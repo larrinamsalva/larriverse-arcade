@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#060810">
+  <meta name="description" content="Bubble Resonance Phi 369 in the LarriVerse Arcade">
+  <title>Bubble Resonance Φ369 · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+  <main class="shell">
+    <nav class="game-nav" aria-label="Game navigation">
+      <a href="../../index.html">← Arcade lobby</a>
+      <div class="profile"><span id="playerName">🌟 Player One</span><span>LV <b id="playerLevel">1</b></span><span>KC <b id="playerKc">0</b></span></div>
+    </nav>
+
+    <header class="intro">
+      <div>
+        <p class="eyebrow">PHI · 3 · 6 · 9 ENGINE</p>
+        <h1>Bubble Resonance</h1>
+        <p>Aim, bank shots off the walls, and connect three matching frequency bubbles. Larger clusters raise Tφ coherence and unlock PHI-chain multipliers.</p>
+      </div>
+      <div class="best">PERSONAL BEST <b id="bestScore">0</b></div>
+    </header>
+
+    <section class="cabinet" aria-label="Bubble Resonance game cabinet">
+      <div class="hud">
+        <div><small>Score</small><b id="score">0</b></div>
+        <div><small>Resonance</small><b id="combo">×1</b></div>
+        <div class="title">BUBBLE RESONANCE<span>PHI·369 ENGINE</span></div>
+        <div><small>Level</small><b id="level">1</b></div>
+        <div><small>Lives</small><b id="lives">♦♦♦</b></div>
+      </div>
+      <div class="coherence"><span>Tφ COHERENCE</span><i><em id="coherenceFill"></em></i><b id="coherenceValue">50</b></div>
+      <div class="playfield">
+        <canvas id="game" width="620" height="500" aria-label="Bubble Resonance playfield"></canvas>
+        <div id="message" class="message" aria-live="polite"><b></b><span></span></div>
+      </div>
+      <div id="legend" class="legend"></div>
+      <div class="controls">
+        <button id="reset">↺ Reset</button>
+        <span>Aim · Click or tap to fire · Bank shots work</span>
+        <button id="sound" class="active">♪ Sound ON</button>
+        <button id="auto">⚡ Auto-fire</button>
+      </div>
+    </section>
+    <p class="note">Creative arcade prototype. Frequency labels are game themes, not medical claims. Sound begins only after player interaction.</p>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="../../assets/arcade-sdk.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
