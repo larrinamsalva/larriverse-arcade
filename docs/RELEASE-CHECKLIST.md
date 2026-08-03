@@ -79,4 +79,4 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 
 ## Release decision
 
-Release only after every unchecked manual item above is complete. **GitHub Actions confirms structural, syntax, content, privacy, safety, browser, approval-record, and tag-publishing contracts; it does not replace hands-on play testing.** The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
+**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, approval-record, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
