@@ -55,12 +55,14 @@
     "title": "Chill Brain Rewards",
     "icon": "🌿",
     "category": "Calm & focus",
-    "desc": "A rewards and onboarding prototype for calm practice, breathing, and guided missions.",
-    "featured": false,
-    "status": "Recovered prototype",
-    "available": false,
+    "desc": "Create a private spirit guide, practice four gentle source missions, grow skill progress, and unlock non-competitive badges.",
+    "featured": true,
+    "status": "Playable alpha",
+    "available": true,
     "href": "games/chill-brain-rewards/index.html",
-    "source": "chill_brain_rewards_onboarding.html"
+    "source": "chill_brain_rewards_onboarding.html",
+    "integration": "arcade-sdk-v2",
+    "sessions": "games/chill-brain-rewards/sessions.json"
   },
   {
     "id": "creature-catcher",
