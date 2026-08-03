@@ -14,15 +14,22 @@ A precision bubble-shooter built from Larrina's original PHI·369 prototype. Pla
 
 The frequency names are preserved as creative game themes. The cabinet explicitly does not present them as medical claims.
 
-Both cabinets connect to the shared arcade profile:
+### Road Trip Quest — Alpha
+
+The first larger adventure cabinet. Players steer across three lanes, collect sixteen types of roadside power items, charge a boss meter, use their inventory during question battles, recruit six roaming heroes, and confront eight city bosses across math, science, reading, and trivia.
+
+The campaign preserves Larrina's original **Collect · Battle · Conquer** structure, city roster, bosses, rewards, Hero Collection, and educational question system. Campaign progress is saved separately on the device, while completed city battles award shared LarriVerse XP and fictional KC.
+
+All playable cabinets connect to the shared arcade profile:
 
 - device-local player XP and levels
 - fictional KC rewards
 - 3-session milestone bonuses
 - per-game sessions, completions, high scores, and activity totals
+- cabinet-specific numeric metrics through Arcade SDK v2
 - device-local achievements and save data
 
-Launch either game from the root arcade lobby.
+Launch any live game from the root arcade lobby.
 
 ## Recovered concept vault
 
@@ -57,12 +64,15 @@ const result = LarriVerseArcade.award('game-id', {
   xp: 36,
   kc: 6,
   score: 90,
-  catches: 3,
-  completed: true
+  completed: true,
+  metrics: {
+    bossesDefeated: 1,
+    itemsCollected: 9
+  }
 });
 ```
 
-The SDK stores data in the browser with `localStorage`. No account, cloud database, real currency, or blockchain is involved.
+Arcade SDK v2 keeps old v1 saves compatible and adds validated, cumulative per-game metrics. The SDK stores data in the browser with `localStorage`. No account, cloud database, real currency, or blockchain is involved.
 
 Larger React and React Native projects stay in source-lab folders until they receive independent build pipelines.
 
@@ -76,9 +86,10 @@ npm run validate
 
 It checks:
 
-- catalog structure, unique IDs, and safe paths
-- every available cabinet's HTML document
+- catalog structure, unique IDs, safe paths, and declared SDK versions
+- every available cabinet's HTML document and route back to the lobby
 - local CSS and JavaScript dependencies referenced by playable games
+- shared SDK load order before cabinet code
 - JavaScript syntax for the lobby, shared SDK, and playable cabinet scripts
 - lobby integration and playable-cabinet counts
 
