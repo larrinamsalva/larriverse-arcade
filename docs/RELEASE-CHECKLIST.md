@@ -21,6 +21,11 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Reduced motion, high contrast, and larger text are shared through the SDK.
 - [x] Release metadata matches package version, catalog routes, notes, and gallery targets.
 - [x] Version tags validate the complete arcade before GitHub can publish a release.
+- [x] Automated Chromium pass covers the lobby and all eight cabinets at 1440×900 and 390×844.
+- [x] Browser automation performs a real profile/settings/reward/backup/restore round trip.
+- [x] Browser evidence is captured without granting location permission.
+
+Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md) for the exact automated boundary.
 
 ## Cabinet launch pass
 
@@ -55,13 +60,13 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 
 ## Visual gallery capture
 
-Capture each cabinet at 1440×900 and 390×844 after its opening screen loads. Use Demo Mode for Road Trip GPS and do not grant live location during screenshots.
+Review the temporary Chromium screenshots first, then capture or approve each cabinet at 1440×900 and 390×844 after its opening screen loads. Use Demo Mode for Road Trip GPS and do not grant live location during screenshots.
 
-- [ ] Desktop and mobile images captured for all eight cabinets.
+- [ ] Desktop and mobile images approved for all eight cabinets.
 - [ ] No personal names, family notes, location prompts, or real saved progress appear.
-- [ ] Images are compressed and placed under `docs/screenshots/`.
+- [ ] Approved images are compressed and placed under `docs/screenshots/`.
 - [ ] Gallery links and alt text are added to `docs/CABINET-GALLERY.md`.
 
 ## Release decision
 
-Release only after the unchecked manual items above have been tested on a desktop browser and one mobile browser. GitHub Actions confirms structural, syntax, content, privacy, safety, release-metadata, and tag-publishing contracts; it does not replace hands-on play testing.
+Release only after the unchecked manual items above have been tested on a desktop browser and one physical mobile browser. GitHub Actions confirms structural, syntax, content, privacy, automated Chromium, safety, release-metadata, and tag-publishing contracts; it does not replace hands-on play testing.
