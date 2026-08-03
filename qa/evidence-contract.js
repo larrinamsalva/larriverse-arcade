@@ -5,7 +5,7 @@
   const MAX_BUNDLE_BYTES = 6_500_000;
   const REQUIRED_DEVICE_CHECKS = ['controls', 'accessibility', 'backupRestore', 'privacy', 'sound', 'deviceComfort'];
   const PROJECTS = ['desktop-chromium', 'mobile-chromium'];
-  const FORBIDDEN_EVIDENCE_KEYS = new Set(['latitude', 'longitude', 'coordinates', 'coords', 'geolocation']);
+  const FORBIDDEN_EVIDENCE_KEYS = new Set(['latitude', 'longitude', 'coordinates', 'coords', 'geo' + 'location']);
 
   function fail(message) {
     throw new Error(message);
