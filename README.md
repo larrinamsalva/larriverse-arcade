@@ -35,6 +35,22 @@ Twelve reviewed lessons are playable at launch with 60 questions, saved personal
 
 The recovered source contains 239 readable questions and one malformed media-literacy question. The malformed item is excluded and documented instead of being silently rewritten.
 
+### Chill Brain Rewards — Alpha
+
+The first non-competitive calm-and-focus cabinet. It turns the recovered rewards and onboarding mockup into a playable local experience while preserving its terminology and structure:
+
+- six onboarding steps
+- Little Sprout, Explorer, Challenger, and Dreamer paths
+- eight spirit-guide avatars
+- Leaf Breathing, Wave Breathing, Chaos Shield, and Sleep Moon Journey
+- six source skill tracks and twelve badge concepts
+- source-length sessions plus an optional 45-second preview mode
+- pause, leave-gently, and finish-early controls with no failure state
+- reduced motion, high contrast, large text, and optional sound controls
+- device-local guide, age, settings, streak, mission, skill, and badge progress
+
+The original mockup references Hemi-Sync. This repository does not include Hemi-Sync audio and does not claim therapeutic effects. Optional **Brain Tune** sound is a quiet, locally generated ambience, defaults off, and can be disabled at any time. Skill percentages represent game practice only—not mental-health or nervous-system measurements.
+
 All playable cabinets connect to the shared arcade profile:
 
 - device-local player XP and levels
@@ -81,8 +97,8 @@ const result = LarriVerseArcade.award('game-id', {
   score: 90,
   completed: true,
   metrics: {
-    lessonsCompleted: 1,
-    correctAnswers: 5
+    sessionsCompleted: 1,
+    mindfulSeconds: 180
   }
 });
 ```
@@ -90,6 +106,8 @@ const result = LarriVerseArcade.award('game-id', {
 Arcade SDK v2 keeps old v1 saves compatible and adds validated, cumulative per-game metrics. The SDK stores data in the browser with `localStorage`. No account, cloud database, real currency, or blockchain is involved.
 
 Brain Sweat separates its content from the quiz engine through a JSON manifest and one file per world. This lets later content reviews unlock or revise lessons without rebuilding the interface.
+
+Chill Brain separates source-grounded profiles, missions, skills, badges, privacy rules, and audio boundaries into `sessions.json`. The interface reads that manifest at runtime, and CI verifies its source counts and safety defaults.
 
 Larger React and React Native projects stay in source-lab folders until they receive independent build pipelines.
 
@@ -110,6 +128,8 @@ It checks:
 - JavaScript syntax for the lobby, shared SDK, and playable cabinet scripts
 - structured learning manifests, world and lesson IDs, review states, question schemas, answer indexes, and source counts
 - queued lessons contain no unpublished questions and explain why review is required
+- Chill Brain's six onboarding steps, four paths, eight avatars, four missions, six skills, and twelve badges
+- Chill Brain sound defaults off, profiles remain device-local, and the Hemi-Sync / medical-claim boundary stays explicit
 - lobby integration and playable-cabinet counts
 
 Pull requests run the same checks through `.github/workflows/validate.yml`.
@@ -127,6 +147,8 @@ The workflow in `.github/workflows/pages.yml` deploys the repository root whenev
 - Keep child-facing experiences free from ads, purchases, public profiles, and gambling mechanics.
 - Clearly separate creative themes from medical or scientific claims.
 - Keep high-stakes learning material behind visible review gates until qualified review is complete.
+- Treat wellness progress as game activity, never as diagnosis or health measurement.
+- Keep optional audio off by default and document branded or therapeutic-source references without imitating them.
 - Document malformed or excluded source content instead of silently changing it.
 - Parent-review child-facing prototypes before public release.
 
