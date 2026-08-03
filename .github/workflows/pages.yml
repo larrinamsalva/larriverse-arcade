@@ -30,8 +30,28 @@ jobs:
       - name: Validate complete arcade and QA contracts
         run: npm run validate
 
-      - name: Build allowlisted static preview
-        run: node scripts/build-pages-site.mjs
+      - name: Build allowlisted static preview and deployment identity
+        env:
+          PAGES_BUILDER: node scripts/build-pages-site.mjs
+        run: npm run build:pages
+
+      - name: Verify public artifact boundary
+        shell: bash
+        run: |
+          test -f _site/deployment.json
+          test -f _site/qa/readiness.html
+          test -f _site/qa/evidence-preflight.html
+          test ! -e _site/docs/release-approval.json
+          test ! -e _site/scripts
+          test ! -e _site/.github
+
+      - name: Record deployment identity
+        shell: bash
+        run: |
+          echo '### LarriVerse deployment identity' >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat _site/deployment.json >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

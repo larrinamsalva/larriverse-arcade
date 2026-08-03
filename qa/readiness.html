@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071526">
+  <meta name="description" content="Same-origin deployment readiness checks for LarriVerse Arcade 1.0.">
+  <title>LarriVerse Deployment Readiness</title>
+  <link rel="stylesheet" href="readiness.css">
+</head>
+<body>
+  <main class="shell">
+    <nav class="nav"><a href="../index.html">← Arcade</a><a href="index.html">Guided QA</a><a href="evidence-preflight.html">Evidence preflight</a></nav>
+    <header class="hero">
+      <p class="eyebrow">Phase 15 · deployed-build verification</p>
+      <h1>Is this the build we meant to test?</h1>
+      <p>This page checks the published deployment identity, release alignment, all eight cabinet routes, HTTPS, and the absence of private approval files. It does not play games or approve a release.</p>
+    </header>
+
+    <section class="summary" aria-labelledby="summaryTitle">
+      <div><p class="eyebrow">Current result</p><h2 id="summaryTitle">Checking deployment…</h2></div>
+      <strong id="score">0/5</strong>
+    </section>
+
+    <section class="grid" aria-label="Deployment checks">
+      <article><small>Transport</small><h2 id="httpsState">Checking</h2><p id="httpsDetail"></p></article>
+      <article><small>Deployment identity</small><h2 id="identityState">Checking</h2><p id="identityDetail"></p></article>
+      <article><small>Release alignment</small><h2 id="releaseState">Checking</h2><p id="releaseDetail"></p></article>
+      <article><small>Cabinet routes</small><h2 id="routeState">0/8</h2><p id="routeDetail">Not checked yet.</p></article>
+      <article><small>Private paths</small><h2 id="privateState">Checking</h2><p id="privateDetail"></p></article>
+    </section>
+
+    <section class="panel">
+      <h2>Deployment details</h2>
+      <dl>
+        <div><dt>Source commit</dt><dd id="commit">—</dd></div>
+        <div><dt>Built at</dt><dd id="builtAt">—</dd></div>
+        <div><dt>Workflow run</dt><dd id="runId">—</dd></div>
+        <div><dt>Release</dt><dd id="releaseLabel">—</dd></div>
+      </dl>
+      <button id="rerun" type="button">Run checks again</button>
+    </section>
+
+    <p id="status" class="status" role="status" aria-live="polite">Loading same-origin deployment metadata…</p>
+    <footer>No uploads, analytics, screenshots, location, camera, microphone, contacts, or arcade-save access.</footer>
+  </main>
+  <script src="readiness.js"></script>
+</body>
+</html>
