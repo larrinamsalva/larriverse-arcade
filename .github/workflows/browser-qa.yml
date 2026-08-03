@@ -35,6 +35,13 @@ jobs:
       - name: Run desktop and mobile browser QA
         run: npx playwright test --config=playwright.config.mjs
 
+      - name: Build offline gallery review pack
+        if: success()
+        env:
+          LARRIVERSE_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          LARRIVERSE_RUN_ID: ${{ github.run_id }}
+        run: node scripts/build-gallery-review.mjs
+
       - name: Upload browser QA evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -42,7 +49,17 @@ jobs:
           name: larriverse-browser-qa-${{ github.run_number }}
           path: |
             artifacts/screenshots/
+            artifacts/gallery-review/
             playwright-report/
             test-results/
           if-no-files-found: warn
           retention-days: 14
+
+      - name: Upload offline gallery review
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: larriverse-gallery-review-${{ github.run_number }}
+          path: artifacts/gallery-review/
+          if-no-files-found: error
+          retention-days: 30

@@ -27,6 +27,19 @@
     "humanApprovalRequired": true,
     "documentation": "docs/BROWSER-QA.md"
   },
+  "galleryReview": {
+    "schema": "larriverse-gallery-review",
+    "expectedImages": 18,
+    "projects": ["desktop-chromium", "mobile-chromium"],
+    "offline": true,
+    "uploadsData": false,
+    "grantsLocation": false,
+    "humanApprovalRequired": true,
+    "documentation": "docs/GALLERY-APPROVAL.md",
+    "approvalConsole": "qa/release-approval.html",
+    "approvalRecord": "docs/release-approval.json",
+    "approvedImagesRoot": "docs/screenshots"
+  },
   "cabinets": [
     {
       "id": "kidscoin-family",

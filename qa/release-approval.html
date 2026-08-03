@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#081322">
+  <title>LarriVerse Release Approval</title>
+  <link rel="stylesheet" href="release-approval.css">
+</head>
+<body>
+  <main class="shell">
+    <a class="back" href="index.html">← Browser QA console</a>
+    <header class="hero">
+      <p class="eyebrow">LarriVerse Arcade 1.0 · Human release gate</p>
+      <h1>Release approval console</h1>
+      <p>Combine the approved screenshot review, a completed desktop QA report, and a completed physical-phone QA report. This page reads local JSON files only, uploads nothing, and cannot create a tag or GitHub release.</p>
+    </header>
+
+    <section class="panel" aria-labelledby="evidenceTitle">
+      <h2 id="evidenceTitle">1. Import the three evidence files</h2>
+      <div class="imports">
+        <label>Gallery approval JSON<input id="galleryFile" type="file" accept="application/json,.json"><span id="galleryState">Not loaded</span></label>
+        <label>Desktop QA report<input id="desktopFile" type="file" accept="application/json,.json"><span id="desktopState">Not loaded</span></label>
+        <label>Physical-phone QA report<input id="mobileFile" type="file" accept="application/json,.json"><span id="mobileState">Not loaded</span></label>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="humanTitle">
+      <h2 id="humanTitle">2. Record the human decision</h2>
+      <div class="identity">
+        <label>Approver name or initials<input id="approver" maxlength="60" autocomplete="off"></label>
+        <label>Physical phone tested<input id="device" maxlength="100" placeholder="Example: Pixel 9 / Chrome" autocomplete="off"></label>
+      </div>
+      <div class="checks">
+        <label><input type="checkbox" data-check="physicalPhone">The mobile report was completed on the physical phone named above—not only device emulation.</label>
+        <label><input type="checkbox" data-check="gameplay">All eight cabinet focus tasks were completed on desktop and phone.</label>
+        <label><input type="checkbox" data-check="soundTouch">Sound, touch comfort, scrolling, and instruction clarity were judged by a person.</label>
+        <label><input type="checkbox" data-check="accessibility">Keyboard, focus, reduced motion, high contrast, and larger text were manually checked.</label>
+        <label><input type="checkbox" data-check="backupPrivacy">Backup restoration and privacy boundaries were manually confirmed.</label>
+        <label><input type="checkbox" data-check="releaseDecision">I approve this exact release candidate for the final gallery-import and tag-preparation step.</label>
+      </div>
+      <label class="notes">Final notes<textarea id="notes" rows="4" maxlength="1000"></textarea></label>
+    </section>
+
+    <section class="summary" aria-live="polite">
+      <div><small>Gallery</small><b id="gallerySummary">missing</b></div>
+      <div><small>Desktop QA</small><b id="desktopSummary">missing</b></div>
+      <div><small>Phone QA</small><b id="mobileSummary">missing</b></div>
+      <div><small>Decision</small><b id="decisionSummary">blocked</b></div>
+      <button id="export" disabled>Export final approval JSON</button>
+    </section>
+
+    <p id="status" class="status" role="status">Load the three evidence files to begin.</p>
+    <footer>The exported record contains review decisions, browser details, file hashes, and notes. It contains no game saves, family messages, passwords, or coordinates.</footer>
+  </main>
+  <script src="release-approval.js"></script>
+</body>
+</html>
