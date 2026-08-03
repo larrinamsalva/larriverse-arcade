@@ -1,11 +1,11 @@
 {
   "name": "larriverse-arcade",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "private": true,
   "description": "A shared arcade lobby for Larrina's learning games and creative prototypes.",
   "type": "module",
   "scripts": {
-    "validate": "node scripts/validate.mjs && node scripts/validate-brain-sweat-expanded.mjs && node scripts/validate-kidscoin-family.mjs && node scripts/validate-road-trip-gps.mjs"
+    "validate": "node scripts/validate.mjs && node scripts/validate-brain-sweat-expanded.mjs && node scripts/validate-kidscoin-family.mjs && node scripts/validate-road-trip-gps.mjs && node scripts/validate-arcade-polish.mjs"
   },
   "engines": {
     "node": ">=20"
