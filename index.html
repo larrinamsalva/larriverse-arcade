@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#120b2f">
+  <meta name="description" content="LarriVerse Arcade — playful learning, adventures, rewards, and wonderfully strange experiments by Larrina.">
+  <title>LarriVerse Arcade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/arcade.css">
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <header class="hero" id="top">
+    <nav class="nav" aria-label="Arcade navigation">
+      <a class="brand" href="#top"><span>✦</span> LarriVerse</a>
+      <div class="nav-pills"><a href="#games">Games</a><a href="#labs">Labs</a><a href="README.md">About</a></div>
+    </nav>
+    <div class="hero-copy">
+      <p class="eyebrow">Arc & Bloom Forge presents</p>
+      <h1>Step into the<br><em>LarriVerse Arcade</em></h1>
+      <p class="lede">Learning games, road-trip quests, calm worlds, rewards, creatures, bubbles, and whatever brilliant weirdness Larrina dreams up next.</p>
+      <div class="hero-actions"><button class="primary" id="randomGame">🎲 Surprise me</button><a class="secondary" href="#games">Browse cabinets ↓</a></div>
+      <div class="hero-stats"><span><b id="gameCount">8</b> recovered prototypes</span><span><b>2</b> source labs</span><span><b>∞</b> room to grow</span></div>
+    </div>
+    <div class="cabinet" aria-label="Featured arcade cabinet illustration">
+      <div class="cabinet-top">LARRIVERSE</div>
+      <div class="screen"><span id="screenIcon">🫧</span><b id="screenTitle">Bubble Resonance</b><small>PRESS START</small></div>
+      <div class="controls"><i></i><span></span><span></span></div>
+      <div class="coin-slot">25¢ IN IMAGINARY MONEY</div>
+    </div>
+  </header>
+  <main>
+    <section class="section" id="games">
+      <div class="section-head"><div><p class="eyebrow">Choose your cabinet</p><h2>The first game vault</h2></div><label class="search"><span>⌕</span><input id="search" type="search" placeholder="Find a game…" aria-label="Find a game"></label></div>
+      <div class="filters" id="filters" aria-label="Game categories"></div>
+      <div class="game-grid" id="gameGrid"><p class="loading">Powering up the cabinets…</p></div>
+      <p class="prototype-note">These are creative prototypes. Parent review is recommended before children use them. GPS mode asks for location only when its browser feature is used.</p>
+    </section>
+    <section class="section labs" id="labs">
+      <div class="section-head"><div><p class="eyebrow">Under construction</p><h2>The invention lab</h2></div></div>
+      <div class="lab-grid">
+        <article><span>⚛️</span><div><h3>KidsCoin React Platform</h3><p>The original JSX component is preserved for a future shared React architecture.</p></div></article>
+        <article><span>🌙</span><div><h3>Chill Brain Native</h3><p>The React Native world, rewards, sessions, sleep journey, parent controls, and PHI engine are preserved as a source lab.</p></div></article>
+      </div>
+    </section>
+  </main>
+  <footer><b>LarriVerse Arcade</b><span>Built with heart, curiosity, and an unreasonable number of good ideas.</span><a href="https://github.com/larrinamsalva/larriverse-arcade">GitHub ↗</a></footer>
+  <script src="assets/arcade.js"></script>
+</body>
+</html>
