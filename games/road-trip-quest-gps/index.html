@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07131f">
+  <meta name="description" content="Road Trip Quest GPS — a privacy-first proximity collection game for LarriVerse Arcade.">
+  <title>Road Trip Quest GPS · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a href="../../index.html" class="back-link">← Arcade</a>
+    <div class="brand"><span>🗺️</span><div><strong>Road Trip Quest GPS</strong><small>Privacy-first quest field</small></div></div>
+    <button id="privacyButton" class="soft-button">Privacy</button>
+  </header>
+
+  <main>
+    <section id="landingView" class="landing view">
+      <div class="landing-card">
+        <p class="eyebrow">Passenger or parked only</p>
+        <h1>Find nearby-style quests without sharing your location.</h1>
+        <p>This rebuild preserves the recovered proximity hunt, place categories, question catches, collectibles, XP levels, and collection book. It does not load external maps or upload coordinates.</p>
+        <div class="boundary">
+          <span>🚗</span>
+          <div><strong>Never play while driving.</strong><p>A passenger may play, or use it after the vehicle is safely parked. This is not navigation or an emergency-location service.</p></div>
+        </div>
+        <div class="mode-grid">
+          <article>
+            <span class="mode-icon">🎮</span>
+            <h2>Demo Mode</h2>
+            <p>Move with arrow keys or on-screen controls. No location permission.</p>
+            <button id="demoButton" class="primary">Start Demo Mode</button>
+          </article>
+          <article>
+            <span class="mode-icon">📍</span>
+            <h2>Live Movement</h2>
+            <p>After you tap, the browser may temporarily use GPS to move the player across a locally generated field.</p>
+            <button id="liveButton" class="primary">Use Live Movement</button>
+          </article>
+        </div>
+        <p class="fine-print">Live coordinates stay in memory only. They are not saved, placed in the arcade profile, or sent to a map or place service.</p>
+      </div>
+    </section>
+
+    <section id="gameView" class="view" hidden>
+      <div class="hud">
+        <div class="hud-chip"><span id="sharedAvatar">🌟</span><b id="sharedLevel">Arcade 1</b></div>
+        <div class="hud-chip">⚡ Quest Lv <b id="questLevel">1</b></div>
+        <div class="hud-chip">⭐ <b id="scoreValue">0</b></div>
+        <div class="hud-chip">🎒 <b id="foundValue">0</b></div>
+      </div>
+      <div class="xp-track"><div id="xpFill"></div></div>
+
+      <section class="status-strip">
+        <div><span id="modeIcon">🎮</span><b id="modeLabel">Demo Mode</b><small id="trackingText">No location access</small></div>
+        <div class="status-actions">
+          <button id="stopTracking" class="danger" hidden>Stop location</button>
+          <button id="newField" class="soft-button">New field</button>
+          <button id="collectionButton" class="soft-button">Collection</button>
+        </div>
+      </section>
+
+      <section id="questField" class="quest-field" aria-label="Locally generated quest field">
+        <div class="road road-a"></div>
+        <div class="road road-b"></div>
+        <div class="park-zone"></div>
+        <div id="poiLayer"></div>
+        <div id="player" class="player" aria-label="Player position">🚙</div>
+        <div class="range-ring" id="rangeRing"></div>
+      </section>
+
+      <div class="map-caption">
+        <strong>Abstract quest field</strong>
+        <span>Markers are game locations, not real businesses or emergency directions.</span>
+      </div>
+
+      <section id="demoControls" class="controls">
+        <button data-move="up" aria-label="Move up">▲</button>
+        <div><button data-move="left" aria-label="Move left">◀</button><button data-move="down" aria-label="Move down">▼</button><button data-move="right" aria-label="Move right">▶</button></div>
+        <small>Arrow keys and WASD also work.</small>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="encounterDialog" class="dialog-card encounter">
+    <div>
+      <button class="close-x" id="closeEncounter" aria-label="Close">×</button>
+      <span id="placeTag" class="place-tag">🌲 Park</span>
+      <div id="rewardEmoji" class="reward-emoji">🦄</div>
+      <h2 id="rewardName">Park Unicorn</h2>
+      <p id="placeName">Park Quest</p>
+      <div class="reward-box"><b id="rewardXp">+70 XP</b><span id="rewardDescription">Runs free in nature!</span></div>
+      <section id="questionSection" hidden>
+        <span id="subjectBadge" class="subject-badge">🔢 Math</span>
+        <h3 id="questionText"></h3>
+        <div id="answerGrid" class="answer-grid"></div>
+        <p id="questionFeedback" class="feedback"></p>
+      </section>
+      <button id="catchButton" class="primary">Answer to catch</button>
+    </div>
+  </dialog>
+
+  <dialog id="collectionDialog" class="dialog-card wide">
+    <form method="dialog">
+      <header><div><p class="eyebrow">Persistent quest book</p><h2>Collection</h2></div><button value="close" class="close-x" aria-label="Close">×</button></header>
+      <div class="collection-tabs">
+        <button type="button" data-collection="all" class="active">All</button>
+        <button type="button" data-collection="character">Heroes</button>
+        <button type="button" data-collection="outfit">Outfits</button>
+        <button type="button" data-collection="item">Items</button>
+      </div>
+      <div id="collectionGrid" class="collection-grid"></div>
+    </form>
+  </dialog>
+
+  <dialog id="privacyDialog" class="dialog-card wide">
+    <form method="dialog">
+      <header><div><p class="eyebrow">Location boundary</p><h2>What this cabinet does</h2></div><button value="close" class="close-x" aria-label="Close">×</button></header>
+      <div class="privacy-grid">
+        <article><h3>Stored</h3><p>Quest XP, score, collection IDs, level unlocks, and settings stay in this browser.</p></article>
+        <article><h3>Never stored</h3><p>Latitude, longitude, accuracy, movement paths, and real-place names are never written to saves.</p></article>
+        <article><h3>No location upload</h3><p>No map tiles, Overpass query, analytics service, cloud account, or shared profile receives coordinates.</p></article>
+        <article><h3>Live mode</h3><p>GPS starts only after the Live Movement button. Stop Location, closing the page, hiding the tab, or leaving the cabinet clears tracking.</p></article>
+      </div>
+      <p class="boundary-text">Hospital, pharmacy, police, fire-station, and other place labels are collectible game themes. They do not locate services or provide emergency help.</p>
+      <button value="close" class="primary">Got it</button>
+    </form>
+  </dialog>
+
+  <dialog id="levelDialog" class="dialog-card level-card">
+    <div>
+      <div class="level-star">⭐</div>
+      <p class="eyebrow">Level up</p>
+      <h2 id="levelTitle">Quest Level 2</h2>
+      <p id="levelUnlock"></p>
+      <button id="closeLevel" class="primary">Continue exploring</button>
+    </div>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <noscript>This cabinet needs JavaScript enabled.</noscript>
+  <script src="../../assets/arcade-sdk.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

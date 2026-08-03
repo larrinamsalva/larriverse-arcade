@@ -99,11 +99,13 @@
     "title": "Road Trip Quest GPS",
     "icon": "🗺️",
     "category": "Adventure",
-    "desc": "A map-based companion prototype using GPS and nearby points of interest.",
-    "featured": false,
-    "status": "Recovered prototype",
-    "available": false,
+    "desc": "Explore 15 locally generated place categories, answer 28 source questions, collect 41 rewards, and use Demo Mode or explicit temporary live movement without maps or location upload.",
+    "featured": true,
+    "status": "Playable alpha",
+    "available": true,
     "href": "games/road-trip-quest-gps/index.html",
-    "source": "road-trip-quest-gps.html"
+    "source": "road-trip-quest-gps.html",
+    "integration": "arcade-sdk-v2",
+    "world": "games/road-trip-quest-gps/world.json"
   }
 ]
