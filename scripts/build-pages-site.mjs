@@ -51,11 +51,13 @@ const deployment = {
     guidedQa: release.deviceQa.route,
     readiness: release.deployment.readinessRoute,
     evidencePreflight: release.deployment.evidencePreflightRoute,
+    releaseRoom: release.deployment.releaseRoomRoute,
     finalApproval: release.galleryReview.approvalConsole
   },
   privacy: {
     uploadsData: false,
     requestsLocation: false,
+    createsReleaseApproval: false,
     publishesApprovalRecord: false,
     publishesPrivateEvidence: false
   }
@@ -76,7 +78,9 @@ for (const required of [
   'deployment.json',
   'qa/index.html',
   'qa/readiness.html',
+  'qa/evidence-contract.js',
   'qa/evidence-preflight.html',
+  'qa/release-room.html',
   'qa/release-approval.html',
   'games/catalog.json'
 ]) {
