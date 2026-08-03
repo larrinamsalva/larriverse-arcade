@@ -64,12 +64,13 @@
     "title": "Creature Catcher",
     "icon": "🦊",
     "category": "Learning arcade",
-    "desc": "Catch creatures, answer learning prompts, and build a field guide.",
+    "desc": "Catch creatures, solve mixed learning questions, earn shared XP and KC, and grow a persistent field guide.",
     "featured": true,
-    "status": "Recovered prototype",
-    "available": false,
+    "status": "Playable alpha",
+    "available": true,
     "href": "games/creature-catcher/index.html",
-    "source": "creature-catcher.html"
+    "source": "creature-catcher.html",
+    "integration": "arcade-sdk-v1"
   },
   {
     "id": "road-trip-quest",
