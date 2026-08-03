@@ -30,8 +30,12 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] The physical-phone report requires touch capability and six completed device-wide checks.
 - [x] The GitHub Pages workflow validates `main` and publishes only the allowlisted static arcade files.
 - [x] The Pages build excludes the final release approval record and private evidence files.
+- [x] Every Pages build generates a deployment identity with source commit, build time, workflow run, and release-manifest digest.
+- [x] The readiness page checks HTTPS, release alignment, all eight cabinet routes, and private-path exclusion.
+- [x] Evidence preflight validates gallery, desktop, and physical-phone files without creating release approval.
+- [x] Browser QA serves the same allowlisted `_site` shape used by GitHub Pages and tests the readiness and preflight tools.
 
-Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md), [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md), and [`DEVICE-QA.md`](DEVICE-QA.md) for the exact boundary.
+Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md), [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md), [`DEVICE-QA.md`](DEVICE-QA.md), and [`DEPLOYMENT-REHEARSAL.md`](DEPLOYMENT-REHEARSAL.md) for the exact boundary.
 
 ## Cabinet launch pass
 
@@ -72,6 +76,13 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 - [ ] Useful alt text is approved for every image.
 - [ ] Export the `larriverse-gallery-approval` JSON.
 
+## Deployment rehearsal
+
+- [ ] Open `qa/readiness.html` on the deployed site and confirm all five checks pass.
+- [ ] Confirm the readiness source commit matches the merged release-candidate commit intended for testing.
+- [ ] Confirm all eight routes are reachable and private approval/workflow/script paths remain unavailable.
+- [ ] Do not use search-engine indexing or a route-only result as gameplay evidence.
+
 ## Guided device QA
 
 - [ ] Confirm **Deploy LarriVerse Arcade** completed successfully for the merged `main` commit.
@@ -80,6 +91,12 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 - [ ] Send the QA link to one physical phone and export a complete schema-v2 physical-phone report.
 - [ ] Confirm the phone report names the real phone, reports touch capability, and is not desktop emulation.
 - [ ] Confirm both reports contain eight reachable routes, eight cabinet passes, and six device-wide checks.
+
+## Evidence preflight
+
+- [ ] Load the gallery, desktop, and physical-phone JSON files into `qa/evidence-preflight.html`.
+- [ ] Confirm the files match release `1.0.0 rc.1`, have distinct desktop/phone hashes, and pass every structural check.
+- [ ] Treat the optional `larriverse-evidence-rehearsal` summary as rehearsal only—not release approval.
 
 ## Final human approval
 
@@ -90,4 +107,4 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 
 ## Release decision
 
-**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, approval-record, device-label, static-preview, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
+**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, deployment-identity, evidence-preflight, approval-record, device-label, static-preview, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
