@@ -11,12 +11,14 @@ permissions:
 jobs:
   validate-and-release:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
     env:
       CI: true
     steps:
       - name: Check out tagged source
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -25,6 +27,15 @@ jobs:
 
       - name: Validate complete arcade
         run: npm run validate
+
+      - name: Verify committed human approval
+        run: npm run verify:release-approval
+
+      - name: Verify approved code ancestry
+        shell: bash
+        run: |
+          APPROVED_COMMIT="$(node -p "JSON.parse(require('fs').readFileSync('docs/release-approval.json','utf8')).approvedCodeCommit")"
+          git merge-base --is-ancestor "$APPROVED_COMMIT" HEAD
 
       - name: Install pinned browser test runner
         run: npm install --no-save --no-package-lock @playwright/test@1.55.0
