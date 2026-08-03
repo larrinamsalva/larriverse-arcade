@@ -94,7 +94,7 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 
 ## Evidence preflight
 
-- [ ] Load the gallery, desktop, and physical-phone JSON files into `qa/evidence-preflight.html`.
+- [ ] Run evidence preflight by loading the gallery, desktop, and physical-phone JSON files into `qa/evidence-preflight.html`.
 - [ ] Confirm the files match release `1.0.0 rc.1`, have distinct desktop/phone hashes, and pass every structural check.
 - [ ] Treat the optional `larriverse-evidence-rehearsal` summary as rehearsal only—not release approval.
 
