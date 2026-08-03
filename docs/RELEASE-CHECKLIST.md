@@ -30,12 +30,15 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] The physical-phone report requires touch capability and six completed device-wide checks.
 - [x] The GitHub Pages workflow validates `main` and publishes only the allowlisted static arcade files.
 - [x] The Pages build excludes the final release approval record and private evidence files.
-- [x] Every Pages build generates a deployment identity with source commit, build time, workflow run, and release-manifest digest.
-- [x] The readiness page checks HTTPS, release alignment, all eight cabinet routes, and private-path exclusion.
-- [x] Evidence preflight validates gallery, desktop, and physical-phone files without creating release approval.
-- [x] Browser QA serves the same allowlisted `_site` shape used by GitHub Pages and tests the readiness and preflight tools.
+- [x] Every deployed build contains a tamper-evident deployment identity tied to its source commit.
+- [x] Deployment Readiness checks HTTPS, release alignment, eight routes, and private-path exclusion.
+- [x] Evidence Preflight validates three human evidence files without approving the release.
+- [x] Evidence Preflight, Release Room, and Final Approval use one shared schema-v2 evidence contract.
+- [x] The shared contract uses `deviceClass` and `environment.maxTouchPoints` and rejects obsolete device fields.
+- [x] The Release Room creates a private `larriverse-evidence-bundle` that preserves all three original JSON texts and SHA-256 hashes.
+- [x] The evidence bundle identifies the deployed candidate and explicitly cannot create release approval.
 
-Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md), [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md), [`DEVICE-QA.md`](DEVICE-QA.md), and [`DEPLOYMENT-REHEARSAL.md`](DEPLOYMENT-REHEARSAL.md) for the exact boundary.
+Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md), [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md), [`DEVICE-QA.md`](DEVICE-QA.md), [`DEPLOYMENT-REHEARSAL.md`](DEPLOYMENT-REHEARSAL.md), and [`RELEASE-ROOM.md`](RELEASE-ROOM.md) for the exact boundary.
 
 ## Cabinet launch pass
 
@@ -76,13 +79,6 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 - [ ] Useful alt text is approved for every image.
 - [ ] Export the `larriverse-gallery-approval` JSON.
 
-## Deployment rehearsal
-
-- [ ] Open `qa/readiness.html` on the deployed site and confirm all five checks pass.
-- [ ] Confirm the readiness source commit matches the merged release-candidate commit intended for testing.
-- [ ] Confirm all eight routes are reachable and private approval/workflow/script paths remain unavailable.
-- [ ] Do not use search-engine indexing or a route-only result as gameplay evidence.
-
 ## Guided device QA
 
 - [ ] Confirm **Deploy LarriVerse Arcade** completed successfully for the merged `main` commit.
@@ -92,19 +88,28 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 - [ ] Confirm the phone report names the real phone, reports touch capability, and is not desktop emulation.
 - [ ] Confirm both reports contain eight reachable routes, eight cabinet passes, and six device-wide checks.
 
-## Evidence preflight
+## Deployment and evidence rehearsal
 
-- [ ] Run evidence preflight by loading the gallery, desktop, and physical-phone JSON files into `qa/evidence-preflight.html`.
-- [ ] Confirm the files match release `1.0.0 rc.1`, have distinct desktop/phone hashes, and pass every structural check.
-- [ ] Treat the optional `larriverse-evidence-rehearsal` summary as rehearsal only—not release approval.
+- [ ] Open `qa/readiness.html` on the deployed site and confirm its deployment identity matches the merged commit.
+- [ ] Confirm Readiness shows all five checks passed and all eight cabinet routes reachable.
+- [ ] Confirm the final approval record, repository scripts, and workflow files are not publicly reachable.
+- [ ] Load the gallery, desktop, and phone files through evidence preflight and resolve every structural issue.
+
+## Release Room handoff
+
+- [ ] Open `qa/release-room.html` from the live HTTPS deployment.
+- [ ] Confirm the exact deployment commit, release digest, 8/8 cabinet routes, and private-path exclusion.
+- [ ] Load the approved gallery JSON, desktop QA JSON, and physical-phone QA JSON.
+- [ ] Export the private evidence bundle and keep it out of the public Pages artifact.
+- [ ] Import the evidence bundle into `qa/release-approval.html` and confirm the three original hashes are preserved.
 
 ## Final human approval
 
-- [ ] Import both device QA reports and the gallery approval into `qa/release-approval.html`.
+- [ ] Import the Release Room evidence bundle—or both device QA reports and the gallery approval—into `qa/release-approval.html`.
 - [ ] Complete the sound, touch, gameplay, accessibility, backup, privacy, and release-decision confirmations.
 - [ ] Export the final approval JSON.
 - [ ] Commit it as `docs/release-approval.json` with the exact 18 approved images under `docs/screenshots/`.
 
 ## Release decision
 
-**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, deployment-identity, evidence-preflight, approval-record, device-label, static-preview, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
+**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, approval-record, device-label, static-preview, shared-evidence-contract, evidence-bundle, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
