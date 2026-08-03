@@ -24,8 +24,10 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Automated Chromium pass covers the lobby and all eight cabinets at 1440×900 and 390×844.
 - [x] Browser automation performs a real profile/settings/reward/backup/restore round trip.
 - [x] Browser evidence is captured without granting location permission.
+- [x] Successful Browser QA builds an offline gallery review with 18 hashed images.
+- [x] The tag workflow requires a committed final approval JSON and exact approved image hashes.
 
-Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md) for the exact automated boundary.
+Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md) and [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md) for the exact boundary.
 
 ## Cabinet launch pass
 
@@ -58,15 +60,23 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 - [ ] Erase progress keeps accessibility settings when requested.
 - [ ] No location coordinates appear in exported Road Trip GPS data.
 
-## Visual gallery capture
+## Visual gallery approval
 
-Review the temporary Chromium screenshots first, then capture or approve each cabinet at 1440×900 and 390×844 after its opening screen loads. Use Demo Mode for Road Trip GPS and do not grant live location during screenshots.
+- [ ] Download the successful `larriverse-gallery-review-<run>` artifact and open its offline `index.html`.
+- [ ] Review all 18 desktop/mobile images and their SHA-256 digests.
+- [ ] No personal names, family notes, location prompts, coordinates, or real saved progress appear.
+- [ ] Useful alt text is approved for every image.
+- [ ] Export the `larriverse-gallery-approval` JSON.
 
-- [ ] Desktop and mobile images approved for all eight cabinets.
-- [ ] No personal names, family notes, location prompts, or real saved progress appear.
-- [ ] Approved images are compressed and placed under `docs/screenshots/`.
-- [ ] Gallery links and alt text are added to `docs/CABINET-GALLERY.md`.
+## Final human approval
+
+- [ ] Export a complete desktop QA report from `qa/index.html`.
+- [ ] Export a complete QA report from one physical phone—not only mobile emulation.
+- [ ] Import both QA reports and the gallery approval into `qa/release-approval.html`.
+- [ ] Complete the sound, touch, gameplay, accessibility, backup, privacy, and release-decision confirmations.
+- [ ] Export the final approval JSON.
+- [ ] Commit it as `docs/release-approval.json` with the exact 18 approved images under `docs/screenshots/`.
 
 ## Release decision
 
-Release only after the unchecked manual items above have been tested on a desktop browser and one physical mobile browser. GitHub Actions confirms structural, syntax, content, privacy, automated Chromium, safety, release-metadata, and tag-publishing contracts; it does not replace hands-on play testing.
+Release only after every unchecked manual item above is complete. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
