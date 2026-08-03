@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#073b34">
+  <meta name="description" content="Chill Brain — gentle, non-competitive calm and focus practice inside LarriVerse Arcade.">
+  <title>Chill Brain · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="back-link" href="../../index.html">← Arcade</a>
+    <div class="brand"><span>🌿</span><div><strong>Chill Brain</strong><small>Arc & Bloom Forge</small></div></div>
+    <button class="icon-button" id="settingsButton" aria-haspopup="dialog" aria-controls="settingsDialog" title="Accessibility and parent controls">⚙️</button>
+  </header>
+
+  <main>
+    <section id="setupView" class="view" hidden>
+      <div class="setup-shell">
+        <div class="setup-progress" id="setupProgress" aria-label="Onboarding progress"></div>
+        <div id="setupBody"></div>
+      </div>
+    </section>
+
+    <section id="homeView" class="view" hidden>
+      <div class="hero-card">
+        <div>
+          <p class="eyebrow">Gentle practice · no losing</p>
+          <h1>Welcome back, <span id="guideName">Explorer</span>.</h1>
+          <p>Choose a calm mission. Pause, skip, or stop whenever you need—trying counts here.</p>
+        </div>
+        <div class="guide-orbit"><span id="guideAvatar">🌱</span><i></i></div>
+      </div>
+
+      <section class="profile-row" aria-label="LarriVerse profile">
+        <div><span id="sharedAvatar">🌟</span><b id="sharedLevel">Level 1</b><small id="sharedKc">0 KC</small></div>
+        <div><b id="sessionCount">0</b><small>sessions</small></div>
+        <div><b id="minuteCount">0</b><small>practice minutes</small></div>
+        <div><b id="streakCount">0</b><small>day rhythm</small></div>
+      </section>
+
+      <section class="notice-card">
+        <span>🔒</span>
+        <div><strong>Private by design</strong><p>Names, ages, settings, and progress stay in this browser. Optional ambience is off by default and is simple generated sound—not Hemi-Sync audio or medical treatment.</p></div>
+      </section>
+
+      <section class="section-head">
+        <div><p class="eyebrow">Pick a journey</p><h2>Calm missions</h2></div>
+        <button class="soft-button" id="editGuideButton">Edit guide</button>
+      </section>
+      <div class="mission-grid" id="missionGrid"></div>
+
+      <section class="section-head">
+        <div><p class="eyebrow">Practice progress</p><h2>Brain skills</h2></div>
+        <small>Play progress, not a health measurement</small>
+      </section>
+      <div class="skills-grid" id="skillsGrid"></div>
+
+      <section class="section-head">
+        <div><p class="eyebrow">Gentle milestones</p><h2>Badge garden</h2></div>
+      </section>
+      <div class="badge-grid" id="badgeGrid"></div>
+    </section>
+
+    <section id="sessionView" class="view session-view" hidden>
+      <div class="session-top">
+        <button class="soft-button" id="leaveSession">← Leave gently</button>
+        <span id="sessionWorld">Still Forest</span>
+        <button class="soft-button" id="pauseSession">Pause</button>
+      </div>
+      <div class="session-stage" id="sessionStage">
+        <div class="breath-orb" id="breathOrb"><span id="sessionIcon">🌳</span></div>
+        <p class="phase-label" id="phaseLabel">Ready</p>
+        <h2 id="sessionName">Leaf Breathing</h2>
+        <p class="session-cue" id="sessionCue">Settle in and choose Start.</p>
+        <div class="timer" id="sessionTimer">03:00</div>
+        <div class="session-progress"><div id="sessionProgressFill"></div></div>
+        <ol class="step-list" id="sessionSteps"></ol>
+        <div class="session-actions">
+          <button class="primary" id="startSession">Start mission</button>
+          <button class="secondary" id="completeEarly" hidden>Finish gently</button>
+        </div>
+        <p class="session-note">Skip breath holds or stop if you feel uncomfortable. This is a relaxation game, not medical care.</p>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="settingsDialog" class="dialog-card">
+    <form method="dialog">
+      <header><div><p class="eyebrow">Parent & accessibility controls</p><h2>Make it comfortable</h2></div><button class="icon-button" value="cancel" aria-label="Close settings">×</button></header>
+      <label class="toggle-row"><span><b>Simple ambience</b><small>Off by default · generated locally</small></span><input id="soundToggle" type="checkbox"></label>
+      <label class="toggle-row"><span><b>Reduced motion</b><small>Stops pulsing and drifting effects</small></span><input id="motionToggle" type="checkbox"></label>
+      <label class="toggle-row"><span><b>High contrast</b><small>Stronger edges and text contrast</small></span><input id="contrastToggle" type="checkbox"></label>
+      <label class="toggle-row"><span><b>Large text</b><small>Increases reading size</small></span><input id="textToggle" type="checkbox"></label>
+      <label class="select-row"><span><b>Session mode</b><small>Preview is useful for testing</small></span><select id="durationMode"><option value="source">Source duration</option><option value="preview">45-second preview</option></select></label>
+      <p class="dialog-note">The recovered mockup references Hemi-Sync. LarriVerse does not include that branded audio. “Brain Tune” here means optional simple ambience only.</p>
+      <button class="primary" value="done">Save controls</button>
+    </form>
+  </dialog>
+
+  <dialog id="resultDialog" class="dialog-card result-card">
+    <div>
+      <span class="result-icon" id="resultIcon">🌿</span>
+      <p class="eyebrow">Mission complete</p>
+      <h2 id="resultTitle">You showed up.</h2>
+      <p id="resultText"></p>
+      <div class="reward-strip"><b id="resultXp">+0 XP</b><b id="resultKc">+0 KC</b></div>
+      <div id="newBadges" class="new-badges"></div>
+      <button class="primary" id="resultHome">Back to mission garden</button>
+    </div>
+  </dialog>
+
+  <noscript>This cabinet needs JavaScript enabled.</noscript>
+  <script src="../../assets/arcade-sdk.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
