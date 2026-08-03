@@ -1,0 +1,14 @@
+{
+  "name": "larriverse-arcade",
+  "version": "0.2.0",
+  "private": true,
+  "description": "A shared arcade lobby for Larrina's learning games and creative prototypes.",
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
