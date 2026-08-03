@@ -1,0 +1,98 @@
+[
+  {
+    "id": "kidscoin-family",
+    "title": "KidsCoin Family App",
+    "icon": "🪙",
+    "category": "Learning & rewards",
+    "desc": "Family profiles, chores, lessons, wallet skills, rewards, and the 3-6-9 earning loop.",
+    "featured": true,
+    "status": "Recovered prototype",
+    "available": false,
+    "href": "games/kidscoin-family/index.html",
+    "source": "KidsCoin_Family_App (5).html"
+  },
+  {
+    "id": "brain-sweat-expanded",
+    "title": "Brain Sweat Expanded",
+    "icon": "🧠",
+    "category": "Life skills",
+    "desc": "A bright, hands-on learning world for practical skills, choices, tools, and confidence.",
+    "featured": true,
+    "status": "Recovered prototype",
+    "available": false,
+    "href": "games/brain-sweat-expanded/index.html",
+    "source": "brain_sweat_full_expanded.html"
+  },
+  {
+    "id": "brain-sweat-life-skills",
+    "title": "Brain Sweat Life Skills",
+    "icon": "🛠️",
+    "category": "Life skills",
+    "desc": "Quiz-driven lessons across real-world skill worlds with KZC rewards.",
+    "featured": false,
+    "status": "Recovered prototype",
+    "available": false,
+    "href": "games/brain-sweat-life-skills/index.html",
+    "source": "brain_sweat_life_skills_expansion.html"
+  },
+  {
+    "id": "bubble-resonance-phi369",
+    "title": "Bubble Resonance Φ369",
+    "icon": "🫧",
+    "category": "Arcade",
+    "desc": "A precision bubble game driven by resonance, patterns, and the PHI/3-6-9 system.",
+    "featured": true,
+    "status": "Recovered prototype",
+    "available": false,
+    "href": "games/bubble-resonance-phi369/index.html",
+    "source": "bubble_resonance_phi369_v3.html"
+  },
+  {
+    "id": "chill-brain-rewards",
+    "title": "Chill Brain Rewards",
+    "icon": "🌿",
+    "category": "Calm & focus",
+    "desc": "A rewards and onboarding prototype for calm practice, breathing, and guided missions.",
+    "featured": false,
+    "status": "Recovered prototype",
+    "available": false,
+    "href": "games/chill-brain-rewards/index.html",
+    "source": "chill_brain_rewards_onboarding.html"
+  },
+  {
+    "id": "creature-catcher",
+    "title": "Creature Catcher",
+    "icon": "🦊",
+    "category": "Learning arcade",
+    "desc": "Catch creatures, answer learning prompts, and build a field guide.",
+    "featured": true,
+    "status": "Recovered prototype",
+    "available": false,
+    "href": "games/creature-catcher/index.html",
+    "source": "creature-catcher.html"
+  },
+  {
+    "id": "road-trip-quest",
+    "title": "Road Trip Quest",
+    "icon": "🚗",
+    "category": "Adventure",
+    "desc": "A road-trip arcade adventure with stops, challenges, fuel, XP, and collectibles.",
+    "featured": true,
+    "status": "Recovered prototype",
+    "available": false,
+    "href": "games/road-trip-quest/index.html",
+    "source": "road-trip-quest (2).html"
+  },
+  {
+    "id": "road-trip-quest-gps",
+    "title": "Road Trip Quest GPS",
+    "icon": "🗺️",
+    "category": "Adventure",
+    "desc": "A map-based companion prototype using GPS and nearby points of interest.",
+    "featured": false,
+    "status": "Recovered prototype",
+    "available": false,
+    "href": "games/road-trip-quest-gps/index.html",
+    "source": "road-trip-quest-gps.html"
+  }
+]
