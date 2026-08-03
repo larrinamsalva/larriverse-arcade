@@ -40,12 +40,13 @@
     "title": "Bubble Resonance Φ369",
     "icon": "🫧",
     "category": "Arcade",
-    "desc": "A precision bubble game driven by resonance, patterns, and the PHI/3-6-9 system.",
+    "desc": "Bank precision shots, match six frequency colors, build resonance, and raise Tφ coherence through PHI-chain scoring.",
     "featured": true,
-    "status": "Recovered prototype",
-    "available": false,
+    "status": "Playable alpha",
+    "available": true,
     "href": "games/bubble-resonance-phi369/index.html",
-    "source": "bubble_resonance_phi369_v3.html"
+    "source": "bubble_resonance_phi369_v3.html",
+    "integration": "arcade-sdk-v1"
   },
   {
     "id": "chill-brain-rewards",
