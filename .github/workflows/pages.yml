@@ -31,6 +31,8 @@ jobs:
         run: npm run validate
 
       - name: Build allowlisted static preview and deployment identity
+        env:
+          PAGES_BUILDER: node scripts/build-pages-site.mjs
         run: npm run build:pages
 
       - name: Verify public artifact boundary
