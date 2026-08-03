@@ -23,13 +23,17 @@
       <h1>Step into the<br><em>LarriVerse Arcade</em></h1>
       <p class="lede">Learning games, road-trip quests, calm worlds, rewards, creatures, bubbles, and whatever brilliant weirdness Larrina dreams up next.</p>
       <div class="hero-actions"><button class="primary" id="randomGame">🎲 Surprise me</button><a class="secondary" href="#games">Browse cabinets ↓</a></div>
-      <div class="hero-stats"><span><b id="gameCount">8</b> recovered prototypes</span><span><b>2</b> source labs</span><span><b>∞</b> room to grow</span></div>
+      <div class="hero-stats">
+        <span><b id="gameCount">8</b> recovered concepts</span>
+        <span><b id="playableCount">1</b> live cabinet</span>
+        <span id="profileStat"><b>🌟</b> Player One · Level 1</span>
+      </div>
     </div>
     <div class="cabinet" aria-label="Featured arcade cabinet illustration">
       <div class="cabinet-top">LARRIVERSE</div>
-      <div class="screen"><span id="screenIcon">🫧</span><b id="screenTitle">Bubble Resonance</b><small>PRESS START</small></div>
+      <div class="screen"><span id="screenIcon">🦊</span><b id="screenTitle">Creature Catcher</b><small>PRESS START</small></div>
       <div class="controls"><i></i><span></span><span></span></div>
-      <div class="coin-slot">25¢ IN IMAGINARY MONEY</div>
+      <div class="coin-slot">3 · 6 · 9 POWERED</div>
     </div>
   </header>
   <main>
@@ -48,6 +52,7 @@
     </section>
   </main>
   <footer><b>LarriVerse Arcade</b><span>Built with heart, curiosity, and an unreasonable number of good ideas.</span><a href="https://github.com/larrinamsalva/larriverse-arcade">GitHub ↗</a></footer>
+  <script src="assets/arcade-sdk.js"></script>
   <script src="assets/arcade.js"></script>
 </body>
 </html>
