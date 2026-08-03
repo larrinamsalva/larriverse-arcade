@@ -11,8 +11,8 @@ const release = JSON.parse(releaseText);
 const files = ['index.html', 'release.json', 'LICENSE'];
 const directories = ['assets', 'games', 'qa', 'docs'];
 const forbidden = ['.git', '.github', 'node_modules', 'scripts', 'tests', 'artifacts', 'playwright-report', 'test-results'];
-const sourceCommit = process.env.GITHUB_SHA || process.env.LARRIVERSE_SOURCE_SHA || 'local-build';
 const runningInActions = process.env.GITHUB_ACTIONS === 'true';
+const sourceCommit = process.env.GITHUB_SHA || process.env.LARRIVERSE_SOURCE_SHA || '0'.repeat(40);
 
 if (runningInActions && !/^[a-f0-9]{40}$/i.test(sourceCommit)) {
   throw new Error('GitHub Pages build requires a full source commit SHA');
