@@ -17,7 +17,7 @@ The browser workflow also captures the arcade lobby in both viewports, producing
 
 ## Approval rules
 
-Use only clean demo data. Reject any image showing personal profile names, family messages, private progress, coordinates, location permission prompts, or real nearby-place data. Road Trip Quest GPS must remain in Demo Mode. Check that controls and key safety messages are readable and that alt text describes the visible interface rather than repeating a filename.
+Use only clean demo data. Reject any image showing personal profile names, family messages, private progress, coordinates, location permission prompts, or real nearby-place data. **Road Trip Quest GPS must be captured in Demo Mode.** Check that controls and key safety messages are readable and that alt text describes the visible interface rather than repeating a filename.
 
 Approved images are eventually committed under `docs/screenshots/<project>/<subject>.png` together with `docs/release-approval.json`. Until those exact files and hashes are present, this document intentionally links to the live cabinets rather than claiming a finished public gallery.
 
