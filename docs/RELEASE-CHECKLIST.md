@@ -2,7 +2,7 @@
 
 This checklist covers the complete eight-cabinet recovered browser collection.
 
-Open `qa/index.html` from the deployed site to record device-local route checks, manual cabinet results, browser notes, and an exportable QA report. The console does not upload results or convert a reachable route into a gameplay pass.
+Open `qa/index.html` from the deployed site to record device-local route checks, manual cabinet results, browser notes, and an exportable QA report. The console does not upload results or convert a reachable route into a gameplay pass. Desktop and physical-phone progress are stored as separate local records.
 
 ## Required automated checks
 
@@ -26,8 +26,12 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Browser evidence is captured without granting location permission.
 - [x] Successful Browser QA builds an offline gallery review with 18 hashed images.
 - [x] The tag workflow requires a committed final approval JSON and exact approved image hashes.
+- [x] Guided QA exports schema-v2 desktop and schema-v2 physical-phone reports with separate local records.
+- [x] The physical-phone report requires touch capability and six completed device-wide checks.
+- [x] The GitHub Pages workflow validates `main` and publishes only the allowlisted static arcade files.
+- [x] The Pages build excludes the final release approval record and private evidence files.
 
-Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md) and [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md) for the exact boundary.
+Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md), [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md), and [`DEVICE-QA.md`](DEVICE-QA.md) for the exact boundary.
 
 ## Cabinet launch pass
 
@@ -68,15 +72,22 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 - [ ] Useful alt text is approved for every image.
 - [ ] Export the `larriverse-gallery-approval` JSON.
 
+## Guided device QA
+
+- [ ] Confirm **Deploy LarriVerse Arcade** completed successfully for the merged `main` commit.
+- [ ] Open the published QA route over HTTPS on both devices.
+- [ ] Open the guided QA route on the actual desktop/laptop and export a complete schema-v2 desktop report.
+- [ ] Send the QA link to one physical phone and export a complete schema-v2 physical-phone report.
+- [ ] Confirm the phone report names the real phone, reports touch capability, and is not desktop emulation.
+- [ ] Confirm both reports contain eight reachable routes, eight cabinet passes, and six device-wide checks.
+
 ## Final human approval
 
-- [ ] Export a complete desktop QA report from `qa/index.html`.
-- [ ] Export a complete QA report from one physical phone—not only mobile emulation.
-- [ ] Import both QA reports and the gallery approval into `qa/release-approval.html`.
+- [ ] Import both device QA reports and the gallery approval into `qa/release-approval.html`.
 - [ ] Complete the sound, touch, gameplay, accessibility, backup, privacy, and release-decision confirmations.
 - [ ] Export the final approval JSON.
 - [ ] Commit it as `docs/release-approval.json` with the exact 18 approved images under `docs/screenshots/`.
 
 ## Release decision
 
-**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, approval-record, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
+**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, approval-record, device-label, static-preview, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
