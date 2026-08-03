@@ -35,6 +35,23 @@ Twelve reviewed lessons are playable at launch with 60 questions, saved personal
 
 The recovered source contains 239 readable questions and one malformed media-literacy question. The malformed item is excluded and documented instead of being silently rewritten.
 
+### Brain Sweat Expanded — Alpha
+
+The hands-on activity hub preserves the recovered prototype's original 14-world skill map, three guides, four daily quest slots, skill tree, parent report, and beginner/intermediate/advanced organization.
+
+The source contains **219 activities** across eight tool-sequence worlds, four action-choice worlds, a 24-transaction checkbook simulation, and twelve voltage circuit challenges. This reviewed release publishes **69 activities across six worlds**:
+
+- Checkbook & Balancing — all three source tiers
+- Basic Coding — all three source tiers
+- Landscaping — beginner and intermediate
+- Retail & Cashier — beginner and intermediate
+- Community Service — beginner
+- Cooking & Nutrition — beginner
+
+Plumbing, voltage, caregiving, welding, roofing, HVAC, emergency skills, farming and animals, and higher-risk tiers remain visible as **Review queued**. Their source names and counts stay in the audit, but their actionable payloads are not shipped to the playable interface.
+
+The cabinet supports source-style tool-order puzzles, marked action choices, ledger classification, three selectable guides, safe daily quests, device-local progress, reviewed-world completion bonuses, and a parent-facing source audit. Progress represents game practice only. It is not a license, job qualification, safety clearance, medical assessment, or permission to perform hazardous work.
+
 ### Chill Brain Rewards — Alpha
 
 The first non-competitive calm-and-focus cabinet. It turns the recovered rewards and onboarding mockup into a playable local experience while preserving its terminology and structure:
@@ -97,15 +114,17 @@ const result = LarriVerseArcade.award('game-id', {
   score: 90,
   completed: true,
   metrics: {
-    sessionsCompleted: 1,
-    mindfulSeconds: 180
+    activitiesCompleted: 1,
+    practiceRuns: 1
   }
 });
 ```
 
 Arcade SDK v2 keeps old v1 saves compatible and adds validated, cumulative per-game metrics. The SDK stores data in the browser with `localStorage`. No account, cloud database, real currency, or blockchain is involved.
 
-Brain Sweat separates its content from the quiz engine through a JSON manifest and one file per world. This lets later content reviews unlock or revise lessons without rebuilding the interface.
+Brain Sweat Life Skills separates lessons from its quiz engine through a JSON manifest and one file per world. This lets later content reviews unlock or revise lessons without rebuilding the interface.
+
+Brain Sweat Expanded uses a small `activities.json` source manifest and four world bundles. `loader.js` combines those bundles in the original source order before the activity engine starts. Review-queued tiers contain source counts and review explanations but no actionable activity payloads.
 
 Chill Brain separates source-grounded profiles, missions, skills, badges, privacy rules, and audio boundaries into `sessions.json`. The interface reads that manifest at runtime, and CI verifies its source counts and safety defaults.
 
@@ -126,8 +145,10 @@ It checks:
 - local CSS and JavaScript dependencies referenced by playable games
 - shared SDK load order before cabinet code
 - JavaScript syntax for the lobby, shared SDK, and playable cabinet scripts
-- structured learning manifests, world and lesson IDs, review states, question schemas, answer indexes, and source counts
+- Brain Sweat Life Skills manifests, world and lesson IDs, review states, question schemas, answer indexes, and source counts
 - queued lessons contain no unpublished questions and explain why review is required
+- Brain Sweat Expanded's 14 worlds, 219 source activities, 69 reviewed activities, tier counts, tool references, choice answers, ledger transactions, and empty queued payloads
+- Brain Sweat Expanded loads SDK, content loader, and game engine in that order and keeps the real-world competence boundary explicit
 - Chill Brain's six onboarding steps, four paths, eight avatars, four missions, six skills, and twelve badges
 - Chill Brain sound defaults off, profiles remain device-local, and the Hemi-Sync / medical-claim boundary stays explicit
 - lobby integration and playable-cabinet counts
@@ -148,6 +169,7 @@ The workflow in `.github/workflows/pages.yml` deploys the repository root whenev
 - Clearly separate creative themes from medical or scientific claims.
 - Keep high-stakes learning material behind visible review gates until qualified review is complete.
 - Treat wellness progress as game activity, never as diagnosis or health measurement.
+- Treat hands-on progress as game practice, never as competence, certification, or permission to perform hazardous work.
 - Keep optional audio off by default and document branded or therapeutic-source references without imitating them.
 - Document malformed or excluded source content instead of silently changing it.
 - Parent-review child-facing prototypes before public release.
