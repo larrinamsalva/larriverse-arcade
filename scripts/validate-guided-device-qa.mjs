@@ -20,20 +20,29 @@ const required = [
   'qa/index.html',
   'qa/qa.css',
   'qa/qa.js',
+  'qa/evidence-contract.js',
   'qa/release-approval.html',
   'qa/release-approval.js',
   'scripts/build-pages-site.mjs',
   'scripts/verify-release-approval.mjs'
 ];
 for (const file of required) assert(exists(file), `missing ${file}`);
-for (const file of ['qa/qa.js', 'qa/release-approval.js', 'scripts/build-pages-site.mjs', 'scripts/verify-release-approval.mjs', 'scripts/validate-guided-device-qa.mjs']) {
-  const result = execFileSync(process.execPath, ['--check', path.join(root, file)], { stdio: 'pipe' });
-  assert(result !== null, `${file} syntax passes`);
+for (const file of [
+  'qa/qa.js',
+  'qa/evidence-contract.js',
+  'qa/release-approval.js',
+  'scripts/build-pages-site.mjs',
+  'scripts/verify-release-approval.mjs',
+  'scripts/validate-guided-device-qa.mjs'
+]) {
+  execFileSync(process.execPath, ['--check', path.join(root, file)], { stdio: 'pipe' });
+  assert(true, `${file} syntax passes`);
 }
 
 const qaHtml = read('qa/index.html');
 const qaCss = read('qa/qa.css');
 const qaJs = read('qa/qa.js');
+const contract = read('qa/evidence-contract.js');
 const approvalHtml = read('qa/release-approval.html');
 const approvalJs = read('qa/release-approval.js');
 const verifier = read('scripts/verify-release-approval.mjs');
@@ -50,12 +59,9 @@ assert(qaHtml.includes('value="physical-phone"'), 'physical-phone option missing
 assert(qaHtml.includes('id="deviceName"'), 'device name field missing');
 assert(qaHtml.includes('id="shareTestLink"'), 'test-link handoff missing');
 assert(qaHtml.includes('id="exportReport"') && qaHtml.includes('disabled'), 'report export must begin blocked');
-assert(qaHtml.includes('data-device-check="controls"'), 'controls check missing');
-assert(qaHtml.includes('data-device-check="accessibility"'), 'accessibility check missing');
-assert(qaHtml.includes('data-device-check="backupRestore"'), 'backup check missing');
-assert(qaHtml.includes('data-device-check="privacy"'), 'privacy check missing');
-assert(qaHtml.includes('data-device-check="sound"'), 'sound check missing');
-assert(qaHtml.includes('data-device-check="deviceComfort"'), 'device comfort check missing');
+for (const key of ['controls', 'accessibility', 'backupRestore', 'privacy', 'sound', 'deviceComfort']) {
+  assert(qaHtml.includes(`data-device-check="${key}"`), `${key} device check missing`);
+}
 assert(qaHtml.includes('No uploads. No screenshots. No location request.'), 'visible QA privacy boundary missing');
 assert(qaHtml.includes('Route checks do not count as gameplay passes') || qaJs.includes('Route checks do not count as gameplay passes.'), 'route/manual boundary missing');
 assert(qaHtml.includes('DEVICE-QA.md'), 'device guide link missing');
@@ -67,8 +73,9 @@ assert(qaJs.includes("const DEVICE_CLASSES = ['desktop', 'physical-phone']"), 'd
 assert(qaJs.includes('schemaVersion: 2'), 'QA report schema v2 missing');
 assert(qaJs.includes('deviceClass: profile.deviceClass'), 'QA report device class missing');
 assert(qaJs.includes('deviceName: profile.deviceName.trim()'), 'QA report device name missing');
-assert(qaJs.includes('deviceChecks: { ...profile.deviceChecks }'), 'QA report device checks missing');
+assert(qaJs.includes('environment: environmentDetails()'), 'QA environment metadata missing');
 assert(qaJs.includes('maxTouchPoints: Number(navigator.maxTouchPoints)'), 'touch metadata missing');
+assert(qaJs.includes('deviceChecks: { ...profile.deviceChecks }'), 'QA report device checks missing');
 assert(qaJs.includes('locationGrantedDuringEvidence: false'), 'location boundary missing from report');
 assert(qaJs.includes('profile.deviceClass') && qaJs.includes('state.profiles'), 'separate device profiles missing');
 assert(qaJs.includes('reportReady()'), 'report readiness gate missing');
@@ -78,16 +85,27 @@ assert(qaJs.includes('navigator.share') && qaJs.includes('navigator.clipboard.wr
 assert(!/geolocation|watchPosition|sendBeacon|XMLHttpRequest|WebSocket/i.test(qaJs), 'QA page must not request location or upload data');
 assert(!/https?:\/\//i.test(qaHtml + qaCss + qaJs), 'QA page must not load external resources');
 
-assert(approvalHtml.includes('schema-v2 desktop report'), 'approval console must describe v2 evidence');
+assert(contract.includes('window.LarriVerseEvidence'), 'shared evidence contract missing');
+assert(contract.includes('value.deviceClass === expectedDeviceClass'), 'shared contract must validate deviceClass');
+assert(contract.includes('value.environment.maxTouchPoints'), 'shared contract must validate canonical touch metadata');
+assert(contract.includes('REQUIRED_DEVICE_CHECKS'), 'shared contract device checks missing');
+assert(contract.includes("result.route === 'reachable'"), 'shared contract route pass missing');
+assert(contract.includes("result.result === 'pass'"), 'shared contract gameplay pass missing');
+assert(contract.includes('desktop and phone evidence files must be different'), 'shared contract distinct evidence gate missing');
+assert(!contract.includes('deviceRole'), 'shared contract must reject obsolete deviceRole design');
+assert(!/geolocation|watchPosition|sendBeacon|XMLHttpRequest|WebSocket/i.test(contract), 'shared contract must not request location or upload data');
+
+assert(approvalHtml.includes('schema-v2 desktop report') || approvalHtml.includes('Desktop QA report'), 'approval console must describe desktop evidence');
 assert(approvalHtml.includes('physical-phone'), 'approval console must identify physical-phone evidence');
-assert(approvalJs.includes('value.schemaVersion !== 2'), 'approval must require QA schema v2');
-assert(approvalJs.includes('expectedDeviceClass'), 'approval must check expected device class');
-assert(approvalJs.includes("kind === 'desktop' ? 'desktop' : 'physical-phone'"), 'desktop/phone import roles missing');
-assert(approvalJs.includes('environment.maxTouchPoints'), 'phone touch check missing');
-assert(approvalJs.includes('REQUIRED_DEVICE_CHECKS.every'), 'approval must require device-wide checks');
-assert(approvalJs.includes('hashes.desktop !== hashes.mobile'), 'duplicate desktop/phone evidence blocked');
-assert(approvalJs.includes('device === evidence.mobile.deviceName'), 'physical device identity agreement missing');
+assert(approvalHtml.includes('Release Room evidence bundle'), 'approval console bundle input missing');
+assert(approvalHtml.indexOf('evidence-contract.js') < approvalHtml.indexOf('release-approval.js'), 'approval must load shared contract first');
+assert(approvalJs.includes('Contract.readEvidenceFile'), 'approval must validate individual files through shared contract');
+assert(approvalJs.includes('Contract.readBundleFile'), 'approval must validate bundles through shared contract');
+assert(approvalJs.includes('items.physicalPhone.value.deviceName'), 'approval phone identity agreement missing');
+assert(approvalJs.includes('items.desktop.sha256'), 'approval desktop evidence hash missing');
+assert(approvalJs.includes('items.physicalPhone.sha256'), 'approval phone evidence hash missing');
 assert(approvalJs.includes('qaSchemaVersion: 2'), 'final approval must record QA schema version');
+assert(approvalJs.includes("schema: 'larriverse-release-approval'"), 'final approval schema missing');
 assert(!/geolocation|watchPosition|sendBeacon|XMLHttpRequest|WebSocket/i.test(approvalJs), 'approval console must not request location or upload data');
 
 assert(verifier.includes("approval.qaSchemaVersion !== 2"), 'repository verifier must require QA schema v2');
@@ -115,7 +133,9 @@ assert(builder.includes("fs.rmSync(path.join(out, 'docs', 'release-approval.json
 assert(builder.includes("fs.writeFileSync(path.join(out, '.nojekyll')"), 'nojekyll marker missing');
 assert(builder.includes('Forbidden preview path published'), 'preview forbidden-path guard missing');
 assert(builder.includes('private evidence or credential file'), 'preview credential guard missing');
-assert(!builder.includes("fs.cpSync(root, out"), 'builder must not copy the whole repository');
+assert(builder.includes("'qa/evidence-contract.js'"), 'preview shared contract missing');
+assert(builder.includes("'qa/release-room.html'"), 'preview Release Room missing');
+assert(!builder.includes('fs.cpSync(root, out'), 'builder must not copy the whole repository');
 
 assert(guide.includes('Settings') && guide.includes('Pages') && guide.includes('GitHub Actions'), 'one-time Pages setup missing');
 assert(guide.includes('workflow_dispatch') && guide.includes('pull-request branches are never published'), 'deployment boundary missing');
@@ -123,6 +143,7 @@ assert(guide.includes('https://larrinamsalva.github.io/larriverse-arcade/qa/'), 
 assert(guide.includes('touch-capable') && guide.includes('desktop') && guide.includes('physical-phone'), 'device evidence distinction missing');
 assert(guide.includes('upload nothing') && guide.includes('request no location'), 'device guide privacy boundary missing');
 assert(checklist.includes('schema-v2 desktop') && checklist.includes('schema-v2 physical-phone'), 'release checklist must require labeled device reports');
+assert(checklist.includes('shared schema-v2 evidence contract'), 'release checklist must document shared contract');
 
 assert(pkg.scripts.validate.includes('validate-guided-device-qa.mjs'), 'normal validation must include guided QA audit');
 assert(pkg.scripts['build:pages'] === 'node scripts/build-pages-site.mjs', 'Pages build script missing');
@@ -131,6 +152,8 @@ assert(JSON.stringify(release.deviceQa?.requiredDeviceClasses) === JSON.stringif
 assert(release.deviceQa?.separateLocalRecords === true, 'separate local records flag missing');
 assert(release.deviceQa?.physicalPhoneTouchRequired === true, 'phone touch requirement missing');
 assert(release.deviceQa?.uploadsData === false && release.deviceQa?.requestsLocation === false, 'device QA privacy flags missing');
+assert(release.evidenceContract?.deviceClassField === 'deviceClass', 'release canonical device field missing');
+assert(release.evidenceContract?.touchField === 'environment.maxTouchPoints', 'release canonical touch field missing');
 assert(release.preview?.workflow === '.github/workflows/pages.yml', 'preview workflow metadata missing');
 assert(release.preview?.manualDeployment === false && release.preview?.deployOnMain === true, 'preview main deployment metadata missing');
 assert(release.preview?.qaUrl === 'https://larrinamsalva.github.io/larriverse-arcade/qa/', 'preview QA URL mismatch');
