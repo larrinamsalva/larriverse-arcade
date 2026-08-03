@@ -1,0 +1,30 @@
+name: Validate LarriVerse Arcade
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check shared JavaScript syntax
+        run: |
+          node --check assets/arcade-sdk.js
+          node --check assets/arcade.js
+      - name: Validate catalog and playable paths
+        run: npm run validate
