@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071525">
+  <meta name="description" content="KidsCoin Family — private, parent-controlled chores, learning, ledger skills and fictional family rewards.">
+  <title>KidsCoin Family · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+  <div class="glow glow-a" aria-hidden="true"></div><div class="glow glow-b" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="back-link" href="../../index.html">← Arcade</a>
+    <div class="brand"><span>🪙</span><div><strong>KidsCoin Family</strong><small>3·6·9 reward lab</small></div></div>
+    <div class="top-actions"><button class="soft" id="profileButton">🦁 Explorer ▾</button><button class="parent" id="parentButton">🔐 Parent</button></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div><p class="eyebrow">Private family practice · no real money</p><h1>Earn. Learn. Plan. <em>Grow.</em></h1><p>Complete family-approved work, practice simple ledger skills, and request rewards through a parent-controlled queue.</p></div>
+      <div class="coin-orbit" aria-hidden="true"><span>KC</span><i></i><i></i></div>
+    </section>
+
+    <section class="boundary"><span>🔒</span><div><strong>Family KC is fictional.</strong><p>No cryptocurrency, blockchain, market price, staking, purchases, ads, public profiles or cloud accounts. Data stays in this browser. The parent PIN is a convenience lock, not strong account security.</p></div></section>
+
+    <section class="profile-summary">
+      <article class="identity"><span id="activeAvatar">🦁</span><div><small>Active explorer</small><h2 id="activeName">Explorer</h2><p id="activeLevel">Level 1</p></div></article>
+      <article><b id="familyBalance">0</b><span>Family KC</span></article>
+      <article><b id="streakValue">0</b><span>day rhythm</span></article>
+      <article><b id="pendingValue">0</b><span>waiting on parent</span></article>
+      <article><b id="sharedValue">0</b><span>shared arcade KC</span></article>
+    </section>
+
+    <nav class="tabs" aria-label="KidsCoin sections">
+      <button class="active" data-tab="home">Home</button><button data-tab="tasks">Earn</button><button data-tab="learn">Learn</button><button data-tab="ledger">Ledger</button><button data-tab="rewards">Rewards</button><button data-tab="notes">Notes</button>
+    </nav>
+
+    <section id="view" class="view" aria-live="polite"><p class="loading">Loading the family ledger…</p></section>
+  </main>
+
+  <dialog id="profileDialog" class="dialog-card"><form method="dialog"><header><div><p class="eyebrow">Device-local profiles</p><h2>Choose an explorer</h2></div><button class="icon" value="cancel" aria-label="Close">×</button></header><div id="profileList" class="profile-list"></div><p class="muted">Profiles can be added or edited inside Parent Mode.</p></form></dialog>
+
+  <dialog id="lessonDialog" class="dialog-card"><div><header><div><p class="eyebrow">Wallet skill</p><h2 id="lessonTitle">Lesson</h2></div><button class="icon" id="closeLesson" aria-label="Close">×</button></header><p id="lessonSummary" class="lesson-summary"></p><h3 id="lessonQuestion"></h3><div id="lessonOptions" class="option-list"></div><p id="lessonFeedback" class="feedback" aria-live="polite"></p></div></dialog>
+
+  <dialog id="parentGate" class="dialog-card"><form id="pinForm"><header><div><p class="eyebrow">Parent Mode</p><h2 id="pinTitle">Enter parent PIN</h2></div><button class="icon" type="button" id="closePin">×</button></header><p id="pinHelp" class="muted">Four digits. This is only a local convenience lock.</p><input id="pinInput" class="pin-input" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" aria-label="Four digit parent PIN"><p id="pinError" class="feedback"></p><button class="primary" type="submit">Continue</button></form></dialog>
+
+  <dialog id="parentDialog" class="parent-dialog"><div class="parent-shell"><header><div><p class="eyebrow">Parent-controlled family space</p><h2>Parent Mode</h2></div><button class="icon" id="closeParent" aria-label="Close">×</button></header><nav class="parent-tabs"><button class="active" data-parent-tab="approvals">Approvals</button><button data-parent-tab="profiles">Profiles</button><button data-parent-tab="tasks">Tasks</button><button data-parent-tab="rewards">Rewards</button><button data-parent-tab="bonus">Bonus & grace</button><button data-parent-tab="privacy">Privacy</button></nav><section id="parentView" class="parent-view"></section></div></dialog>
+
+  <dialog id="resultDialog" class="dialog-card result"><div><span id="resultIcon">✨</span><p class="eyebrow">Family update</p><h2 id="resultTitle">Done</h2><p id="resultText"></p><button class="primary" id="resultClose">Back to KidsCoin</button></div></dialog>
+
+  <noscript>This cabinet needs JavaScript enabled.</noscript>
+  <script src="../../assets/arcade-sdk.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
