@@ -1,0 +1,42 @@
+name: Publish LarriVerse Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate complete arcade
+        run: npm run validate
+
+      - name: Verify tag and release manifest
+        shell: bash
+        run: |
+          PACKAGE_VERSION="$(node -p "JSON.parse(require('fs').readFileSync('package.json','utf8')).version")"
+          MANIFEST_VERSION="$(node -p "JSON.parse(require('fs').readFileSync('release.json','utf8')).version")"
+          EXPECTED_TAG="v${PACKAGE_VERSION}"
+          test "$GITHUB_REF_NAME" = "$EXPECTED_TAG"
+          test "$PACKAGE_VERSION" = "$MANIFEST_VERSION"
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "LarriVerse Arcade $GITHUB_REF_NAME" \
+            --notes-file docs/RELEASE-NOTES-1.0.0.md \
+            --verify-tag

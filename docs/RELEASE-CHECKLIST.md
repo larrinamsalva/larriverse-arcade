@@ -2,6 +2,8 @@
 
 This checklist covers the complete eight-cabinet recovered browser collection.
 
+Open `qa/index.html` from the deployed site to record device-local route checks, manual cabinet results, browser notes, and an exportable QA report. The console does not upload results or convert a reachable route into a gameplay pass.
+
 ## Required automated checks
 
 - [x] Root catalog contains exactly eight unique cabinets.
@@ -17,6 +19,8 @@ This checklist covers the complete eight-cabinet recovered browser collection.
 - [x] Save backups accept only schema-checked `larriverse.*` browser records.
 - [x] Import failures roll back to the pre-import browser records.
 - [x] Reduced motion, high contrast, and larger text are shared through the SDK.
+- [x] Release metadata matches package version, catalog routes, notes, and gallery targets.
+- [x] Version tags validate the complete arcade before GitHub can publish a release.
 
 ## Cabinet launch pass
 
@@ -60,4 +64,4 @@ Capture each cabinet at 1440×900 and 390×844 after its opening screen loads. U
 
 ## Release decision
 
-Release only after the unchecked manual items above have been tested on a desktop browser and one mobile browser. GitHub Actions confirms structural, syntax, content, privacy, and safety contracts; it does not replace hands-on play testing.
+Release only after the unchecked manual items above have been tested on a desktop browser and one mobile browser. GitHub Actions confirms structural, syntax, content, privacy, safety, release-metadata, and tag-publishing contracts; it does not replace hands-on play testing.

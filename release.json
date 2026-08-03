@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "candidate": "rc.1",
+  "tag": "v1.0.0",
+  "title": "LarriVerse Arcade 1.0",
+  "releaseState": "candidate",
+  "cabinetCount": 8,
+  "humanChecksRequired": true,
+  "qaRoute": "qa/index.html",
+  "releaseNotes": "docs/RELEASE-NOTES-1.0.0.md",
+  "checklist": "docs/RELEASE-CHECKLIST.md",
+  "gallery": "docs/CABINET-GALLERY.md",
+  "privacy": {
+    "qaStoragePrefix": "larriverse.releaseSmoke.",
+    "uploadsData": false,
+    "requestsLocation": false,
+    "capturesScreenshots": false
+  },
+  "cabinets": [
+    {
+      "id": "kidscoin-family",
+      "title": "KidsCoin Family App",
+      "route": "games/kidscoin-family/index.html",
+      "manualFocus": "Create a local profile, request and approve a task, then confirm backup and restore preserve the family ledger without exposing notes."
+    },
+    {
+      "id": "brain-sweat-expanded",
+      "title": "Brain Sweat Expanded",
+      "route": "games/brain-sweat-expanded/index.html",
+      "manualFocus": "Complete one reviewed activity, reload, and confirm queued higher-risk tiers remain locked and empty of actionable payloads."
+    },
+    {
+      "id": "brain-sweat-life-skills",
+      "title": "Brain Sweat Life Skills",
+      "route": "games/brain-sweat-life-skills/index.html",
+      "manualFocus": "Complete one reviewed lesson, reload, and confirm lesson and world progress persist while review-queued lessons stay locked."
+    },
+    {
+      "id": "bubble-resonance-phi369",
+      "title": "Bubble Resonance Φ369",
+      "route": "games/bubble-resonance-phi369/index.html",
+      "manualFocus": "Finish a run with sound disabled, verify controls at desktop and mobile widths, and confirm the creative-theme medical boundary remains visible."
+    },
+    {
+      "id": "chill-brain-rewards",
+      "title": "Chill Brain Rewards",
+      "route": "games/chill-brain-rewards/index.html",
+      "manualFocus": "Test full completion and leave-gently paths, confirm sound remains opt-in, and verify reduced motion changes the experience."
+    },
+    {
+      "id": "creature-catcher",
+      "title": "Creature Catcher",
+      "route": "games/creature-catcher/index.html",
+      "manualFocus": "Finish a round, reload, and confirm shared rewards plus the local field guide persist."
+    },
+    {
+      "id": "road-trip-quest",
+      "title": "Road Trip Quest",
+      "route": "games/road-trip-quest/index.html",
+      "manualFocus": "Win one city battle, reload, and confirm route, inventory, hero, and city progress persist."
+    },
+    {
+      "id": "road-trip-quest-gps",
+      "title": "Road Trip Quest GPS",
+      "route": "games/road-trip-quest-gps/index.html",
+      "manualFocus": "Use Demo Mode for the test, verify live movement remains opt-in, then confirm stopping or hiding the page clears any temporary location watch."
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d0a21">
+  <meta name="description" content="Device-local manual smoke-test console for LarriVerse Arcade 1.0.">
+  <title>LarriVerse 1.0 QA Console</title>
+  <link rel="stylesheet" href="qa.css">
+</head>
+<body>
+  <a class="skip-link" href="#cabinetTests">Skip to cabinet tests</a>
+  <header class="topbar">
+    <a href="../index.html">← Arcade lobby</a>
+    <span>LarriVerse 1.0 · QA Console</span>
+    <button id="exportReport" type="button">Export report</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Release candidate · human verification</p>
+      <h1>Test what automation cannot.</h1>
+      <p>This page checks that routes can be requested, but only a person may mark gameplay, mobile layout, accessibility, save restoration, or privacy behavior as passed.</p>
+      <div class="boundary" role="note">
+        <strong>No uploads. No screenshots. No location request.</strong>
+        <span>Results stay in this browser under <code>larriverse.releaseSmoke.v1</code> until exported or reset.</span>
+      </div>
+    </section>
+
+    <section class="summary" aria-labelledby="summaryTitle">
+      <div>
+        <p class="eyebrow">Candidate status</p>
+        <h2 id="summaryTitle">Manual release gate</h2>
+      </div>
+      <div class="summary-grid">
+        <article><strong id="routeCount">0/8</strong><span>routes reachable</span></article>
+        <article><strong id="passCount">0/8</strong><span>marked pass</span></article>
+        <article><strong id="needsWorkCount">0</strong><span>needs work</span></article>
+        <article><strong id="untestedCount">8</strong><span>untested</span></article>
+      </div>
+      <p id="statusMessage" class="status" role="status" aria-live="polite">Loading release manifest…</p>
+    </section>
+
+    <section class="toolbar" aria-label="QA controls">
+      <label>Tester name or initials
+        <input id="testerName" maxlength="40" autocomplete="name" placeholder="Optional">
+      </label>
+      <button id="checkRoutes" class="primary" type="button">Check all routes</button>
+      <button id="resetResults" class="danger" type="button">Reset QA results</button>
+    </section>
+
+    <section id="cabinetTests" aria-labelledby="cabinetTitle">
+      <div class="section-head">
+        <div><p class="eyebrow">Eight cabinet pass</p><h2 id="cabinetTitle">Manual test cards</h2></div>
+        <p>Open each cabinet in a separate tab so this checklist stays available.</p>
+      </div>
+      <div id="testGrid" class="test-grid"><p>Loading cabinets…</p></div>
+    </section>
+
+    <section class="release-decision" aria-labelledby="decisionTitle">
+      <p class="eyebrow">Release decision</p>
+      <h2 id="decisionTitle">Green CI is necessary, not magical.</h2>
+      <p>The official tag should be created only after all eight cabinets are marked passed on at least one desktop browser and one mobile browser, backup restoration is tested, and the privacy-safe screenshot gallery is captured.</p>
+      <nav><a href="../docs/RELEASE-CHECKLIST.md">Open release checklist</a><a href="../docs/CABINET-GALLERY.md">Open gallery plan</a><a href="../docs/RELEASE-NOTES-1.0.0.md">Open release notes</a></nav>
+    </section>
+  </main>
+
+  <template id="testCardTemplate">
+    <article class="test-card">
+      <div class="card-head"><span class="number"></span><span class="route-state">not checked</span></div>
+      <h3></h3>
+      <p class="focus"></p>
+      <div class="actions">
+        <a class="open-game" target="_blank" rel="noopener">Open cabinet ↗</a>
+        <button class="check-one" type="button">Check route</button>
+      </div>
+      <fieldset>
+        <legend>Manual result</legend>
+        <label><input type="radio" value="pass"> Pass</label>
+        <label><input type="radio" value="needs-work"> Needs work</label>
+        <label><input type="radio" value="untested"> Untested</label>
+      </fieldset>
+      <label class="notes-label">Notes
+        <textarea rows="3" maxlength="600" placeholder="Browser, device, issue, or confirmation details"></textarea>
+      </label>
+      <small class="saved-at"></small>
+    </article>
+  </template>
+
+  <script src="qa.js"></script>
+</body>
+</html>
