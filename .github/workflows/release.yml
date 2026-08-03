@@ -11,6 +11,9 @@ permissions:
 jobs:
   validate-and-release:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: true
     steps:
       - name: Check out tagged source
         uses: actions/checkout@v4
@@ -18,10 +21,31 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Validate complete arcade
         run: npm run validate
+
+      - name: Install pinned browser test runner
+        run: npm install --no-save --no-package-lock @playwright/test@1.55.0
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run desktop and mobile browser QA
+        run: npx playwright test --config=playwright.config.mjs
+
+      - name: Upload tagged browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: larriverse-release-browser-qa-${{ github.ref_name }}
+          path: |
+            artifacts/screenshots/
+            playwright-report/
+            test-results/
+          if-no-files-found: warn
+          retention-days: 30
 
       - name: Verify tag and release manifest
         shell: bash
