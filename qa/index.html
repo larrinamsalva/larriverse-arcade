@@ -4,64 +4,104 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0d0a21">
-  <meta name="description" content="Device-local manual smoke-test console for LarriVerse Arcade 1.0.">
-  <title>LarriVerse 1.0 QA Console</title>
+  <meta name="description" content="Device-local guided release testing for LarriVerse Arcade 1.0.">
+  <title>LarriVerse 1.0 Guided QA</title>
   <link rel="stylesheet" href="qa.css">
 </head>
 <body>
-  <a class="skip-link" href="#cabinetTests">Skip to cabinet tests</a>
+  <a class="skip-link" href="#deviceSetup">Skip to device setup</a>
   <header class="topbar">
     <a href="../index.html">← Arcade lobby</a>
-    <span>LarriVerse 1.0 · QA Console</span>
-    <button id="exportReport" type="button">Export report</button>
+    <span>LarriVerse 1.0 · Guided QA</span>
+    <div class="top-actions">
+      <button id="shareTestLink" type="button">Send test link</button>
+      <button id="exportReport" type="button" disabled>Export report</button>
+    </div>
   </header>
 
   <main>
     <section class="hero">
       <p class="eyebrow">Release candidate · human verification</p>
-      <h1>Test what automation cannot.</h1>
-      <p>This page checks that routes can be requested, but only a person may mark gameplay, mobile layout, accessibility, save restoration, or privacy behavior as passed.</p>
+      <h1>Test the real device, not the idea of it.</h1>
+      <p><strong>Test what automation cannot.</strong> Choose the device you are holding, complete each cabinet’s focus task, and export one report from a desktop and one from a physical phone.</p>
       <div class="boundary" role="note">
         <strong>No uploads. No screenshots. No location request.</strong>
-        <span>Results stay in this browser under <code>larriverse.releaseSmoke.v1</code> until exported or reset.</span>
+        <span>Desktop and physical-phone results are stored separately on this device until exported or reset.</span>
+      </div>
+    </section>
+
+    <section id="deviceSetup" class="panel" aria-labelledby="deviceTitle">
+      <p class="eyebrow">Step 1</p>
+      <h2 id="deviceTitle">Identify this test device</h2>
+      <div class="device-grid">
+        <fieldset class="device-choice">
+          <legend>What are you testing on?</legend>
+          <label><input type="radio" name="deviceClass" value="desktop"> Desktop or laptop browser</label>
+          <label><input type="radio" name="deviceClass" value="physical-phone"> Physical phone browser</label>
+        </fieldset>
+        <label>Device and browser name
+          <input id="deviceName" maxlength="100" autocomplete="off" placeholder="Example: Windows laptop / Chrome">
+        </label>
+        <label>Tester name or initials
+          <input id="testerName" maxlength="40" autocomplete="name" placeholder="Required for export">
+        </label>
+      </div>
+      <div class="detected" role="note">
+        <strong>Detected browser details</strong>
+        <span id="deviceHint">Choose a device type to begin.</span>
       </div>
     </section>
 
     <section class="summary" aria-labelledby="summaryTitle">
       <div>
         <p class="eyebrow">Candidate status</p>
-        <h2 id="summaryTitle">Manual release gate</h2>
+        <h2 id="summaryTitle">This-device release gate</h2>
       </div>
       <div class="summary-grid">
         <article><strong id="routeCount">0/8</strong><span>routes reachable</span></article>
-        <article><strong id="passCount">0/8</strong><span>marked pass</span></article>
-        <article><strong id="needsWorkCount">0</strong><span>needs work</span></article>
-        <article><strong id="untestedCount">8</strong><span>untested</span></article>
+        <article><strong id="passCount">0/8</strong><span>cabinet passes</span></article>
+        <article><strong id="checkCount">0/6</strong><span>device checks</span></article>
+        <article><strong id="readyCount">Blocked</strong><span>report status</span></article>
       </div>
       <p id="statusMessage" class="status" role="status" aria-live="polite">Loading release manifest…</p>
     </section>
 
     <section class="toolbar" aria-label="QA controls">
-      <label>Tester name or initials
-        <input id="testerName" maxlength="40" autocomplete="name" placeholder="Optional">
-      </label>
       <button id="checkRoutes" class="primary" type="button">Check all routes</button>
-      <button id="resetResults" class="danger" type="button">Reset QA results</button>
+      <button id="resetResults" class="danger" type="button">Reset this device report</button>
     </section>
 
     <section id="cabinetTests" aria-labelledby="cabinetTitle">
       <div class="section-head">
-        <div><p class="eyebrow">Eight cabinet pass</p><h2 id="cabinetTitle">Manual test cards</h2></div>
-        <p>Open each cabinet in a separate tab so this checklist stays available.</p>
+        <div><p class="eyebrow">Step 2</p><h2 id="cabinetTitle">Complete all eight focus tasks</h2></div>
+        <p>Open each cabinet in a separate tab, perform the listed task, then record the result here. A reachable page is not automatically a gameplay pass.</p>
       </div>
-      <div id="testGrid" class="test-grid"><p>Loading cabinets…</p></div>
+      <div id="testGrid" class="test-grid"><p>Choose a device type to load the cabinet cards.</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="deviceChecksTitle">
+      <p class="eyebrow">Step 3</p>
+      <h2 id="deviceChecksTitle">Confirm the device-wide checks</h2>
+      <div class="device-checks">
+        <label><input type="checkbox" data-device-check="controls"> I completed the listed focus task in every cabinet on this device.</label>
+        <label><input type="checkbox" data-device-check="accessibility"> Text, contrast, motion settings, status messages, and visible focus remained usable.</label>
+        <label><input type="checkbox" data-device-check="backupRestore"> I tested a LarriVerse backup and restore round trip on this device.</label>
+        <label><input type="checkbox" data-device-check="privacy"> The exported backup/report contained no passwords, coordinates, family notes, or unrelated storage.</label>
+        <label><input type="checkbox" data-device-check="sound"> Sound behavior, silent use, completion, and leave-gently paths were understandable.</label>
+        <label><input type="checkbox" data-device-check="deviceComfort"> <span id="deviceComfortLabel">Keyboard, pointer, scrolling, and layout felt usable.</span></label>
+      </div>
     </section>
 
     <section class="release-decision" aria-labelledby="decisionTitle">
-      <p class="eyebrow">Release decision</p>
-      <h2 id="decisionTitle">Green CI is necessary, not magical.</h2>
-      <p>The official tag should be created only after all eight cabinets are marked passed on at least one desktop browser and one mobile browser, backup restoration is tested, and the privacy-safe screenshot gallery is captured.</p>
-      <nav><a href="../docs/RELEASE-CHECKLIST.md">Open release checklist</a><a href="../docs/CABINET-GALLERY.md">Open gallery plan</a><a href="../docs/RELEASE-NOTES-1.0.0.md">Open release notes</a></nav>
+      <p class="eyebrow">Step 4</p>
+      <h2 id="decisionTitle">Export only when this device is genuinely complete.</h2>
+      <p>The report button unlocks only after a named tester, a device identity, eight reachable routes, eight cabinet passes, and all six device checks are present. The final approval console will reject a desktop report labeled as a phone—or a phone report with no touch capability.</p>
+      <nav>
+        <a href="../docs/DEVICE-QA.md">Open device-testing guide</a>
+        <a href="../docs/RELEASE-CHECKLIST.md">Open release checklist</a>
+        <a href="../docs/CABINET-GALLERY.md">Open gallery plan</a>
+        <a href="release-approval.html">Open final approval console</a>
+      </nav>
     </section>
   </main>
 
@@ -81,7 +121,7 @@
         <label><input type="radio" value="untested"> Untested</label>
       </fieldset>
       <label class="notes-label">Notes
-        <textarea rows="3" maxlength="600" placeholder="Browser, device, issue, or confirmation details"></textarea>
+        <textarea rows="3" maxlength="600" placeholder="What worked, what felt awkward, or what needs repair"></textarea>
       </label>
       <small class="saved-at"></small>
     </article>

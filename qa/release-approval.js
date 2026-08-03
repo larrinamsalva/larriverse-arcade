@@ -3,6 +3,7 @@
 
   const MANIFEST_URL = '../release.json';
   const MAX_FILE_BYTES = 2_000_000;
+  const REQUIRED_DEVICE_CHECKS = ['controls', 'accessibility', 'backupRestore', 'privacy', 'sound', 'deviceComfort'];
   const $ = (selector) => document.querySelector(selector);
   const evidence = { gallery: null, desktop: null, mobile: null };
   const hashes = { gallery: null, desktop: null, mobile: null };
@@ -39,10 +40,16 @@
     }
     return value;
   }
-  function validateQa(value, label) {
-    if (value?.schema !== 'larriverse-release-qa' || value.schemaVersion !== 1) throw new Error(`${label} report schema is unsupported`);
+  function validateQa(value, label, expectedDeviceClass) {
+    if (value?.schema !== 'larriverse-release-qa' || value.schemaVersion !== 2) throw new Error(`${label} report schema is unsupported`);
     if (value.release !== manifest.version || value.candidate !== manifest.candidate) throw new Error(`${label} release does not match`);
+    if (value.deviceClass !== expectedDeviceClass) throw new Error(`${label} must be labeled ${expectedDeviceClass}`);
+    if (!value.deviceName || value.deviceName.trim().length < 3) throw new Error(`${label} device name is missing`);
     if (!value.tester || !value.userAgent || !value.exportedAt) throw new Error(`${label} tester or browser metadata is missing`);
+    if (value.locationGrantedDuringEvidence !== false) throw new Error(`${label} must confirm that location was not granted`);
+    if (!value.environment || !Number.isFinite(value.environment.viewportWidth) || !Number.isFinite(value.environment.viewportHeight)) throw new Error(`${label} viewport metadata is missing`);
+    if (expectedDeviceClass === 'physical-phone' && !(Number(value.environment.maxTouchPoints) >= 1)) throw new Error('Phone QA must come from a touch-capable physical device');
+    if (!value.deviceChecks || !REQUIRED_DEVICE_CHECKS.every((key) => value.deviceChecks[key] === true)) throw new Error(`${label} device-wide checks are incomplete`);
     if (!Array.isArray(value.results) || value.results.length !== manifest.cabinetCount) throw new Error(`${label} must contain eight cabinet results`);
     const expected = allCabinetIds();
     const seen = new Set();
@@ -69,8 +76,11 @@
     state.textContent = 'Checking…';
     try {
       const value = await readJson(file, kind);
-      evidence[kind] = kind === 'gallery' ? validateGallery(value) : validateQa(value, label);
-      state.textContent = kind === 'gallery' ? '18/18 images approved' : '8/8 cabinets passed';
+      evidence[kind] = kind === 'gallery'
+        ? validateGallery(value)
+        : validateQa(value, label, kind === 'desktop' ? 'desktop' : 'physical-phone');
+      if (kind === 'mobile' && !$('#device').value.trim()) $('#device').value = evidence.mobile.deviceName;
+      state.textContent = kind === 'gallery' ? '18/18 images approved' : `8/8 cabinets passed · ${evidence[kind].deviceName}`;
       state.className = 'good';
       setStatus(`${label} evidence loaded successfully.`);
     } catch (error) {
@@ -86,15 +96,28 @@
     const approver = $('#approver').value.trim();
     const device = $('#device').value.trim();
     const checks = humanChecks();
-    return Boolean(evidence.gallery && evidence.desktop && evidence.mobile && approver.length >= 2 && device.length >= 3 && Object.values(checks).length === 6 && Object.values(checks).every(Boolean));
+    return Boolean(
+      evidence.gallery &&
+      evidence.desktop &&
+      evidence.mobile &&
+      hashes.desktop !== hashes.mobile &&
+      approver.length >= 2 &&
+      device === evidence.mobile.deviceName &&
+      Object.values(checks).length === 6 &&
+      Object.values(checks).every(Boolean)
+    );
   }
   function update() {
     const states = [
       ['#gallerySummary', Boolean(evidence.gallery), evidence.gallery ? '18 approved' : 'missing'],
-      ['#desktopSummary', Boolean(evidence.desktop), evidence.desktop ? '8 passed' : 'missing'],
-      ['#mobileSummary', Boolean(evidence.mobile), evidence.mobile ? '8 passed' : 'missing']
+      ['#desktopSummary', Boolean(evidence.desktop), evidence.desktop ? `8 passed · ${evidence.desktop.deviceName}` : 'missing'],
+      ['#mobileSummary', Boolean(evidence.mobile), evidence.mobile ? `8 passed · ${evidence.mobile.deviceName}` : 'missing']
     ];
-    for (const [selector, good, text] of states) { const node = $(selector); node.textContent = text; node.className = good ? 'good' : 'bad'; }
+    for (const [selector, good, text] of states) {
+      const node = $(selector);
+      node.textContent = text;
+      node.className = good ? 'good' : 'bad';
+    }
     const approved = ready();
     $('#decisionSummary').textContent = approved ? 'ready to export' : 'blocked';
     $('#decisionSummary').className = approved ? 'good' : 'bad';
@@ -102,10 +125,22 @@
   }
   function reportSummary(report) {
     return {
+      deviceClass: report.deviceClass,
+      deviceName: report.deviceName,
       tester: report.tester,
       userAgent: report.userAgent,
+      environment: report.environment,
+      deviceChecks: report.deviceChecks,
+      locationGrantedDuringEvidence: report.locationGrantedDuringEvidence,
       exportedAt: report.exportedAt,
-      results: report.results.map(({ id, title, route, result, notes, savedAt }) => ({ id, title, route, result, notes: notes || null, savedAt: savedAt || null }))
+      results: report.results.map(({ id, title, route, result, notes, savedAt }) => ({
+        id,
+        title,
+        route,
+        result,
+        notes: notes || null,
+        savedAt: savedAt || null
+      }))
     };
   }
   function exportApproval() {
@@ -113,12 +148,13 @@
     const approval = {
       schema: 'larriverse-release-approval',
       schemaVersion: 1,
+      qaSchemaVersion: 2,
       release: manifest.version,
       candidate: manifest.candidate,
       approvedCodeCommit: evidence.gallery.sourceCommit,
       approver: $('#approver').value.trim(),
       approvedAt: new Date().toISOString(),
-      physicalDevice: $('#device').value.trim(),
+      physicalDevice: evidence.mobile.deviceName,
       locationGrantedDuringEvidence: false,
       notes: $('#notes').value.trim() || null,
       confirmations: humanChecks(),
@@ -139,7 +175,7 @@
         }))
       },
       desktopQa: { approved: true, fileSha256: hashes.desktop, ...reportSummary(evidence.desktop) },
-      physicalMobileQa: { approved: true, device: $('#device').value.trim(), fileSha256: hashes.mobile, ...reportSummary(evidence.mobile) }
+      physicalMobileQa: { approved: true, device: evidence.mobile.deviceName, fileSha256: hashes.mobile, ...reportSummary(evidence.mobile) }
     };
     const blob = new Blob([JSON.stringify(approval, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);

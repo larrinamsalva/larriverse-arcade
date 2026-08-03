@@ -11,21 +11,44 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: larriverse-pages
   cancel-in-progress: true
 
 jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate complete arcade and QA contracts
+        run: npm run validate
+
+      - name: Build allowlisted static preview
+        run: node scripts/build-pages-site.mjs
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
   deploy:
+    needs: validate-and-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - name: Deploy to GitHub Pages
+      - name: Deploy preview
         id: deployment
         uses: actions/deploy-pages@v4

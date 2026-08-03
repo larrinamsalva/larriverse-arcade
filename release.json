@@ -40,6 +40,28 @@
     "approvalRecord": "docs/release-approval.json",
     "approvedImagesRoot": "docs/screenshots"
   },
+  "deviceQa": {
+    "schema": "larriverse-release-qa",
+    "schemaVersion": 2,
+    "route": "qa/index.html",
+    "requiredDeviceClasses": ["desktop", "physical-phone"],
+    "separateLocalRecords": true,
+    "requiredDeviceChecks": ["controls", "accessibility", "backupRestore", "privacy", "sound", "deviceComfort"],
+    "physicalPhoneTouchRequired": true,
+    "uploadsData": false,
+    "requestsLocation": false,
+    "documentation": "docs/DEVICE-QA.md"
+  },
+  "preview": {
+    "provider": "GitHub Pages",
+    "workflow": ".github/workflows/pages.yml",
+    "manualDeployment": false,
+    "deployOnMain": true,
+    "requiresPagesSource": "GitHub Actions",
+    "siteUrl": "https://larrinamsalva.github.io/larriverse-arcade/",
+    "qaUrl": "https://larrinamsalva.github.io/larriverse-arcade/qa/",
+    "publishesApprovalRecord": false
+  },
   "cabinets": [
     {
       "id": "kidscoin-family",
