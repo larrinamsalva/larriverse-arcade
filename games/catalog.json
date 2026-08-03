@@ -4,12 +4,14 @@
     "title": "KidsCoin Family App",
     "icon": "🪙",
     "category": "Learning & rewards",
-    "desc": "Family profiles, chores, lessons, wallet skills, rewards, and the 3-6-9 earning loop.",
+    "desc": "Manage device-local family profiles, parent-approved tasks, wallet-skill lessons, reward requests, notes, grace days, and a fictional 3·6·9 Family KC ledger.",
     "featured": true,
-    "status": "Recovered prototype",
-    "available": false,
+    "status": "Playable alpha",
+    "available": true,
     "href": "games/kidscoin-family/index.html",
-    "source": "KidsCoin_Family_App (5).html"
+    "source": "KidsCoin_Family_App (5).html",
+    "integration": "arcade-sdk-v2",
+    "family": "games/kidscoin-family/family.json"
   },
   {
     "id": "brain-sweat-expanded",
