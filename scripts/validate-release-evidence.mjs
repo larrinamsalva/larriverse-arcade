@@ -16,19 +16,21 @@ const exists = (relative) => fs.existsSync(path.join(root, relative));
 const required = [
   'scripts/build-gallery-review.mjs',
   'scripts/verify-release-approval.mjs',
+  'qa/evidence-contract.js',
   'qa/release-approval.html',
   'qa/release-approval.css',
   'qa/release-approval.js',
   'docs/GALLERY-APPROVAL.md'
 ];
 for (const file of required) assert(exists(file), `missing ${file}`);
-for (const file of ['scripts/build-gallery-review.mjs', 'scripts/verify-release-approval.mjs', 'qa/release-approval.js']) {
+for (const file of ['scripts/build-gallery-review.mjs', 'scripts/verify-release-approval.mjs', 'qa/evidence-contract.js', 'qa/release-approval.js']) {
   execFileSync(process.execPath, ['--check', path.join(root, file)], { stdio: 'pipe' });
   assert(true, `${file} syntax must pass`);
 }
 
 const build = read('scripts/build-gallery-review.mjs');
 const verify = read('scripts/verify-release-approval.mjs');
+const contract = read('qa/evidence-contract.js');
 const approvalHtml = read('qa/release-approval.html');
 const approvalCss = read('qa/release-approval.css');
 const approvalJs = read('qa/release-approval.js');
@@ -54,24 +56,37 @@ assert(build.includes("e.status==='approved'"), 'offline page must require every
 assert(build.includes('Every approved image has useful, accurate alt text'), 'alt-text human check missing');
 assert(!/https?:\/\//i.test(build), 'offline review builder must not embed external URLs');
 
+assert(contract.includes("value?.schema === 'larriverse-gallery-approval'"), 'shared gallery schema validation missing');
+assert(contract.includes("value?.schema === release.deviceQa?.schema"), 'shared QA schema validation missing');
+assert(contract.includes("entry.status === 'approved'"), 'shared gallery approval requirement missing');
+assert(contract.includes("result.result === 'pass'"), 'shared QA pass requirement missing');
+assert(contract.includes("result.route === 'reachable'"), 'shared QA route requirement missing');
+assert(contract.includes("crypto.subtle.digest('SHA-256'"), 'shared evidence hashes missing');
+assert(contract.includes("schema: 'larriverse-evidence-bundle'"), 'shared bundle schema missing');
+assert(contract.includes('createsReleaseApproval: false'), 'shared bundle authority boundary missing');
+assert(!/sendBeacon|XMLHttpRequest|WebSocket|geolocation|watchPosition|getUserMedia/i.test(contract), 'shared contract must not upload or request sensors');
+
 assert(approvalHtml.includes('Release approval console'), 'approval console heading missing');
 assert(approvalHtml.includes('Physical-phone QA report'), 'physical-phone evidence input missing');
 assert(approvalHtml.includes('uploads nothing'), 'approval privacy statement missing');
+assert(approvalHtml.includes('Release Room evidence bundle'), 'bundle evidence input missing');
 assert(approvalHtml.includes('data-check="physicalPhone"'), 'physical-phone confirmation missing');
 assert(approvalHtml.includes('data-check="releaseDecision"'), 'final release decision missing');
 assert(approvalHtml.includes('role="status"'), 'approval status must be announced');
+assert(approvalHtml.indexOf('evidence-contract.js') < approvalHtml.indexOf('release-approval.js'), 'approval must load shared contract first');
 assert(approvalCss.includes(':focus-visible'), 'approval console needs visible keyboard focus');
 assert(approvalCss.includes('@media(max-width:760px)'), 'approval console needs mobile layout');
 assert(approvalJs.includes("const MANIFEST_URL = '../release.json'"), 'approval console must use local release manifest');
-assert(approvalJs.includes("schema !== 'larriverse-gallery-approval'"), 'gallery schema validation missing');
-assert(approvalJs.includes("schema !== 'larriverse-release-qa'"), 'QA schema validation missing');
+assert(approvalJs.includes('Contract.readEvidenceFile'), 'approval must use shared evidence validation');
+assert(approvalJs.includes('Contract.readBundleFile'), 'approval must validate evidence bundles');
 assert(approvalJs.includes("schema: 'larriverse-release-approval'"), 'final approval schema missing');
 assert(approvalJs.includes('approvedPath: `docs/screenshots/'), 'approved target path missing');
-assert(approvalJs.includes("crypto.subtle.digest('SHA-256'"), 'imported evidence hashes missing');
-assert(approvalJs.includes("result.result !== 'pass'"), 'QA reports must require pass results');
-assert(approvalJs.includes("result.route !== 'reachable'"), 'QA reports must require reachable routes');
-assert(!/sendBeacon|XMLHttpRequest|WebSocket|geolocation|watchPosition/i.test(approvalJs), 'approval console must not upload or request location');
-assert(!/https?:\/\//i.test(approvalHtml + approvalCss + approvalJs), 'approval console must not load external resources');
+assert(approvalJs.includes('items.gallery.sha256'), 'gallery file hash missing');
+assert(approvalJs.includes('items.desktop.sha256'), 'desktop file hash missing');
+assert(approvalJs.includes('items.physicalPhone.sha256'), 'phone file hash missing');
+assert(approvalJs.includes('handoffBundle:'), 'optional handoff identity missing');
+assert(!/sendBeacon|XMLHttpRequest|WebSocket|geolocation|watchPosition|getUserMedia/i.test(approvalJs), 'approval console must not upload or request location');
+assert(!/https?:\/\//i.test(approvalHtml + approvalCss), 'approval console markup must not load external resources');
 
 assert(verify.includes("docs', 'release-approval.json'"), 'verifier must require committed approval record');
 assert(verify.includes('human approval is required before tagging'), 'missing human gate error');
@@ -102,9 +117,13 @@ assert(release.galleryReview?.uploadsData === false, 'gallery review must not up
 assert(release.galleryReview?.approvalConsole === 'qa/release-approval.html', 'approval console path mismatch');
 assert(release.galleryReview?.approvalRecord === 'docs/release-approval.json', 'approval record path mismatch');
 assert(release.galleryReview?.approvedImagesRoot === 'docs/screenshots', 'approved image root mismatch');
+assert(release.evidenceContract?.script === 'qa/evidence-contract.js', 'shared evidence contract metadata missing');
+assert(release.evidenceBundle?.schema === 'larriverse-evidence-bundle', 'evidence bundle metadata missing');
+assert(release.evidenceBundle?.createsReleaseApproval === false, 'bundle must not approve release');
 assert(docs.includes('physical phone') && docs.includes('18 exact approved images'), 'approval documentation must preserve human gate');
 assert(docs.includes('uploads nothing'), 'approval documentation must state privacy boundary');
 assert(gallery.includes('candidate evidence') && gallery.includes('human approval'), 'gallery document must describe candidate evidence');
 assert(checklist.includes('offline gallery review') && checklist.includes('final approval JSON'), 'release checklist must include approval workflow');
+assert(checklist.includes('evidence bundle'), 'release checklist must include bundle workflow');
 
 console.log(`Release evidence validation passed ${checks} checks.`);

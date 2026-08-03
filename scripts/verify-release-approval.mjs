@@ -41,7 +41,9 @@ if (!approval.approver || !approval.approvedAt || !approval.physicalDevice) fail
 if (approval.locationGrantedDuringEvidence !== false) fail('release evidence must not grant location');
 const requiredConfirmations = ['physicalPhone', 'gameplay', 'soundTouch', 'accessibility', 'backupPrivacy', 'releaseDecision'];
 for (const key of requiredConfirmations) if (approval.confirmations?.[key] !== true) fail(`missing confirmation ${key}`);
-if (!/^[a-f0-9]{64}$/.test(approval.evidenceHashes?.desktop || '') || !/^[a-f0-9]{64}$/.test(approval.evidenceHashes?.mobile || '')) fail('QA evidence hashes are invalid');
+for (const key of ['gallery', 'desktop', 'mobile']) {
+  if (!/^[a-f0-9]{64}$/.test(approval.evidenceHashes?.[key] || '')) fail(`${key} evidence hash is invalid`);
+}
 if (approval.evidenceHashes.desktop === approval.evidenceHashes.mobile) fail('desktop and phone evidence files must be different');
 
 if (!approval.gallery?.approved || !Array.isArray(approval.gallery.entries) || approval.gallery.entries.length !== 18) fail('gallery must approve exactly 18 images');
@@ -64,7 +66,19 @@ for (const entry of approval.gallery.entries) {
 if (seenPairs.size !== expectedPairs.size) fail('gallery pair coverage is incomplete');
 verifyQa(approval.desktopQa, 'desktop QA', 'desktop');
 verifyQa(approval.physicalMobileQa, 'physical mobile QA', 'physical-phone');
+if (approval.desktopQa.fileSha256 !== approval.evidenceHashes.desktop) fail('desktop evidence hash does not agree with the final approval');
+if (approval.physicalMobileQa.fileSha256 !== approval.evidenceHashes.mobile) fail('phone evidence hash does not agree with the final approval');
 if (!approval.physicalMobileQa.device || approval.physicalMobileQa.device !== approval.physicalMobileQa.deviceName) fail('physical mobile report device details do not agree');
 if (approval.physicalMobileQa.deviceName !== approval.physicalDevice) fail('physical mobile device does not agree with final approval');
+
+if (approval.handoffBundle !== null && approval.handoffBundle !== undefined) {
+  const handoff = approval.handoffBundle;
+  if (!/^[a-f0-9]{64}$/.test(handoff.fileSha256 || '')) fail('handoff bundle file hash is invalid');
+  if (!handoff.createdAt || !handoff.deployment) fail('handoff bundle metadata is incomplete');
+  if (handoff.deployment.schema !== 'larriverse-deployment' || handoff.deployment.schemaVersion !== 1) fail('handoff deployment identity is invalid');
+  if (handoff.deployment.release !== release.version || handoff.deployment.candidate !== release.candidate) fail('handoff deployment release does not match');
+  if (!/^[a-f0-9]{40}$/.test(handoff.deployment.sourceCommit || '')) fail('handoff deployment source commit is invalid');
+  if (!/^[a-f0-9]{64}$/.test(handoff.deployment.releaseManifestSha256 || '')) fail('handoff deployment digest is invalid');
+}
 
 console.log(`Release approval verified: ${seenPairs.size} images, 16 device-labeled manual cabinet results, approver ${approval.approver}.`);

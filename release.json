@@ -52,6 +52,15 @@
     "requestsLocation": false,
     "documentation": "docs/DEVICE-QA.md"
   },
+  "evidenceContract": {
+    "script": "qa/evidence-contract.js",
+    "qaSchemaVersion": 2,
+    "deviceClassField": "deviceClass",
+    "environmentField": "environment",
+    "touchField": "environment.maxTouchPoints",
+    "maxEvidenceFileBytes": 2000000,
+    "forbiddenLocationKeys": ["latitude", "longitude", "coordinates", "coords", "geolocation"]
+  },
   "preview": {
     "provider": "GitHub Pages",
     "workflow": ".github/workflows/pages.yml",
@@ -69,6 +78,7 @@
     "generatedAtDeploy": true,
     "readinessRoute": "qa/readiness.html",
     "evidencePreflightRoute": "qa/evidence-preflight.html",
+    "releaseRoomRoute": "qa/release-room.html",
     "documentation": "docs/DEPLOYMENT-REHEARSAL.md",
     "publishesApprovalRecord": false,
     "publishesPrivateEvidence": false
@@ -82,6 +92,22 @@
     "uploadsData": false,
     "requestsLocation": false,
     "documentation": "docs/DEPLOYMENT-REHEARSAL.md"
+  },
+  "evidenceBundle": {
+    "schema": "larriverse-evidence-bundle",
+    "schemaVersion": 1,
+    "route": "qa/release-room.html",
+    "sharedContract": "qa/evidence-contract.js",
+    "requiredDocuments": ["gallery", "desktop", "physicalPhone"],
+    "maxBytes": 6500000,
+    "preservesOriginalJsonText": true,
+    "preservesOriginalSha256": true,
+    "requiresLiveDeploymentIdentity": true,
+    "createsReleaseApproval": false,
+    "finalApprovalRoute": "qa/release-approval.html",
+    "uploadsData": false,
+    "requestsLocation": false,
+    "documentation": "docs/RELEASE-ROOM.md"
   },
   "cabinets": [
     {

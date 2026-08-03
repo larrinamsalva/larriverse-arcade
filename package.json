@@ -5,7 +5,7 @@
   "description": "A shared arcade lobby for Larrina's learning games and creative prototypes.",
   "type": "module",
   "scripts": {
-    "validate": "node scripts/validate.mjs && node scripts/validate-brain-sweat-expanded.mjs && node scripts/validate-kidscoin-family.mjs && node scripts/validate-road-trip-gps.mjs && node scripts/validate-arcade-polish.mjs && node scripts/validate-release-candidate.mjs && node scripts/validate-browser-qa.mjs && node scripts/validate-release-evidence.mjs && node scripts/validate-guided-device-qa.mjs && node scripts/validate-deployment-rehearsal.mjs",
+    "validate": "node scripts/validate.mjs && node scripts/validate-brain-sweat-expanded.mjs && node scripts/validate-kidscoin-family.mjs && node scripts/validate-road-trip-gps.mjs && node scripts/validate-arcade-polish.mjs && node scripts/validate-release-candidate.mjs && node scripts/validate-browser-qa.mjs && node scripts/validate-release-evidence.mjs && node scripts/validate-guided-device-qa.mjs && node scripts/validate-deployment-rehearsal.mjs && node scripts/validate-release-room.mjs",
     "build:pages": "node scripts/build-pages-site.mjs",
     "verify:release-approval": "node scripts/verify-release-approval.mjs"
   },
