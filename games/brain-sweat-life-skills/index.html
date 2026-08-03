@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080b16">
+  <meta name="description" content="Brain Sweat Life Skills — practical learning worlds inside LarriVerse Arcade.">
+  <title>Brain Sweat Life Skills · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="back-link" href="../../index.html">← Arcade</a>
+    <div class="brand"><span>🧠</span><div><strong>Brain Sweat</strong><small>Life Skills Lab</small></div></div>
+    <div class="profile-chip" aria-live="polite"><span id="profileAvatar">🌟</span><b id="profileLevel">Lv 1</b><span id="profileKc">0 KC</span></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Practical knowledge · reviewed release</p>
+        <h1>Make your brain <em>sweat.</em></h1>
+        <p class="lede">Six real-life learning worlds from Larrina’s recovered prototype, rebuilt with reusable lessons, saved mastery, and the LarriVerse 3·6·9 reward loop.</p>
+        <div class="hero-actions">
+          <button class="primary" id="continueButton">Start a lesson</button>
+          <button class="secondary" id="randomButton">Surprise lesson</button>
+        </div>
+      </div>
+      <div class="brain-orbit" aria-hidden="true"><span>🧠</span><i></i><i></i><i></i></div>
+    </section>
+
+    <section class="stats" aria-label="Learning progress">
+      <article><b id="reviewedCount">12</b><span>reviewed lessons</span></article>
+      <article><b id="completedCount">0</b><span>completed</span></article>
+      <article><b id="accuracyStat">—</b><span>best-answer accuracy</span></article>
+      <article><b id="questionCount">60</b><span>playable questions</span></article>
+    </section>
+
+    <section class="notice">
+      <span>🛡️</span>
+      <div><strong>Review-first publishing</strong><p>The recovered file contains medical, legal, electrical, foraging, and other high-stakes material. Those lessons stay visible but locked until a qualified content review. This cabinet is educational entertainment, not professional advice.</p></div>
+    </section>
+
+    <section class="controls" aria-label="Lesson filters">
+      <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Search worlds and lessons…" aria-label="Search worlds and lessons"></label>
+      <div class="filter-row" id="filters">
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="reviewed">Ready</button>
+        <button data-filter="review-queued">Review queued</button>
+      </div>
+    </section>
+
+    <section id="worldGrid" class="world-grid" aria-live="polite">
+      <p class="loading">Loading the learning worlds…</p>
+    </section>
+
+    <section class="source-card">
+      <div><span>📚</span><strong>Recovered source map</strong></div>
+      <p id="sourceSummary">Reading the original lesson map…</p>
+    </section>
+  </main>
+
+  <dialog id="lessonDialog" class="lesson-dialog">
+    <form method="dialog" class="dialog-shell" id="lessonForm">
+      <header class="dialog-head">
+        <button class="icon-button" value="cancel" aria-label="Close lesson">×</button>
+        <div><p id="lessonWorld">World</p><h2 id="lessonTitle">Lesson</h2></div>
+        <span id="lessonProgress">1 / 5</span>
+      </header>
+      <div class="progress-track"><div id="progressFill"></div></div>
+      <section class="question-card">
+        <p class="question-number" id="questionNumber">Question 1</p>
+        <h3 id="questionText">Question text</h3>
+        <div class="answers" id="answerGrid"></div>
+        <p class="feedback" id="feedback" aria-live="polite"></p>
+      </section>
+      <footer class="dialog-footer">
+        <span id="lessonScore">0 correct</span>
+        <button class="primary" type="button" id="nextQuestion" hidden>Next question</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="resultDialog" class="result-dialog">
+    <div class="result-shell">
+      <span class="result-icon" id="resultIcon">🎉</span>
+      <p class="eyebrow">Lesson complete</p>
+      <h2 id="resultTitle">Nice work!</h2>
+      <p id="resultSummary"></p>
+      <div class="reward-row"><b id="resultKc">+0 KC</b><b id="resultXp">+0 XP</b></div>
+      <div class="result-stats" id="resultStats"></div>
+      <div class="result-actions">
+        <button class="secondary" id="resultHome">Back to worlds</button>
+        <button class="primary" id="resultAgain">Play again</button>
+      </div>
+    </div>
+  </dialog>
+
+  <noscript>This cabinet needs JavaScript enabled.</noscript>
+  <script src="../../assets/arcade-sdk.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

@@ -19,6 +19,90 @@ function safeLocalPath(fromFile, reference) {
   return resolved.startsWith('..') || path.isAbsolute(resolved) ? false : resolved;
 }
 
+async function readJson(relativePath, label) {
+  try {
+    return JSON.parse(await readFile(path.join(root, relativePath), 'utf8'));
+  } catch (error) {
+    failures.push(`${label}: valid JSON (${error.message})`);
+    return null;
+  }
+}
+
+async function validateContent(game, label) {
+  if (game.content === undefined) return;
+  check(typeof game.content === 'string' && game.content.startsWith('games/') && !game.content.includes('..'), `${label}: content manifest path is safe`);
+  if (typeof game.content !== 'string') return;
+
+  const manifestExists = await exists(game.content);
+  check(manifestExists, `${label}: content manifest exists at ${game.content}`);
+  if (!manifestExists) return;
+
+  const manifest = await readJson(game.content, `${label}: content manifest`);
+  if (!manifest) return;
+  check(Number.isInteger(manifest.schemaVersion) && manifest.schemaVersion >= 1, `${label}: content schema version is declared`);
+  check(Array.isArray(manifest.worldFiles) && manifest.worldFiles.length > 0, `${label}: content manifest lists world files`);
+  check(manifest.rewardModel && Number(manifest.rewardModel.correctKc) >= 0, `${label}: content reward model is present`);
+  if (!Array.isArray(manifest.worldFiles)) return;
+
+  const worldIds = new Set();
+  const lessonIds = new Set();
+  let totalLessons = 0;
+  let reviewedLessons = 0;
+  let playableQuestions = 0;
+
+  for (const reference of manifest.worldFiles) {
+    const local = safeLocalPath(game.content, reference);
+    check(local !== false && typeof local === 'string', `${label}: content file ${reference} stays inside the repository`);
+    if (!local || local === false) continue;
+    const localExists = await exists(local);
+    check(localExists, `${label}: content file exists at ${local}`);
+    if (!localExists) continue;
+
+    const world = await readJson(local, `${label}: ${reference}`);
+    if (!world) continue;
+    check(typeof world.id === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(world.id), `${label}: ${reference} has a safe world id`);
+    check(!worldIds.has(world.id), `${label}: world id ${world.id} is unique`);
+    worldIds.add(world.id);
+    check(typeof world.title === 'string' && world.title.trim().length > 0, `${label}: ${world.id} has a title`);
+    check(Array.isArray(world.lessons) && world.lessons.length > 0, `${label}: ${world.id} contains lessons`);
+    if (!Array.isArray(world.lessons)) continue;
+
+    for (const lesson of world.lessons) {
+      totalLessons += 1;
+      check(typeof lesson.id === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(lesson.id), `${label}: lesson id is a safe slug`);
+      check(!lessonIds.has(lesson.id), `${label}: lesson id ${lesson.id} is unique`);
+      lessonIds.add(lesson.id);
+      check(['reviewed', 'review-queued'].includes(lesson.status), `${label}: ${lesson.id} has a supported review status`);
+      check(Array.isArray(lesson.questions), `${label}: ${lesson.id} has a questions array`);
+      if (!Array.isArray(lesson.questions)) continue;
+
+      if (lesson.status === 'reviewed') {
+        reviewedLessons += 1;
+        playableQuestions += lesson.questions.length;
+        check(lesson.questions.length >= 3, `${label}: reviewed lesson ${lesson.id} has at least three questions`);
+        for (const [questionIndex, question] of lesson.questions.entries()) {
+          const qLabel = `${label}: ${lesson.id} question ${questionIndex + 1}`;
+          check(typeof question.prompt === 'string' && question.prompt.trim().length > 0, `${qLabel} has a prompt`);
+          check(Array.isArray(question.options) && question.options.length === 4, `${qLabel} has four options`);
+          check(Number.isInteger(question.answer) && question.answer >= 0 && question.answer < 4, `${qLabel} has a valid answer index`);
+        }
+      } else {
+        check(lesson.questions.length === 0, `${label}: queued lesson ${lesson.id} does not publish unreviewed questions`);
+        check(typeof lesson.reviewNote === 'string' && lesson.reviewNote.trim().length > 0, `${label}: queued lesson ${lesson.id} explains its review status`);
+      }
+    }
+  }
+
+  check(reviewedLessons > 0, `${label}: content includes reviewed lessons`);
+  check(playableQuestions > 0, `${label}: content includes playable questions`);
+  if (manifest.source && Number.isInteger(manifest.source.worldCount)) {
+    check(manifest.source.worldCount === worldIds.size, `${label}: source world count matches content files`);
+  }
+  if (manifest.source && Number.isInteger(manifest.source.lessonCount)) {
+    check(manifest.source.lessonCount === totalLessons, `${label}: source lesson count matches content files`);
+  }
+}
+
 const catalog = JSON.parse(await readFile(path.join(root, 'games/catalog.json'), 'utf8'));
 check(Array.isArray(catalog), 'catalog is an array');
 check(catalog.length > 0, 'catalog contains at least one cabinet');
@@ -70,6 +154,8 @@ for (const [index, game] of catalog.entries()) {
       check(syntax.status === 0, `${label}: ${local} passes node --check`);
     }
   }
+
+  await validateContent(game, label);
 }
 
 check(playable > 0, 'at least one cabinet is playable');

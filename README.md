@@ -20,6 +20,21 @@ The first larger adventure cabinet. Players steer across three lanes, collect si
 
 The campaign preserves Larrina's original **Collect · Battle · Conquer** structure, city roster, bosses, rewards, Hero Collection, and educational question system. Campaign progress is saved separately on the device, while completed city battles award shared LarriVerse XP and fictional KC.
 
+### Brain Sweat Life Skills — Alpha
+
+The first content-driven learning cabinet and reusable lesson engine. It preserves the recovered prototype's six-world, 24-lesson organization:
+
+- Cooking & Food Sovereignty
+- Body & Health
+- Law & Your Rights
+- Home Skills
+- Survival Skills
+- Mind & Emotions
+
+Twelve reviewed lessons are playable at launch with 60 questions, saved personal bests, lesson completion, world mastery, search, filters, random lesson selection, and 3·6·9 rewards. The remaining lessons stay visible as **Review queued** rather than silently publishing medical, legal, electrical, foraging, or other high-stakes material.
+
+The recovered source contains 239 readable questions and one malformed media-literacy question. The malformed item is excluded and documented instead of being silently rewritten.
+
 All playable cabinets connect to the shared arcade profile:
 
 - device-local player XP and levels
@@ -66,13 +81,15 @@ const result = LarriVerseArcade.award('game-id', {
   score: 90,
   completed: true,
   metrics: {
-    bossesDefeated: 1,
-    itemsCollected: 9
+    lessonsCompleted: 1,
+    correctAnswers: 5
   }
 });
 ```
 
 Arcade SDK v2 keeps old v1 saves compatible and adds validated, cumulative per-game metrics. The SDK stores data in the browser with `localStorage`. No account, cloud database, real currency, or blockchain is involved.
+
+Brain Sweat separates its content from the quiz engine through a JSON manifest and one file per world. This lets later content reviews unlock or revise lessons without rebuilding the interface.
 
 Larger React and React Native projects stay in source-lab folders until they receive independent build pipelines.
 
@@ -91,6 +108,8 @@ It checks:
 - local CSS and JavaScript dependencies referenced by playable games
 - shared SDK load order before cabinet code
 - JavaScript syntax for the lobby, shared SDK, and playable cabinet scripts
+- structured learning manifests, world and lesson IDs, review states, question schemas, answer indexes, and source counts
+- queued lessons contain no unpublished questions and explain why review is required
 - lobby integration and playable-cabinet counts
 
 Pull requests run the same checks through `.github/workflows/validate.yml`.
@@ -107,6 +126,8 @@ The workflow in `.github/workflows/pages.yml` deploys the repository root whenev
 - Treat `$KIDZ` / KZC / KC as fictional in-app rewards, not real cryptocurrency.
 - Keep child-facing experiences free from ads, purchases, public profiles, and gambling mechanics.
 - Clearly separate creative themes from medical or scientific claims.
+- Keep high-stakes learning material behind visible review gates until qualified review is complete.
+- Document malformed or excluded source content instead of silently changing it.
 - Parent-review child-facing prototypes before public release.
 
 ## License
