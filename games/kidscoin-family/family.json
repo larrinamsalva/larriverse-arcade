@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "file": "KidsCoin_Family_App (5).html",
+    "profileSystem": true,
+    "parentMode": true,
+    "approvalQueue": true,
+    "customTasks": true,
+    "customRewards": true,
+    "messages": true,
+    "notifications": true,
+    "graceDays": true,
+    "streakMilestones": [3, 7, 14, 30],
+    "note": "The recovered prototype combines family profiles, parent approvals, tasks, rewards, messages, streaks and learning with simulated token-price, wallet-address and staking language. LarriVerse preserves the family system while replacing the pretend-finance layer."
+  },
+  "boundaries": {
+    "rewardUnit": "fictional-family-kc",
+    "deviceLocal": true,
+    "parentControlled": true,
+    "realMoney": false,
+    "cryptocurrency": false,
+    "blockchain": false,
+    "marketPrice": false,
+    "staking": false,
+    "purchases": false,
+    "publicProfiles": false,
+    "cloudAccounts": false,
+    "ads": false,
+    "gambling": false,
+    "pinNote": "The parent PIN is a convenience lock on this browser, not strong account security."
+  },
+  "avatars": ["🦁", "🦋", "🐉", "🦊", "🐬", "🦄", "🐼", "🦅"],
+  "categories": [
+    {"id":"forge","icon":"⚔️","title":"The Forge","subtitle":"Daily independence"},
+    {"id":"shield","icon":"🛡️","title":"The Shield","subtitle":"Home and helping"},
+    {"id":"scrolls","icon":"📖","title":"The Scrolls","subtitle":"Learning and wisdom"},
+    {"id":"quest","icon":"💪","title":"The Quest","subtitle":"Movement and kindness"}
+  ],
+  "tasks": [
+    {"id":"morning-routine","category":"forge","icon":"🌅","title":"Morning routine","description":"Get dressed and ready for the day.","difficulty":"easy","kc":3,"xp":6},
+    {"id":"brush-teeth","category":"forge","icon":"🪥","title":"Brush teeth","description":"Complete the family tooth-brushing routine.","difficulty":"easy","kc":3,"xp":6},
+    {"id":"organize-space","category":"forge","icon":"🎒","title":"Organize your space","description":"Put personal items where they belong.","difficulty":"medium","kc":6,"xp":12},
+    {"id":"make-bed","category":"shield","icon":"🛏️","title":"Make the bed","description":"Straighten blankets and pillows.","difficulty":"easy","kc":3,"xp":6},
+    {"id":"help-dishes","category":"shield","icon":"🍽️","title":"Help with dishes","description":"Load, unload or safely put away dishes.","difficulty":"medium","kc":6,"xp":12},
+    {"id":"take-trash","category":"shield","icon":"🗑️","title":"Take out trash","description":"Handle the assigned household bin.","difficulty":"medium","kc":6,"xp":12},
+    {"id":"reading-time","category":"scrolls","icon":"📚","title":"Reading time","description":"Read or listen to a family-approved book.","difficulty":"easy","kc":3,"xp":6},
+    {"id":"math-practice","category":"scrolls","icon":"➗","title":"Math practice","description":"Finish the assigned math practice.","difficulty":"medium","kc":6,"xp":12},
+    {"id":"project-finish","category":"scrolls","icon":"🔬","title":"Finish a learning project","description":"Complete the agreed project or study goal.","difficulty":"hard","kc":9,"xp":18},
+    {"id":"movement-break","category":"quest","icon":"🏃","title":"Movement break","description":"Do the family-approved movement activity.","difficulty":"easy","kc":3,"xp":6},
+    {"id":"help-someone","category":"quest","icon":"🤝","title":"Help someone","description":"Complete one useful act for the household.","difficulty":"medium","kc":6,"xp":12},
+    {"id":"kindness-quest","category":"quest","icon":"💛","title":"Kindness quest","description":"Do one thoughtful action without being asked twice.","difficulty":"hard","kc":9,"xp":18}
+  ],
+  "lessons": [
+    {"id":"earn-before-spend","icon":"🌱","title":"Earn before spending","summary":"A balance grows when rewards are earned before they are redeemed.","kc":3,"xp":9,"question":"Which action adds Family KC to your ledger?","options":["A parent approves completed work","Opening the app many times","Changing your avatar","Guessing a password"],"answer":0},
+    {"id":"needs-and-wants","icon":"⚖️","title":"Needs and wants","summary":"Needs keep daily life working; wants are extras that can wait.","kc":3,"xp":9,"question":"Which is usually a need?","options":["Safe food","A second game controller","A deluxe costume","A later bedtime"],"answer":0},
+    {"id":"saving-goal","icon":"🎯","title":"Saving for a goal","summary":"A bigger reward may take several smaller earning steps.","kc":3,"xp":9,"question":"What helps reach a 36 KC goal?","options":["Keep part of each reward","Spend every reward immediately","Delete the ledger","Ask strangers for money"],"answer":0},
+    {"id":"read-the-ledger","icon":"📒","title":"Read the ledger","summary":"Earn entries add to the balance and redemption entries subtract from it.","kc":3,"xp":9,"question":"What does a negative ledger entry mean here?","options":["Family KC was redeemed","Real money was lost","A bank charged interest","Cryptocurrency was sold"],"answer":0},
+    {"id":"plan-a-reward","icon":"🧭","title":"Plan a reward","summary":"Compare the balance with the reward cost before requesting it.","kc":3,"xp":9,"question":"You have 18 KC and a reward costs 27 KC. What is true?","options":["You need 9 more KC","You can buy it with cash","The app lends the difference","The price changes randomly"],"answer":0},
+    {"id":"family-kc-boundary","icon":"🔒","title":"Family KC is pretend","summary":"Family KC has no cash value and never leaves this browser.","kc":3,"xp":9,"question":"What can Family KC be used for?","options":["Parent-approved family rewards","Buying cryptocurrency","Online gambling","Sending money to strangers"],"answer":0}
+  ],
+  "rewards": [
+    {"id":"choose-dinner","icon":"🍕","title":"Choose tonight's dinner","description":"Choose from parent-approved dinner options.","cost":27,"category":"privilege"},
+    {"id":"movie-pick","icon":"🎬","title":"Movie night pick","description":"Pick from the family's approved movie list.","cost":27,"category":"fun"},
+    {"id":"extra-screen","icon":"📱","title":"Extra screen time","description":"A parent decides the amount and timing.","cost":36,"category":"privilege"},
+    {"id":"stay-up","icon":"🌙","title":"Later bedtime pass","description":"A parent decides whether tonight works.","cost":45,"category":"privilege"},
+    {"id":"new-book","icon":"📖","title":"New book choice","description":"Choose a book within the family plan.","cost":54,"category":"reward"},
+    {"id":"art-time","icon":"🎨","title":"Special art supplies","description":"Choose a parent-approved creative item or activity.","cost":72,"category":"reward"},
+    {"id":"board-game","icon":"🎲","title":"Board game night","description":"Pick the family's game for the evening.","cost":45,"category":"fun"},
+    {"id":"special-outing","icon":"🎡","title":"Special day-out idea","description":"Submit an outing idea for parent planning and approval.","cost":108,"category":"premium"}
+  ],
+  "milestones": [
+    {"days":3,"icon":"🔥","title":"3-Day Fire","bonusKc":9,"bonusXp":50,"multiplier":1.5},
+    {"days":7,"icon":"⚡","title":"Week Warrior","bonusKc":27,"bonusXp":100,"multiplier":2},
+    {"days":14,"icon":"💎","title":"2-Week Diamond","bonusKc":54,"bonusXp":200,"multiplier":2.5},
+    {"days":30,"icon":"🏆","title":"Month Champion","bonusKc":99,"bonusXp":500,"multiplier":3}
+  ]
+}
