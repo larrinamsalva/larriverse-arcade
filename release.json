@@ -17,6 +17,16 @@
     "requestsLocation": false,
     "capturesScreenshots": false
   },
+  "browserQa": {
+    "runner": "Playwright Chromium 1.55.0",
+    "projects": ["desktop-chromium", "mobile-chromium"],
+    "viewports": ["1440x900", "390x844"],
+    "capturesTemporaryScreenshots": true,
+    "grantsLocation": false,
+    "uploadsApplicationData": false,
+    "humanApprovalRequired": true,
+    "documentation": "docs/BROWSER-QA.md"
+  },
   "cabinets": [
     {
       "id": "kidscoin-family",
