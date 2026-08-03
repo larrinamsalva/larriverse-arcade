@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10213c">
+  <meta name="description" content="Brain Sweat Expanded — reviewed hands-on skill worlds inside LarriVerse Arcade.">
+  <title>Brain Sweat Expanded · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="back-link" href="../../index.html">← Arcade</a>
+    <div class="brand"><span>🧠</span><div><strong>Brain Sweat Expanded</strong><small>Hands-on Skill Lab</small></div></div>
+    <button class="icon-button" id="reportButton" aria-haspopup="dialog" aria-controls="reportDialog" title="Skill tree and parent report">📊</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Truth-based practice · review-first release</p>
+        <h1>Build skills without pretending a game makes you licensed.</h1>
+        <p>Larrina’s original hub contains 14 practical worlds and 219 activities. Six reviewed areas are playable now; higher-risk repair, medical, electrical, emergency, animal-care, and trade content remains visible but locked for qualified review.</p>
+        <div class="hero-actions">
+          <button class="primary" id="continueButton">Continue practicing</button>
+          <button class="secondary" id="surpriseButton">Surprise safe challenge</button>
+        </div>
+      </div>
+      <div class="workbench" aria-hidden="true"><span>🔧</span><span>💰</span><span>💻</span><span>🌳</span><i></i></div>
+    </section>
+
+    <section class="profile-strip" aria-label="Player progress">
+      <div class="profile"><span id="sharedAvatar">🌟</span><div><b id="sharedLevel">Level 1</b><small id="sharedKc">0 KC</small></div></div>
+      <article><b id="readyWorlds">6</b><span>reviewed worlds</span></article>
+      <article><b id="readyActivities">69</b><span>playable activities</span></article>
+      <article><b id="completedActivities">0</b><span>completed</span></article>
+      <article><b id="dayRhythm">0</b><span>day rhythm</span></article>
+    </section>
+
+    <section class="notice-card">
+      <span>🛡️</span>
+      <div><strong>Practice is not permission</strong><p>Progress here measures play inside this browser. It does not certify real-world competence, replace adult supervision, or authorize electrical, medical, emergency, roofing, welding, plumbing, HVAC, animal-care, or other hazardous work.</p></div>
+    </section>
+
+    <section class="quest-panel">
+      <div class="section-head"><div><p class="eyebrow">Four safe daily quests</p><h2>Today’s build list</h2></div><span id="questDate"></span></div>
+      <div class="quest-grid" id="questGrid"></div>
+    </section>
+
+    <section class="controls" aria-label="World filters">
+      <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Search all 14 skill worlds…" aria-label="Search skill worlds"></label>
+      <div class="filters" id="filters">
+        <button class="active" data-filter="all">All worlds</button>
+        <button data-filter="reviewed">Ready</button>
+        <button data-filter="review-queued">Review queued</button>
+      </div>
+    </section>
+
+    <section class="guides">
+      <div class="section-head"><div><p class="eyebrow">Source guide team</p><h2>Choose your helper</h2></div><small>Saved only in this browser</small></div>
+      <div class="guide-row" id="guideRow"></div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><p class="eyebrow">Original skill map</p><h2>Your skill worlds</h2></div><small id="sourceSummary">Loading source map…</small></div>
+      <div class="world-grid" id="worldGrid" aria-live="polite"><p class="loading">Opening the workshop…</p></div>
+    </section>
+  </main>
+
+  <dialog id="worldDialog" class="dialog-card world-dialog">
+    <div class="dialog-shell">
+      <header class="dialog-head">
+        <button class="icon-button" id="closeWorld" aria-label="Close world">×</button>
+        <div><p id="worldMode">Skill world</p><h2 id="worldTitle">World</h2></div>
+        <span id="worldProgress">0 / 0</span>
+      </header>
+      <div class="tier-tabs" id="tierTabs"></div>
+      <section id="lockedPanel" class="locked-panel" hidden></section>
+      <section id="challengePanel" class="challenge-panel" hidden>
+        <div class="scenario-top"><span id="scenarioNumber">Challenge 1</span><span id="rewardBadge">+3 KC · +6 XP</span></div>
+        <h3 id="scenarioTitle"></h3>
+        <p id="scenarioDescription"></p>
+        <div class="hint-box"><span id="guideIcon">🦊</span><div><b id="guideName">Rufus says</b><p id="scenarioHint"></p></div></div>
+        <div id="challengeBody"></div>
+        <p class="feedback" id="feedback" aria-live="polite"></p>
+      </section>
+      <footer class="dialog-footer">
+        <button class="secondary" id="previousChallenge">← Previous</button>
+        <button class="primary" id="nextChallenge">Next challenge →</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <dialog id="resultDialog" class="dialog-card result-dialog">
+    <div class="result-shell">
+      <span class="result-icon" id="resultIcon">🌱</span>
+      <p class="eyebrow">Challenge practiced</p>
+      <h2 id="resultTitle">Workbench win</h2>
+      <p id="resultText"></p>
+      <div class="reward-strip"><b id="resultKc">+0 KC</b><b id="resultXp">+0 XP</b></div>
+      <div id="resultUnlocks" class="unlock-list"></div>
+      <div class="result-actions"><button class="secondary" id="resultWorlds">Back to worlds</button><button class="primary" id="resultNext">Next challenge</button></div>
+    </div>
+  </dialog>
+
+  <dialog id="reportDialog" class="dialog-card report-dialog">
+    <form method="dialog" class="report-shell">
+      <header class="dialog-head"><button class="icon-button" value="cancel" aria-label="Close report">×</button><div><p>Device-local report</p><h2>Skill tree & source audit</h2></div></header>
+      <div class="report-note"><b>Important:</b> Percentages show completed reviewed activities only. They are not grades, job qualifications, medical assessments, or safety clearances.</div>
+      <div class="report-grid" id="reportGrid"></div>
+      <section class="audit-box" id="auditBox"></section>
+      <button class="primary" value="done">Close report</button>
+    </form>
+  </dialog>
+
+  <noscript>This cabinet needs JavaScript enabled.</noscript>
+  <script src="../../assets/arcade-sdk.js"></script>
+  <script src="loader.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

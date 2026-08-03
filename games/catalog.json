@@ -16,12 +16,14 @@
     "title": "Brain Sweat Expanded",
     "icon": "🧠",
     "category": "Life skills",
-    "desc": "A bright, hands-on learning world for practical skills, choices, tools, and confidence.",
+    "desc": "Practice 69 reviewed activities across six of the original fourteen hands-on skill worlds while higher-risk tiers remain visibly review gated.",
     "featured": true,
-    "status": "Recovered prototype",
-    "available": false,
+    "status": "Playable alpha",
+    "available": true,
     "href": "games/brain-sweat-expanded/index.html",
-    "source": "brain_sweat_full_expanded.html"
+    "source": "brain_sweat_full_expanded.html",
+    "integration": "arcade-sdk-v2",
+    "activities": "games/brain-sweat-expanded/activities.json"
   },
   {
     "id": "brain-sweat-life-skills",
