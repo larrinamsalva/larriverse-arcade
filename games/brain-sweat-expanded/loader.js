@@ -2,6 +2,7 @@
   'use strict';
   const nativeFetch = window.fetch.bind(window);
   const sourceIcons = { caregiving: '❤️', retail: '🛒', community: '🤝', cooking: '🍳' };
+  const sourceOrder = ['plumbing', 'checkbook', 'voltage', 'caregiving', 'retail', 'welding', 'roofing', 'hvac', 'landscaping', 'community', 'emergency', 'cooking', 'farming', 'coding'];
 
   window.fetch = async (resource, options) => {
     const target = typeof resource === 'string' ? resource : resource?.url || '';
@@ -19,7 +20,9 @@
       if (!response.ok) throw new Error(`Could not load ${file} (${response.status})`);
       return response.json();
     }));
-    const worlds = lists.flat().map(world => ({ ...world, icon: world.icon || sourceIcons[world.id] || '🧰' }));
+    const worlds = lists.flat()
+      .map(world => ({ ...world, icon: world.icon || sourceIcons[world.id] || '🧰' }))
+      .sort((a, b) => sourceOrder.indexOf(a.id) - sourceOrder.indexOf(b.id));
     return new Response(JSON.stringify({ ...core, worlds }), { status: 200, headers: { 'content-type': 'application/json' } });
   };
 })();
