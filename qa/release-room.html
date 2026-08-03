@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1024">
+  <meta name="description" content="Local-only release evidence handoff for LarriVerse Arcade 1.0.">
+  <title>LarriVerse Release Room</title>
+  <link rel="stylesheet" href="release-room.css">
+</head>
+<body>
+  <a class="skip" href="#evidence">Skip to evidence</a>
+  <main class="shell">
+    <nav class="nav" aria-label="Release tools">
+      <a href="../index.html">← Arcade</a>
+      <a href="readiness.html">Readiness</a>
+      <a href="index.html">Device QA</a>
+      <a href="evidence-preflight.html">Preflight</a>
+      <a href="release-approval.html">Final approval</a>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow">Phase 16 · evidence intake</p>
+      <h1>One room for the final handoff.</h1>
+      <p>Confirm the deployed build, load the three human evidence files, and export one tamper-evident bundle for the final approval console.</p>
+      <div class="boundary" role="note">
+        <strong>No uploads. No automatic approval. No tag creation.</strong>
+        <span>The files stay in this browser tab and the bundle remains private until you choose where to save it.</span>
+      </div>
+    </header>
+
+    <section class="panel" aria-labelledby="deploymentTitle">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">Step 1</p>
+          <h2 id="deploymentTitle">Verify the deployed candidate</h2>
+        </div>
+        <button id="checkDeployment" type="button">Run deployment check</button>
+      </div>
+      <div class="metrics" aria-live="polite">
+        <div><small>Environment</small><b id="secureState">checking</b></div>
+        <div><small>Deployment</small><b id="deploymentState">checking</b></div>
+        <div><small>Cabinet routes</small><b id="routeState">0/8</b></div>
+        <div><small>Private paths</small><b id="privateState">checking</b></div>
+      </div>
+      <dl class="identity">
+        <div><dt>Source commit</dt><dd><code id="sourceCommit">unknown</code></dd></div>
+        <div><dt>Built</dt><dd id="builtAt">unknown</dd></div>
+        <div><dt>Workflow run</dt><dd><a id="workflowRun" href="#" aria-disabled="true">unavailable</a></dd></div>
+        <div><dt>Release</dt><dd id="releaseIdentity">unknown</dd></div>
+      </dl>
+      <p id="deploymentMessage" class="status" role="status">Checking the same-origin deployment identity…</p>
+    </section>
+
+    <section class="panel" aria-labelledby="humanTitle">
+      <p class="eyebrow">Step 2</p>
+      <h2 id="humanTitle">Complete the human work</h2>
+      <div class="steps">
+        <a href="index.html"><span>1</span><strong>Desktop QA</strong><small>Eight routes, eight focus tasks, six device checks.</small></a>
+        <a href="index.html"><span>2</span><strong>Physical-phone QA</strong><small>Real touch-capable phone, not browser emulation.</small></a>
+        <a id="galleryAction" href="#"><span>3</span><strong>Gallery review</strong><small>Download the latest Browser QA review artifact in GitHub Actions.</small></a>
+      </div>
+    </section>
+
+    <section id="evidence" class="panel" aria-labelledby="evidenceTitle">
+      <p class="eyebrow">Step 3</p>
+      <h2 id="evidenceTitle">Load the three evidence files</h2>
+      <div class="imports">
+        <label>Gallery approval JSON<input id="galleryFile" type="file" accept="application/json,.json"><span id="galleryState">Not loaded</span></label>
+        <label>Desktop QA JSON<input id="desktopFile" type="file" accept="application/json,.json"><span id="desktopState">Not loaded</span></label>
+        <label>Physical-phone QA JSON<input id="phoneFile" type="file" accept="application/json,.json"><span id="phoneState">Not loaded</span></label>
+      </div>
+      <ul id="issues" class="issues"><li>No evidence checked yet.</li></ul>
+    </section>
+
+    <section class="handoff" aria-live="polite">
+      <div><small>Deployment</small><b id="deploymentSummary">blocked</b></div>
+      <div><small>Gallery</small><b id="gallerySummary">missing</b></div>
+      <div><small>Desktop</small><b id="desktopSummary">missing</b></div>
+      <div><small>Phone</small><b id="phoneSummary">missing</b></div>
+      <button id="exportBundle" type="button" disabled>Export evidence bundle</button>
+    </section>
+
+    <section class="panel next" aria-labelledby="nextTitle">
+      <p class="eyebrow">Step 4</p>
+      <h2 id="nextTitle">Make the human decision separately</h2>
+      <p>The bundle proves file identity and structural compatibility. It does not approve the release. Import it into the final approval console, complete the six human confirmations, and export the final approval JSON only after the testing is genuinely complete.</p>
+      <a id="approvalLink" class="primary" href="release-approval.html" aria-disabled="true">Open final approval console</a>
+      <p id="status" class="status" role="status">The release handoff is blocked.</p>
+    </section>
+
+    <footer>The evidence bundle schema is <code>larriverse-evidence-bundle</code>. The release workflow accepts only <code>larriverse-release-approval</code> committed with the exact approved screenshots.</footer>
+  </main>
+  <script src="evidence-contract.js"></script>
+  <script src="release-room.js"></script>
+</body>
+</html>
