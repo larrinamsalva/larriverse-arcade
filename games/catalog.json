@@ -28,12 +28,14 @@
     "title": "Brain Sweat Life Skills",
     "icon": "🛠️",
     "category": "Life skills",
-    "desc": "Quiz-driven lessons across real-world skill worlds with KZC rewards.",
-    "featured": false,
-    "status": "Recovered prototype",
-    "available": false,
+    "desc": "Explore six life-skill worlds, master 12 reviewed lessons, save progress, and earn shared 3·6·9 rewards.",
+    "featured": true,
+    "status": "Playable alpha",
+    "available": true,
     "href": "games/brain-sweat-life-skills/index.html",
-    "source": "brain_sweat_life_skills_expansion.html"
+    "source": "brain_sweat_life_skills_expansion.html",
+    "integration": "arcade-sdk-v2",
+    "content": "games/brain-sweat-life-skills/content-manifest.json"
   },
   {
     "id": "bubble-resonance-phi369",
