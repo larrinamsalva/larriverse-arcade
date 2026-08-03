@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "file": "chill_brain_rewards_onboarding.html",
+    "onboardingSteps": 6,
+    "profilePaths": 4,
+    "avatarCount": 8,
+    "skillTracks": 6,
+    "badgeConcepts": 12,
+    "note": "Mission names, profile paths, avatars, onboarding structure, skill labels, and badge vocabulary are grounded in the recovered prototype. The interactive timer, accessibility system, generated ambience, and save model are new LarriVerse integration work."
+  },
+  "privacy": {
+    "storage": "device-local",
+    "publicProfiles": false,
+    "cloudAccounts": false,
+    "note": "Names, ages, settings, and progress stay in this browser only."
+  },
+  "audio": {
+    "defaultEnabled": false,
+    "kind": "simple-generated-ambience",
+    "medicalClaims": false,
+    "note": "The recovered prototype references Hemi-Sync. This cabinet does not include Hemi-Sync audio or claim therapeutic effects. Optional sound is a simple locally generated ambience."
+  },
+  "avatars": ["🌱", "🌊", "🦋", "⭐", "🌸", "🔮", "🌿", "⚡"],
+  "profiles": [
+    {"id":"little","title":"Little Sprout","icon":"🌱","ages":"4–6","description":"Short sessions · gentle worlds","recommendedMission":"leaf-breathing"},
+    {"id":"explorer","title":"Explorer","icon":"🌊","ages":"7–9","description":"All worlds · focus practice","recommendedMission":"wave-breathing"},
+    {"id":"challenger","title":"Challenger","icon":"⚡","ages":"10–12","description":"Chaos Arena · steady attention","recommendedMission":"chaos-shield"},
+    {"id":"sleeper","title":"Dreamer","icon":"🌙","ages":"Any age","description":"Sleep-journey focus · gentle pacing","recommendedMission":"sleep-moon-journey"}
+  ],
+  "skills": [
+    {"id":"calmControl","title":"Calm control","icon":"🧘"},
+    {"id":"focusPower","title":"Focus power","icon":"🎯"},
+    {"id":"stillBody","title":"Still body","icon":"🌳"},
+    {"id":"breathRhythm","title":"Breath rhythm","icon":"🌊"},
+    {"id":"chaosShield","title":"Chaos shield","icon":"🛡️"},
+    {"id":"soundExplorer","title":"Sound explorer","icon":"🎵"}
+  ],
+  "missions": [
+    {
+      "id":"leaf-breathing","name":"Leaf Breathing","world":"Still Forest","icon":"🌳","durationSeconds":180,"sourceXp":25,"kc":6,
+      "skillWeights":{"calmControl":2,"stillBody":2,"breathRhythm":3},
+      "steps":["Breathe in for 4 slow counts","Hold gently for 2","Out for 6 — long and slow","Repeat 5 times"],
+      "cue":{"inhale":4,"hold":2,"exhale":6,"rest":0}
+    },
+    {
+      "id":"wave-breathing","name":"Wave Breathing","world":"Calm Ocean","icon":"🌊","durationSeconds":240,"sourceXp":30,"kc":6,
+      "skillWeights":{"calmControl":2,"focusPower":1,"breathRhythm":3},
+      "steps":["In for 4 — wave rises","Hold for 4 — wave at peak","Out for 4 — wave falls back","Feel the rhythm. You are the ocean."],
+      "cue":{"inhale":4,"hold":4,"exhale":4,"rest":0}
+    },
+    {
+      "id":"chaos-shield","name":"Chaos Shield","world":"Chaos Arena","icon":"🛡️","durationSeconds":180,"sourceXp":55,"kc":9,
+      "skillWeights":{"calmControl":1,"focusPower":3,"stillBody":1,"chaosShield":3,"soundExplorer":1},
+      "steps":["Close eyes and breathe steady","Notice the optional background sounds","Stay still — keep breathing","Return attention gently when it wanders"],
+      "cue":{"inhale":4,"hold":0,"exhale":4,"rest":2}
+    },
+    {
+      "id":"sleep-moon-journey","name":"Sleep Moon Journey","world":"Sleep Journey","icon":"🌙","durationSeconds":300,"sourceXp":40,"kc":9,
+      "skillWeights":{"calmControl":3,"stillBody":2,"breathRhythm":1,"soundExplorer":1},
+      "steps":["Lie or sit comfortably","Close eyes and picture a warm cloud","Follow the gentle story","Let rest come naturally"],
+      "cue":{"inhale":4,"hold":0,"exhale":6,"rest":2}
+    }
+  ],
+  "badges": [
+    {"id":"welcome-explorer","name":"Welcome Explorer","icon":"🏅","rule":"onboarding"},
+    {"id":"first-calm","name":"First Calm","icon":"🧘","rule":"sessions:1"},
+    {"id":"seven-day-streak","name":"7 Day Streak","icon":"🔥","rule":"streak:7"},
+    {"id":"wave-master","name":"Wave Master","icon":"🌊","rule":"mission:wave-breathing"},
+    {"id":"forest-still","name":"Forest Still","icon":"🌱","rule":"mission:leaf-breathing"},
+    {"id":"bloom-breath","name":"Bloom Breath","icon":"🌸","rule":"breathCycles:9"},
+    {"id":"tone-tuner","name":"Tone Tuner","icon":"🎵","rule":"soundSessions:3"},
+    {"id":"star-gazer","name":"Star Gazer","icon":"⭐","rule":"sessions:6"},
+    {"id":"mind-master","name":"Mind Master","icon":"🧠","rule":"sessions:9"},
+    {"id":"chaos-hero","name":"Chaos Hero","icon":"🛡️","rule":"mission:chaos-shield"},
+    {"id":"dream-walker","name":"Dream Walker","icon":"🌙","rule":"mission:sleep-moon-journey"},
+    {"id":"crystal-mind","name":"Crystal Mind","icon":"💎","rule":"allMissions"}
+  ]
+}
