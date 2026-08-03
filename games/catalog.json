@@ -78,12 +78,13 @@
     "title": "Road Trip Quest",
     "icon": "🚗",
     "category": "Adventure",
-    "desc": "A road-trip arcade adventure with stops, challenges, fuel, XP, and collectibles.",
+    "desc": "Collect roadside power items, answer subject questions, defeat eight city bosses, and build a persistent Hero Collection.",
     "featured": true,
-    "status": "Recovered prototype",
-    "available": false,
+    "status": "Playable alpha",
+    "available": true,
     "href": "games/road-trip-quest/index.html",
-    "source": "road-trip-quest (2).html"
+    "source": "road-trip-quest (2).html",
+    "integration": "arcade-sdk-v2"
   },
   {
     "id": "road-trip-quest-gps",

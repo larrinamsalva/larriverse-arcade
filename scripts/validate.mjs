@@ -40,6 +40,8 @@ for (const [index, game] of catalog.entries()) {
 
   if (!game.available) continue;
   playable += 1;
+  check(typeof game.integration === 'string' && /^arcade-sdk-v\d+$/.test(game.integration), `${label}: declares an arcade SDK integration version`);
+
   const htmlExists = await exists(game.href);
   check(htmlExists, `${label}: playable file exists at ${game.href}`);
   if (!htmlExists) continue;
@@ -48,13 +50,16 @@ for (const [index, game] of catalog.entries()) {
   check(/^<!doctype html>/i.test(html.trim()), `${label}: playable file has a doctype`);
   check(/<title>.+<\/title>/is.test(html), `${label}: playable file has a title`);
   check(/<\/html>\s*$/i.test(html), `${label}: playable file closes the document`);
+  check(html.includes('../../index.html'), `${label}: provides a route back to the arcade lobby`);
 
-  const refs = [
-    ...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi),
-    ...html.matchAll(/<link[^>]+href=["']([^"']+)["']/gi)
-  ].map(match => match[1]);
+  const scriptRefs = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)].map(match => match[1]);
+  const styleRefs = [...html.matchAll(/<link[^>]+href=["']([^"']+)["']/gi)].map(match => match[1]);
+  const sdkPosition = scriptRefs.findIndex(reference => reference.endsWith('assets/arcade-sdk.js'));
+  const firstGameScript = scriptRefs.findIndex(reference => !reference.endsWith('assets/arcade-sdk.js') && !/^(?:https?:|data:)/i.test(reference));
+  check(sdkPosition >= 0, `${label}: loads the shared arcade SDK`);
+  check(firstGameScript < 0 || sdkPosition < firstGameScript, `${label}: loads the SDK before cabinet code`);
 
-  for (const reference of refs) {
+  for (const reference of [...scriptRefs, ...styleRefs]) {
     const local = safeLocalPath(game.href, reference);
     check(local !== false, `${label}: ${reference} stays inside the repository`);
     if (!local) continue;
@@ -76,10 +81,10 @@ for (const script of ['assets/arcade-sdk.js', 'assets/arcade.js']) {
 }
 
 const lobby = await readFile(path.join(root, 'index.html'), 'utf8');
-const sdkPosition = lobby.indexOf('assets/arcade-sdk.js');
+const lobbySdkPosition = lobby.indexOf('assets/arcade-sdk.js');
 const lobbyPosition = lobby.indexOf('assets/arcade.js');
-check(sdkPosition >= 0, 'lobby loads the arcade SDK');
-check(lobbyPosition > sdkPosition, 'lobby loads the SDK before arcade.js');
+check(lobbySdkPosition >= 0, 'lobby loads the arcade SDK');
+check(lobbyPosition > lobbySdkPosition, 'lobby loads the SDK before arcade.js');
 check(lobby.includes('id="playableCount"'), 'lobby displays the playable cabinet count');
 
 if (failures.length) {

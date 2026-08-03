@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f0c29">
+  <meta name="description" content="Road Trip Quest — collect road items, answer questions, defeat city bosses, and recruit heroes across America.">
+  <title>Road Trip Quest | LarriVerse Arcade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+  <main id="app">
+    <section class="screen active" id="titleScreen" aria-labelledby="gameTitle">
+      <div class="stars" aria-hidden="true"></div>
+      <a class="arcade-link" href="../../index.html">← LarriVerse Arcade</a>
+      <div class="title-card">
+        <p class="eyebrow">Collect · Battle · Conquer</p>
+        <h1 id="gameTitle">Road Trip<br><span>Quest!</span></h1>
+        <div class="road-demo" aria-hidden="true"><span>🌲</span><i></i><b>🚗</b><i></i><span>⛰️</span></div>
+        <p>Collect power items as you drive, answer learning questions, defeat eight city bosses, and build your Hero Collection.</p>
+        <button class="primary" id="startButton">Start the engine 🚗</button>
+        <button class="secondary" id="newTripButton">Reset saved trip</button>
+        <div class="profile-chip" id="profileChip">Loading player…</div>
+      </div>
+    </section>
+
+    <section class="screen" id="gameScreen" aria-label="Road Trip Quest game">
+      <header class="hud">
+        <a href="../../index.html" aria-label="Return to LarriVerse Arcade">✦</a>
+        <div><small>City</small><strong id="cityHud">New York City</strong></div>
+        <div><small>Score</small><strong id="scoreHud">0</strong></div>
+        <div><small>Items</small><strong id="itemsHud">0</strong></div>
+        <button id="pauseButton" aria-pressed="false">Pause</button>
+      </header>
+
+      <div class="boss-progress" aria-label="Boss meter">
+        <span>Boss power</span><div><i id="bossFill"></i></div><b id="bossValue">0%</b>
+      </div>
+
+      <section class="road-wrap" id="roadWrap">
+        <div class="skyline" id="skyline" aria-hidden="true"></div>
+        <div class="road" id="road" role="application" aria-label="Drive with left and right arrow keys or the lane buttons">
+          <div class="lane-line one"></div><div class="lane-line two"></div>
+          <div class="car" id="car" aria-label="Player car">🚗</div>
+          <div class="road-message" id="roadMessage">Collect items to charge the boss meter!</div>
+        </div>
+        <div class="lane-controls" aria-label="Lane controls">
+          <button id="leftButton" aria-label="Move left">◀</button>
+          <button id="battleButton" disabled>Boss battle <span id="battleReady">60%</span></button>
+          <button id="rightButton" aria-label="Move right">▶</button>
+        </div>
+      </section>
+
+      <nav class="bottom-nav" aria-label="Game panels">
+        <button data-panel="bagPanel">🎒 Bag <span id="bagBadge">0</span></button>
+        <button data-panel="routePanel">🗺️ Route</button>
+        <button data-panel="heroesPanel">🏆 Heroes <span id="heroBadge">0</span></button>
+        <button data-panel="helpPanel">❔ Help</button>
+      </nav>
+    </section>
+
+    <dialog id="questionDialog" class="dialog">
+      <form method="dialog" class="dialog-card" id="questionForm">
+        <p class="eyebrow" id="questionMode">Boss battle</p>
+        <div class="opponents"><div><span>🚗</span><small>You</small><div class="hp"><i id="playerHp"></i></div></div><b>VS</b><div><span id="bossEmoji">🚕</span><small id="bossName">King Cabbie</small><div class="hp"><i id="bossHp"></i></div></div></div>
+        <div class="subject" id="subjectBadge">Math</div>
+        <h2 id="questionText">Question</h2>
+        <div class="item-row" id="battleItems" aria-label="Use a collected item"></div>
+        <div class="answers" id="answers"></div>
+        <p class="feedback" id="feedback" aria-live="polite"></p>
+        <button class="primary next" id="nextQuestion" type="button" hidden>Next round</button>
+      </form>
+    </dialog>
+
+    <dialog id="panelDialog" class="dialog">
+      <section class="dialog-card panel-card">
+        <button class="close" id="closePanel" aria-label="Close panel">×</button>
+        <div id="panelContent"></div>
+      </section>
+    </dialog>
+
+    <dialog id="resultDialog" class="dialog">
+      <section class="dialog-card result-card">
+        <div class="result-icon" id="resultIcon">🏆</div>
+        <p class="eyebrow" id="resultEyebrow">City conquered</p>
+        <h2 id="resultTitle">Victory!</h2>
+        <p id="resultText"></p>
+        <div class="reward-grid" id="rewardGrid"></div>
+        <button class="primary" id="continueButton">Continue trip</button>
+      </section>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+  <script src="../../assets/arcade-sdk.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
