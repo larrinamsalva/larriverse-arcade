@@ -10,11 +10,11 @@
 </head>
 <body>
   <main class="shell">
-    <nav class="nav"><a href="../index.html">← Arcade</a><a href="readiness.html">Deployment readiness</a><a href="index.html">Guided QA</a></nav>
+    <nav class="nav"><a href="../index.html">← Arcade</a><a href="readiness.html">Deployment readiness</a><a href="index.html">Guided QA</a><a href="release-room.html">Release Room</a></nav>
     <header class="hero">
-      <p class="eyebrow">Phase 15 · local evidence rehearsal</p>
+      <p class="eyebrow">Phase 16 · shared evidence contract</p>
       <h1>Check the evidence before approval.</h1>
-      <p>Load the gallery, desktop, and physical-phone JSON files. This page validates them locally and can export a rehearsal summary, but it cannot create release approval.</p>
+      <p>Load the gallery, desktop, and physical-phone JSON files. This page validates them locally with the same contract used by the Release Room and final approval console.</p>
       <div class="boundary"><strong>No uploads. No repository writes. No release decision.</strong><span>Files are read only in this browser tab.</span></div>
     </header>
 
@@ -37,11 +37,13 @@
       <h2>What this proves</h2>
       <p id="status" role="status">Load the three evidence files to begin.</p>
       <ul id="issues"><li>No files checked yet.</li></ul>
+      <a id="releaseRoomLink" class="approval" href="release-room.html" aria-disabled="true">Open Release Room</a>
       <a id="approvalLink" class="approval" href="release-approval.html" aria-disabled="true">Open final approval console</a>
     </section>
 
     <footer>A rehearsal summary uses the schema <code>larriverse-evidence-rehearsal</code>. The release workflow does not accept it as approval.</footer>
   </main>
+  <script src="evidence-contract.js"></script>
   <script src="evidence-preflight.js"></script>
 </body>
 </html>
