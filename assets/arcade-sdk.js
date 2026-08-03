@@ -2,7 +2,7 @@
   'use strict';
 
   const STORAGE_KEY = 'larriverse.arcade.profile.v1';
-  const VERSION = 1;
+  const VERSION = 2;
 
   const freshProfile = () => ({
     version: VERSION,
@@ -18,11 +18,31 @@
     updatedAt: new Date().toISOString()
   });
 
+  function gameDefaults() {
+    return {
+      sessions: 0,
+      completions: 0,
+      highScore: 0,
+      totalScore: 0,
+      catches: 0,
+      metrics: {},
+      lastPlayedAt: null
+    };
+  }
+
   function normalise(value) {
     const base = freshProfile();
-    const profile = value && typeof value === 'object' ? { ...base, ...value } : base;
+    const profile = value && typeof value === 'object' ? { ...base, ...value, version: VERSION } : base;
     profile.games = profile.games && typeof profile.games === 'object' ? profile.games : {};
     profile.achievements = Array.isArray(profile.achievements) ? profile.achievements : [];
+    for (const [gameId, game] of Object.entries(profile.games)) {
+      const safeGame = game && typeof game === 'object' ? game : {};
+      profile.games[gameId] = {
+        ...gameDefaults(),
+        ...safeGame,
+        metrics: safeGame.metrics && typeof safeGame.metrics === 'object' ? safeGame.metrics : {}
+      };
+    }
     return profile;
   }
 
@@ -38,11 +58,11 @@
     const next = normalise(profile);
     next.updatedAt = new Date().toISOString();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    window.dispatchEvent(new CustomEvent('larriverse:profile', { detail: structuredCloneSafe(next) }));
+    window.dispatchEvent(new CustomEvent('larriverse:profile', { detail: clone(next) }));
     return next;
   }
 
-  function structuredCloneSafe(value) {
+  function clone(value) {
     return JSON.parse(JSON.stringify(value));
   }
 
@@ -55,14 +75,22 @@
   }
 
   function getGame(profile, gameId) {
-    return profile.games[gameId] || {
-      sessions: 0,
-      completions: 0,
-      highScore: 0,
-      totalScore: 0,
-      catches: 0,
-      lastPlayedAt: null
+    const existing = profile.games[gameId] && typeof profile.games[gameId] === 'object' ? profile.games[gameId] : {};
+    return {
+      ...gameDefaults(),
+      ...existing,
+      metrics: existing.metrics && typeof existing.metrics === 'object' ? existing.metrics : {}
     };
+  }
+
+  function addMetrics(game, metrics) {
+    if (!metrics || typeof metrics !== 'object' || Array.isArray(metrics)) return;
+    for (const [key, rawValue] of Object.entries(metrics)) {
+      if (!/^[a-z][a-zA-Z0-9]{0,39}$/.test(key)) continue;
+      const value = Number(rawValue);
+      if (!Number.isFinite(value) || value <= 0) continue;
+      game.metrics[key] = (Number(game.metrics[key]) || 0) + value;
+    }
   }
 
   function award(gameId, reward = {}) {
@@ -83,6 +111,7 @@
     game.totalScore += score;
     game.highScore = Math.max(game.highScore, score);
     game.catches += catches;
+    addMetrics(game, reward.metrics);
     game.lastPlayedAt = new Date().toISOString();
 
     let milestoneBonus = 0;
@@ -103,10 +132,12 @@
     if (profile.completedSessions >= 3) unlocked.push(unlock(profile, 'three-is-magic'));
     if (profile.kc >= 36) unlocked.push(unlock(profile, 'coin-spark'));
     if (game.highScore >= 90) unlocked.push(unlock(profile, `${gameId}-score-90`));
+    if ((game.metrics.bossesDefeated || 0) >= 8) unlocked.push(unlock(profile, `${gameId}-campaign-clear`));
 
     const saved = save(profile);
     return {
-      profile: structuredCloneSafe(saved),
+      profile: clone(saved),
+      game: clone(saved.games[gameId]),
       level: levelForXp(saved.xp),
       milestoneBonus,
       unlocked: unlocked.filter(Boolean)
@@ -129,7 +160,7 @@
   function reset() {
     localStorage.removeItem(STORAGE_KEY);
     const profile = freshProfile();
-    window.dispatchEvent(new CustomEvent('larriverse:profile', { detail: structuredCloneSafe(profile) }));
+    window.dispatchEvent(new CustomEvent('larriverse:profile', { detail: clone(profile) }));
     return profile;
   }
 
@@ -137,7 +168,7 @@
     const profile = load();
     const level = levelForXp(profile.xp);
     return {
-      ...structuredCloneSafe(profile),
+      ...clone(profile),
       level,
       nextLevelXp: xpForNextLevel(level)
     };
