@@ -62,6 +62,27 @@
     "qaUrl": "https://larrinamsalva.github.io/larriverse-arcade/qa/",
     "publishesApprovalRecord": false
   },
+  "deployment": {
+    "schema": "larriverse-deployment",
+    "schemaVersion": 1,
+    "manifest": "deployment.json",
+    "generatedAtDeploy": true,
+    "readinessRoute": "qa/readiness.html",
+    "evidencePreflightRoute": "qa/evidence-preflight.html",
+    "documentation": "docs/DEPLOYMENT-REHEARSAL.md",
+    "publishesApprovalRecord": false,
+    "publishesPrivateEvidence": false
+  },
+  "evidenceRehearsal": {
+    "schema": "larriverse-evidence-rehearsal",
+    "schemaVersion": 1,
+    "route": "qa/evidence-preflight.html",
+    "requiredFiles": ["gallery-approval", "desktop-qa", "physical-phone-qa"],
+    "createsReleaseApproval": false,
+    "uploadsData": false,
+    "requestsLocation": false,
+    "documentation": "docs/DEPLOYMENT-REHEARSAL.md"
+  },
   "cabinets": [
     {
       "id": "kidscoin-family",
