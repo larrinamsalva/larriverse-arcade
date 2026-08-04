@@ -9,7 +9,7 @@ const releasePath = path.join(root, 'release.json');
 const releaseText = fs.readFileSync(releasePath, 'utf8');
 const release = JSON.parse(releaseText);
 const files = ['index.html', 'release.json', 'LICENSE'];
-const directories = ['assets', 'games', 'qa', 'docs'];
+const directories = ['assets', 'games', 'passport', 'qa', 'docs'];
 const forbidden = ['.git', '.github', 'node_modules', 'scripts', 'tests', 'artifacts', 'playwright-report', 'test-results'];
 const runningInActions = process.env.GITHUB_ACTIONS === 'true';
 const sourceCommit = process.env.GITHUB_SHA || process.env.LARRIVERSE_SOURCE_SHA || '0'.repeat(40);
@@ -48,6 +48,7 @@ const deployment = {
   releaseManifestSha256: crypto.createHash('sha256').update(releaseText).digest('hex'),
   routes: {
     lobby: 'index.html',
+    progressPassport: 'passport/index.html',
     guidedQa: release.deviceQa.route,
     readiness: release.deployment.readinessRoute,
     evidencePreflight: release.deployment.evidencePreflightRoute,
@@ -76,6 +77,9 @@ for (const required of [
   'index.html',
   'release.json',
   'deployment.json',
+  'passport/index.html',
+  'passport/passport.css',
+  'passport/passport.js',
   'qa/index.html',
   'qa/readiness.html',
   'qa/evidence-contract.js',
