@@ -99,7 +99,7 @@ test.describe('LarriVerse Progress Passport', () => {
 
     await expect(page.locator('.achievement:not(.locked)')).toHaveCount(4);
     await expect(page.locator('#missionHeading')).toContainText('Practice Math');
-    await expect(page.locator('#missionLink')).toHaveAttribute('href', '../games/creature-catcher/');
+    await expect(page.locator('#missionLink')).toHaveAttribute('href', '../games/creature-catcher/index.html');
 
     const summary = await page.evaluate(() => window.LarriVerseProgressPassport.summary());
     expect(summary.schema).toBe('larriverse-progress-passport');
