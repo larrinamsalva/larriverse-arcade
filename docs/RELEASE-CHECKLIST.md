@@ -20,9 +20,12 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Creature Catcher and Road Trip Quest offer Starter, Growing, Challenge, and Mixed paths.
 - [x] Learning-path choice, recent question IDs, and local accuracy stay in browser storage without collecting age.
 - [x] Learning expansion loaders request no location and upload no answers.
-- [x] Progress Passport publishes all eight cabinet stamps, adaptive-learning trails, achievements, level progress, and a suggested next mission.
+- [x] Learning Goals supports six preset goal types, three slots, safe target choices, restart, remove, and clear.
+- [x] Learning Goals counts only progress after the pinned baseline and blocks a fourth goal.
+- [x] Learning Goals stores no free text, deadlines, streaks, grades, family records, or location data and uploads nothing.
+- [x] Progress Passport publishes current goals, all eight cabinet stamps, adaptive-learning trails, achievements, level progress, and a suggested next mission.
 - [x] Progress Passport is read-only, requests no location, uploads no data, and excludes raw family and location records from its summary export.
-- [x] Family Learning Report publishes aggregate strengths, practice opportunities, learning paths, eight cabinet rows, recent activity, and conversation starters.
+- [x] Family Learning Report publishes current goals, aggregate strengths, practice opportunities, learning paths, eight cabinet rows, recent activity, and conversation starters.
 - [x] Family Learning Report requires at least two answers before describing a subject pattern, uses 80% for strengths and below 75% for practice, and explicitly rejects grading, diagnosis, ranking, and certification claims.
 - [x] Family Learning Report is read-only, stores no review notes, requests no location, uploads no data, and excludes raw family and coordinate records from its export.
 - [x] Road Trip Quest GPS defaults to Demo Mode and never saves or uploads coordinates.
@@ -34,6 +37,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Automated Chromium pass covers the lobby and all eight cabinets at 1440×900 and 390×844.
 - [x] Browser automation performs a real profile/settings/reward/backup/restore round trip.
 - [x] Browser automation changes an adaptive learning path, reloads it, and verifies local recent-question memory.
+- [x] Browser automation pins three goals, advances local counters, reloads, verifies completion, checks safe storage and export, restarts one, removes one, and confirms Passport and Report stay read-only.
 - [x] Browser automation seeds a realistic Progress Passport and verifies totals, eight stamps, accuracy, achievements, next mission, and safe export fields.
 - [x] Browser automation seeds a realistic Family Learning Report and verifies strength, practice, neutral subject, eight cabinet rows, recent activity, healthy boundaries, and safe export fields.
 - [x] Browser evidence is captured without granting location permission.
@@ -42,8 +46,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Guided QA exports schema-v2 desktop and schema-v2 physical-phone reports with separate local records.
 - [x] The physical-phone report requires touch capability and six completed device-wide checks.
 - [x] The GitHub Pages workflow validates `main` and publishes only the allowlisted static arcade files.
-- [x] The Pages build publishes `/passport/` and records it in the deployment manifest.
-- [x] The Pages build publishes `/report/` and records it in the deployment manifest.
+- [x] The Pages build publishes `/goals/`, `/passport/`, and `/report/` and records them in the deployment manifest.
 - [x] The Pages build excludes the final release approval record and private evidence files.
 - [x] Every deployed build contains a tamper-evident deployment identity tied to its source commit.
 - [x] Deployment Readiness checks HTTPS, release alignment, eight routes, and private-path exclusion.
@@ -53,7 +56,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] The Release Room creates a private `larriverse-evidence-bundle` that preserves all three original JSON texts and SHA-256 hashes.
 - [x] The evidence bundle identifies the deployed candidate and explicitly cannot create release approval.
 
-Browser evidence does not replace the manual gameplay, real-device, print, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md), [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md), [`DEVICE-QA.md`](DEVICE-QA.md), [`DEPLOYMENT-REHEARSAL.md`](DEPLOYMENT-REHEARSAL.md), [`RELEASE-ROOM.md`](RELEASE-ROOM.md), [`PROGRESS-PASSPORT.md`](PROGRESS-PASSPORT.md), and [`FAMILY-LEARNING-REPORT.md`](FAMILY-LEARNING-REPORT.md) for the exact boundary.
+Browser evidence does not replace the manual gameplay, real-device, print, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md), [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md), [`DEVICE-QA.md`](DEVICE-QA.md), [`DEPLOYMENT-REHEARSAL.md`](DEPLOYMENT-REHEARSAL.md), [`RELEASE-ROOM.md`](RELEASE-ROOM.md), [`LEARNING-GOALS.md`](LEARNING-GOALS.md), [`PROGRESS-PASSPORT.md`](PROGRESS-PASSPORT.md), and [`FAMILY-LEARNING-REPORT.md`](FAMILY-LEARNING-REPORT.md) for the exact boundary.
 
 ## Cabinet launch pass
 
@@ -66,10 +69,25 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Road Trip Quest — change the learning path, win one city battle, reload, and confirm path and route progress persist.
 - [ ] Road Trip Quest GPS — complete one Demo Mode encounter and verify Live Movement remains opt-in.
 
+## Learning Goals pass
+
+- [ ] Open `/goals/` and confirm a new browser shows zero pinned goals without inventing an assignment.
+- [ ] Pin a subject goal after answers already exist and confirm it begins at zero.
+- [ ] Answer enough new questions to complete the goal and confirm older answers were not counted.
+- [ ] Restart the completed goal and confirm its baseline returns to zero without erasing answer history.
+- [ ] Pin three goals and confirm a fourth is blocked.
+- [ ] Remove one goal and confirm a slot reopens.
+- [ ] Clear the board and confirm profile XP, cabinet progress, learning history, and KidsCoin family data remain unchanged.
+- [ ] Confirm suggestions never pin themselves and use invitation language instead of assignments or punishments.
+- [ ] Print or save the print preview and confirm the builder, suggestions, management buttons, and toast are hidden without clipping current goals.
+- [ ] Download the `larriverse-learning-goals-summary` JSON and confirm it contains no free text, deadline, streak, family, PIN, note, or coordinate fields.
+- [ ] Confirm Passport and Family Report show the same goal count and progress but cannot modify goals.
+- [ ] Confirm `/goals/` remains usable on a physical phone with larger text, high contrast, and reduced motion.
+
 ## Progress Passport pass
 
 - [ ] Open `/passport/` after playing multiple cabinets and confirm all eight stamps appear.
-- [ ] Confirm XP, level, Arcade KC, session totals, completions, achievements, and last-played dates match the local saves.
+- [ ] Confirm current goals, XP, level, Arcade KC, session totals, completions, achievements, and last-played dates match the local saves.
 - [ ] Confirm Creature Catcher and Road Trip Quest show the selected learning paths, recent-question counts, and correct per-subject accuracy.
 - [ ] Print or save the print preview and confirm no navigation, mission prompt, or private-data warning is clipped.
 - [ ] Download the `larriverse-progress-passport` summary and confirm it contains no raw KidsCoin family records or location data.
@@ -77,7 +95,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 
 ## Family Learning Report pass
 
-- [ ] Open `/report/` after playing multiple cabinets and confirm profile totals and the visited-cabinet count match the local saves.
+- [ ] Open `/report/` after playing multiple cabinets and confirm current goals, profile totals, and the visited-cabinet count match the local saves.
 - [ ] Confirm subject totals agree with Creature Catcher and Road Trip Quest history.
 - [ ] Confirm strengths require at least two answers and at least 80% accuracy.
 - [ ] Confirm practice opportunities require at least two answers and below 75% accuracy.
@@ -90,10 +108,10 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 
 ## Accessibility pass
 
-- [ ] Keyboard-only navigation reaches the skip link, search, filters, cabinet launches, learning-path controls, Passport sections, Family Report sections, settings, and save tools.
+- [ ] Keyboard-only navigation reaches the skip link, search, filters, cabinet launches, goal builder and controls, learning-path controls, Passport sections, Family Report sections, settings, and save tools.
 - [ ] Focus indicators remain visible in normal and high-contrast modes.
 - [ ] Reduced motion stops lobby rotation and decorative animation.
-- [ ] Larger text does not hide launch buttons, Passport actions, Family Report actions, or dialog controls at 320px width.
+- [ ] Larger text does not hide launch buttons, goal controls, Passport actions, Family Report actions, or dialog controls at 320px width.
 - [ ] Mobile dock does not cover interactive content.
 - [ ] Dialogs close with their close button and Escape.
 - [ ] Status messages are announced through `aria-live`.
@@ -107,7 +125,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Restore rejects invalid record keys and oversized files.
 - [ ] Erase progress keeps accessibility settings when requested.
 - [ ] No location coordinates appear in exported Road Trip GPS data.
-- [ ] Restoring a backup restores the profile and adaptive-learning history used by both the Progress Passport and Family Learning Report.
+- [ ] Restoring a backup restores the profile, adaptive-learning history, and `larriverse.learningGoals.v1` baselines used by Goals, Passport, and Family Report.
 
 ## Visual gallery approval
 
@@ -130,7 +148,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 
 - [ ] Open `qa/readiness.html` on the deployed site and confirm its deployment identity matches the merged commit.
 - [ ] Confirm Readiness shows all five checks passed and all eight cabinet routes reachable.
-- [ ] Confirm the Progress Passport and Family Learning Report routes are published and the final approval record, repository scripts, and workflow files are not publicly reachable.
+- [ ] Confirm the Learning Goals, Progress Passport, and Family Learning Report routes are published and the final approval record, repository scripts, and workflow files are not publicly reachable.
 - [ ] Load the gallery, desktop, and phone files through evidence preflight and resolve every structural issue.
 
 ## Release Room handoff
@@ -150,4 +168,4 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 
 ## Release decision
 
-**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, Progress Passport, Family Learning Report, approval-record, device-label, static-preview, shared-evidence-contract, evidence-bundle, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
+**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, Learning Goals, Progress Passport, Family Learning Report, approval-record, device-label, static-preview, shared-evidence-contract, evidence-bundle, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
