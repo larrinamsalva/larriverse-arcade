@@ -50,7 +50,7 @@ check(html.includes('it is not a grade, diagnosis, ranking, or certification'), 
 check(html.includes('Local and read-only'), 'report visibly states its local read-only boundary');
 check(html.includes('does not create an account'), 'report visibly rejects account creation');
 check(html.includes('save review notes'), 'report visibly states that review notes are not saved');
-check(html.includes('Practice suggestions as invitations'), 'report frames practice as optional invitations');
+check(html.includes('practice suggestions as invitations'), 'report frames practice as optional invitations');
 check((html.match(/<section/g) || []).length >= 7, 'report has a substantial section structure');
 check((html.match(/<h2/g) || []).length >= 5, 'report has a clear heading hierarchy');
 check(!/<input|<textarea|<select/.test(html), 'report collects no form data or notes');
