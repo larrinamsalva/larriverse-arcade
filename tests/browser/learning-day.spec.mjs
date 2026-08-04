@@ -108,7 +108,11 @@ test.describe('LarriVerse My Learning Day', () => {
     await expect(page.locator('#activeLabel')).toHaveText('Answer 3 Math questions');
     await expect(page.locator('#activeProgress')).toHaveText('0 of 3');
     await expect(page.locator('#finishStep')).toBeDisabled();
-    await expect(page.locator('#choiceGrid button')).toBeDisabled();
+    const choiceButtons = page.locator('#choiceGrid button');
+    await expect(choiceButtons).toHaveCount(3);
+    for (let index = 0; index < 3; index += 1) {
+      await expect(choiceButtons.nth(index)).toBeDisabled();
+    }
 
     const initialDay = await page.evaluate(key => JSON.parse(localStorage.getItem(key)), DAY_KEY);
     expect(initialDay.schema).toBe('larriverse-learning-day');
