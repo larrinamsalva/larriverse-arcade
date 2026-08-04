@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#071525">
-  <meta name="description" content="KidsCoin Family — private, parent-controlled chores, learning, ledger skills and fictional family rewards.">
+  <meta name="description" content="KidsCoin Family — open learning, parent-assigned chores, a private ledger and fictional family rewards.">
   <title>KidsCoin Family · LarriVerse Arcade</title>
   <link rel="stylesheet" href="game.css">
 </head>
@@ -18,11 +18,11 @@
 
   <main>
     <section class="hero">
-      <div><p class="eyebrow">Private family practice · no real money</p><h1>Earn. Learn. Plan. <em>Grow.</em></h1><p>Complete family-approved work, practice simple ledger skills, and request rewards through a parent-controlled queue.</p></div>
+      <div><p class="eyebrow">Private family practice · no real money</p><h1>Earn. Learn. Plan. <em>Grow.</em></h1><p>Learning stays unlocked. Parents assign chores, approve earned Family KC, and make the final decision on family rewards.</p></div>
       <div class="coin-orbit" aria-hidden="true"><span>KC</span><i></i><i></i></div>
     </section>
 
-    <section class="boundary"><span>🔒</span><div><strong>Family KC is fictional.</strong><p>No cryptocurrency, blockchain, market price, staking, purchases, ads, public profiles or cloud accounts. Data stays in this browser. The parent PIN is a convenience lock, not strong account security.</p></div></section>
+    <section class="boundary"><span>🔒</span><div><strong>Family KC is fictional, but learning is open.</strong><p>No cryptocurrency, blockchain, market price, staking, purchases, ads, public profiles or cloud accounts. Data stays in this browser. Parent Mode assigns chores and approves rewards; the PIN is a convenience lock, not strong account security.</p></div></section>
 
     <section class="profile-summary">
       <article class="identity"><span id="activeAvatar">🦁</span><div><small>Active explorer</small><h2 id="activeName">Explorer</h2><p id="activeLevel">Level 1</p></div></article>
@@ -33,7 +33,7 @@
     </section>
 
     <nav class="tabs" aria-label="KidsCoin sections">
-      <button class="active" data-tab="home">Home</button><button data-tab="tasks">Earn</button><button data-tab="learn">Learn</button><button data-tab="ledger">Ledger</button><button data-tab="rewards">Rewards</button><button data-tab="notes">Notes</button>
+      <button class="active" data-tab="home">Home</button><button data-tab="tasks">Chores</button><button data-tab="learn">Learn</button><button data-tab="ledger">Ledger</button><button data-tab="rewards">Rewards</button><button data-tab="notes">Notes</button>
     </nav>
 
     <section id="view" class="view" aria-live="polite"><p class="loading">Loading the family ledger…</p></section>
@@ -41,11 +41,11 @@
 
   <dialog id="profileDialog" class="dialog-card"><form method="dialog"><header><div><p class="eyebrow">Device-local profiles</p><h2>Choose an explorer</h2></div><button class="icon" value="cancel" aria-label="Close">×</button></header><div id="profileList" class="profile-list"></div><p class="muted">Profiles can be added or edited inside Parent Mode.</p></form></dialog>
 
-  <dialog id="lessonDialog" class="dialog-card"><div><header><div><p class="eyebrow">Wallet skill</p><h2 id="lessonTitle">Lesson</h2></div><button class="icon" id="closeLesson" aria-label="Close">×</button></header><p id="lessonSummary" class="lesson-summary"></p><h3 id="lessonQuestion"></h3><div id="lessonOptions" class="option-list"></div><p id="lessonFeedback" class="feedback" aria-live="polite"></p></div></dialog>
+  <dialog id="lessonDialog" class="dialog-card"><div><header><div><p class="eyebrow">Unlocked learning round</p><h2 id="lessonTitle">Lesson</h2></div><button class="icon" id="closeLesson" aria-label="Close">×</button></header><p id="lessonSummary" class="lesson-summary"></p><h3 id="lessonQuestion"></h3><div id="lessonOptions" class="option-list"></div><p id="lessonFeedback" class="feedback" aria-live="polite"></p><button id="lessonNext" class="primary" hidden>Next question</button></div></dialog>
 
   <dialog id="parentGate" class="dialog-card"><form id="pinForm"><header><div><p class="eyebrow">Parent Mode</p><h2 id="pinTitle">Enter parent PIN</h2></div><button class="icon" type="button" id="closePin">×</button></header><p id="pinHelp" class="muted">Four digits. This is only a local convenience lock.</p><input id="pinInput" class="pin-input" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" aria-label="Four digit parent PIN"><p id="pinError" class="feedback"></p><button class="primary" type="submit">Continue</button></form></dialog>
 
-  <dialog id="parentDialog" class="parent-dialog"><div class="parent-shell"><header><div><p class="eyebrow">Parent-controlled family space</p><h2>Parent Mode</h2></div><button class="icon" id="closeParent" aria-label="Close">×</button></header><nav class="parent-tabs"><button class="active" data-parent-tab="approvals">Approvals</button><button data-parent-tab="profiles">Profiles</button><button data-parent-tab="tasks">Tasks</button><button data-parent-tab="rewards">Rewards</button><button data-parent-tab="bonus">Bonus & grace</button><button data-parent-tab="privacy">Privacy</button></nav><section id="parentView" class="parent-view"></section></div></dialog>
+  <dialog id="parentDialog" class="parent-dialog"><div class="parent-shell"><header><div><p class="eyebrow">Assignments, approvals and family settings</p><h2>Parent Mode</h2></div><button class="icon" id="closeParent" aria-label="Close">×</button></header><nav class="parent-tabs"><button class="active" data-parent-tab="approvals">Approvals</button><button data-parent-tab="profiles">Profiles</button><button data-parent-tab="tasks">Assign chores</button><button data-parent-tab="rewards">Rewards</button><button data-parent-tab="bonus">Bonus & grace</button><button data-parent-tab="privacy">Privacy</button></nav><section id="parentView" class="parent-view"></section></div></dialog>
 
   <dialog id="resultDialog" class="dialog-card result"><div><span id="resultIcon">✨</span><p class="eyebrow">Family update</p><h2 id="resultTitle">Done</h2><p id="resultText"></p><button class="primary" id="resultClose">Back to KidsCoin</button></div></dialog>
 
