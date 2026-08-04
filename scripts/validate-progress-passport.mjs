@@ -81,7 +81,8 @@ check(catalog.every(game => game.available), 'all eight passport cabinet stamps 
 check(lobby.includes('href="passport/"'), 'lobby links to the Progress Passport');
 check(lobby.includes('View my Progress Passport'), 'lobby hero promotes the Progress Passport');
 check(lobby.includes('<h3>Progress Passport</h3>'), 'release section describes the Progress Passport');
-check(build.includes("'assets', 'games', 'passport', 'qa', 'docs'"), 'Pages build publishes the passport directory');
+check(build.includes("const directories = ['assets', 'games', 'qa', 'docs']"), 'Pages build preserves the established directory allowlist');
+check(build.includes("directories.splice(2, 0, 'passport')"), 'Pages build inserts the passport directory into the allowlist');
 check(build.includes("progressPassport: 'passport/index.html'"), 'deployment manifest exposes the passport route');
 for (const file of ['passport/index.html', 'passport/passport.css', 'passport/passport.js']) {
   check(build.includes(`'${file}'`), `Pages build requires ${file}`);
