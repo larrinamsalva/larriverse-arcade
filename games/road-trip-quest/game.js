@@ -113,8 +113,8 @@
     if (!response.ok) throw new Error(`Learning question bank could not load (${response.status})`);
     questionBank = await response.json();
     for (const subject of QUESTION_SUBJECTS) {
-      if (!Array.isArray(questionBank.subjects?.[subject]) || questionBank.subjects[subject].length < 12) {
-        throw new Error(`Question bank is missing enough ${subject} questions`);
+      if (!Array.isArray(questionBank.subjects?.[subject]) || questionBank.subjects[subject].length < 3) {
+        throw new Error(`Question bank needs at least three ${subject} questions`);
       }
     }
   }
