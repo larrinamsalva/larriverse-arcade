@@ -20,6 +20,8 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Creature Catcher and Road Trip Quest offer Starter, Growing, Challenge, and Mixed paths.
 - [x] Learning-path choice, recent question IDs, and local accuracy stay in browser storage without collecting age.
 - [x] Learning expansion loaders request no location and upload no answers.
+- [x] Progress Passport publishes all eight cabinet stamps, adaptive-learning trails, achievements, level progress, and a suggested next mission.
+- [x] Progress Passport is read-only, requests no location, uploads no data, and excludes raw family and location records from its summary export.
 - [x] Road Trip Quest GPS defaults to Demo Mode and never saves or uploads coordinates.
 - [x] Save backups accept only schema-checked `larriverse.*` browser records.
 - [x] Import failures roll back to the pre-import browser records.
@@ -29,12 +31,14 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Automated Chromium pass covers the lobby and all eight cabinets at 1440×900 and 390×844.
 - [x] Browser automation performs a real profile/settings/reward/backup/restore round trip.
 - [x] Browser automation changes an adaptive learning path, reloads it, and verifies local recent-question memory.
+- [x] Browser automation seeds a realistic Progress Passport and verifies totals, eight stamps, accuracy, achievements, next mission, and safe export fields.
 - [x] Browser evidence is captured without granting location permission.
 - [x] Successful Browser QA builds an offline gallery review with 18 hashed images.
 - [x] The tag workflow requires a committed final approval JSON and exact approved image hashes.
 - [x] Guided QA exports schema-v2 desktop and schema-v2 physical-phone reports with separate local records.
 - [x] The physical-phone report requires touch capability and six completed device-wide checks.
 - [x] The GitHub Pages workflow validates `main` and publishes only the allowlisted static arcade files.
+- [x] The Pages build publishes `/passport/` and records it in the deployment manifest.
 - [x] The Pages build excludes the final release approval record and private evidence files.
 - [x] Every deployed build contains a tamper-evident deployment identity tied to its source commit.
 - [x] Deployment Readiness checks HTTPS, release alignment, eight routes, and private-path exclusion.
@@ -44,7 +48,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] The Release Room creates a private `larriverse-evidence-bundle` that preserves all three original JSON texts and SHA-256 hashes.
 - [x] The evidence bundle identifies the deployed candidate and explicitly cannot create release approval.
 
-Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md), [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md), [`DEVICE-QA.md`](DEVICE-QA.md), [`DEPLOYMENT-REHEARSAL.md`](DEPLOYMENT-REHEARSAL.md), and [`RELEASE-ROOM.md`](RELEASE-ROOM.md) for the exact boundary.
+Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md), [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md), [`DEVICE-QA.md`](DEVICE-QA.md), [`DEPLOYMENT-REHEARSAL.md`](DEPLOYMENT-REHEARSAL.md), [`RELEASE-ROOM.md`](RELEASE-ROOM.md), and [`PROGRESS-PASSPORT.md`](PROGRESS-PASSPORT.md) for the exact boundary.
 
 ## Cabinet launch pass
 
@@ -57,12 +61,21 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 - [ ] Road Trip Quest — change the learning path, win one city battle, reload, and confirm path and route progress persist.
 - [ ] Road Trip Quest GPS — complete one Demo Mode encounter and verify Live Movement remains opt-in.
 
+## Progress Passport pass
+
+- [ ] Open `/passport/` after playing multiple cabinets and confirm all eight stamps appear.
+- [ ] Confirm XP, level, Arcade KC, session totals, completions, achievements, and last-played dates match the local saves.
+- [ ] Confirm Creature Catcher and Road Trip Quest show the selected learning paths, recent-question counts, and correct per-subject accuracy.
+- [ ] Print or save the print preview and confirm no navigation, mission prompt, or private-data warning is clipped.
+- [ ] Download the `larriverse-progress-passport` summary and confirm it contains no raw KidsCoin family records or location data.
+- [ ] Confirm an empty/new browser shows a friendly first-adventure state instead of invented progress.
+
 ## Accessibility pass
 
-- [ ] Keyboard-only navigation reaches the skip link, search, filters, cabinet launches, learning-path controls, settings, and save tools.
+- [ ] Keyboard-only navigation reaches the skip link, search, filters, cabinet launches, learning-path controls, Passport sections, settings, and save tools.
 - [ ] Focus indicators remain visible in normal and high-contrast modes.
 - [ ] Reduced motion stops lobby rotation and decorative animation.
-- [ ] Larger text does not hide launch buttons or dialog controls at 320px width.
+- [ ] Larger text does not hide launch buttons, Passport actions, or dialog controls at 320px width.
 - [ ] Mobile dock does not cover interactive content.
 - [ ] Dialogs close with their close button and Escape.
 - [ ] Status messages are announced through `aria-live`.
@@ -76,6 +89,7 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 - [ ] Restore rejects invalid record keys and oversized files.
 - [ ] Erase progress keeps accessibility settings when requested.
 - [ ] No location coordinates appear in exported Road Trip GPS data.
+- [ ] Restoring a backup restores the profile and adaptive-learning history used by the Progress Passport.
 
 ## Visual gallery approval
 
@@ -98,7 +112,7 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 
 - [ ] Open `qa/readiness.html` on the deployed site and confirm its deployment identity matches the merged commit.
 - [ ] Confirm Readiness shows all five checks passed and all eight cabinet routes reachable.
-- [ ] Confirm the final approval record, repository scripts, and workflow files are not publicly reachable.
+- [ ] Confirm the Progress Passport route is published and the final approval record, repository scripts, and workflow files are not publicly reachable.
 - [ ] Load the gallery, desktop, and phone files through evidence preflight and resolve every structural issue.
 
 ## Release Room handoff
@@ -118,4 +132,4 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 
 ## Release decision
 
-**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, approval-record, device-label, static-preview, shared-evidence-contract, evidence-bundle, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
+**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, Progress Passport, approval-record, device-label, static-preview, shared-evidence-contract, evidence-bundle, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
