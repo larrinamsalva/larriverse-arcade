@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "packId": "learning-expansion-2",
+  "title": "LarriVerse Learning Expansion Pack 2",
+  "description": "Forty reviewed, reusable questions that expand the shared learning bank without replacing its original data.",
+  "subjects": {
+    "math": [
+      {"id":"math-17","prompt":"What is 4 × 7?","options":["21","28","32","36"],"answer":1,"explanation":"Four groups of seven make 28.","difficulty":"starter"},
+      {"id":"math-18","prompt":"What is 63 ÷ 9?","options":["6","7","8","9"],"answer":1,"explanation":"Nine groups of seven make 63, so 63 ÷ 9 = 7.","difficulty":"starter"},
+      {"id":"math-19","prompt":"What is three fifths of 25?","options":["10","12","15","20"],"answer":2,"explanation":"One fifth of 25 is 5, so three fifths is 15.","difficulty":"growing"},
+      {"id":"math-20","prompt":"What is 2.4 + 3.6?","options":["5","5.5","6","6.5"],"answer":2,"explanation":"Line up the decimal points: 2.4 + 3.6 = 6.","difficulty":"growing"},
+      {"id":"math-21","prompt":"Which number comes next: 5, 10, 20, 40, __?","options":["45","60","70","80"],"answer":3,"explanation":"Each number doubles, so 40 doubles to 80.","difficulty":"growing"},
+      {"id":"math-22","prompt":"A triangle has side lengths 6, 7, and 8. What is its perimeter?","options":["18","20","21","22"],"answer":2,"explanation":"Add all three sides: 6 + 7 + 8 = 21.","difficulty":"growing"},
+      {"id":"math-23","prompt":"What is 15% of 200?","options":["15","20","30","45"],"answer":2,"explanation":"Ten percent of 200 is 20 and five percent is 10, for a total of 30.","difficulty":"challenge"},
+      {"id":"math-24","prompt":"Solve x + 17 = 42. What is x?","options":["23","24","25","26"],"answer":2,"explanation":"Subtract 17 from 42, which leaves 25.","difficulty":"challenge"}
+    ],
+    "reading": [
+      {"id":"reading-17","prompt":"What is the plural form of “mouse”?","options":["mouses","mice","mouse","meese"],"answer":1,"explanation":"Mouse has the irregular plural form mice.","difficulty":"starter"},
+      {"id":"reading-18","prompt":"Which contraction means “do not”?","options":["didn't","doesn't","don't","won't"],"answer":2,"explanation":"The contraction don't combines do and not.","difficulty":"starter"},
+      {"id":"reading-19","prompt":"In “Jordan carried the box because it was heavy,” what does “it” refer to?","options":["Jordan","the box","carried","because"],"answer":1,"explanation":"The pronoun it refers to the box.","difficulty":"growing"},
+      {"id":"reading-20","prompt":"The arid desert received almost no rain. What does “arid” mean?","options":["crowded","dry","cold","dark"],"answer":1,"explanation":"The clue about almost no rain shows that arid means very dry.","difficulty":"growing"},
+      {"id":"reading-21","prompt":"Which sentence shows cause and effect?","options":["The bell rang, so the students entered class.","The red ball sat beside the blue ball.","Birds and bats can both fly.","The story has three chapters."],"answer":0,"explanation":"The bell ringing causes the students to enter class.","difficulty":"growing"},
+      {"id":"reading-22","prompt":"Which sentence contains a metaphor?","options":["The moon is a silver coin in the sky.","The moon looks bright tonight.","The moon rose after sunset.","The moon is larger than it appears."],"answer":0,"explanation":"The sentence directly compares the moon to a silver coin without using like or as.","difficulty":"challenge"},
+      {"id":"reading-23","prompt":"Which transition word often signals a contrast?","options":["therefore","however","because","first"],"answer":1,"explanation":"However often introduces an idea that contrasts with the one before it.","difficulty":"challenge"},
+      {"id":"reading-24","prompt":"A paragraph explains that trees provide shade, homes for animals, and cleaner air. What is its main idea?","options":["Trees help living things in several ways.","Only animals need trees.","Shade is the only benefit of trees.","All trees are the same size."],"answer":0,"explanation":"The details all support the broader idea that trees help living things in many ways.","difficulty":"challenge"}
+    ],
+    "science": [
+      {"id":"science-17","prompt":"At what temperature does fresh water freeze on the Celsius scale?","options":["0°C","10°C","32°C","100°C"],"answer":0,"explanation":"Fresh water freezes at 0 degrees Celsius under ordinary conditions.","difficulty":"starter"},
+      {"id":"science-18","prompt":"What is the change from a solid to a liquid called?","options":["freezing","melting","evaporation","condensation"],"answer":1,"explanation":"Melting occurs when a solid gains enough heat to become a liquid.","difficulty":"starter"},
+      {"id":"science-19","prompt":"Which cell structure helps many plants capture sunlight?","options":["chloroplast","rib","vein","joint"],"answer":0,"explanation":"Chloroplasts contain chlorophyll and help plants capture light for photosynthesis.","difficulty":"growing"},
+      {"id":"science-20","prompt":"Which material is usually an electrical insulator?","options":["copper","aluminum","rubber","iron"],"answer":2,"explanation":"Rubber resists the flow of electric current and is commonly used as an insulator.","difficulty":"growing"},
+      {"id":"science-21","prompt":"About how long does Earth take to rotate once on its axis?","options":["12 hours","24 hours","7 days","365 days"],"answer":1,"explanation":"One complete rotation takes about 24 hours and produces day and night.","difficulty":"growing"},
+      {"id":"science-22","prompt":"A ramp is an example of which simple machine?","options":["pulley","lever","inclined plane","wheel and axle"],"answer":2,"explanation":"A ramp is an inclined plane that spreads lifting work over a longer distance.","difficulty":"growing"},
+      {"id":"science-23","prompt":"An object is less dense than water. What will it usually do in water?","options":["float","sink immediately","turn into gas","stop having mass"],"answer":0,"explanation":"Objects less dense than water usually float.","difficulty":"challenge"},
+      {"id":"science-24","prompt":"Two equal forces push an object in opposite directions. What is the net force?","options":["zero","one force doubled","always upward","always downward"],"answer":0,"explanation":"Equal opposite forces cancel, producing a net force of zero.","difficulty":"challenge"}
+    ],
+    "nature": [
+      {"id":"nature-17","prompt":"What does a seed usually need to begin germinating?","options":["water","paint","salt","plastic"],"answer":0,"explanation":"Water activates the processes that begin seed germination.","difficulty":"starter"},
+      {"id":"nature-18","prompt":"An animal that eats both plants and animals is called what?","options":["herbivore","carnivore","omnivore","producer"],"answer":2,"explanation":"Omnivores eat both plant material and other animals.","difficulty":"starter"},
+      {"id":"nature-19","prompt":"Which living thing is most likely a pollinator?","options":["hummingbird","earthworm","trout","turtle"],"answer":0,"explanation":"Hummingbirds can carry pollen as they drink nectar from flowers.","difficulty":"growing"},
+      {"id":"nature-20","prompt":"Why are wetlands important?","options":["They can filter water and provide wildlife habitat.","They prevent every flood.","They contain no plants.","They are always saltwater."],"answer":0,"explanation":"Wetlands can help filter water, store floodwater, and support many species.","difficulty":"growing"},
+      {"id":"nature-21","prompt":"How does a waxy coating help many desert plants?","options":["It reduces water loss.","It attracts snow.","It makes roots disappear.","It stops photosynthesis."],"answer":0,"explanation":"A waxy surface slows evaporation and helps a plant conserve water.","difficulty":"growing"},
+      {"id":"nature-22","prompt":"What is a food web?","options":["Many connected food chains","A spider web only","A list of plant names","A type of weather map"],"answer":0,"explanation":"A food web shows how several food chains connect in an ecosystem.","difficulty":"growing"},
+      {"id":"nature-23","prompt":"What is an invasive species?","options":["A nonnative species that spreads and causes harm","Any rare native animal","A plant growing in a garden","Every migrating bird"],"answer":0,"explanation":"An invasive species is nonnative, spreads, and can harm ecosystems, economies, or health.","difficulty":"challenge"},
+      {"id":"nature-24","prompt":"What does biodiversity describe?","options":["The variety of living things in an area","The temperature of soil","The height of one tree","The speed of one animal"],"answer":0,"explanation":"Biodiversity is the variety of genes, species, and ecosystems in an area.","difficulty":"challenge"}
+    ],
+    "trivia": [
+      {"id":"trivia-17","prompt":"How many continents are commonly recognized?","options":["5","6","7","8"],"answer":2,"explanation":"Seven continents are commonly recognized: Africa, Antarctica, Asia, Europe, North America, South America, and Australia.","difficulty":"starter"},
+      {"id":"trivia-18","prompt":"What is the capital of France?","options":["Rome","Paris","Madrid","Berlin"],"answer":1,"explanation":"Paris is the capital of France.","difficulty":"starter"},
+      {"id":"trivia-19","prompt":"Which instrument is played with strings and a bow?","options":["violin","trumpet","flute","drum"],"answer":0,"explanation":"A violin has strings that are often played with a bow.","difficulty":"starter"},
+      {"id":"trivia-20","prompt":"How many days are in a leap year?","options":["364","365","366","367"],"answer":2,"explanation":"A leap year includes February 29 and has 366 days.","difficulty":"growing"},
+      {"id":"trivia-21","prompt":"Which direction is opposite west?","options":["north","south","east","up"],"answer":2,"explanation":"East is the compass direction opposite west.","difficulty":"growing"},
+      {"id":"trivia-22","prompt":"What number does the Roman numeral X represent?","options":["5","10","50","100"],"answer":1,"explanation":"The Roman numeral X represents the number 10.","difficulty":"growing"},
+      {"id":"trivia-23","prompt":"Which country has a maple leaf on its national flag?","options":["Canada","Mexico","Japan","Brazil"],"answer":0,"explanation":"Canada's national flag features a red maple leaf.","difficulty":"growing"},
+      {"id":"trivia-24","prompt":"What is the largest ocean on Earth?","options":["Atlantic","Indian","Arctic","Pacific"],"answer":3,"explanation":"The Pacific Ocean is the largest ocean on Earth.","difficulty":"challenge"}
+    ]
+  },
+  "privacy": {"deviceLocal":true,"uploadsData":false,"requestsLocation":false},
+  "review": {"status":"reviewed","note":"General learning questions with four choices, one answer, an explanation, and a difficulty label."}
+}

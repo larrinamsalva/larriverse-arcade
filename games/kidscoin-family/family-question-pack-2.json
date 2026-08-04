@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "packId": "kidscoin-family-expansion-2",
+  "title": "KidsCoin Family Learning Expansion 2",
+  "description": "Twenty-four additional family-planning questions, four for each open KidsCoin lesson.",
+  "questionsByLesson": {
+    "earn-before-spend": [
+      {"id":"earn-07","prompt":"Which action should happen before Family KC is added for a chore?","options":["A parent approves the completed chore","The app contacts a bank","The child buys a token","A public account is created"],"answer":0,"explanation":"A completed chore waits for a parent decision before fictional Family KC is awarded.","difficulty":"starter"},
+      {"id":"earn-08","prompt":"Why might a parent reject a completed-chore request?","options":["The chore may need to be finished or checked again","Family KC ran out worldwide","The app requires a credit card","The reward market closed"],"answer":0,"explanation":"A parent may ask for the chore to be completed or checked again before approval.","difficulty":"growing"},
+      {"id":"earn-09","prompt":"What is a fair way to earn toward a larger family reward?","options":["Complete several agreed chores or lessons over time","Change the balance with browser tools","Use another explorer's profile","Request every reward at once"],"answer":0,"explanation":"Several approved efforts can build a fictional balance gradually and fairly.","difficulty":"growing"},
+      {"id":"earn-10","prompt":"Which statement best describes earning in KidsCoin?","options":["It practices responsibility with fictional points","It creates wages or employment","It guarantees a real purchase","It sends money outside the family"],"answer":0,"explanation":"KidsCoin is a family practice system using fictional points, not wages or real payments.","difficulty":"challenge"}
+    ],
+    "needs-and-wants": [
+      {"id":"needs-07","prompt":"Which choice is usually a need for school?","options":["Required basic supplies","A collector's edition backpack","A second gaming headset","A decorative light"],"answer":0,"explanation":"Required basic supplies help a student participate, while the other choices are usually extras.","difficulty":"starter"},
+      {"id":"needs-08","prompt":"A family has enough KC for one choice. Which should come first?","options":["An agreed important need","The newest extra","The most expensive option","A random reward"],"answer":0,"explanation":"Important agreed needs should generally be considered before optional extras.","difficulty":"growing"},
+      {"id":"needs-09","prompt":"Can the same item be a need for one person and a want for another?","options":["Yes, circumstances can differ","No, every item has one permanent category","Only if it costs 9 KC","Only inside a store"],"answer":0,"explanation":"Circumstances matter; an item may be necessary for one person and optional for another.","difficulty":"growing"},
+      {"id":"needs-10","prompt":"What question helps separate a need from a want?","options":["Is this necessary for safety, health, or an important daily responsibility?","Is it brightly colored?","Does an advertisement show it?","Can I request it twice?"],"answer":0,"explanation":"Thinking about safety, health, and important responsibilities helps identify needs.","difficulty":"challenge"}
+    ],
+    "saving-goal": [
+      {"id":"save-07","prompt":"You have 21 KC and save 3 more. What is the new balance?","options":["18 KC","22 KC","24 KC","27 KC"],"answer":2,"explanation":"Twenty-one plus three equals 24.","difficulty":"starter"},
+      {"id":"save-08","prompt":"A reward costs 54 KC. You have 36 KC. How much more is needed?","options":["9 KC","18 KC","21 KC","27 KC"],"answer":1,"explanation":"Fifty-four minus thirty-six equals 18.","difficulty":"growing"},
+      {"id":"save-09","prompt":"Which plan reaches a 45 KC goal from 18 KC?","options":["Earn three approved 9 KC rewards","Redeem 9 KC first","Ignore the ledger","Change profiles"],"answer":0,"explanation":"Three rewards of 9 KC add 27 KC; 18 + 27 = 45.","difficulty":"growing"},
+      {"id":"save-10","prompt":"Why can a written KC goal help?","options":["It makes the target and progress easier to track","It turns KC into cash","It removes parent approval","It guarantees every request"],"answer":0,"explanation":"A clear written goal helps an explorer compare the current balance with the target.","difficulty":"challenge"}
+    ],
+    "read-the-ledger": [
+      {"id":"ledger-07","prompt":"The ledger shows +6 KC and then -3 KC. What is the overall change?","options":["+3 KC","-3 KC","+9 KC","0 KC"],"answer":0,"explanation":"Adding 6 and subtracting 3 leaves a net increase of 3 KC.","difficulty":"starter"},
+      {"id":"ledger-08","prompt":"Which ledger detail tells when an entry happened?","options":["The timestamp","The avatar","The lesson icon","The tab name"],"answer":0,"explanation":"The timestamp records the date and time of the local ledger entry.","difficulty":"starter"},
+      {"id":"ledger-09","prompt":"Why should a rejected request not subtract KC?","options":["No reward was approved or redeemed","The app forgot the balance","Rejected requests become cash","The ledger hides mistakes"],"answer":0,"explanation":"KC is only deducted when a reward redemption is actually approved.","difficulty":"growing"},
+      {"id":"ledger-10","prompt":"A balance seems wrong. What is the best first check?","options":["Review recent earn and spend entries with a parent","Create a public complaint","Guess a new balance","Delete every profile immediately"],"answer":0,"explanation":"Recent ledger entries usually explain how the local fictional balance changed.","difficulty":"challenge"}
+    ],
+    "plan-a-reward": [
+      {"id":"plan-07","prompt":"You have 48 KC. Which reward can you request right now?","options":["A 45 KC reward","A 54 KC reward","A 72 KC reward","A 108 KC reward"],"answer":0,"explanation":"Forty-eight KC is enough for a 45 KC reward but not the higher-cost choices.","difficulty":"starter"},
+      {"id":"plan-08","prompt":"What happens to the balance while a reward request is pending?","options":["It stays unchanged until a parent decides","It doubles","It becomes real money","It is posted publicly"],"answer":0,"explanation":"Pending requests do not deduct Family KC before parent approval.","difficulty":"growing"},
+      {"id":"plan-09","prompt":"Two rewards cost 27 KC and 45 KC. How much KC would both cost together?","options":["62 KC","72 KC","82 KC","90 KC"],"answer":1,"explanation":"Twenty-seven plus forty-five equals 72.","difficulty":"growing"},
+      {"id":"plan-10","prompt":"Why might a parent approve a reward for a different day?","options":["The timing may need to fit the family schedule","The KC has a market price","The app requires shipping","The reward belongs to a stranger"],"answer":0,"explanation":"A family reward can be approved while its timing is planned around real family needs.","difficulty":"challenge"}
+    ],
+    "family-kc-boundary": [
+      {"id":"boundary-07","prompt":"Where can another family see your KidsCoin notes?","options":["Nowhere; notes stay in this browser","On a public leaderboard","In an advertising feed","At a bank"],"answer":0,"explanation":"KidsCoin notes are device-local and are not posted for other families.","difficulty":"starter"},
+      {"id":"boundary-08","prompt":"What could clearing this browser's local data do?","options":["Remove device-local KidsCoin progress","Withdraw cash","Cancel a bank account","Delete a public profile"],"answer":0,"explanation":"Because the data is local, clearing browser storage can remove KidsCoin progress unless it was backed up.","difficulty":"growing"},
+      {"id":"boundary-09","prompt":"What is the safest description of the parent PIN?","options":["A convenience lock against casual taps","A secure bank password","A cloud account login","A legal identity check"],"answer":0,"explanation":"The local PIN is a convenience boundary and is not strong account security.","difficulty":"growing"},
+      {"id":"boundary-10","prompt":"Why does KidsCoin avoid real-money purchases?","options":["The app is designed for private family learning with fictional rewards","Real money makes every lesson easier","Purchases are required for local storage","Children need a market account"],"answer":0,"explanation":"The system practices planning and responsibility without payments, sales, or financial accounts.","difficulty":"challenge"}
+    ]
+  },
+  "privacy": {"deviceLocal":true,"uploadsData":false,"requestsLocation":false},
+  "review": {"status":"reviewed","note":"Family-planning practice questions with no real-money, investment, banking, or cryptocurrency instruction."}
+}
