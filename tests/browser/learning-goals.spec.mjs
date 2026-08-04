@@ -130,7 +130,7 @@ test.describe('LarriVerse Learning Goals', () => {
       includesRawFamilyRecords: false,
       includesLocationData: false
     }));
-    expect(JSON.stringify(exported)).not.toMatch(/pinDigest|familyTasks|rewardRequests|latitude|longitude|coordinates|password|noteText|deadline/i);
+    expect(JSON.stringify(exported)).not.toMatch(/pinDigest|familyTasks|rewardRequests|latitude|longitude|coordinates|password|noteText|deadlineAt|dueDate|overdueAt/i);
 
     const stored = await page.evaluate(key => JSON.parse(localStorage.getItem(key)), GOALS_KEY);
     expect(stored.schema).toBe('larriverse-learning-goals');
