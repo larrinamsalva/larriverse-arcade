@@ -2,7 +2,12 @@ import { test, expect } from '@playwright/test';
 
 async function cleanDevice(page, context) {
   await context.clearPermissions();
-  await page.addInitScript(() => localStorage.clear());
+  await page.addInitScript(() => {
+    const marker = 'larriverse.qa.storage-cleared-once';
+    if (sessionStorage.getItem(marker)) return;
+    localStorage.clear();
+    sessionStorage.setItem(marker, 'true');
+  });
 }
 
 function watchErrors(page) {
