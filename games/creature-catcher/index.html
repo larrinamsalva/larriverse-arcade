@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#10234d">
-  <meta name="description" content="Catch curious creatures, answer learning questions, and grow your LarriVerse field guide.">
+  <meta name="description" content="Catch curious creatures, answer a large reusable learning question bank, and grow your LarriVerse field guide.">
   <title>Creature Catcher | LarriVerse Arcade</title>
   <style>
-    :root{--ink:#10203b;--sky:#8fe5ff;--grass:#63d684;--cream:#fffdf2;--violet:#7c4dff;--pink:#ff5f96;--gold:#ffd34d;--good:#20a86b;--bad:#e0485d;--shadow:0 18px 50px rgba(16,32,59,.22)}
+    :root{--ink:#10203b;--cream:#fffdf2;--violet:#7c4dff;--pink:#ff5f96;--gold:#ffd34d;--good:#20a86b;--bad:#e0485d;--shadow:0 18px 50px rgba(16,32,59,.22)}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:ui-rounded,"Nunito",system-ui,sans-serif;color:var(--ink);background:linear-gradient(#80dcff 0 58%,#69da86 58% 78%,#a87853 78%);overflow:hidden}
     button,a{font:inherit}button{cursor:pointer}.hidden{display:none!important}.stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle at 12% 18%,#fff 0 2px,transparent 3px),radial-gradient(circle at 82% 11%,#fff 0 1px,transparent 2px),radial-gradient(circle at 55% 28%,rgba(255,255,255,.8) 0 2px,transparent 3px);opacity:.75}
     .topbar{position:fixed;z-index:20;top:0;left:0;right:0;display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(9,24,59,.82);backdrop-filter:blur(12px);color:white;border-bottom:1px solid rgba(255,255,255,.18)}
@@ -18,11 +18,11 @@
     .corner-actions{position:fixed;right:14px;bottom:16px;z-index:12;display:flex;gap:9px}.round-btn{border:0;border-radius:18px;padding:11px 14px;background:rgba(9,24,59,.86);color:white;font-weight:900;box-shadow:var(--shadow)}
     .overlay{position:fixed;z-index:50;inset:0;display:grid;place-items:center;padding:20px;background:rgba(8,18,45,.66);backdrop-filter:blur(8px)}.card{width:min(560px,100%);max-height:92vh;overflow:auto;background:var(--cream);border:3px solid rgba(255,255,255,.8);border-radius:28px;padding:24px;box-shadow:var(--shadow)}
     .start-card{text-align:center}.logo{font-size:4.6rem;filter:drop-shadow(0 9px 10px rgba(124,77,255,.22))}.eyebrow{margin:0 0 4px;color:var(--violet);font-size:.72rem;font-weight:950;letter-spacing:.16em;text-transform:uppercase}.card h1,.card h2{margin:.2rem 0 .6rem;line-height:1}.card h1{font-size:clamp(2.2rem,8vw,4.1rem)}.card p{line-height:1.55}.instructions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}.instructions div{padding:12px 7px;border-radius:17px;background:white;font-size:.75rem;font-weight:850}.instructions b{display:block;font-size:1.4rem;margin-bottom:3px}
-    .primary,.secondary{border:0;border-radius:16px;padding:13px 18px;font-weight:950}.primary{background:linear-gradient(135deg,var(--violet),var(--pink));color:white;box-shadow:0 6px 0 #5630c4}.primary:active{transform:translateY(3px);box-shadow:0 3px 0 #5630c4}.secondary{background:#eae5ff;color:#4f35a6}.actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+    .primary,.secondary{border:0;border-radius:16px;padding:13px 18px;font-weight:950}.primary{background:linear-gradient(135deg,var(--violet),var(--pink));color:white;box-shadow:0 6px 0 #5630c4}.primary:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}.primary:active:not(:disabled){transform:translateY(3px);box-shadow:0 3px 0 #5630c4}.secondary{background:#eae5ff;color:#4f35a6}.actions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
     .question-top{display:flex;align-items:center;gap:12px}.big-creature{font-size:4.2rem}.rarity{margin-left:auto;padding:5px 10px;border-radius:999px;background:#eee6ff;color:#5b35b7;font-size:.68rem;font-weight:950;text-transform:uppercase}.subject{display:inline-block;padding:5px 10px;border-radius:999px;background:#dff7ff;color:#15627a;font-size:.68rem;font-weight:950;text-transform:uppercase}.question{font-size:clamp(1.25rem,4vw,1.7rem);font-weight:950;margin:13px 0}.answers{display:grid;grid-template-columns:1fr 1fr;gap:9px}.answer{min-height:58px;border:2px solid #d8dceb;border-radius:15px;background:white;color:var(--ink);font-weight:900;padding:10px}.answer:hover,.answer:focus-visible{border-color:var(--violet);outline:none;transform:translateY(-2px)}.answer.correct{border-color:var(--good);background:#dff8ea;color:#11754a}.answer.wrong{border-color:var(--bad);background:#ffe3e8;color:#ad263b}.feedback{min-height:32px;text-align:center;font-weight:950;margin:13px 0 4px}.feedback.good{color:var(--good)}.feedback.bad{color:var(--bad)}
     .collection-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:9px;margin-top:14px}.specimen{padding:12px 7px;border-radius:17px;background:white;text-align:center}.specimen span{font-size:2.3rem}.specimen b,.specimen small{display:block}.specimen b{font-size:.72rem}.specimen small{color:#667085}.locked{filter:grayscale(1);opacity:.35}
     .score-ring{width:128px;height:128px;margin:10px auto;display:grid;place-items:center;border-radius:50%;background:conic-gradient(var(--pink) var(--score-angle),#eee 0);position:relative}.score-ring:before{content:"";position:absolute;inset:12px;border-radius:50%;background:var(--cream)}.score-ring strong{position:relative;font-size:2.2rem}.reward-line{display:flex;justify-content:center;gap:18px;margin:14px 0;font-weight:950}.reward-line span{padding:8px 12px;border-radius:999px;background:white}.tiny{font-size:.72rem;color:#667085}
-    .toast{position:fixed;z-index:70;left:50%;bottom:20px;transform:translate(-50%,130%);padding:10px 16px;border-radius:999px;background:#10203b;color:white;font-weight:900;transition:.25s}.toast.show{transform:translate(-50%,0)}
+    .toast{position:fixed;z-index:70;left:50%;bottom:20px;transform:translate(-50%,130%);padding:10px 16px;border-radius:999px;background:#10203b;color:white;font-weight:900;transition:.25s}.toast.show{transform:translate(-50%,0)}:focus-visible{outline:3px solid white;outline-offset:3px}
     @media(max-width:570px){.topbar{padding:8px}.brand{font-size:.8rem}.pill{min-width:auto;font-size:.68rem;padding:6px 8px}.answers{grid-template-columns:1fr}.card{padding:19px}.instructions{gap:5px}.instructions div{font-size:.64rem}.creature .tag{display:none}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
   </style>
@@ -55,11 +55,11 @@
       <div class="logo">🦊</div>
       <p class="eyebrow">LarriVerse learning arcade</p>
       <h1>Creature Catcher</h1>
-      <p>Curious creatures are popping up across the meadow. Catch one, solve its question, and add it to your field guide.</p>
+      <p>Catch curious creatures and answer questions from a large non-repeating Math, Reading, Science and Nature bank.</p>
       <div class="instructions">
-        <div><b>👆</b>Tap a creature</div><div><b>🧠</b>Solve its question</div><div><b>✨</b>Earn XP and KC</div>
+        <div><b>👆</b>Tap a creature</div><div><b>🧠</b>Solve a question</div><div><b>✨</b>Earn XP and KC</div>
       </div>
-      <div class="actions"><button class="primary" id="startButton">Start 60-second safari</button><a class="secondary" href="../../index.html">Back to arcade</a></div>
+      <div class="actions"><button class="primary" id="startButton">Loading questions…</button><a class="secondary" href="../../index.html">Back to arcade</a></div>
       <p class="tiny" id="profileLine">Loading arcade profile…</p>
     </div>
   </section>
@@ -96,91 +96,6 @@
 
   <div class="toast" id="toast" aria-live="polite"></div>
   <script src="../../assets/arcade-sdk.js"></script>
-  <script>
-    const GAME_ID='creature-catcher';
-    const COLLECTION_KEY='larriverse.creature-catcher.collection.v1';
-    const creatures=[
-      {id:'foxfire',emoji:'🦊',name:'Foxfire',rarity:'common'},{id:'ribbit',emoji:'🐸',name:'Ribbit Rex',rarity:'common'},
-      {id:'buzzy',emoji:'🐝',name:'Buzzy B',rarity:'common'},{id:'spiky',emoji:'🦔',name:'Spiky Sam',rarity:'common'},
-      {id:'octo',emoji:'🐙',name:'Octo Otto',rarity:'uncommon'},{id:'flippy',emoji:'🐬',name:'Flippy',rarity:'uncommon'},
-      {id:'roary',emoji:'🦁',name:'Roary',rarity:'uncommon'},{id:'drake',emoji:'🐉',name:'Sparkle Drake',rarity:'rare'},
-      {id:'unicorny',emoji:'🦄',name:'Unicorny',rarity:'rare'},{id:'moonmoth',emoji:'🦋',name:'Moon Moth',rarity:'rare'}
-    ];
-    const questions=[
-      {s:'Math',q:'What is 6 × 3?',a:['12','18','21','24'],c:1},{s:'Math',q:'What is half of 18?',a:['6','8','9','12'],c:2},
-      {s:'Math',q:'What is 100 − 36?',a:['54','64','74','66'],c:1},{s:'Reading',q:'Which word rhymes with “light”?',a:['late','night','little','leaf'],c:1},
-      {s:'Reading',q:'Which word is a noun?',a:['quickly','purple','river','jump'],c:2},{s:'Reading',q:'How many syllables are in “butterfly”?',a:['1','2','3','4'],c:2},
-      {s:'Science',q:'What do plants use sunlight to make?',a:['Food','Rocks','Wind','Sound'],c:0},{s:'Science',q:'Which planet is our home?',a:['Mars','Venus','Earth','Jupiter'],c:2},
-      {s:'Science',q:'A caterpillar can become what?',a:['A butterfly','A fish','A frog','A spider'],c:0},{s:'Nature',q:'Which animal breathes with gills?',a:['Fox','Fish','Bird','Bee'],c:1},
-      {s:'Nature',q:'How many legs does an insect have?',a:['4','6','8','10'],c:1},{s:'Trivia',q:'How many colors are named in a rainbow?',a:['5','6','7','9'],c:2},
-      {s:'Trivia',q:'What do bees help flowers do?',a:['Pollinate','Hibernate','Evaporate','Echo'],c:0},{s:'Life skills',q:'What is the safest first step before crossing a road?',a:['Run quickly','Look both ways','Close your eyes','Follow a bird'],c:1},
-      {s:'Life skills',q:'Which action shows good teamwork?',a:['Listening','Interrupting','Hiding tools','Blaming'],c:0}
-    ];
-    const world=document.querySelector('#world');
-    const overlays={start:document.querySelector('#startOverlay'),question:document.querySelector('#questionOverlay'),guide:document.querySelector('#guideOverlay'),end:document.querySelector('#endOverlay')};
-    const state={running:false,paused:false,time:60,score:0,caught:0,active:[],current:null,timer:null,spawner:null,collection:loadCollection()};
-    const $=id=>document.getElementById(id);
-
-    function loadCollection(){try{return JSON.parse(localStorage.getItem(COLLECTION_KEY))||{}}catch{return {}}}
-    function saveCollection(){localStorage.setItem(COLLECTION_KEY,JSON.stringify(state.collection))}
-    function random(list){return list[Math.floor(Math.random()*list.length)]}
-    function rarityPoints(rarity){return rarity==='rare'?9:rarity==='uncommon'?6:3}
-    function profileText(){const p=window.LarriVerseArcade.summary();$('profileLine').textContent=`${p.avatar} ${p.name} · Level ${p.level} · ${p.kc} KC · ${p.xp} XP`}
-    function updateHud(){$('time').textContent=state.time;$('score').textContent=state.score;$('caught').textContent=state.caught}
-    function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1800)}
-
-    function begin(){
-      Object.values(overlays).forEach(x=>x.classList.add('hidden'));
-      state.running=true;state.paused=false;state.time=60;state.score=0;state.caught=0;state.active.forEach(removeCreature);state.active=[];updateHud();
-      $('banner').classList.remove('hidden');setTimeout(()=>$('banner').classList.add('hidden'),1200);
-      spawn();spawn();state.spawner=setInterval(spawn,1900);state.timer=setInterval(tick,1000);$('pauseButton').textContent='⏸ Pause';
-    }
-    function tick(){if(!state.running||state.paused)return;state.time-=1;updateHud();if(state.time<=0)finish()}
-    function spawn(){
-      if(!state.running||state.paused||state.active.length>=5)return;
-      const creature=random(creatures);const btn=document.createElement('button');btn.className='creature';btn.type='button';btn.setAttribute('aria-label',`Catch ${creature.name}`);
-      btn.style.left=`${8+Math.random()*84}%`;btn.style.top=`${43+Math.random()*36}%`;btn.style.animationDelay=`-${Math.random()}s`;
-      btn.innerHTML=`<span class="ping">!</span><span class="emoji">${creature.emoji}</span><span class="tag">${creature.name}</span>`;
-      btn.addEventListener('click',()=>encounter(creature,btn));world.appendChild(btn);state.active.push(btn);btn._expiry=setTimeout(()=>removeCreature(btn),7500);
-    }
-    function removeCreature(btn){if(!btn)return;clearTimeout(btn._expiry);state.active=state.active.filter(x=>x!==btn);btn.remove()}
-    function encounter(creature,btn){
-      if(!state.running||state.paused)return;state.paused=true;state.current={creature,btn,question:random(questions),answered:false};
-      $('questionCreature').textContent=creature.emoji;$('creatureName').textContent=creature.name;$('rarity').textContent=creature.rarity;$('subject').textContent=state.current.question.s;
-      $('questionText').textContent=state.current.question.q;$('feedback').textContent='';$('feedback').className='feedback';$('continueButton').classList.add('hidden');
-      $('answers').innerHTML='';state.current.question.a.forEach((label,index)=>{const answer=document.createElement('button');answer.className='answer';answer.type='button';answer.textContent=label;answer.addEventListener('click',()=>answerQuestion(index,answer));$('answers').appendChild(answer)});
-      overlays.question.classList.remove('hidden');
-    }
-    function answerQuestion(index,button){
-      if(state.current.answered)return;state.current.answered=true;const q=state.current.question;const buttons=[...document.querySelectorAll('.answer')];buttons.forEach(x=>x.disabled=true);buttons[q.c].classList.add('correct');
-      if(index===q.c){
-        const points=rarityPoints(state.current.creature.rarity);button.classList.add('correct');state.score+=points;state.caught+=1;state.collection[state.current.creature.id]=(state.collection[state.current.creature.id]||0)+1;saveCollection();removeCreature(state.current.btn);
-        $('feedback').textContent=`Caught! +${points} points`;$('feedback').className='feedback good';toast(`${state.current.creature.emoji} Added to the field guide`);
-      }else{button.classList.add('wrong');state.score+=1;$('feedback').textContent='Good try — the creature escaped this time.';$('feedback').className='feedback bad';removeCreature(state.current.btn)}
-      updateHud();$('continueButton').classList.remove('hidden');
-    }
-    function continueRound(){overlays.question.classList.add('hidden');state.current=null;state.paused=false;spawn()}
-    function togglePause(){
-      if(!state.running)return;if(!overlays.question.classList.contains('hidden')||!overlays.guide.classList.contains('hidden'))return;
-      state.paused=!state.paused;$('pauseButton').textContent=state.paused?'▶ Resume':'⏸ Pause';toast(state.paused?'Safari paused':'Safari resumed');
-    }
-    function openGuide(){const wasRunning=state.running;state.paused=true;renderGuide();overlays.guide.classList.remove('hidden');overlays.guide.dataset.wasRunning=String(wasRunning)}
-    function closeGuide(){overlays.guide.classList.add('hidden');if(state.running)state.paused=false}
-    function renderGuide(){
-      $('collectionGrid').innerHTML=creatures.map(c=>{const count=state.collection[c.id]||0;return `<div class="specimen ${count?'':'locked'}"><span>${count?c.emoji:'❔'}</span><b>${count?c.name:'Undiscovered'}</b><small>${count?`Caught ×${count}`:c.rarity}</small></div>`}).join('');
-    }
-    function finish(){
-      state.running=false;state.paused=true;clearInterval(state.timer);clearInterval(state.spawner);state.active.forEach(removeCreature);state.active=[];overlays.question.classList.add('hidden');
-      const kc=state.caught?Math.min(18,3+Math.floor(state.caught/3)*3):0;const result=window.LarriVerseArcade.award(GAME_ID,{xp:state.score,kc,score:state.score,catches:state.caught,completed:state.caught>0});
-      $('finalScore').textContent=state.score;$('xpReward').textContent=state.score;$('kcReward').textContent=kc+result.milestoneBonus;$('scoreRing').style.setProperty('--score-angle',`${Math.min(100,state.score)/100*360}deg`);
-      $('roundSummary').textContent=`You caught ${state.caught} creature${state.caught===1?'':'s'} and reached Level ${result.level}.`;
-      const notes=[];if(result.milestoneBonus)notes.push(`3-session milestone: +${result.milestoneBonus} KC`);if(result.unlocked.length)notes.push(`${result.unlocked.length} achievement unlocked`);$('bonusLine').textContent=notes.join(' · ')||'Every safari grows your permanent arcade profile.';
-      overlays.end.classList.remove('hidden');
-    }
-
-    $('startButton').addEventListener('click',begin);$('replayButton').addEventListener('click',begin);$('continueButton').addEventListener('click',continueRound);$('pauseButton').addEventListener('click',togglePause);$('guideButton').addEventListener('click',openGuide);$('closeGuide').addEventListener('click',closeGuide);
-    document.addEventListener('visibilitychange',()=>{if(document.hidden&&state.running&&!state.paused)togglePause()});
-    profileText();renderGuide();updateHud();
-  </script>
+  <script src="game.js"></script>
 </body>
 </html>
