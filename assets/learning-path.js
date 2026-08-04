@@ -96,7 +96,7 @@
       const seen = Array.isArray(entry.seen[subject]) ? entry.seen[subject] : [];
       const seenSet = new Set(seen);
       let fresh = eligible.filter(question => !seenSet.has(question.id));
-      const minimumDeck = Math.min(8, eligible.length);
+      const minimumDeck = Math.min(3, eligible.length);
       if (fresh.length < minimumDeck) {
         entry.seen[subject] = [];
         fresh = [...eligible];
