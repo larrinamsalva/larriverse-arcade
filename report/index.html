@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183b37">
+  <meta name="description" content="A private, printable family learning report built from LarriVerse Arcade saves on this device.">
+  <title>Family Learning Report · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="report.css">
+</head>
+<body>
+  <a class="skip-link" href="#reportMain">Skip to report</a>
+  <div class="paper-glow" aria-hidden="true"></div>
+
+  <header class="report-nav">
+    <a class="brand" href="../"><span aria-hidden="true">✦</span> LarriVerse Arcade</a>
+    <nav aria-label="Family Learning Report navigation">
+      <a href="#learning">Learning</a>
+      <a href="#cabinets">Cabinets</a>
+      <a href="#activity">Activity</a>
+      <a href="../passport/">Passport</a>
+      <a href="../">Arcade</a>
+    </nav>
+  </header>
+
+  <main id="reportMain">
+    <section class="report-hero" aria-labelledby="reportTitle">
+      <div class="learner-mark" id="identityAvatar" aria-hidden="true">🌟</div>
+      <div class="hero-copy">
+        <p class="eyebrow">Private family learning report</p>
+        <h1 id="reportTitle"><span id="identityName">Player One</span>’s learning snapshot</h1>
+        <p class="lede">A calm review of progress already stored in this browser. It summarizes participation and practice patterns; it is not a grade, diagnosis, ranking, or certification.</p>
+        <p class="report-date">Prepared <time id="generatedDate">today</time></p>
+        <div class="hero-actions">
+          <button id="printReport" class="primary" type="button">Print report</button>
+          <button id="downloadReport" class="secondary" type="button">Download report</button>
+          <a class="secondary" href="../passport/">Open Progress Passport</a>
+        </div>
+      </div>
+      <div class="level-seal" aria-label="Current arcade level">
+        <small>LEVEL</small>
+        <strong id="levelValue">1</strong>
+        <span id="levelXp">0 XP</span>
+      </div>
+    </section>
+
+    <section class="privacy-note" aria-label="Privacy boundary">
+      <span aria-hidden="true">🔒</span>
+      <p><strong>Local and read-only.</strong> This report does not create an account, save review notes, request location, upload answers, or include raw chores, approvals, PIN material, family notes, coordinates, passwords, or unrelated browser data.</p>
+    </section>
+
+    <section class="stat-grid" aria-label="Learning report totals">
+      <article><span aria-hidden="true">⚡</span><strong id="totalXp">0</strong><small>Total XP</small></article>
+      <article><span aria-hidden="true">🕹️</span><strong id="totalSessions">0</strong><small>Sessions</small></article>
+      <article><span aria-hidden="true">✓</span><strong id="totalCompletions">0</strong><small>Completed</small></article>
+      <article><span aria-hidden="true">📚</span><strong id="cabinetsVisited">0 / 8</strong><small>Cabinets visited</small></article>
+    </section>
+
+    <section class="report-section" id="learning" aria-labelledby="learningHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Learning overview</p><h2 id="learningHeading">Strengths and practice opportunities</h2></div>
+        <p>Patterns appear only after at least two answers in a subject. A short history is described as “more data needed” instead of being treated as a conclusion.</p>
+      </div>
+      <div class="insight-grid">
+        <article class="insight-panel strength-panel">
+          <header><span aria-hidden="true">🌱</span><div><p class="eyebrow">Growing strengths</p><h3>What is clicking</h3></div></header>
+          <div id="strengthCards" class="insight-list" aria-live="polite"></div>
+        </article>
+        <article class="insight-panel practice-panel">
+          <header><span aria-hidden="true">🧭</span><div><p class="eyebrow">Gentle practice</p><h3>What could use another round</h3></div></header>
+          <div id="practiceCards" class="insight-list" aria-live="polite"></div>
+        </article>
+      </div>
+
+      <div class="subsection-head"><h3>Subject snapshot</h3><p>Combined answer history from Creature Catcher and Road Trip Quest.</p></div>
+      <div id="subjectGrid" class="subject-grid" aria-live="polite"></div>
+
+      <div class="subsection-head"><h3>Learning paths</h3><p>Selected path, recent-question memory, and answer totals for each adaptive cabinet.</p></div>
+      <div id="learningPathGrid" class="path-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="report-section" id="cabinets" aria-labelledby="cabinetHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Participation</p><h2 id="cabinetHeading">Eight-cabinet progress</h2></div>
+        <p id="cabinetSummary">Loading the cabinet vault…</p>
+      </div>
+      <div id="cabinetReport" class="cabinet-report" aria-live="polite"></div>
+    </section>
+
+    <section class="report-section split-section" id="activity" aria-labelledby="activityHeading">
+      <article>
+        <div class="subsection-head"><h2 id="activityHeading">Recent activity</h2><p>Latest cabinet timestamps recorded on this device.</p></div>
+        <ol id="recentActivity" class="activity-list" aria-live="polite"></ol>
+      </article>
+      <article>
+        <div class="subsection-head"><h2>Conversation starters</h2><p>Optional questions for a learner and trusted adult to explore together.</p></div>
+        <ul id="conversationStarters" class="starter-list" aria-live="polite"></ul>
+      </article>
+    </section>
+
+    <section class="boundary-card" aria-labelledby="boundaryHeading">
+      <span aria-hidden="true">🫶</span>
+      <div>
+        <p class="eyebrow">Healthy interpretation</p>
+        <h2 id="boundaryHeading">A snapshot, not a label</h2>
+        <p>Accuracy can change with question difficulty, attention, reading comfort, device conditions, and how much history exists. Celebrate effort, ask what felt interesting, and use practice suggestions as invitations—not punishments.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>LarriVerse Family Learning Report</span>
+    <span>Private by design · Printable by choice</span>
+    <a href="../">Return to the arcade</a>
+  </footer>
+
+  <output id="reportMessage" class="toast" aria-live="polite"></output>
+
+  <script src="../assets/arcade-sdk.js"></script>
+  <script src="report.js"></script>
+</body>
+</html>
