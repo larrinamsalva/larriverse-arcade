@@ -7,6 +7,7 @@
   <meta name="description" content="A private, printable family learning report built from LarriVerse Arcade saves on this device.">
   <title>Family Learning Report · LarriVerse Arcade</title>
   <link rel="stylesheet" href="report.css">
+  <link rel="stylesheet" href="../assets/learning-goals.css">
 </head>
 <body>
   <a class="skip-link" href="#reportMain">Skip to report</a>
@@ -15,6 +16,7 @@
   <header class="report-nav">
     <a class="brand" href="../"><span aria-hidden="true">✦</span> LarriVerse Arcade</a>
     <nav aria-label="Family Learning Report navigation">
+      <a href="#goals">Goals</a>
       <a href="#learning">Learning</a>
       <a href="#cabinets">Cabinets</a>
       <a href="#activity">Activity</a>
@@ -34,6 +36,7 @@
         <div class="hero-actions">
           <button id="printReport" class="primary" type="button">Print report</button>
           <button id="downloadReport" class="secondary" type="button">Download report</button>
+          <a class="secondary" href="../goals/">Open Learning Goals</a>
           <a class="secondary" href="../passport/">Open Progress Passport</a>
         </div>
       </div>
@@ -54,6 +57,14 @@
       <article><span aria-hidden="true">🕹️</span><strong id="totalSessions">0</strong><small>Sessions</small></article>
       <article><span aria-hidden="true">✓</span><strong id="totalCompletions">0</strong><small>Completed</small></article>
       <article><span aria-hidden="true">📚</span><strong id="cabinetsVisited">0 / 8</strong><small>Cabinets visited</small></article>
+    </section>
+
+    <section class="report-section" id="goals" aria-labelledby="goalsHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Current focus</p><h2 id="goalsHeading">Learning goals</h2></div>
+        <p><span data-learning-goals-count>0/0 complete</span> · Preset goals only; no notes, deadlines, streaks, or penalties.</p>
+      </div>
+      <div class="shared-goal-grid" data-learning-goals-summary aria-live="polite"></div>
     </section>
 
     <section class="report-section" id="learning" aria-labelledby="learningHeading">
@@ -117,6 +128,8 @@
   <output id="reportMessage" class="toast" aria-live="polite"></output>
 
   <script src="../assets/arcade-sdk.js"></script>
+  <script src="../assets/learning-goals.js"></script>
   <script src="report.js"></script>
+  <script src="../assets/learning-goals-summary.js"></script>
 </body>
 </html>

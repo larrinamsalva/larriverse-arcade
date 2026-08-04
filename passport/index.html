@@ -7,6 +7,7 @@
   <meta name="description" content="A private, device-local progress passport for LarriVerse Arcade.">
   <title>Progress Passport · LarriVerse Arcade</title>
   <link rel="stylesheet" href="passport.css">
+  <link rel="stylesheet" href="../assets/learning-goals.css">
 </head>
 <body>
   <a class="skip-link" href="#passportMain">Skip to progress</a>
@@ -15,6 +16,7 @@
   <header class="passport-nav">
     <a class="brand" href="../"><span aria-hidden="true">✦</span> LarriVerse Arcade</a>
     <nav aria-label="Progress Passport navigation">
+      <a href="#goals">Goals</a>
       <a href="#learning">Learning</a>
       <a href="#cabinets">Cabinets</a>
       <a href="#achievements">Achievements</a>
@@ -33,6 +35,7 @@
         <div class="hero-actions">
           <button id="printPassport" type="button" class="primary">Print passport</button>
           <button id="downloadPassport" type="button" class="secondary">Download summary</button>
+          <a class="secondary" href="../goals/">Open Learning Goals</a>
           <a class="secondary" href="../report/">Open Family Learning Report</a>
           <a class="secondary" href="../#games">Play a cabinet</a>
         </div>
@@ -78,6 +81,14 @@
       <a id="missionLink" class="primary" href="../#games">Explore games</a>
     </section>
 
+    <section class="passport-section" id="goals" aria-labelledby="goalsHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Gentle focus</p><h2 id="goalsHeading">Learning goals</h2></div>
+        <p><span data-learning-goals-count>0/0 complete</span> · No deadlines, streaks, or penalties.</p>
+      </div>
+      <div class="shared-goal-grid" data-learning-goals-summary aria-live="polite"></div>
+    </section>
+
     <section class="passport-section" id="learning" aria-labelledby="learningHeading">
       <div class="section-head">
         <div><p class="eyebrow">Adaptive learning</p><h2 id="learningHeading">Learning trails</h2></div>
@@ -103,8 +114,9 @@
     </section>
 
     <section class="empty-reset" aria-label="Passport help">
-      <h2>Need a calm review or a backup?</h2>
-      <p>The Family Learning Report summarizes strengths and practice opportunities. The Arcade Control Center manages save backups, restores, profile identity, comfort settings, and progress erasure.</p>
+      <h2>Need a focus, calm review, or backup?</h2>
+      <p>Learning Goals makes the next small step visible. The Family Learning Report summarizes strengths and practice opportunities. The Arcade Control Center manages save backups, restores, profile identity, comfort settings, and progress erasure.</p>
+      <a class="secondary" href="../goals/">Open Learning Goals</a>
       <a class="secondary" href="../report/">Open Family Learning Report</a>
       <a class="secondary" href="../#top">Open the arcade control center</a>
     </section>
@@ -119,6 +131,8 @@
   <output id="passportMessage" class="toast" aria-live="polite"></output>
 
   <script src="../assets/arcade-sdk.js"></script>
+  <script src="../assets/learning-goals.js"></script>
   <script src="passport.js"></script>
+  <script src="../assets/learning-goals-summary.js"></script>
 </body>
 </html>
