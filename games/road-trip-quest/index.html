@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0f0c29">
-  <meta name="description" content="Road Trip Quest — collect road items, answer questions, defeat city bosses, and recruit heroes across America.">
+  <meta name="description" content="Road Trip Quest — choose a learning path, collect road items, answer questions, defeat city bosses, and recruit heroes across America.">
   <title>Road Trip Quest | LarriVerse Arcade</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,8 @@
         <p class="eyebrow">Collect · Battle · Conquer</p>
         <h1 id="gameTitle">Road Trip<br><span>Quest!</span></h1>
         <div class="road-demo" aria-hidden="true"><span>🌲</span><i></i><b>🚗</b><i></i><span>⛰️</span></div>
-        <p>Collect power items as you drive, answer learning questions, defeat eight city bosses, and build your Hero Collection.</p>
+        <p>Collect power items as you drive, answer questions from a 96-question Math, Trivia, Science and Reading pool, defeat eight city bosses, and build your Hero Collection.</p>
+        <div id="learningPathControl"></div>
         <button class="primary" id="startButton">Start the engine 🚗</button>
         <button class="secondary" id="newTripButton">Reset saved trip</button>
         <div class="profile-chip" id="profileChip">Loading player…</div>
@@ -96,6 +97,7 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </main>
   <script src="../../assets/arcade-sdk.js"></script>
+  <script src="../../assets/learning-path.js"></script>
   <script src="game.js"></script>
 </body>
 </html>
