@@ -46,7 +46,7 @@ const seededLearning = {
         reading: ['reading-context-1']
       },
       stats: {
-        math: { attempts: 4, correct: 3 },
+        math: { attempts: 4, correct: 2 },
         reading: { attempts: 2, correct: 2 }
       }
     },
@@ -94,7 +94,7 @@ test.describe('LarriVerse Progress Passport', () => {
 
     await expect(page.locator('.learning-card')).toHaveCount(2);
     await expect(page.locator('.learning-card').first()).toContainText('Growing');
-    await expect(page.locator('.learning-card').first()).toContainText('75%');
+    await expect(page.locator('.learning-card').first()).toContainText('50%');
     await expect(page.locator('.learning-card').first()).toContainText('100%');
 
     await expect(page.locator('.achievement:not(.locked)')).toHaveCount(4);
