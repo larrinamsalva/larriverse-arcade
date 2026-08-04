@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#10234d">
-  <meta name="description" content="Catch curious creatures, answer a large reusable learning question bank, and grow your LarriVerse field guide.">
+  <meta name="description" content="Catch curious creatures, choose a learning path, answer a large reusable question bank, and grow your LarriVerse field guide.">
   <title>Creature Catcher | LarriVerse Arcade</title>
   <style>
     :root{--ink:#10203b;--cream:#fffdf2;--violet:#7c4dff;--pink:#ff5f96;--gold:#ffd34d;--good:#20a86b;--bad:#e0485d;--shadow:0 18px 50px rgba(16,32,59,.22)}
@@ -55,10 +55,11 @@
       <div class="logo">🦊</div>
       <p class="eyebrow">LarriVerse learning arcade</p>
       <h1>Creature Catcher</h1>
-      <p>Catch curious creatures and answer questions from a large non-repeating Math, Reading, Science and Nature bank.</p>
+      <p>Catch curious creatures and answer questions from a 96-question Math, Reading, Science and Nature pool.</p>
       <div class="instructions">
         <div><b>👆</b>Tap a creature</div><div><b>🧠</b>Solve a question</div><div><b>✨</b>Earn XP and KC</div>
       </div>
+      <div id="learningPathControl"></div>
       <div class="actions"><button class="primary" id="startButton">Loading questions…</button><a class="secondary" href="../../index.html">Back to arcade</a></div>
       <p class="tiny" id="profileLine">Loading arcade profile…</p>
     </div>
@@ -96,6 +97,7 @@
 
   <div class="toast" id="toast" aria-live="polite"></div>
   <script src="../../assets/arcade-sdk.js"></script>
+  <script src="../../assets/learning-path.js"></script>
   <script src="game.js"></script>
 </body>
 </html>
