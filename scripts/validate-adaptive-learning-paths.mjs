@@ -102,6 +102,7 @@ for (const required of [
   'Progress stays in this browser'
 ]) check(learningPath.includes(required), `learning path includes ${required}`);
 check(learningPath.includes("../games/learning-question-pack-2.json"), 'learning path loads the expansion pack');
+check(learningPath.includes('const minimumDeck = Math.min(3, eligible.length)'), 'recent-question history resets only when fewer than three unseen questions remain');
 check(learningPath.includes('localStorage.setItem'), 'learning path saves device-local progress');
 check(learningPath.includes('location.reload()'), 'changing learning level reloads the prepared bank');
 check(!/navigator\.geolocation|watchPosition|sendBeacon|WebSocket|XMLHttpRequest/.test(learningPath), 'learning path has no location or upload APIs');
