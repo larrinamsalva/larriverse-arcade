@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/arcade.css">
-  <style>@media(max-width:700px){.mobile-dock{grid-template-columns:repeat(6,1fr)}}</style>
+  <style>@media(max-width:700px){.mobile-dock{grid-template-columns:repeat(7,1fr)}}</style>
 </head>
 <body>
   <a class="skip-link" href="#games">Skip to game cabinets</a>
@@ -21,6 +21,7 @@
       <a class="brand" href="#top"><span>✦</span> LarriVerse</a>
       <div class="nav-pills">
         <a href="#games">Games</a>
+        <a href="today/">Today</a>
         <a href="goals/">Goals</a>
         <a href="passport/">Passport</a>
         <a href="report/">Report</a>
@@ -37,6 +38,7 @@
       <div class="hero-actions">
         <button class="primary" id="randomGame">🎲 Surprise me</button>
         <a class="secondary" href="#games">Browse cabinets ↓</a>
+        <a class="secondary" href="today/">🌤️ My Learning Day</a>
         <a class="secondary" href="goals/">🎯 My Learning Goals</a>
         <a class="secondary" href="passport/">📘 View my Progress Passport</a>
         <a class="secondary" href="report/">📄 Family Learning Report</a>
@@ -81,11 +83,12 @@
       <div class="section-head"><div><p class="eyebrow">Release readiness</p><h2>LarriVerse Arcade 1.0</h2></div><a class="secondary" href="docs/RELEASE-CHECKLIST.md">Open checklist ↗</a></div>
       <div class="release-grid">
         <article><span>8/8</span><h3>Complete vault</h3><p>Every recovered browser concept launches from the shared lobby.</p></article>
+        <article><span>🌤️</span><h3>My Learning Day</h3><p>Three optional next-step cards turn goals and local progress into one pace-sized choice with no timer, deadline, streak, grade, or automatic assignment.</p></article>
         <article><span>🎯</span><h3>Learning Goals</h3><p>A private pressure-free board tracks up to three preset goals with no deadlines, streaks, grades, or penalties.</p></article>
         <article><span>📘</span><h3>Progress Passport</h3><p>A private, printable view turns existing local saves into cabinet stamps, learning trails, achievements, goals, and a suggested next mission.</p></article>
         <article><span>📄</span><h3>Family Learning Report</h3><p>A private review view summarizes goals, strengths, gentle practice opportunities, participation, and recent activity without grading or storing notes.</p></article>
         <article><span>♿</span><h3>Shared comfort controls</h3><p>Reduced motion, high contrast, and larger text follow the player into every cabinet.</p></article>
-        <article><span>💾</span><h3>Portable saves</h3><p>Download and restore a schema-checked backup containing only LarriVerse browser records, including the small preset goal record.</p></article>
+        <article><span>💾</span><h3>Portable saves</h3><p>Download and restore a schema-checked backup containing only LarriVerse browser records, including the small preset goal and Learning Day records.</p></article>
         <article><span>✓</span><h3>Automated guardrails</h3><p>Whole-arcade validation runs alongside cabinet-specific content, privacy, and safety audits.</p></article>
       </div>
     </section>
@@ -99,6 +102,7 @@
 
   <nav class="mobile-dock" aria-label="Mobile arcade shortcuts">
     <a href="#games"><span>🕹️</span>Games</a>
+    <a href="today/"><span>🌤️</span>Today</a>
     <a href="goals/"><span>🎯</span>Goals</a>
     <a href="passport/"><span>📘</span>Passport</a>
     <a href="report/"><span>📄</span>Report</a>
@@ -127,6 +131,7 @@
           <label>Avatar<input id="profileAvatar" maxlength="8" aria-label="Profile avatar emoji"></label>
         </div>
         <button id="saveProfile" class="secondary button-secondary" type="button">Save profile</button>
+        <a class="secondary" href="today/">Open My Learning Day</a>
         <a class="secondary" href="goals/">Open Learning Goals</a>
         <a class="secondary" href="passport/">Open Progress Passport</a>
         <a class="secondary" href="report/">Open Family Learning Report</a>
