@@ -15,6 +15,11 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Brain Sweat Expanded keeps queued hazardous activity payloads physically absent.
 - [x] Chill Brain keeps sound optional and avoids health claims.
 - [x] KidsCoin Family keeps family data local and parent controlled.
+- [x] KidsCoin combines six ten-question lessons for 60 open family-planning questions.
+- [x] Shared learning packs combine into 120 unique reviewed questions across five subjects.
+- [x] Creature Catcher and Road Trip Quest offer Starter, Growing, Challenge, and Mixed paths.
+- [x] Learning-path choice, recent question IDs, and local accuracy stay in browser storage without collecting age.
+- [x] Learning expansion loaders request no location and upload no answers.
 - [x] Road Trip Quest GPS defaults to Demo Mode and never saves or uploads coordinates.
 - [x] Save backups accept only schema-checked `larriverse.*` browser records.
 - [x] Import failures roll back to the pre-import browser records.
@@ -23,6 +28,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Version tags validate the complete arcade before GitHub can publish a release.
 - [x] Automated Chromium pass covers the lobby and all eight cabinets at 1440×900 and 390×844.
 - [x] Browser automation performs a real profile/settings/reward/backup/restore round trip.
+- [x] Browser automation changes an adaptive learning path, reloads it, and verifies local recent-question memory.
 - [x] Browser evidence is captured without granting location permission.
 - [x] Successful Browser QA builds an offline gallery review with 18 hashed images.
 - [x] The tag workflow requires a committed final approval JSON and exact approved image hashes.
@@ -42,18 +48,18 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 
 ## Cabinet launch pass
 
-- [ ] KidsCoin Family App — create a profile, request a task, approve it, and restore its save.
+- [ ] KidsCoin Family App — open a ten-question lesson bank without a PIN, finish one three-question round, assign a chore, approve its KC, and restore the save.
 - [ ] Brain Sweat Expanded — complete one reviewed activity and confirm queued tiers remain locked.
 - [ ] Brain Sweat Life Skills — complete one reviewed lesson and confirm world progress persists.
 - [ ] Bubble Resonance Φ369 — finish one run with sound optional and medical boundary visible.
 - [ ] Chill Brain Rewards — finish and leave-gently paths both save correctly.
-- [ ] Creature Catcher — finish a round and confirm the field guide persists.
-- [ ] Road Trip Quest — win a city battle and confirm route progress persists.
+- [ ] Creature Catcher — change the learning path, finish a round, reload, and confirm the path, recent memory, and field guide persist.
+- [ ] Road Trip Quest — change the learning path, win one city battle, reload, and confirm path and route progress persist.
 - [ ] Road Trip Quest GPS — complete one Demo Mode encounter and verify Live Movement remains opt-in.
 
 ## Accessibility pass
 
-- [ ] Keyboard-only navigation reaches the skip link, search, filters, cabinet launches, settings, and save tools.
+- [ ] Keyboard-only navigation reaches the skip link, search, filters, cabinet launches, learning-path controls, settings, and save tools.
 - [ ] Focus indicators remain visible in normal and high-contrast modes.
 - [ ] Reduced motion stops lobby rotation and decorative animation.
 - [ ] Larger text does not hide launch buttons or dialog controls at 320px width.
