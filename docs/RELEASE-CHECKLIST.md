@@ -22,6 +22,9 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Learning expansion loaders request no location and upload no answers.
 - [x] Progress Passport publishes all eight cabinet stamps, adaptive-learning trails, achievements, level progress, and a suggested next mission.
 - [x] Progress Passport is read-only, requests no location, uploads no data, and excludes raw family and location records from its summary export.
+- [x] Family Learning Report publishes aggregate strengths, practice opportunities, learning paths, eight cabinet rows, recent activity, and conversation starters.
+- [x] Family Learning Report requires at least two answers before describing a subject pattern, uses 80% for strengths and below 75% for practice, and explicitly rejects grading, diagnosis, ranking, and certification claims.
+- [x] Family Learning Report is read-only, stores no review notes, requests no location, uploads no data, and excludes raw family and coordinate records from its export.
 - [x] Road Trip Quest GPS defaults to Demo Mode and never saves or uploads coordinates.
 - [x] Save backups accept only schema-checked `larriverse.*` browser records.
 - [x] Import failures roll back to the pre-import browser records.
@@ -32,6 +35,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Browser automation performs a real profile/settings/reward/backup/restore round trip.
 - [x] Browser automation changes an adaptive learning path, reloads it, and verifies local recent-question memory.
 - [x] Browser automation seeds a realistic Progress Passport and verifies totals, eight stamps, accuracy, achievements, next mission, and safe export fields.
+- [x] Browser automation seeds a realistic Family Learning Report and verifies strength, practice, neutral subject, eight cabinet rows, recent activity, healthy boundaries, and safe export fields.
 - [x] Browser evidence is captured without granting location permission.
 - [x] Successful Browser QA builds an offline gallery review with 18 hashed images.
 - [x] The tag workflow requires a committed final approval JSON and exact approved image hashes.
@@ -39,6 +43,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] The physical-phone report requires touch capability and six completed device-wide checks.
 - [x] The GitHub Pages workflow validates `main` and publishes only the allowlisted static arcade files.
 - [x] The Pages build publishes `/passport/` and records it in the deployment manifest.
+- [x] The Pages build publishes `/report/` and records it in the deployment manifest.
 - [x] The Pages build excludes the final release approval record and private evidence files.
 - [x] Every deployed build contains a tamper-evident deployment identity tied to its source commit.
 - [x] Deployment Readiness checks HTTPS, release alignment, eight routes, and private-path exclusion.
@@ -48,7 +53,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] The Release Room creates a private `larriverse-evidence-bundle` that preserves all three original JSON texts and SHA-256 hashes.
 - [x] The evidence bundle identifies the deployed candidate and explicitly cannot create release approval.
 
-Browser evidence does not replace the manual gameplay, real-device, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md), [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md), [`DEVICE-QA.md`](DEVICE-QA.md), [`DEPLOYMENT-REHEARSAL.md`](DEPLOYMENT-REHEARSAL.md), [`RELEASE-ROOM.md`](RELEASE-ROOM.md), and [`PROGRESS-PASSPORT.md`](PROGRESS-PASSPORT.md) for the exact boundary.
+Browser evidence does not replace the manual gameplay, real-device, print, and visual-approval checks below. See [`BROWSER-QA.md`](BROWSER-QA.md), [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md), [`DEVICE-QA.md`](DEVICE-QA.md), [`DEPLOYMENT-REHEARSAL.md`](DEPLOYMENT-REHEARSAL.md), [`RELEASE-ROOM.md`](RELEASE-ROOM.md), [`PROGRESS-PASSPORT.md`](PROGRESS-PASSPORT.md), and [`FAMILY-LEARNING-REPORT.md`](FAMILY-LEARNING-REPORT.md) for the exact boundary.
 
 ## Cabinet launch pass
 
@@ -70,12 +75,25 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 - [ ] Download the `larriverse-progress-passport` summary and confirm it contains no raw KidsCoin family records or location data.
 - [ ] Confirm an empty/new browser shows a friendly first-adventure state instead of invented progress.
 
+## Family Learning Report pass
+
+- [ ] Open `/report/` after playing multiple cabinets and confirm profile totals and the visited-cabinet count match the local saves.
+- [ ] Confirm subject totals agree with Creature Catcher and Road Trip Quest history.
+- [ ] Confirm strengths require at least two answers and at least 80% accuracy.
+- [ ] Confirm practice opportunities require at least two answers and below 75% accuracy.
+- [ ] Confirm subjects with too little history show “more data needed” instead of an ability conclusion.
+- [ ] Confirm all eight cabinet rows appear and recent activity is ordered by real local timestamps.
+- [ ] Confirm conversation starters are optional, supportive, and contain no punishment or ranking language.
+- [ ] Print or save the print preview and confirm navigation, action buttons, and toast messages are hidden without clipping report content.
+- [ ] Download the `larriverse-family-learning-report` JSON and confirm it contains no chores, approvals, parent-control material, family notes, review notes, or coordinate records.
+- [ ] Confirm an empty/new browser shows friendly empty states instead of invented strengths or weaknesses.
+
 ## Accessibility pass
 
-- [ ] Keyboard-only navigation reaches the skip link, search, filters, cabinet launches, learning-path controls, Passport sections, settings, and save tools.
+- [ ] Keyboard-only navigation reaches the skip link, search, filters, cabinet launches, learning-path controls, Passport sections, Family Report sections, settings, and save tools.
 - [ ] Focus indicators remain visible in normal and high-contrast modes.
 - [ ] Reduced motion stops lobby rotation and decorative animation.
-- [ ] Larger text does not hide launch buttons, Passport actions, or dialog controls at 320px width.
+- [ ] Larger text does not hide launch buttons, Passport actions, Family Report actions, or dialog controls at 320px width.
 - [ ] Mobile dock does not cover interactive content.
 - [ ] Dialogs close with their close button and Escape.
 - [ ] Status messages are announced through `aria-live`.
@@ -89,7 +107,7 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 - [ ] Restore rejects invalid record keys and oversized files.
 - [ ] Erase progress keeps accessibility settings when requested.
 - [ ] No location coordinates appear in exported Road Trip GPS data.
-- [ ] Restoring a backup restores the profile and adaptive-learning history used by the Progress Passport.
+- [ ] Restoring a backup restores the profile and adaptive-learning history used by both the Progress Passport and Family Learning Report.
 
 ## Visual gallery approval
 
@@ -112,7 +130,7 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 
 - [ ] Open `qa/readiness.html` on the deployed site and confirm its deployment identity matches the merged commit.
 - [ ] Confirm Readiness shows all five checks passed and all eight cabinet routes reachable.
-- [ ] Confirm the Progress Passport route is published and the final approval record, repository scripts, and workflow files are not publicly reachable.
+- [ ] Confirm the Progress Passport and Family Learning Report routes are published and the final approval record, repository scripts, and workflow files are not publicly reachable.
 - [ ] Load the gallery, desktop, and phone files through evidence preflight and resolve every structural issue.
 
 ## Release Room handoff
@@ -132,4 +150,4 @@ Browser evidence does not replace the manual gameplay, real-device, and visual-a
 
 ## Release decision
 
-**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, Progress Passport, approval-record, device-label, static-preview, shared-evidence-contract, evidence-bundle, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
+**Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, Progress Passport, Family Learning Report, approval-record, device-label, static-preview, shared-evidence-contract, evidence-bundle, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.

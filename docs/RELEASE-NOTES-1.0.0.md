@@ -34,6 +34,16 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 - A downloadable `larriverse-progress-passport` summary contains totals and learning statistics without raw family records or location data.
 - The Passport is read-only and does not create an account, age field, leaderboard, analytics stream, or cloud profile.
 
+## Family Learning Report
+
+- A first-class `/report/` route presents the same local progress in a calmer family-review format.
+- The report summarizes shared totals, all eight cabinet participation records, adaptive learning paths, aggregate subject accuracy, and up to five recent cabinet timestamps.
+- Growing strengths require at least two answers and at least 80% accuracy; gentle practice opportunities require at least two answers and below 75% accuracy.
+- Short histories are described as needing more data instead of being treated as ability conclusions.
+- Generated conversation starters invite celebration, curiosity, and optional practice without grading or punishment language.
+- Print and JSON export are supported, while review notes are never collected or stored.
+- The downloadable `larriverse-family-learning-report` excludes raw KidsCoin family records and location data and explicitly states that it is not a grade, diagnosis, ranking, or certification.
+
 ## Shared 1.0 platform
 
 - Arcade SDK v3 with backwards-compatible local saves
@@ -42,15 +52,17 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 - A lobby control center for profile editing, safe save backup and restore, and confirmed progress erasure
 - Per-cabinet progress summaries in the lobby
 - A private Progress Passport for cabinet stamps, learning statistics, achievements, printing, and safe summary download
+- A private Family Learning Report for strengths, gentle practice opportunities, participation, recent activity, printing, and aggregate report download
 - Keyboard navigation, visible focus, responsive dialogs, and mobile navigation
 - Zero-dependency structural and content validation in GitHub Actions
 
 ## Safety and privacy design
 
 - No advertising, gambling, real-currency purchases, cryptocurrency, or public child profiles
-- Family data, cabinet progress, question history, local accuracy, accessibility settings, and Passport calculations remain in the browser
+- Family data, cabinet progress, question history, local accuracy, accessibility settings, Passport calculations, and report calculations remain in the browser
 - The learning-path system does not collect age, request location, or upload answers
 - The Progress Passport does not read raw KidsCoin tasks, approvals, PIN data, reward requests, or Road Trip GPS coordinates
+- The Family Learning Report does not save review notes, read raw family records, request location, or upload learner statistics
 - KidsCoin Parent Mode assigns chores and approves Family KC awards and reward redemptions; learning and reward browsing remain open
 - Backup files include only schema-checked `larriverse.*` JSON records
 - High-stakes health, legal, electrical, foraging, emergency, repair, and trade content remains review gated where applicable
@@ -60,4 +72,4 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 
 ## Release qualification
 
-GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Progress Passport calculations and privacy boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic Passport progress and verifies the page at desktop and mobile widths alongside the lobby, all eight cabinets, and release tooling. Real-device gameplay, physical-phone layout, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
+GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress and verifies both progress views at desktop and mobile widths alongside the lobby, all eight cabinets, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
