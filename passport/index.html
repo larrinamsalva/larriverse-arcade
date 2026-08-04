@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#160f35">
+  <meta name="description" content="A private, device-local progress passport for LarriVerse Arcade.">
+  <title>Progress Passport · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="passport.css">
+</head>
+<body>
+  <a class="skip-link" href="#passportMain">Skip to progress</a>
+  <div class="stars" aria-hidden="true"></div>
+
+  <header class="passport-nav">
+    <a class="brand" href="../"><span aria-hidden="true">✦</span> LarriVerse Arcade</a>
+    <nav aria-label="Progress Passport navigation">
+      <a href="#learning">Learning</a>
+      <a href="#cabinets">Cabinets</a>
+      <a href="#achievements">Achievements</a>
+      <a href="../">Back to arcade</a>
+    </nav>
+  </header>
+
+  <main id="passportMain">
+    <section class="passport-hero" aria-labelledby="passportTitle">
+      <div class="identity-mark" id="identityAvatar" aria-hidden="true">🌟</div>
+      <div class="hero-copy">
+        <p class="eyebrow">Private progress passport</p>
+        <h1 id="passportTitle"><span id="identityName">Player One</span>’s LarriVerse journey</h1>
+        <p class="lede">A friendly snapshot built from saves already stored in this browser. No account, age field, leaderboard, analytics, or cloud upload is used.</p>
+        <div class="hero-actions">
+          <button id="printPassport" type="button" class="primary">Print passport</button>
+          <button id="downloadPassport" type="button" class="secondary">Download summary</button>
+          <a class="secondary" href="../#games">Play a cabinet</a>
+        </div>
+      </div>
+      <div class="level-seal" aria-label="Current arcade level">
+        <small>LEVEL</small>
+        <strong id="levelValue">1</strong>
+        <span id="xpValue">0 XP</span>
+      </div>
+    </section>
+
+    <section class="privacy-note" aria-label="Privacy note">
+      <span aria-hidden="true">🔒</span>
+      <p><strong>This page stays on your device.</strong> Its downloaded summary contains totals and learning statistics, not raw family tasks, location data, passwords, or unrelated browser storage.</p>
+    </section>
+
+    <section class="stat-grid" aria-label="Arcade progress totals">
+      <article><span aria-hidden="true">⚡</span><strong id="totalXp">0</strong><small>Total XP</small></article>
+      <article><span aria-hidden="true">🪙</span><strong id="totalKc">0</strong><small>Arcade KC</small></article>
+      <article><span aria-hidden="true">🕹️</span><strong id="totalSessions">0</strong><small>Sessions</small></article>
+      <article><span aria-hidden="true">✓</span><strong id="totalCompletions">0</strong><small>Completed</small></article>
+    </section>
+
+    <section class="level-card" aria-labelledby="levelHeading">
+      <div>
+        <p class="eyebrow">Level trail</p>
+        <h2 id="levelHeading">Growing one session at a time</h2>
+        <p id="levelMessage">Every cabinet visit adds another stamp to the journey.</p>
+      </div>
+      <div class="level-progress">
+        <div class="progress-label"><span id="levelStart">0 XP</span><strong id="levelProgressText">0% to next level</strong><span id="levelEnd">36 XP</span></div>
+        <div class="progress-track" role="progressbar" aria-label="Progress to next arcade level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="levelProgressBar"></span></div>
+      </div>
+    </section>
+
+    <section class="mission-card" aria-labelledby="missionHeading">
+      <div class="mission-icon" aria-hidden="true">🧭</div>
+      <div>
+        <p class="eyebrow">Suggested next mission</p>
+        <h2 id="missionHeading">Choose a first adventure</h2>
+        <p id="missionText">Open a cabinet and start building your passport.</p>
+      </div>
+      <a id="missionLink" class="primary" href="../#games">Explore games</a>
+    </section>
+
+    <section class="passport-section" id="learning" aria-labelledby="learningHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Adaptive learning</p><h2 id="learningHeading">Learning trails</h2></div>
+        <p>Recent-question memory and answer totals from Creature Catcher and Road Trip Quest stay in this browser.</p>
+      </div>
+      <div id="learningGrid" class="learning-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="passport-section" id="cabinets" aria-labelledby="cabinetHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Eight-cabinet vault</p><h2 id="cabinetHeading">Cabinet stamps</h2></div>
+        <p id="cabinetSummary">Loading the arcade catalog…</p>
+      </div>
+      <div id="cabinetGrid" class="cabinet-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="passport-section" id="achievements" aria-labelledby="achievementHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Milestones</p><h2 id="achievementHeading">Achievement shelf</h2></div>
+        <p>Achievements are earned through local arcade activity and never posted publicly.</p>
+      </div>
+      <div id="achievementGrid" class="achievement-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="empty-reset" aria-label="Passport help">
+      <h2>Need a clean start or a backup?</h2>
+      <p>The Arcade Control Center manages save backups, restores, profile identity, comfort settings, and progress erasure.</p>
+      <a class="secondary" href="../#top">Open the arcade control center</a>
+    </section>
+  </main>
+
+  <footer>
+    <span>LarriVerse Progress Passport</span>
+    <span>Local by design · Printable by choice</span>
+    <a href="../">Return to the arcade</a>
+  </footer>
+
+  <output id="passportMessage" class="toast" aria-live="polite"></output>
+
+  <script src="../assets/arcade-sdk.js"></script>
+  <script src="passport.js"></script>
+</body>
+</html>
