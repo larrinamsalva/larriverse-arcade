@@ -13,6 +13,7 @@ const directories = ['assets', 'games', 'qa', 'docs'];
 directories.splice(2, 0, 'passport');
 directories.splice(3, 0, 'report');
 directories.splice(4, 0, 'goals');
+directories.splice(5, 0, 'today');
 const forbidden = ['.git', '.github', 'node_modules', 'scripts', 'tests', 'artifacts', 'playwright-report', 'test-results'];
 const runningInActions = process.env.GITHUB_ACTIONS === 'true';
 const sourceCommit = process.env.GITHUB_SHA || process.env.LARRIVERSE_SOURCE_SHA || '0'.repeat(40);
@@ -51,6 +52,7 @@ const deployment = {
   releaseManifestSha256: crypto.createHash('sha256').update(releaseText).digest('hex'),
   routes: {
     lobby: 'index.html',
+    learningDay: 'today/index.html',
     learningGoals: 'goals/index.html',
     progressPassport: 'passport/index.html',
     familyLearningReport: 'report/index.html',
@@ -85,6 +87,10 @@ for (const required of [
   'assets/learning-goals.js',
   'assets/learning-goals-summary.js',
   'assets/learning-goals.css',
+  'assets/learning-day.js',
+  'today/index.html',
+  'today/today.css',
+  'today/today.js',
   'goals/index.html',
   'goals/goals.css',
   'goals/goals.js',

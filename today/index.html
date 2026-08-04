@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173449">
+  <meta name="description" content="A private, pressure-free next-step page for LarriVerse Arcade.">
+  <title>My Learning Day · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="today.css">
+</head>
+<body>
+  <a class="skip-link" href="#todayMain">Skip to today’s choices</a>
+  <div class="sky-glow" aria-hidden="true"></div>
+
+  <header class="today-nav">
+    <a class="brand" href="../"><span aria-hidden="true">✦</span> LarriVerse Arcade</a>
+    <nav aria-label="My Learning Day navigation">
+      <a href="#currentStep">Current step</a>
+      <a href="#choices">Choices</a>
+      <a href="#celebrations">Celebrations</a>
+      <a href="../goals/">Goals</a>
+      <a href="../passport/">Passport</a>
+      <a href="../report/">Family report</a>
+      <a href="../">Arcade</a>
+    </nav>
+  </header>
+
+  <main id="todayMain">
+    <section class="today-hero" aria-labelledby="todayTitle">
+      <div class="identity-mark" id="identityAvatar" aria-hidden="true">🌟</div>
+      <div class="hero-copy">
+        <p class="eyebrow">One choice at a time</p>
+        <h1 id="todayTitle"><span id="identityName">Player One</span>’s Learning Day</h1>
+        <p class="lede">Choose one next step that fits your energy. The page measures real local progress, but it never uses a timer, deadline, streak, grade, automatic assignment, or missed-day label.</p>
+        <div class="hero-actions">
+          <button id="refreshDay" class="primary" type="button">Refresh progress</button>
+          <button id="printDay" class="secondary" type="button">Print this page</button>
+          <button id="downloadDay" class="secondary" type="button">Download summary</button>
+          <a class="secondary" href="../goals/">Open Learning Goals</a>
+        </div>
+      </div>
+      <div class="day-seal" aria-label="Recent celebrations">
+        <small>CELEBRATIONS</small>
+        <strong id="celebrationCount">0</strong>
+        <span>kept locally</span>
+      </div>
+    </section>
+
+    <section class="privacy-note" aria-label="Privacy and wellbeing boundary">
+      <span aria-hidden="true">🌤️</span>
+      <p><strong>This is a choice board, not a schedule.</strong> It stores one preset active step and up to six recent celebrations. It stores no notes, ages, deadlines, elapsed time, grades, family records, coordinates, or uploads.</p>
+    </section>
+
+    <section class="pace-section" aria-labelledby="paceHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Match your energy</p><h2 id="paceHeading">Choose a comfortable pace</h2></div>
+        <p>The pace changes the size of new choices only. It never changes a pinned goal or creates an assignment.</p>
+      </div>
+      <fieldset id="pacePicker" class="pace-grid">
+        <legend class="sr-only">Learning pace</legend>
+        <label class="pace-card">
+          <input type="radio" name="pace" value="quick">
+          <span class="pace-icon" aria-hidden="true">✨</span>
+          <strong>Quick Spark</strong>
+          <small>One tiny step. Stop whenever it feels complete.</small>
+        </label>
+        <label class="pace-card selected">
+          <input type="radio" name="pace" value="steady" checked>
+          <span class="pace-icon" aria-hidden="true">🧭</span>
+          <strong>Steady Quest</strong>
+          <small>A comfortable middle-sized adventure.</small>
+        </label>
+        <label class="pace-card">
+          <input type="radio" name="pace" value="deep">
+          <span class="pace-icon" aria-hidden="true">🌊</span>
+          <strong>Deep Dive</strong>
+          <small>A longer choice for days with extra energy.</small>
+        </label>
+      </fieldset>
+    </section>
+
+    <section class="today-section" id="currentStep" aria-labelledby="currentHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Current focus</p><h2 id="currentHeading">One active step</h2></div>
+        <p>Progress starts when the step is chosen. Releasing it is a change of direction, not a failure.</p>
+      </div>
+      <div id="activeEmpty" class="empty-card">
+        <strong>No step is active.</strong>
+        <p>Pick any choice below. The board also works perfectly well with nothing selected.</p>
+      </div>
+      <article id="activeStep" class="active-card" hidden>
+        <header>
+          <div><p class="eyebrow" id="activePace">Steady Quest</p><h3 id="activeLabel">Choose one learning step</h3></div>
+          <span id="activeBadge" class="status-badge">In progress</span>
+        </header>
+        <p id="activeMessage">Progress is measured from the moment this step was chosen.</p>
+        <div id="activeMeter" class="progress-track" role="progressbar" aria-label="Active learning step" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0"><span></span></div>
+        <div class="progress-meta"><span id="activeProgress">0 of 1</span><span id="activePercent">0%</span></div>
+        <div class="active-actions">
+          <a id="openActivity" class="primary" href="../#games">Open activity</a>
+          <button id="finishStep" class="celebrate" type="button" disabled>Celebrate and finish</button>
+          <button id="releaseStep" class="secondary" type="button">Release this step</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="today-section" id="choices" aria-labelledby="choicesHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Three invitations</p><h2 id="choicesHeading">Choose what feels right</h2></div>
+        <p>Pinned goals are considered first. Remaining cards come from aggregate local progress and never select themselves.</p>
+      </div>
+      <div id="choiceGrid" class="choice-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="today-section" id="celebrations" aria-labelledby="celebrationsHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Recent wins</p><h2 id="celebrationsHeading">Celebrations, not streaks</h2></div>
+        <p>Only the six newest completed steps are kept. Missing a day changes nothing.</p>
+      </div>
+      <div id="historyGrid" class="history-grid" aria-live="polite"></div>
+      <button id="clearHistory" class="secondary quiet-action" type="button">Clear celebration history</button>
+    </section>
+
+    <section class="promise-card" aria-labelledby="promiseHeading">
+      <span aria-hidden="true">🌱</span>
+      <div>
+        <p class="eyebrow">Learning Day promise</p>
+        <h2 id="promiseHeading">Energy changes. Curiosity can stay.</h2>
+        <p>A Quick Spark counts. A Deep Dive counts. Releasing a choice counts as listening to yourself. This page exists to make a next step visible—not to judge how fast anyone moves.</p>
+      </div>
+      <a class="primary" href="../#games">Browse all cabinets</a>
+    </section>
+  </main>
+
+  <footer>
+    <span>LarriVerse My Learning Day</span>
+    <span>Local by design · Choice before pressure</span>
+    <a href="../">Return to the arcade</a>
+  </footer>
+
+  <output id="dayToast" class="toast" aria-live="polite"></output>
+
+  <script src="../assets/arcade-sdk.js"></script>
+  <script src="../assets/learning-goals.js"></script>
+  <script src="../assets/learning-day.js"></script>
+  <script src="today.js"></script>
+</body>
+</html>

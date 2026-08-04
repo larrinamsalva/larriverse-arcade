@@ -37,6 +37,18 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 - The small `larriverse.learningGoals.v1` record is included in the existing LarriVerse save backup.
 - Passport and Family Report use one shared read-only renderer to show exactly the same goal totals and progress.
 
+## My Learning Day
+
+- A first-class `/today/` route turns pinned goals and aggregate local progress into exactly three optional next-step cards.
+- Incomplete pinned goals are considered first; remaining cards may suggest a subject practice invitation, an unvisited or least-played cabinet, a general session, or XP growth.
+- Quick Spark, Steady Quest, and Deep Dive change only the size of newly offered steps.
+- A learner must deliberately choose one card. Suggestions never assign themselves.
+- One active step records a fresh baseline, so only real activity after the choice counts.
+- “Celebrate and finish” remains disabled until the selected metric reaches its target.
+- Releasing a step creates no failure, penalty, missed-day record, or change to goals and arcade progress.
+- The device-local `larriverse.learningDay.v1` record stores one preset active step and up to six recent celebrations.
+- The page stores no notes, timer duration, schedule, deadline, streak, grade, family record, password, or location coordinate and uploads nothing.
+
 ## Progress Passport
 
 - A first-class `/passport/` route turns existing local saves into a private progress view.
@@ -64,6 +76,7 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 - A lobby control center for profile editing, safe save backup and restore, and confirmed progress erasure
 - Per-cabinet progress summaries in the lobby
 - A pressure-free Learning Goals board with three preset focus slots, automatic local progress, printing, and safe summary download
+- A private My Learning Day page with three optional pace-sized choices, one measured active step, six recent celebrations, printing, and safe summary download
 - A private Progress Passport for goals, cabinet stamps, learning statistics, achievements, printing, and safe summary download
 - A private Family Learning Report for goals, strengths, gentle practice opportunities, participation, recent activity, printing, and aggregate report download
 - Keyboard navigation, visible focus, responsive dialogs, and mobile navigation
@@ -72,12 +85,13 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 ## Safety and privacy design
 
 - No advertising, gambling, real-currency purchases, cryptocurrency, or public child profiles
-- Family data, cabinet progress, question history, local accuracy, preset goals, accessibility settings, Passport calculations, and report calculations remain in the browser
+- Family data, cabinet progress, question history, local accuracy, preset goals, Learning Day choices, accessibility settings, Passport calculations, and report calculations remain in the browser
 - The learning-path system does not collect age, request location, or upload answers
 - The Learning Goals engine reads only aggregate arcade and learning-path counters, writes only `larriverse.learningGoals.v1`, and stores no free text, family records, or location data
+- The Learning Day engine reads the same aggregate counters, writes only `larriverse.learningDay.v1`, and stores no diary text, timers, schedules, deadlines, streaks, grades, family records, or location data
 - The Progress Passport does not read raw KidsCoin tasks, approvals, PIN data, reward requests, or Road Trip GPS coordinates
 - The Family Learning Report does not save review notes, read raw family records, request location, or upload learner statistics
-- KidsCoin Parent Mode assigns chores and approves Family KC awards and reward redemptions; learning, goal setting, and reward browsing remain open
+- KidsCoin Parent Mode assigns chores and approves Family KC awards and reward redemptions; learning, goal setting, next-step choosing, and reward browsing remain open
 - Backup files include only schema-checked `larriverse.*` JSON records
 - High-stakes health, legal, electrical, foraging, emergency, repair, and trade content remains review gated where applicable
 - Wellness progress is not diagnosis; hands-on progress is not certification or safety clearance
@@ -86,4 +100,4 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 
 ## Release qualification
 
-GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes three goals, verifies restart and removal, and checks the read-only goal summaries at desktop and mobile widths alongside the lobby, all eight cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
+GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all eight cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
