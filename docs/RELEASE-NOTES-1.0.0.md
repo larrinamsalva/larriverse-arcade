@@ -25,10 +25,22 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 - KidsCoin Family combines its original 36 questions with a 24-question expansion pack for 60 family-planning questions, ten per lesson.
 - Brain Sweat retains its larger reviewed content system, while Road Trip Quest GPS retains its separate recovered 28-question bank.
 
+## Learning Goals
+
+- A first-class `/goals/` route lets a learner pin up to three preset goals without entering Parent Mode.
+- Goal types cover subject answers, one chosen cabinet, any arcade sessions, completed sessions, XP growth, and newly visited cabinets.
+- Targets follow small 1/3/6/9 or 9/18/36 steps rather than open-ended demands.
+- Only progress recorded after a goal is pinned counts; restarting creates a fresh baseline without erasing game or answer history.
+- Completed goals award no money and create no automatic assignment.
+- Suggestions are optional and must be deliberately pinned.
+- The board stores no custom notes, free-text goals, deadlines, overdue states, streaks, leaderboards, grades, or punishment flags.
+- The small `larriverse.learningGoals.v1` record is included in the existing LarriVerse save backup.
+- Passport and Family Report use one shared read-only renderer to show exactly the same goal totals and progress.
+
 ## Progress Passport
 
 - A first-class `/passport/` route turns existing local saves into a private progress view.
-- The Passport shows shared level progress, XP, Arcade KC, sessions, completed sessions, all eight cabinet stamps, adaptive-learning trails, per-subject accuracy, and friendly achievement labels.
+- The Passport shows shared level progress, XP, Arcade KC, sessions, completed sessions, current learning goals, all eight cabinet stamps, adaptive-learning trails, per-subject accuracy, and friendly achievement labels.
 - One gentle next mission recommends an unvisited cabinet, a practiced subject below 75% accuracy, or the least-completed cabinet.
 - The page supports keyboard focus, mobile layouts, larger text, high contrast, reduced motion, and a print-specific layout.
 - A downloadable `larriverse-progress-passport` summary contains totals and learning statistics without raw family records or location data.
@@ -37,7 +49,7 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 ## Family Learning Report
 
 - A first-class `/report/` route presents the same local progress in a calmer family-review format.
-- The report summarizes shared totals, all eight cabinet participation records, adaptive learning paths, aggregate subject accuracy, and up to five recent cabinet timestamps.
+- The report summarizes current goals, shared totals, all eight cabinet participation records, adaptive learning paths, aggregate subject accuracy, and up to five recent cabinet timestamps.
 - Growing strengths require at least two answers and at least 80% accuracy; gentle practice opportunities require at least two answers and below 75% accuracy.
 - Short histories are described as needing more data instead of being treated as ability conclusions.
 - Generated conversation starters invite celebration, curiosity, and optional practice without grading or punishment language.
@@ -51,19 +63,21 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 - Reduced motion, high contrast, and larger text across SDK-enabled cabinets
 - A lobby control center for profile editing, safe save backup and restore, and confirmed progress erasure
 - Per-cabinet progress summaries in the lobby
-- A private Progress Passport for cabinet stamps, learning statistics, achievements, printing, and safe summary download
-- A private Family Learning Report for strengths, gentle practice opportunities, participation, recent activity, printing, and aggregate report download
+- A pressure-free Learning Goals board with three preset focus slots, automatic local progress, printing, and safe summary download
+- A private Progress Passport for goals, cabinet stamps, learning statistics, achievements, printing, and safe summary download
+- A private Family Learning Report for goals, strengths, gentle practice opportunities, participation, recent activity, printing, and aggregate report download
 - Keyboard navigation, visible focus, responsive dialogs, and mobile navigation
 - Zero-dependency structural and content validation in GitHub Actions
 
 ## Safety and privacy design
 
 - No advertising, gambling, real-currency purchases, cryptocurrency, or public child profiles
-- Family data, cabinet progress, question history, local accuracy, accessibility settings, Passport calculations, and report calculations remain in the browser
+- Family data, cabinet progress, question history, local accuracy, preset goals, accessibility settings, Passport calculations, and report calculations remain in the browser
 - The learning-path system does not collect age, request location, or upload answers
+- The Learning Goals engine reads only aggregate arcade and learning-path counters, writes only `larriverse.learningGoals.v1`, and stores no free text, family records, or location data
 - The Progress Passport does not read raw KidsCoin tasks, approvals, PIN data, reward requests, or Road Trip GPS coordinates
 - The Family Learning Report does not save review notes, read raw family records, request location, or upload learner statistics
-- KidsCoin Parent Mode assigns chores and approves Family KC awards and reward redemptions; learning and reward browsing remain open
+- KidsCoin Parent Mode assigns chores and approves Family KC awards and reward redemptions; learning, goal setting, and reward browsing remain open
 - Backup files include only schema-checked `larriverse.*` JSON records
 - High-stakes health, legal, electrical, foraging, emergency, repair, and trade content remains review gated where applicable
 - Wellness progress is not diagnosis; hands-on progress is not certification or safety clearance
@@ -72,4 +86,4 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 
 ## Release qualification
 
-GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress and verifies both progress views at desktop and mobile widths alongside the lobby, all eight cabinets, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
+GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes three goals, verifies restart and removal, and checks the read-only goal summaries at desktop and mobile widths alongside the lobby, all eight cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
