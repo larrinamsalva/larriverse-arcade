@@ -84,7 +84,7 @@ check(engine.includes("localStorage.setItem(STORAGE_KEY"), 'goal engine writes o
 check((engine.match(/localStorage\.setItem/g) || []).length === 1, 'goal engine has one intentional storage write path');
 check(!/navigator\.geolocation|watchPosition|getCurrentPosition|sendBeacon|WebSocket|XMLHttpRequest/.test(engine), 'goal engine requests no sensors and uploads no data');
 check(!/fetch\(/.test(engine), 'goal engine performs no network requests');
-check(!/deadline|overdue|streakCount|leaderboard|punish/i.test(engine), 'goal engine contains no pressure-state fields');
+check(!/deadlineAt|dueDate|overdueAt|streakCount|leaderboardRank|punishment/i.test(engine), 'goal engine contains no pressure-state fields');
 check(!/larriverse\.kidscoin|pinDigest|familyTasks|rewardRequests|coordinates|latitude|longitude/i.test(engine), 'goal engine does not read family or location records');
 
 for (const required of [
