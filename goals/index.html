@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2b1848">
+  <meta name="description" content="A private, device-local learning goals board for LarriVerse Arcade.">
+  <title>Learning Goals · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="../assets/learning-goals.css">
+  <link rel="stylesheet" href="goals.css">
+</head>
+<body>
+  <a class="skip-link" href="#goalsMain">Skip to goals</a>
+  <div class="spark-field" aria-hidden="true"></div>
+
+  <header class="goals-nav">
+    <a class="brand" href="../"><span aria-hidden="true">✦</span> LarriVerse Arcade</a>
+    <nav aria-label="Learning Goals navigation">
+      <a href="#currentGoals">Current goals</a>
+      <a href="#addGoal">Add a goal</a>
+      <a href="../passport/">Passport</a>
+      <a href="../report/">Family report</a>
+      <a href="../">Arcade</a>
+    </nav>
+  </header>
+
+  <main id="goalsMain">
+    <section class="goals-hero" aria-labelledby="goalsTitle">
+      <div class="identity-mark" id="identityAvatar" aria-hidden="true">🌟</div>
+      <div class="hero-copy">
+        <p class="eyebrow">Private learning goals</p>
+        <h1 id="goalsTitle"><span id="identityName">Player One</span>’s gentle focus board</h1>
+        <p class="lede">Choose up to three small goals that update from arcade progress already stored in this browser. No deadlines, streaks, leaderboards, punishments, or parent lock are used.</p>
+        <div class="hero-actions">
+          <button id="printGoals" class="primary" type="button">Print goals</button>
+          <button id="downloadGoals" class="secondary" type="button">Download summary</button>
+          <a class="secondary" href="../#games">Play a cabinet</a>
+        </div>
+      </div>
+      <div class="focus-seal" aria-label="Goal completion">
+        <small>FOCUS</small>
+        <strong id="completeCount">0 / 0</strong>
+        <span>complete</span>
+      </div>
+    </section>
+
+    <section class="privacy-note" aria-label="Privacy and wellbeing boundary">
+      <span aria-hidden="true">🫶</span>
+      <p><strong>Small goals, no pressure.</strong> This board stores only preset goal choices and starting counters. It collects no age, notes, deadlines, grades, location, or family-control records, and it uploads nothing.</p>
+    </section>
+
+    <section class="stat-grid" aria-label="Goal board totals">
+      <article><span aria-hidden="true">📌</span><strong id="pinnedCount">0</strong><small>Pinned goals</small></article>
+      <article><span aria-hidden="true">✓</span><strong id="doneCount">0</strong><small>Complete</small></article>
+      <article><span aria-hidden="true">🌱</span><strong id="progressCount">0</strong><small>In progress</small></article>
+      <article><span aria-hidden="true">＋</span><strong id="slotCount">3</strong><small>Open slots</small></article>
+    </section>
+
+    <section class="goals-section" id="currentGoals" aria-labelledby="currentGoalsHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Current focus</p><h2 id="currentGoalsHeading">Up to three goals</h2></div>
+        <p>Progress starts when a goal is pinned. Completed goals can stay for celebration, restart from today, or be removed without penalty.</p>
+      </div>
+      <div id="goalGrid" class="goal-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="goals-section builder-section" id="addGoal" aria-labelledby="addGoalHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Build a focus</p><h2 id="addGoalHeading">Add one small goal</h2></div>
+        <p>Only preset choices are stored. There is no free-text note field.</p>
+      </div>
+      <form id="goalForm" class="goal-builder">
+        <label>Goal type
+          <select id="goalType" required>
+            <option value="subject-answers">Answer learning questions</option>
+            <option value="cabinet-sessions">Play one cabinet</option>
+            <option value="arcade-sessions">Try arcade sessions</option>
+            <option value="completed-sessions">Complete arcade sessions</option>
+            <option value="xp-growth">Earn Arcade XP</option>
+            <option value="new-cabinets">Visit new cabinets</option>
+          </select>
+        </label>
+        <label id="contextLabel">Subject
+          <select id="goalContext" required></select>
+        </label>
+        <label>Target
+          <select id="goalTarget" required></select>
+        </label>
+        <button id="addGoalButton" class="primary" type="submit">Pin this goal</button>
+      </form>
+      <output id="builderMessage" class="builder-message" aria-live="polite"></output>
+    </section>
+
+    <section class="goals-section" aria-labelledby="suggestionHeading">
+      <div class="section-head">
+        <div><p class="eyebrow">Optional ideas</p><h2 id="suggestionHeading">Suggestions from local progress</h2></div>
+        <p>Suggestions are invitations. They never become assignments automatically.</p>
+      </div>
+      <div id="suggestionGrid" class="suggestion-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="principles-card" aria-labelledby="principlesHeading">
+      <span aria-hidden="true">🌈</span>
+      <div>
+        <p class="eyebrow">Goal-board promise</p>
+        <h2 id="principlesHeading">Progress can pause, restart, or change</h2>
+        <p>A reset is not a failure. A completed goal does not award money or unlock pressure. The board exists to make the next small step visible and celebrate effort.</p>
+      </div>
+      <button id="clearGoals" class="danger" type="button">Clear goal board</button>
+    </section>
+  </main>
+
+  <footer>
+    <span>LarriVerse Learning Goals</span>
+    <span>Local by design · Pressure-free by choice</span>
+    <a href="../">Return to the arcade</a>
+  </footer>
+
+  <output id="goalToast" class="toast" aria-live="polite"></output>
+
+  <script src="../assets/arcade-sdk.js"></script>
+  <script src="../assets/learning-goals.js"></script>
+  <script src="goals.js"></script>
+</body>
+</html>
