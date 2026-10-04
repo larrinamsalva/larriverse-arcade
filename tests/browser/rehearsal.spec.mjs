@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+const release = JSON.parse(fs.readFileSync(new URL('../../release.json', import.meta.url), 'utf8'));
 import { test, expect } from '@playwright/test';
 
 async function assertNoHorizontalOverflow(page) {
@@ -24,7 +26,7 @@ test.describe('LarriVerse deployment and evidence rehearsal', () => {
     expect(response?.ok()).toBeTruthy();
     await expect(page.locator('#score')).toHaveText('5/5');
     await expect(page.locator('#summaryTitle')).toHaveText('Deployment is ready for human rehearsal');
-    await expect(page.locator('#routeState')).toHaveText('8/8');
+    await expect(page.locator('#routeState')).toHaveText(`${release.cabinetCount}/${release.cabinetCount}`);
     await expect(page.locator('#privateState')).toHaveText('Hidden');
     await assertNoHorizontalOverflow(page);
     expect(errors).toEqual([]);
@@ -47,7 +49,7 @@ test.describe('LarriVerse deployment and evidence rehearsal', () => {
     const errors = watchPage(page);
     const response = await page.goto('/qa/release-room.html', { waitUntil: 'domcontentloaded' });
     expect(response?.ok()).toBeTruthy();
-    await expect(page.locator('#routeState')).toHaveText('8/8');
+    await expect(page.locator('#routeState')).toHaveText(`${release.cabinetCount}/${release.cabinetCount}`);
     await expect(page.locator('#privateState')).toHaveText('not published');
     await expect(page.locator('#secureState')).toHaveText('local rehearsal');
     await expect(page.locator('#exportBundle')).toBeDisabled();

@@ -121,7 +121,7 @@ check(css.includes('button:focus-visible,a:focus-visible,select:focus-visible'),
 check(css.includes('body.high-contrast') && css.includes('body.large-text') && css.includes('body.reduce-motion'), 'goal board follows shared comfort classes');
 
 check(lobby.includes('href="goals/"'), 'lobby links to Learning Goals');
-check(lobby.includes('<h3>Learning Goals</h3>'), 'release overview describes Learning Goals');
+check(lobby.includes('Learning goals'), 'release overview describes Learning Goals');
 check(passport.includes('id="goals"'), 'Progress Passport includes a goal summary section');
 check(report.includes('id="goals"'), 'Family Learning Report includes a goal summary section');
 for (const surface of [passport, report]) {

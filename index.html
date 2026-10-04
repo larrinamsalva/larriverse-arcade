@@ -1,115 +1,41 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#120b2f">
-  <meta name="description" content="LarriVerse Arcade — eight playable learning, adventure, reward, and calm-world prototypes by Larrina.">
-  <title>LarriVerse Arcade 1.0</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6854d9">
+  <meta name="description" content="20 free games for curious kids. Build, explore, make music, and practice money choices, kindness, digital detective skills, and caring for our planet.">
+  <title>LarriVerse Arcade · Play your way to a bigger world</title>
   <link rel="stylesheet" href="assets/arcade.css">
-  <style>@media(max-width:700px){.mobile-dock{grid-template-columns:repeat(7,1fr)}}</style>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%236854d9'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='43' fill='white'%3E✦%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/emoji.css">
 </head>
 <body>
-  <a class="skip-link" href="#games">Skip to game cabinets</a>
-  <div class="stars" aria-hidden="true"></div>
-
-  <header class="hero" id="top">
-    <nav class="nav" aria-label="Arcade navigation">
-      <a class="brand" href="#top"><span>✦</span> LarriVerse</a>
-      <div class="nav-pills">
-        <a href="#games">Games</a>
-        <a href="today/">Today</a>
-        <a href="goals/">Goals</a>
-        <a href="passport/">Passport</a>
-        <a href="report/">Report</a>
-        <a href="#labs">Labs</a>
-        <a href="#release">Release</a>
-        <button class="nav-control" type="button" data-open-control>⚙️ Settings & saves</button>
-      </div>
-    </nav>
-
-    <div class="hero-copy">
-      <p class="eyebrow">Arc & Bloom Forge presents</p>
-      <h1>Step into the<br><em>LarriVerse Arcade</em></h1>
-      <p class="lede">Eight playable cabinets spanning learning, family rewards, road-trip adventures, calm worlds, creatures, bubbles, and Larrina-grade creative weirdness.</p>
-      <div class="hero-actions">
-        <button class="primary" id="randomGame">🎲 Surprise me</button>
-        <a class="secondary" href="#games">Browse cabinets ↓</a>
-        <a class="secondary" href="today/">🌤️ My Learning Day</a>
-        <a class="secondary" href="goals/">🎯 My Learning Goals</a>
-        <a class="secondary" href="passport/">📘 View my Progress Passport</a>
-        <a class="secondary" href="report/">📄 Family Learning Report</a>
-        <button class="secondary button-secondary" type="button" data-open-control>Back up my saves</button>
-      </div>
-      <div class="release-ribbon" role="status"><span>✓</span> All 8 recovered browser concepts are playable</div>
-      <div class="hero-stats">
-        <span><b id="gameCount">8</b> recovered concepts</span>
-        <span><b id="playableCount">8</b> live cabinets</span>
-        <span id="profileStat"><b>🌟</b> Player One · Level 1</span>
-      </div>
-    </div>
-
-    <div class="cabinet" aria-label="Featured arcade cabinet illustration">
-      <div class="cabinet-top">LARRIVERSE</div>
-      <div class="screen"><span id="screenIcon">🦊</span><b id="screenTitle">Creature Catcher</b><small>PRESS START</small></div>
-      <div class="controls"><i></i><span></span><span></span></div>
-      <div class="coin-slot">3 · 6 · 9 POWERED</div>
-    </div>
-  </header>
-
+  <a class="skip-link" href="#games">Skip to games</a>
+  <header class="nav-wrap"><nav class="nav" aria-label="Arcade navigation">
+    <a class="brand" href="index.html"><span class="brand-mark">✦</span><span>LarriVerse<small>THE CURIOSITY ARCADE</small></span></a>
+    <div class="nav-pills"><a class="current" href="#games">Play</a><a href="today/">My day</a><a href="passport/">Passport</a><a href="report/">For families</a></div>
+    <button class="nav-control" type="button" data-open-control aria-label="Open settings and saves">⚙ <span>Settings</span></button>
+  </nav></header>
   <main>
+    <div class="welcome-row"><div><p class="eyebrow">Small games. Big discoveries.</p><h1>What will you explore today?</h1></div><span class="player-pill" id="profileStat"><b>🌟</b> Player One · Level 1</span></div>
+    <section class="play-shelf" aria-label="Jump into an adventure">
+      <article class="spotlight">
+        <div class="spotlight-copy"><span class="new-label">12 NEW ADVENTURES</span><h2 id="screenTitle">Pocket Planet</h2><p id="featureDescription">Your coins. Your choices. Build a budget for a little island adventure.</p><a id="featuredPlay" class="primary" href="games/pocket-planet/index.html">Let's play</a><span class="feature-note" id="featureSkill">Money choices · Ages 7+</span></div>
+        <div class="spotlight-art" id="featureArt" aria-hidden="true" style="--art-x:0%;--art-y:0%"><span id="screenIcon" hidden>🪙</span></div>
+      </article>
+      <div class="side-quests"><article class="quick-quest"><div><span class="quest-icon">🎲</span><h2>Feeling curious?</h2><p>Let the arcade pick your next adventure.</p><button class="secondary" id="randomGame">Surprise me</button></div></article><a class="quick-quest passport-quest" href="passport/"><span class="quest-icon">📘</span><div><h2>Every try counts.</h2><p>Collect game stamps in your own progress passport.</p><b>Open my passport</b></div></a></div>
+    </section>
     <section class="section" id="games">
-      <div class="section-head">
-        <div><p class="eyebrow">Choose your cabinet</p><h2>The complete game vault</h2></div>
-        <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Find a game…" aria-label="Find a game"></label>
-      </div>
+      <div class="section-head"><div><p class="eyebrow">Find your next favorite</p><h2>All the adventures <span class="count-badge" id="playableCount">20</span></h2></div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search games or skills" aria-label="Find a game"></label></div>
       <div class="filters" id="filters" aria-label="Game categories"></div>
-      <div class="game-grid" id="gameGrid" aria-live="polite"><p class="loading">Powering up the cabinets…</p></div>
-      <p class="prototype-note">These are creative prototypes. Parent review is recommended before children use them. Road Trip GPS starts in Demo Mode and requests temporary location only after an explicit choice.</p>
+      <div class="game-grid" id="gameGrid" aria-live="polite"><p class="loading">Getting your adventures ready…</p></div>
+      <p class="prototype-note">Free to play. No ads or purchases. Your progress stays in this browser. KC are pretend game coins.</p>
     </section>
-
-    <section class="section labs" id="labs">
-      <div class="section-head"><div><p class="eyebrow">Source labs</p><h2>The invention lab</h2></div></div>
-      <div class="lab-grid">
-        <article><span>⚛️</span><div><h3>KidsCoin React Platform</h3><p>The original JSX component remains preserved for a future shared React architecture.</p></div></article>
-        <article><span>🌙</span><div><h3>Chill Brain Native</h3><p>The React Native world, rewards, sessions, sleep journey, parent controls, and PHI engine remain preserved as a source lab.</p></div></article>
-      </div>
-    </section>
-
-    <section class="section release-section" id="release">
-      <div class="section-head"><div><p class="eyebrow">Release readiness</p><h2>LarriVerse Arcade 1.0</h2></div><a class="secondary" href="docs/RELEASE-CHECKLIST.md">Open checklist ↗</a></div>
-      <div class="release-grid">
-        <article><span>8/8</span><h3>Complete vault</h3><p>Every recovered browser concept launches from the shared lobby.</p></article>
-        <article><span>🌤️</span><h3>My Learning Day</h3><p>Three optional next-step cards turn goals and local progress into one pace-sized choice with no timer, deadline, streak, grade, or automatic assignment.</p></article>
-        <article><span>🎯</span><h3>Learning Goals</h3><p>A private pressure-free board tracks up to three preset goals with no deadlines, streaks, grades, or penalties.</p></article>
-        <article><span>📘</span><h3>Progress Passport</h3><p>A private, printable view turns existing local saves into cabinet stamps, learning trails, achievements, goals, and a suggested next mission.</p></article>
-        <article><span>📄</span><h3>Family Learning Report</h3><p>A private review view summarizes goals, strengths, gentle practice opportunities, participation, and recent activity without grading or storing notes.</p></article>
-        <article><span>♿</span><h3>Shared comfort controls</h3><p>Reduced motion, high contrast, and larger text follow the player into every cabinet.</p></article>
-        <article><span>💾</span><h3>Portable saves</h3><p>Download and restore a schema-checked backup containing only LarriVerse browser records, including the small preset goal and Learning Day records.</p></article>
-        <article><span>✓</span><h3>Automated guardrails</h3><p>Whole-arcade validation runs alongside cabinet-specific content, privacy, and safety audits.</p></article>
-      </div>
-    </section>
+    <section class="family-strip" id="release"><div><span>🌱</span><h2>A little practice for a bigger world.</h2><p>Choose your own pace. Explore money, creative thinking, digital life, kindness, and our planet together.</p></div><div class="family-links"><a class="secondary" href="goals/">Learning goals</a><a class="secondary" href="report/">Family Learning Report</a><button class="secondary" type="button" data-open-control>Comfort & saves</button></div></section>
+    <details class="project-notes" id="labs"><summary>About the arcade & project notes</summary><p>Created by Larrina. <b id="gameCount">20</b> playable cabinets, including the original eight recovered concepts. These games are practice spaces for curiosity, not qualifications. Some original lessons await review. Road Trip GPS starts in Demo Mode.</p><a href="docs/RELEASE-CHECKLIST.md">Project checklist</a> · <a href="docs/MODERN-ARCADE.md">New game guide & artwork</a></details>
   </main>
-
-  <footer>
-    <b>LarriVerse Arcade 1.0</b>
-    <span>Built with heart, curiosity, and an unreasonable number of good ideas.</span>
-    <a href="https://github.com/larrinamsalva/larriverse-arcade">GitHub ↗</a>
-  </footer>
-
-  <nav class="mobile-dock" aria-label="Mobile arcade shortcuts">
-    <a href="#games"><span>🕹️</span>Games</a>
-    <a href="today/"><span>🌤️</span>Today</a>
-    <a href="goals/"><span>🎯</span>Goals</a>
-    <a href="passport/"><span>📘</span>Passport</a>
-    <a href="report/"><span>📄</span>Report</a>
-    <button type="button" data-open-control><span>⚙️</span>Settings</button>
-    <a href="#release"><span>✓</span>Release</a>
-  </nav>
-
+  <footer><a class="brand" href="#top">✦ LarriVerse</a><span>Made for curious minds. Built with heart.</span><a href="https://github.com/larrinamsalva/larriverse-arcade">Explore the code</a></footer>
+  <nav class="mobile-dock" aria-label="Mobile arcade shortcuts"><a href="#games">🕹️ <span>Play</span></a><a href="today/">🌤️ <span>My day</span></a><a href="passport/">📘 <span>Passport</span></a><button type="button" data-open-control>⚙ <span>Settings</span></button></nav>
   <dialog id="controlCenter" class="control-center">
     <form method="dialog" class="control-card">
       <button class="dialog-close" value="close" aria-label="Close control center">×</button>
@@ -139,7 +65,7 @@
 
       <section class="control-section" aria-labelledby="saveTitle">
         <h3 id="saveTitle">Save backup</h3>
-        <p>Backups contain only browser records whose keys begin with <code>larriverse.</code>. They do not include location coordinates, unrelated website storage, passwords, or files from your device.</p>
+        <p>Backups contain only browser records whose keys begin with <code>larriverse.</code>. They include small preset goal and Learning Day records. They do not include location coordinates, unrelated website storage, passwords, or files from your device.</p>
         <div class="data-actions">
           <button id="exportSaves" class="primary" type="button">Download backup</button>
           <label class="secondary import-label">Restore backup<input id="importSaves" type="file" accept="application/json,.json"></label>
@@ -152,5 +78,4 @@
 
   <script src="assets/arcade-sdk.js"></script>
   <script src="assets/arcade.js"></script>
-</body>
-</html>
+</body></html>

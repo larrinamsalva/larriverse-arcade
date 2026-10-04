@@ -101,3 +101,21 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 ## Release qualification
 
 GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all eight cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
+
+
+## Modern arcade expansion
+
+The collection now includes 20 playable games: the original eight cabinets and these twelve new practice worlds. The release gallery covers the lobby plus every game in both viewports (42 images). The formal release still requires the documented human review.
+
+- **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Kindness Quest** — Listening & boundaries. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Fact Finder** — Checking claims & sources. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Repair Café** — Repair before replacing. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Time Trail** — Planning & tradeoffs. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Garden Guardians** — Resource care & diversity. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Energy Island** — Energy storage & systems. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Reuse Rally** — Reuse & thoughtful sorting. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Robot Rover** — Sequencing & debugging. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Lemonade Lab** — Costs, demand & small business. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Beat Builder** — Rhythm, patterns & creativity. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.

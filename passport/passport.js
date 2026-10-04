@@ -327,7 +327,7 @@
     const response = await fetch('../games/catalog.json');
     if (!response.ok) throw new Error(`Arcade catalog could not load (${response.status}).`);
     catalog = await response.json();
-    if (!Array.isArray(catalog) || catalog.length !== 8) throw new Error('The Progress Passport requires the complete eight-cabinet catalog.');
+    if (!Array.isArray(catalog) || catalog.length === 0) throw new Error('The Progress Passport requires the playable game catalog.');
     render();
   }
 

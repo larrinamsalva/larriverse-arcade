@@ -361,7 +361,7 @@
     const response = await fetch('../games/catalog.json');
     if (!response.ok) throw new Error('The arcade catalog could not be loaded.');
     catalog = await response.json();
-    if (!Array.isArray(catalog) || catalog.length !== 8) throw new Error('The Family Learning Report requires all eight playable cabinets.');
+    if (!Array.isArray(catalog) || catalog.length === 0) throw new Error('The Family Learning Report requires the playable game catalog.');
     render();
     $('#printReport').addEventListener('click', () => window.print());
     $('#downloadReport').addEventListener('click', downloadReport);

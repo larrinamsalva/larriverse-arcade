@@ -58,6 +58,7 @@ async function assertNoHorizontalOverflow(page) {
 async function takeCleanScreenshot(page, projectName, name) {
   const folder = path.join(screenshotRoot, projectName);
   fs.mkdirSync(folder, { recursive: true });
+  await page.evaluate(() => document.fonts.ready);
   await page.screenshot({
     path: path.join(folder, `${name}.png`),
     animations: 'disabled',
@@ -73,8 +74,8 @@ test.describe('LarriVerse browser release gate', () => {
     const response = await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     expect(response?.ok()).toBeTruthy();
-    await expect(page.locator('#playableCount')).toHaveText('8');
-    await expect(page.locator('.game-card')).toHaveCount(8);
+    await expect(page.locator('#playableCount')).toHaveText(String(release.cabinetCount));
+    await expect(page.locator('.game-card')).toHaveCount(release.cabinetCount);
     await expect.poll(() => page.evaluate(() => window.LarriVerseArcade?.version)).toBe(3);
 
     const restored = await page.evaluate(() => {
@@ -104,7 +105,7 @@ test.describe('LarriVerse browser release gate', () => {
       window.LarriVerseArcade.setSettings({ reducedMotion: true, highContrast: false, largeText: false });
     });
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await expect(page.locator('#playableCount')).toHaveText('8');
+    await expect(page.locator('#playableCount')).toHaveText(String(release.cabinetCount));
     await assertNoHorizontalOverflow(page);
     await takeCleanScreenshot(page, testInfo.project.name, 'lobby');
 

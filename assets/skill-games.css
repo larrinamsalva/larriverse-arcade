@@ -1,0 +1,1189 @@
+:root {
+  font-family: ui-rounded, "Avenir Next", "Trebuchet MS", system-ui, sans-serif;
+  color: #28354c;
+  background: #f1f4fb;
+  --ink: #28354c;
+  --muted: #526177;
+  --purple: #6854d9;
+  --line: #d7dfed;
+  --mint: #dff6ee;
+  --gold: #ffd66d;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+a {
+  color: inherit;
+}
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+p {
+  line-height: 1.55;
+}
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #4c35b5;
+  outline-offset: 3px;
+}
+.skip-link {
+  position: fixed;
+  top: -100px;
+  z-index: 100;
+  background: #fff;
+  padding: 1rem;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+.game-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem max(1.25rem, calc((100vw - 1200px) / 2));
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 900;
+  text-decoration: none;
+  font-size: 1.15rem;
+}
+.brand > span {
+  display: grid;
+  place-items: center;
+  background: #6854d9;
+  color: #fff;
+  width: 35px;
+  height: 35px;
+  border-radius: 12px;
+  font-size: 1.5rem;
+}
+.brand small {
+  color: #63728a;
+  font-size: 0.85rem;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nav-right a,
+.nav-right button {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-decoration: none;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  min-height: 40px;
+  background: #fff;
+  color: #526176;
+}
+.nav-right button[aria-pressed="true"] {
+  background: #e7e0fb;
+  color: #513dae;
+}
+.game-shell {
+  width: min(1200px, calc(100% - 2.5rem));
+  margin: 1.5rem auto;
+}
+.world-banner {
+  display: flex;
+  gap: 1.3rem;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  overflow: hidden;
+  margin-bottom: 1.3rem;
+}
+.world-cover {
+  width: 210px;
+  min-width: 180px;
+  align-self: stretch;
+  min-height: 166px;
+  background-image: url("worlds-atlas.webp");
+  background-size: 400% 300%;
+  background-position: var(--art-x) var(--art-y);
+}
+.world-heading {
+  flex: 1;
+  padding: 1.2rem 0;
+  min-width: 0;
+}
+.world-heading h1 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  letter-spacing: -0.04em;
+  margin-bottom: 0.4rem;
+}
+.world-heading p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 0.9rem;
+  max-width: 550px;
+  margin-bottom: 0.6rem;
+}
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: #71638f;
+  margin-bottom: 0.5rem;
+}
+.age-pill {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #5e5680;
+  background: #f0edfb;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+}
+.world-score {
+  padding: 1.5rem;
+  text-align: center;
+  min-width: 165px;
+}
+.world-score strong {
+  display: block;
+  font-size: 2rem;
+  margin: 0.3rem 0;
+  color: #6651ce;
+}
+.world-score span,
+.world-score small {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.game-layout {
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: 1.3rem;
+  align-items: start;
+}
+.mission-card,
+.play-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: 0 5px 0 #e7ebf4;
+}
+.mission-card {
+  padding: 1.5rem;
+}
+.mission-icon {
+  display: block;
+  font-size: 2.7rem;
+  margin-bottom: 0.7rem;
+}
+.mission-card h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+.mission-card p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.mission-card .local-note {
+  font-size: 0.75rem;
+  margin: 1rem 0 0;
+}
+.mission-progress {
+  margin: 1.2rem 0;
+}
+.meter {
+  height: 9px;
+  background: #edf0f6;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+.meter i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #6854d9, #b18ce8);
+  border-radius: 10px;
+  transition: width 0.3s;
+}
+.mission-progress > span {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #685681;
+}
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.primary,
+.secondary,
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.7rem 1rem;
+  border: 0;
+  border-radius: 11px;
+  font-weight: 850;
+  text-decoration: none;
+  max-width: 100%;
+}
+.primary {
+  background: #6854d9;
+  color: #fff;
+  box-shadow: 0 3px 0 #483297;
+}
+.primary:hover {
+  background: #5742c6;
+}
+.secondary {
+  border: 1px solid #ccd6e6;
+  background: #f6f8fc;
+  color: #40516a;
+}
+.text-button {
+  background: transparent;
+  color: #6854d9;
+}
+.button-row button {
+  padding: 0.5rem 0.7rem;
+  font-size: 0.8rem;
+}
+.hint {
+  font-size: 0.8rem !important;
+  background: #fff5d9;
+  border-radius: 10px;
+  padding: 0.85rem;
+  margin: 1rem 0 0 !important;
+  color: #695322 !important;
+}
+.play-card {
+  padding: 1.3rem;
+  min-height: 450px;
+  min-width: 0;
+}
+.play-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid #e5eaf3;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #635582;
+}
+.score-pill {
+  background: #fff4d4;
+  border-radius: 8px;
+  padding: 0.35rem 0.65rem;
+  color: #725c28;
+  white-space: nowrap;
+}
+.game-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  align-items: center;
+  margin-top: 0.8rem;
+}
+.feedback {
+  display: block;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  color: #344a61;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  background: #eef4fc;
+  margin-top: 1rem;
+  min-height: 52px;
+}
+.feedback.good {
+  background: #e2f7ec;
+  color: #24573e;
+}
+.feedback.try {
+  background: #fff3d4;
+  color: #74511e;
+}
+.game-footer {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #61718a;
+  margin: 1.5rem 0 0;
+}
+.board-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.board-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+.stat-chip {
+  background: #f0edfb;
+  border: 1px solid #e1d9f8;
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.stat-chip b {
+  font-size: 1.15rem;
+  display: block;
+  color: #6550c5;
+}
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+.item-button {
+  background: #fff;
+  border: 2px solid #dce4f0;
+  border-radius: 14px;
+  min-height: 126px;
+  padding: 0.9rem 0.6rem;
+  color: #344860;
+  font-weight: 850;
+  position: relative;
+}
+.item-button .item-icon {
+  display: block;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+.item-button small {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: #5b6c82;
+  margin-top: 0.3rem;
+}
+.item-button.selected {
+  border-color: #55aa83;
+  background: #e7f8ef;
+}
+.item-button:hover:not(:disabled) {
+  border-color: #8b75dc;
+}
+.message-card {
+  text-align: center;
+  border: 1px solid #dce3ee;
+  border-radius: 17px;
+  background: linear-gradient(135deg, #f5f0ff, #eef9fb);
+  padding: 1.5rem;
+}
+.message-card .message-icon {
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 0.7rem;
+}
+.message-card h3 {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+.message-card p {
+  font-size: 1.05rem;
+  color: #334763;
+  margin-bottom: 0.3rem;
+}
+.choice-grid {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.choice-button {
+  border: 2px solid #d7dfed;
+  background: #fff;
+  border-radius: 13px;
+  min-height: 65px;
+  padding: 0.8rem 0.7rem;
+  color: #344860;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+.choice-button.selected,
+.choice-button.correct {
+  border-color: #61b090;
+  background: #e0f5ec;
+}
+.choice-button.wrong {
+  border-color: #dfae59;
+  background: #fff5dc;
+}
+.news-bins {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.repair-list {
+  display: grid;
+  gap: 0.7rem;
+}
+.repair-step {
+  text-align: left;
+  border: 2px solid #dce3ef;
+  background: #fff;
+  border-radius: 12px;
+  padding: 0.9rem;
+  color: #3b4d66;
+  font-weight: 800;
+  min-height: 55px;
+}
+.repair-step.done {
+  border-color: #66b68e;
+  background: #e6f8ee;
+}
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.4rem;
+  width: min(420px, 100%);
+  margin: 1rem auto;
+}
+.tile {
+  min-height: 58px;
+  aspect-ratio: 1;
+  border: 2px solid #d3e4d5;
+  background: #e1f2df;
+  color: #38536c;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  position: relative;
+}
+.tile.rock {
+  background: #c8d2dc;
+  border-color: #b9c7d5;
+}
+.tile.player {
+  border-color: #735bd2;
+  background: #e4dbff;
+}
+.tile.flag {
+  background: #fff0b6;
+  border-color: #ead991;
+}
+.tile.visited {
+  background: #c4ecdc;
+  border-color: #8acfb5;
+}
+.tile small {
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  font-size: 0.65rem;
+  color: #526176;
+}
+.tile.rover {
+  background: #ebeffb;
+  border-color: #d4dcf0;
+}
+.tile.rover.player {
+  background: #d3c8fb;
+  border-color: #7961d2;
+}
+.route-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #5b6c83;
+}
+.garden-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  background: #dbedcd;
+  padding: 1rem;
+  border-radius: 18px;
+  margin-top: 1rem;
+}
+.plot {
+  border: 2px solid #ad845f;
+  background: linear-gradient(#ce9d70, #9a6e4b);
+  border-radius: 14px;
+  min-height: 106px;
+  font-size: 2rem;
+  color: #fff;
+}
+.plot.selected {
+  border-color: #ffd86f;
+  box-shadow: inset 0 0 0 2px #ffd86f;
+}
+.plot small {
+  display: block;
+  font-size: 0.72rem;
+  background: #fffbe9;
+  color: #63513d;
+  border-radius: 6px;
+  padding: 0.2rem;
+  margin: 0.4rem 0.2rem 0;
+}
+.plant-picker {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.plant-picker button {
+  flex: 1;
+  border: 2px solid #d9e3ee;
+  min-height: 48px;
+  border-radius: 11px;
+  background: #fff;
+  color: #47634b;
+  font-size: 0.85rem;
+  padding: 0.6rem;
+}
+.plant-picker button.selected {
+  border-color: #588e67;
+  background: #dff2dd;
+}
+.energy-scene {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 100px;
+  background: linear-gradient(#daf0fb, #e5f7dc);
+  border-radius: 15px;
+  margin: 1rem 0;
+  padding: 1rem;
+  gap: 0.5rem;
+}
+.energy-scene span {
+  font-size: 2.2rem;
+}
+.weather-preview {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.weather-preview > div {
+  font-size: 0.8rem;
+  background: #f3f6fc;
+  border: 1px solid #dce4f0;
+  border-radius: 10px;
+  padding: 0.6rem;
+  text-align: center;
+}
+.weather-preview strong {
+  display: block;
+  font-size: 1.3rem;
+}
+.ledger {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  margin-top: 1rem;
+}
+.ledger th,
+.ledger td {
+  text-align: left;
+  border-bottom: 1px solid #dce4ee;
+  padding: 0.55rem;
+}
+.ledger th {
+  color: #605b78;
+}
+.ledger caption {
+  text-align: left;
+  font-weight: 900;
+  padding: 0.5rem;
+}
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.field-grid label {
+  display: grid;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+.field-grid select {
+  width: 100%;
+  min-height: 46px;
+  border: 2px solid #d3dcec;
+  border-radius: 11px;
+  padding: 0.65rem;
+  background: #fff;
+  color: #344860;
+}
+.stand-scene {
+  text-align: center;
+  font-size: 3rem;
+  background: #fff3c9;
+  border: 1px solid #f0df9b;
+  border-radius: 17px;
+  padding: 1.2rem;
+  margin: 1rem 0;
+}
+.stand-scene small {
+  display: block;
+  font-size: 0.85rem;
+  color: #746034;
+}
+.command-bar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.command-bar button {
+  font-size: 0.85rem;
+}
+.command-list {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  padding: 0.75rem;
+  background: #f2effb;
+  min-height: 52px;
+  border-radius: 12px;
+  margin: 1rem 0;
+}
+.command-list button {
+  background: #fff;
+  border: 1px solid #d0c6ef;
+  color: #574297;
+  border-radius: 7px;
+  padding: 0.35rem 0.45rem;
+  font-size: 0.85rem;
+  min-width: 34px;
+  min-height: 36px;
+}
+.beat-grid {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: 0.3rem;
+  margin: 0.6rem 0;
+}
+.beat-cell {
+  aspect-ratio: 0.75;
+  min-width: 0;
+  border: 1px solid #d6dded;
+  background: #edf0f8;
+  border-radius: 6px;
+  min-height: 38px;
+  color: #736196;
+  font-size: 0.65rem;
+  padding: 0;
+}
+.beat-cell:nth-child(4n + 1) {
+  border-left: 3px solid #b3a5d9;
+}
+.beat-cell.active {
+  background: #9881e1;
+  border-color: #7960c8;
+  color: #fff;
+}
+.beat-cell.playing {
+  box-shadow: inset 0 0 0 3px #ffd96f;
+}
+.track-label {
+  font-weight: 850;
+  font-size: 0.85rem;
+}
+.beat-numbers {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  text-align: center;
+  font-size: 0.65rem;
+  color: #66768b;
+  margin-bottom: 0.5rem;
+}
+.pattern-goals {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+.pattern-goals span {
+  background: #f2effb;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: #60517e;
+}
+.finish-dialog {
+  border: 1px solid var(--line);
+  border-radius: 25px;
+  background: #fff;
+  color: #28354c;
+  max-width: 500px;
+  width: calc(100% - 2rem);
+  max-height: 90vh;
+  padding: 0;
+  box-shadow: 0 30px 80px #29395750;
+}
+.finish-dialog::backdrop {
+  background: #22314880;
+  backdrop-filter: blur(6px);
+}
+.finish-card {
+  padding: 2rem;
+  text-align: center;
+}
+.finish-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.finish-card h2 {
+  font-size: 1.8rem;
+  letter-spacing: -0.035em;
+}
+.finish-card p {
+  color: #566780;
+  font-size: 0.9rem;
+}
+.finish-score {
+  display: grid;
+  gap: 0.25rem;
+  margin: 1rem auto;
+  background: #f0ebfc;
+  border-radius: 17px;
+  padding: 1rem;
+  width: 150px;
+  color: #6550bc;
+}
+.finish-score strong {
+  font-size: 2.4rem;
+}
+.finish-score span {
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.finish-card .takeaway {
+  padding: 1rem;
+  text-align: left;
+  border-radius: 12px;
+  background: #e6f7ed;
+  color: #3e6651;
+}
+.finish-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+}
+.finish-actions > * {
+  font-size: 0.85rem;
+}
+.finish-actions .text-button {
+  width: 100%;
+}
+html.larriverse-high-contrast .mission-card,
+html.larriverse-high-contrast .play-card,
+html.larriverse-high-contrast .world-banner,
+html.larriverse-high-contrast .finish-dialog {
+  background: #000;
+  color: #fff;
+  border-color: #fff;
+}
+html.larriverse-high-contrast .mission-card p,
+html.larriverse-high-contrast .board-note,
+html.larriverse-high-contrast .world-heading p,
+html.larriverse-high-contrast .world-score span,
+html.larriverse-high-contrast .world-score small,
+html.larriverse-high-contrast .eyebrow,
+html.larriverse-high-contrast .game-footer {
+  color: #fff;
+}
+@media (max-width: 1000px) {
+  .game-layout {
+    grid-template-columns: 225px minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .world-score {
+    display: none;
+  }
+  .world-cover {
+    min-width: 160px;
+    width: 180px;
+  }
+  .mission-card {
+    padding: 1.1rem;
+  }
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+  .news-bins {
+    grid-template-columns: 1fr 1fr;
+  }
+  .item-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .game-shell {
+    width: calc(100% - 1.25rem);
+    margin: 0.75rem auto;
+  }
+  .game-nav {
+    padding: 0.7rem 0.8rem;
+  }
+  .brand small,
+  .nav-right > a {
+    display: none;
+  }
+  .brand {
+    font-size: 0.95rem;
+    gap: 0.4rem;
+  }
+  .brand > span {
+    width: 30px;
+    height: 30px;
+  }
+  .nav-right {
+    gap: 0.35rem;
+  }
+  .nav-right button {
+    font-size: 0.7rem;
+    padding: 0.45rem 0.55rem;
+    min-height: 40px;
+  }
+  .world-banner {
+    gap: 0.85rem;
+    margin-bottom: 0.85rem;
+    border-radius: 17px;
+  }
+  .world-cover {
+    width: 100px;
+    min-width: 100px;
+    min-height: 150px;
+  }
+  .world-heading {
+    padding: 0.9rem 0.75rem 0.9rem 0;
+  }
+  .world-heading h1 {
+    font-size: 1.65rem;
+  }
+  .world-heading p:not(.eyebrow) {
+    font-size: 0.8rem;
+    margin-bottom: 0.4rem;
+  }
+  .world-heading .eyebrow {
+    font-size: 0.6rem;
+  }
+  .age-pill {
+    font-size: 0.68rem;
+  }
+  .game-layout {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+  .mission-card {
+    padding: 1rem;
+  }
+  .mission-icon {
+    float: left;
+    font-size: 2.1rem;
+    margin-right: 0.8rem;
+    margin-bottom: 0;
+  }
+  .mission-card .eyebrow {
+    font-size: 0.65rem;
+  }
+  .mission-card h2 {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+  }
+  .mission-card p:not(.eyebrow) {
+    font-size: 0.85rem;
+    margin-bottom: 0.7rem;
+  }
+  .mission-progress {
+    margin: 0.8rem 0;
+  }
+  .mission-card .local-note {
+    display: none;
+  }
+  .play-card {
+    padding: 1rem;
+    border-radius: 17px;
+    min-height: 380px;
+  }
+  .play-top {
+    font-size: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+  .item-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .item-button {
+    min-height: 115px;
+    padding: 0.7rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  .item-button .item-icon {
+    font-size: 1.85rem;
+  }
+  .item-button small {
+    font-size: 0.72rem;
+  }
+  .message-card {
+    padding: 1.2rem 0.9rem;
+  }
+  .message-card p {
+    font-size: 0.95rem;
+  }
+  .message-card .message-icon {
+    font-size: 2.5rem;
+  }
+  .choice-button {
+    font-size: 0.85rem;
+    min-height: 52px;
+  }
+  .news-bins {
+    grid-template-columns: 1fr 1fr;
+  }
+  .stat-row {
+    gap: 0.4rem;
+  }
+  .stat-chip {
+    font-size: 0.7rem;
+    padding: 0.45rem 0.6rem;
+  }
+  .stat-chip b {
+    font-size: 1.1rem;
+  }
+  .tile {
+    min-height: 47px;
+    font-size: 1.3rem;
+    border-radius: 9px;
+  }
+  .tile-grid {
+    gap: 0.3rem;
+  }
+  .garden-grid {
+    padding: 0.6rem;
+    gap: 0.4rem;
+  }
+  .plot {
+    min-height: 91px;
+    font-size: 1.7rem;
+  }
+  .plot small {
+    font-size: 0.6rem;
+    margin: 0.25rem 0 0;
+  }
+  .plant-picker button {
+    font-size: 0.72rem;
+    padding: 0.5rem;
+  }
+  .weather-preview {
+    gap: 0.3rem;
+  }
+  .weather-preview > div {
+    font-size: 0.65rem;
+    padding: 0.5rem 0.2rem;
+  }
+  .weather-preview strong {
+    font-size: 1.15rem;
+  }
+  .field-grid {
+    gap: 0.65rem;
+  }
+  .ledger {
+    font-size: 0.7rem;
+  }
+  .ledger th,
+  .ledger td {
+    padding: 0.4rem 0.25rem;
+  }
+  .beat-grid {
+    gap: 0.17rem;
+  }
+  .beat-cell {
+    border-radius: 4px;
+    min-height: 34px;
+    font-size: 0.55rem;
+  }
+  .beat-cell:nth-child(4n + 1) {
+    border-left-width: 2px;
+  }
+  .beat-numbers {
+    font-size: 0.55rem;
+  }
+  .finish-card {
+    padding: 1.5rem;
+  }
+  .game-footer {
+    font-size: 0.72rem;
+  }
+  .game-actions > .primary,
+  .game-actions > .secondary {
+    flex: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Reflow at enlarged text sizes; the play surface remains keyboard and touch usable. */
+.game-nav,
+.nav-right,
+.play-top {
+  flex-wrap: wrap;
+}
+.nav-right {
+  max-width: 100%;
+}
+.game-nav > * {
+  min-width: 0;
+}
+.brand {
+  flex-wrap: wrap;
+}
+.item-button,
+.choice-button,
+.repair-step,
+.plot {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.stat-chip,
+.track-label,
+.command-list,
+.age-pill {
+  overflow-wrap: anywhere;
+}
+.field-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.field-grid select {
+  min-width: 0;
+  max-width: 100%;
+}
+.ledger {
+  table-layout: fixed;
+}
+.ledger td,
+.ledger th {
+  overflow-wrap: anywhere;
+}
+.energy-scene {
+  flex-wrap: wrap;
+}
+.weather-preview > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.world-heading {
+  overflow-wrap: anywhere;
+}
+html.larriverse-high-contrast .game-nav {
+  background: #000;
+  color: #fff;
+  border-color: #fff;
+}
+html.larriverse-high-contrast .brand small,
+html.larriverse-high-contrast .world-score strong,
+html.larriverse-high-contrast .mission-progress > span,
+html.larriverse-high-contrast .play-top,
+html.larriverse-high-contrast .track-label {
+  color: #fff;
+}
+html.larriverse-high-contrast .nav-right a,
+html.larriverse-high-contrast .nav-right button,
+html.larriverse-high-contrast .secondary,
+html.larriverse-high-contrast .age-pill {
+  background: #000;
+  color: #fff;
+  border-color: #fff;
+}
+html.larriverse-high-contrast .item-button,
+html.larriverse-high-contrast .choice-button,
+html.larriverse-high-contrast .repair-step,
+html.larriverse-high-contrast .stat-chip,
+html.larriverse-high-contrast .message-card,
+html.larriverse-high-contrast .command-list {
+  background: #111;
+  color: #fff;
+  border-color: #fff;
+}
+html.larriverse-high-contrast .item-button small,
+html.larriverse-high-contrast .message-card p,
+html.larriverse-high-contrast .stat-chip b,
+html.larriverse-high-contrast .ledger th,
+html.larriverse-high-contrast .ledger td,
+html.larriverse-high-contrast .route-legend {
+  color: #fff;
+}
+html.larriverse-high-contrast .finish-card p {
+  color: #fff;
+}
+html.larriverse-high-contrast .finish-card .takeaway {
+  color: #244d3a;
+}
+@media (max-width: 700px) {
+  .world-cover {
+    max-height: 180px;
+    align-self: flex-start;
+    margin-top: 0.75rem;
+    margin-left: 0.75rem;
+    border-radius: 12px;
+  }
+  .world-banner {
+    align-items: flex-start;
+  }
+  .world-cover {
+    min-height: 120px;
+  }
+  .game-nav {
+    gap: 0.6rem;
+  }
+  .nav-right {
+    gap: 0.35rem;
+  }
+}

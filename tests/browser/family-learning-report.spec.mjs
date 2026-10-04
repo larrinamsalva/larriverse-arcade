@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+const catalog = JSON.parse(fs.readFileSync(new URL('../../games/catalog.json', import.meta.url), 'utf8'));
 import { test, expect } from '@playwright/test';
 
 const PROFILE_KEY = 'larriverse.arcade.profile.v1';
@@ -88,7 +90,7 @@ test.describe('LarriVerse Family Learning Report', () => {
     await expect(page.locator('#totalXp')).toHaveText('180');
     await expect(page.locator('#totalSessions')).toHaveText('7');
     await expect(page.locator('#totalCompletions')).toHaveText('5');
-    await expect(page.locator('#cabinetsVisited')).toHaveText('2 / 8');
+    await expect(page.locator('#cabinetsVisited')).toHaveText(`2 / ${catalog.length}`);
 
     await expect(page.locator('#strengthCards .insight-card')).toHaveCount(1);
     await expect(page.locator('#strengthCards')).toContainText('Reading');
@@ -103,9 +105,9 @@ test.describe('LarriVerse Family Learning Report', () => {
     await expect(page.locator('.path-card').first()).toContainText('Growing');
     await expect(page.locator('.path-card').last()).toContainText('Challenge');
 
-    await expect(page.locator('.cabinet-row')).toHaveCount(8);
+    await expect(page.locator('.cabinet-row')).toHaveCount(catalog.length);
     await expect(page.locator('.cabinet-row:not(.unvisited)')).toHaveCount(2);
-    await expect(page.locator('#cabinetSummary')).toContainText('2 of 8 visited');
+    await expect(page.locator('#cabinetSummary')).toContainText(`2 of ${catalog.length} visited`);
     await expect(page.locator('#recentActivity li')).toHaveCount(2);
     await expect(page.locator('#recentActivity li').first()).toContainText('Creature Catcher');
     await expect(page.locator('#conversationStarters li')).toHaveCount(3);
@@ -115,7 +117,7 @@ test.describe('LarriVerse Family Learning Report', () => {
     expect(report.version).toBe(1);
     expect(report.learner).toEqual(expect.objectContaining({ name: 'Trail Tester', level: 3, xp: 180 }));
     expect(report.overview).toEqual(expect.objectContaining({
-      cabinetCount: 8,
+      cabinetCount: catalog.length,
       visitedCabinets: 2,
       completedCabinets: 2,
       learningAttempts: 10,
@@ -125,7 +127,7 @@ test.describe('LarriVerse Family Learning Report', () => {
     expect(report.strengths).toHaveLength(1);
     expect(report.practiceOpportunities).toHaveLength(1);
     expect(report.subjects).toHaveLength(3);
-    expect(report.cabinets).toHaveLength(8);
+    expect(report.cabinets).toHaveLength(catalog.length);
     expect(report.recentActivity).toHaveLength(2);
     expect(report.privacy).toEqual(expect.objectContaining({
       deviceLocalSource: true,

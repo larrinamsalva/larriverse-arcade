@@ -1,0 +1,112 @@
+/* Shared visual finishing for the original eight cabinets. Their controls and saves stay cabinet-owned. */
+body {
+  font-family: ui-rounded, "Avenir Next", "Trebuchet MS", system-ui, sans-serif;
+}
+button,
+a,
+input,
+select {
+  touch-action: manipulation;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #7253df !important;
+  outline-offset: 4px;
+}
+.primary {
+  border-radius: 13px !important;
+  box-shadow: 0 4px 0 #493593 !important;
+}
+.secondary {
+  border-radius: 12px !important;
+}
+.card,
+.dialog-card,
+.mission-card,
+.world-card,
+.lesson-card {
+  border-radius: 22px !important;
+}
+.world-card,
+.lesson-card {
+  box-shadow: 0 6px 0 #18295112;
+}
+.back-link {
+  font-size: 0.9rem !important;
+}
+body[data-classic="brain-sweat-expanded"] .workbench {
+  background-image: url("worlds-atlas.webp");
+  background-size: 400% 300%;
+  background-position: 0% 50%;
+  border-radius: 22px;
+  overflow: hidden;
+  min-height: 200px;
+}
+body[data-classic="brain-sweat-expanded"] .workbench > * {
+  visibility: hidden;
+}
+body[data-classic="brain-sweat-life-skills"] .world-art {
+  border-radius: 18px;
+}
+body[data-classic="creature-catcher"] {
+  background: linear-gradient(145deg, #91e5f0, #70ca93);
+}
+body[data-classic="creature-catcher"] .start-card:before {
+  content: "";
+  display: block;
+  height: 150px;
+  border-radius: 18px;
+  margin-bottom: 1rem;
+  background-image: url("worlds-atlas.webp");
+  background-size: 400% 300%;
+  background-position: 66.6667% 50%;
+}
+body[data-classic="creature-catcher"] .start-card .logo {
+  display: none;
+}
+body[data-classic="creature-catcher"] .start-card h1 {
+  font-size: clamp(2rem, 7vw, 3rem);
+}
+body[data-classic="creature-catcher"] .creature .tag {
+  font-size: 0.75rem;
+}
+body[data-classic="bubble-resonance-phi369"] {
+  background: radial-gradient(ellipse at top, #433979, #17162d);
+}
+body[data-classic="bubble-resonance-phi369"] canvas {
+  border-radius: 20px;
+  box-shadow: 0 15px 45px #14102655;
+}
+body[data-classic="road-trip-quest"] .road {
+  box-shadow:
+    0 0 0 6px #719d7b,
+    0 0 0 10px #3d6d4a;
+  border-radius: 18px;
+}
+html.larriverse-high-contrast .secondary {
+  background: #000;
+  color: #fff;
+  border: 1px solid #fff;
+}
+@media (max-width: 700px) {
+  body[data-classic="creature-catcher"] .start-card:before {
+    height: 100px;
+  }
+  .primary,
+  .secondary {
+    min-height: 44px;
+  }
+  body[data-classic="brain-sweat-expanded"] .workbench {
+    min-height: 140px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

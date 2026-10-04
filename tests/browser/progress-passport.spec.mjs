@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+const catalog = JSON.parse(fs.readFileSync(new URL('../../games/catalog.json', import.meta.url), 'utf8'));
 import { test, expect } from '@playwright/test';
 
 const PROFILE_KEY = 'larriverse.arcade.profile.v1';
@@ -59,7 +61,7 @@ const seededLearning = {
 };
 
 test.describe('LarriVerse Progress Passport', () => {
-  test('turns device-local saves into a private eight-cabinet progress view', async ({ page }) => {
+  test('turns device-local saves into a private complete-catalog progress view', async ({ page }) => {
     const errors = [];
     page.on('pageerror', error => errors.push(error.stack || error.message));
     page.on('console', message => {
@@ -87,10 +89,10 @@ test.describe('LarriVerse Progress Passport', () => {
     await expect(page.locator('#totalCompletions')).toHaveText('5');
     await expect(page.locator('.progress-track')).toHaveAttribute('aria-valuenow', '20');
 
-    await expect(page.locator('.cabinet-stamp')).toHaveCount(8);
+    await expect(page.locator('.cabinet-stamp')).toHaveCount(catalog.length);
     await expect(page.locator('.cabinet-stamp.played')).toHaveCount(2);
     await expect(page.locator('.cabinet-stamp.completed')).toHaveCount(2);
-    await expect(page.locator('#cabinetSummary')).toContainText('2 of 8 cabinets visited');
+    await expect(page.locator('#cabinetSummary')).toContainText(`2 of ${catalog.length} cabinets visited`);
 
     await expect(page.locator('.learning-card')).toHaveCount(2);
     await expect(page.locator('.learning-card').first()).toContainText('Growing');
@@ -105,7 +107,7 @@ test.describe('LarriVerse Progress Passport', () => {
     expect(summary.schema).toBe('larriverse-progress-passport');
     expect(summary.version).toBe(1);
     expect(summary.player).toEqual(expect.objectContaining({ name: 'Trail Tester', level: 3, xp: 180 }));
-    expect(summary.cabinets).toHaveLength(8);
+    expect(summary.cabinets).toHaveLength(catalog.length);
     expect(summary.learning).toHaveLength(2);
     expect(summary.privacy).toEqual(expect.objectContaining({
       deviceLocalSource: true,

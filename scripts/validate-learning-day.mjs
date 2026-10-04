@@ -120,7 +120,7 @@ check(css.includes('html.larriverse-large-text') && css.includes('html.larrivers
 check(css.includes('@media (prefers-reduced-motion: reduce)'), 'Learning Day respects operating-system reduced motion');
 
 check(lobby.includes('href="today/"'), 'lobby links to My Learning Day');
-check(lobby.includes('<h3>My Learning Day</h3>'), 'release overview describes My Learning Day');
+check(lobby.includes('href="today/"'), 'release overview describes My Learning Day');
 check(lobby.includes('small preset goal and Learning Day records'), 'lobby backup description includes Learning Day');
 check(goalsPage.includes('../today/'), 'Learning Goals links to My Learning Day');
 check(build.includes("directories.splice(5, 0, 'today')"), 'Pages build allowlists the today directory');

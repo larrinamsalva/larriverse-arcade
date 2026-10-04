@@ -30,8 +30,8 @@ assert(release.candidate === 'rc.1', 'candidate must be rc.1');
 assert(release.tag === `v${packageJson.version}`, 'tag must match package version');
 assert(release.releaseState === 'candidate', 'release state must remain candidate before the tag is created');
 assert(release.humanChecksRequired === true, 'human release checks must remain required');
-assert(release.cabinetCount === 8, 'release must declare eight cabinets');
-assert(Array.isArray(release.cabinets) && release.cabinets.length === 8, 'release must list eight cabinets');
+assert(release.cabinetCount === catalog.length, 'release count must match catalog');
+assert(Array.isArray(release.cabinets) && release.cabinets.length === catalog.length, 'release must list every cabinet');
 assert(release.privacy.uploadsData === false, 'QA console must not upload data');
 assert(release.privacy.requestsLocation === false, 'QA console must not request location');
 assert(release.privacy.capturesScreenshots === false, 'QA console must not claim screenshot capture');
@@ -57,7 +57,7 @@ for (const cabinet of release.cabinets) {
   assert(checklist.includes(cabinet.title), `${cabinet.title} missing from release checklist`);
   assert(gallery.includes(cabinet.title), `${cabinet.title} missing from gallery manifest`);
 }
-assert(catalog.length === 8, 'catalog must contain eight entries');
+assert(catalog.length === release.cabinetCount, 'catalog and release must agree');
 assert(catalog.every((game) => game.available && game.featured), 'all release cabinets must be playable and featured');
 
 for (const file of ['qa/index.html', 'qa/qa.css', 'qa/qa.js', 'docs/RELEASE-NOTES-1.0.0.md', '.github/workflows/release.yml']) {

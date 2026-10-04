@@ -169,3 +169,21 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 ## Release decision
 
 **Release only after the unchecked manual items above are complete.** GitHub Actions confirms structural, syntax, content, privacy, safety, browser, Learning Goals, Progress Passport, Family Learning Report, approval-record, device-label, static-preview, shared-evidence-contract, evidence-bundle, and tag-publishing contracts; it does not replace hands-on play testing. The tag workflow verifies the final approval JSON, image hashes, approved-code ancestry, structural validation, and fresh desktop/mobile Chromium before publication. It still does not invent human judgment or physical-device results.
+
+
+## Modern arcade expansion
+
+The collection now includes 20 playable games: the original eight cabinets and these twelve new practice worlds. The release gallery covers the lobby plus every game in both viewports (42 images). The formal release still requires the documented human review.
+
+- **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Kindness Quest** — Listening & boundaries. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Fact Finder** — Checking claims & sources. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Repair Café** — Repair before replacing. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Time Trail** — Planning & tradeoffs. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Garden Guardians** — Resource care & diversity. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Energy Island** — Energy storage & systems. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Reuse Rally** — Reuse & thoughtful sorting. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Robot Rover** — Sequencing & debugging. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Lemonade Lab** — Costs, demand & small business. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+- **Beat Builder** — Rhythm, patterns & creativity. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.

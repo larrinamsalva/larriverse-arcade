@@ -79,7 +79,7 @@ for (const required of [
   'notACertification: true',
   'window.LarriVerseFamilyLearningReport',
   "fetch('../games/catalog.json')",
-  'catalog.length !== 8',
+  'catalog.length === 0',
   'window.print()'
 ]) check(js.includes(required), `report logic includes ${required}`);
 
@@ -103,8 +103,8 @@ check(css.includes('body.reduce-motion'), 'report responds to shared reduced mot
 check(css.includes('.subject-grid'), 'report styles subject summaries');
 check(css.includes('.cabinet-report'), 'report styles cabinet participation');
 
-check(catalog.length === 8, 'catalog still contains eight cabinets');
-check(catalog.every(game => game.available), 'all eight report cabinets are playable');
+check(catalog.length === 20, 'catalog contains all twenty cabinets');
+check(catalog.every(game => game.available), 'all declared report cabinets are playable');
 check(lobby.includes('href="report/"'), 'lobby links to the Family Learning Report');
 check(lobby.includes('Family Learning Report'), 'lobby names the Family Learning Report');
 check(passport.includes('../report/'), 'Progress Passport links to the Family Learning Report');
@@ -117,7 +117,7 @@ check(packageJson.scripts.validate.includes('validate-family-learning-report.mjs
 
 for (const required of [
   "page.goto('/report/')",
-  "toHaveCount(8)",
+  "toHaveCount(catalog.length)",
   "toContainText('Math')",
   "toContainText('Reading')",
   "larriverse-family-learning-report",

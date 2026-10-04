@@ -15,7 +15,7 @@
     errors[kind] = null;
     try {
       items[kind] = await Contract.readEvidenceFile(file, kind, release);
-      state.textContent = kind === 'gallery' ? '18 approved images' : `8 passed cabinets · ${items[kind].value.deviceName}`;
+      state.textContent = kind === 'gallery' ? `${release.galleryReview.expectedImages} approved images` : `${release.cabinetCount} passed cabinets · ${items[kind].value.deviceName}`;
       state.className = 'good';
     } catch (error) {
       items[kind] = null;
@@ -42,9 +42,9 @@
   }
 
   function update() {
-    setSummary('#gallerySummary', Boolean(items.gallery), items.gallery ? '18 approved' : 'missing');
-    setSummary('#desktopSummary', Boolean(items.desktop), items.desktop ? '8 passed' : 'missing');
-    setSummary('#phoneSummary', Boolean(items.physicalPhone), items.physicalPhone ? '8 passed' : 'missing');
+    setSummary('#gallerySummary', Boolean(items.gallery), items.gallery ? `${release.galleryReview.expectedImages} approved` : 'missing');
+    setSummary('#desktopSummary', Boolean(items.desktop), items.desktop ? `${release.cabinetCount} passed` : 'missing');
+    setSummary('#phoneSummary', Boolean(items.physicalPhone), items.physicalPhone ? `${release.cabinetCount} passed` : 'missing');
     const distinct = Boolean(items.desktop && items.physicalPhone && items.desktop.sha256 !== items.physicalPhone.sha256);
     setSummary('#distinctSummary', distinct, distinct ? 'yes' : 'blocked');
 
