@@ -333,7 +333,7 @@
     const response = await fetch(MANIFEST_URL, { cache: 'no-store' });
     if (!response.ok) throw new Error(`Release manifest request failed: ${response.status}`);
     manifest = await response.json();
-    if (manifest.schemaVersion !== 1 || manifest.cabinetCount !== 8 || manifest.cabinets.length !== 8) throw new Error('Unsupported or incomplete release manifest.');
+    if (manifest.schemaVersion !== 1 || manifest.cabinetCount < 1 || manifest.cabinets.length !== manifest.cabinetCount) throw new Error('Unsupported or incomplete release manifest.');
 
     document.querySelectorAll('input[name="deviceClass"]').forEach((radio) => radio.addEventListener('change', () => chooseDevice(radio.value)));
     $('#testerName').addEventListener('input', (event) => {

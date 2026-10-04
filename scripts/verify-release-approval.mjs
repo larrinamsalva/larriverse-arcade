@@ -22,7 +22,7 @@ function verifyQa(report, label, expectedDeviceClass) {
   if (!report.environment || !Number.isFinite(report.environment.viewportWidth) || !Number.isFinite(report.environment.viewportHeight)) fail(`${label} environment is incomplete`);
   if (expectedDeviceClass === 'physical-phone' && !(Number(report.environment.maxTouchPoints) >= 1)) fail(`${label} must show touch capability`);
   for (const key of requiredDeviceChecks) if (report.deviceChecks?.[key] !== true) fail(`${label} is missing device check ${key}`);
-  if (!Array.isArray(report.results) || report.results.length !== 8) fail(`${label} must contain eight results`);
+  if (!Array.isArray(report.results) || report.results.length !== release.cabinetCount) fail(`${label} must contain all cabinet results`);
   const expected = new Set(release.cabinets.map((cabinet) => cabinet.id));
   const seen = new Set();
   for (const result of report.results) {
@@ -46,7 +46,7 @@ for (const key of ['gallery', 'desktop', 'mobile']) {
 }
 if (approval.evidenceHashes.desktop === approval.evidenceHashes.mobile) fail('desktop and phone evidence files must be different');
 
-if (!approval.gallery?.approved || !Array.isArray(approval.gallery.entries) || approval.gallery.entries.length !== 18) fail('gallery must approve exactly 18 images');
+if (!approval.gallery?.approved || !Array.isArray(approval.gallery.entries) || approval.gallery.entries.length !== release.galleryReview.expectedImages) fail('gallery must approve every expected image');
 const subjects = new Set(['lobby', ...release.cabinets.map((cabinet) => cabinet.id)]);
 const expectedPairs = new Set();
 for (const project of ['desktop-chromium', 'mobile-chromium']) for (const subject of subjects) expectedPairs.add(`${project}/${subject}`);

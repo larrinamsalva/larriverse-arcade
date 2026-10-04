@@ -26,7 +26,7 @@
   function acceptItem(kind, item) {
     items[kind] = item;
     if (kind === 'physicalPhone' && !$('#device').value.trim()) $('#device').value = item.value.deviceName;
-    setEvidenceState(kind, kind === 'gallery' ? '18/18 images approved' : `8/8 cabinets passed · ${item.value.deviceName}`, true);
+    setEvidenceState(kind, kind === 'gallery' ? `${manifest.galleryReview.expectedImages}/${manifest.galleryReview.expectedImages} images approved` : `${manifest.cabinetCount}/${manifest.cabinetCount} cabinets passed · ${item.value.deviceName}`, true);
   }
 
   async function loadEvidence(kind, file) {
@@ -100,9 +100,9 @@
   }
 
   function update() {
-    setSummary('#gallerySummary', Boolean(items.gallery), items.gallery ? '18 approved' : 'missing');
-    setSummary('#desktopSummary', Boolean(items.desktop), items.desktop ? `8 passed · ${items.desktop.value.deviceName}` : 'missing');
-    setSummary('#mobileSummary', Boolean(items.physicalPhone), items.physicalPhone ? `8 passed · ${items.physicalPhone.value.deviceName}` : 'missing');
+    setSummary('#gallerySummary', Boolean(items.gallery), items.gallery ? `${manifest.galleryReview.expectedImages} approved` : 'missing');
+    setSummary('#desktopSummary', Boolean(items.desktop), items.desktop ? `${manifest.cabinetCount} passed · ${items.desktop.value.deviceName}` : 'missing');
+    setSummary('#mobileSummary', Boolean(items.physicalPhone), items.physicalPhone ? `${manifest.cabinetCount} passed · ${items.physicalPhone.value.deviceName}` : 'missing');
     const approved = ready();
     setSummary('#decisionSummary', approved, approved ? 'ready to export' : 'blocked');
     $('#export').disabled = !approved;
@@ -192,7 +192,7 @@
     const response = await fetch(MANIFEST_URL, { cache: 'no-store' });
     if (!response.ok) throw new Error(`release manifest request failed: ${response.status}`);
     manifest = await response.json();
-    if (manifest.version !== '1.0.0' || manifest.candidate !== 'rc.1' || manifest.cabinetCount !== 8) throw new Error('unsupported release candidate');
+    if (manifest.version !== '1.0.0' || manifest.candidate !== 'rc.1' || manifest.cabinetCount < 1) throw new Error('unsupported release candidate');
 
     $('#bundleFile').addEventListener('change', (event) => loadBundle(event.target.files[0]));
     $('#galleryFile').addEventListener('change', (event) => loadEvidence('gallery', event.target.files[0]));

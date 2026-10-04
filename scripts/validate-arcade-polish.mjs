@@ -30,16 +30,16 @@ const playable = catalog.filter(game => game.available);
 
 check(pkg.version === '1.0.0', 'package declares LarriVerse Arcade 1.0.0');
 check(pkg.scripts?.validate?.includes('validate-arcade-polish.mjs'), 'main validation command includes arcade polish audit');
-check(Array.isArray(catalog) && catalog.length === 8, 'catalog contains exactly eight recovered browser concepts');
-check(playable.length === 8, 'all eight recovered browser concepts are playable');
-check(new Set(catalog.map(game => game.id)).size === 8, 'all cabinet ids are unique');
+check(Array.isArray(catalog) && catalog.length === 20, 'catalog contains eight originals and twelve new worlds');
+check(playable.length === catalog.length, 'every declared game is playable');
+check(new Set(catalog.map(game => game.id)).size === catalog.length, 'all cabinet ids are unique');
 check(catalog.every(game => game.featured === true), 'all playable cabinets participate in the featured rotation');
 
 check(index.includes('class="skip-link"'), 'lobby includes a keyboard skip link');
 check(index.includes('id="controlCenter"'), 'lobby includes the shared control center');
 check(index.includes('class="mobile-dock"'), 'lobby includes mobile shortcut navigation');
 check(index.includes('id="release"'), 'lobby includes a release-readiness section');
-check(index.includes('<b id="playableCount">8</b> live cabinets'), 'static lobby fallback reports eight live cabinets');
+check(index.includes(`id="playableCount">${playable.length}</`), 'static lobby count matches the playable catalog');
 check(index.includes('data-open-control'), 'settings and save tools have visible open controls');
 check(index.includes('id="reducedMotion"'), 'control center exposes reduced motion');
 check(index.includes('id="highContrast"'), 'control center exposes high contrast');

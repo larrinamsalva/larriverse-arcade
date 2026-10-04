@@ -38,7 +38,7 @@ Record the approver, physical phone, and six final confirmations. The console ex
 Before `v1.0.0` can publish, a final evidence commit must contain:
 
 - `docs/release-approval.json`
-- All 18 exact approved images at `docs/screenshots/<project>/<subject>.png`
+- All 42 exact approved images at `docs/screenshots/<project>/<subject>.png`
 
 The tag workflow recomputes every image SHA-256 digest, checks all 16 manual cabinet results, verifies the approved code commit is an ancestor of the tag, reruns structural validation, and reruns desktop/mobile Chromium. A missing, incomplete, or changed approval record blocks publication.
 

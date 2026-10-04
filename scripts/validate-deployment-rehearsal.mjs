@@ -170,7 +170,7 @@ assert(rehearsalTests.includes("page.goto('/qa/evidence-preflight.html'"), 'brow
 assert(rehearsalTests.includes("page.goto('/qa/release-room.html'"), 'browser test must visit Release Room');
 assert(rehearsalTests.includes("page.goto('/qa/release-approval.html'"), 'browser test must visit final approval');
 assert(rehearsalTests.includes("toHaveText('5/5')"), 'browser test must require all readiness checks');
-assert(rehearsalTests.includes("toHaveText('8/8')"), 'browser test must require eight routes');
+assert(rehearsalTests.includes("toHaveText(`${release.cabinetCount}/${release.cabinetCount}`)"), 'browser test must require eight routes');
 assert(rehearsalTests.includes('assertNoHorizontalOverflow'), 'new pages need overflow checks');
 
 assert(docs.includes('Search-engine indexing is not used as release evidence.'), 'docs must reject indexing as proof');

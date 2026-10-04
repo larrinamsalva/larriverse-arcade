@@ -19,7 +19,19 @@ const subjects = [
   ...release.cabinets.map(({ id, title }) => ({ id, title }))
 ];
 const altText = {
-  lobby: 'LarriVerse Arcade lobby showing the eight-cabinet collection and shared profile controls.',
+  'beat-builder': 'Beat Builder illustrated game board with a mission, play controls, and local progress.',
+  'lemonade-lab': 'Lemonade Lab illustrated game board with a mission, play controls, and local progress.',
+  'robot-rover': 'Robot Rover illustrated game board with a mission, play controls, and local progress.',
+  'reuse-rally': 'Reuse Rally illustrated game board with a mission, play controls, and local progress.',
+  'energy-island': 'Energy Island illustrated game board with a mission, play controls, and local progress.',
+  'garden-guardians': 'Garden Guardians illustrated game board with a mission, play controls, and local progress.',
+  'time-trail': 'Time Trail illustrated game board with a mission, play controls, and local progress.',
+  'repair-cafe': 'Repair Café illustrated game board with a mission, play controls, and local progress.',
+  'fact-finder': 'Fact Finder illustrated game board with a mission, play controls, and local progress.',
+  'kindness-quest': 'Kindness Quest illustrated game board with a mission, play controls, and local progress.',
+  'scam-sleuth': 'Scam Sleuth illustrated game board with a mission, play controls, and local progress.',
+  'pocket-planet': 'Pocket Planet illustrated game board with a mission, play controls, and local progress.',
+  lobby: 'LarriVerse Arcade lobby showing the complete game collection and shared profile controls.',
   'kidscoin-family': 'KidsCoin Family dashboard explaining fictional family rewards and parent-controlled local progress.',
   'brain-sweat-expanded': 'Brain Sweat Expanded opening screen with reviewed skill worlds, progress cards, and review-first safety messaging.',
   'brain-sweat-life-skills': 'Brain Sweat Life Skills lesson hub showing reviewed worlds, playable question totals, and queued-content protections.',
@@ -45,7 +57,7 @@ function safeJson(value) {
 }
 
 if (release.version !== '1.0.0' || release.candidate !== 'rc.1') fail('unsupported release candidate');
-if (!Array.isArray(release.cabinets) || release.cabinets.length !== 8) fail('release must list eight cabinets');
+if (!Array.isArray(release.cabinets) || release.cabinets.length !== release.cabinetCount) fail('release must list every cabinet');
 if (!fs.existsSync(sourceRoot)) fail('artifacts/screenshots is missing; run browser QA first');
 
 fs.rmSync(outputRoot, { recursive: true, force: true });
@@ -77,7 +89,7 @@ for (const project of expectedProjects) {
     });
   }
 }
-if (entries.length !== 18) fail(`expected 18 screenshots, found ${entries.length}`);
+if (entries.length !== release.galleryReview.expectedImages) fail(`expected ${release.galleryReview.expectedImages} screenshots, found ${entries.length}`);
 
 const manifest = {
   schema: 'larriverse-gallery-review',
@@ -90,7 +102,7 @@ const manifest = {
   humanApprovalRequired: true,
   uploadsData: false,
   grantsLocation: false,
-  expectedEntries: 18,
+  expectedEntries: release.galleryReview.expectedImages,
   projects: expectedProjects,
   entries
 };
@@ -112,7 +124,7 @@ const html = `<!doctype html>
 <section class="hero">
 <p>LarriVerse Arcade 1.0 · ${release.candidate}</p>
 <h1>Offline gallery approval</h1>
-<p>Review all 18 Chromium evidence images. This file works locally, makes no network requests, uploads nothing, and cannot publish a release. Automated screenshots are evidence—not human approval.</p>
+<p>Review all ${manifest.expectedEntries} Chromium evidence images. This file works locally, makes no network requests, uploads nothing, and cannot publish a release. Automated screenshots are evidence—not human approval.</p>
 <p class="notice">Physical-phone gameplay, sound, touch comfort, and instruction clarity remain separate human checks.</p>
 <div class="controls"><label>Reviewer name or initials<input id="reviewer" maxlength="60" autocomplete="off"></label><label>Review notes<input id="overallNotes" maxlength="500" autocomplete="off"></label></div>
 <div class="checks">
@@ -123,7 +135,7 @@ const html = `<!doctype html>
 <label><input type="checkbox" data-global="humanBoundary">I understand this approves gallery images only; it does not replace physical-device or full gameplay QA.</label>
 </div>
 </section>
-<section class="summary"><b id="counts">0 approved · 0 rejected · 18 pending</b><span id="readiness" class="blocked">Approval incomplete</span><div class="actions"><button id="approveAll">Approve all visible</button><button id="reset">Reset</button><button id="export" class="primary" disabled>Export approval JSON</button></div></section>
+<section class="summary"><b id="counts">0 approved · 0 rejected · ${manifest.expectedEntries} pending</b><span id="readiness" class="blocked">Approval incomplete</span><div class="actions"><button id="approveAll">Approve all visible</button><button id="reset">Reset</button><button id="export" class="primary" disabled>Export approval JSON</button></div></section>
 <section id="grid" class="grid"></section>
 <p class="footer">Source commit: <code>${sourceCommit}</code> · Generated ${manifest.generatedAt}</p>
 </main>
@@ -137,7 +149,7 @@ function save(){state.updatedAt=new Date().toISOString();try{localStorage.setIte
 function entryState(id,entry){return state.entries[id]||{status:'pending',alt:entry.defaultAlt,note:''}}
 function render(){const grid=$('#grid');grid.innerHTML='';for(const entry of manifest.entries){const current=entryState(entry.key,entry);const card=document.createElement('article');card.className='card';card.dataset.status=current.status;card.innerHTML='<img loading="lazy"><div class="body"><h2></h2><p class="meta"></p><div class="decision"><label><input type="radio" value="approved">Approve</label><label><input type="radio" value="rejected">Reject</label><label><input type="radio" value="pending">Pending</label></div><label>Alt text<textarea rows="3" maxlength="300"></textarea></label><label>Reviewer note<textarea class="note" rows="2" maxlength="400"></textarea></label></div>';card.querySelector('img').src=entry.path;card.querySelector('img').alt=current.alt;card.querySelector('h2').textContent=entry.title+' · '+(entry.project.startsWith('desktop')?'Desktop':'Mobile');card.querySelector('.meta').textContent=entry.cssViewport+' CSS viewport · '+entry.pixelWidth+'×'+entry.pixelHeight+' pixels · SHA-256 '+entry.sha256;card.querySelector('textarea').value=current.alt;card.querySelector('.note').value=current.note;const selected=card.querySelector('input[value="'+current.status+'"]');if(selected)selected.checked=true;card.querySelectorAll('input[type="radio"]').forEach(r=>r.addEventListener('change',()=>{const n=entryState(entry.key,entry);n.status=r.value;state.entries[entry.key]=n;card.dataset.status=r.value;save()}));const areas=card.querySelectorAll('textarea');areas[0].addEventListener('change',()=>{const n=entryState(entry.key,entry);n.alt=areas[0].value.trim().slice(0,300);state.entries[entry.key]=n;card.querySelector('img').alt=n.alt;save()});areas[1].addEventListener('change',()=>{const n=entryState(entry.key,entry);n.note=areas[1].value.trim().slice(0,400);state.entries[entry.key]=n;save()});grid.append(card)}}
 function complete(){const entries=manifest.entries.map(e=>entryState(e.key,e));return state.reviewer.trim().length>=2&&Object.values(state.checks).filter(Boolean).length===5&&entries.every(e=>e.status==='approved'&&e.alt.trim().length>=20)}
-function update(){const entries=manifest.entries.map(e=>entryState(e.key,e));const approved=entries.filter(e=>e.status==='approved').length,rejected=entries.filter(e=>e.status==='rejected').length,pending=18-approved-rejected;$('#counts').textContent=approved+' approved · '+rejected+' rejected · '+pending+' pending';const ready=complete();$('#readiness').textContent=ready?'Gallery approval ready to export':'Approval incomplete';$('#readiness').className=ready?'ready':'blocked';$('#export').disabled=!ready}
+function update(){const entries=manifest.entries.map(e=>entryState(e.key,e));const approved=entries.filter(e=>e.status==='approved').length,rejected=entries.filter(e=>e.status==='rejected').length,pending=manifest.expectedEntries-approved-rejected;$('#counts').textContent=approved+' approved · '+rejected+' rejected · '+pending+' pending';const ready=complete();$('#readiness').textContent=ready?'Gallery approval ready to export':'Approval incomplete';$('#readiness').className=ready?'ready':'blocked';$('#export').disabled=!ready}
 function exportApproval(){if(!complete())return;const approval={schema:'larriverse-gallery-approval',schemaVersion:1,release:manifest.release,candidate:manifest.candidate,sourceCommit:manifest.sourceCommit,workflowRunId:manifest.workflowRunId,manifestGeneratedAt:manifest.generatedAt,reviewer:state.reviewer.trim(),reviewedAt:new Date().toISOString(),overallNotes:state.overallNotes.trim()||null,checks:{...state.checks},entries:manifest.entries.map(e=>({key:e.key,project:e.project,subjectId:e.subjectId,path:e.path,sha256:e.sha256,status:entryState(e.key,e).status,alt:entryState(e.key,e).alt.trim(),note:entryState(e.key,e).note.trim()||null}))};const blob=new Blob([JSON.stringify(approval,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='larriverse-'+manifest.release+'-'+manifest.candidate+'-gallery-approval.json';a.click();URL.revokeObjectURL(url)}
 $('#reviewer').value=state.reviewer;$('#overallNotes').value=state.overallNotes;$('#reviewer').addEventListener('change',e=>{state.reviewer=e.target.value.slice(0,60);save()});$('#overallNotes').addEventListener('change',e=>{state.overallNotes=e.target.value.slice(0,500);save()});document.querySelectorAll('[data-global]').forEach(box=>{box.checked=Boolean(state.checks[box.dataset.global]);box.addEventListener('change',()=>{state.checks[box.dataset.global]=box.checked;save()})});$('#approveAll').addEventListener('click',()=>{for(const e of manifest.entries){const n=entryState(e.key,e);n.status='approved';state.entries[e.key]=n}save();render()});$('#reset').addEventListener('click',()=>{if(!confirm('Reset this local gallery review?'))return;state=fresh();try{localStorage.removeItem(key)}catch{}location.reload()});$('#export').addEventListener('click',exportApproval);render();update();
 })();
@@ -145,5 +157,5 @@ $('#reviewer').value=state.reviewer;$('#overallNotes').value=state.overallNotes;
 </body>
 </html>`;
 fs.writeFileSync(path.join(outputRoot, 'index.html'), html);
-fs.writeFileSync(path.join(outputRoot, 'README.txt'), `LarriVerse Arcade ${release.version} ${release.candidate} gallery review\n\nOpen index.html in a modern browser. The page works offline, makes no network requests, and exports a JSON approval record only after all 18 images and five human checks are approved.\n`);
+fs.writeFileSync(path.join(outputRoot, 'README.txt'), `LarriVerse Arcade ${release.version} ${release.candidate} gallery review\n\nOpen index.html in a modern browser. The page works offline, makes no network requests, and exports a JSON approval record only after all ${release.galleryReview.expectedImages} images and five human checks are approved.\n`);
 console.log(`Gallery review pack built: ${entries.length} screenshots, source ${sourceCommit}.`);

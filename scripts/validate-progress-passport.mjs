@@ -55,7 +55,7 @@ for (const required of [
   'uploadsData: false',
   'window.LarriVerseProgressPassport',
   "fetch('../games/catalog.json')",
-  'catalog.length !== 8',
+  'catalog.length === 0',
   'window.print()'
 ]) check(js.includes(required), `passport logic includes ${required}`);
 
@@ -76,11 +76,11 @@ check(css.includes('.learning-grid'), 'passport styles learning trails');
 check(css.includes('.cabinet-grid'), 'passport styles cabinet stamps');
 check(css.includes('.achievement-grid'), 'passport styles achievements');
 
-check(catalog.length === 8, 'catalog still contains eight cabinets');
-check(catalog.every(game => game.available), 'all eight passport cabinet stamps are playable');
+check(catalog.length === 20, 'catalog contains all twenty cabinets');
+check(catalog.every(game => game.available), 'all declared passport cabinet stamps are playable');
 check(lobby.includes('href="passport/"'), 'lobby links to the Progress Passport');
-check(lobby.includes('View my Progress Passport'), 'lobby hero promotes the Progress Passport');
-check(lobby.includes('<h3>Progress Passport</h3>'), 'release section describes the Progress Passport');
+check(lobby.includes('Open my passport'), 'lobby promotes the Progress Passport');
+check(lobby.includes('progress passport'), 'lobby describes the Progress Passport');
 check(build.includes("const directories = ['assets', 'games', 'qa', 'docs']"), 'Pages build preserves the established directory allowlist');
 check(build.includes("directories.splice(2, 0, 'passport')"), 'Pages build inserts the passport directory into the allowlist');
 check(build.includes("progressPassport: 'passport/index.html'"), 'deployment manifest exposes the passport route');

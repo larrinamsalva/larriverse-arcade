@@ -28,34 +28,35 @@ function gameProgress(game) {
   return `${record.sessions || 0} session${record.sessions === 1 ? '' : 's'} started`;
 }
 
-function card(game, index) {
-  const badges = [game.category, game.status].map(value => `<span>${escapeHtml(value)}</span>`).join('');
-  const action = game.available
-    ? `<a class="launch" href="${encodeURI(game.href)}"><span>Launch game</span><span>START ↗</span></a>`
-    : `<div class="launch queued" title="This concept is preserved but not yet playable"><span>Integration queued</span><span>◌</span></div>`;
-  return `<article class="game-card" style="--glow:${palette[index % palette.length]}">
-    <div class="game-icon" aria-hidden="true">${escapeHtml(game.icon)}</div>
-    <div class="game-badges">${badges}</div>
-    <h3>${escapeHtml(game.title)}</h3>
-    <p>${escapeHtml(game.desc)}</p>
+function artPosition(game) {
+  const art = Number(game.art || 0);
+  return `--art-x:${art % 4 * 100 / 3}%;--art-y:${Math.floor(art / 4) * 50}%`;
+}
+function card(game) {
+  const tag = game.isNew ? '<span class="cover-tag">NEW WORLD</span>' : '';
+  const title = escapeHtml(game.title);
+  return `<article class="game-card">
+    <a class="game-cover" style="${artPosition(game)}" href="${encodeURI(game.href)}" aria-label="Play ${title}">${tag}</a>
+    <div class="game-body"><div class="game-badges"><span>${escapeHtml(game.skill || game.topic || game.category)}</span><span>${escapeHtml(game.age || '7+')}</span></div>
+    <h3>${title}</h3><p>${escapeHtml(game.desc)}</p>
     <small class="progress-line">${escapeHtml(gameProgress(game))}</small>
-    ${action}
+    <a class="launch" href="${encodeURI(game.href)}"><span>Play game</span><span>${escapeHtml(game.minutes || 'Explore')}</span></a></div>
   </article>`;
 }
 
 function render() {
   const query = search.value.trim().toLowerCase();
   const visible = games.filter(game =>
-    (category === 'All' || game.category === category) &&
+    (category === 'All' || (game.topic || game.category) === category) &&
     (!query || `${game.title} ${game.desc} ${game.category}`.toLowerCase().includes(query))
   );
   grid.innerHTML = visible.length
     ? visible.map(card).join('')
-    : '<p class="empty">No cabinet matches that search. The arcade gremlins deny everything.</p>';
+    : '<p class="empty">No games found yet. Try another skill or clear your search.</p>';
 }
 
 function renderFilters() {
-  const categories = ['All', ...new Set(games.map(game => game.category))];
+  const categories = ['All', ...new Set(games.map(game => game.topic || game.category))];
   filters.innerHTML = categories.map(value =>
     `<button class="filter ${value === category ? 'active' : ''}" type="button" data-category="${escapeHtml(value)}" aria-pressed="${value === category}">${escapeHtml(value)}</button>`
   ).join('');
@@ -83,6 +84,10 @@ function showFeature() {
   const game = featured[featureIndex % featured.length];
   document.querySelector('#screenIcon').textContent = game.icon;
   document.querySelector('#screenTitle').textContent = game.title;
+  document.querySelector('#featureDescription').textContent = game.desc;
+  document.querySelector('#featuredPlay').href = game.href;
+  document.querySelector('#featureSkill').textContent = `${game.skill || game.topic} · Ages ${game.age || '7+'}`;
+  document.querySelector('#featureArt').setAttribute('style', artPosition(game));
   featureIndex += 1;
 }
 
@@ -91,7 +96,7 @@ function restartFeatureRotation() {
   featureTimer = null;
   showFeature();
   const reduced = sdk?.settings?.().reducedMotion;
-  if (!reduced && featured.length > 1) featureTimer = setInterval(showFeature, 2600);
+  if (!reduced && featured.length > 1) featureTimer = setInterval(showFeature, 12000);
 }
 
 function setControlMessage(message, kind = 'info') {
@@ -192,7 +197,7 @@ fetch('games/catalog.json')
   .then(data => {
     games = data;
     const playable = games.filter(game => game.available);
-    featured = games.filter(game => game.featured && game.available);
+    featured = games.filter(game => game.featured && game.available).sort((a,b) => Number(Boolean(b.isNew)) - Number(Boolean(a.isNew)));
     document.querySelector('#gameCount').textContent = games.length;
     document.querySelector('#playableCount').textContent = playable.length;
     renderFilters();

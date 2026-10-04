@@ -5,7 +5,7 @@
   "tag": "v1.0.0",
   "title": "LarriVerse Arcade 1.0",
   "releaseState": "candidate",
-  "cabinetCount": 8,
+  "cabinetCount": 20,
   "humanChecksRequired": true,
   "qaRoute": "qa/index.html",
   "releaseNotes": "docs/RELEASE-NOTES-1.0.0.md",
@@ -19,8 +19,14 @@
   },
   "browserQa": {
     "runner": "Playwright Chromium 1.55.0",
-    "projects": ["desktop-chromium", "mobile-chromium"],
-    "viewports": ["1440x900", "390x844"],
+    "projects": [
+      "desktop-chromium",
+      "mobile-chromium"
+    ],
+    "viewports": [
+      "1440x900",
+      "390x844"
+    ],
     "capturesTemporaryScreenshots": true,
     "grantsLocation": false,
     "uploadsApplicationData": false,
@@ -29,8 +35,11 @@
   },
   "galleryReview": {
     "schema": "larriverse-gallery-review",
-    "expectedImages": 18,
-    "projects": ["desktop-chromium", "mobile-chromium"],
+    "expectedImages": 42,
+    "projects": [
+      "desktop-chromium",
+      "mobile-chromium"
+    ],
     "offline": true,
     "uploadsData": false,
     "grantsLocation": false,
@@ -44,9 +53,19 @@
     "schema": "larriverse-release-qa",
     "schemaVersion": 2,
     "route": "qa/index.html",
-    "requiredDeviceClasses": ["desktop", "physical-phone"],
+    "requiredDeviceClasses": [
+      "desktop",
+      "physical-phone"
+    ],
     "separateLocalRecords": true,
-    "requiredDeviceChecks": ["controls", "accessibility", "backupRestore", "privacy", "sound", "deviceComfort"],
+    "requiredDeviceChecks": [
+      "controls",
+      "accessibility",
+      "backupRestore",
+      "privacy",
+      "sound",
+      "deviceComfort"
+    ],
     "physicalPhoneTouchRequired": true,
     "uploadsData": false,
     "requestsLocation": false,
@@ -59,7 +78,13 @@
     "environmentField": "environment",
     "touchField": "environment.maxTouchPoints",
     "maxEvidenceFileBytes": 2000000,
-    "forbiddenLocationKeys": ["latitude", "longitude", "coordinates", "coords", "geolocation"]
+    "forbiddenLocationKeys": [
+      "latitude",
+      "longitude",
+      "coordinates",
+      "coords",
+      "geolocation"
+    ]
   },
   "preview": {
     "provider": "GitHub Pages",
@@ -87,7 +112,11 @@
     "schema": "larriverse-evidence-rehearsal",
     "schemaVersion": 1,
     "route": "qa/evidence-preflight.html",
-    "requiredFiles": ["gallery-approval", "desktop-qa", "physical-phone-qa"],
+    "requiredFiles": [
+      "gallery-approval",
+      "desktop-qa",
+      "physical-phone-qa"
+    ],
     "createsReleaseApproval": false,
     "uploadsData": false,
     "requestsLocation": false,
@@ -98,7 +127,11 @@
     "schemaVersion": 1,
     "route": "qa/release-room.html",
     "sharedContract": "qa/evidence-contract.js",
-    "requiredDocuments": ["gallery", "desktop", "physicalPhone"],
+    "requiredDocuments": [
+      "gallery",
+      "desktop",
+      "physicalPhone"
+    ],
     "maxBytes": 6500000,
     "preservesOriginalJsonText": true,
     "preservesOriginalSha256": true,
@@ -110,6 +143,78 @@
     "documentation": "docs/RELEASE-ROOM.md"
   },
   "cabinets": [
+    {
+      "id": "pocket-planet",
+      "title": "Pocket Planet",
+      "route": "games/pocket-planet/index.html",
+      "manualFocus": "Complete a full Pocket Planet round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
+    {
+      "id": "scam-sleuth",
+      "title": "Scam Sleuth",
+      "route": "games/scam-sleuth/index.html",
+      "manualFocus": "Complete a full Scam Sleuth round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
+    {
+      "id": "kindness-quest",
+      "title": "Kindness Quest",
+      "route": "games/kindness-quest/index.html",
+      "manualFocus": "Complete a full Kindness Quest round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
+    {
+      "id": "fact-finder",
+      "title": "Fact Finder",
+      "route": "games/fact-finder/index.html",
+      "manualFocus": "Complete a full Fact Finder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
+    {
+      "id": "repair-cafe",
+      "title": "Repair Caf\u00e9",
+      "route": "games/repair-cafe/index.html",
+      "manualFocus": "Complete a full Repair Caf\u00e9 round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
+    {
+      "id": "time-trail",
+      "title": "Time Trail",
+      "route": "games/time-trail/index.html",
+      "manualFocus": "Complete a full Time Trail round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
+    {
+      "id": "garden-guardians",
+      "title": "Garden Guardians",
+      "route": "games/garden-guardians/index.html",
+      "manualFocus": "Complete a full Garden Guardians round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
+    {
+      "id": "energy-island",
+      "title": "Energy Island",
+      "route": "games/energy-island/index.html",
+      "manualFocus": "Complete a full Energy Island round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
+    {
+      "id": "reuse-rally",
+      "title": "Reuse Rally",
+      "route": "games/reuse-rally/index.html",
+      "manualFocus": "Complete a full Reuse Rally round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
+    {
+      "id": "robot-rover",
+      "title": "Robot Rover",
+      "route": "games/robot-rover/index.html",
+      "manualFocus": "Complete a full Robot Rover round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
+    {
+      "id": "lemonade-lab",
+      "title": "Lemonade Lab",
+      "route": "games/lemonade-lab/index.html",
+      "manualFocus": "Complete a full Lemonade Lab round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
+    {
+      "id": "beat-builder",
+      "title": "Beat Builder",
+      "route": "games/beat-builder/index.html",
+      "manualFocus": "Complete a full Beat Builder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+    },
     {
       "id": "kidscoin-family",
       "title": "KidsCoin Family App",
@@ -130,7 +235,7 @@
     },
     {
       "id": "bubble-resonance-phi369",
-      "title": "Bubble Resonance Φ369",
+      "title": "Bubble Resonance \u03a6369",
       "route": "games/bubble-resonance-phi369/index.html",
       "manualFocus": "Finish a run with sound disabled, verify controls at desktop and mobile widths, and confirm the creative-theme medical boundary remains visible."
     },

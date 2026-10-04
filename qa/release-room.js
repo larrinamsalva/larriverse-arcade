@@ -100,7 +100,7 @@
     errors[kind] = null;
     try {
       items[kind] = await Contract.readEvidenceFile(file, kind, release);
-      state.textContent = kind === 'gallery' ? '18/18 approved' : `8/8 passed · ${items[kind].value.deviceName}`;
+      state.textContent = kind === 'gallery' ? `${release.galleryReview.expectedImages}/${release.galleryReview.expectedImages} approved` : `${release.cabinetCount}/${release.cabinetCount} passed · ${items[kind].value.deviceName}`;
       state.className = 'good';
     } catch (error) {
       items[kind] = null;
@@ -122,9 +122,9 @@
 
   function update() {
     setMetric('#deploymentSummary', deploymentReady ? 'verified' : 'blocked', deploymentReady ? 'good' : 'bad');
-    setMetric('#gallerySummary', items.gallery ? '18 approved' : 'missing', items.gallery ? 'good' : 'bad');
-    setMetric('#desktopSummary', items.desktop ? '8 passed' : 'missing', items.desktop ? 'good' : 'bad');
-    setMetric('#phoneSummary', items.physicalPhone ? '8 passed' : 'missing', items.physicalPhone ? 'good' : 'bad');
+    setMetric('#gallerySummary', items.gallery ? `${release.galleryReview.expectedImages} approved` : 'missing', items.gallery ? 'good' : 'bad');
+    setMetric('#desktopSummary', items.desktop ? `${release.cabinetCount} passed` : 'missing', items.desktop ? 'good' : 'bad');
+    setMetric('#phoneSummary', items.physicalPhone ? `${release.cabinetCount} passed` : 'missing', items.physicalPhone ? 'good' : 'bad');
 
     const issueList = Object.entries(errors).filter(([, value]) => value);
     $('#issues').replaceChildren();
