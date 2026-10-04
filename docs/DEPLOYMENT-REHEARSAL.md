@@ -9,7 +9,7 @@ Open `qa/readiness.html` from the deployed site. The readiness page checks, from
 - HTTPS or a local development context;
 - the generated `deployment.json` identity;
 - the release version, candidate, and state;
-- all eight cabinet routes;
+- all twenty cabinet routes;
 - that `docs/release-approval.json`, repository workflows, and release-verification scripts are not public Pages files.
 
 The deployment identity records the exact source commit, build time, workflow run, release-manifest digest, and public QA routes. Search-engine indexing is not used as release evidence.
@@ -23,7 +23,7 @@ Use `qa/index.html` to export:
 1. one complete schema-v2 `desktop` report;
 2. one complete schema-v2 `physical-phone` report from a touch-capable phone browser.
 
-Use the offline gallery-review artifact to export one `larriverse-gallery-approval` JSON with 18 approved images.
+Use the offline gallery-review artifact to export one `larriverse-gallery-approval` JSON with 42 approved images.
 
 The canonical QA fields are `deviceClass` and `environment.maxTouchPoints`. Evidence Preflight, Release Room, and Final Approval all load `qa/evidence-contract.js` so those fields cannot drift between tools.
 
@@ -34,9 +34,9 @@ The QA pages upload nothing and request no location. Keep the JSON files in a tr
 Open `qa/evidence-preflight.html` and load the three files. The preflight checks:
 
 - release and candidate agreement;
-- the gallery schema, reviewer metadata, five global checks, 18 image approvals, hashes, and alt text;
+- the gallery schema, reviewer metadata, five global checks, 42 image approvals, hashes, and alt text;
 - schema-v2 desktop and physical-phone device classes;
-- eight reachable and passed cabinets per device;
+- twenty reachable and passed cabinets per device;
 - all six device-wide checks;
 - phone touch capability;
 - location remaining ungranted;

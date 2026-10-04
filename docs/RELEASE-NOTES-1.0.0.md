@@ -52,7 +52,7 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 ## Progress Passport
 
 - A first-class `/passport/` route turns existing local saves into a private progress view.
-- The Passport shows shared level progress, XP, Arcade KC, sessions, completed sessions, current learning goals, all eight cabinet stamps, adaptive-learning trails, per-subject accuracy, and friendly achievement labels.
+- The Passport shows shared level progress, XP, Arcade KC, sessions, completed sessions, current learning goals, all twenty cabinet stamps, adaptive-learning trails, per-subject accuracy, and friendly achievement labels.
 - One gentle next mission recommends an unvisited cabinet, a practiced subject below 75% accuracy, or the least-completed cabinet.
 - The page supports keyboard focus, mobile layouts, larger text, high contrast, reduced motion, and a print-specific layout.
 - A downloadable `larriverse-progress-passport` summary contains totals and learning statistics without raw family records or location data.
@@ -61,7 +61,7 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 ## Family Learning Report
 
 - A first-class `/report/` route presents the same local progress in a calmer family-review format.
-- The report summarizes current goals, shared totals, all eight cabinet participation records, adaptive learning paths, aggregate subject accuracy, and up to five recent cabinet timestamps.
+- The report summarizes current goals, shared totals, all twenty cabinet participation records, adaptive learning paths, aggregate subject accuracy, and up to five recent cabinet timestamps.
 - Growing strengths require at least two answers and at least 80% accuracy; gentle practice opportunities require at least two answers and below 75% accuracy.
 - Short histories are described as needing more data instead of being treated as ability conclusions.
 - Generated conversation starters invite celebration, curiosity, and optional practice without grading or punishment language.
@@ -100,7 +100,7 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 
 ## Release qualification
 
-GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all eight cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
+GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all twenty cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
 
 
 ## Modern arcade expansion
