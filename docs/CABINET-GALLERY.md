@@ -13,7 +13,7 @@ Automated Chromium now creates **candidate evidence** for the lobby and every ca
 | Road Trip Quest | `games/road-trip-quest/index.html` | generated automatically | pending human approval |
 | Road Trip Quest GPS | `games/road-trip-quest-gps/index.html` | generated automatically | pending human approval |
 
-The browser workflow also captures the arcade lobby in both viewports, producing 18 review images in total. Download the `larriverse-gallery-review-<run>` artifact, unzip it, and open `index.html` to approve or reject each image and review its proposed alt text.
+The browser workflow also captures the arcade lobby in both viewports, producing 42 review images in total. Download the `larriverse-gallery-review-<run>` artifact, unzip it, and open `index.html` to approve or reject each image and review its proposed alt text.
 
 ## Approval rules
 

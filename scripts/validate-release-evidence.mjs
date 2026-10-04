@@ -43,7 +43,7 @@ const release = json('release.json');
 const packageJson = json('package.json');
 
 assert(build.includes("schema: 'larriverse-gallery-review'"), 'gallery manifest schema missing');
-assert(build.includes('expectedEntries: release.galleryReview.expectedImages'), 'gallery builder must declare 18 entries');
+assert(build.includes('expectedEntries: release.galleryReview.expectedImages'), 'gallery builder must declare every expected entry');
 assert(build.includes("crypto.createHash('sha256')"), 'gallery builder must hash images');
 assert(build.includes('readUInt32BE(16)') && build.includes('readUInt32BE(20)'), 'gallery builder must record PNG dimensions');
 assert(build.includes("['desktop-chromium'") || build.includes("id: 'desktop-chromium'"), 'desktop project missing');
@@ -90,7 +90,7 @@ assert(!/https?:\/\//i.test(approvalHtml + approvalCss), 'approval console marku
 
 assert(verify.includes("docs', 'release-approval.json'"), 'verifier must require committed approval record');
 assert(verify.includes('human approval is required before tagging'), 'missing human gate error');
-assert(verify.includes('gallery.entries.length !== release.galleryReview.expectedImages'), 'verifier must require 18 images');
+assert(verify.includes('gallery.entries.length !== release.galleryReview.expectedImages'), 'verifier must require every expected image');
 assert(verify.includes('docs/screenshots/${entry.project}/${entry.subjectId}.png'), 'verifier must enforce screenshot paths');
 assert(verify.includes('hashFile(absolute) !== entry.sha256'), 'verifier must recompute image hashes');
 assert(verify.includes("['physicalPhone', 'gameplay', 'soundTouch', 'accessibility', 'backupPrivacy', 'releaseDecision']"), 'verifier must require six confirmations');
@@ -111,7 +111,7 @@ assert(packageJson.scripts.validate.includes('validate-release-evidence.mjs'), '
 assert(packageJson.scripts['verify:release-approval'] === 'node scripts/verify-release-approval.mjs', 'approval verification script missing');
 
 assert(release.galleryReview?.schema === 'larriverse-gallery-review', 'release galleryReview schema missing');
-assert(release.galleryReview?.expectedImages === (release.cabinetCount + 1) * 2, 'release must expect 18 gallery images');
+assert(release.galleryReview?.expectedImages === (release.cabinetCount + 1) * 2, 'release must expect a desktop and mobile image for every game and lobby');
 assert(release.galleryReview?.humanApprovalRequired === true, 'release must require gallery approval');
 assert(release.galleryReview?.uploadsData === false, 'gallery review must not upload data');
 assert(release.galleryReview?.approvalConsole === 'qa/release-approval.html', 'approval console path mismatch');

@@ -5,11 +5,11 @@ The automated Browser QA workflow produces two evidence artifacts after a succes
 - `larriverse-browser-qa-<run>` — screenshots, Playwright report, and failure traces.
 - `larriverse-gallery-review-<run>` — a self-contained offline gallery review folder.
 
-## Review the 18 images
+## Review the 42 images
 
 1. Download and unzip the gallery review artifact.
 2. Open `index.html` in a modern browser.
-3. Inspect the lobby and all eight cabinets in desktop and mobile views.
+3. Inspect the lobby and all twenty cabinets in desktop and mobile views.
 4. Approve, reject, or leave each image pending.
 5. Review or edit the proposed alt text.
 6. Complete the five privacy, layout, and human-boundary checks.
@@ -19,7 +19,7 @@ The review page works offline. It loads only the images inside the downloaded fo
 
 ## Complete desktop and physical-phone QA
 
-Serve the repository over HTTP and open `qa/index.html` once on a desktop browser and once on a physical phone. Complete all eight cabinet focus tasks and export a `larriverse-release-qa` report from each device.
+Serve the repository over HTTP and open `qa/index.html` once on a desktop browser and once on a physical phone. Complete all twenty cabinet focus tasks and export a `larriverse-release-qa` report from each device.
 
 Browser emulation is useful evidence, but it is not a physical-phone pass. The phone report must come from the physical device named in the final approval.
 

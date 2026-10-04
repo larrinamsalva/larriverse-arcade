@@ -36,6 +36,6 @@ The existing Arcade Control Center backup includes all `larriverse.*` records, i
 
 ## Testing
 
-The structural validator checks the page structure, local-only data boundary, published Pages route, eight-cabinet contract, export schema, JavaScript syntax, mobile layout, and print layout.
+The structural validator checks the page structure, local-only data boundary, published Pages route, complete-catalog contract, export schema, JavaScript syntax, mobile layout, and print layout.
 
 Chromium seeds a realistic profile and adaptive-learning record, then verifies the Passport in both desktop and mobile projects. The test confirms totals, cabinet stamps, learning accuracy, achievements, suggested mission, safe export fields, and zero browser console errors.

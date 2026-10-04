@@ -1,6 +1,6 @@
 # LarriVerse Automated Browser QA
 
-Phase 12 adds a pinned Playwright/Chromium release gate for the complete eight-cabinet arcade.
+Phase 12 adds a pinned Playwright/Chromium release gate for the complete twenty-game arcade.
 
 ## What automation now proves
 
@@ -22,7 +22,7 @@ Road Trip Quest GPS receives an extra check: geolocation permission is never gra
 
 ## Screenshot evidence
 
-Each run captures a clean viewport screenshot for the lobby and all eight cabinets in both browser projects. GitHub Actions uploads these images with the HTML Playwright report and failure traces as a temporary artifact.
+Each run captures a clean viewport screenshot for the lobby and all twenty cabinets in both browser projects. GitHub Actions uploads these images with the HTML Playwright report and failure traces as a temporary artifact.
 
 The screenshot contexts begin with empty browser storage, reduced motion enabled, and no location permission. They are QA evidence, not automatically approved marketing images. A human must still inspect them before copying selected images into `docs/screenshots/`.
 
