@@ -52,7 +52,7 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 ## Progress Passport
 
 - A first-class `/passport/` route turns existing local saves into a private progress view.
-- The Passport shows shared level progress, XP, Arcade KC, sessions, completed sessions, current learning goals, all 28 cabinet stamps, adaptive-learning trails, per-subject accuracy, and friendly achievement labels.
+- The Passport shows shared level progress, XP, Arcade KC, sessions, completed sessions, current learning goals, all 29 cabinet stamps, adaptive-learning trails, per-subject accuracy, and friendly achievement labels.
 - One gentle next mission recommends an unvisited cabinet, a practiced subject below 75% accuracy, or the least-completed cabinet.
 - The page supports keyboard focus, mobile layouts, larger text, high contrast, reduced motion, and a print-specific layout.
 - A downloadable `larriverse-progress-passport` summary contains totals and learning statistics without raw family records or location data.
@@ -61,7 +61,7 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 ## Family Learning Report
 
 - A first-class `/report/` route presents the same local progress in a calmer family-review format.
-- The report summarizes current goals, shared totals, all 28 cabinet participation records, adaptive learning paths, aggregate subject accuracy, and up to five recent cabinet timestamps.
+- The report summarizes current goals, shared totals, all 29 cabinet participation records, adaptive learning paths, aggregate subject accuracy, and up to five recent cabinet timestamps.
 - Growing strengths require at least two answers and at least 80% accuracy; gentle practice opportunities require at least two answers and below 75% accuracy.
 - Short histories are described as needing more data instead of being treated as ability conclusions.
 - Generated conversation starters invite celebration, curiosity, and optional practice without grading or punishment language.
@@ -100,12 +100,12 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 
 ## Release qualification
 
-GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all 28 cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
+GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all 29 cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
 
 
 ## Modern arcade expansion
 
-The collection now includes 28 playable games: the original eight cabinets and these twelve new practice worlds. The release gallery covers the lobby plus every game in both viewports (58 images). The formal release still requires the documented human review.
+The collection now includes 29 playable games: the original eight cabinets and these twelve new practice worlds. The release gallery covers the lobby plus every game in both viewports (60 images). The formal release still requires the documented human review.
 
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
@@ -133,3 +133,11 @@ The collection now includes 28 playable games: the original eight cabinets and t
 - **Critter Council** — Design for different needs.
 
 See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
+
+
+### Traffic Town
+
+- Adds a 7+ road-awareness world with 30 unique common U.S. traffic-sign and safe-action questions.
+- Each playthrough serves ten questions and rotates through unseen questions in the current tab before the bank cycles.
+- Expands Scam Sleuth, Kindness Quest, Fact Finder, and Reuse Rally to 12 unique scenarios each, serving six per round.
+- Keeps the experience educational rather than a licensing claim: official local DMV materials and age-appropriate supervision remain the source for real permit preparation and driving rules.
