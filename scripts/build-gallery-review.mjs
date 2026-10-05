@@ -19,6 +19,15 @@ const subjects = [
   ...release.cabinets.map(({ id, title }) => ({ id, title }))
 ];
 const altText = {
+  'bridge-buddies': 'Bridge Buddies bridge-building board with support choices, cart loads, and progress feedback.',
+  'water-works': 'Water Works pipe-network board showing the reservoir, toy filter, town, and rotatable connections.',
+  'harbor-helpers': 'Harbor Helpers island-delivery map with boat capacity, fuel, supply requests, and progress.',
+  'pantry-picnic': 'Pantry Picnic planning board with pretend foods, leftover-first choices, and balanced picnic boxes.',
+  'compass-cove': 'Compass Cove island map with landmarks, direction clues, hidden treasures, and progress.',
+  'cipher-club': 'Cipher Club code workshop with a toy alphabet, shared shift key, message controls, and progress.',
+  'trade-town': 'Trade Town shopping board with bundle quantities, prices, fees, budgets, and comparison feedback.',
+  'critter-council': 'Critter Council town-building board with neighbor needs, inclusive features, plots, and builder tokens.',
+  'traffic-town': 'Traffic Town road-sign practice showing a sign scenario, answer choices, explanation feedback, and local progress.',
   'beat-builder': 'Beat Builder illustrated game board with a mission, play controls, and local progress.',
   'lemonade-lab': 'Lemonade Lab illustrated game board with a mission, play controls, and local progress.',
   'robot-rover': 'Robot Rover illustrated game board with a mission, play controls, and local progress.',
