@@ -6,6 +6,7 @@ import {
   newsCards,
   repairs,
   sorting,
+  trafficQuestions,
 } from "../../assets/skill-worlds.js";
 
 async function round(page, id, play) {
@@ -45,8 +46,8 @@ async function round(page, id, play) {
   await expect(page.locator("#bestScore")).not.toHaveText("—");
   expect(errors).toEqual([]);
 }
-async function chooseDeck(page, deck, labels) {
-  for (let i = 0; i < deck.length; i++) {
+async function chooseDeck(page, deck, labels, roundSize = 6) {
+  for (let i = 0; i < roundSize; i++) {
     const text = await page.locator(".message-card").innerText();
     const item = deck.find((item) => text.includes(item.text || item.name));
     expect(item).toBeTruthy();
@@ -60,7 +61,7 @@ async function chooseDeck(page, deck, labels) {
     await expect(page.locator("#feedback")).toHaveClass(/good/);
     await page
       .getByRole("button", {
-        name: i === deck.length - 1 ? "See what I learned" : "Next discovery",
+        name: i === roundSize - 1 ? "See what I learned" : "Next discovery",
         exact: true,
       })
       .click();
@@ -125,6 +126,9 @@ test("Reuse Rally: sort objects with the displayed town rules", async ({
   await round(page, "reuse-rally", () =>
     chooseDeck(page, sorting, ["Reuse", "Recycle", "Compost", "Trash"]),
   );
+});
+test("Traffic Town: identify ten different signs and safe road meanings", async ({ page }) => {
+  await round(page, "traffic-town", () => chooseDeck(page, trafficQuestions, null, 10));
 });
 test("Repair Café: reject premature steps and sequence three repairs", async ({
   page,
