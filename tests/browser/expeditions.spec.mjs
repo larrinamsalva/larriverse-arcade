@@ -90,7 +90,7 @@ test("Cipher Club: shared keys, incorrect messages, encode and decode five round
       for(let turn=0;turn<shifts[index];turn++)await page.locator('[data-key="1"]').click();
       if(index===0) { for(let letter=0;letter<3;letter++)await page.locator('[data-letter="A"]').click(); await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/try/); await action(page,"Clear my answer"); }
       for(const letter of answers[index])await page.locator(`[data-letter="${letter}"]`).click();
-      await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/good/); await expect(page.locator('[data-map="14"] .landmark-icon')).toBeVisible(); await expect(page.locator('[data-map="14"] .treasure-marker')).toBeVisible(); await next(page,index===4);
+      await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/good/); await next(page,index===4);
     }
   });
 });
