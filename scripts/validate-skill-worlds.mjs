@@ -8,6 +8,7 @@ import {
   newsCards,
   repairs,
   sorting,
+  trafficQuestions,
   robotLevels,
 } from "../assets/skill-worlds.js";
 const catalog = JSON.parse(fs.readFileSync("games/catalog.json", "utf8"));
@@ -30,11 +31,12 @@ for (const world of worlds) {
   assert.ok(html.includes('type="module" src="../../assets/skill-games.js"'));
 }
 for (const [deck, count, options] of [
-  [messages, 6, 3],
-  [conversations, 5, 3],
-  [newsCards, 8, 4],
+  [messages, 12, 3],
+  [conversations, 12, 3],
+  [newsCards, 12, 4],
 ]) {
   assert.equal(deck.length, count);
+  assert.equal(new Set(deck.map((item) => item.text)).size, deck.length);
   for (const item of deck) {
     assert.ok(item.text.length > 20 && item.why.length > 20);
     assert.ok(
@@ -44,7 +46,8 @@ for (const [deck, count, options] of [
     );
   }
 }
-assert.equal(sorting.length, 10);
+assert.equal(sorting.length, 12);
+assert.equal(new Set(sorting.map((item) => item.name)).size, sorting.length);
 for (const item of sorting)
   assert.ok(
     Number.isInteger(item.bin) &&
@@ -52,6 +55,13 @@ for (const item of sorting)
       item.bin < 4 &&
       item.why.length > 20,
   );
+assert.equal(trafficQuestions.length, 30);
+assert.equal(new Set(trafficQuestions.map((item) => item.text)).size, trafficQuestions.length);
+for (const item of trafficQuestions) {
+  assert.equal(item.options.length, 3);
+  assert.ok(item.text.length > 20 && item.why.length > 20);
+  assert.ok(Number.isInteger(item.answer) && item.answer >= 0 && item.answer < item.options.length);
+}
 assert.equal(repairs.length, 3);
 for (const item of repairs) {
   assert.equal(item.steps.length, 4);
@@ -67,11 +77,12 @@ for (const level of robotLevels) {
   );
 }
 for (const file of [
+  "assets/expanded-scenarios.js",
   "assets/skill-worlds.js",
   "assets/skill-games.js",
   "tests/browser/skill-worlds.spec.mjs",
 ])
   execFileSync(process.execPath, ["--check", file]);
 console.log(
-  "Skill worlds validated: twenty unique modes, complete routes, scenario indexes, repair sequences, and rover grids.",
+  "Skill worlds validated: twenty-one unique modes, expanded non-duplicate scenario banks, Traffic Town road-sign practice, complete routes, repair sequences, and rover grids.",
 );
