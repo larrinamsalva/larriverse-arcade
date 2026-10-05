@@ -1,6 +1,6 @@
 # LarriVerse Arcade ✦
 
-A free, kid-oriented arcade with **28 playable games**, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
+A free, kid- and teen-friendly arcade with **28 playable games**, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
 
 The latest expansion adds **eight new expeditions**: bridges, water networks, island deliveries, pantry planning, compass maps, secret codes, shopping comparisons, and inclusive town building. See [the expedition guide](docs/EXPEDITIONS.md).
 
@@ -8,23 +8,23 @@ The modern expansion adds twelve adventures: **Pocket Planet, Scam Sleuth, Kindn
 
 ## Playable cabinets
 
-### Creature Catcher — Alpha
+### Creature Catcher
 
 A 60-second learning safari where players catch creatures, answer mixed questions, and build a persistent field guide.
 
-### Bubble Resonance Φ369 — Alpha
+### Bubble Resonance Φ369
 
 A precision bubble-shooter built from Larrina's original PHI·369 prototype. Players aim and bank shots, match six frequency colors, drop floating clusters, raise Tφ coherence, and build resonance through PHI-chain score multipliers.
 
 The frequency names are preserved as creative game themes. The cabinet explicitly does not present them as medical claims.
 
-### Road Trip Quest — Alpha
+### Road Trip Quest
 
 The first larger adventure cabinet. Players steer across three lanes, collect sixteen types of roadside power items, charge a boss meter, use their inventory during question battles, recruit six roaming heroes, and confront eight city bosses across math, science, reading, and trivia.
 
 The campaign preserves Larrina's original **Collect · Battle · Conquer** structure, city roster, bosses, rewards, Hero Collection, and educational question system. Campaign progress is saved separately on the device, while completed city battles award shared LarriVerse XP and fictional KC.
 
-### Brain Sweat Life Skills — Alpha
+### Brain Sweat Life Skills
 
 The first content-driven learning cabinet and reusable lesson engine. It preserves the recovered prototype's six-world, 24-lesson organization:
 
@@ -39,7 +39,7 @@ Twelve reviewed lessons are playable at launch with 60 questions, saved personal
 
 The recovered source contains 239 readable questions and one malformed media-literacy question. The malformed item is excluded and documented instead of being silently rewritten.
 
-### Brain Sweat Expanded — Alpha
+### Brain Sweat Expanded
 
 The hands-on activity hub preserves the recovered prototype's original 14-world skill map, three guides, four daily quest slots, skill tree, parent report, and beginner/intermediate/advanced organization.
 
@@ -56,7 +56,7 @@ Plumbing, voltage, caregiving, welding, roofing, HVAC, emergency skills, farming
 
 The cabinet supports source-style tool-order puzzles, marked action choices, ledger classification, three selectable guides, safe daily quests, device-local progress, reviewed-world completion bonuses, and a parent-facing source audit. Progress represents game practice only. It is not a license, job qualification, safety clearance, medical assessment, or permission to perform hazardous work.
 
-### Chill Brain Rewards — Alpha
+### Chill Brain Rewards
 
 The first non-competitive calm-and-focus cabinet. It turns the recovered rewards and onboarding mockup into a playable local experience while preserving its terminology and structure:
 
@@ -72,7 +72,7 @@ The first non-competitive calm-and-focus cabinet. It turns the recovered rewards
 
 The original mockup references Hemi-Sync. This repository does not include Hemi-Sync audio and does not claim therapeutic effects. Optional **Brain Tune** sound is a quiet, locally generated ambience, defaults off, and can be disabled at any time. Skill percentages represent game practice only—not mental-health or nervous-system measurements.
 
-### KidsCoin Family — Alpha
+### KidsCoin Family
 
 A device-local, parent-controlled family reward cabinet grounded in the recovered KidsCoin prototype. It preserves the useful family-system ideas while deliberately removing the source's simulated token-price, wallet-address, staking, interest, and purchase framing.
 
@@ -103,30 +103,16 @@ All playable cabinets connect to the shared arcade profile:
 - fictional shared arcade KC
 - 3-session milestone bonuses
 - per-game sessions, completions, high scores, and activity totals
-- cabinet-specific numeric metrics through Arcade SDK v2
+- cabinet-specific numeric metrics through Arcade SDK v3
 - device-local achievements and save data
 
 Launch any live game from the root arcade lobby.
 
-## Recovered concept vault
+## Release candidate
 
-The first recovered batch contains eight browser concepts:
+The arcade is at **1.0.0 rc.1**, with 28 playable games. Automation produces candidate evidence; it does not approve a formal release. The existing [release checklist](docs/RELEASE-CHECKLIST.md) still requires hands-on desktop play, real physical-phone QA, human visual/gameplay approval, and print review. No final approval record has been created by this polish pass.
 
-- KidsCoin Family App
-- Brain Sweat Expanded
-- Brain Sweat Life Skills
-- Bubble Resonance Φ369
-- Chill Brain Rewards & Onboarding
-- Creature Catcher
-- Road Trip Quest
-- Road Trip Quest GPS
-
-Concepts remain marked **Integration queued** until they are connected to shared profiles, rewards, navigation, and validation. This prevents broken or misleading Launch buttons.
-
-The broader recovery bundle also includes two source labs:
-
-- KidsCoin React platform (`kidscoin-platform.jsx`)
-- Chill Brain React Native / Expo source
+All eight recovered browser concepts are now connected to the shared arcade. Larger React and React Native recovery sources are historical inputs, not playable cabinets shipped in this repository.
 
 ## Architecture
 
@@ -149,7 +135,7 @@ const result = LarriVerseArcade.award('game-id', {
 });
 ```
 
-Arcade SDK v2 keeps old v1 saves compatible and adds validated, cumulative per-game metrics. The SDK stores data in the browser with `localStorage`. No account, cloud database, real currency, or blockchain is involved.
+Arcade SDK v3 keeps old v1 saves compatible and adds validated, cumulative per-game metrics. The SDK stores data in the browser with `localStorage`. No account, cloud database, real currency, or blockchain is involved.
 
 Brain Sweat Life Skills separates lessons from its quiz engine through a JSON manifest and one file per world. This lets later content reviews unlock or revise lessons without rebuilding the interface.
 
@@ -159,7 +145,11 @@ Chill Brain separates source-grounded profiles, missions, skills, badges, privac
 
 KidsCoin Family separates source-grounded family features, tasks, reviewed lessons, rewards, milestones, and finance/privacy boundaries into `family.json`. Family profiles and the family ledger use a cabinet-specific localStorage record; shared arcade progress remains in the Arcade SDK record.
 
-Larger React and React Native projects stay in source-lab folders until they receive independent build pipelines.
+The original eight cabinets keep independent engines and local saves. `assets/cabinet-shell.js` adds shared branding, player context, comfort controls, and an arcade return while preserving their replay and continue actions. `assets/arcade-accessibility.css` provides reflow and focus rules across game and progress routes.
+
+All twenty newer worlds use `assets/skill-games.js`, which implements twelve practice modes and delegates eight expedition modes to `assets/expedition-games.js`. Their definitions live in `assets/skill-worlds.js` and `assets/expedition-worlds.js`; the lobby reads `games/catalog.json`. Each game preserves its individual board and safety notes. See [MODERN-ARCADE.md](docs/MODERN-ARCADE.md), [EXPEDITIONS.md](docs/EXPEDITIONS.md), and [V1-POLISH.md](docs/V1-POLISH.md).
+
+`assets/arcade-discovery.js` computes optional Continue Playing, Recommended for You, and Try Something New links from the current catalog and aggregate local session history. It writes no records and makes no ability judgment. Search and topic filters still expose all 28 games.
 
 ## Validation
 
@@ -186,11 +176,23 @@ It checks:
 - KidsCoin Family keeps rewards fictional and device-local, loads the SDK first, hashes the local PIN, and excludes token-price, staking, blockchain, geolocation, and real-purchase code
 - lobby integration and playable-cabinet counts
 
-Pull requests run the same checks through `.github/workflows/validate.yml`.
+Pull requests run the same checks through `.github/workflows/validate.yml`. Complete browser QA uses the pinned runner in `.github/workflows/browser-qa.yml`:
+
+```bash
+npm install --no-save --no-package-lock @playwright/test@1.55.0
+npx playwright install chromium
+npm run test:browser
+npm run gallery:build
+npm run gallery:verify
+```
+
+The gallery contains the lobby plus 28 games in desktop/mobile Chromium: **58 images**. Explicit descriptions, PNG dimensions, byte counts, and SHA-256 hashes are verified before the offline human review bundle is uploaded. Missing descriptions fail the build. See [BROWSER-QA.md](docs/BROWSER-QA.md) and [GALLERY-APPROVAL.md](docs/GALLERY-APPROVAL.md).
+
+Repository description, homepage, and topic suggestions are documented in [REPOSITORY-METADATA.md](docs/REPOSITORY-METADATA.md).
 
 ## GitHub Pages
 
-The workflow in `.github/workflows/pages.yml` deploys the repository root whenever `main` changes. In repository settings, choose **Pages → Source → GitHub Actions**.
+The workflow in `.github/workflows/pages.yml` validates and builds an allowlisted static site when `main` changes. Private approval evidence, repository scripts, and workflow files are excluded from publication. In repository settings, choose **Pages → Source → GitHub Actions**.
 
 ## Project principles
 

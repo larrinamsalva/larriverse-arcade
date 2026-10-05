@@ -1,4 +1,4 @@
-const palette = ['#8b5cf6', '#ff4ecd', '#ffd43b', '#41e5ff', '#70f0a8', '#ff8e3c'];
+import { discoverGames } from './arcade-discovery.js';
 const grid = document.querySelector('#gameGrid');
 const filters = document.querySelector('#filters');
 const search = document.querySelector('#search');
@@ -11,6 +11,8 @@ let category = 'All';
 let featured = [];
 let featureIndex = 0;
 let featureTimer = null;
+let featurePaused = false;
+const systemMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>'"]/g, char => ({
@@ -48,11 +50,26 @@ function render() {
   const query = search.value.trim().toLowerCase();
   const visible = games.filter(game =>
     (category === 'All' || (game.topic || game.category) === category) &&
-    (!query || `${game.title} ${game.desc} ${game.category}`.toLowerCase().includes(query))
+    (!query || `${game.title} ${game.desc} ${game.category} ${game.topic} ${game.skill}`.toLowerCase().includes(query))
   );
   grid.innerHTML = visible.length
     ? visible.map(card).join('')
-    : '<p class="empty">No games found yet. Try another skill or clear your search.</p>';
+    : '<p class="empty">No games found yet. Try another skill or <button type="button" id="clearSearch" class="secondary">Clear search and filters</button>.</p>';
+  document.querySelector('#clearSearch')?.addEventListener('click', () => {
+    search.value = '';
+    category = 'All';
+    updateFilters();
+    render();
+    search.focus();
+  });
+}
+
+function updateFilters() {
+  filters.querySelectorAll('button').forEach(button => {
+    const selected = button.dataset.category === category;
+    button.classList.toggle('active', selected);
+    button.setAttribute('aria-pressed', String(selected));
+  });
 }
 
 function renderFilters() {
@@ -60,13 +77,27 @@ function renderFilters() {
   filters.innerHTML = categories.map(value =>
     `<button class="filter ${value === category ? 'active' : ''}" type="button" data-category="${escapeHtml(value)}" aria-pressed="${value === category}">${escapeHtml(value)}</button>`
   ).join('');
-  filters.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', () => {
-      category = button.dataset.category;
-      renderFilters();
-      render();
-    });
+  filters.addEventListener('click', event => {
+    const button = event.target.closest('[data-category]');
+    if (!button) return;
+    category = button.dataset.category;
+    updateFilters();
+    render();
   });
+}
+
+function discoveryCard(game) {
+  return `<a class="discovery-card" href="${encodeURI(game.href)}"><span class="discovery-art ${game.artSet === 'expedition' ? 'expedition' : ''}" style="${artPosition(game)}" aria-hidden="true"></span><span><b>${escapeHtml(game.title)}</b><small>${escapeHtml(game.skill)}</small><small>${escapeHtml(game.minutes || 'Your pace')}</small></span><span aria-hidden="true">→</span></a>`;
+}
+
+function renderDiscovery() {
+  const discovery = discoverGames(games, sdk?.summary?.());
+  document.querySelector('#continueGroup').hidden = !discovery.recent.length;
+  document.querySelector('#continueGames').innerHTML = discovery.recent.map(discoveryCard).join('');
+  document.querySelector('#recommendationReason').textContent = discovery.recommendationReason;
+  document.querySelector('#recommendedGames').innerHTML = discovery.recommended.map(discoveryCard).join('');
+  document.querySelector('#newGroup').hidden = !discovery.unvisited.length;
+  document.querySelector('#newGames').innerHTML = discovery.unvisited.map(discoveryCard).join('');
 }
 
 function renderProfile() {
@@ -77,6 +108,7 @@ function renderProfile() {
   document.querySelector('#profileName').value = profile.name;
   document.querySelector('#profileAvatar').value = profile.avatar;
   render();
+  renderDiscovery();
 }
 
 function showFeature() {
@@ -89,15 +121,22 @@ function showFeature() {
   document.querySelector('#featureSkill').textContent = `${game.skill || game.topic} · Ages ${game.age || '7+'}`;
   document.querySelector('#featureArt').setAttribute('style', artPosition(game));
   document.querySelector('#featureArt').classList.toggle('expedition', game.artSet === 'expedition');
-  featureIndex += 1;
 }
 
 function restartFeatureRotation() {
   clearInterval(featureTimer);
   featureTimer = null;
-  showFeature();
-  const reduced = sdk?.settings?.().reducedMotion;
-  if (!reduced && featured.length > 1) featureTimer = setInterval(showFeature, 12000);
+  const reduced = sdk?.settings?.().reducedMotion || systemMotion.matches;
+  const pause = document.querySelector('#featureRotation');
+  pause.disabled = reduced;
+  pause.setAttribute('aria-pressed', String(reduced || featurePaused));
+  pause.textContent = reduced ? 'Automatic changes off' : featurePaused ? 'Resume changes' : 'Pause changes';
+  if (!reduced && !featurePaused && featured.length > 1) featureTimer = setInterval(() => {
+    const spotlight = document.querySelector('.spotlight');
+    if (document.hidden || controlCenter.open || spotlight.matches(':hover') || spotlight.contains(document.activeElement)) return;
+    featureIndex = (featureIndex + 1) % featured.length;
+    showFeature();
+  }, 12000);
 }
 
 function setControlMessage(message, kind = 'info') {
@@ -204,6 +243,7 @@ fetch('games/catalog.json')
     renderFilters();
     render();
     renderProfile();
+    showFeature();
     restartFeatureRotation();
 
     randomButton.disabled = !playable.length;
@@ -226,9 +266,20 @@ window.addEventListener('larriverse:settings', () => {
 });
 window.addEventListener('larriverse:data-imported', renderProfile);
 window.addEventListener('larriverse:data-cleared', renderProfile);
+systemMotion.addEventListener('change', restartFeatureRotation);
+document.querySelectorAll('[data-feature-step]').forEach(button => button.addEventListener('click', () => {
+  if (!featured.length) return;
+  featureIndex = (featureIndex + Number(button.dataset.featureStep) + featured.length) % featured.length;
+  showFeature();
+  restartFeatureRotation();
+}));
+document.querySelector('#featureRotation').addEventListener('click', () => {
+  featurePaused = !featurePaused;
+  restartFeatureRotation();
+});
 
 document.addEventListener('keydown', event => {
-  if (event.key === '/' && document.activeElement?.tagName !== 'INPUT') {
+  if (event.key === '/' && !controlCenter.open && !document.activeElement?.matches('input,textarea,select,[contenteditable="true"]')) {
     event.preventDefault();
     search.focus();
   }

@@ -4,13 +4,34 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#10213c">
-  <meta name="description" content="Brain Sweat Expanded — reviewed hands-on skill worlds inside LarriVerse Arcade.">
+  <meta name="description" content="Try coding, shop skills, gardening, and everyday problem-solving challenges. Free game practice in LarriVerse Arcade. KC are fictional; progress stays in this browser.">
   <title>Brain Sweat Expanded · LarriVerse Arcade</title>
   <link rel="stylesheet" href="game.css">
   <link rel="stylesheet" href="../../assets/classic-polish.css">
 <link rel="stylesheet" href="../../assets/emoji.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+  <link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/brain-sweat-expanded/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LarriVerse Arcade">
+  <meta property="og:title" content="Brain Sweat Expanded · LarriVerse Arcade">
+  <meta property="og:description" content="Try coding, shop skills, gardening, and everyday problem-solving challenges. Free game practice in LarriVerse Arcade. KC are fictional; progress stays in this browser.">
+  <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/brain-sweat-expanded/">
+  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="800">
+  <meta property="og:image:alt" content="Eight illustrated LarriVerse expedition worlds: bridges, water, island deliveries, picnic planning, maps, codes, shopping, and an inclusive town.">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body data-classic="brain-sweat-expanded">
+  <a class="skip-link" href="#lvGameMain">Skip to game</a>
+  <header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+    <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+    <div class="lv-context"><strong>Brain Sweat Expanded</strong><small>Hands-on skill puzzles · Game practice, your pace</small></div>
+    <nav class="lv-tools" aria-label="Arcade tools"><a class="lv-button" href="../../index.html">Back to Arcade</a><button class="lv-button" type="button" data-lv-comfort>Comfort & accessibility</button></nav>
+    <span data-lv-profile>Progress stays in this browser.</span>
+  </header>
   <div class="sky" aria-hidden="true"></div>
   <header class="topbar">
     <a class="back-link" href="../../index.html">← Arcade</a>
@@ -18,7 +39,7 @@
     <button class="icon-button" id="reportButton" aria-haspopup="dialog" aria-controls="reportDialog" title="Skill tree and parent report">📊</button>
   </header>
 
-  <main>
+  <main id="lvGameMain" tabindex="-1">
     <section class="hero">
       <div class="hero-copy">
         <p class="eyebrow">Try it. Think it through. Try again.</p>
@@ -120,5 +141,6 @@
   <script src="../../assets/arcade-sdk.js"></script>
   <script src="loader.js"></script>
   <script src="game.js"></script>
+<script src="../../assets/cabinet-shell.js"></script>
 </body>
 </html>

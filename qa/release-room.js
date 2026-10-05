@@ -80,7 +80,7 @@
 
       deploymentReady = Boolean(secureProduction && releaseMatches && routes === release.cabinetCount && privateSafe);
       $('#deploymentMessage').textContent = deploymentReady
-        ? 'The live HTTPS build matches its deployment identity and all eight cabinet routes are reachable.'
+        ? `The live HTTPS build matches its deployment identity and all ${release.cabinetCount} cabinet routes are reachable.`
         : loopback && releaseMatches && routes === release.cabinetCount && privateSafe
           ? 'Local rehearsal passed, but bundle export stays blocked until this page runs from the live HTTPS deployment.'
           : 'Deployment verification is blocked. Repair the failed checks before creating a release handoff.';

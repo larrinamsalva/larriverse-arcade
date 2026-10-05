@@ -127,6 +127,7 @@
     paused = false;
     renderHud();
     moveCar();
+    syncRoadComfort();
     startLoops();
     toast(`${CITIES[state.currentCity].emoji} Next stop: ${CITIES[state.currentCity].name}`);
   }
@@ -138,7 +139,7 @@
       if (running && !paused) spawnRoadThing();
     }, 1150);
     sceneryTimer = setInterval(() => {
-      if (running && !paused) spawnScenery();
+      if (running && !paused && !window.LarriVerseArcade.settings().reducedMotion) spawnScenery();
     }, 900);
   }
 
@@ -176,6 +177,20 @@
       : `${thing.name}, move into its lane to collect`);
     $('#road').append(element);
 
+    if (window.LarriVerseArcade.settings().reducedMotion) {
+      // Same lane, item, inventory, and battle rules; no falling target is needed.
+      if ($('#road').querySelectorAll(`.stationary[data-lane="${lane}"]`).length) { element.remove(); return; }
+      element.classList.add('stationary');
+      element.setAttribute('aria-label', `${thing.name}, stationary item in lane ${lane + 1}. Move to this lane, then choose to collect.`);
+      element.addEventListener('click', () => {
+        if (!running || paused || !element.isConnected) return;
+        if (state.lane !== lane) { toast(`Move to lane ${lane + 1}, then choose this item again.`); return; }
+        element.remove();
+        special ? meetRoamer(thing) : collectItem(thing);
+      });
+      return;
+    }
+
     let checked = false;
     const collision = setInterval(() => {
       if (!element.isConnected) {
@@ -205,6 +220,13 @@
     element.style.animationDuration = `${5 + Math.random() * 4}s`;
     $('#skyline').append(element);
     element.addEventListener('animationend', () => element.remove());
+  }
+
+  function syncRoadComfort() {
+    const reduced = window.LarriVerseArcade.settings().reducedMotion;
+    $('#motionRoadNote').hidden = !reduced;
+    $('#road').querySelectorAll('.road-item').forEach(element => element.remove());
+    if (reduced) $('#skyline').replaceChildren();
   }
 
   function collectItem(item) {
@@ -523,12 +545,14 @@
       button.addEventListener('click', () => openPanel(button.dataset.panel));
     });
     window.addEventListener('keydown', event => {
+      if (document.querySelector('dialog[open]') || event.target.matches('input,textarea,select,button,a,[contenteditable="true"]')) return;
       if (['ArrowLeft','a','A'].includes(event.key)) move(-1);
       if (['ArrowRight','d','D'].includes(event.key)) move(1);
       if (event.key === ' ' && state.bossMeter >= 60) triggerBoss();
       if (event.key === 'p' || event.key === 'P') togglePause();
     });
     window.addEventListener('larriverse:profile', syncProfile);
+    window.addEventListener('larriverse:settings', syncRoadComfort);
   }
 
   async function init() {

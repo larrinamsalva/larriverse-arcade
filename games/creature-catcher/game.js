@@ -135,8 +135,9 @@
     button.className = 'creature';
     button.type = 'button';
     button.setAttribute('aria-label', `Catch ${creature.name}`);
-    button.style.left = `${8 + Math.random() * 84}%`;
-    button.style.top = `${43 + Math.random() * 36}%`;
+    // Keep the whole target inside the meadow when its text is enlarged.
+    button.style.left = `clamp(84px, ${8 + Math.random() * 84}%, calc(100% - 84px))`;
+    button.style.top = `clamp(100px, ${43 + Math.random() * 36}%, calc(100% - 100px))`;
     button.style.animationDelay = `-${Math.random()}s`;
     button.innerHTML = `<span class="ping">!</span><span class="emoji">${creature.emoji}</span><span class="tag">${creature.name}</span>`;
     button.addEventListener('click', () => encounter(creature, button));
@@ -296,6 +297,7 @@
     profileText();
     renderGuide();
     updateHud();
+    $('startButton').textContent = 'Start exploring';
     $('startButton').disabled = false;
   }
 

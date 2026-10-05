@@ -1,0 +1,21 @@
+.discovery { margin-top: 2rem; }
+.discovery-note { color: #566278; font-size: .9rem; }
+.discovery-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1rem; }
+.discovery-group { min-width: 0; padding: 1.1rem; border: 1px solid #d9d1ea; border-radius: 22px; background: #fcfaff; }
+.discovery-group[hidden] { display: none; }
+.discovery-group h3 { margin: 0 0 .5rem; font-size: 1.1rem; }
+.discovery-group > p { color: #566278; font-size: .85rem; line-height: 1.55; margin: 0 0 1rem; }
+.discovery-card { min-width: 0; min-height: 88px; display: flex; align-items: center; gap: .7rem; padding: .55rem; margin-top: .6rem; border: 1px solid #ded5ec; border-radius: 14px; background: #fff; color: #26324a; text-decoration: none; }
+.discovery-card > span:nth-child(2) { flex: 1; min-width: 0; }
+.discovery-card b { display: block; font-size: .95rem; overflow-wrap: anywhere; }
+.discovery-card small { display: block; font-size: .75rem; color: #566278; margin-top: .2rem; }
+.discovery-art { width: 68px; height: 68px; flex: 0 0 68px; border-radius: 10px; background-image: url('worlds-atlas-v2.webp'); background-size: 400% 300%; background-position: var(--art-x) var(--art-y); }
+.discovery-art.expedition { background-image: url('expedition-atlas.webp'); background-size: 400% 200%; }
+.feature-pager { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+.feature-pager button { min-height: 44px; min-width: 44px; border: 1px solid #b6a7d6; border-radius: 10px; padding: .45rem .65rem; background: #ffffffd9; color: #4b3b80; font-size: .8rem; font-weight: 800; }
+.feature-pager button:disabled { opacity: .75; cursor: default; }
+@media (max-width: 420px) {
+  .discovery-group { padding: .8rem; }
+  .feature-pager { gap: .35rem; }
+  .discovery-art { width: 52px; height: 60px; flex-basis: 52px; }
+}

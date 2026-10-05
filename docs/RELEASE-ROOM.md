@@ -20,7 +20,7 @@ An earlier Evidence Preflight implementation checked obsolete field names (`devi
 
 1. Open the Release Room from the deployed HTTPS site.
 2. Run the deployment check.
-3. Confirm the exact source commit, release digest, eight cabinet routes, and private-path exclusions.
+3. Confirm the exact source commit, release digest, 28 cabinet routes, and private-path exclusions.
 4. Complete and export one schema-v2 desktop QA report.
 5. Complete and export one schema-v2 physical-phone QA report from a touch-capable phone.
 6. Review and approve the 58-image gallery artifact.

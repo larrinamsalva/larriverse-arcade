@@ -42,6 +42,10 @@ jobs:
           LARRIVERSE_RUN_ID: ${{ github.run_id }}
         run: node scripts/build-gallery-review.mjs
 
+      - name: Verify all gallery metadata and image hashes
+        if: success()
+        run: npm run gallery:verify
+
       - name: Upload browser QA evidence
         if: always()
         uses: actions/upload-artifact@v4

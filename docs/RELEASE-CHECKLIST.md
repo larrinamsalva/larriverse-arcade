@@ -6,7 +6,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 
 ## Required automated checks
 
-- [x] Root catalog contains exactly eight unique cabinets.
+- [x] Root catalog contains exactly 28 unique cabinets.
 - [x] All 28 cabinets are marked playable.
 - [x] Every cabinet has a route back to the arcade lobby.
 - [x] Every playable cabinet loads the shared Arcade SDK before its own engine.
@@ -25,7 +25,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Learning Goals stores no free text, deadlines, streaks, grades, family records, or location data and uploads nothing.
 - [x] Progress Passport publishes current goals, all 28 cabinet stamps, adaptive-learning trails, achievements, level progress, and a suggested next mission.
 - [x] Progress Passport is read-only, requests no location, uploads no data, and excludes raw family and location records from its summary export.
-- [x] Family Learning Report publishes current goals, aggregate strengths, practice opportunities, learning paths, eight cabinet rows, recent activity, and conversation starters.
+- [x] Family Learning Report publishes current goals, aggregate strengths, practice opportunities, learning paths, all 28 cabinet rows, recent activity, and conversation starters.
 - [x] Family Learning Report requires at least two answers before describing a subject pattern, uses 80% for strengths and below 75% for practice, and explicitly rejects grading, diagnosis, ranking, and certification claims.
 - [x] Family Learning Report is read-only, stores no review notes, requests no location, uploads no data, and excludes raw family and coordinate records from its export.
 - [x] Road Trip Quest GPS defaults to Demo Mode and never saves or uploads coordinates.
@@ -38,8 +38,8 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Browser automation performs a real profile/settings/reward/backup/restore round trip.
 - [x] Browser automation changes an adaptive learning path, reloads it, and verifies local recent-question memory.
 - [x] Browser automation pins three goals, advances local counters, reloads, verifies completion, checks safe storage and export, restarts one, removes one, and confirms Passport and Report stay read-only.
-- [x] Browser automation seeds a realistic Progress Passport and verifies totals, eight stamps, accuracy, achievements, next mission, and safe export fields.
-- [x] Browser automation seeds a realistic Family Learning Report and verifies strength, practice, neutral subject, eight cabinet rows, recent activity, healthy boundaries, and safe export fields.
+- [x] Browser automation seeds a realistic Progress Passport and verifies totals, all 28 stamps, accuracy, achievements, next mission, and safe export fields.
+- [x] Browser automation seeds a realistic Family Learning Report and verifies strength, practice, neutral subject, all 28 cabinet rows, recent activity, healthy boundaries, and safe export fields.
 - [x] Browser evidence is captured without granting location permission.
 - [x] Successful Browser QA builds an offline gallery review with 58 hashed images.
 - [x] The tag workflow requires a committed final approval JSON and exact approved image hashes.
@@ -68,6 +68,26 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Creature Catcher — change the learning path, finish a round, reload, and confirm the path, recent memory, and field guide persist.
 - [ ] Road Trip Quest — change the learning path, win one city battle, reload, and confirm path and route progress persist.
 - [ ] Road Trip Quest GPS — complete one Demo Mode encounter and verify Live Movement remains opt-in.
+- [ ] Bridge Buddies — Build four bridge spans within your token budget. Test each crossing, learn from the weak spots, and help three carts get across.
+- [ ] Water Works — Rotate the blue pipes to connect the reservoir on the left to the house on the right. Pass through the toy filter in all three networks.
+- [ ] Harbor Helpers — Deliver nine crates to three islands. Your boat holds three crates and has twelve fuel tokens. Check what each island needs before sailing.
+- [ ] Pantry Picnic — Pack three pretend picnic boxes, each with one main and two fruit or vegetable portions. Use the marked leftovers first and finish the pantry.
+- [ ] Compass Cove — Find five treasures by following clues from island landmarks. North is up, east is right, south is down, and west is left on this map.
+- [ ] Cipher Club — Use the toy A–H alphabet and a shared number key to encode or decode five three-letter clubhouse messages. The alphabet wraps around after H.
+- [ ] Trade Town — Fill three shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.
+- [ ] Critter Council — Listen to four neighbors. Place a shaded park, quiet reading hut, step-free ramp, and bench near the park on six plots using twelve builder tokens.
+- [ ] Pocket Planet — Complete a full Pocket Planet round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Scam Sleuth — Complete a full Scam Sleuth round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Kindness Quest — Complete a full Kindness Quest round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Fact Finder — Complete a full Fact Finder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Repair Café — Complete a full Repair Café round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Time Trail — Complete a full Time Trail round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Garden Guardians — Complete a full Garden Guardians round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Energy Island — Complete a full Energy Island round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Reuse Rally — Complete a full Reuse Rally round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Robot Rover — Complete a full Robot Rover round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Lemonade Lab — Complete a full Lemonade Lab round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Beat Builder — Complete a full Beat Builder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 
 ## Learning Goals pass
 
@@ -173,7 +193,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 
 ## Modern arcade expansion
 
-The collection now includes 28 playable games: the original eight cabinets and these twelve new practice worlds. The release gallery covers the lobby plus every game in both viewports (58 images). The formal release still requires the documented human review.
+The collection includes 28 playable games: eight original cabinets, twelve practice worlds listed below, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (58 images). The formal release still requires the documented human review.
 
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.

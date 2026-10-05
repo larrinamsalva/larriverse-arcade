@@ -3,12 +3,26 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#6854d9">
-  <meta name="description" content="28 free games for curious kids. Build, explore, make music, and practice money choices, kindness, digital detective skills, and caring for our planet.">
+  <meta name="description" content="28 free games for curious kids and teens. Build, explore, make music, and practice money choices, kindness, digital detective skills, and caring for our planet.">
   <title>LarriVerse Arcade · Play your way to a bigger world</title>
   <link rel="stylesheet" href="assets/arcade.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%236854d9'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='43' fill='white'%3E✦%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/arcade-discovery.css">
 <link rel="stylesheet" href="assets/emoji.css">
   <link rel="stylesheet" href="assets/arcade-expedition.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="assets/arcade-accessibility.css">
+  <link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LarriVerse Arcade">
+  <meta property="og:title" content="LarriVerse Arcade · Play your way to a bigger world">
+  <meta property="og:description" content="28 free games for curious kids and teens. Build, explore, make music, and practice money choices, kindness, digital detective skills, and caring for our planet.">
+  <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/">
+  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="800">
+  <meta property="og:image:alt" content="Eight illustrated LarriVerse expedition worlds: bridges, water, island deliveries, picnic planning, maps, codes, shopping, and an inclusive town.">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
   <a class="skip-link" href="#games">Skip to games</a>
@@ -21,10 +35,19 @@
     <div class="welcome-row"><div><p class="eyebrow">Small games. Big discoveries.</p><h1>What will you explore today?</h1></div><span class="player-pill" id="profileStat"><b>🌟</b> Player One · Level 1</span></div>
     <section class="play-shelf" aria-label="Jump into an adventure">
       <article class="spotlight">
-        <div class="spotlight-copy"><span class="new-label">8 NEW EXPEDITIONS</span><h2 id="screenTitle">Bridge Buddies</h2><p id="featureDescription">Build a bridge, roll the little cart, and discover why triangles help.</p><a id="featuredPlay" class="primary" href="games/bridge-buddies/index.html">Let's play</a><span class="feature-note" id="featureSkill">Build, test & improve · Ages 8+</span></div>
+        <div class="spotlight-copy"><span class="new-label">8 NEW EXPEDITIONS</span><h2 id="screenTitle">Bridge Buddies</h2><p id="featureDescription">Build a bridge, roll the little cart, and discover why triangles help.</p><a id="featuredPlay" class="primary" href="games/bridge-buddies/index.html">Let's play</a><span class="feature-note" id="featureSkill">Build, test & improve · Ages 8+</span><div class="feature-pager" aria-label="Spotlight controls"><button type="button" data-feature-step="-1" aria-label="Previous featured adventure">←</button><button type="button" id="featureRotation" aria-pressed="false">Pause changes</button><button type="button" data-feature-step="1" aria-label="Next featured adventure">→</button></div></div>
         <div class="spotlight-art expedition" id="featureArt" aria-hidden="true" style="--art-x:0%;--art-y:0%"><span id="screenIcon" hidden>🪙</span></div>
       </article>
       <div class="side-quests"><article class="quick-quest"><div><span class="quest-icon">🎲</span><h2>Feeling curious?</h2><p>Let the arcade pick your next adventure.</p><button class="secondary" id="randomGame">Surprise me</button></div></article><a class="quick-quest passport-quest" href="passport/"><span class="quest-icon">📘</span><div><h2>Every try counts.</h2><p>Collect game stamps in your own progress passport.</p><b>Open my passport</b></div></a></div>
+    </section>
+    <section class="discovery" aria-labelledby="discoveryTitle">
+      <div class="section-head"><div><p class="eyebrow">Your next little discovery</p><h2 id="discoveryTitle">A place to begin</h2></div><a href="#games" class="secondary">Browse all 28 games</a></div>
+      <p class="discovery-note">Optional ideas from this browser only. Pick any adventure, or take a break.</p>
+      <div class="discovery-groups">
+        <section class="discovery-group" id="continueGroup" hidden aria-labelledby="continueTitle"><h3 id="continueTitle">Continue Playing</h3><p>Recent adventures. Saved trips resume where supported; short boards start a fresh round.</p><div id="continueGames"></div></section>
+        <section class="discovery-group" aria-labelledby="recommendedTitle"><h3 id="recommendedTitle">Recommended for You</h3><p id="recommendationReason">You might enjoy these different skills.</p><div id="recommendedGames"></div></section>
+        <section class="discovery-group" id="newGroup" aria-labelledby="newTitle"><h3 id="newTitle">Try Something New</h3><p>Ready for another challenge? These games have no recorded session here yet.</p><div id="newGames"></div></section>
+      </div>
     </section>
     <section class="section" id="games">
       <div class="section-head"><div><p class="eyebrow">Find your next favorite</p><h2>All the adventures <span class="count-badge" id="playableCount">28</span></h2></div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search games or skills" aria-label="Find a game"></label></div>
@@ -35,7 +58,7 @@
     <section class="family-strip" id="release"><div><span>🌱</span><h2>A little practice for a bigger world.</h2><p>Choose your own pace. Explore money, creative thinking, digital life, kindness, and our planet together.</p></div><div class="family-links"><a class="secondary" href="goals/">Learning goals</a><a class="secondary" href="report/">Family Learning Report</a><button class="secondary" type="button" data-open-control>Comfort & saves</button></div></section>
     <details class="project-notes" id="labs"><summary>About the arcade & project notes</summary><p>Created by Larrina. <b id="gameCount">28</b> playable cabinets, including the original eight recovered concepts. These games are practice spaces for curiosity, not qualifications. Some original lessons await review. Road Trip GPS starts in Demo Mode.</p><a href="docs/RELEASE-CHECKLIST.md">Project checklist</a> · <a href="docs/MODERN-ARCADE.md">New game guide & artwork</a></details>
   </main>
-  <footer><a class="brand" href="#top">✦ LarriVerse</a><span>Made for curious minds. Built with heart.</span><a href="https://github.com/larrinamsalva/larriverse-arcade">Explore the code</a></footer>
+  <footer><a class="brand" href="index.html">✦ LarriVerse</a><span>Made for curious minds. Built with heart.</span><a href="https://github.com/larrinamsalva/larriverse-arcade">Explore the code</a></footer>
   <nav class="mobile-dock" aria-label="Mobile arcade shortcuts"><a href="#games">🕹️ <span>Play</span></a><a href="today/">🌤️ <span>My day</span></a><a href="passport/">📘 <span>Passport</span></a><button type="button" data-open-control>⚙ <span>Settings</span></button></nav>
   <dialog id="controlCenter" class="control-center">
     <form method="dialog" class="control-card">
@@ -46,7 +69,7 @@
 
       <section class="control-section" aria-labelledby="comfortTitle">
         <h3 id="comfortTitle">Comfort controls</h3>
-        <label class="toggle-row"><span><b>Reduce motion</b><small>Stops decorative animation and shortens transitions.</small></span><input id="reducedMotion" type="checkbox"></label>
+        <label class="toggle-row"><span><b>Reduce motion</b><small>Stops decorative motion and spotlight changes. Your device's motion preference also applies.</small></span><input id="reducedMotion" type="checkbox"></label>
         <label class="toggle-row"><span><b>High contrast</b><small>Strengthens text, borders, and focus visibility.</small></span><input id="highContrast" type="checkbox"></label>
         <label class="toggle-row"><span><b>Larger text</b><small>Raises the base text size across the arcade.</small></span><input id="largeText" type="checkbox"></label>
       </section>
@@ -78,5 +101,5 @@
   </dialog>
 
   <script src="assets/arcade-sdk.js"></script>
-  <script src="assets/arcade.js"></script>
+  <script type="module" src="assets/arcade.js"></script>
 </body></html>

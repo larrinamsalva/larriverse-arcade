@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="report.css">
   <link rel="stylesheet" href="../assets/learning-goals.css">
 <link rel="stylesheet" href="../assets/emoji.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../assets/arcade-accessibility.css">
 </head>
 <body>
   <a class="skip-link" href="#reportMain">Skip to report</a>
@@ -23,7 +25,7 @@
       <a href="#activity">Activity</a>
       <a href="../passport/">Passport</a>
       <a href="../">Arcade</a>
-    </nav>
+    <button class="lv-button" type="button" data-lv-comfort>Comfort & accessibility</button></nav>
   </header>
 
   <main id="reportMain">
@@ -57,7 +59,7 @@
       <article><span aria-hidden="true">⚡</span><strong id="totalXp">0</strong><small>Total XP</small></article>
       <article><span aria-hidden="true">🕹️</span><strong id="totalSessions">0</strong><small>Sessions</small></article>
       <article><span aria-hidden="true">✓</span><strong id="totalCompletions">0</strong><small>Completed</small></article>
-      <article><span aria-hidden="true">📚</span><strong id="cabinetsVisited">0 / 8</strong><small>Cabinets visited</small></article>
+      <article><span aria-hidden="true">📚</span><strong id="cabinetsVisited">0 / 28</strong><small>Cabinets visited</small></article>
     </section>
 
     <section class="report-section" id="goals" aria-labelledby="goalsHeading">
@@ -132,5 +134,6 @@
   <script src="../assets/learning-goals.js"></script>
   <script src="report.js"></script>
   <script src="../assets/learning-goals-summary.js"></script>
+  <script src="../assets/cabinet-shell.js"></script>
 </body>
 </html>

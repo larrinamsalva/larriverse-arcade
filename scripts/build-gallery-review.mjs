@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { galleryMetadata } from './gallery-metadata.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const release = JSON.parse(fs.readFileSync(path.join(root, 'release.json'), 'utf8'));
@@ -18,29 +19,6 @@ const subjects = [
   { id: 'lobby', title: `${release.title} lobby` },
   ...release.cabinets.map(({ id, title }) => ({ id, title }))
 ];
-const altText = {
-  'beat-builder': 'Beat Builder illustrated game board with a mission, play controls, and local progress.',
-  'lemonade-lab': 'Lemonade Lab illustrated game board with a mission, play controls, and local progress.',
-  'robot-rover': 'Robot Rover illustrated game board with a mission, play controls, and local progress.',
-  'reuse-rally': 'Reuse Rally illustrated game board with a mission, play controls, and local progress.',
-  'energy-island': 'Energy Island illustrated game board with a mission, play controls, and local progress.',
-  'garden-guardians': 'Garden Guardians illustrated game board with a mission, play controls, and local progress.',
-  'time-trail': 'Time Trail illustrated game board with a mission, play controls, and local progress.',
-  'repair-cafe': 'Repair Café illustrated game board with a mission, play controls, and local progress.',
-  'fact-finder': 'Fact Finder illustrated game board with a mission, play controls, and local progress.',
-  'kindness-quest': 'Kindness Quest illustrated game board with a mission, play controls, and local progress.',
-  'scam-sleuth': 'Scam Sleuth illustrated game board with a mission, play controls, and local progress.',
-  'pocket-planet': 'Pocket Planet illustrated game board with a mission, play controls, and local progress.',
-  lobby: 'LarriVerse Arcade lobby showing the complete game collection and shared profile controls.',
-  'kidscoin-family': 'KidsCoin Family dashboard explaining fictional family rewards and parent-controlled local progress.',
-  'brain-sweat-expanded': 'Brain Sweat Expanded opening screen with reviewed skill worlds, progress cards, and review-first safety messaging.',
-  'brain-sweat-life-skills': 'Brain Sweat Life Skills lesson hub showing reviewed worlds, playable question totals, and queued-content protections.',
-  'bubble-resonance-phi369': 'Bubble Resonance playfield with colorful hexagonal bubbles, score controls, and the creative-theme boundary.',
-  'chill-brain-rewards': 'Chill Brain onboarding card with calm practice choices, optional sound, and gentle session controls.',
-  'creature-catcher': 'Creature Catcher opening card inviting the player to begin a short question-and-collection safari.',
-  'road-trip-quest': 'Road Trip Quest opening screen with the start button and collect, battle, and conquer campaign theme.',
-  'road-trip-quest-gps': 'Road Trip Quest GPS opening screen showing Demo Mode, optional Live Movement, and the passenger-only safety warning.'
-};
 
 function fail(message) {
   throw new Error(`Gallery review build failed: ${message}`);
@@ -68,6 +46,7 @@ for (const project of expectedProjects) {
   const projectOutput = path.join(outputRoot, 'images', project.id);
   fs.mkdirSync(projectOutput, { recursive: true });
   for (const subject of subjects) {
+    const metadata = galleryMetadata(subject, project);
     const source = path.join(sourceRoot, project.id, `${subject.id}.png`);
     if (!fs.existsSync(source)) fail(`missing ${project.id}/${subject.id}.png`);
     const buffer = fs.readFileSync(source);
@@ -79,13 +58,13 @@ for (const project of expectedProjects) {
       project: project.id,
       cssViewport: project.cssViewport,
       subjectId: subject.id,
-      title: subject.title,
+      title: metadata.title,
       path: relativePath,
       sha256: sha256(buffer),
       bytes: buffer.length,
       pixelWidth: dimensions.width,
       pixelHeight: dimensions.height,
-      defaultAlt: `${altText[subject.id]} ${project.id === 'desktop-chromium' ? 'Desktop view.' : 'Mobile view.'}`
+      defaultAlt: metadata.defaultAlt
     });
   }
 }
