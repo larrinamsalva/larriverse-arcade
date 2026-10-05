@@ -76,7 +76,7 @@ check(css.includes('.learning-grid'), 'passport styles learning trails');
 check(css.includes('.cabinet-grid'), 'passport styles cabinet stamps');
 check(css.includes('.achievement-grid'), 'passport styles achievements');
 
-check(catalog.length === 20, 'catalog contains all twenty cabinets');
+check(catalog.length === json('release.json').cabinetCount, 'catalog contains all declared cabinets');
 check(catalog.every(game => game.available), 'all declared passport cabinet stamps are playable');
 check(lobby.includes('href="passport/"'), 'lobby links to the Progress Passport');
 check(lobby.includes('Open my passport'), 'lobby promotes the Progress Passport');

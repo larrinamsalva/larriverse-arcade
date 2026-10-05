@@ -30,13 +30,13 @@ function gameProgress(game) {
 
 function artPosition(game) {
   const art = Number(game.art || 0);
-  return `--art-x:${art % 4 * 100 / 3}%;--art-y:${Math.floor(art / 4) * 50}%`;
+  return `--art-x:${art % 4 * 100 / 3}%;--art-y:${Math.floor(art / 4) * (game.artSet === "expedition" ? 100 : 50)}%`;
 }
 function card(game) {
   const tag = game.isNew ? '<span class="cover-tag">NEW WORLD</span>' : '';
   const title = escapeHtml(game.title);
   return `<article class="game-card">
-    <a class="game-cover" style="${artPosition(game)}" href="${encodeURI(game.href)}" aria-label="Play ${title}">${tag}</a>
+    <a class="game-cover ${game.artSet === "expedition" ? "expedition" : ""}" style="${artPosition(game)}" href="${encodeURI(game.href)}" aria-label="Play ${title}">${tag}</a>
     <div class="game-body"><div class="game-badges"><span>${escapeHtml(game.skill || game.topic || game.category)}</span><span>${escapeHtml(game.age || '7+')}</span></div>
     <h3>${title}</h3><p>${escapeHtml(game.desc)}</p>
     <small class="progress-line">${escapeHtml(gameProgress(game))}</small>
@@ -88,6 +88,7 @@ function showFeature() {
   document.querySelector('#featuredPlay').href = game.href;
   document.querySelector('#featureSkill').textContent = `${game.skill || game.topic} · Ages ${game.age || '7+'}`;
   document.querySelector('#featureArt').setAttribute('style', artPosition(game));
+  document.querySelector('#featureArt').classList.toggle('expedition', game.artSet === 'expedition');
   featureIndex += 1;
 }
 

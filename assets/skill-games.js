@@ -7,6 +7,8 @@ import {
   sorting,
   robotLevels,
 } from "./skill-worlds.js";
+import { createExpedition } from "./expedition-games.js";
+import { mountScene, iconSvg } from "./arcade-scenes.js";
 const world = worlds.find((item) => item.id === document.body.dataset.world);
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
@@ -46,6 +48,7 @@ $("skillLabel").textContent = world.skill;
 $("worldDescription").textContent = world.desc;
 $("worldMeta").textContent = `Ages ${world.age} · about ${world.minutes}`;
 $("missionIcon").textContent = world.icon;
+if (world.mode === "bridge") $("missionIcon").innerHTML = iconSvg("wood");
 $("missionTitle").textContent = world.skill;
 $("missionText").textContent = world.mission;
 $("takeaway").textContent = world.take;
@@ -239,6 +242,8 @@ function initialize() {
       state.bpm = 100;
       renderMusic();
       break;
+    default:
+      expedition?.start();
   }
 }
 
@@ -981,5 +986,9 @@ document.addEventListener("keydown", (event) => {
     moveRoute(state.player + delta);
   }
 });
+const expedition = world.artSet === "expedition" ? createExpedition(world, {
+  board, actions, esc, chip, stage, bind, button, tone, say, finish, progress, score: updateScore,
+}) : null;
+mountScene(world);
 syncComfort();
 initialize();

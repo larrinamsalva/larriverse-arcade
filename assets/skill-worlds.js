@@ -1,4 +1,6 @@
+import { expeditions } from "./expedition-worlds.js";
 export const worlds = [
+  ...expeditions,
   {
     id: "pocket-planet",
     title: "Pocket Planet",

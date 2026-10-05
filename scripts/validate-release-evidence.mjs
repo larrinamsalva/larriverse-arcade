@@ -120,7 +120,7 @@ assert(release.galleryReview?.approvedImagesRoot === 'docs/screenshots', 'approv
 assert(release.evidenceContract?.script === 'qa/evidence-contract.js', 'shared evidence contract metadata missing');
 assert(release.evidenceBundle?.schema === 'larriverse-evidence-bundle', 'evidence bundle metadata missing');
 assert(release.evidenceBundle?.createsReleaseApproval === false, 'bundle must not approve release');
-assert(docs.includes('physical phone') && docs.includes('42 exact approved images'), 'approval documentation must preserve human gate');
+assert(docs.includes('physical phone') && docs.includes(`${release.galleryReview.expectedImages} exact approved images`), 'approval documentation must preserve human gate');
 assert(docs.includes('uploads nothing'), 'approval documentation must state privacy boundary');
 assert(gallery.includes('candidate evidence') && gallery.includes('human approval'), 'gallery document must describe candidate evidence');
 assert(checklist.includes('offline gallery review') && checklist.includes('final approval JSON'), 'release checklist must include approval workflow');

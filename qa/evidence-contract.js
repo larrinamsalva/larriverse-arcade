@@ -98,7 +98,7 @@
     }
     const requiredChecks = release.deviceQa?.requiredDeviceChecks || REQUIRED_DEVICE_CHECKS;
     assert(requiredChecks.every((key) => value.deviceChecks?.[key] === true), 'six device-wide checks are incomplete');
-    assert(Array.isArray(value.results) && value.results.length === release.cabinetCount, 'QA report must contain eight cabinet results');
+    assert(Array.isArray(value.results) && value.results.length === release.cabinetCount, 'QA report must contain every declared cabinet result');
 
     const expected = new Set(cabinetIds(release));
     const seen = new Set();
