@@ -137,6 +137,7 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 
 ### Traffic Town
 
+- **Traffic Town** — Read traffic signs & choose safe actions through ten-question rounds drawn from a 30-question unique bank.
 - Adds a 7+ road-awareness world with 30 unique common U.S. traffic-sign and safe-action questions.
 - Each playthrough serves ten questions and rotates through unseen questions in the current tab before the bank cycles.
 - Expands Scam Sleuth, Kindness Quest, Fact Finder, and Reuse Rally to 12 unique scenarios each, serving six per round.
