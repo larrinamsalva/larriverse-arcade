@@ -13,7 +13,7 @@ Automated Chromium now creates **candidate evidence** for the lobby and every ca
 | Road Trip Quest | `games/road-trip-quest/index.html` | generated automatically | pending human approval |
 | Road Trip Quest GPS | `games/road-trip-quest-gps/index.html` | generated automatically | pending human approval |
 
-The browser workflow also captures the arcade lobby in both viewports, producing 58 review images in total. Download the `larriverse-gallery-review-<run>` artifact, unzip it, and open `index.html` to approve or reject each image and review its proposed alt text.
+The browser workflow also captures the arcade lobby in both viewports, producing 60 review images in total. Download the `larriverse-gallery-review-<run>` artifact, unzip it, and open `index.html` to approve or reject each image and review its proposed alt text.
 
 ## Approval rules
 
@@ -26,8 +26,9 @@ See [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md) for the complete evidence and r
 
 ## Modern arcade expansion
 
-The collection now includes 28 playable games: the original eight cabinets and these twelve new practice worlds. The release gallery covers the lobby plus every game in both viewports (58 images). The formal release still requires the documented human review.
+The collection now includes 29 playable games: the original eight cabinets and these twelve new practice worlds. The release gallery covers the lobby plus every game in both viewports (60 images). The formal release still requires the documented human review.
 
+- **Traffic Town** — Read traffic signs & choose safe actions. Complete a ten-question round, replay for a fresh set, and check the age-appropriate road-awareness boundary.
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Kindness Quest** — Listening & boundaries. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.

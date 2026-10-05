@@ -1,6 +1,24 @@
 import { expeditions } from "./expedition-worlds.js";
+import { messageExtras, conversationExtras, newsExtras, sortingExtras, trafficQuestions } from "./expanded-scenarios.js";
+export { trafficQuestions };
 export const worlds = [
   ...expeditions,
+  {
+    id: "traffic-town",
+    title: "Traffic Town",
+    icon: "🚦",
+    category: "Road smarts",
+    topic: "Everyday life",
+    age: "7+",
+    minutes: "5 min",
+    art: 5,
+    artSet: "traffic",
+    skill: "Read traffic signs & choose safe actions",
+    desc: "Cruise through a friendly practice town and learn what common road signs are telling you.",
+    mission: "Practice ten different traffic-sign challenges each round. Name the sign, notice its shape or color, and choose the safest meaning or action.",
+    take: "Traffic Town teaches common U.S. sign patterns for early road awareness. Real driving requires the official rules where you live, adult supervision, and age-appropriate licensing.",
+    mode: "traffic",
+  },
   {
     id: "pocket-planet",
     title: "Pocket Planet",
@@ -29,7 +47,7 @@ export const worlds = [
     skill: "Spotting online tricks",
     desc: "Investigate sneaky messages and protect your digital clubhouse.",
     mission:
-      "Read six clubhouse messages. Choose whether to open, check another way, or block and tell a trusted adult.",
+      "Try six different clubhouse messages from a larger bank. Choose whether to open, check another way, or block and tell a trusted adult.",
     take: "Slow down when a message asks for secrets, money, or a rushed decision. Check through a route you already trust.",
     mode: "messages",
   },
@@ -45,7 +63,7 @@ export const worlds = [
     skill: "Listening & boundaries",
     desc: "Help the treehouse crew listen, work together, and set kind boundaries.",
     mission:
-      "The treehouse crew needs your help. Try five small choices that make room for everyone, including you.",
+      "The treehouse crew needs your help. Try six different choices from a larger bank that make room for everyone, including you.",
     take: "You can care about someone and still say no. Ask, listen, and make a plan together.",
     mode: "conversation",
   },
@@ -61,7 +79,7 @@ export const worlds = [
     skill: "Checking claims & sources",
     desc: "Run a tiny news desk. Sort evidence, opinions, ads, and unchecked claims.",
     mission:
-      "Before a story reaches your news desk, sort each card into evidence, opinion, advertisement, or needs checking.",
+      "Try six different news-desk cards from a larger bank. Sort each into evidence, opinion, advertisement, or needs checking.",
     take: "A popular claim is not automatically a fact. Look for a source, context, and something you can check.",
     mode: "news",
   },
@@ -141,7 +159,7 @@ export const worlds = [
     skill: "Reuse & thoughtful sorting",
     desc: "Clean up Toy Town. Reuse what you can and sort the rest.",
     mission:
-      "Sort ten objects using Toy Town rules: reuse, recycling, compost, or trash. Real local rules can differ.",
+      "Sort six different objects each round from a larger bank: reuse, recycling, compost, or trash. Real local rules can differ.",
     take: "Using something again can avoid waste. Check your local recycling and compost rules with an adult.",
     mode: "sorting",
   },
@@ -238,6 +256,7 @@ export const messages = [
     answer: 0,
     why: "You checked an account through your own trusted route. You can read the ordinary reminder.",
   },
+  ...messageExtras,
 ];
 export const conversations = [
   {
@@ -300,6 +319,7 @@ export const conversations = [
     answer: 1,
     why: "You do not have to handle repeated hurtful behavior alone. Support the person and get help.",
   },
+  ...conversationExtras,
 ];
 export const newsCards = [
   {
@@ -350,6 +370,7 @@ export const newsCards = [
     answer: 2,
     why: "Payment or gifts can make this sponsored content. Look for the sponsorship disclosure.",
   },
+  ...newsExtras,
 ];
 export const repairs = [
   {
@@ -447,6 +468,7 @@ export const sorting = [
     bin: 1,
     why: "Toy Town accepts clean paper in recycling. Local rules can differ.",
   },
+  ...sortingExtras,
 ];
 export const robotLevels = [
   {

@@ -5,6 +5,7 @@ import {
   newsCards,
   repairs,
   sorting,
+  trafficQuestions,
   robotLevels,
 } from "./skill-worlds.js";
 import { createExpedition } from "./expedition-games.js";
@@ -24,6 +25,7 @@ const esc = (value) =>
         char
       ],
   );
+const challengeKey = (item) => item.id || item.text || item.name || item.title;
 const shuffle = (values) => {
   const list = [...values];
   for (let i = list.length - 1; i > 0; i--) {
@@ -32,6 +34,25 @@ const shuffle = (values) => {
   }
   return list;
 };
+function challengeRound(pool, count) {
+  const target = Math.min(count, pool.length);
+  const storageKey = "larriverse.challengeRotation." + world.id + ".v1";
+  let seen = [];
+  try {
+    const stored = JSON.parse(sessionStorage.getItem(storageKey) || "[]");
+    if (Array.isArray(stored)) seen = stored.filter((value) => typeof value === "string");
+  } catch {}
+  let unseen = pool.filter((item) => !seen.includes(challengeKey(item)));
+  if (unseen.length < target) {
+    seen = [];
+    unseen = [...pool];
+  }
+  const picked = shuffle(unseen).slice(0, target);
+  try {
+    sessionStorage.setItem(storageKey, JSON.stringify([...seen, ...picked.map(challengeKey)]));
+  } catch {}
+  return picked;
+}
 const chip = (label, value) =>
   `<span class="stat-chip">${esc(label)}<b>${esc(value)}</b></span>`;
 let state = {};
@@ -176,15 +197,15 @@ function initialize() {
       renderBudget();
       break;
     case "messages":
-      state.deck = shuffle(messages);
+      state.deck = challengeRound(messages, 6);
       renderCards("messages");
       break;
     case "conversation":
-      state.deck = [...conversations];
+      state.deck = challengeRound(conversations, 6);
       renderCards("conversation");
       break;
     case "news":
-      state.deck = shuffle(newsCards);
+      state.deck = challengeRound(newsCards, 6);
       renderCards("news");
       break;
     case "repair":
@@ -219,8 +240,12 @@ function initialize() {
       renderEnergy();
       break;
     case "sorting":
-      state.deck = shuffle(sorting);
+      state.deck = challengeRound(sorting, 6);
       renderCards("sorting");
+      break;
+    case "traffic":
+      state.deck = challengeRound(trafficQuestions, 10);
+      renderCards("traffic");
       break;
     case "robot":
       state.level = 0;
@@ -320,12 +345,12 @@ function renderCards(mode) {
     item = deck[state.step];
   state.answered = false;
   stage(
-    `${mode === "sorting" ? "Toy Town cleanup" : mode === "news" ? "Tiny news desk" : mode === "conversation" ? "Treehouse crew" : "Clubhouse inbox"} · ${state.step + 1}/${deck.length}`,
+    `${mode === "sorting" ? "Toy Town cleanup" : mode === "news" ? "Tiny news desk" : mode === "conversation" ? "Treehouse crew" : mode === "traffic" ? "Traffic Town road school" : "Clubhouse inbox"} · ${state.step + 1}/${deck.length}`,
   );
   const labels =
     mode === "messages"
       ? ["Read it", "Check another way", "Block & tell an adult"]
-      : mode === "conversation"
+      : mode === "conversation" || mode === "traffic"
         ? item.options
         : mode === "news"
           ? ["Evidence", "Opinion", "Advertisement", "Needs checking"]
@@ -333,7 +358,7 @@ function renderCards(mode) {
   const title =
     mode === "messages"
       ? item.from
-      : mode === "conversation"
+      : mode === "conversation" || mode === "traffic"
         ? item.title
         : mode === "sorting"
           ? item.name
@@ -389,6 +414,8 @@ function renderCards(mode) {
         ? "Listen first. Be clear about your boundary. Ask for help when someone keeps hurting others."
         : mode === "news"
           ? "Evidence is something you can check. An opinion is a preference. An ad tries to sell. Missing sources need a closer look."
+          : mode === "traffic"
+            ? "Use the sign shape, color, symbol, and words together. Ask what the sign wants road users to notice or do."
           : "Try reuse first for things that still work. For this town: clean paper/cardboard/metal recycle; fruit scraps compost; ceramics/tissues go in trash.";
 }
 

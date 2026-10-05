@@ -176,6 +176,28 @@
     "integration": "arcade-sdk-v3"
   },
   {
+    "id": "traffic-town",
+    "title": "Traffic Town",
+    "icon": "🚦",
+    "category": "Road smarts",
+    "topic": "Everyday life",
+    "age": "7+",
+    "minutes": "5 min",
+    "art": 5,
+    "artSet": "traffic",
+    "skill": "Read traffic signs & choose safe actions",
+    "desc": "Cruise through a friendly practice town and learn what common road signs are telling you.",
+    "mission": "Practice ten different traffic-sign challenges each round. Name the sign, notice its shape or color, and choose the safest meaning or action.",
+    "take": "Traffic Town teaches common U.S. sign patterns for early road awareness. Real driving requires the official rules where you live, adult supervision, and age-appropriate licensing.",
+    "available": true,
+    "featured": true,
+    "isNew": true,
+    "status": "Playable",
+    "href": "games/traffic-town/index.html",
+    "source": "Original LarriVerse road-awareness world, 2026",
+    "integration": "arcade-sdk-v3"
+  },
+  {
     "id": "pocket-planet",
     "title": "Pocket Planet",
     "icon": "🪙",
