@@ -30,7 +30,7 @@ const playable = catalog.filter(game => game.available);
 
 check(pkg.version === '1.0.0', 'package declares LarriVerse Arcade 1.0.0');
 check(pkg.scripts?.validate?.includes('validate-arcade-polish.mjs'), 'main validation command includes arcade polish audit');
-check(Array.isArray(catalog) && catalog.length === 20, 'catalog contains eight originals and twelve new worlds');
+check(Array.isArray(catalog) && catalog.length === JSON.parse(await read('release.json')).cabinetCount, 'catalog contains all declared playable games');
 check(playable.length === catalog.length, 'every declared game is playable');
 check(new Set(catalog.map(game => game.id)).size === catalog.length, 'all cabinet ids are unique');
 check(catalog.every(game => game.featured === true), 'all playable cabinets participate in the featured rotation');

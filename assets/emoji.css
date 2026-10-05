@@ -4,6 +4,7 @@
   font-weight: 100 900;
   font-display: swap;
   src: url("fonts/arcade-emoji.woff2") format("woff2");
+  unicode-range: U+200D, U+20E3, U+2190-2BFF, U+FE0F, U+1F000-1FAFF;
 }
 body,
 button,
@@ -11,6 +12,6 @@ input,
 select,
 textarea {
   font-family:
-    ui-rounded, "Avenir Next", "Trebuchet MS", system-ui, "LarriVerse Emoji",
+    "LarriVerse Emoji", ui-rounded, "Avenir Next", "Trebuchet MS", system-ui,
     sans-serif;
 }

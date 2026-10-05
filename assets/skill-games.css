@@ -129,7 +129,7 @@ select:focus-visible,
   min-width: 180px;
   align-self: stretch;
   min-height: 166px;
-  background-image: url("worlds-atlas.webp");
+  background-image: url("worlds-atlas-v2.webp");
   background-size: 400% 300%;
   background-position: var(--art-x) var(--art-y);
 }

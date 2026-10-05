@@ -10,7 +10,7 @@ The Family Learning Report is a private, printable summary at `/report/`. It hel
 - selected adaptive-learning paths and recent-question counts
 - growing strengths when a subject has at least two answers and at least 80% accuracy
 - gentle practice opportunities when a subject has at least two answers and below 75% accuracy
-- all twenty cabinet participation records and up to five recent cabinet timestamps
+- all 28 cabinet participation records and up to five recent cabinet timestamps
 - optional conversation starters based on the local snapshot
 
 A subject with too little history is described as needing more data. The report does not turn a single answer or a short session into a conclusion.

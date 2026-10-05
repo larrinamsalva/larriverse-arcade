@@ -5,7 +5,7 @@
   "tag": "v1.0.0",
   "title": "LarriVerse Arcade 1.0",
   "releaseState": "candidate",
-  "cabinetCount": 20,
+  "cabinetCount": 28,
   "humanChecksRequired": true,
   "qaRoute": "qa/index.html",
   "releaseNotes": "docs/RELEASE-NOTES-1.0.0.md",
@@ -35,7 +35,7 @@
   },
   "galleryReview": {
     "schema": "larriverse-gallery-review",
-    "expectedImages": 42,
+    "expectedImages": 58,
     "projects": [
       "desktop-chromium",
       "mobile-chromium"
@@ -144,6 +144,54 @@
   },
   "cabinets": [
     {
+      "id": "bridge-buddies",
+      "title": "Bridge Buddies",
+      "manualFocus": "Build four bridge spans within your token budget. Test each crossing, learn from the weak spots, and help three carts get across.",
+      "route": "games/bridge-buddies/index.html"
+    },
+    {
+      "id": "water-works",
+      "title": "Water Works",
+      "manualFocus": "Rotate the blue pipes to connect the reservoir on the left to the house on the right. Pass through the toy filter in all three networks.",
+      "route": "games/water-works/index.html"
+    },
+    {
+      "id": "harbor-helpers",
+      "title": "Harbor Helpers",
+      "manualFocus": "Deliver nine crates to three islands. Your boat holds three crates and has twelve fuel tokens. Check what each island needs before sailing.",
+      "route": "games/harbor-helpers/index.html"
+    },
+    {
+      "id": "pantry-picnic",
+      "title": "Pantry Picnic",
+      "manualFocus": "Pack three pretend picnic boxes, each with one main and two fruit or vegetable portions. Use the marked leftovers first and finish the pantry.",
+      "route": "games/pantry-picnic/index.html"
+    },
+    {
+      "id": "compass-cove",
+      "title": "Compass Cove",
+      "manualFocus": "Find five treasures by following clues from island landmarks. North is up, east is right, south is down, and west is left on this map.",
+      "route": "games/compass-cove/index.html"
+    },
+    {
+      "id": "cipher-club",
+      "title": "Cipher Club",
+      "manualFocus": "Use the toy A–H alphabet and a shared number key to encode or decode five three-letter clubhouse messages. The alphabet wraps around after H.",
+      "route": "games/cipher-club/index.html"
+    },
+    {
+      "id": "trade-town",
+      "title": "Trade Town",
+      "manualFocus": "Fill three shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.",
+      "route": "games/trade-town/index.html"
+    },
+    {
+      "id": "critter-council",
+      "title": "Critter Council",
+      "manualFocus": "Listen to four neighbors. Place a shaded park, quiet reading hut, step-free ramp, and bench near the park on six plots using twelve builder tokens.",
+      "route": "games/critter-council/index.html"
+    },
+    {
       "id": "pocket-planet",
       "title": "Pocket Planet",
       "route": "games/pocket-planet/index.html",
@@ -169,9 +217,9 @@
     },
     {
       "id": "repair-cafe",
-      "title": "Repair Caf\u00e9",
+      "title": "Repair Café",
       "route": "games/repair-cafe/index.html",
-      "manualFocus": "Complete a full Repair Caf\u00e9 round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+      "manualFocus": "Complete a full Repair Café round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
     },
     {
       "id": "time-trail",
@@ -235,7 +283,7 @@
     },
     {
       "id": "bubble-resonance-phi369",
-      "title": "Bubble Resonance \u03a6369",
+      "title": "Bubble Resonance Φ369",
       "route": "games/bubble-resonance-phi369/index.html",
       "manualFocus": "Finish a run with sound disabled, verify controls at desktop and mobile widths, and confirm the creative-theme medical boundary remains visible."
     },

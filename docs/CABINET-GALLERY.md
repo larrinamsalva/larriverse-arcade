@@ -13,7 +13,7 @@ Automated Chromium now creates **candidate evidence** for the lobby and every ca
 | Road Trip Quest | `games/road-trip-quest/index.html` | generated automatically | pending human approval |
 | Road Trip Quest GPS | `games/road-trip-quest-gps/index.html` | generated automatically | pending human approval |
 
-The browser workflow also captures the arcade lobby in both viewports, producing 42 review images in total. Download the `larriverse-gallery-review-<run>` artifact, unzip it, and open `index.html` to approve or reject each image and review its proposed alt text.
+The browser workflow also captures the arcade lobby in both viewports, producing 58 review images in total. Download the `larriverse-gallery-review-<run>` artifact, unzip it, and open `index.html` to approve or reject each image and review its proposed alt text.
 
 ## Approval rules
 
@@ -26,7 +26,7 @@ See [`GALLERY-APPROVAL.md`](GALLERY-APPROVAL.md) for the complete evidence and r
 
 ## Modern arcade expansion
 
-The collection now includes 20 playable games: the original eight cabinets and these twelve new practice worlds. The release gallery covers the lobby plus every game in both viewports (42 images). The formal release still requires the documented human review.
+The collection now includes 28 playable games: the original eight cabinets and these twelve new practice worlds. The release gallery covers the lobby plus every game in both viewports (58 images). The formal release still requires the documented human review.
 
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
@@ -40,3 +40,17 @@ The collection now includes 20 playable games: the original eight cabinets and t
 - **Robot Rover** — Sequencing & debugging. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Lemonade Lab** — Costs, demand & small business. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Beat Builder** — Rhythm, patterns & creativity. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
+
+
+### Eight new expeditions
+
+- **Bridge Buddies** — Test, improve, try again.
+- **Water Works** — See how a system connects.
+- **Harbor Helpers** — Plan deliveries together.
+- **Pantry Picnic** — Use what you already have.
+- **Compass Cove** — Read landmarks and directions.
+- **Cipher Club** — Make meaning with a shared key.
+- **Trade Town** — Compare the whole deal.
+- **Critter Council** — Design for different needs.
+
+See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.

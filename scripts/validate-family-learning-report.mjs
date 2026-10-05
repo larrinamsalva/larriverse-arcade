@@ -103,7 +103,7 @@ check(css.includes('body.reduce-motion'), 'report responds to shared reduced mot
 check(css.includes('.subject-grid'), 'report styles subject summaries');
 check(css.includes('.cabinet-report'), 'report styles cabinet participation');
 
-check(catalog.length === 20, 'catalog contains all twenty cabinets');
+check(catalog.length === json('release.json').cabinetCount, 'catalog contains all declared cabinets');
 check(catalog.every(game => game.available), 'all declared report cabinets are playable');
 check(lobby.includes('href="report/"'), 'lobby links to the Family Learning Report');
 check(lobby.includes('Family Learning Report'), 'lobby names the Family Learning Report');

@@ -12,15 +12,15 @@ import {
 } from "../assets/skill-worlds.js";
 const catalog = JSON.parse(fs.readFileSync("games/catalog.json", "utf8"));
 const release = JSON.parse(fs.readFileSync("release.json", "utf8"));
-assert.equal(worlds.length, 12);
-assert.equal(new Set(worlds.map((w) => w.id)).size, 12);
-assert.equal(new Set(worlds.map((w) => w.mode)).size, 12);
-assert.equal(new Set(worlds.map((w) => w.art)).size, 12);
+assert.equal(worlds.length, catalog.filter(game => game.integration === "arcade-sdk-v3").length);
+assert.equal(new Set(worlds.map((w) => w.id)).size, worlds.length);
+assert.equal(new Set(worlds.map((w) => w.mode)).size, worlds.length);
+assert.equal(new Set(worlds.map((w) => `${w.artSet || "original"}:${w.art}`)).size, worlds.length);
 for (const world of worlds) {
   assert.match(world.id, /^[a-z]+(?:-[a-z]+)*$/);
   assert.ok(world.mission.length > 40);
   assert.ok(world.take.length > 40);
-  assert.ok(Number.isInteger(world.art) && world.art >= 0 && world.art < 12);
+  assert.ok(Number.isInteger(world.art) && world.art >= 0 && world.art < (world.artSet === "expedition" ? 8 : 12));
   const match = catalog.find((game) => game.id === world.id);
   assert.equal(match?.title, world.title);
   assert.equal(match?.available, true);
@@ -73,5 +73,5 @@ for (const file of [
 ])
   execFileSync(process.execPath, ["--check", file]);
 console.log(
-  "Skill worlds validated: twelve unique modes, complete routes, scenario indexes, repair sequences, and rover grids.",
+  "Skill worlds validated: twenty unique modes, complete routes, scenario indexes, repair sequences, and rover grids.",
 );

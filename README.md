@@ -1,6 +1,8 @@
 # LarriVerse Arcade ✦
 
-A free, kid-oriented arcade with **20 playable games**, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
+A free, kid-oriented arcade with **28 playable games**, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
+
+The latest expansion adds **eight new expeditions**: bridges, water networks, island deliveries, pantry planning, compass maps, secret codes, shopping comparisons, and inclusive town building. See [the expedition guide](docs/EXPEDITIONS.md).
 
 The modern expansion adds twelve adventures: **Pocket Planet, Scam Sleuth, Kindness Quest, Fact Finder, Repair Café, Time Trail, Garden Guardians, Energy Island, Reuse Rally, Robot Rover, Lemonade Lab, and Beat Builder**. These cover money choices, privacy, media literacy, listening and boundaries, repair and reuse, planning, resource care, coding, small business, and music. See [the full game guide](docs/MODERN-ARCADE.md) for mechanics, architecture, and artwork provenance.
 
