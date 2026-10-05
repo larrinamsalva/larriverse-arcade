@@ -112,7 +112,7 @@ export function createExpedition(world, a) {
     a.stage(`Treasure ${s.level + 1} of 5`); a.progress(s.found.length, 5); a.score(s.found.length * 20);
     a.board.innerHTML = `<div class="map-clue"><span class="compass-rose" aria-hidden="true">N ↑<br>W ← ✦ → E<br>S ↓</span><p>Start at the <b>${landmark.name}</b>. Go <b>${moves}</b>. Tap the treasure tile.</p></div><div class="compass-grid">${Array.from({length:36}, (_,index) => {
       const place = landmarks.find(item => item.id === index), found = s.found.includes(index);
-      return `<button type="button" class="map-tile ${place ? "landmark" : ""} ${found ? "found" : ""}" data-map="${index}" data-focus="map-${index}" ${s.passed ? "disabled" : ""} aria-label="Row ${Math.floor(index / 6) + 1}, column ${index % 6 + 1}${place ? `, ${place.name}` : ""}${found ? ", treasure found" : ""}">${found ? iconSvg("coin") : place ? iconSvg(place.icon) : '<span class="map-dot" aria-hidden="true"></span>'}<small>${index + 1}</small></button>`;
+      return `<button type="button" class="map-tile ${place ? "landmark" : ""} ${found ? "found" : ""}" data-map="${index}" data-focus="map-${index}" ${s.passed ? "disabled" : ""} aria-label="Row ${Math.floor(index / 6) + 1}, column ${index % 6 + 1}${place ? `, ${place.name}` : ""}${found ? ", treasure found" : ""}">${place ? iconSvg(place.icon, "object-icon landmark-icon") : found ? iconSvg("coin") : '<span class="map-dot" aria-hidden="true"></span>'}${found && place ? iconSvg("coin", "treasure-marker") : ""}<small>${index + 1}</small></button>`;
     }).join("")}</div><div class="map-legend">${landmarks.map(item => `<span>${iconSvg(item.icon)} ${item.name}</span>`).join("")}</div>`;
     a.bind("[data-map]", node => {
       if (s.passed) return;
