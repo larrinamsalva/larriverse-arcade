@@ -23,39 +23,46 @@ function watchErrors(page) {
 }
 
 test.describe('LarriVerse adaptive learning paths', () => {
-  test('expansion packs publish 120 shared and 60 KidsCoin questions', async ({ request }) => {
-    const [baseResponse, packResponse, familyResponse, familyPackResponse] = await Promise.all([
+  test('expansion packs publish 120 shared and 120 KidsCoin questions', async ({ request }) => {
+    const [baseResponse, packResponse, familyResponse, familyPack2Response, familyPack3Response] = await Promise.all([
       request.get('/games/learning-question-bank.json'),
       request.get('/games/learning-question-pack-2.json'),
       request.get('/games/kidscoin-family/family.json'),
-      request.get('/games/kidscoin-family/family-question-pack-2.json')
+      request.get('/games/kidscoin-family/family-question-pack-2.json'),
+      request.get('/games/kidscoin-family/family-question-pack-3.json')
     ]);
-    for (const response of [baseResponse, packResponse, familyResponse, familyPackResponse]) expect(response.ok()).toBeTruthy();
+    for (const response of [baseResponse, packResponse, familyResponse, familyPack2Response, familyPack3Response]) expect(response.ok()).toBeTruthy();
 
-    const [base, pack, family, familyPack] = await Promise.all([
-      baseResponse.json(), packResponse.json(), familyResponse.json(), familyPackResponse.json()
+    const [base, pack, family, familyPack2, familyPack3] = await Promise.all([
+      baseResponse.json(),
+      packResponse.json(),
+      familyResponse.json(),
+      familyPack2Response.json(),
+      familyPack3Response.json()
     ]);
     const sharedTotal = Object.values(base.subjects).flat().length + Object.values(pack.subjects).flat().length;
     const familyTotal = family.lessons.reduce((sum, lesson) => sum + lesson.questions.length, 0)
-      + Object.values(familyPack.questionsByLesson).flat().length;
+      + Object.values(familyPack2.questionsByLesson).flat().length
+      + Object.values(familyPack3.questionsByLesson).flat().length;
 
     expect(sharedTotal).toBe(120);
     expect(Object.values(pack.subjects).every(questions => questions.length === 8)).toBeTruthy();
-    expect(familyTotal).toBe(60);
-    expect(Object.values(familyPack.questionsByLesson).every(questions => questions.length === 4)).toBeTruthy();
+    expect(familyTotal).toBe(120);
+    expect(Object.values(familyPack2.questionsByLesson).every(questions => questions.length === 4)).toBeTruthy();
+    expect(Object.values(familyPack3.questionsByLesson).every(questions => questions.length === 10)).toBeTruthy();
   });
 
-  test('KidsCoin merges its expansion into six open ten-question lessons', async ({ page, context }) => {
+  test('KidsCoin merges its expansions into six open twenty-question lessons', async ({ page, context }) => {
     await cleanDevice(page, context);
     const errors = watchErrors(page);
     const response = await page.goto('/games/kidscoin-family/index.html', { waitUntil: 'domcontentloaded' });
     expect(response?.ok()).toBeTruthy();
 
-    await expect.poll(() => page.evaluate(() => window.KidsCoinFamilyData?.questions)).toBe(60);
+    await expect.poll(() => page.evaluate(() => window.KidsCoinFamilyData?.questions)).toBe(120);
     await page.locator('[data-tab="learn"]').click();
     await expect(page.locator('.lesson-card')).toHaveCount(6);
     const labels = await page.locator('.lesson-card .pill').allTextContents();
-    expect(labels.every(label => label.includes('10 questions'))).toBeTruthy();
+    expect(labels.every(label => label.includes('20 questions'))).toBeTruthy();
     await page.locator('[data-lesson]').first().click();
     await expect(page.locator('#lessonQuestion')).toContainText('Question 1 of 3');
     await expect(page.locator('#parentGate')).not.toHaveAttribute('open', '');
