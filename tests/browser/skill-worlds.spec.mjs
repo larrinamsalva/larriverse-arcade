@@ -153,24 +153,33 @@ test("Traffic Town: consecutive rounds rotate to ten unseen signs", async ({ pag
   expect(second.filter((text) => first.includes(text))).toEqual([]);
   await expect(page.locator("#finishDialog")).toBeVisible();
 });
-test("Repair Café: reject premature steps and sequence eight repairs", async ({
+test("Repair Café: draw eight from twenty, reject premature steps, and sequence the round", async ({
   page,
 }) => {
+  expect(repairs).toHaveLength(20);
   await round(page, "repair-cafe", async () => {
-    await page
-      .getByRole("button", { name: repairs[0].steps[3], exact: true })
-      .click();
-    await expect(page.locator("#feedback")).toContainText("comes later");
-    for (let i = 0; i < repairs.length; i++) {
-      for (const step of repairs[i].steps)
+    const played = [];
+    for (let i = 0; i < 8; i++) {
+      const title = await page.locator(".message-card .board-title").innerText();
+      const repair = repairs.find((item) => item.title === title);
+      expect(repair).toBeTruthy();
+      expect(played).not.toContain(title);
+      played.push(title);
+
+      if (i === 0) {
+        await page.getByRole("button", { name: repair.steps[3], exact: true }).click();
+        await expect(page.locator("#feedback")).toContainText("comes later");
+      }
+      for (const step of repair.steps)
         await page.getByRole("button", { name: step, exact: true }).click();
       await page
         .getByRole("button", {
-          name: i === repairs.length - 1 ? "See my repairs" : "Next repair",
+          name: i === 7 ? "See my repairs" : "Next repair",
           exact: true,
         })
         .click();
     }
+    expect(new Set(played).size).toBe(8);
   });
 });
 test("Time Trail: use a legal route, gather all flags, and reach the picnic", async ({
