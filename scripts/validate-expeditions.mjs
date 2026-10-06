@@ -5,6 +5,13 @@ import { expeditions, bridgeLevels, bridgeParts, pipePaths, compassClues, landma
 import { traceWater, compassTarget, encode, cheapestShop, townNeeds } from "../assets/expedition-logic.js";
 const catalog = JSON.parse(fs.readFileSync("games/catalog.json", "utf8"));
 assert.equal(expeditions.length, 8);
+assert.equal(bridgeLevels.length, 8);
+assert.equal(pipePaths.length, 8);
+assert.equal(compassClues.length, 8);
+assert.equal(cipherLevels.length, 8);
+assert.equal(tradeLevels.length, 8);
+assert.equal(new Set(bridgeLevels.map(level => level.name)).size, bridgeLevels.length);
+assert.equal(new Set(tradeLevels.map(level => level.name)).size, tradeLevels.length);
 for (const world of expeditions) {
   assert.equal(catalog.filter(game => game.id === world.id).length, 1);
   const html = fs.readFileSync(`games/${world.id}/index.html`, "utf8");
@@ -27,7 +34,7 @@ for (const path of pipePaths) {
   cells[10] = [0,1]; assert.equal(traceWater(cells).ok, false);
 }
 const targets = compassClues.map(clue => compassTarget(landmarks[clue.landmark], clue));
-assert.equal(new Set(targets).size, 5);
+assert.equal(new Set(targets).size, compassClues.length);
 assert.ok(targets.every(target => target >= 0 && target < 36));
 for (const level of cipherLevels) assert.equal(encode(encode(level.word,level.shift),-level.shift),level.word);
 for (const level of tradeLevels) assert.ok(cheapestShop(level) <= level.budget);
@@ -35,4 +42,4 @@ assert.deepEqual(townNeeds(["park","bench","ramp","hut",null,null]), [true,true,
 assert.deepEqual(townNeeds([null,null,null,"park","bench","hut"]), [false,true,false,true]);
 for (const path of ["assets/expedition-worlds.js","assets/expedition-logic.js","assets/expedition-games.js","assets/arcade-scenes.js","tests/browser/expeditions.spec.mjs"]) execFileSync(process.execPath,["--check",path]);
 for (const path of ["assets/expedition-atlas.webp","assets/worlds-atlas-v2.webp"]) assert.ok(fs.statSync(path).size < 1_000_000);
-console.log("Eight expeditions validated: solvable bridges, complete water paths, distinct treasures, cipher keys, affordable shopping and inclusive town layouts.");
+console.log("Eight expeditions validated: eight solvable bridges, eight complete water paths, eight distinct treasures, eight cipher keys, eight affordable shopping challenges and inclusive town layouts.");
