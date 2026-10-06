@@ -288,6 +288,32 @@ test('Bubble Resonance fills the play area, settles shallow bank shots, and keep
   await expect(page.locator('[data-lv-comfort]')).toBeFocused();
 });
 
+test('Bubble Resonance adds and animates a fresh top row after five misses', async ({ page }) => {
+  await page.addInitScript(() => {
+    let calls = 0;
+    Math.random = () => (++calls <= 96 ? .01 : .2);
+  });
+  await page.goto('/games/bubble-resonance-phi369/index.html');
+  await expect(page.locator('#dropIn')).toHaveText('5');
+  await expect(page.locator('#limit')).toHaveText('CLEAR');
+
+  const box = await page.locator('#game').boundingBox();
+  for (const fraction of [.1, .3, .5, .7, .9]) {
+    await page.mouse.click(box.x + box.width * fraction, box.y + box.height * .35);
+    await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
+    await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false', { timeout: 5000 });
+  }
+
+  await expect(page.locator('#dropIn')).toHaveText('5');
+  await expect(page.locator('#message')).toContainText('CEILING DROP');
+  await expect(page.locator('#limit')).toHaveText('CLEAR');
+
+  const bubbleSource = fs.readFileSync('games/bubble-resonance-phi369/game.js', 'utf8');
+  expect(bubbleSource).toContain('Fresh bubbles are moving the field down one row');
+  expect(bubbleSource).toContain('dropOffset=-HEX');
+  expect(bubbleSource).toContain('for(let c=0;c<COLS;c++)shifted[0][c]');
+});
+
 test('Chill Brain cabinet and shared comfort choices stay in sync without enabling sound', async ({ page }) => {
   await page.goto('/games/chill-brain-rewards/index.html');
   await page.locator('#settingsButton').click();
