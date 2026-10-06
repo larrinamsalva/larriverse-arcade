@@ -153,7 +153,7 @@ test("Traffic Town: consecutive rounds rotate to ten unseen signs", async ({ pag
   expect(second.filter((text) => first.includes(text))).toEqual([]);
   await expect(page.locator("#finishDialog")).toBeVisible();
 });
-test("Repair Café: reject premature steps and sequence three repairs", async ({
+test("Repair Café: reject premature steps and sequence eight repairs", async ({
   page,
 }) => {
   await round(page, "repair-cafe", async () => {
@@ -166,7 +166,7 @@ test("Repair Café: reject premature steps and sequence three repairs", async ({
         await page.getByRole("button", { name: step, exact: true }).click();
       await page
         .getByRole("button", {
-          name: i === 2 ? "See my repairs" : "Next repair",
+          name: i === repairs.length - 1 ? "See my repairs" : "Next repair",
           exact: true,
         })
         .click();

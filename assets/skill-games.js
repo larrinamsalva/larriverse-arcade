@@ -433,8 +433,8 @@ function renderRepair() {
         `<button class="repair-step" data-repair="${i}">${esc(item.steps[i])}</button>`,
     )
     .join("")}</div>`;
-  progress(state.step * 4 + state.position, 12);
-  updateScore(((state.step * 4 + state.position) / 12) * 100);
+  progress(state.step * 4 + state.position, repairs.length * 4);
+  updateScore(((state.step * 4 + state.position) / (repairs.length * 4)) * 100);
   bind("[data-repair]", (node) => {
     const i = Number(node.dataset.repair);
     if (i !== state.position) {
@@ -450,11 +450,11 @@ function renderRepair() {
     renderRepair();
   });
   if (state.position === 4)
-    button(state.step === 2 ? "See my repairs" : "Next repair", () => {
+    button(state.step === repairs.length - 1 ? "See my repairs" : "Next repair", () => {
       state.step++;
       if (state.step === repairs.length) {
         finish(
-          "You inspected, chose materials, repaired, and tested three objects. They all got a second chance.",
+          `You inspected, chose safe materials, repaired, and tested ${repairs.length} different objects. Each one got another chance.`,
           100,
         );
       } else {

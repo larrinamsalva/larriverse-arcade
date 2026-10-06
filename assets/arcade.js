@@ -132,6 +132,10 @@ function restartFeatureRotation() {
   pause.setAttribute('aria-pressed', String(reduced || featurePaused));
   pause.textContent = reduced ? 'Automatic changes off' : featurePaused ? 'Resume changes' : 'Pause changes';
   if (!reduced && !featurePaused && featured.length > 1) featureTimer = setInterval(() => {
+    if (sdk?.settings?.().reducedMotion || systemMotion.matches) {
+      restartFeatureRotation();
+      return;
+    }
     const spotlight = document.querySelector('.spotlight');
     if (document.hidden || controlCenter.open || spotlight.matches(':hover') || spotlight.contains(document.activeElement)) return;
     featureIndex = (featureIndex + 1) % featured.length;

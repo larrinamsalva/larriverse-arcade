@@ -43,8 +43,8 @@ export function createExpedition(world, a) {
   function bridge() {
     const level = bridgeLevels[s.level];
     const spent = s.parts.reduce((sum, id) => sum + (part(id)?.cost || 0), 0);
-    a.stage(`${level.name} · ${s.level + 1} of 3`); a.progress(s.level, 3); a.score(s.level * 33);
-    a.board.innerHTML = `<div class="expedition-stats">${a.chip("Builder tokens", level.budget - spent)}${a.chip("Crossings", `${s.level}/3`)}</div><p class="board-intro">Choose a support, then tap a span. Each span must hold the cart load shown above it.</p><div class="tool-shelf">${bridgeParts.map(item => tool(item, s.tool)).join("")}<button type="button" class="build-tool" data-tool="erase" data-focus="tool-erase" aria-pressed="${s.tool === "erase"}">Clear a span<small>Tokens return to you</small></button></div><div class="bridge-landscape ${s.passed ? "crossed" : ""}"><div class="bridge-cart" aria-hidden="true">${iconSvg("wood")}<i></i><i></i></div><div class="bridge-spans">${s.parts.map((id, index) => `<button type="button" class="bridge-span ${id || "empty"} ${s.failed.includes(index) ? "weak" : ""}" data-span="${index}" data-focus="span-${index}" ${s.passed ? "disabled" : ""} aria-label="Span ${index + 1}, load ${level.loads[index]}, ${part(id)?.name || "empty"}"><span class="load-label">Load ${level.loads[index]}</span><svg viewBox="0 0 140 90" aria-hidden="true"><path d="M5 21h130" stroke="#c79d75" stroke-width="13" stroke-linecap="round"/>${id === "triangle" ? '<path d="M9 65L70 24 131 65z" fill="#ffd885" stroke="#d8ac5b" stroke-width="7"/>' : id === "beam" ? '<path d="M15 31v49M125 31v49M15 54h110" stroke="#a0a2d4" stroke-width="12"/>' : id === "plank" ? '<path d="M15 36h110" stroke="#e7b887" stroke-width="8"/>' : '<path d="M30 56h80" stroke="#bbe2dc" stroke-width="4" stroke-dasharray="6 8"/>'}</svg><b>${part(id)?.name || "Add a support"}</b><small>${id ? `Holds ${part(id).capacity}` : "Choose a tool first"}</small></button>`).join("")}</div></div>`;
+    a.stage(`${level.name} · ${s.level + 1} of ${bridgeLevels.length}`); a.progress(s.level, bridgeLevels.length); a.score(s.level / bridgeLevels.length * 100);
+    a.board.innerHTML = `<div class="expedition-stats">${a.chip("Builder tokens", level.budget - spent)}${a.chip("Crossings", `${s.level}/${bridgeLevels.length}`)}</div><p class="board-intro">Choose a support, then tap a span. Each span must hold the cart load shown above it.</p><div class="tool-shelf">${bridgeParts.map(item => tool(item, s.tool)).join("")}<button type="button" class="build-tool" data-tool="erase" data-focus="tool-erase" aria-pressed="${s.tool === "erase"}">Clear a span<small>Tokens return to you</small></button></div><div class="bridge-landscape ${s.passed ? "crossed" : ""}"><div class="bridge-cart" aria-hidden="true">${iconSvg("wood")}<i></i><i></i></div><div class="bridge-spans">${s.parts.map((id, index) => `<button type="button" class="bridge-span ${id || "empty"} ${s.failed.includes(index) ? "weak" : ""}" data-span="${index}" data-focus="span-${index}" ${s.passed ? "disabled" : ""} aria-label="Span ${index + 1}, load ${level.loads[index]}, ${part(id)?.name || "empty"}"><span class="load-label">Load ${level.loads[index]}</span><svg viewBox="0 0 140 90" aria-hidden="true"><path d="M5 21h130" stroke="#c79d75" stroke-width="13" stroke-linecap="round"/>${id === "triangle" ? '<path d="M9 65L70 24 131 65z" fill="#ffd885" stroke="#d8ac5b" stroke-width="7"/>' : id === "beam" ? '<path d="M15 31v49M125 31v49M15 54h110" stroke="#a0a2d4" stroke-width="12"/>' : id === "plank" ? '<path d="M15 36h110" stroke="#e7b887" stroke-width="8"/>' : '<path d="M30 56h80" stroke="#bbe2dc" stroke-width="4" stroke-dasharray="6 8"/>'}</svg><b>${part(id)?.name || "Add a support"}</b><small>${id ? `Holds ${part(id).capacity}` : "Choose a tool first"}</small></button>`).join("")}</div></div>`;
     toolBindings();
     a.bind("[data-span]", node => {
       if (s.passed) return;
@@ -53,7 +53,7 @@ export function createExpedition(world, a) {
       if (cost > level.budget) { a.say("That support needs more tokens. Clear or change another span first.", "try"); return; }
       s.parts[index] = next; s.failed = []; render();
     });
-    if (s.passed) nextLevel(3, "You tested three bridges and improved the supports. Testing a model helps you find the weak spots before you build.");
+    if (s.passed) nextLevel(bridgeLevels.length, `You tested ${bridgeLevels.length} bridges and improved the supports. Testing a model helps you find weak spots before you build.`);
     else a.button("Test the crossing", () => {
       s.failed = s.parts.flatMap((id, index) => (part(id)?.capacity || 0) < level.loads[index] ? [index] : []);
       s.passed = s.failed.length === 0; render();
@@ -62,11 +62,11 @@ export function createExpedition(world, a) {
     });
   }
   function pipes() {
-    a.stage(`Water network ${s.level + 1} of 3`); a.progress(s.level, 3); a.score(s.level * 33);
+    a.stage(`Water network ${s.level + 1} of ${pipePaths.length}`); a.progress(s.level, pipePaths.length); a.score(s.level / pipePaths.length * 100);
     const endpoint = [[50,5],[95,50],[50,95],[5,50]];
     a.board.innerHTML = `<p class="board-intro">Reservoir → pipe 11 → toy filter (pipe 13) → pipe 15 → town. Tap a pipe to turn it clockwise.</p><div class="pipe-labels"><span>${iconSvg("drop")} Reservoir, left</span><span>${iconSvg("hut")} Town, right</span></div><div class="pipe-grid">${s.cells.map((pair, index) => pair ? `<button type="button" class="pipe-tile ${index === 12 ? "filter" : ""} ${s.flow.includes(index) ? "flowing" : ""} ${s.leak === index ? "leak" : ""}" data-pipe="${index}" data-focus="pipe-${index}" ${s.passed ? "disabled" : ""} aria-label="Pipe ${index + 1}: ${pair.map(value => directions[value]).join(" and ")}${index === 12 ? "; toy filter" : ""}. Rotate clockwise."><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M${endpoint[pair[0]].join(" ")}L50 50 ${endpoint[pair[1]].join(" ")}" fill="none" stroke="#9cd1df" stroke-width="25" stroke-linejoin="round"/><path class="pipe-flow" d="M${endpoint[pair[0]].join(" ")}L50 50 ${endpoint[pair[1]].join(" ")}" fill="none" stroke="#e3f8ff" stroke-width="11" stroke-linejoin="round"/>${index === 12 ? '<circle cx="50" cy="50" r="20" fill="#d2baed"/><text x="50" y="58" text-anchor="middle" fill="#4e466d" font-size="23" font-weight="bold">F</text>' : ""}</svg><span class="tile-number">${index + 1}</span></button>` : `<div class="pipe-ground" aria-hidden="true">${iconSvg(index % 3 ? "seed" : "tree")}</div>`).join("")}</div><p class="small-note">F = toy filter. Real water safety needs real treatment and testing.</p>`;
     a.bind("[data-pipe]", node => { const index = Number(node.dataset.pipe); s.cells[index] = s.cells[index].map(value => (value + 1) % 4); s.flow = []; s.leak = -1; render(); });
-    if (s.passed) nextLevel(3, "You connected three water networks. Following the flow helped you find and fix each connection.");
+    if (s.passed) nextLevel(pipePaths.length, `You connected ${pipePaths.length} water networks. Following the flow helped you find and fix each connection.`);
     else a.button("Send the water", () => { const flow = traceWater(s.cells); s.flow = flow.seen; s.leak = flow.ok ? -1 : flow.tile; s.passed = flow.ok; render(); a.say(flow.reason, flow.ok ? "good" : "try"); if (flow.ok) a.tone(1); });
   }
   function harbor() {
@@ -109,7 +109,7 @@ export function createExpedition(world, a) {
   function compass() {
     const clue = compassClues[s.level], landmark = landmarks[clue.landmark];
     const moves = [clue.east ? `${Math.abs(clue.east)} ${clue.east > 0 ? "east (right)" : "west (left)"}` : "", clue.south ? `${Math.abs(clue.south)} ${clue.south > 0 ? "south (down)" : "north (up)"}` : ""].filter(Boolean).join(", then ");
-    a.stage(`Treasure ${s.level + 1} of 5`); a.progress(s.found.length, 5); a.score(s.found.length * 20);
+    a.stage(`Treasure ${s.level + 1} of ${compassClues.length}`); a.progress(s.found.length, compassClues.length); a.score(s.found.length / compassClues.length * 100);
     a.board.innerHTML = `<div class="map-clue"><span class="compass-rose" aria-hidden="true">N ↑<br>W ← ✦ → E<br>S ↓</span><p>Start at the <b>${landmark.name}</b>. Go <b>${moves}</b>. Tap the treasure tile.</p></div><div class="compass-grid">${Array.from({length:36}, (_,index) => {
       const place = landmarks.find(item => item.id === index), found = s.found.includes(index);
       return `<button type="button" class="map-tile ${place ? "landmark" : ""} ${found ? "found" : ""}" data-map="${index}" data-focus="map-${index}" ${s.passed ? "disabled" : ""} aria-label="Row ${Math.floor(index / 6) + 1}, column ${index % 6 + 1}${place ? `, ${place.name}` : ""}${found ? ", treasure found" : ""}">${place ? iconSvg(place.icon, "object-icon landmark-icon") : found ? iconSvg("coin") : '<span class="map-dot" aria-hidden="true"></span>'}${found && place ? iconSvg("coin", "treasure-marker") : ""}<small>${index + 1}</small></button>`;
@@ -120,15 +120,15 @@ export function createExpedition(world, a) {
       if (selected !== target) { a.say(`Try again from the ${landmark.name}. Count one tile for each step in the clue.`, "try"); return; }
       s.found.push(target); s.passed = true; render(); a.say("Treasure found! Your directions led to the right tile.", "good"); a.tone(1);
     });
-    if (s.passed) nextLevel(5, "Five treasures found! You used landmarks and compass directions to explain your route.");
+    if (s.passed) nextLevel(compassClues.length, `${compassClues.length} treasures found! You used landmarks and compass directions to explain your route.`);
   }
   function cipher() {
     const level = cipherLevels[s.level], message = level.encode ? level.word : encode(level.word, level.shift);
-    a.stage(`Clubhouse message ${s.level + 1} of 5`); a.progress(s.level, 5); a.score(s.level * 20);
+    a.stage(`Clubhouse message ${s.level + 1} of ${cipherLevels.length}`); a.progress(s.level, cipherLevels.length); a.score(s.level / cipherLevels.length * 100);
     a.board.innerHTML = `<div class="cipher-workshop"><div class="cipher-dial">${iconSvg("key")}<b>Shared key: ${level.shift}</b><span>Wheel now: ${s.shift}</span><div class="stepper"><button type="button" data-key="-1" data-focus="key-minus" aria-label="Turn key back">−</button><button type="button" data-key="1" data-focus="key-plus" aria-label="Turn key forward">+</button></div></div><div class="cipher-message"><span>${level.encode ? "Encode this message" : "Decode this message"}</span><strong>${message}</strong><p>${level.encode ? "Read from plain letters to code letters." : "Read from code letters back to plain letters."}</p></div></div><div class="cipher-key">${[...alphabet].map(letter => `<span><b>${letter}</b><i>↓</i><b>${encode(letter, s.shift)}</b></span>`).join("")}</div><div class="cipher-answer" aria-label="Your answer">${[0,1,2].map(index => `<span>${s.tokens[index] || "·"}</span>`).join("")}</div><div class="letter-keys">${[...alphabet].map(letter => `<button type="button" data-letter="${letter}" data-focus="letter-${letter}" ${s.passed ? "disabled" : ""}>${letter}</button>`).join("")}</div><p class="small-note">A toy code for exploring patterns. It cannot protect real secrets.</p>`;
     a.bind("[data-key]", node => { if (!s.passed) { s.shift = wrap(s.shift, Number(node.dataset.key)); render(); } });
     a.bind("[data-letter]", node => { if (s.tokens.length < 3) { s.tokens.push(node.dataset.letter); render(); } });
-    if (s.passed) nextLevel(5, "Five clubhouse messages solved! A shared key helps you turn a pattern into meaning.");
+    if (s.passed) nextLevel(cipherLevels.length, `${cipherLevels.length} clubhouse messages solved! A shared key helps you turn a pattern into meaning.`);
     else {
       a.button("Check my message", () => {
         if (s.shift !== level.shift) { a.say(`Turn the wheel to the shared key ${level.shift} first.`, "try"); return; }
@@ -141,10 +141,10 @@ export function createExpedition(world, a) {
   }
   function trade() {
     const level = tradeLevels[s.level], quantity = s.cart.reduce((sum,count,index) => sum + count * level.deals[index].quantity, 0), cost = s.cart.reduce((sum,count,index) => sum + count * (level.deals[index].price + level.deals[index].fee), 0);
-    a.stage(`${level.name} · ${s.level + 1} of 3`); a.progress(s.level, 3);
+    a.stage(`${level.name} · ${s.level + 1} of ${tradeLevels.length}`); a.progress(s.level, tradeLevels.length);
     a.board.innerHTML = `<div class="expedition-stats">${a.chip("Need", level.need)}${a.chip("Budget", level.budget)}${a.chip("In basket", quantity)}${a.chip("Whole cost", cost)}</div><p class="board-intro">Compare the price for each item, then choose enough for the request. Every bundle's fee is included.</p><div class="market-stalls">${level.deals.map((deal,index) => `<article class="market-stall">${iconSvg(level.icon)}<h3>${deal.name}</h3><p>${deal.quantity} items · ${deal.price} coins${deal.fee ? ` + ${deal.fee} fee` : " · no fee"}</p><strong>${deal.price + deal.fee} coins total</strong><small>${((deal.price+deal.fee)/deal.quantity).toFixed(2)} per item, with fee</small><div class="stepper"><button type="button" data-shop="${index},-1" data-focus="shop-${index}-minus" aria-label="Return ${deal.name}" ${!s.cart[index] || s.passed ? "disabled" : ""}>−</button><b>${s.cart[index]}</b><button type="button" data-shop="${index},1" data-focus="shop-${index}-plus" aria-label="Add ${deal.name}" ${s.cart[index] >= 12 || s.passed ? "disabled" : ""}>+</button></div></article>`).join("")}</div>`;
     a.bind("[data-shop]", node => { const [index,delta] = node.dataset.shop.split(",").map(Number); s.cart[index] = Math.max(0,Math.min(12,s.cart[index]+delta)); render(); });
-    if (s.passed) nextLevel(3, "You compared three whole deals, including delivery fees. Check how much you need before choosing a bigger pack.");
+    if (s.passed) nextLevel(tradeLevels.length, `You compared ${tradeLevels.length} shopping challenges, including delivery fees. Check how much you need before choosing a bigger pack.`);
     else a.button("Check out", () => {
       if (quantity < level.need) { a.say(`You need ${level.need} items. Add enough to cover the request.`, "try"); return; }
       if (cost > level.budget) { a.say("That basket is over budget. Return a bundle and compare the whole deal again.", "try"); return; }
