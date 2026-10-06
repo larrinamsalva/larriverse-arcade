@@ -26,7 +26,7 @@ export const iconSvg = (name, className = "object-icon") => `<svg class="${class
 const themes = {
   budget: ["coin", "boat", "tree"], messages: ["key", "hut", "robot"], conversation: ["tree", "bench", "book"], news: ["book", "market", "key"],
   repair: ["wood", "robot", "hut"], route: ["tree", "lighthouse", "boat"], garden: ["carrot", "seed", "tree"], energy: ["sun", "hut", "seed"],
-  sorting: ["book", "seed", "wood"], robot: ["robot", "hut", "key"], market: ["market", "apple", "coin"], music: ["music", "music", "music"],
+  sorting: ["book", "seed", "wood"], traffic: ["lighthouse", "robot", "key"], robot: ["robot", "hut", "key"], market: ["market", "apple", "coin"], music: ["music", "music", "music"],
   bridge: ["wood", "boat", "tree"], pipes: ["drop", "hut", "drop"], harbor: ["boat", "lighthouse", "boat"], pantry: ["bread", "apple", "carrot"],
   compass: ["lighthouse", "tree", "boat"], cipher: ["key", "hut", "key"], trade: ["market", "coin", "apple"], town: ["tree", "hut", "ramp"],
 };

@@ -1,4 +1,4 @@
-# LarriVerse: 28 worlds for curious kids
+# LarriVerse: 29 worlds for curious kids
 
 The arcade now contains twenty skill adventures and the original eight cabinets. The latest eight adventures are described in [the expedition guide](EXPEDITIONS.md). The lobby uses illustrated covers, short descriptions, skill filters, search, a surprise-game launcher, and the existing profile and comfort controls. There is no required sign-up, advertising, checkout, or public leaderboard. Ages are broad suggestions; adults can help younger players with reading.
 
@@ -35,8 +35,13 @@ Generation brief: one landscape atlas, exactly four columns and three rows of eq
 
 ## Verification
 
-Run `npm run validate` for structural and content contracts, then `npm run test:browser` after installing the pinned Playwright runner and Chromium as described in `docs/BROWSER-QA.md`. The new full-round tests exercise all twenty game modes on desktop and mobile viewports, including saved completion, replay, and error paths. The release-manifest route tests capture all 28 cabinets and the lobby in both viewports. Gallery and QA counts now follow the manifest. The formal tagged release retains its separate physical-device and human approval gates.
+Run `npm run validate` for structural and content contracts, then `npm run test:browser` after installing the pinned Playwright runner and Chromium as described in `docs/BROWSER-QA.md`. The new full-round tests exercise all twenty-one game modes on desktop and mobile viewports, including saved completion, replay, and error paths. The release-manifest route tests capture all 29 cabinets and the lobby in both viewports. Gallery and QA counts now follow the manifest. The formal tagged release retains its separate physical-device and human approval gates.
 
 ### Local symbol font
 
 `assets/fonts/arcade-emoji.woff2` is a character subset of Noto Color Emoji from `@fontsource/noto-color-emoji` 5.3.2. It supplies colorful icons on devices without an emoji font. Its SIL Open Font License is retained in `assets/fonts/OFL-NotoColorEmoji.txt`; the font keeps that license separately from the MIT project code. `assets/emoji.css` loads it locally as a fallback. FontTools 4.61.1 generated the WOFF2 subset from the characters used in the arcade's HTML, CSS, JavaScript, and JSON files.
+
+
+## Traffic Town
+
+Traffic Town adds early road-awareness practice for ages 7+. Its 30 unique sign and safe-action questions are served ten at a time, and a session rotates through unseen questions before cycling. It teaches common U.S. sign patterns without presenting itself as a driver's license course or a substitute for official local DMV materials.
