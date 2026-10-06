@@ -93,9 +93,9 @@ export const worlds = [
     minutes: "3 min",
     art: 4,
     skill: "Repair before replacing",
-    desc: "Give a toy, a book, and a little planter a second chance.",
+    desc: "Practice eight small repair-and-care challenges before replacing something.",
     mission:
-      "Choose the steps in a sensible order. Inspect first, fix the small problem, then test your repair.",
+      "Work through eight different repair situations. Put the steps in a sensible order: inspect first, choose a safe fix, make the small repair, then test it.",
     take: "Looking closely can save time, materials, and money. Small repairs can give things a second life.",
     mode: "repair",
   },
@@ -406,7 +406,63 @@ export const repairs = [
     ],
     hint: "Reuse a simple material, then test whether your repair solved the problem.",
   },
+  {
+    icon: "🎲",
+    title: "A board-game box corner is torn",
+    steps: [
+      "Inspect the torn corner and line up the edges",
+      "Choose paper repair tape with an adult",
+      "Hold the corner square and tape the outside",
+      "Open and close the box to test the repair",
+    ],
+    hint: "Line things up before taping so the box still opens and closes normally.",
+  },
+  {
+    icon: "📕",
+    title: "A paperback cover is peeling",
+    steps: [
+      "Check where the cover has started to lift",
+      "Choose book-safe repair tape with an adult",
+      "Smooth the cover into its original position",
+      "Open the book gently and check the hinge",
+    ],
+    hint: "The goal is to support the cover without blocking the book from opening.",
+  },
+  {
+    icon: "🎒",
+    title: "A lunch-bag zipper is catching",
+    steps: [
+      "Empty the bag and look for fabric caught near the zipper",
+      "Ask an adult to help free any trapped fabric",
+      "Move the zipper slowly along the clear track",
+      "Zip and unzip once more to test it",
+    ],
+    hint: "Do not force a stuck zipper. Find what is catching first, then test gently.",
+  },
+  {
+    icon: "🧩",
+    title: "A puzzle box flap will not stay closed",
+    steps: [
+      "Check which flap or tab is bent",
+      "Fold the tab back along its original crease",
+      "Add a small paper reinforcement with an adult",
+      "Close the box and turn it gently to test it",
+    ],
+    hint: "Strengthen the weak spot without making the flap too thick to close.",
+  },
+  {
+    icon: "🛞",
+    title: "A toy wagon wheel wobbles",
+    steps: [
+      "Stop using the wagon and inspect the loose wheel with an adult",
+      "Ask an adult to check the safe fastener or axle connection",
+      "Have the adult secure the loose part if appropriate",
+      "Roll the wagon slowly and check that the wheel stays straight",
+    ],
+    hint: "Loose moving parts can pinch fingers. Inspect first and let an adult handle tools or small fasteners.",
+  },
 ];
+
 export const sorting = [
   {
     name: "Reusable bottle",
