@@ -23,7 +23,7 @@ function watchErrors(page) {
 }
 
 test.describe('LarriVerse adaptive learning paths', () => {
-  test('expansion packs publish 120 shared and 60 KidsCoin questions', async ({ request }) => {
+  test('expansion packs publish 120 shared and 120 KidsCoin questions', async ({ request }) => {
     const [baseResponse, packResponse, familyResponse, familyPackResponse] = await Promise.all([
       request.get('/games/learning-question-bank.json'),
       request.get('/games/learning-question-pack-2.json'),
@@ -41,21 +41,21 @@ test.describe('LarriVerse adaptive learning paths', () => {
 
     expect(sharedTotal).toBe(120);
     expect(Object.values(pack.subjects).every(questions => questions.length === 8)).toBeTruthy();
-    expect(familyTotal).toBe(60);
-    expect(Object.values(familyPack.questionsByLesson).every(questions => questions.length === 4)).toBeTruthy();
+    expect(familyTotal).toBe(120);
+    expect(Object.values(familyPack.questionsByLesson).every(questions => questions.length === 14)).toBeTruthy();
   });
 
-  test('KidsCoin merges its expansion into six open ten-question lessons', async ({ page, context }) => {
+  test('KidsCoin merges its expansion into six open twenty-question lessons', async ({ page, context }) => {
     await cleanDevice(page, context);
     const errors = watchErrors(page);
     const response = await page.goto('/games/kidscoin-family/index.html', { waitUntil: 'domcontentloaded' });
     expect(response?.ok()).toBeTruthy();
 
-    await expect.poll(() => page.evaluate(() => window.KidsCoinFamilyData?.questions)).toBe(60);
+    await expect.poll(() => page.evaluate(() => window.KidsCoinFamilyData?.questions)).toBe(120);
     await page.locator('[data-tab="learn"]').click();
     await expect(page.locator('.lesson-card')).toHaveCount(6);
     const labels = await page.locator('.lesson-card .pill').allTextContents();
-    expect(labels.every(label => label.includes('10 questions'))).toBeTruthy();
+    expect(labels.every(label => label.includes('20 questions'))).toBeTruthy();
     await page.locator('[data-lesson]').first().click();
     await expect(page.locator('#lessonQuestion')).toContainText('Question 1 of 3');
     await expect(page.locator('#parentGate')).not.toHaveAttribute('open', '');
