@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { execFileSync } from "node:child_process";
-import { expeditions, bridgeLevels, bridgeParts, pipePaths, compassClues, landmarks, cipherLevels, tradeLevels } from "../assets/expedition-worlds.js";
+import { expeditions, bridgeLevels, bridgeParts, pipePaths, directions, compassClues, landmarks, cipherLevels, tradeLevels } from "../assets/expedition-worlds.js";
 import { traceWater, compassTarget, encode, cheapestShop, townNeeds } from "../assets/expedition-logic.js";
 const catalog = JSON.parse(fs.readFileSync("games/catalog.json", "utf8"));
 assert.equal(expeditions.length, 8);
 assert.equal(bridgeLevels.length, 8);
 assert.equal(pipePaths.length, 8);
+assert.deepEqual(directions, ["north", "east", "south", "west"]);
 assert.equal(compassClues.length, 8);
 assert.equal(cipherLevels.length, 8);
 assert.equal(tradeLevels.length, 8);
