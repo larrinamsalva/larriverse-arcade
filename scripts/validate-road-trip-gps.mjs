@@ -11,6 +11,8 @@ const check = (condition, message) => (condition ? checks : failures).push(messa
 const read = relative => readFile(path.join(root, relative), 'utf8');
 
 const manifest = JSON.parse(await read(`${base}/world.json`));
+const sharedBank = JSON.parse(await read('games/learning-question-bank.json'));
+const sharedExpansion = JSON.parse(await read('games/learning-question-pack-2.json'));
 const html = await read(`${base}/index.html`);
 const js = await read(`${base}/game.js`);
 const css = await read(`${base}/game.css`);
@@ -58,6 +60,24 @@ for (const [subject, questions] of Object.entries(manifest.questions || {})) {
   }
 }
 check(questionCount === 28, 'question payload totals 28 questions');
+const mergedSubjectCounts = {};
+for (const subject of ['math', 'science', 'reading', 'trivia']) {
+  const recovered = manifest.questions?.[subject] || [];
+  const reviewed = [
+    ...(sharedBank.subjects?.[subject] || []),
+    ...(sharedExpansion.subjects?.[subject] || [])
+  ].map(question => ({ q: question.prompt, a: question.options, c: question.answer }));
+  const seen = new Set();
+  const merged = [...recovered, ...reviewed].filter(question => {
+    const key = String(question.q || '').trim().toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  mergedSubjectCounts[subject] = merged.length;
+  check(merged.length >= 20, `GPS ${subject} has at least twenty unique questions after the reviewed-bank merge`);
+}
+check(Object.values(mergedSubjectCounts).every(count => count >= 20), 'all four GPS subject banks meet the twenty-question minimum');
 check(Array.isArray(manifest.levelThresholds) && manifest.levelThresholds.length === 11, 'level thresholds total eleven');
 check(Array.isArray(manifest.levelUnlocks) && manifest.levelUnlocks.length === 11, 'level unlocks total eleven');
 check(manifest.levelThresholds.every((value, index, values) => Number.isInteger(value) && (index === 0 || value > values[index - 1])), 'level thresholds are strictly increasing');
@@ -87,7 +107,11 @@ check(!/leaflet/i.test(html + css + js), 'GPS cabinet does not load Leaflet');
 check(!/overpass-api|openstreetmap|cartocdn/i.test(html + css + js), 'GPS cabinet does not query external maps or places');
 check(!/https?:\/\//i.test(html + css + js), 'GPS cabinet contains no external network URL');
 check(!/fetch\s*\(\s*[`'"]https?:/i.test(js), 'GPS cabinet makes no external fetch');
-check(/fetch\('world\.json'\)/.test(js), 'GPS cabinet fetches only its local world manifest');
+check(/fetch\('world\.json'\)/.test(js), 'GPS cabinet fetches its local world manifest');
+check(js.includes("fetch('../learning-question-bank.json')"), 'GPS cabinet loads the reviewed shared question bank');
+check(js.includes("fetch('../learning-question-pack-2.json')"), 'GPS cabinet loads the reviewed shared question expansion');
+check(js.includes('mergeQuestionSources'), 'GPS cabinet merges recovered and reviewed questions');
+check(js.includes('RoadTripGpsContent'), 'GPS cabinet exposes a testable question-depth summary');
 check(/getCurrentPosition/.test(js), 'GPS cabinet supports explicit one-time location permission');
 check(/watchPosition/.test(js), 'GPS cabinet supports temporary live movement');
 check(/clearWatch/.test(js), 'GPS cabinet can stop live movement');
@@ -110,4 +134,4 @@ if (failures.length) {
   failures.forEach(message => console.error(`  ✗ ${message}`));
   process.exit(1);
 }
-console.log(`Road Trip Quest GPS validation passed: ${checks.length} checks, 15 place types, 41 rewards, 28 questions.`);
+console.log(`Road Trip Quest GPS validation passed: ${checks.length} checks, 15 place types, 41 rewards, 28 recovered questions, merged subject counts ${JSON.stringify(mergedSubjectCounts)}.`);
