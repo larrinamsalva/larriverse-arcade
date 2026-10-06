@@ -77,6 +77,21 @@ export const tradeLevels = [
   { name: "Seeds for the garden", icon: "seed", need: 6, budget: 9, deals: [
     { name: "Local seed trio", quantity: 3, price: 3, fee: 0 }, { name: "Six-pack delivery", quantity: 6, price: 4, fee: 4 }, { name: "Single packet", quantity: 1, price: 2, fee: 0 },
   ] },
+  { name: "Notebooks for study time", icon: "book", need: 5, budget: 9, deals: [
+    { name: "Single notebook", quantity: 1, price: 2, fee: 0 }, { name: "Three-pack", quantity: 3, price: 4, fee: 0 }, { name: "Six-pack shipped", quantity: 6, price: 7, fee: 1 },
+  ] },
+  { name: "Carrots for soup day", icon: "carrot", need: 8, budget: 10, deals: [
+    { name: "Two-carrot bunch", quantity: 2, price: 3, fee: 0 }, { name: "Four-carrot bunch", quantity: 4, price: 4, fee: 0 }, { name: "Eight-carrot crate", quantity: 8, price: 9, fee: 0 },
+  ] },
+  { name: "Bread rolls for the picnic", icon: "bread", need: 7, budget: 10, deals: [
+    { name: "Single roll", quantity: 1, price: 2, fee: 0 }, { name: "Four-roll delivery", quantity: 4, price: 4, fee: 1 }, { name: "Eight-roll bag", quantity: 8, price: 8, fee: 0 },
+  ] },
+  { name: "Wood pieces for craft club", icon: "wood", need: 9, budget: 12, deals: [
+    { name: "Three-piece pack", quantity: 3, price: 4, fee: 0 }, { name: "Five-piece delivery", quantity: 5, price: 5, fee: 1 }, { name: "Ten-piece box", quantity: 10, price: 11, fee: 0 },
+  ] },
+  { name: "Water bottles for the team", icon: "drop", need: 10, budget: 12, deals: [
+    { name: "Two bottles", quantity: 2, price: 3, fee: 0 }, { name: "Five-bottle delivery", quantity: 5, price: 5, fee: 1 }, { name: "Ten-bottle case", quantity: 10, price: 10, fee: 1 },
+  ] },
 ];
 export const townParts = [
   { id: "park", name: "Shaded park", cost: 4, icon: "tree" }, { id: "hut", name: "Reading hut", cost: 4, icon: "hut" },
