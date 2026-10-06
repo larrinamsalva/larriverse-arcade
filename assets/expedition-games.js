@@ -109,7 +109,7 @@ export function createExpedition(world, a) {
   function compass() {
     const clue = compassClues[s.level], landmark = landmarks[clue.landmark];
     const moves = [clue.east ? `${Math.abs(clue.east)} ${clue.east > 0 ? "east (right)" : "west (left)"}` : "", clue.south ? `${Math.abs(clue.south)} ${clue.south > 0 ? "south (down)" : "north (up)"}` : ""].filter(Boolean).join(", then ");
-    a.stage(`Treasure ${s.level + 1} of 5`); a.progress(s.found.length, 5); a.score(s.found.length * 20);
+    a.stage(`Treasure ${s.level + 1} of ${compassClues.length}`); a.progress(s.found.length, compassClues.length); a.score(s.found.length / compassClues.length * 100);
     a.board.innerHTML = `<div class="map-clue"><span class="compass-rose" aria-hidden="true">N ↑<br>W ← ✦ → E<br>S ↓</span><p>Start at the <b>${landmark.name}</b>. Go <b>${moves}</b>. Tap the treasure tile.</p></div><div class="compass-grid">${Array.from({length:36}, (_,index) => {
       const place = landmarks.find(item => item.id === index), found = s.found.includes(index);
       return `<button type="button" class="map-tile ${place ? "landmark" : ""} ${found ? "found" : ""}" data-map="${index}" data-focus="map-${index}" ${s.passed ? "disabled" : ""} aria-label="Row ${Math.floor(index / 6) + 1}, column ${index % 6 + 1}${place ? `, ${place.name}` : ""}${found ? ", treasure found" : ""}">${place ? iconSvg(place.icon, "object-icon landmark-icon") : found ? iconSvg("coin") : '<span class="map-dot" aria-hidden="true"></span>'}${found && place ? iconSvg("coin", "treasure-marker") : ""}<small>${index + 1}</small></button>`;
@@ -120,15 +120,15 @@ export function createExpedition(world, a) {
       if (selected !== target) { a.say(`Try again from the ${landmark.name}. Count one tile for each step in the clue.`, "try"); return; }
       s.found.push(target); s.passed = true; render(); a.say("Treasure found! Your directions led to the right tile.", "good"); a.tone(1);
     });
-    if (s.passed) nextLevel(5, "Five treasures found! You used landmarks and compass directions to explain your route.");
+    if (s.passed) nextLevel(compassClues.length, `${compassClues.length} treasures found! You used landmarks and compass directions to explain your route.`);
   }
   function cipher() {
     const level = cipherLevels[s.level], message = level.encode ? level.word : encode(level.word, level.shift);
-    a.stage(`Clubhouse message ${s.level + 1} of 5`); a.progress(s.level, 5); a.score(s.level * 20);
+    a.stage(`Clubhouse message ${s.level + 1} of ${cipherLevels.length}`); a.progress(s.level, cipherLevels.length); a.score(s.level / cipherLevels.length * 100);
     a.board.innerHTML = `<div class="cipher-workshop"><div class="cipher-dial">${iconSvg("key")}<b>Shared key: ${level.shift}</b><span>Wheel now: ${s.shift}</span><div class="stepper"><button type="button" data-key="-1" data-focus="key-minus" aria-label="Turn key back">−</button><button type="button" data-key="1" data-focus="key-plus" aria-label="Turn key forward">+</button></div></div><div class="cipher-message"><span>${level.encode ? "Encode this message" : "Decode this message"}</span><strong>${message}</strong><p>${level.encode ? "Read from plain letters to code letters." : "Read from code letters back to plain letters."}</p></div></div><div class="cipher-key">${[...alphabet].map(letter => `<span><b>${letter}</b><i>↓</i><b>${encode(letter, s.shift)}</b></span>`).join("")}</div><div class="cipher-answer" aria-label="Your answer">${[0,1,2].map(index => `<span>${s.tokens[index] || "·"}</span>`).join("")}</div><div class="letter-keys">${[...alphabet].map(letter => `<button type="button" data-letter="${letter}" data-focus="letter-${letter}" ${s.passed ? "disabled" : ""}>${letter}</button>`).join("")}</div><p class="small-note">A toy code for exploring patterns. It cannot protect real secrets.</p>`;
     a.bind("[data-key]", node => { if (!s.passed) { s.shift = wrap(s.shift, Number(node.dataset.key)); render(); } });
     a.bind("[data-letter]", node => { if (s.tokens.length < 3) { s.tokens.push(node.dataset.letter); render(); } });
-    if (s.passed) nextLevel(5, "Five clubhouse messages solved! A shared key helps you turn a pattern into meaning.");
+    if (s.passed) nextLevel(cipherLevels.length, `${cipherLevels.length} clubhouse messages solved! A shared key helps you turn a pattern into meaning.`);
     else {
       a.button("Check my message", () => {
         if (s.shift !== level.shift) { a.say(`Turn the wheel to the shared key ${level.shift} first.`, "try"); return; }
