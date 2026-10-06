@@ -30,12 +30,12 @@ for (const world of worlds) {
   assert.ok(html.includes(`data-world="${world.id}"`));
   assert.ok(html.includes('type="module" src="../../assets/skill-games.js"'));
 }
-for (const [deck, count, options] of [
-  [messages, 12, 3],
-  [conversations, 12, 3],
-  [newsCards, 12, 4],
+for (const [deck, options] of [
+  [messages, 3],
+  [conversations, 3],
+  [newsCards, 4],
 ]) {
-  assert.equal(deck.length, count);
+  assert.ok(deck.length >= 20);
   assert.equal(new Set(deck.map((item) => item.text)).size, deck.length);
   for (const item of deck) {
     assert.ok(item.text.length > 20 && item.why.length > 20);
@@ -46,7 +46,7 @@ for (const [deck, count, options] of [
     );
   }
 }
-assert.equal(sorting.length, 12);
+assert.ok(sorting.length >= 20);
 assert.equal(new Set(sorting.map((item) => item.name)).size, sorting.length);
 for (const item of sorting)
   assert.ok(
@@ -62,7 +62,7 @@ for (const item of trafficQuestions) {
   assert.ok(item.text.length > 20 && item.why.length > 20);
   assert.ok(Number.isInteger(item.answer) && item.answer >= 0 && item.answer < item.options.length);
 }
-assert.equal(repairs.length, 8);
+assert.ok(repairs.length >= 20);
 assert.equal(new Set(repairs.map((item) => item.title)).size, repairs.length);
 for (const item of repairs) {
   assert.equal(item.steps.length, 4);
@@ -126,5 +126,5 @@ for (const file of [
 ])
   execFileSync(process.execPath, ["--check", file]);
 console.log(
-  "Skill worlds validated: twenty-one unique modes, expanded non-duplicate scenario banks, Traffic Town road-sign practice, complete routes, repair sequences, and eight shortest-path-verified rover grids.",
+  "Skill worlds validated: twenty-one unique modes, twenty-item minimum replay banks, Traffic Town road-sign practice, complete routes, repair sequences, and eight shortest-path-verified rover grids.",
 );
