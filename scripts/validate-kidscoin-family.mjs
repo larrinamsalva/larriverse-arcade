@@ -12,6 +12,8 @@ const safeSlug = value => typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)
 const unique = list => new Set(list).size === list.length;
 
 const manifest = JSON.parse(await readFile(path.join(root, base, 'family.json'), 'utf8'));
+const questionPack = JSON.parse(await readFile(path.join(root, base, 'family-question-pack-2.json'), 'utf8'));
+const loaderJs = await readFile(path.join(root, base, 'family-data-loader.js'), 'utf8');
 const html = await readFile(path.join(root, base, 'index.html'), 'utf8');
 const js = await readFile(path.join(root, base, 'game.js'), 'utf8');
 
@@ -61,6 +63,32 @@ for (const lesson of manifest.lessons) {
 }
 check(questionCount >= 36, 'KidsCoin publishes at least 36 learning questions');
 check(unique(questionIds), 'KidsCoin question IDs are unique');
+check(questionPack.schemaVersion === 1, 'KidsCoin question expansion schema is version 1');
+check(questionPack.packId === 'kidscoin-family-expansion-2', 'KidsCoin question expansion keeps its stable pack id');
+check(questionPack.questionsByLesson && typeof questionPack.questionsByLesson === 'object', 'KidsCoin expansion maps questions by lesson');
+const mergedQuestionIds = [...questionIds];
+let mergedQuestionCount = questionCount;
+for (const lesson of manifest.lessons) {
+  const additions = questionPack.questionsByLesson?.[lesson.id] || [];
+  check(additions.length === 14, `${lesson.id}: fourteen expansion questions exist`);
+  const merged = [...lesson.questions, ...additions];
+  check(merged.length >= 20, `${lesson.id}: at least twenty questions exist after expansion`);
+  check(unique(merged.map(question => question.id)), `${lesson.id}: merged question ids are unique`);
+  for (const question of additions) {
+    mergedQuestionCount += 1;
+    mergedQuestionIds.push(question.id);
+    check(safeSlug(question.id), `${lesson.id}: expansion id ${question.id} is safe`);
+    check(typeof question.prompt === 'string' && question.prompt.trim().length >= 10, `${question.id}: expansion prompt is useful`);
+    check(Array.isArray(question.options) && question.options.length === 4, `${question.id}: expansion has four answer options`);
+    check(Number.isInteger(question.answer) && question.answer >= 0 && question.answer < 4, `${question.id}: expansion answer index is valid`);
+    check(typeof question.explanation === 'string' && question.explanation.trim().length >= 15, `${question.id}: expansion explanation is useful`);
+    check(['starter','growing','challenge'].includes(question.difficulty), `${question.id}: expansion difficulty is supported`);
+  }
+}
+check(mergedQuestionCount >= 120, 'KidsCoin publishes at least 120 merged learning questions');
+check(unique(mergedQuestionIds), 'KidsCoin merged question IDs are unique across base and expansion');
+check(loaderJs.includes("family-question-pack-2.json"), 'KidsCoin loader fetches the question expansion');
+check(loaderJs.includes('mergeQuestions'), 'KidsCoin loader merges base and expansion questions');
 
 check(Array.isArray(manifest.rewards) && manifest.rewards.length === 8, 'eight parent-approved rewards exist');
 check(unique(manifest.rewards.map(item => item.id)), 'reward IDs are unique');
@@ -92,10 +120,12 @@ for (const forbidden of ['KIDZ_PRICE_BASE','livePrice(','staked *','Leaflet','na
 
 const syntax = spawnSync(process.execPath, ['--check', path.join(root, base, 'game.js')], { encoding: 'utf8' });
 check(syntax.status === 0, 'KidsCoin game.js passes node --check');
+const loaderSyntax = spawnSync(process.execPath, ['--check', path.join(root, base, 'family-data-loader.js')], { encoding: 'utf8' });
+check(loaderSyntax.status === 0, 'KidsCoin family-data-loader.js passes node --check');
 
 if (failures.length) {
   console.error(`KidsCoin Family validation failed with ${failures.length} problem${failures.length === 1 ? '' : 's'}:`);
   failures.forEach(message => console.error(`  ✗ ${message}`));
   process.exit(1);
 }
-console.log(`KidsCoin Family validation passed: ${checks.length} checks, ${manifest.tasks.length} chores, ${manifest.lessons.length} lessons, ${questionCount} questions, ${manifest.rewards.length} rewards.`);
+console.log(`KidsCoin Family validation passed: ${checks.length} checks, ${manifest.tasks.length} chores, ${manifest.lessons.length} lessons, ${mergedQuestionCount} merged questions, ${manifest.rewards.length} rewards.`);
