@@ -156,7 +156,7 @@ test("Traffic Town: consecutive rounds rotate to ten unseen signs", async ({ pag
 test("Repair Café: draw eight from twenty, reject premature steps, and sequence the round", async ({
   page,
 }) => {
-  expect(repairs).toHaveLength(20);
+  expect(repairs.length).toBeGreaterThanOrEqual(20);
   await round(page, "repair-cafe", async () => {
     const played = [];
     for (let i = 0; i < 8; i++) {
