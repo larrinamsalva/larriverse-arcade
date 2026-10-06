@@ -2,12 +2,15 @@
   'use strict';
 
   const nativeFetch = window.fetch.bind(window);
-  const PACK_URL = new URL('family-question-pack-2.json', location.href).href;
+  const PACK_URLS = [
+    new URL('family-question-pack-2.json', location.href).href,
+    new URL('family-question-pack-3.json', location.href).href
+  ];
   let handled = false;
 
-  function mergeQuestions(manifest, pack) {
+  function mergeQuestions(manifest, packs) {
     const lessons = (manifest.lessons || []).map(lesson => {
-      const additions = pack.questionsByLesson?.[lesson.id] || [];
+      const additions = packs.flatMap(pack => pack.questionsByLesson?.[lesson.id] || []);
       const ids = new Set();
       const questions = [...(lesson.questions || []), ...additions].filter(question => {
         if (!question?.id || ids.has(question.id)) return false;
@@ -17,16 +20,17 @@
       return { ...lesson, questions };
     });
     const totalQuestions = lessons.reduce((sum, lesson) => sum + lesson.questions.length, 0);
+    const packIds = packs.map(pack => pack.packId);
     window.KidsCoinFamilyData = Object.freeze({
-      version: 2,
-      packId: pack.packId,
+      version: 3,
+      packIds,
       lessons: lessons.length,
       questions: totalQuestions
     });
     return {
       ...manifest,
       schemaVersion: Math.max(Number(manifest.schemaVersion) || 1, 2),
-      questionPacks: [...(manifest.questionPacks || []), pack.packId],
+      questionPacks: [...new Set([...(manifest.questionPacks || []), ...packIds])],
       lessons
     };
   }
@@ -36,15 +40,19 @@
     if (handled || !requestUrl.pathname.endsWith('/games/kidscoin-family/family.json')) return nativeFetch(input, init);
     handled = true;
 
-    const [baseResponse, packResponse] = await Promise.all([
+    const [baseResponse, ...packResponses] = await Promise.all([
       nativeFetch(input, init),
-      nativeFetch(PACK_URL, { cache: 'no-store' })
+      ...PACK_URLS.map(url => nativeFetch(url, { cache: 'no-store' }))
     ]);
     if (!baseResponse.ok) return baseResponse;
-    if (!packResponse.ok) throw new Error(`KidsCoin question expansion could not load (${packResponse.status})`);
+    const failedPack = packResponses.find(response => !response.ok);
+    if (failedPack) throw new Error(`KidsCoin question expansion could not load (${failedPack.status})`);
 
-    const [manifest, pack] = await Promise.all([baseResponse.clone().json(), packResponse.json()]);
-    const merged = mergeQuestions(manifest, pack);
+    const [manifest, ...packs] = await Promise.all([
+      baseResponse.clone().json(),
+      ...packResponses.map(response => response.json())
+    ]);
+    const merged = mergeQuestions(manifest, packs);
     const headers = new Headers(baseResponse.headers);
     headers.set('content-type', 'application/json; charset=utf-8');
     window.fetch = nativeFetch;
