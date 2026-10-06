@@ -35,7 +35,6 @@
   <main id="app" tabindex="-1">
     <section class="screen active" id="titleScreen" aria-labelledby="gameTitle">
       <div class="stars" aria-hidden="true"></div>
-      <a class="arcade-link" href="../../index.html">← LarriVerse Arcade</a>
       <div class="title-card">
         <p class="eyebrow">Collect · Battle · Conquer</p>
         <h1 id="gameTitle">Road Trip<br><span>Quest!</span></h1>
@@ -69,10 +68,12 @@
           <div class="road-message" id="roadMessage">Collect items to charge the boss meter!</div>
         </div>
         <p id="motionRoadNote" class="motion-road-note" hidden>Reduced motion: items stay still. Move to an item’s lane with the lane buttons or arrow keys, then tap the item or focus it and press Enter to collect. Your inventory and battles work the same way.</p>
-        <div class="lane-controls" aria-label="Lane controls">
-          <button id="leftButton" aria-label="Move left">◀</button>
+        <div class="lane-controls" aria-label="Driving controls">
+          <div class="lane-movers" aria-label="Lane controls">
+            <button id="leftButton" aria-label="Move left">◀</button>
+            <button id="rightButton" aria-label="Move right">▶</button>
+          </div>
           <button id="battleButton" disabled>Boss battle <span id="battleReady">60%</span></button>
-          <button id="rightButton" aria-label="Move right">▶</button>
         </div>
       </section>
 
