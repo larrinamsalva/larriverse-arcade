@@ -247,7 +247,10 @@ test('reduced-motion Road Trip keeps same-lane collection, saved inventory and d
 });
 
 test('Bubble Resonance fills the play area, settles shallow bank shots, and keeps keyboard/comfort controls separate', async ({ page }) => {
-  await page.addInitScript(() => { Math.random = () => .5; });
+  await page.addInitScript(() => {
+    let calls = 0;
+    Math.random = () => ((calls++ % 6) + .25) / 6;
+  });
   await page.goto('/games/bubble-resonance-phi369/index.html');
   await expect(page.locator('#legend span')).toHaveCount(6);
   await expect(page.locator('#bubbleStatus')).toContainText('Match the numbers');
@@ -264,14 +267,13 @@ test('Bubble Resonance fills the play area, settles shallow bank shots, and keep
   });
   expect(widthUse).toBeGreaterThan(.98);
 
-  const before = await page.locator('#score').textContent();
   await page.locator('#game').focus();
   await page.keyboard.press('ArrowLeft');
   await page.keyboard.press('ArrowRight');
   await page.keyboard.press('Space');
   await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
   await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false', { timeout: 5000 });
-  await expect(page.locator('#score')).not.toHaveText(before);
+  await expect(page.locator('#limit')).toHaveText('CLEAR');
 
   const box = await page.locator('#game').boundingBox();
   await page.mouse.click(box.x + box.width * .95, box.y + box.height * .88);
