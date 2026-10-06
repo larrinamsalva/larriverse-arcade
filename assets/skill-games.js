@@ -252,6 +252,10 @@ function initialize() {
       state.commands = [];
       state.player = robotLevels[0].start;
       state.dir = robotLevels[0].dir;
+      state.trail = [robotLevels[0].start];
+      state.levelStars = Array(robotLevels.length).fill(0);
+      state.activeCommand = -1;
+      state.reached = false;
       renderRobot();
       break;
     case "market":
@@ -703,15 +707,39 @@ function renderEnergy() {
     "Try 2 solar panels, 2 wind turbines, and 1 battery. A sunny-day surplus can help your island get through the night.";
 }
 
+function roverStarTotal() {
+  return state.levelStars.reduce((total, stars) => total + stars, 0);
+}
+function roverStarsFor(commandsUsed, par) {
+  return commandsUsed <= par ? 3 : commandsUsed <= par + 2 ? 2 : 1;
+}
 function renderRobot() {
   const level = robotLevels[state.level];
-  stage(`Robot world ${state.level + 1} of 3`);
-  board.innerHTML = `<p class="board-note">The arrow shows where the rover faces. Turns rotate in place. Tap a command chip to remove it.</p><div class="tile-grid" aria-label="Robot path grid">${Array.from({ length: 25 }, (_, i) => `<div class="tile rover ${level.rocks.includes(i) ? "rock" : ""} ${i === state.player ? "player" : ""}" aria-label="Row ${Math.floor(i / 5) + 1}, column ${(i % 5) + 1}: ${i === state.player ? "rover" : i === level.goal ? "goal" : level.rocks.includes(i) ? "rock" : "path"}">${i === state.player ? `🤖<small>${["↑", "→", "↓", "←"][state.dir]}</small>` : i === level.goal ? "⭐" : level.rocks.includes(i) ? "🪨" : "·"}</div>`).join("")}</div><div class="command-bar"><button class="secondary" data-command="F">↑ Forward</button><button class="secondary" data-command="L">↶ Turn left</button><button class="secondary" data-command="R">↷ Turn right</button></div><div class="command-list" aria-label="Your command list">${state.commands.length ? state.commands.map((cmd, i) => `<button data-remove="${i}" aria-label="Remove command ${i + 1}: ${cmd === "F" ? "forward" : cmd === "L" ? "left turn" : "right turn"}">${cmd === "F" ? "↑" : cmd === "L" ? "↶" : "↷"}</button>`).join("") : '<span class="board-note" style="margin:0">Your program goes here (up to 24 commands).</span>'}</div>`;
+  const directions = ["↑ North", "→ East", "↓ South", "← West"];
+  const trail = new Set(state.trail || [level.start]);
+  const currentStars = state.levelStars[state.level] || 0;
+  stage(`Robot world ${state.level + 1} of ${robotLevels.length} · ${level.name}`);
+  board.innerHTML = `<div class="stat-row rover-stats">${chip("Facing", directions[state.dir])}${chip("World", `${state.level + 1}/${robotLevels.length}`)}${chip("3-star target", `${level.par} cmds`)}${chip("Stars earned", `${roverStarTotal()}/${robotLevels.length * 3}`)}</div><p class="board-note rover-lesson"><strong>Forward moves Rover in the direction it is facing.</strong> Left and Right turn Rover in place. The dotted trail shows where it has traveled.</p><div class="tile-grid rover-grid" aria-label="Robot path grid">${Array.from({ length: 25 }, (_, i) => {
+    const rock = level.rocks.includes(i);
+    const player = i === state.player;
+    const goal = i === level.goal;
+    const visited = trail.has(i) && !player;
+    const label = player
+      ? `rover facing ${directions[state.dir].slice(2)}`
+      : goal
+        ? "goal star"
+        : rock
+          ? "rock"
+          : visited
+            ? "visited path"
+            : "path";
+    return `<div class="tile rover ${rock ? "rock" : ""} ${player ? "player" : ""} ${visited ? "trail" : ""} ${goal ? "goal" : ""}" aria-label="Row ${Math.floor(i / 5) + 1}, column ${(i % 5) + 1}: ${label}">${player ? `🤖<small>${["↑", "→", "↓", "←"][state.dir]}</small>` : goal ? "⭐" : rock ? "🪨" : visited ? "•" : "·"}</div>`;
+  }).join("")}</div><div class="rover-efficiency"><strong>${esc(level.name)}</strong><span>Target: ${level.par} commands for ⭐⭐⭐</span>${currentStars ? `<span class="rover-stars" aria-label="${currentStars} efficiency stars">${"⭐".repeat(currentStars)}${"☆".repeat(3 - currentStars)}</span>` : "<span>Reach the star to earn 1–3 efficiency stars.</span>"}</div><div class="command-bar" aria-label="Add rover commands"><button class="secondary" data-command="F" ${running || state.reached ? "disabled" : ""}>↑ Forward</button><button class="secondary" data-command="L" ${running || state.reached ? "disabled" : ""}>↶ Turn left</button><button class="secondary" data-command="R" ${running || state.reached ? "disabled" : ""}>↷ Turn right</button></div><div class="command-list" aria-label="Your command list">${state.commands.length ? state.commands.map((cmd, i) => `<button class="${i === state.activeCommand ? "active-command" : ""}" data-remove="${i}" aria-label="Remove command ${i + 1}: ${cmd === "F" ? "forward" : cmd === "L" ? "left turn" : "right turn"}" ${i === state.activeCommand ? 'aria-current="step"' : ""} ${running || state.reached ? "disabled" : ""}><small>${i + 1}</small>${cmd === "F" ? "↑" : cmd === "L" ? "↶" : "↷"}</button>`).join("") : '<span class="board-note" style="margin:0">Your program goes here (up to 32 commands).</span>'}</div>`;
   bind("[data-command]", (node) => {
-    if (running) return;
-    if (state.commands.length >= 24) {
+    if (running || state.reached) return;
+    if (state.commands.length >= 32) {
       say(
-        "Your program has 24 commands. Remove a command before adding another.",
+        "Your program has 32 commands. Remove a command before adding another.",
         "try",
       );
       return;
@@ -720,57 +748,69 @@ function renderRobot() {
     renderRobot();
   });
   bind("[data-remove]", (node) => {
-    if (!running) {
+    if (!running && !state.reached) {
       state.commands.splice(Number(node.dataset.remove), 1);
       renderRobot();
     }
   });
-  button("Run my code", runRobot, "primary", running || !state.commands.length);
+  button("Run my code", runRobot, "primary", running || state.reached || !state.commands.length);
   button(
     "Clear code",
     () => {
       state.commands = [];
       state.player = level.start;
       state.dir = level.dir;
+      state.trail = [level.start];
+      state.activeCommand = -1;
+      state.reached = false;
       renderRobot();
+      say("Program cleared. Rover is back at the start, facing its original direction.");
     },
     "secondary",
-    running,
+    running || state.reached,
   );
   if (state.reached)
-    button(state.level === 2 ? "See my rover" : "Next world", () => {
-      if (state.level === 2) {
+    button(state.level === robotLevels.length - 1 ? "See my rover" : "Next world", () => {
+      if (state.level === robotLevels.length - 1) {
+        const totalStars = roverStarTotal();
+        const finalScore = Math.round((totalStars / (robotLevels.length * 3)) * 100);
         finish(
-          "You sequenced, tested, and improved programs in three rover worlds.",
-          100,
+          `You sequenced, tested, and improved programs in ${robotLevels.length} rover worlds and earned ${totalStars} of ${robotLevels.length * 3} efficiency stars.`,
+          finalScore,
         );
         return;
       }
       state.level++;
       state.commands = [];
       state.reached = false;
+      state.activeCommand = -1;
       state.player = robotLevels[state.level].start;
       state.dir = robotLevels[state.level].dir;
+      state.trail = [state.player];
       renderRobot();
-      say("A new path. Plan before you press run.");
+      say(`Welcome to ${robotLevels[state.level].name}. Check Rover's facing direction before you build the next program.`);
     });
-  progress(state.level + (state.reached ? 1 : 0), 3);
-  updateScore(((state.level + (state.reached ? 1 : 0)) / 3) * 100);
+  const completed = state.level + (state.reached ? 1 : 0);
+  progress(completed, robotLevels.length, `${completed} of ${robotLevels.length} rover worlds solved`);
+  updateScore(Math.round((roverStarTotal() / (robotLevels.length * 3)) * 100));
   hint = level.hint;
 }
 async function runRobot() {
-  if (running || finished) return;
+  if (running || finished || state.reached) return;
   const level = robotLevels[state.level];
   const program = [...state.commands];
   const session = state;
   running = true;
   state.reached = false;
+  state.activeCommand = -1;
   state.player = level.start;
   state.dir = level.dir;
+  state.trail = [level.start];
   renderRobot();
   for (let i = 0; i < program.length; i++) {
     if (session !== state || finished) return;
     const cmd = program[i];
+    state.activeCommand = i;
     if (cmd === "L") state.dir = (state.dir + 3) % 4;
     else if (cmd === "R") state.dir = (state.dir + 1) % 4;
     else {
@@ -784,32 +824,41 @@ async function runRobot() {
         running = false;
         renderRobot();
         say(
-          `Command ${i + 1} meets a rock or edge. Change your program and try again. Debugging is part of coding.`,
+          `Command ${i + 1} hit a rock or edge while Rover faced ${["north", "east", "south", "west"][state.dir]}. The trail shows the last safe path. Change your program and try again.`,
           "try",
         );
         return;
       }
       state.player = next;
+      state.trail.push(next);
     }
     tone();
     renderRobot();
     say(
-      `Command ${i + 1} of ${program.length}: ${cmd === "F" ? "forward" : cmd === "L" ? "turn left" : "turn right"}.`,
+      `Command ${i + 1} of ${program.length}: ${cmd === "F" ? `forward while facing ${["north", "east", "south", "west"][state.dir]}` : cmd === "L" ? "turn left in place" : "turn right in place"}.`,
     );
     if (state.player === level.goal) {
+      const used = i + 1;
+      const stars = roverStarsFor(used, level.par);
+      state.levelStars[state.level] = Math.max(state.levelStars[state.level], stars);
       state.reached = true;
       running = false;
+      state.activeCommand = -1;
       renderRobot();
-      say("Your rover found the star! You can explore the next world.", "good");
+      say(
+        `Rover found the star in ${used} command${used === 1 ? "" : "s"} — ${"⭐".repeat(stars)}${"☆".repeat(3 - stars)}. ${stars === 3 ? "That meets the shortest-path target!" : "You solved it. Try trimming turns or extra moves if you want more efficiency stars."}`,
+        "good",
+      );
       return;
     }
     if (!sdk.settings().reducedMotion)
-      await new Promise((resolve) => setTimeout(resolve, 250));
+      await new Promise((resolve) => setTimeout(resolve, 300));
   }
   running = false;
+  state.activeCommand = -1;
   renderRobot();
   say(
-    "Your rover followed the program. It needs a few different steps to reach the star.",
+    `Rover followed all ${program.length} commands but has not reached the star yet. Use the trail and Facing arrow to decide what to change.`,
     "try",
   );
 }

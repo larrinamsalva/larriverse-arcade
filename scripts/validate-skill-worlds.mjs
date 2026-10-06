@@ -67,7 +67,42 @@ for (const item of repairs) {
   assert.equal(item.steps.length, 4);
   assert.equal(new Set(item.steps).size, 4);
 }
-assert.equal(robotLevels.length, 3);
+assert.equal(robotLevels.length, 8);
+assert.equal(new Set(robotLevels.map((level) => level.name)).size, robotLevels.length);
+const roverAdjacent = (a, b) =>
+  Math.abs(Math.floor(a / 5) - Math.floor(b / 5)) +
+    Math.abs((a % 5) - (b % 5)) ===
+  1;
+function shortestRoverProgram(level) {
+  const moves = [-5, 1, 5, -1];
+  const queue = [{ player: level.start, dir: level.dir, length: 0 }];
+  const seen = new Set([`${level.start}:${level.dir}`]);
+  for (let index = 0; index < queue.length; index++) {
+    const state = queue[index];
+    if (state.player === level.goal) return state.length;
+    const forward = state.player + moves[state.dir];
+    if (
+      forward >= 0 &&
+      forward < 25 &&
+      roverAdjacent(forward, state.player) &&
+      !level.rocks.includes(forward)
+    ) {
+      const key = `${forward}:${state.dir}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        queue.push({ player: forward, dir: state.dir, length: state.length + 1 });
+      }
+    }
+    for (const dir of [(state.dir + 3) % 4, (state.dir + 1) % 4]) {
+      const key = `${state.player}:${dir}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        queue.push({ player: state.player, dir, length: state.length + 1 });
+      }
+    }
+  }
+  return Infinity;
+}
 for (const level of robotLevels) {
   assert.ok(
     !level.rocks.includes(level.start) && !level.rocks.includes(level.goal),
@@ -75,6 +110,12 @@ for (const level of robotLevels) {
   assert.ok(
     level.start >= 0 && level.start < 25 && level.goal >= 0 && level.goal < 25,
   );
+  assert.ok(Number.isInteger(level.dir) && level.dir >= 0 && level.dir < 4);
+  assert.ok(Number.isInteger(level.par) && level.par > 0 && level.par <= 32);
+  assert.ok(level.hint.length > 40);
+  assert.equal(new Set(level.rocks).size, level.rocks.length);
+  assert.ok(level.rocks.every((rock) => Number.isInteger(rock) && rock >= 0 && rock < 25));
+  assert.equal(shortestRoverProgram(level), level.par);
 }
 for (const file of [
   "assets/expanded-scenarios.js",
@@ -84,5 +125,5 @@ for (const file of [
 ])
   execFileSync(process.execPath, ["--check", file]);
 console.log(
-  "Skill worlds validated: twenty-one unique modes, expanded non-duplicate scenario banks, Traffic Town road-sign practice, complete routes, repair sequences, and rover grids.",
+  "Skill worlds validated: twenty-one unique modes, expanded non-duplicate scenario banks, Traffic Town road-sign practice, complete routes, repair sequences, and eight shortest-path-verified rover grids.",
 );
