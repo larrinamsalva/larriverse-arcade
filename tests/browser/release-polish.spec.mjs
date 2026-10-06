@@ -246,18 +246,34 @@ test('reduced-motion Road Trip keeps same-lane collection, saved inventory and d
   await checkReflow(page, 'Road Trip saved bag');
 });
 
-test('Bubble Resonance numbers, silent start, keyboard aiming and comfort dialog do not conflict', async ({ page }) => {
+test('Bubble Resonance fills the play area, settles shallow bank shots, and keeps keyboard/comfort controls separate', async ({ page }) => {
   await page.addInitScript(() => { Math.random = () => .5; });
   await page.goto('/games/bubble-resonance-phi369/index.html');
   await expect(page.locator('#legend span')).toHaveCount(6);
   await expect(page.locator('#bubbleStatus')).toContainText('Match the numbers');
   await expect(page.locator('#sound')).toHaveAttribute('aria-pressed', 'false');
+
+  const widthUse = await page.locator('#game').evaluate(node => {
+    const canvas = node.getBoundingClientRect();
+    const cabinet = node.closest('.cabinet').getBoundingClientRect();
+    return canvas.width / cabinet.width;
+  });
+  expect(widthUse).toBeGreaterThan(.98);
+
   const before = await page.locator('#score').textContent();
   await page.locator('#game').focus();
   await page.keyboard.press('ArrowLeft');
   await page.keyboard.press('ArrowRight');
   await page.keyboard.press('Space');
+  await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
+  await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false', { timeout: 5000 });
   await expect(page.locator('#score')).not.toHaveText(before);
+
+  const box = await page.locator('#game').boundingBox();
+  await page.mouse.click(box.x + box.width * .95, box.y + box.height * .88);
+  await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
+  await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false', { timeout: 5000 });
+
   await page.locator('[data-lv-comfort]').click();
   const status = await page.locator('#bubbleStatus').textContent();
   await page.locator('[data-lv-setting="highContrast"]').focus();
