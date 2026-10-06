@@ -46,7 +46,7 @@ for (const width of [320, 390, 768, 1024, 1440]) {
 
 test('discovery stays local, and search and category filters keep their keyboard focus', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#gameGrid .game-card')).toHaveCount(28);
+  await expect(page.locator('#gameGrid .game-card')).toHaveCount(29);
   await expect(page.locator('#continueGroup')).toBeHidden();
   await page.evaluate(() => window.LarriVerseArcade.award('scam-sleuth', { xp: 18, kc: 3, score: 70, completed: true }));
   await expect(page.locator('#continueGames')).toContainText('Scam Sleuth');
@@ -59,7 +59,7 @@ test('discovery stays local, and search and category filters keep their keyboard
   await page.locator('#search').fill('no-such-cabinet');
   await page.locator('#clearSearch').click();
   await expect(page.locator('#search')).toBeFocused();
-  await expect(page.locator('#gameGrid .game-card')).toHaveCount(28);
+  await expect(page.locator('#gameGrid .game-card')).toHaveCount(29);
   await page.locator('#search').fill('Listening & boundaries');
   await expect(page.locator('#gameGrid .game-card')).toHaveCount(1);
   await expect(page.locator('#gameGrid')).toContainText('Kindness Quest');
@@ -70,7 +70,7 @@ test('reduced motion and system preference stop spotlight rotation without chang
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.clock.install();
   await page.goto('/');
-  await expect(page.locator('#playableCount')).toHaveText('28');
+  await expect(page.locator('#playableCount')).toHaveText('29');
   const first = await page.locator('#screenTitle').textContent();
   await page.clock.fastForward(13_000);
   await expect(page.locator('#screenTitle')).not.toHaveText(first);
@@ -309,7 +309,7 @@ test('high contrast gives progress navigation a dark surface and keeps printed r
 test('keyboard cabinet links scroll clear of the mobile shortcut dock', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 700 });
   await page.goto('/');
-  await expect(page.locator('#gameGrid .game-card')).toHaveCount(28);
+  await expect(page.locator('#gameGrid .game-card')).toHaveCount(29);
   for (const target of [page.locator('#newGames .discovery-card').last(), page.locator('#gameGrid .launch').last()]) {
     await target.focus();
     await expect(target).toBeFocused();
