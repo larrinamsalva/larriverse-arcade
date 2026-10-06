@@ -98,4 +98,4 @@ if (failures.length) {
   failures.forEach(message => console.error(`  ✗ ${message}`));
   process.exit(1);
 }
-console.log(`Learning question bank validation passed: ${checks.length} checks, ${total} shared questions across ${requiredSubjects.length} subjects.`);
+console.log(`Learning question bank validation passed: ${checks.length} checks, merged counts ${JSON.stringify(mergedCounts)} across ${requiredSubjects.length} subjects.`);
