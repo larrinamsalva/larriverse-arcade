@@ -1,6 +1,6 @@
 # LarriVerse 1.0 polish — candidate QA evidence
 
-Automated and agent-inspected evidence only. **This document does not approve a release or replace a human desktop/physical-phone report.** The collection remains 28 games, `1.0.0 rc.1`, with `releaseState: candidate` and mandatory human checks.
+Automated and agent-inspected evidence only. **This document does not approve a release or replace a human desktop/physical-phone report.** The collection remains 29 games, `1.0.0 rc.1`, with `releaseState: candidate` and mandatory human checks.
 
 ## Source and environment
 
@@ -18,17 +18,17 @@ Automated and agent-inspected evidence only. **This document does not approve a 
 | --- | --- |
 | `npm run validate` | All 21 validation scripts pass; existing content, safety, privacy, release, and approval contracts retained. |
 | Complete `npm run test:browser` | 166 passed: 83 desktop and 83 mobile. Zero failed, skipped, or flaky results; 245.2 seconds. |
-| Route/reflow coverage | All 28 game routes and the lobby, My Learning Day, Goals, Passport, Family Report, and five QA pages load. All 38 routes checked at 320/390/768/1024/1440px with normal and 200% text; high contrast and reduced motion included. |
+| Route/reflow coverage | All 29 game routes and the lobby, My Learning Day, Goals, Passport, Family Report, and five QA pages load. All 39 routes checked at 320/390/768/1024/1440px with normal and 200% text; high contrast and reduced motion included. |
 | Gameplay | Existing twelve practice-world and eight expedition suites pass. Focused original-cabinet checks cover questions, keyboard aiming, same-lane collection, completion/replay, saved inventory, shared comfort, and sound defaults. |
 | Progress and backups | Profile/settings/game progress persists across reloads. Download, erase, restore, invalid-import handling, and unrelated-storage preservation pass. |
 | Export privacy | Backups exclude unrelated localStorage. Passport/Family Report downloads exclude raw family records, PIN data, and location coordinates. |
 | Comfort/accessibility | Shared dialog focus/escape, keyboard navigation, narrow completion views, larger text, contrast, OS/shared reduced motion, stopped lobby rotation, and print CSS checks pass. |
-| Gallery | Fresh 58-image desktop/mobile pack generated. Exactly 58 unique deterministic descriptions, no undefined/null metadata, and valid paths/viewports/PNG dimensions/byte counts/SHA-256 hashes. All 58 PNGs decode. |
+| Gallery | Fresh 60-image desktop/mobile pack generated. Exactly 60 unique deterministic descriptions, no undefined/null metadata, and valid paths/viewports/PNG dimensions/byte counts/SHA-256 hashes. All 60 PNGs decode. |
 | Release gate negative check | `npm run verify:release-approval` exits 1 because the real human approval JSON is missing, as required. |
 
 The existing Harbor Helpers capacity/delivery test keeps all assertions. It now uses two independent taps because the shelf button is replaced after each tap. Screenshot capture clears temporary focus/scroll artifacts after keyboard checks and waits for question-driven start controls to be ready.
 
-Agent inspection covered the 58 opening images and focused narrow/enlarged-text views. It corrected the stale Creature Catcher loading label, cramped phone learning-path buttons, duplicate opening return link, contrast issues, and hidden mobile Passport comfort controls. This inspection is candidate evidence, **not human visual approval**.
+Agent inspection covered the 60 opening images and focused narrow/enlarged-text views. It corrected the stale Creature Catcher loading label, cramped phone learning-path buttons, duplicate opening return link, contrast issues, and hidden mobile Passport comfort controls. This inspection is candidate evidence, **not human visual approval**.
 
 ## Reproduce
 
@@ -49,9 +49,9 @@ Browser QA creates screenshots under `artifacts/screenshots/` and the offline hu
 
 Still pending:
 
-- Hands-on desktop and **real physical-phone** gameplay for all 28 cabinets, plus all six device-wide checks on each device: 56 cabinet results total.
-- Human visual/privacy inspection and alt-text approval of all 58 gallery images.
+- Hands-on desktop and **real physical-phone** gameplay for all 29 cabinets, plus all six device-wide checks on each device: 58 cabinet results total.
+- Human visual/privacy inspection and alt-text approval of all 60 gallery images.
 - Real touch, orientation, scrolling, sound comfort, instruction clarity, gameplay feel, accessibility, backup/restore, and print-output review.
-- Actual guided device reports and gallery approval, final human release decision, committed `docs/release-approval.json`, and the exact 58 approved images with the existing hash and code-ancestry checks.
+- Actual guided device reports and gallery approval, final human release decision, committed `docs/release-approval.json`, and the exact 60 approved images with the existing hash and code-ancestry checks.
 
 No approval JSON, device result, screenshot approval, release tag, merge, or deployment is fabricated here. Follow [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md), [DEVICE-QA.md](DEVICE-QA.md), and [GALLERY-APPROVAL.md](GALLERY-APPROVAL.md).
