@@ -1,8 +1,8 @@
 # LarriVerse Arcade 1.0
 
-LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection into eight independently playable, GitHub Pages-ready cabinets with a shared device-local profile, fictional rewards, accessibility settings, validation, and clear privacy and safety boundaries.
+LarriVerse Arcade 1.0 is a release candidate with 28 independently playable games: eight original cabinets, twelve practice worlds, and eight expeditions. They share device-local progress, fictional rewards, comfort controls, validation, and privacy and safety boundaries. Human visual/gameplay approval and real physical-phone QA remain required before the formal release.
 
-## Eight playable cabinets
+## Eight original cabinets
 
 1. **KidsCoin Family App** — unlocked learning with 60 questions, parent-assigned chores, fictional Family KC, local profiles, parent-approved KC awards and reward redemptions, notes, grace days, and a family ledger.
 2. **Brain Sweat Expanded** — 69 reviewed hands-on activities across six worlds while higher-risk tiers remain visible and review gated.
@@ -98,6 +98,17 @@ LarriVerse Arcade 1.0 turns Larrina's first recovered browser-concept collection
 - Road Trip Quest GPS does not upload, save, or map live coordinates and is not navigation or emergency assistance
 - Optional audio begins disabled where the source requires a stronger comfort boundary
 
+## 1.0 polish candidate
+
+- Shared LarriVerse context, arcade return, comfort dialog, local profile summary, and replay/return treatment across original cabinets.
+- Optional device-local discovery alongside all 28 searchable and filterable games.
+- Focus and reflow hardening at 320px, 390px, tablet, desktop, and 200% text; numbered Bubble Resonance cues and keyboard aiming; stationary Road Trip collection under reduced motion.
+- Explicit deterministic metadata and integrity verification for all 58 release gallery images, including the eight expeditions.
+- Shared local branding and public page metadata, with repository setting recommendations documented.
+- Physical-phone, human visual/gameplay, sound/touch, and print release gates remain pending.
+
+See [V1-POLISH.md](V1-POLISH.md) for the implementation and privacy boundaries.
+
 ## Release qualification
 
 GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all 29 cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
@@ -105,7 +116,7 @@ GitHub Actions verifies routes, syntax, combined question counts, expansion-pack
 
 ## Modern arcade expansion
 
-The collection now includes 29 playable games: the original eight cabinets and these twelve new practice worlds. The release gallery covers the lobby plus every game in both viewports (60 images). The formal release still requires the documented human review.
+The collection includes 29 playable games: eight original cabinets, twelve practice worlds listed below, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (60 images). The formal release still requires the documented human review.
 
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
@@ -138,7 +149,6 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 ### Traffic Town
 
 - **Traffic Town** — Read traffic signs & choose safe actions through ten-question rounds drawn from a 30-question unique bank.
-- Adds a 7+ road-awareness world with 30 unique common U.S. traffic-sign and safe-action questions.
-- Each playthrough serves ten questions and rotates through unseen questions in the current tab before the bank cycles.
-- Expands Scam Sleuth, Kindness Quest, Fact Finder, and Reuse Rally to 12 unique scenarios each, serving six per round.
-- Keeps the experience educational rather than a licensing claim: official local DMV materials and age-appropriate supervision remain the source for real permit preparation and driving rules.
+- Adds early road-awareness practice for ages 7+ using common U.S. sign patterns and safe-choice explanations.
+- Consecutive rounds rotate through unseen questions before the bank cycles.
+- This is educational practice, not a driver's-license course or substitute for official local DMV materials and age-appropriate licensing rules.

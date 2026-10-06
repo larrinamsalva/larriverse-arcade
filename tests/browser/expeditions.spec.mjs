@@ -55,7 +55,8 @@ test("Harbor Helpers: capacity, rejected wrong supplies, efficient deliveries an
   await adventure(page,"harbor-helpers",async()=>{
     await page.locator('[data-cargo="wood"]').click(); await action(page,"Sail to this island");
     await expect(page.locator("#feedback")).toContainText("did not ask");
-    await page.locator('[data-cargo="water"]').click({clickCount:2}); await page.locator('[data-cargo="seeds"]').click();
+    // Loading replaces the shelf: each tap must resolve the current button.
+    await page.locator('[data-cargo="water"]').click(); await page.locator('[data-cargo="water"]').click(); await page.locator('[data-cargo="seeds"]').click();
     await expect(page.locator("#feedback")).toContainText("holds three"); await action(page,"Unload the boat");
     for(let index=0;index<3;index++) {
       await page.locator(`[data-island="${index}"]`).click();

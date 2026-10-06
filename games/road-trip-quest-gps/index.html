@@ -4,13 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#07131f">
-  <meta name="description" content="Road Trip Quest GPS — a privacy-first proximity collection game for LarriVerse Arcade.">
+  <meta name="description" content="Explore a pretend neighborhood, discover places, and collect discoveries. Free game practice in LarriVerse Arcade. KC are fictional; progress stays in this browser.">
   <title>Road Trip Quest GPS · LarriVerse Arcade</title>
   <link rel="stylesheet" href="game.css">
   <link rel="stylesheet" href="../../assets/classic-polish.css">
 <link rel="stylesheet" href="../../assets/emoji.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LarriVerse Arcade">
+  <meta property="og:title" content="Road Trip Quest GPS · LarriVerse Arcade">
+  <meta property="og:description" content="Explore a pretend neighborhood, discover places, and collect discoveries. Free game practice in LarriVerse Arcade. KC are fictional; progress stays in this browser.">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body data-classic="road-trip-quest-gps">
+  <a class="skip-link" href="#lvGameMain">Skip to game</a>
+  <header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+    <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+    <div class="lv-context"><strong>Road Trip Quest GPS</strong><small>Exploring &amp; discovery · Game practice, your pace</small></div>
+    <nav class="lv-tools" aria-label="Arcade tools"><a class="lv-button" href="../../index.html">Back to Arcade</a><button class="lv-button" type="button" data-lv-comfort>Comfort & accessibility</button></nav>
+    <span data-lv-profile>Progress stays in this browser.</span>
+  </header>
   <div class="sky" aria-hidden="true"></div>
 
   <header class="topbar">
@@ -19,7 +33,7 @@
     <button id="privacyButton" class="soft-button">Privacy</button>
   </header>
 
-  <main>
+  <main id="lvGameMain" tabindex="-1">
     <section id="landingView" class="landing view">
       <div class="landing-card">
         <p class="eyebrow">Passenger or parked only</p>
@@ -147,5 +161,6 @@
   <noscript>This cabinet needs JavaScript enabled.</noscript>
   <script src="../../assets/arcade-sdk.js"></script>
   <script src="game.js"></script>
+<script src="../../assets/cabinet-shell.js"></script>
 </body>
 </html>

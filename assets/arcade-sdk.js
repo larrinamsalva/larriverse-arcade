@@ -68,7 +68,7 @@
     const base = freshSettings();
     const source = value && typeof value === 'object' ? value : {};
     return {
-      reducedMotion: typeof source.reducedMotion === 'boolean' ? source.reducedMotion : base.reducedMotion,
+      reducedMotion: base.reducedMotion || (typeof source.reducedMotion === 'boolean' ? source.reducedMotion : false),
       highContrast: Boolean(source.highContrast),
       largeText: Boolean(source.largeText)
     };
@@ -121,9 +121,8 @@
       html.larriverse-reduced-motion *,
       html.larriverse-reduced-motion *::before,
       html.larriverse-reduced-motion *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        animation: none !important;
+        transition: none !important;
       }
     `;
     (document.head || document.documentElement).appendChild(style);
@@ -347,7 +346,14 @@
   }
 
   window.addEventListener('storage', event => {
-    if (event.key === SETTINGS_KEY) applySettings();
+    if (event.key === SETTINGS_KEY || event.key === null) {
+      const settings = applySettings();
+      window.dispatchEvent(new CustomEvent('larriverse:settings', { detail: settings }));
+    }
+  });
+  window.matchMedia?.('(prefers-reduced-motion: reduce)')?.addEventListener?.('change', () => {
+    const settings = applySettings();
+    window.dispatchEvent(new CustomEvent('larriverse:settings', { detail: settings }));
   });
 
   applySettings();

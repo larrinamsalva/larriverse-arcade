@@ -1,0 +1,262 @@
+/* Shared reflow and comfort rules; cabinet artwork and mechanics stay independent. */
+.lv-cabinet-shell {
+  position: relative;
+  z-index: 25;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .75rem 1.25rem;
+  padding: .85rem max(1rem, calc((100vw - 1200px) / 2));
+  background: #f9f7ff;
+  color: #243049;
+  border-bottom: 2px solid #d7cfee;
+  font: 1rem/1.4 ui-rounded, "Trebuchet MS", system-ui, sans-serif;
+}
+.lv-brand { display: flex; align-items: center; gap: .5rem; color: #5140ad; font-weight: 900; text-decoration: none; }
+.lv-brand img { width: 34px; height: 34px; }
+.lv-context { flex: 1 1 200px; min-width: 0; }
+.lv-context strong, .lv-context small, [data-lv-profile] { display: block; }
+.lv-context small, [data-lv-profile] { font-size: .8rem; }
+[data-lv-profile] { color: #566278; flex-basis: 100%; }
+.lv-tools { display: flex; gap: .65rem; flex-wrap: wrap; align-items: center; }
+.lv-button, button[data-lv-comfort] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: .6rem .85rem;
+  border: 1px solid #bdb0dc;
+  border-radius: 12px;
+  background: #fff;
+  color: #4e3d9a;
+  font: 800 .9rem/1.4 system-ui, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.lv-completion, .lv-overlay-tools { margin-top: 1rem; }
+.lv-comfort-dialog {
+  box-sizing: border-box;
+  width: min(580px, calc(100% - 1.5rem));
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  padding: 0;
+  border: 2px solid #bdb0dc;
+  border-radius: 22px;
+  background: #f9f7ff;
+  color: #243049;
+  font: 1rem/1.6 system-ui, sans-serif;
+}
+.lv-comfort-dialog::backdrop { background: #15203dbb; }
+.lv-comfort-card { padding: clamp(1rem, 4vw, 1.75rem); }
+.lv-comfort-card h2 { font-size: 1.5rem; margin: .4rem 0 1rem; }
+.lv-eyebrow { font-size: .8rem; font-weight: 900; color: #5140ad; }
+.lv-comfort-card label { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 64px; margin: 1rem 0; }
+.lv-comfort-card label small { display: block; font-size: .85rem; }
+.lv-comfort-card input { flex: 0 0 26px; width: 26px; height: 26px; accent-color: #6854d9; }
+.lv-close { float: right; width: 44px; height: 44px; border: 1px solid #bdb0dc; border-radius: 12px; color: #4e3d9a; background: #fff; font-size: 1.5rem; cursor: pointer; }
+.lv-comfort-status { display: block; min-height: 1.6em; font-size: .9rem; }
+.lv-local-note { font-size: .85rem; }
+body[data-classic] > .skip-link { position: fixed; z-index: 100; top: .5rem; left: .5rem; transform: translateY(-160%); background: #fff; color: #243049; border-radius: 10px; padding: .7rem; }
+body[data-classic] > .skip-link:focus { transform: none; }
+
+/* Allow intrinsic grid/flex children to shrink instead of pushing the viewport. */
+:is(.nav > *, .nav-pills, .welcome-row > *, .player-pill, .section-head > *,
+  .topbar > *, .topbar .brand, .topbar .brand > div, .top-actions, .top-actions > *,
+  .hero-copy, .path-card, .path-card header, .identity-mark, .level-card,
+  .privacy-note, .privacy-note > div, .goal-builder, .goal-builder label,
+  .summary, .imports, .imports > *, .imports label, .stat-grid > *, .stats > *,
+  .toolbar, .toolbar > *, .actions > *, .files > *, .proof-grid > *,
+  .handoff-grid > *, .handoff-grid a, .next-links > *, .readiness-grid > *,
+  .device-fields > *, .identity-grid > *, .game-grid > *, .world-grid > *,
+  .play-card, .board-intro, .pipe-labels > *, .mode-grid > *, .profile-chip,
+  .choice-card, .suggestion-card, .goal-card, .cabinet-row, .cabinet-title,
+  .cabinet-title > *, .profile-summary > *, .profile-summary .identity > *,
+  .dashboard-grid > *, .quick-quest, .quick-quest > *, .split-section > *,
+  .insight-grid > *, .path-grid > *) { min-width: 0; }
+.brand { min-width: 0; white-space: normal; }
+.cabinet-title small { display: block; white-space: normal; }
+:is(.choice-card, .suggestion-card, .goal-card) > * { min-width: 0; }
+:is(.choice-card, .suggestion-card) footer { padding: 0; border: 0; }
+:is(h1, h2, h3, p, li, small, label, output, code, summary, strong, b, .brand, .player-pill,
+  .path-badge, .status-badge, .profile-chip, .lv-cabinet-shell, .game-badges) { overflow-wrap: anywhere; }
+:is(button, input, select, textarea) { max-width: 100%; }
+input[type="file"] { width: 100%; min-width: 0; font-size: .85rem; }
+:is(.steps > *, .metrics > *, .handoff > *, .imports > *, .top-actions > *) { min-width: 0; overflow-wrap: anywhere; }
+:is(button, a.primary, a.secondary, .filter, .launch, .soft-button, .icon-button, .close-x) { min-height: 44px; }
+:is(.icon, .icon-button, .dialog-close, .close-x, .lv-close) { min-width: 44px; min-height: 44px; }
+:is(button, .primary, .secondary, .path-badge, .status-badge, .player-pill) { white-space: normal; }
+button { min-width: 0; overflow-wrap: anywhere; }
+html .learning-path__choices { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+html .learning-path__head { flex-wrap: wrap; }
+:is(.topbar, .top-actions, .top-actions > div, .nav, .nav-pills,
+  .welcome-row, .actions, .hero-actions, .result-actions, .profile-chip,
+  .path-card header, .progress-label, .toolbar,
+  .pipe-labels, .status-actions, .dialog-head, .dialog-footer,
+  .setup-actions, .session-actions, .reward-strip, .tabs, .parent-tabs) { flex-wrap: wrap; }
+.tabs button, .parent-tabs button { white-space: normal; }
+:is(.summary, .stat-grid, .stats, .goal-grid, .suggestion-grid, .proof-grid, .handoff-grid, .next-links) { min-width: 0; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible,
+textarea:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid #5940ba !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 2px #fff;
+}
+:is(dialog, .control-center) { max-width: calc(100% - 1.5rem); max-height: calc(100dvh - 2rem); overflow: auto; }
+:is(dialog h2, dialog h3, dialog p, dialog label) { overflow-wrap: anywhere; }
+:is(.dialog-card, .dialog-shell, .finish-card, .result-shell, .control-card) { min-width: 0; }
+.import-label input:focus-visible { outline: 0 !important; }
+.import-label:focus-within { outline: 3px solid #5940ba; outline-offset: 3px; }
+
+/* A larger reading size must reflow the interface, including old px-based controls. */
+html.larriverse-large-text body { font-size: 1rem; }
+html.larriverse-large-text body[data-classic] :is(button, input, select, textarea) { font-size: 1rem; }
+html.larriverse-large-text :is(.nav, .goals-nav, .passport-nav, .report-nav, .today-nav, .topbar) { position: relative; }
+html.larriverse-large-text .nav-pills { margin-left: 0; }
+html.larriverse-large-text .stat-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); }
+html.larriverse-large-text .stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
+html.larriverse-large-text :is(.goal-grid, .suggestion-grid, .learning-grid) { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+html.larriverse-large-text .summary { grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); }
+html.larriverse-large-text .mobile-dock { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+html.larriverse-large-text .mobile-dock :is(a, button) { min-width: 0; overflow-wrap: anywhere; }
+html.larriverse-large-text .profile-summary { grid-template-columns: minmax(0, 1fr); }
+html.larriverse-large-text .profile-summary .identity { flex-wrap: wrap; }
+html.larriverse-large-text .learning-path__choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+body[data-classic="chill-brain-rewards"] .topbar { height: auto; min-height: 70px; }
+.lv-cabinet-shell + .sky, .lv-cabinet-shell + .aurora { pointer-events: none; }
+body[data-classic] > .topbar { position: relative; flex-wrap: wrap; }
+body[data-classic="road-trip-quest"] { overflow: auto; }
+body[data-classic="road-trip-quest"] #app { height: auto; min-height: 100dvh; }
+body[data-classic="road-trip-quest"] .screen { min-height: calc(100dvh - var(--lv-shell-height, 120px)); height: auto; }
+body[data-classic="road-trip-quest"] .title-card { max-height: none; }
+body[data-classic="road-trip-quest"] .hud { height: auto; min-height: 66px; grid-template-columns: auto minmax(0, 1fr) auto; }
+body[data-classic="road-trip-quest"] .hud strong { white-space: normal; }
+body[data-classic="road-trip-quest"] #gameScreen { padding-bottom: 1rem; }
+body[data-classic="road-trip-quest"] .road-item.stationary { top: 22%; animation: none; }
+body[data-classic="road-trip-quest"] .road-message { width: calc(100% - 1rem); max-width: 100%; white-space: normal; text-align: center; }
+html.larriverse-large-text body[data-classic="road-trip-quest"] .road-item.stationary { top: 38%; }
+.motion-road-note { padding: .85rem; margin: .5rem 0; color: #fff; background: #17253d; border: 1px solid #8498bb; border-radius: 12px; line-height: 1.5; }
+body[data-classic="creature-catcher"] { overflow: auto; }
+body[data-classic="creature-catcher"] .topbar { position: relative; width: 100%; }
+body[data-classic="creature-catcher"] #world { position: relative; inset: auto; height: max(420px, calc(100dvh - var(--lv-shell-height, 120px) - var(--lv-creature-hud-height, 58px))); }
+body[data-classic="creature-catcher"] .overlay { padding: 12px; overflow: auto; }
+body[data-classic="creature-catcher"] .overlay .card { max-height: 100%; margin: auto; }
+body[data-classic="creature-catcher"] .corner-actions { position: sticky; bottom: 0; right: auto; justify-content: flex-end; flex-wrap: wrap; padding: .75rem; background: #10203b; }
+body[data-classic="creature-catcher"] .creature .tag { display: block; }
+body[data-classic="creature-catcher"] .creature { max-width: min(160px, 35%); }
+body[data-classic="creature-catcher"] .round-banner { width: calc(100% - 1rem); top: 20%; }
+body[data-classic="creature-catcher"] .round-banner strong { font-size: clamp(1.8rem, 8vw, 4rem); }
+
+/* Shared high contrast applies to light and dark cabinets, with text labels retained. */
+@media screen {
+html.larriverse-high-contrast { --ink: #fff !important; --text: #fff !important; --muted: #fff !important; --panel: #111 !important; --panel2: #111 !important; --paper: #111 !important; --bg: #000 !important; --line: #fff !important; }
+html.larriverse-high-contrast body { background: #000 !important; color: #fff !important; }
+html.larriverse-high-contrast :is(.lv-cabinet-shell, .lv-comfort-dialog, .lv-button, button[data-lv-comfort], .lv-close,
+  header, footer, section, article, details, dialog, button,
+  .nav-wrap, .nav, .player-pill, .new-label, .count-badge, .search, .control-center,
+  .today-nav, .goals-nav, .passport-nav, .report-nav, .report-section, .report-hero,
+  .passport-hero, .passport-section, .goals-hero, .today-hero, .boundary-card,
+  .insight-panel, .subject-card, .cabinet-row, .activity-list li, .starter-list li,
+  .shared-goal-card, .shared-goal-empty, .principles-card, .setup-shell,
+  .learning-path, .learning-path__choices button, .learning-path__note,
+  .spotlight, .quick-quest, .game-card, .game-body, .family-strip,
+  .option-card, .avatar-option, .age-option, .mission-preview, .setup-art,
+  .tabs, .parent-tabs, .ledger-card, .note-card, .profile-summary article,
+  .road-item small, .road-message, .creature .tag, .nav-pills .current,
+  .discovery-group, .discovery-card, .feature-pager button, .mobile-dock,
+  .topbar, .topbar button, .topbar a, .card, .world-card, .lesson-card, .dialog-card,
+  .dialog-shell, .result-shell, .result-card, .finish-dialog, .finish-card, .instructions div,
+  .primary, .secondary, .danger, .filter, .launch, .answer, .pill, .specimen,
+  .reward-line span, .reward-strip, .reward-row, .result-stats > *, .profile-strip,
+  .notice, .notice-card, .landing-card, .mode-grid article, .hud-chip,
+  .profile-chip, .profile-row, .score-ring::before, .question-card, .legend,
+  .task-card, .reward-card, .activity-card, .family-note, .path-badge, .status-badge,
+  .mission-card, .takeaway, .stats article, .stat-grid article, .identity-mark,
+  .level-card, .goal-card, .path-card, .privacy-note, .goal-builder, .choice-card,
+  .pace-card, .active-card, .history-card, .summary, .imports > *, .panel,
+  input, select, textarea, .profile-fields input) {
+  background: #111 !important;
+  background-image: none !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}
+html.larriverse-high-contrast :is(p, small, h1, h2, h3, label, output, .brand, .lv-eyebrow,
+  [data-lv-profile], .eyebrow, .progress-line, .game-badges, .feature-note,
+  .path-badge, .status-badge, .profile-chip, .topbar strong, .takeaway) { color: #fff !important; }
+html.larriverse-high-contrast a { color: #fff !important; }
+html.larriverse-high-contrast a:hover { background-color: #111 !important; }
+html.larriverse-high-contrast .search input { color: #fff !important; }
+html.larriverse-high-contrast .mobile-dock :is(a, button) { color: #fff !important; }
+html.larriverse-high-contrast :focus-visible { outline-color: #ffdf83 !important; box-shadow: 0 0 0 2px #000; }
+html.larriverse-high-contrast .filter.active { outline: 3px solid #ffdf83; outline-offset: 2px; }
+html.larriverse-high-contrast input::placeholder { color: #ddd; }
+}
+.bubble-controls { display: flex; flex-wrap: wrap; gap: .65rem; justify-content: center; padding: .75rem; }
+.bubble-controls button { min-width: 44px; border: 1px solid #abb3cf; border-radius: 12px; padding: .65rem; background: #22283c; color: #fff; font: inherit; }
+#bubbleStatus, #bubbleKeys { text-align: center; line-height: 1.5; }
+html.larriverse-reduced-motion *, html.larriverse-reduced-motion *::before, html.larriverse-reduced-motion *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (max-width: 850px) {
+  .nav { flex-wrap: wrap; }
+  .nav-pills { margin-left: 0; flex-wrap: wrap; }
+  .nav-control { margin-left: auto; }
+  html.larriverse-large-text .nav-pills { flex-basis: 100%; order: 3; }
+}
+@media (max-width: 700px) {
+  html { scroll-padding-bottom: 6rem; }
+  :is(.discovery-card, .launch, .filter) { scroll-margin-bottom: 6rem; }
+  :is(.topbar, .goals-nav, .passport-nav, .report-nav, .today-nav) { position: relative; }
+  .lv-cabinet-shell { padding: .75rem; gap: .65rem; }
+  .lv-brand { font-size: .9rem; }
+  .lv-context { flex-basis: 100%; }
+  .lv-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+  .lv-tools > :only-child { grid-column: 1 / -1; }
+  html .learning-path__choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .passport-nav { flex-wrap: wrap; gap: .75rem; padding: 1rem; }
+  .passport-nav nav { display: flex; width: 100%; min-width: 0; flex-wrap: wrap; }
+  :is(.topbar .brand, .topbar .brand > div, .player-pill, .path-badge) { white-space: normal; }
+  .path-card header { align-items: flex-start; gap: .5rem; }
+  .choice-grid { grid-template-columns: minmax(0, 1fr); }
+  .side-quests { grid-template-columns: minmax(0, 1fr); }
+  .cabinet-row { grid-template-columns: minmax(0, 1fr); }
+  .split-section { grid-template-columns: minmax(0, 1fr); }
+  :is(.summary, .imports, .device-fields, .identity-grid, .handoff-grid, .next-links) { grid-template-columns: minmax(0, 1fr); }
+  .pipe-labels { flex-direction: column; }
+  body[data-classic="creature-catcher"] .overlay .card { padding: 1rem; }
+  body[data-classic="creature-catcher"] .overlay { padding: 8px; }
+}
+@media (max-width: 420px) {
+  .game-shell { width: calc(100% - 1rem); }
+  .play-card { padding: .75rem; }
+  .compass-grid { margin-inline: -.5rem; padding: 4px; gap: 1px; }
+  .map-tile { min-height: 44px; }
+  .picnic-basket { grid-template-columns: minmax(0, 1fr); }
+  .profile-fields { grid-template-columns: minmax(0, 1fr); }
+  .control-card { padding: 1rem; }
+  .welcome-row > * { max-width: 100%; }
+  .game-badges { flex-wrap: wrap; }
+  .lv-tools > * { flex: 1 1 auto; }
+  html.larriverse-large-text .learning-path__choices { grid-template-columns: minmax(0, 1fr); }
+  html.larriverse-large-text .instructions { grid-template-columns: minmax(0, 1fr); }
+}
+@media print {
+  .lv-cabinet-shell, .lv-comfort-dialog, [data-lv-comfort], .mobile-dock { display: none !important; }
+  :is(.today-nav, .goals-nav, .passport-nav, .report-nav) { display: none !important; }
+  html.larriverse-high-contrast { --ink: #111 !important; --muted: #333 !important; --paper: #fff !important; --line: #666 !important; }
+  html.larriverse-high-contrast :is(body, header, footer, section, article, .report-section,
+    .report-hero, .passport-hero, .passport-section, .goals-hero, .today-hero,
+    .privacy-note, .boundary-card, .stat-grid article, .goal-card, .shared-goal-card,
+    .shared-goal-empty, .path-card, .subject-card, .insight-panel, .cabinet-row,
+    .activity-list li, .starter-list li, .level-card, .level-seal, .focus-seal,
+    .active-card, .history-card, .identity-mark) {
+    background: #fff !important; color: #111 !important; border-color: #666 !important; box-shadow: none !important;
+  }
+  html.larriverse-high-contrast :is(p, small, h1, h2, h3, li, span, strong, b, output, a, .eyebrow) { color: #111 !important; }
+}

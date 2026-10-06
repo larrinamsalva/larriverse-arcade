@@ -81,4 +81,4 @@ if (approval.handoffBundle !== null && approval.handoffBundle !== undefined) {
   if (!/^[a-f0-9]{64}$/.test(handoff.deployment.releaseManifestSha256 || '')) fail('handoff deployment digest is invalid');
 }
 
-console.log(`Release approval verified: ${seenPairs.size} images, 16 device-labeled manual cabinet results, approver ${approval.approver}.`);
+console.log(`Release approval verified: ${seenPairs.size} images, ${release.cabinetCount * 2} device-labeled manual cabinet results, approver ${approval.approver}.`);

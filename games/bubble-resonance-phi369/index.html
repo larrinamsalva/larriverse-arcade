@@ -4,14 +4,35 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#060810">
-  <meta name="description" content="Bubble Resonance Phi 369 in the LarriVerse Arcade">
+  <meta name="description" content="Aim colorful bubbles, bounce clever shots, and make satisfying matches. Free game practice in LarriVerse Arcade. KC are fictional; progress stays in this browser.">
   <title>Bubble Resonance Φ369 · LarriVerse Arcade</title>
   <link rel="stylesheet" href="game.css">
   <link rel="stylesheet" href="../../assets/classic-polish.css">
 <link rel="stylesheet" href="../../assets/emoji.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+  <link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/bubble-resonance-phi369/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LarriVerse Arcade">
+  <meta property="og:title" content="Bubble Resonance Φ369 · LarriVerse Arcade">
+  <meta property="og:description" content="Aim colorful bubbles, bounce clever shots, and make satisfying matches. Free game practice in LarriVerse Arcade. KC are fictional; progress stays in this browser.">
+  <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/bubble-resonance-phi369/">
+  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="800">
+  <meta property="og:image:alt" content="Eight illustrated LarriVerse expedition worlds: bridges, water, island deliveries, picnic planning, maps, codes, shopping, and an inclusive town.">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body data-classic="bubble-resonance-phi369">
-  <main class="shell">
+  <a class="skip-link" href="#lvGameMain">Skip to game</a>
+  <header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+    <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+    <div class="lv-context"><strong>Bubble Resonance Φ369</strong><small>Aim, patterns &amp; strategy · Game practice, your pace</small></div>
+    <nav class="lv-tools" aria-label="Arcade tools"><a class="lv-button" href="../../index.html">Back to Arcade</a><button class="lv-button" type="button" data-lv-comfort>Comfort & accessibility</button></nav>
+    <span data-lv-profile>Progress stays in this browser.</span>
+  </header>
+  <main class="shell" id="lvGameMain" tabindex="-1">
     <nav class="game-nav" aria-label="Game navigation">
       <a href="../../index.html">← Arcade lobby</a>
       <div class="profile"><span id="playerName">🌟 Player One</span><span>LV <b id="playerLevel">1</b></span><span>KC <b id="playerKc">0</b></span></div>
@@ -36,14 +57,15 @@
       </div>
       <div class="coherence"><span>Tφ COHERENCE</span><i><em id="coherenceFill"></em></i><b id="coherenceValue">50</b></div>
       <div class="playfield">
-        <canvas id="game" width="620" height="500" aria-label="Bubble Resonance playfield"></canvas>
+        <canvas id="game" tabindex="0" aria-describedby="bubbleKeys bubbleStatus" width="620" height="500" aria-label="Bubble Resonance playfield"></canvas>
         <div id="message" class="message" aria-live="polite"><b></b><span></span></div>
       </div>
+      <p id="bubbleStatus" role="status"></p><p id="bubbleKeys">Match three bubbles with the same number. Use ← → to aim, Enter or Space to fire while the board is focused, or the buttons below.</p><div class="bubble-controls"><button type="button" id="aimLeft">← Aim left</button><button type="button" id="fireAimed">Fire bubble</button><button type="button" id="aimRight">Aim right →</button></div>
       <div id="legend" class="legend"></div>
       <div class="controls">
         <button id="reset">↺ Reset</button>
         <span>Aim · Click or tap to fire · Bank shots work</span>
-        <button id="sound" class="active">♪ Sound ON</button>
+        <button id="sound" aria-pressed="false">♪ Sound OFF</button>
         <button id="auto">⚡ Auto-fire</button>
       </div>
     </section>
@@ -52,5 +74,6 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="../../assets/arcade-sdk.js"></script>
   <script type="module" src="game.js"></script>
+<script src="../../assets/cabinet-shell.js"></script>
 </body>
 </html>

@@ -24,6 +24,10 @@
   let manifest = null;
   let state = loadState();
   let settings = loadSettings();
+  // Preserve older cabinet comfort choices when this device has no shared record yet.
+  if (!localStorage.getItem('larriverse.arcade.settings.v1') && localStorage.getItem(SETTINGS_KEY)) {
+    window.LarriVerseArcade.setSettings({ reducedMotion: settings.reducedMotion, highContrast: settings.highContrast, largeText: settings.largeText });
+  }
   let setupStep = 0;
   let activeMission = null;
   let timer = null;
@@ -105,13 +109,20 @@
       $('#' + id).addEventListener('change', readSettings);
     });
     window.addEventListener('larriverse:profile', renderProfile);
+    window.addEventListener('larriverse:settings', applySettings);
   }
 
   function applySettings() {
+    settings = { ...settings, ...window.LarriVerseArcade.settings() };
     document.body.classList.toggle('reduced-motion', settings.reducedMotion);
     document.body.classList.toggle('high-contrast', settings.highContrast);
     document.body.classList.toggle('large-text', settings.largeText);
     if (!settings.sound) stopAudio();
+    if ($('#settingsDialog').open) {
+      $('#motionToggle').checked = settings.reducedMotion;
+      $('#contrastToggle').checked = settings.highContrast;
+      $('#textToggle').checked = settings.largeText;
+    }
   }
 
   function openSettings() {
@@ -131,6 +142,7 @@
       largeText: $('#textToggle').checked,
       durationMode: $('#durationMode').value === 'preview' ? 'preview' : 'source'
     };
+    window.LarriVerseArcade.setSettings({ reducedMotion: settings.reducedMotion, highContrast: settings.highContrast, largeText: settings.largeText });
     saveSettings();
   }
 

@@ -58,7 +58,18 @@ async function assertNoHorizontalOverflow(page) {
 async function takeCleanScreenshot(page, projectName, name) {
   const folder = path.join(screenshotRoot, projectName);
   fs.mkdirSync(folder, { recursive: true });
+  if (name === 'creature-catcher' || name === 'road-trip-quest') {
+    await expect(page.locator('#startButton')).toBeEnabled();
+    await expect(page.locator('#startButton')).not.toContainText(/loading/i);
+  }
   await page.evaluate(() => document.fonts.ready);
+  // Keyboard focus was checked above. Capture a stable opening view without a
+  // focused skip link obscuring the header or a previous focus scroll offset.
+  await page.evaluate(() => {
+    document.activeElement?.blur();
+    window.scrollTo(0, 0);
+    document.querySelectorAll('.overlay .card').forEach(card => { card.scrollTop = 0; });
+  });
   await page.screenshot({
     path: path.join(folder, `${name}.png`),
     animations: 'disabled',
