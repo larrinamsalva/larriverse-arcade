@@ -4,6 +4,7 @@
   const GAME_ID = 'creature-catcher';
   const COLLECTION_KEY = 'larriverse.creature-catcher.collection.v1';
   const QUESTION_SOURCE = '../learning-question-bank.json';
+  const QUESTION_EXPANSION = '../learning-question-pack-2.json';
   const QUESTION_SUBJECTS = ['math', 'reading', 'science', 'nature'];
   const SUBJECT_LABELS = { math: 'Math', reading: 'Reading', science: 'Science', nature: 'Nature' };
 
@@ -285,14 +286,35 @@
   async function init() {
     $('startButton').disabled = true;
     $('profileLine').textContent = 'Loading the expanded learning question bank…';
-    const response = await fetch(QUESTION_SOURCE);
-    if (!response.ok) throw new Error(`Question bank could not load (${response.status})`);
-    questionBank = await response.json();
+    const [baseResponse, expansionResponse] = await Promise.all([
+      fetch(QUESTION_SOURCE),
+      fetch(QUESTION_EXPANSION)
+    ]);
+    if (!baseResponse.ok) throw new Error(`Question bank could not load (${baseResponse.status})`);
+    if (!expansionResponse.ok) throw new Error(`Question expansion could not load (${expansionResponse.status})`);
+    const [baseBank, expansion] = await Promise.all([
+      baseResponse.json(),
+      expansionResponse.json()
+    ]);
+    questionBank = {
+      ...baseBank,
+      subjects: Object.fromEntries(
+        Object.entries(baseBank.subjects).map(([subject, questions]) => [
+          subject,
+          [...questions, ...(expansion.subjects?.[subject] || [])]
+        ])
+      )
+    };
     for (const subject of QUESTION_SUBJECTS) {
-      if (!Array.isArray(questionBank.subjects?.[subject]) || questionBank.subjects[subject].length < 3) {
-        throw new Error(`Question bank needs at least three ${subject} questions`);
+      if (!Array.isArray(questionBank.subjects?.[subject]) || questionBank.subjects[subject].length < 20) {
+        throw new Error(`Question bank needs at least twenty ${subject} questions`);
       }
     }
+    window.CreatureCatcherContent = Object.freeze({
+      questionsBySubject: Object.fromEntries(
+        QUESTION_SUBJECTS.map(subject => [subject, questionBank.subjects[subject].length])
+      )
+    });
     bind();
     profileText();
     renderGuide();
