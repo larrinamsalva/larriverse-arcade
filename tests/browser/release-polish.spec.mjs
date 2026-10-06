@@ -252,6 +252,10 @@ test('Bubble Resonance fills the play area, settles shallow bank shots, and keep
   await expect(page.locator('#legend span')).toHaveCount(6);
   await expect(page.locator('#bubbleStatus')).toContainText('Match the numbers');
   await expect(page.locator('#sound')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('#limit')).toHaveText('CLEAR');
+  const bubbleSource = fs.readFileSync('games/bubble-resonance-phi369/game.js', 'utf8');
+  expect(bubbleSource).not.toContain('grid[7].fill(null)');
+  expect(bubbleSource).toContain('grid[ROWS-1].some(Boolean)');
 
   const widthUse = await page.locator('#game').evaluate(node => {
     const canvas = node.getBoundingClientRect();
