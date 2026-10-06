@@ -288,6 +288,24 @@ test('Bubble Resonance fills the play area, settles shallow bank shots, and keep
   await expect(page.locator('[data-lv-comfort]')).toBeFocused();
 });
 
+test('Bubble Resonance declares a real win when the board is cleared', async ({ page }) => {
+  await page.addInitScript(() => { Math.random = () => .01; });
+  await page.goto('/games/bubble-resonance-phi369/index.html');
+  await expect(page.locator('#limit')).toHaveText('CLEAR');
+
+  const box = await page.locator('#game').boundingBox();
+  await page.mouse.click(box.x + box.width * .5, box.y + box.height * .35);
+  await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
+  await expect(page.locator('#limit')).toHaveText('WIN', { timeout: 5000 });
+  await expect(page.locator('#message')).toContainText('BOARD CLEARED');
+  await expect(page.locator('#message')).toContainText('you win');
+  await expect(page.locator('#reset')).toHaveText('Play again');
+  await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false');
+
+  const result = await page.evaluate(() => window.LarriVerseArcade.summary().games['bubble-resonance-phi369']);
+  expect(result.completions).toBe(1);
+});
+
 test('Bubble Resonance adds and animates a fresh top row after five misses', async ({ page }) => {
   await page.addInitScript(() => {
     let calls = 0;
