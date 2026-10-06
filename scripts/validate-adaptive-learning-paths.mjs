@@ -73,8 +73,8 @@ for (const lesson of family.lessons) {
   familyBaseTotal += lesson.questions.length;
   familyPackTotal += additions.length;
   check(lesson.questions.length === 6, `${lesson.id}: base lesson keeps 6 questions`);
-  check(additions.length === 4, `${lesson.id}: expansion adds exactly 4 questions`);
-  check(lesson.questions.length + additions.length === 10, `${lesson.id}: combined lesson has 10 questions`);
+  check(additions.length === 14, `${lesson.id}: expansion adds exactly 14 questions`);
+  check(lesson.questions.length + additions.length === 20, `${lesson.id}: combined lesson has 20 questions`);
   for (const question of [...lesson.questions, ...additions]) {
     familyIds.push(question.id);
     check(safeSlug(question.id), `${question.id}: KidsCoin question ID is safe`);
@@ -84,8 +84,8 @@ for (const lesson of family.lessons) {
   }
 }
 check(familyBaseTotal === 36, 'KidsCoin base bank remains 36 questions');
-check(familyPackTotal === 24, 'KidsCoin expansion contains 24 questions');
-check(familyBaseTotal + familyPackTotal === 60, 'KidsCoin combined bank contains 60 questions');
+check(familyPackTotal === 84, 'KidsCoin expansion contains 84 questions');
+check(familyBaseTotal + familyPackTotal === 120, 'KidsCoin combined bank contains 120 questions');
 check(unique(familyIds), 'combined KidsCoin question IDs are unique');
 
 for (const required of [
@@ -121,7 +121,7 @@ check(creatureHtml.includes('id="learningPathControl"'), 'Creature Catcher has a
 check(roadHtml.includes('id="learningPathControl"'), 'Road Trip Quest has a learning-path host');
 check(creatureHtml.includes('96-question'), 'Creature Catcher describes its 96-question pool');
 check(roadHtml.includes('96-question'), 'Road Trip Quest describes its 96-question pool');
-check(kidsHtml.includes('60 family-planning questions'), 'KidsCoin describes its 60-question bank');
+check(kidsHtml.includes('120 family-planning questions'), 'KidsCoin describes its 120-question bank');
 check(creatureHtml.indexOf('../../assets/learning-path.js') < creatureHtml.indexOf('game.js'), 'Creature Catcher loads the learning path before its engine');
 check(roadHtml.indexOf('../../assets/learning-path.js') < roadHtml.indexOf('game.js'), 'Road Trip Quest loads the learning path before its engine');
 check(kidsHtml.indexOf('family-data-loader.js') < kidsHtml.indexOf('game.js'), 'KidsCoin loads its data pack before its engine');
