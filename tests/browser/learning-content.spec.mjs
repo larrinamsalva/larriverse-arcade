@@ -79,7 +79,7 @@ test.describe('LarriVerse unlocked learning and question data', () => {
     await page.locator('[data-profile="explorer-1"]').click();
     await expect(page.locator('.task-card')).toHaveCount(12);
     expect(errors).toEqual([]);
-
+  });
 
   test('legacy learning cabinets load twenty-plus questions in every live section', async ({ page, context }) => {
     await cleanDevice(page, context);
@@ -99,6 +99,5 @@ test.describe('LarriVerse unlocked learning and question data', () => {
     const gps = await page.evaluate(() => window.RoadTripGpsContent);
     expect(gps.sourceQuestions).toBe(28);
     expect(Object.values(gps.questionsBySubject).every(count => count >= 20)).toBeTruthy();
-  });
   });
 });
