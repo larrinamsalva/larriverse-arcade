@@ -85,14 +85,11 @@ test.describe('LarriVerse unlocked learning and question data', () => {
     await cleanDevice(page, context);
 
     await page.goto('/games/creature-catcher/index.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => window.CreatureCatcherContent);
-    const creature = await page.evaluate(() => window.CreatureCatcherContent);
-    expect(Object.values(creature.questionsBySubject).every(count => count >= 20)).toBeTruthy();
+    await expect.poll(() => page.evaluate(() => window.LarriVerseLearningPath?.summary().loaded?.total)).toBe(120);
+    await expect(page.locator('#profileLine')).toContainText('96 learning questions loaded');
 
     await page.goto('/games/road-trip-quest/index.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => window.RoadTripQuestContent);
-    const road = await page.evaluate(() => window.RoadTripQuestContent);
-    expect(Object.values(road.questionsBySubject).every(count => count >= 20)).toBeTruthy();
+    await expect.poll(() => page.evaluate(() => window.LarriVerseLearningPath?.summary().loaded?.total)).toBe(120);
 
     await page.goto('/games/road-trip-quest-gps/index.html', { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => window.RoadTripGpsContent);
