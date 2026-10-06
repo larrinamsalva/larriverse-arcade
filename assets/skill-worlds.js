@@ -47,7 +47,7 @@ export const worlds = [
     skill: "Spotting online tricks",
     desc: "Investigate sneaky messages and protect your digital clubhouse.",
     mission:
-      "Try six different clubhouse messages from a larger bank. Choose whether to open, check another way, or block and tell a trusted adult.",
+      "Try six different clubhouse messages each round from a bank of twenty. Choose whether to read, check another way, or block and tell a trusted adult.",
     take: "Slow down when a message asks for secrets, money, or a rushed decision. Check through a route you already trust.",
     mode: "messages",
   },
@@ -63,7 +63,7 @@ export const worlds = [
     skill: "Listening & boundaries",
     desc: "Help the treehouse crew listen, work together, and set kind boundaries.",
     mission:
-      "The treehouse crew needs your help. Try six different choices from a larger bank that make room for everyone, including you.",
+      "The treehouse crew needs your help. Try six different choices each round from a bank of twenty that make room for everyone, including you.",
     take: "You can care about someone and still say no. Ask, listen, and make a plan together.",
     mode: "conversation",
   },
@@ -79,7 +79,7 @@ export const worlds = [
     skill: "Checking claims & sources",
     desc: "Run a tiny news desk. Sort evidence, opinions, ads, and unchecked claims.",
     mission:
-      "Try six different news-desk cards from a larger bank. Sort each into evidence, opinion, advertisement, or needs checking.",
+      "Try six different news-desk cards each round from a bank of twenty. Sort each into evidence, opinion, advertisement, or needs checking.",
     take: "A popular claim is not automatically a fact. Look for a source, context, and something you can check.",
     mode: "news",
   },
@@ -159,7 +159,7 @@ export const worlds = [
     skill: "Reuse & thoughtful sorting",
     desc: "Clean up Toy Town. Reuse what you can and sort the rest.",
     mission:
-      "Sort six different objects each round from a larger bank: reuse, recycling, compost, or trash. Real local rules can differ.",
+      "Sort six different objects each round from a bank of twenty: reuse, recycling, compost, or trash. Real local rules can differ.",
     take: "Using something again can avoid waste. Check your local recycling and compost rules with an adult.",
     mode: "sorting",
   },
