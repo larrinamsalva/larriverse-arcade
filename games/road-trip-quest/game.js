@@ -4,7 +4,6 @@
   const GAME_ID = 'road-trip-quest';
   const SAVE_KEY = 'larriverse.roadTripQuest.v1';
   const QUESTION_SOURCE = '../learning-question-bank.json';
-  const QUESTION_EXPANSION = '../learning-question-pack-2.json';
   const QUESTION_SUBJECTS = ['math', 'trivia', 'science', 'reading'];
   const lanes = [23, 50, 77];
 
@@ -110,35 +109,14 @@
   }
 
   async function loadQuestions() {
-    const [baseResponse, expansionResponse] = await Promise.all([
-      fetch(QUESTION_SOURCE),
-      fetch(QUESTION_EXPANSION)
-    ]);
-    if (!baseResponse.ok) throw new Error(`Learning question bank could not load (${baseResponse.status})`);
-    if (!expansionResponse.ok) throw new Error(`Learning question expansion could not load (${expansionResponse.status})`);
-    const [baseBank, expansion] = await Promise.all([
-      baseResponse.json(),
-      expansionResponse.json()
-    ]);
-    questionBank = {
-      ...baseBank,
-      subjects: Object.fromEntries(
-        Object.entries(baseBank.subjects).map(([subject, questions]) => [
-          subject,
-          [...questions, ...(expansion.subjects?.[subject] || [])]
-        ])
-      )
-    };
+    const response = await fetch(QUESTION_SOURCE);
+    if (!response.ok) throw new Error(`Learning question bank could not load (${response.status})`);
+    questionBank = await response.json();
     for (const subject of QUESTION_SUBJECTS) {
-      if (!Array.isArray(questionBank.subjects?.[subject]) || questionBank.subjects[subject].length < 20) {
-        throw new Error(`Question bank needs at least twenty ${subject} questions`);
+      if (!Array.isArray(questionBank.subjects?.[subject]) || questionBank.subjects[subject].length < 3) {
+        throw new Error(`Question bank needs at least three ${subject} questions`);
       }
     }
-    window.RoadTripQuestContent = Object.freeze({
-      questionsBySubject: Object.fromEntries(
-        QUESTION_SUBJECTS.map(subject => [subject, questionBank.subjects[subject].length])
-      )
-    });
   }
 
   function start() {
