@@ -1,12 +1,12 @@
 # LarriVerse 1.0 polish
 
-This pass keeps exactly **28 games**: eight original cabinets, twelve practice worlds, and eight expeditions. It preserves independent engines, saved progress, learning content, fictional KC, and existing real-world safety boundaries. `release.json` remains a release candidate with mandatory human approval.
+This pass keeps exactly **29 games**: eight original cabinets, twelve practice worlds, and eight expeditions. It preserves independent engines, saved progress, learning content, fictional KC, and existing real-world safety boundaries. `release.json` remains a release candidate with mandatory human approval.
 
 ## Gallery evidence
 
 The gallery's original description map stopped at 20 games. The eight expeditions therefore produced 16 desktop/mobile descriptions beginning with `undefined`. `scripts/gallery-metadata.mjs` now explicitly describes the clean opening view of the lobby and every game. Unknown subjects, missing titles, or unsupported viewports stop the build.
 
-`npm run gallery:verify` checks exactly 58 unique subject/view pairs, deterministic titles and descriptions, image paths, viewports, PNG dimensions, byte counts, and SHA-256 hashes. Browser QA uploads the offline review bundle only after those checks pass. Human reviewers still inspect the images and can revise alt text. Automated descriptions and screenshots are **candidate evidence**, not human approval.
+`npm run gallery:verify` checks exactly 60 unique subject/view pairs, deterministic titles and descriptions, image paths, viewports, PNG dimensions, byte counts, and SHA-256 hashes. Browser QA uploads the offline review bundle only after those checks pass. Human reviewers still inspect the images and can revise alt text. Automated descriptions and screenshots are **candidate evidence**, not human approval.
 
 ## Shared cabinet shell
 
@@ -18,7 +18,7 @@ Creature Catcher's original overlays remain part of its game, with dialog labels
 
 ## Discovery
 
-The illustrated lobby and all 28 searchable/filterable cards remain. Optional sections provide:
+The illustrated lobby and all 29 searchable/filterable cards remain. Optional sections provide:
 
 - **Continue Playing:** the three most recent recorded games. Saved trips resume where supported; short boards begin a fresh round.
 - **Recommended for You:** three catalog choices, with the latest game's topic considered when local sessions exist. These are invitations, not learning conclusions.
@@ -34,4 +34,4 @@ Reduced motion stops decorative CSS animation and automatic lobby spotlight rota
 
 ## Release boundary
 
-The full structural suite, desktop/mobile Chromium suite, focused 320/390/768/1024/1440px checks, backups, safe exports, and 58-image gallery verification provide automated evidence. They cannot approve gameplay feel, real phone touch/layout, sound comfort, print output, or visual quality. Follow [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md), [DEVICE-QA.md](DEVICE-QA.md), and [GALLERY-APPROVAL.md](GALLERY-APPROVAL.md). No approval JSON, approved screenshots, release tag, or final release decision is fabricated by this PR.
+The full structural suite, desktop/mobile Chromium suite, focused 320/390/768/1024/1440px checks, backups, safe exports, and 60-image gallery verification provide automated evidence. They cannot approve gameplay feel, real phone touch/layout, sound comfort, print output, or visual quality. Follow [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md), [DEVICE-QA.md](DEVICE-QA.md), and [GALLERY-APPROVAL.md](GALLERY-APPROVAL.md). No approval JSON, approved screenshots, release tag, or final release decision is fabricated by this PR.
