@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
-import { bridgeLevels, bridgeParts, pipePaths, directions, islands, expeditions } from "../../assets/expedition-worlds.js";
+import { bridgeLevels, bridgeParts, pipePaths, directions, islands, expeditions, compassClues, landmarks, cipherLevels, tradeLevels } from "../../assets/expedition-worlds.js";
+import { compassTarget, encode } from "../../assets/expedition-logic.js";
 
 async function adventure(page,id,play) {
   const errors = []; page.on("pageerror",error => errors.push(error.message));
@@ -22,24 +23,24 @@ async function adventure(page,id,play) {
 const action = (page,name) => page.getByRole("button",{name,exact:true}).click();
 async function next(page,last) { await action(page,last ? "Celebrate my discoveries" : "Next challenge"); }
 
-test("Bridge Buddies: keyboard building, weak supports, three budgeted crossings and saved completion",async({page})=>{
+test("Bridge Buddies: keyboard building, weak supports, eight budgeted crossings and saved completion",async({page})=>{
   await adventure(page,"bridge-buddies",async()=>{
     for (let index=0;index<4;index++) await page.locator(`[data-span="${index}"]`).click();
     await action(page,"Test the crossing"); await expect(page.locator("#feedback")).toHaveClass(/try/);
-    for (let round=0;round<3;round++) {
+    for (let round=0;round<bridgeLevels.length;round++) {
       for (let index=0;index<4;index++) {
         const support = bridgeParts.find(part=>part.capacity>=bridgeLevels[round].loads[index]);
         await page.locator(`[data-tool="${support.id}"]`).focus(); await page.keyboard.press("Enter");
         await page.locator(`[data-span="${index}"]`).focus(); await page.keyboard.press("Enter");
       }
-      await action(page,"Test the crossing"); await expect(page.locator("#feedback")).toHaveClass(/good/); await next(page,round===2);
+      await action(page,"Test the crossing"); await expect(page.locator("#feedback")).toHaveClass(/good/); await next(page,round===bridgeLevels.length-1);
     }
   });
 });
-test("Water Works: leak feedback, clockwise rotations, filter and three connected networks",async({page})=>{
+test("Water Works: leak feedback, clockwise rotations, filter and eight connected networks",async({page})=>{
   await adventure(page,"water-works",async()=>{
     await action(page,"Send the water"); await expect(page.locator("#feedback")).toHaveClass(/try/);
-    for (let round=0;round<3;round++) {
+    for (let round=0;round<pipePaths.length;round++) {
       const path = pipePaths[round], dir=(from,to)=>[-5,1,5,-1].indexOf(to-from);
       for (let index=0;index<path.length;index++) {
         const tile=path[index], pair=[index ? dir(tile,path[index-1]) : 3,index<path.length-1 ? dir(tile,path[index+1]) : 1];
@@ -47,7 +48,7 @@ test("Water Works: leak feedback, clockwise rotations, filter and three connecte
         for (let turn=0;turn<4;turn++) { const label=await pipe.getAttribute("aria-label"); if(pair.every(value=>label.includes(directions[value])))break; await pipe.click(); }
       }
       await action(page,"Send the water"); await expect(page.locator("#feedback")).toHaveClass(/good/);
-      await expect(page.locator(".pipe-tile.flowing")).toHaveCount(path.length); await next(page,round===2);
+      await expect(page.locator(".pipe-tile.flowing")).toHaveCount(path.length); await next(page,round===pipePaths.length-1);
     }
   });
 });
@@ -76,34 +77,57 @@ test("Pantry Picnic: leftovers before new food, three balanced boxes and empty p
     await expect(page.locator("[data-food]:disabled")).toHaveCount(4);
   });
 });
-test("Compass Cove: landmark clues, wrong-turn feedback and five distinct treasures",async({page})=>{
+test("Compass Cove: landmark clues, wrong-turn feedback and eight distinct treasures",async({page})=>{
   await adventure(page,"compass-cove",async()=>{
     await page.locator('[data-map="0"]').click(); await expect(page.locator("#feedback")).toHaveClass(/try/);
-    const targets=[14,15,16,13,29];
-    for(let index=0;index<5;index++) { await page.locator(`[data-map="${targets[index]}"]`).click(); await expect(page.locator("#feedback")).toHaveClass(/good/); await expect(page.locator('[data-map="14"] .landmark-icon')).toBeVisible(); await expect(page.locator('[data-map="14"] .treasure-marker')).toBeVisible(); await next(page,index===4); }
-  });
-});
-test("Cipher Club: shared keys, incorrect messages, encode and decode five rounds",async({page})=>{
-  await adventure(page,"cipher-club",async()=>{
-    await action(page,"Check my message"); await expect(page.locator("#feedback")).toContainText("shared key 1");
-    const shifts=[1,2,3,5,7],answers=["CFE","ACE","GDG","BEE","BHA"];
-    for(let index=0;index<5;index++) {
-      for(let turn=0;turn<shifts[index];turn++)await page.locator('[data-key="1"]').click();
-      if(index===0) { for(let letter=0;letter<3;letter++)await page.locator('[data-letter="A"]').click(); await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/try/); await action(page,"Clear my answer"); }
-      for(const letter of answers[index])await page.locator(`[data-letter="${letter}"]`).click();
-      await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/good/); await next(page,index===4);
+    const targets=compassClues.map(clue=>compassTarget(landmarks[clue.landmark],clue));
+    expect(new Set(targets).size).toBe(compassClues.length);
+    for(let index=0;index<compassClues.length;index++) {
+      await page.locator(`[data-map="${targets[index]}"]`).click();
+      await expect(page.locator("#feedback")).toHaveClass(/good/);
+      await expect(page.locator(`[data-map="${targets[index]}"]`)).toHaveClass(/found/);
+      await next(page,index===compassClues.length-1);
     }
   });
 });
-test("Trade Town: budgets, returns, per-bundle fees and best whole-cost comparisons",async({page})=>{
+test("Cipher Club: shared keys, incorrect messages, encode and decode eight rounds",async({page})=>{
+  await adventure(page,"cipher-club",async()=>{
+    await action(page,"Check my message"); await expect(page.locator("#feedback")).toContainText("shared key 1");
+    for(let index=0;index<cipherLevels.length;index++) {
+      const level=cipherLevels[index];
+      for(let turn=0;turn<level.shift;turn++)await page.locator('[data-key="1"]').click();
+      if(index===0) { for(let letter=0;letter<3;letter++)await page.locator('[data-letter="A"]').click(); await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/try/); await action(page,"Clear my answer"); }
+      const answer=level.encode ? encode(level.word,level.shift) : level.word;
+      for(const letter of answer)await page.locator(`[data-letter="${letter}"]`).click();
+      await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/good/); await next(page,index===cipherLevels.length-1);
+    }
+  });
+});
+test("Trade Town: budgets, returns, fees and eight best whole-cost comparisons",async({page})=>{
   await adventure(page,"trade-town",async()=>{
+    const cheapestBasket=level=>{
+      let best=null;
+      for(let a=0;a<=level.need;a++)for(let b=0;b<=level.need;b++)for(let d=0;d<=level.need;d++){
+        const counts=[a,b,d];
+        const quantity=counts.reduce((sum,count,index)=>sum+count*level.deals[index].quantity,0);
+        const cost=counts.reduce((sum,count,index)=>sum+count*(level.deals[index].price+level.deals[index].fee),0);
+        if(quantity>=level.need&&(!best||cost<best.cost))best={counts,cost};
+      }
+      return best;
+    };
     for(let item=0;item<6;item++)await page.locator('[data-shop="0,1"]').click(); await action(page,"Check out");
     await expect(page.locator("#feedback")).toContainText("over budget");
     for(let item=0;item<6;item++)await page.locator('[data-shop="0,-1"]').click();
-    for(let round=0;round<3;round++) {
-      if(round===2) { for(let bundle=0;bundle<2;bundle++)await page.locator('[data-shop="1,1"]').click(); await action(page,"Check out"); await expect(page.locator("#feedback")).toContainText("over budget"); for(let bundle=0;bundle<2;bundle++)await page.locator('[data-shop="1,-1"]').click(); }
-      const offer=round===0 ? 1 : 0; for(let bundle=0;bundle<2;bundle++)await page.locator(`[data-shop="${offer},1"]`).click();
-      await action(page,"Check out"); await expect(page.locator("#feedback")).toContainText("lowest whole cost"); await next(page,round===2);
+
+    for(let round=0;round<tradeLevels.length;round++) {
+      const best=cheapestBasket(tradeLevels[round]);
+      expect(best.cost).toBeLessThanOrEqual(tradeLevels[round].budget);
+      for(let offer=0;offer<best.counts.length;offer++)
+        for(let bundle=0;bundle<best.counts[offer];bundle++)
+          await page.locator(`[data-shop="${offer},1"]`).click();
+      await action(page,"Check out");
+      await expect(page.locator("#feedback")).toContainText("lowest whole cost");
+      await next(page,round===tradeLevels.length-1);
     }
     await expect(page.locator("#finishScore")).toHaveText("100");
   });
