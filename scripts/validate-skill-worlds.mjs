@@ -62,7 +62,8 @@ for (const item of trafficQuestions) {
   assert.ok(item.text.length > 20 && item.why.length > 20);
   assert.ok(Number.isInteger(item.answer) && item.answer >= 0 && item.answer < item.options.length);
 }
-assert.equal(repairs.length, 3);
+assert.equal(repairs.length, 8);
+assert.equal(new Set(repairs.map((item) => item.title)).size, repairs.length);
 for (const item of repairs) {
   assert.equal(item.steps.length, 4);
   assert.equal(new Set(item.steps).size, 4);
