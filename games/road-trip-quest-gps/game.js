@@ -53,10 +53,59 @@
     localStorage.setItem(SAVE_KEY, JSON.stringify(state));
   }
 
+  function mergeQuestionSources(sourceWorld, sharedBank, expansionPack) {
+    const subjects = ['math', 'science', 'reading', 'trivia'];
+    const merged = { ...sourceWorld, questions: {} };
+    for (const subject of subjects) {
+      const recovered = Array.isArray(sourceWorld.questions?.[subject])
+        ? sourceWorld.questions[subject]
+        : [];
+      const reviewed = [
+        ...(sharedBank.subjects?.[subject] || []),
+        ...(expansionPack.subjects?.[subject] || [])
+      ].map(question => ({
+        q: question.prompt,
+        a: [...question.options],
+        c: question.answer
+      }));
+      const seen = new Set();
+      merged.questions[subject] = [...recovered, ...reviewed].filter(question => {
+        const key = String(question.q || '').trim().toLowerCase();
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+    return merged;
+  }
+
   async function init() {
-    const response = await fetch('world.json');
-    if (!response.ok) throw new Error(`Could not load quest data (${response.status})`);
-    world = await response.json();
+    const [worldResponse, bankResponse, packResponse] = await Promise.all([
+      fetch('world.json'),
+      fetch('../learning-question-bank.json'),
+      fetch('../learning-question-pack-2.json')
+    ]);
+    if (!worldResponse.ok) throw new Error(`Could not load quest data (${worldResponse.status})`);
+    if (!bankResponse.ok) throw new Error(`Could not load shared questions (${bankResponse.status})`);
+    if (!packResponse.ok) throw new Error(`Could not load shared question expansion (${packResponse.status})`);
+
+    const [sourceWorld, sharedBank, expansionPack] = await Promise.all([
+      worldResponse.json(),
+      bankResponse.json(),
+      packResponse.json()
+    ]);
+    world = mergeQuestionSources(sourceWorld, sharedBank, expansionPack);
+    const questionsBySubject = Object.fromEntries(
+      Object.entries(world.questions).map(([subject, questions]) => [subject, questions.length])
+    );
+    window.RoadTripGpsContent = Object.freeze({
+      sourceQuestions: sourceWorld.source?.questionCount || 0,
+      questionsBySubject,
+      totalQuestions: Object.values(questionsBySubject).reduce((sum, count) => sum + count, 0)
+    });
+    for (const [subject, questions] of Object.entries(world.questions)) {
+      if (questions.length < 20) throw new Error(`GPS needs at least twenty ${subject} questions`);
+    }
     bind();
     renderSharedProfile();
     renderHud();

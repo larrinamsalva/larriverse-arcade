@@ -14,7 +14,11 @@ const exists = async relative => { try { await access(path.join(root, relative))
 const bankPath = 'games/learning-question-bank.json';
 check(await exists(bankPath), 'shared learning question bank exists');
 const bank = JSON.parse(await readFile(path.join(root, bankPath), 'utf8'));
+const expansionPath = 'games/learning-question-pack-2.json';
+check(await exists(expansionPath), 'shared learning expansion pack exists');
+const expansion = JSON.parse(await readFile(path.join(root, expansionPath), 'utf8'));
 check(bank.schemaVersion === 1, 'question bank schema version is 1');
+check(expansion.schemaVersion === 1, 'question expansion schema version is 1');
 check(typeof bank.title === 'string' && bank.title.length > 10, 'question bank has a title');
 check(bank.privacy?.deviceLocal === true, 'question bank is device-local content');
 check(bank.privacy?.uploadsData === false, 'question bank does not upload data');
@@ -24,10 +28,16 @@ const requiredSubjects = ['math','reading','science','nature','trivia'];
 check(bank.subjects && typeof bank.subjects === 'object', 'question bank has subject data');
 const ids = [];
 let total = 0;
+const mergedCounts = {};
 for (const subject of requiredSubjects) {
   const questions = bank.subjects?.[subject];
+  const additions = expansion.subjects?.[subject] || [];
   check(Array.isArray(questions), `${subject}: question list exists`);
-  check((questions || []).length >= 16, `${subject}: at least 16 questions exist`);
+  check((questions || []).length >= 16, `${subject}: at least 16 base questions exist`);
+  check(Array.isArray(additions) && additions.length >= 8, `${subject}: at least 8 expansion questions exist`);
+  const merged = [...(questions || []), ...additions];
+  mergedCounts[subject] = merged.length;
+  check(merged.length >= 20, `${subject}: at least 20 merged questions exist`);
   total += questions?.length || 0;
   for (const question of questions || []) {
     ids.push(question.id);
@@ -41,6 +51,20 @@ for (const subject of requiredSubjects) {
 }
 check(total >= 80, 'shared bank contains at least 80 questions');
 check(unique(ids), 'shared question IDs are unique');
+const expansionIds = [];
+for (const subject of requiredSubjects) {
+  for (const question of expansion.subjects?.[subject] || []) {
+    expansionIds.push(question.id);
+    check(safeSlug(question.id), `${subject}: expansion id ${question.id} is safe`);
+    check(typeof question.prompt === 'string' && question.prompt.trim().length >= 8, `${question.id}: expansion prompt is useful`);
+    check(Array.isArray(question.options) && question.options.length === 4, `${question.id}: expansion has four options`);
+    check(Number.isInteger(question.answer) && question.answer >= 0 && question.answer < 4, `${question.id}: expansion answer index is valid`);
+    check(typeof question.explanation === 'string' && question.explanation.trim().length >= 12, `${question.id}: expansion explanation is useful`);
+  }
+}
+check(unique([...ids, ...expansionIds]), 'base and expansion question IDs are unique together');
+check(Object.values(mergedCounts).every(count => count >= 20), 'every shared subject has at least twenty merged questions');
+check(Object.values(mergedCounts).reduce((sum, count) => sum + count, 0) >= 120, 'merged shared bank contains at least 120 questions');
 
 const creatureHtml = await readFile(path.join(root, 'games/creature-catcher/index.html'), 'utf8');
 const creatureJs = await readFile(path.join(root, 'games/creature-catcher/game.js'), 'utf8');
@@ -69,4 +93,4 @@ if (failures.length) {
   failures.forEach(message => console.error(`  ✗ ${message}`));
   process.exit(1);
 }
-console.log(`Learning question bank validation passed: ${checks.length} checks, ${total} shared questions across ${requiredSubjects.length} subjects.`);
+console.log(`Learning question bank validation passed: ${checks.length} checks, merged counts ${JSON.stringify(mergedCounts)} across ${requiredSubjects.length} subjects.`);

@@ -1,46 +1,1121 @@
 {
   "schemaVersion": 1,
   "packId": "kidscoin-family-expansion-2",
-  "title": "KidsCoin Family Learning Expansion 2",
-  "description": "Twenty-four additional family-planning questions, four for each open KidsCoin lesson.",
+  "title": "KidsCoin Family Learning Expansion 2 · Twenty-Question Edition",
+  "description": "Eighty-four additional family-planning questions, fourteen for each open KidsCoin lesson, bringing every lesson to twenty questions when merged with the six recovered base questions.",
   "questionsByLesson": {
     "earn-before-spend": [
-      {"id":"earn-07","prompt":"Which action should happen before Family KC is added for a chore?","options":["A parent approves the completed chore","The app contacts a bank","The child buys a token","A public account is created"],"answer":0,"explanation":"A completed chore waits for a parent decision before fictional Family KC is awarded.","difficulty":"starter"},
-      {"id":"earn-08","prompt":"Why might a parent reject a completed-chore request?","options":["The chore may need to be finished or checked again","Family KC ran out worldwide","The app requires a credit card","The reward market closed"],"answer":0,"explanation":"A parent may ask for the chore to be completed or checked again before approval.","difficulty":"growing"},
-      {"id":"earn-09","prompt":"What is a fair way to earn toward a larger family reward?","options":["Complete several agreed chores or lessons over time","Change the balance with browser tools","Use another explorer's profile","Request every reward at once"],"answer":0,"explanation":"Several approved efforts can build a fictional balance gradually and fairly.","difficulty":"growing"},
-      {"id":"earn-10","prompt":"Which statement best describes earning in KidsCoin?","options":["It practices responsibility with fictional points","It creates wages or employment","It guarantees a real purchase","It sends money outside the family"],"answer":0,"explanation":"KidsCoin is a family practice system using fictional points, not wages or real payments.","difficulty":"challenge"}
+      {
+        "id": "earn-07",
+        "prompt": "Which action should happen before Family KC is added for a chore?",
+        "options": [
+          "A parent approves the completed chore",
+          "The app contacts a bank",
+          "The child buys a token",
+          "A public account is created"
+        ],
+        "answer": 0,
+        "explanation": "A completed chore waits for a parent decision before fictional Family KC is awarded.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "earn-08",
+        "prompt": "Why might a parent reject a completed-chore request?",
+        "options": [
+          "The chore may need to be finished or checked again",
+          "Family KC ran out worldwide",
+          "The app requires a credit card",
+          "The reward market closed"
+        ],
+        "answer": 0,
+        "explanation": "A parent may ask for the chore to be completed or checked again before approval.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "earn-09",
+        "prompt": "What is a fair way to earn toward a larger family reward?",
+        "options": [
+          "Complete several agreed chores or lessons over time",
+          "Change the balance with browser tools",
+          "Use another explorer's profile",
+          "Request every reward at once"
+        ],
+        "answer": 0,
+        "explanation": "Several approved efforts can build a fictional balance gradually and fairly.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "earn-10",
+        "prompt": "Which statement best describes earning in KidsCoin?",
+        "options": [
+          "It practices responsibility with fictional points",
+          "It creates wages or employment",
+          "It guarantees a real purchase",
+          "It sends money outside the family"
+        ],
+        "answer": 0,
+        "explanation": "KidsCoin is a family practice system using fictional points, not wages or real payments.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "earn-11",
+        "prompt": "A chore is marked done but has not been checked yet. What happens next?",
+        "options": [
+          "It waits for parent approval",
+          "KC is added automatically",
+          "A purchase is made",
+          "The balance doubles"
+        ],
+        "answer": 0,
+        "explanation": "KidsCoin waits for a parent to approve a completed chore before adding fictional Family KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "earn-12",
+        "prompt": "Why is it useful to agree on a chore before doing it for KC?",
+        "options": [
+          "Everyone knows the task and reward ahead of time",
+          "It creates real wages",
+          "It removes the parent decision",
+          "It makes every chore worth the same"
+        ],
+        "answer": 0,
+        "explanation": "Clear expectations help everyone understand what needs to be done and what fictional reward is attached.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "earn-13",
+        "prompt": "You earn 3 KC for one approved task and 6 KC for another. How much did you earn?",
+        "options": [
+          "6 KC",
+          "9 KC",
+          "12 KC",
+          "18 KC"
+        ],
+        "answer": 1,
+        "explanation": "Three plus six equals 9 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "earn-14",
+        "prompt": "Which is a responsible way to build a KC balance?",
+        "options": [
+          "Complete agreed tasks and lessons over time",
+          "Change saved data by guessing",
+          "Use another profile's rewards",
+          "Skip the approval step"
+        ],
+        "answer": 0,
+        "explanation": "A fair balance grows from the activities the family agreed on, not from bypassing the rules.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "earn-15",
+        "prompt": "Why might two chores have different KC rewards?",
+        "options": [
+          "They may take different effort or responsibility",
+          "One uses real money",
+          "The app changes prices every minute",
+          "One belongs to a public market"
+        ],
+        "answer": 0,
+        "explanation": "Families can choose different fictional rewards for tasks that require different time, effort, or responsibility.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "earn-16",
+        "prompt": "A task earns 9 KC and 18 XP. What does the XP help track?",
+        "options": [
+          "Learning and activity progress",
+          "Cash value",
+          "A bank balance",
+          "A market price"
+        ],
+        "answer": 0,
+        "explanation": "XP is another fictional progress measure inside the app and does not have cash value.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "earn-17",
+        "prompt": "What should happen if a chore needs to be redone?",
+        "options": [
+          "Finish it properly and ask for approval again",
+          "Add KC anyway",
+          "Delete the ledger",
+          "Request a reward first"
+        ],
+        "answer": 0,
+        "explanation": "Redoing the task and asking for approval again keeps the family agreement fair and clear.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "earn-18",
+        "prompt": "Which choice shows earning before spending?",
+        "options": [
+          "Complete an agreed task, receive approval, then consider a reward",
+          "Request a reward before checking the balance",
+          "Ignore the task list",
+          "Spend someone else's KC"
+        ],
+        "answer": 0,
+        "explanation": "The sequence is effort, approval, earning, and then deciding whether to save or request a reward.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "earn-19",
+        "prompt": "You have 12 KC and earn 9 KC. What is your new balance before any reward is redeemed?",
+        "options": [
+          "3 KC",
+          "18 KC",
+          "21 KC",
+          "27 KC"
+        ],
+        "answer": 2,
+        "explanation": "Twelve plus nine equals 21 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "earn-20",
+        "prompt": "What is the main lesson behind earn-before-spend?",
+        "options": [
+          "Build resources through agreed effort before using them",
+          "Every task should lead to a purchase",
+          "Points should be hidden",
+          "Rewards should come before responsibilities"
+        ],
+        "answer": 0,
+        "explanation": "Earning first practices planning and responsibility before choosing how to use a fictional balance.",
+        "difficulty": "challenge"
+      }
     ],
     "needs-and-wants": [
-      {"id":"needs-07","prompt":"Which choice is usually a need for school?","options":["Required basic supplies","A collector's edition backpack","A second gaming headset","A decorative light"],"answer":0,"explanation":"Required basic supplies help a student participate, while the other choices are usually extras.","difficulty":"starter"},
-      {"id":"needs-08","prompt":"A family has enough KC for one choice. Which should come first?","options":["An agreed important need","The newest extra","The most expensive option","A random reward"],"answer":0,"explanation":"Important agreed needs should generally be considered before optional extras.","difficulty":"growing"},
-      {"id":"needs-09","prompt":"Can the same item be a need for one person and a want for another?","options":["Yes, circumstances can differ","No, every item has one permanent category","Only if it costs 9 KC","Only inside a store"],"answer":0,"explanation":"Circumstances matter; an item may be necessary for one person and optional for another.","difficulty":"growing"},
-      {"id":"needs-10","prompt":"What question helps separate a need from a want?","options":["Is this necessary for safety, health, or an important daily responsibility?","Is it brightly colored?","Does an advertisement show it?","Can I request it twice?"],"answer":0,"explanation":"Thinking about safety, health, and important responsibilities helps identify needs.","difficulty":"challenge"}
+      {
+        "id": "needs-07",
+        "prompt": "Which choice is usually a need for school?",
+        "options": [
+          "Required basic supplies",
+          "A collector's edition backpack",
+          "A second gaming headset",
+          "A decorative light"
+        ],
+        "answer": 0,
+        "explanation": "Required basic supplies help a student participate, while the other choices are usually extras.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "needs-08",
+        "prompt": "A family has enough KC for one choice. Which should come first?",
+        "options": [
+          "An agreed important need",
+          "The newest extra",
+          "The most expensive option",
+          "A random reward"
+        ],
+        "answer": 0,
+        "explanation": "Important agreed needs should generally be considered before optional extras.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "needs-09",
+        "prompt": "Can the same item be a need for one person and a want for another?",
+        "options": [
+          "Yes, circumstances can differ",
+          "No, every item has one permanent category",
+          "Only if it costs 9 KC",
+          "Only inside a store"
+        ],
+        "answer": 0,
+        "explanation": "Circumstances matter; an item may be necessary for one person and optional for another.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "needs-10",
+        "prompt": "What question helps separate a need from a want?",
+        "options": [
+          "Is this necessary for safety, health, or an important daily responsibility?",
+          "Is it brightly colored?",
+          "Does an advertisement show it?",
+          "Can I request it twice?"
+        ],
+        "answer": 0,
+        "explanation": "Thinking about safety, health, and important responsibilities helps identify needs.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "needs-11",
+        "prompt": "Which choice is most likely a need on a rainy school day?",
+        "options": [
+          "A safe rain jacket you already planned for",
+          "A second decorative backpack",
+          "A game skin",
+          "A novelty lamp"
+        ],
+        "answer": 0,
+        "explanation": "A rain jacket can meet a practical daily need, while the other choices are usually optional extras.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "needs-12",
+        "prompt": "Why should needs usually be planned before wants?",
+        "options": [
+          "Needs support important daily life and responsibilities",
+          "Wants are always bad",
+          "Needs always cost more",
+          "Wants use a different currency"
+        ],
+        "answer": 0,
+        "explanation": "Planning for important needs first helps protect the things required for daily life before optional extras.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "needs-13",
+        "prompt": "A working water bottle is lost before school. Is replacing it more likely a need or a want?",
+        "options": [
+          "Need",
+          "Want only",
+          "Neither",
+          "A reward"
+        ],
+        "answer": 0,
+        "explanation": "If the bottle is needed for the school day, replacing it can be a practical need.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "needs-14",
+        "prompt": "You already have a working backpack but like a new design. The new one is usually what?",
+        "options": [
+          "A want",
+          "A safety need",
+          "A medical need",
+          "A required bill"
+        ],
+        "answer": 0,
+        "explanation": "When the current item still works, a different style is usually an optional want.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "needs-15",
+        "prompt": "What can help when two family members disagree about whether something is a need?",
+        "options": [
+          "Explain the reason and listen to each person's situation",
+          "Pick the most expensive choice",
+          "Ignore the reason",
+          "Let an advertisement decide"
+        ],
+        "answer": 0,
+        "explanation": "Needs depend on circumstances, so sharing reasons and listening helps the family make a thoughtful decision.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "needs-16",
+        "prompt": "Which plan leaves room for both needs and wants?",
+        "options": [
+          "Cover important needs, save some, then choose an affordable extra",
+          "Use everything on extras first",
+          "Never plan for fun",
+          "Ignore the balance"
+        ],
+        "answer": 0,
+        "explanation": "A balanced plan can cover important needs, protect savings, and still include an affordable want.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "needs-17",
+        "prompt": "A required school project needs poster board. What is poster board in this situation?",
+        "options": [
+          "A need for the project",
+          "A random want",
+          "A cash investment",
+          "A game reward"
+        ],
+        "answer": 0,
+        "explanation": "Because it is required to complete an important school responsibility, it functions as a need in this situation.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "needs-18",
+        "prompt": "Which question best checks whether a purchase is a want?",
+        "options": [
+          "Could I safely wait or use what I already have?",
+          "Is it advertised today?",
+          "Does it have bright colors?",
+          "Can I ask twice?"
+        ],
+        "answer": 0,
+        "explanation": "If you can safely wait or use something you already have, the new item may be an optional want.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "needs-19",
+        "prompt": "Why can a want still be worth planning for?",
+        "options": [
+          "Fun and personal goals can matter after important needs are covered",
+          "Every want is required",
+          "Wants become cash",
+          "Wants remove family rules"
+        ],
+        "answer": 0,
+        "explanation": "Optional goals can bring enjoyment and motivation, especially when they fit after needs and savings.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "needs-20",
+        "prompt": "What is the strongest needs-and-wants habit?",
+        "options": [
+          "Pause, identify the purpose, and decide what matters first",
+          "Buy the first option",
+          "Call every item a need",
+          "Call every item a want"
+        ],
+        "answer": 0,
+        "explanation": "Thinking about purpose and priority leads to better choices than using a label automatically.",
+        "difficulty": "challenge"
+      }
     ],
     "saving-goal": [
-      {"id":"save-07","prompt":"You have 21 KC and save 3 more. What is the new balance?","options":["18 KC","22 KC","24 KC","27 KC"],"answer":2,"explanation":"Twenty-one plus three equals 24.","difficulty":"starter"},
-      {"id":"save-08","prompt":"A reward costs 54 KC. You have 36 KC. How much more is needed?","options":["9 KC","18 KC","21 KC","27 KC"],"answer":1,"explanation":"Fifty-four minus thirty-six equals 18.","difficulty":"growing"},
-      {"id":"save-09","prompt":"Which plan reaches a 45 KC goal from 18 KC?","options":["Earn three approved 9 KC rewards","Redeem 9 KC first","Ignore the ledger","Change profiles"],"answer":0,"explanation":"Three rewards of 9 KC add 27 KC; 18 + 27 = 45.","difficulty":"growing"},
-      {"id":"save-10","prompt":"Why can a written KC goal help?","options":["It makes the target and progress easier to track","It turns KC into cash","It removes parent approval","It guarantees every request"],"answer":0,"explanation":"A clear written goal helps an explorer compare the current balance with the target.","difficulty":"challenge"}
+      {
+        "id": "save-07",
+        "prompt": "You have 21 KC and save 3 more. What is the new balance?",
+        "options": [
+          "18 KC",
+          "22 KC",
+          "24 KC",
+          "27 KC"
+        ],
+        "answer": 2,
+        "explanation": "Twenty-one plus three equals 24.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "save-08",
+        "prompt": "A reward costs 54 KC. You have 36 KC. How much more is needed?",
+        "options": [
+          "9 KC",
+          "18 KC",
+          "21 KC",
+          "27 KC"
+        ],
+        "answer": 1,
+        "explanation": "Fifty-four minus thirty-six equals 18.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "save-09",
+        "prompt": "Which plan reaches a 45 KC goal from 18 KC?",
+        "options": [
+          "Earn three approved 9 KC rewards",
+          "Redeem 9 KC first",
+          "Ignore the ledger",
+          "Change profiles"
+        ],
+        "answer": 0,
+        "explanation": "Three rewards of 9 KC add 27 KC; 18 + 27 = 45.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "save-10",
+        "prompt": "Why can a written KC goal help?",
+        "options": [
+          "It makes the target and progress easier to track",
+          "It turns KC into cash",
+          "It removes parent approval",
+          "It guarantees every request"
+        ],
+        "answer": 0,
+        "explanation": "A clear written goal helps an explorer compare the current balance with the target.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "save-11",
+        "prompt": "You have 30 KC and want 45 KC. How much more do you need?",
+        "options": [
+          "9 KC",
+          "12 KC",
+          "15 KC",
+          "18 KC"
+        ],
+        "answer": 2,
+        "explanation": "Forty-five minus thirty equals 15 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "save-12",
+        "prompt": "If you save 6 KC from each approved activity, how many activities add 18 KC?",
+        "options": [
+          "2",
+          "3",
+          "4",
+          "6"
+        ],
+        "answer": 1,
+        "explanation": "Three groups of 6 KC equal 18 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "save-13",
+        "prompt": "Which saving goal is easiest to measure?",
+        "options": [
+          "Save 27 KC toward movie-pick night",
+          "Save more someday",
+          "Try not to spend much",
+          "Maybe earn something"
+        ],
+        "answer": 0,
+        "explanation": "A specific amount and purpose make progress easy to measure.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "save-14",
+        "prompt": "You have 33 KC and earn 3 KC. Which goal have you reached?",
+        "options": [
+          "36 KC",
+          "39 KC",
+          "45 KC",
+          "54 KC"
+        ],
+        "answer": 0,
+        "explanation": "Thirty-three plus three equals 36 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "save-15",
+        "prompt": "What can help protect a saving goal when a small want appears?",
+        "options": [
+          "Compare the want with the goal before spending",
+          "Hide the balance",
+          "Delete the goal",
+          "Assume the want is free"
+        ],
+        "answer": 0,
+        "explanation": "Comparing the short-term want with the larger goal helps you decide which matters more.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "save-16",
+        "prompt": "A goal costs 72 KC. You have 45 KC. What fraction of the goal remains as 27 KC?",
+        "options": [
+          "Less than half",
+          "Exactly half",
+          "More than the whole goal",
+          "Zero"
+        ],
+        "answer": 0,
+        "explanation": "Twenty-seven is less than half of 72, so you have already saved more than half.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "save-17",
+        "prompt": "Why is checking the ledger useful while saving?",
+        "options": [
+          "It shows where the balance changed",
+          "It changes KC into cash",
+          "It guarantees rewards",
+          "It removes approvals"
+        ],
+        "answer": 0,
+        "explanation": "The ledger helps you understand earnings and redemptions that move the fictional balance.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "save-18",
+        "prompt": "You save 9 KC, then 6 KC, then 3 KC. How much did you add altogether?",
+        "options": [
+          "12 KC",
+          "15 KC",
+          "18 KC",
+          "21 KC"
+        ],
+        "answer": 2,
+        "explanation": "Nine plus six plus three equals 18 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "save-19",
+        "prompt": "What is a useful response if a saving goal will take longer than expected?",
+        "options": [
+          "Adjust the plan and keep tracking progress",
+          "Pretend the cost is lower",
+          "Change the ledger",
+          "Use another profile's balance"
+        ],
+        "answer": 0,
+        "explanation": "A realistic plan can be adjusted when progress is slower than expected without abandoning the goal.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "save-20",
+        "prompt": "Which statement best describes saving?",
+        "options": [
+          "Choosing to keep some resources now for a later goal",
+          "Never enjoying a reward",
+          "Making the balance grow automatically",
+          "Borrowing from another profile"
+        ],
+        "answer": 0,
+        "explanation": "Saving means intentionally keeping part of what you have so it can support a future goal.",
+        "difficulty": "challenge"
+      }
     ],
     "read-the-ledger": [
-      {"id":"ledger-07","prompt":"The ledger shows +6 KC and then -3 KC. What is the overall change?","options":["+3 KC","-3 KC","+9 KC","0 KC"],"answer":0,"explanation":"Adding 6 and subtracting 3 leaves a net increase of 3 KC.","difficulty":"starter"},
-      {"id":"ledger-08","prompt":"Which ledger detail tells when an entry happened?","options":["The timestamp","The avatar","The lesson icon","The tab name"],"answer":0,"explanation":"The timestamp records the date and time of the local ledger entry.","difficulty":"starter"},
-      {"id":"ledger-09","prompt":"Why should a rejected request not subtract KC?","options":["No reward was approved or redeemed","The app forgot the balance","Rejected requests become cash","The ledger hides mistakes"],"answer":0,"explanation":"KC is only deducted when a reward redemption is actually approved.","difficulty":"growing"},
-      {"id":"ledger-10","prompt":"A balance seems wrong. What is the best first check?","options":["Review recent earn and spend entries with a parent","Create a public complaint","Guess a new balance","Delete every profile immediately"],"answer":0,"explanation":"Recent ledger entries usually explain how the local fictional balance changed.","difficulty":"challenge"}
+      {
+        "id": "ledger-07",
+        "prompt": "The ledger shows +6 KC and then -3 KC. What is the overall change?",
+        "options": [
+          "+3 KC",
+          "-3 KC",
+          "+9 KC",
+          "0 KC"
+        ],
+        "answer": 0,
+        "explanation": "Adding 6 and subtracting 3 leaves a net increase of 3 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "ledger-08",
+        "prompt": "Which ledger detail tells when an entry happened?",
+        "options": [
+          "The timestamp",
+          "The avatar",
+          "The lesson icon",
+          "The tab name"
+        ],
+        "answer": 0,
+        "explanation": "The timestamp records the date and time of the local ledger entry.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "ledger-09",
+        "prompt": "Why should a rejected request not subtract KC?",
+        "options": [
+          "No reward was approved or redeemed",
+          "The app forgot the balance",
+          "Rejected requests become cash",
+          "The ledger hides mistakes"
+        ],
+        "answer": 0,
+        "explanation": "KC is only deducted when a reward redemption is actually approved.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "ledger-10",
+        "prompt": "A balance seems wrong. What is the best first check?",
+        "options": [
+          "Review recent earn and spend entries with a parent",
+          "Create a public complaint",
+          "Guess a new balance",
+          "Delete every profile immediately"
+        ],
+        "answer": 0,
+        "explanation": "Recent ledger entries usually explain how the local fictional balance changed.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "ledger-11",
+        "prompt": "The ledger shows +9 KC, +3 KC, and -6 KC. What is the net change?",
+        "options": [
+          "+3 KC",
+          "+6 KC",
+          "+12 KC",
+          "+18 KC"
+        ],
+        "answer": 1,
+        "explanation": "Nine plus three minus six equals a net increase of 6 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "ledger-12",
+        "prompt": "Why is the newest ledger entry often checked first?",
+        "options": [
+          "It may explain the most recent balance change",
+          "It is always the biggest",
+          "It changes older entries",
+          "It is public"
+        ],
+        "answer": 0,
+        "explanation": "A recent entry is a good first place to look when you are trying to explain a recent change.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "ledger-13",
+        "prompt": "A +3 KC entry is followed by +6 KC. What do both entries represent?",
+        "options": [
+          "Earnings added to the balance",
+          "Two purchases",
+          "Two loans",
+          "Two market prices"
+        ],
+        "answer": 0,
+        "explanation": "Positive KC entries represent fictional earnings that increase the local balance.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "ledger-14",
+        "prompt": "What should a clear ledger label tell you?",
+        "options": [
+          "Why the entry happened",
+          "A secret PIN",
+          "A public username",
+          "A product advertisement"
+        ],
+        "answer": 0,
+        "explanation": "A useful label makes it easy to connect an entry with the task, lesson, or approved reward that caused it.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "ledger-15",
+        "prompt": "Your balance was 42 KC and the ledger shows -27 KC. What balance remains?",
+        "options": [
+          "15 KC",
+          "19 KC",
+          "27 KC",
+          "69 KC"
+        ],
+        "answer": 0,
+        "explanation": "Forty-two minus twenty-seven equals 15 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "ledger-16",
+        "prompt": "Why should ledger entries stay in order by time?",
+        "options": [
+          "It helps reconstruct how the balance changed",
+          "It raises the KC value",
+          "It unlocks purchases",
+          "It creates interest"
+        ],
+        "answer": 0,
+        "explanation": "A time-ordered history makes it easier to follow the sequence of earnings and redemptions.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "ledger-17",
+        "prompt": "Which entry would increase the balance?",
+        "options": [
+          "Approved +9 KC chore",
+          "Approved -27 KC reward",
+          "A rejected request",
+          "Opening the app"
+        ],
+        "answer": 0,
+        "explanation": "A positive approved earning increases the balance; a redemption decreases it.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "ledger-18",
+        "prompt": "If the ledger and balance do not seem to match, what is a careful next step?",
+        "options": [
+          "Review the entries with a parent before changing anything",
+          "Guess a new total",
+          "Delete all history",
+          "Create another profile"
+        ],
+        "answer": 0,
+        "explanation": "Checking the recorded entries together is safer than guessing or deleting the history.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "ledger-19",
+        "prompt": "What makes a ledger useful for planning?",
+        "options": [
+          "It shows patterns in earning and redeeming",
+          "It predicts real prices",
+          "It creates money",
+          "It approves chores automatically"
+        ],
+        "answer": 0,
+        "explanation": "Seeing how often resources come in and go out can help with realistic goals.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "ledger-20",
+        "prompt": "Which sentence best summarizes a ledger?",
+        "options": [
+          "A record of balance-changing events",
+          "A list of advertisements",
+          "A public scoreboard",
+          "A shopping catalog"
+        ],
+        "answer": 0,
+        "explanation": "A ledger records events that add to or subtract from a balance.",
+        "difficulty": "challenge"
+      }
     ],
     "plan-a-reward": [
-      {"id":"plan-07","prompt":"You have 48 KC. Which reward can you request right now?","options":["A 45 KC reward","A 54 KC reward","A 72 KC reward","A 108 KC reward"],"answer":0,"explanation":"Forty-eight KC is enough for a 45 KC reward but not the higher-cost choices.","difficulty":"starter"},
-      {"id":"plan-08","prompt":"What happens to the balance while a reward request is pending?","options":["It stays unchanged until a parent decides","It doubles","It becomes real money","It is posted publicly"],"answer":0,"explanation":"Pending requests do not deduct Family KC before parent approval.","difficulty":"growing"},
-      {"id":"plan-09","prompt":"Two rewards cost 27 KC and 45 KC. How much KC would both cost together?","options":["62 KC","72 KC","82 KC","90 KC"],"answer":1,"explanation":"Twenty-seven plus forty-five equals 72.","difficulty":"growing"},
-      {"id":"plan-10","prompt":"Why might a parent approve a reward for a different day?","options":["The timing may need to fit the family schedule","The KC has a market price","The app requires shipping","The reward belongs to a stranger"],"answer":0,"explanation":"A family reward can be approved while its timing is planned around real family needs.","difficulty":"challenge"}
+      {
+        "id": "plan-07",
+        "prompt": "You have 48 KC. Which reward can you request right now?",
+        "options": [
+          "A 45 KC reward",
+          "A 54 KC reward",
+          "A 72 KC reward",
+          "A 108 KC reward"
+        ],
+        "answer": 0,
+        "explanation": "Forty-eight KC is enough for a 45 KC reward but not the higher-cost choices.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "plan-08",
+        "prompt": "What happens to the balance while a reward request is pending?",
+        "options": [
+          "It stays unchanged until a parent decides",
+          "It doubles",
+          "It becomes real money",
+          "It is posted publicly"
+        ],
+        "answer": 0,
+        "explanation": "Pending requests do not deduct Family KC before parent approval.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "plan-09",
+        "prompt": "Two rewards cost 27 KC and 45 KC. How much KC would both cost together?",
+        "options": [
+          "62 KC",
+          "72 KC",
+          "82 KC",
+          "90 KC"
+        ],
+        "answer": 1,
+        "explanation": "Twenty-seven plus forty-five equals 72.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "plan-10",
+        "prompt": "Why might a parent approve a reward for a different day?",
+        "options": [
+          "The timing may need to fit the family schedule",
+          "The KC has a market price",
+          "The app requires shipping",
+          "The reward belongs to a stranger"
+        ],
+        "answer": 0,
+        "explanation": "A family reward can be approved while its timing is planned around real family needs.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "plan-11",
+        "prompt": "You have 54 KC. Which listed reward cost can you fully cover?",
+        "options": [
+          "72 KC",
+          "108 KC",
+          "54 KC",
+          "63 KC"
+        ],
+        "answer": 2,
+        "explanation": "A 54 KC balance can fully cover a reward that costs 54 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "plan-12",
+        "prompt": "You want a 72 KC reward and have 60 KC. How much more is needed?",
+        "options": [
+          "6 KC",
+          "9 KC",
+          "12 KC",
+          "18 KC"
+        ],
+        "answer": 2,
+        "explanation": "Seventy-two minus sixty equals 12 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "plan-13",
+        "prompt": "Why compare two reward costs before requesting one?",
+        "options": [
+          "To see which fits your balance and goal better",
+          "To change the costs",
+          "To avoid parent approval",
+          "To create real value"
+        ],
+        "answer": 0,
+        "explanation": "Comparing costs helps you choose a reward that fits your current balance and priorities.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "plan-14",
+        "prompt": "What should you consider besides KC cost when planning a family reward?",
+        "options": [
+          "Whether the timing works for the family",
+          "A stock chart",
+          "A public ranking",
+          "A stranger's opinion"
+        ],
+        "answer": 0,
+        "explanation": "Family rewards can depend on schedules, availability, and parent approval as well as the fictional KC cost.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "plan-15",
+        "prompt": "You have 81 KC and choose a 45 KC reward. What balance would remain after approval?",
+        "options": [
+          "26 KC",
+          "36 KC",
+          "45 KC",
+          "126 KC"
+        ],
+        "answer": 1,
+        "explanation": "Eighty-one minus forty-five equals 36 KC.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "plan-16",
+        "prompt": "Which plan keeps a future goal alive after a reward?",
+        "options": [
+          "Check what balance will remain before requesting",
+          "Spend first and calculate later",
+          "Ignore other goals",
+          "Use another explorer's KC"
+        ],
+        "answer": 0,
+        "explanation": "Looking at the remaining balance helps you decide whether the reward fits alongside another goal.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "plan-17",
+        "prompt": "A reward request is pending. What is the best assumption?",
+        "options": [
+          "Wait for the parent decision before treating it as approved",
+          "The reward is guaranteed",
+          "The KC is already gone",
+          "The request is public"
+        ],
+        "answer": 0,
+        "explanation": "Pending means the family decision has not been made yet, so the reward should not be treated as approved.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "plan-18",
+        "prompt": "Why can a smaller reward sometimes be the better choice?",
+        "options": [
+          "It may fit the balance while preserving savings for another goal",
+          "Small rewards are always better",
+          "It avoids all rules",
+          "It creates extra KC"
+        ],
+        "answer": 0,
+        "explanation": "A lower-cost option can meet a goal while leaving more of the fictional balance for future plans.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "plan-19",
+        "prompt": "Which sequence is best for a reward plan?",
+        "options": [
+          "Choose a goal, check cost, save, request, wait for approval",
+          "Request, spend, then check cost",
+          "Hide the goal, guess the cost, spend",
+          "Use someone else's profile"
+        ],
+        "answer": 0,
+        "explanation": "A clear sequence keeps the goal, cost, saving, and parent decision connected.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "plan-20",
+        "prompt": "What does a good reward plan balance?",
+        "options": [
+          "What you want, what you have, and what the family can approve",
+          "Only the biggest reward",
+          "Only today's balance",
+          "Only the newest option"
+        ],
+        "answer": 0,
+        "explanation": "Good planning connects personal goals with the available fictional balance and the family's real schedule and rules.",
+        "difficulty": "challenge"
+      }
     ],
     "family-kc-boundary": [
-      {"id":"boundary-07","prompt":"Where can another family see your KidsCoin notes?","options":["Nowhere; notes stay in this browser","On a public leaderboard","In an advertising feed","At a bank"],"answer":0,"explanation":"KidsCoin notes are device-local and are not posted for other families.","difficulty":"starter"},
-      {"id":"boundary-08","prompt":"What could clearing this browser's local data do?","options":["Remove device-local KidsCoin progress","Withdraw cash","Cancel a bank account","Delete a public profile"],"answer":0,"explanation":"Because the data is local, clearing browser storage can remove KidsCoin progress unless it was backed up.","difficulty":"growing"},
-      {"id":"boundary-09","prompt":"What is the safest description of the parent PIN?","options":["A convenience lock against casual taps","A secure bank password","A cloud account login","A legal identity check"],"answer":0,"explanation":"The local PIN is a convenience boundary and is not strong account security.","difficulty":"growing"},
-      {"id":"boundary-10","prompt":"Why does KidsCoin avoid real-money purchases?","options":["The app is designed for private family learning with fictional rewards","Real money makes every lesson easier","Purchases are required for local storage","Children need a market account"],"answer":0,"explanation":"The system practices planning and responsibility without payments, sales, or financial accounts.","difficulty":"challenge"}
+      {
+        "id": "boundary-07",
+        "prompt": "Where can another family see your KidsCoin notes?",
+        "options": [
+          "Nowhere; notes stay in this browser",
+          "On a public leaderboard",
+          "In an advertising feed",
+          "At a bank"
+        ],
+        "answer": 0,
+        "explanation": "KidsCoin notes are device-local and are not posted for other families.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "boundary-08",
+        "prompt": "What could clearing this browser's local data do?",
+        "options": [
+          "Remove device-local KidsCoin progress",
+          "Withdraw cash",
+          "Cancel a bank account",
+          "Delete a public profile"
+        ],
+        "answer": 0,
+        "explanation": "Because the data is local, clearing browser storage can remove KidsCoin progress unless it was backed up.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "boundary-09",
+        "prompt": "What is the safest description of the parent PIN?",
+        "options": [
+          "A convenience lock against casual taps",
+          "A secure bank password",
+          "A cloud account login",
+          "A legal identity check"
+        ],
+        "answer": 0,
+        "explanation": "The local PIN is a convenience boundary and is not strong account security.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "boundary-10",
+        "prompt": "Why does KidsCoin avoid real-money purchases?",
+        "options": [
+          "The app is designed for private family learning with fictional rewards",
+          "Real money makes every lesson easier",
+          "Purchases are required for local storage",
+          "Children need a market account"
+        ],
+        "answer": 0,
+        "explanation": "The system practices planning and responsibility without payments, sales, or financial accounts.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "boundary-11",
+        "prompt": "Does Family KC have a dollar exchange rate?",
+        "options": [
+          "No",
+          "Yes, every day",
+          "Only for adults",
+          "Only after a streak"
+        ],
+        "answer": 0,
+        "explanation": "Family KC is fictional and has no cash exchange rate.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "boundary-12",
+        "prompt": "Who controls family reward approvals in KidsCoin?",
+        "options": [
+          "The parent or caregiver using Parent Mode",
+          "A public marketplace",
+          "An advertiser",
+          "A bank"
+        ],
+        "answer": 0,
+        "explanation": "Reward approvals stay inside the family's Parent Mode rather than going to an outside service.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "boundary-13",
+        "prompt": "What does device-local mean for KidsCoin data?",
+        "options": [
+          "It is stored in this browser unless you export or clear it",
+          "It is posted publicly",
+          "It is stored at a bank",
+          "It follows every device automatically"
+        ],
+        "answer": 0,
+        "explanation": "Device-local data stays in this browser instead of automatically syncing to an outside account.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "boundary-14",
+        "prompt": "Why should the parent PIN not be treated like strong security?",
+        "options": [
+          "It is only a local convenience lock",
+          "It is printed publicly",
+          "It expires every minute",
+          "It controls a bank account"
+        ],
+        "answer": 0,
+        "explanation": "The PIN helps prevent casual taps but is not designed as strong account authentication.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "boundary-15",
+        "prompt": "What happens if Family KC is never redeemed?",
+        "options": [
+          "It simply remains a fictional local balance",
+          "It earns bank interest",
+          "It becomes cryptocurrency",
+          "It is mailed as cash"
+        ],
+        "answer": 0,
+        "explanation": "Family KC remains a fictional number in the local family app until the family uses it for an approved reward.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "boundary-16",
+        "prompt": "Does KidsCoin sell items inside the app?",
+        "options": [
+          "No",
+          "Yes, with a card",
+          "Yes, with a subscription",
+          "Yes, through ads"
+        ],
+        "answer": 0,
+        "explanation": "KidsCoin has no purchases; its rewards are family-planned and parent approved.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "boundary-17",
+        "prompt": "What is a safe way to think about Family KC?",
+        "options": [
+          "A pretend planning tool",
+          "A real investment",
+          "A paycheck",
+          "A loan"
+        ],
+        "answer": 0,
+        "explanation": "Family KC is a pretend planning and responsibility tool, not real money or a financial product.",
+        "difficulty": "growing"
+      },
+      {
+        "id": "boundary-18",
+        "prompt": "Can another player transfer Family KC into your profile over the internet?",
+        "options": [
+          "No",
+          "Yes, through a wallet",
+          "Yes, through a marketplace",
+          "Yes, through an ad"
+        ],
+        "answer": 0,
+        "explanation": "There is no online transfer system; KidsCoin is a private device-local family experience.",
+        "difficulty": "starter"
+      },
+      {
+        "id": "boundary-19",
+        "prompt": "Why is it important to know the difference between fictional KC and real money?",
+        "options": [
+          "Real money has real-world value and responsibilities; Family KC does not",
+          "They are exactly the same",
+          "KC can always be cashed out",
+          "Real money is only used in games"
+        ],
+        "answer": 0,
+        "explanation": "Keeping the boundary clear prevents a practice system from being confused with real financial accounts or purchases.",
+        "difficulty": "challenge"
+      },
+      {
+        "id": "boundary-20",
+        "prompt": "Which statement matches KidsCoin's design?",
+        "options": [
+          "Learn and plan with pretend rewards, no ads or purchases",
+          "Trade KC publicly",
+          "Buy KC with money",
+          "Earn investment returns"
+        ],
+        "answer": 0,
+        "explanation": "KidsCoin is designed for private family learning with fictional rewards and no ads, purchases, or financial products.",
+        "difficulty": "challenge"
+      }
     ]
   },
-  "privacy": {"deviceLocal":true,"uploadsData":false,"requestsLocation":false},
-  "review": {"status":"reviewed","note":"Family-planning practice questions with no real-money, investment, banking, or cryptocurrency instruction."}
+  "privacy": {
+    "deviceLocal": true,
+    "uploadsData": false,
+    "requestsLocation": false
+  },
+  "review": {
+    "status": "reviewed",
+    "note": "Family-planning practice questions with no real-money, investment, banking, or cryptocurrency instruction."
+  }
 }
