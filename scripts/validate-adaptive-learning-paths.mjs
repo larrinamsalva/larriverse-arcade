@@ -15,7 +15,10 @@ const safeSlug = value => typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)
 const baseBank = json('games/learning-question-bank.json');
 const pack = json('games/learning-question-pack-2.json');
 const family = json('games/kidscoin-family/family.json');
-const familyPack = json('games/kidscoin-family/family-question-pack-2.json');
+const familyPacks = [
+  json('games/kidscoin-family/family-question-pack-2.json'),
+  json('games/kidscoin-family/family-question-pack-3.json')
+];
 const learningPath = read('assets/learning-path.js');
 const familyLoader = read('games/kidscoin-family/family-data-loader.js');
 const creatureHtml = read('games/creature-catcher/index.html');
@@ -59,22 +62,27 @@ check(packTotal === 40, 'shared expansion contains 40 questions');
 check(baseTotal + packTotal === 120, 'combined shared bank contains 120 questions');
 check(unique(allSharedIds), 'combined shared question IDs are unique');
 
-check(familyPack.schemaVersion === 1, 'KidsCoin expansion schema version is 1');
-check(familyPack.packId === 'kidscoin-family-expansion-2', 'KidsCoin expansion pack ID is stable');
-check(familyPack.review?.status === 'reviewed', 'KidsCoin expansion is reviewed');
-check(familyPack.privacy?.deviceLocal === true, 'KidsCoin expansion is device-local content');
-check(familyPack.privacy?.uploadsData === false, 'KidsCoin expansion uploads no data');
+for (const familyPack of familyPacks) {
+  check(familyPack.schemaVersion === 1, `${familyPack.packId}: schema version is 1`);
+  check(familyPack.review?.status === 'reviewed', `${familyPack.packId}: pack is reviewed`);
+  check(familyPack.privacy?.deviceLocal === true, `${familyPack.packId}: content is device-local`);
+  check(familyPack.privacy?.uploadsData === false, `${familyPack.packId}: content uploads no data`);
+}
+check(JSON.stringify(familyPacks.map(pack => pack.packId)) === JSON.stringify([
+  'kidscoin-family-expansion-2',
+  'kidscoin-family-expansion-3'
+]), 'KidsCoin expansion pack IDs are stable');
 
 const familyIds = [];
 let familyBaseTotal = 0;
 let familyPackTotal = 0;
 for (const lesson of family.lessons) {
-  const additions = familyPack.questionsByLesson?.[lesson.id] || [];
+  const additions = familyPacks.flatMap(pack => pack.questionsByLesson?.[lesson.id] || []);
   familyBaseTotal += lesson.questions.length;
   familyPackTotal += additions.length;
   check(lesson.questions.length === 6, `${lesson.id}: base lesson keeps 6 questions`);
-  check(additions.length === 4, `${lesson.id}: expansion adds exactly 4 questions`);
-  check(lesson.questions.length + additions.length === 10, `${lesson.id}: combined lesson has 10 questions`);
+  check(additions.length === 14, `${lesson.id}: expansions add exactly 14 questions`);
+  check(lesson.questions.length + additions.length === 20, `${lesson.id}: combined lesson has 20 questions`);
   for (const question of [...lesson.questions, ...additions]) {
     familyIds.push(question.id);
     check(safeSlug(question.id), `${question.id}: KidsCoin question ID is safe`);
@@ -84,8 +92,8 @@ for (const lesson of family.lessons) {
   }
 }
 check(familyBaseTotal === 36, 'KidsCoin base bank remains 36 questions');
-check(familyPackTotal === 24, 'KidsCoin expansion contains 24 questions');
-check(familyBaseTotal + familyPackTotal === 60, 'KidsCoin combined bank contains 60 questions');
+check(familyPackTotal === 84, 'KidsCoin expansions contain 84 questions');
+check(familyBaseTotal + familyPackTotal === 120, 'KidsCoin combined bank contains 120 questions');
 check(unique(familyIds), 'combined KidsCoin question IDs are unique');
 
 for (const required of [
@@ -110,7 +118,9 @@ check(!/fetch\([^)]*https?:\/\//.test(learningPath), 'learning path makes no ext
 
 for (const required of [
   'family-question-pack-2.json',
-  'mergeQuestions(manifest, pack)',
+  'family-question-pack-3.json',
+  'mergeQuestions(manifest, packs)',
+  'packs.flatMap',
   'window.KidsCoinFamilyData',
   'questions: totalQuestions',
   'window.fetch = nativeFetch'
@@ -121,7 +131,7 @@ check(creatureHtml.includes('id="learningPathControl"'), 'Creature Catcher has a
 check(roadHtml.includes('id="learningPathControl"'), 'Road Trip Quest has a learning-path host');
 check(creatureHtml.includes('96-question'), 'Creature Catcher describes its 96-question pool');
 check(roadHtml.includes('96-question'), 'Road Trip Quest describes its 96-question pool');
-check(kidsHtml.includes('60 family-planning questions'), 'KidsCoin describes its 60-question bank');
+check(kidsHtml.includes('120 family-planning questions'), 'KidsCoin describes its 120-question bank');
 check(creatureHtml.indexOf('../../assets/learning-path.js') < creatureHtml.indexOf('game.js'), 'Creature Catcher loads the learning path before its engine');
 check(roadHtml.indexOf('../../assets/learning-path.js') < roadHtml.indexOf('game.js'), 'Road Trip Quest loads the learning path before its engine');
 check(kidsHtml.indexOf('family-data-loader.js') < kidsHtml.indexOf('game.js'), 'KidsCoin loads its data pack before its engine');
