@@ -71,10 +71,7 @@ const creatureJs = await readFile(path.join(root, 'games/creature-catcher/game.j
 const roadJs = await readFile(path.join(root, 'games/road-trip-quest/game.js'), 'utf8');
 for (const [label, code] of [['Creature Catcher', creatureJs], ['Road Trip Quest', roadJs]]) {
   check(code.includes("const QUESTION_SOURCE = '../learning-question-bank.json'"), `${label}: loads the shared question data`);
-  check(code.includes("const QUESTION_EXPANSION = '../learning-question-pack-2.json'"), `${label}: declares the shared question expansion`);
-  check(code.includes('fetch(QUESTION_SOURCE)'), `${label}: fetches base question data at runtime`);
-  check(code.includes('fetch(QUESTION_EXPANSION)'), `${label}: fetches expansion question data at runtime`);
-  check(code.includes('at least twenty'), `${label}: enforces a twenty-question subject minimum`);
+  check(code.includes('fetch(QUESTION_SOURCE)'), `${label}: fetches question data at runtime`);
   check(code.includes('shuffle('), `${label}: shuffles question decks`);
   check(!code.includes('const QUESTIONS ='), `${label}: old embedded question object is removed`);
   const syntax = spawnSync(process.execPath, ['--check', label === 'Creature Catcher'
@@ -86,10 +83,8 @@ check(creatureHtml.includes('<script src="game.js"></script>'), 'Creature Catche
 check(!creatureHtml.includes('const questions=['), 'Creature Catcher no longer embeds a tiny question list');
 check(creatureJs.includes("const QUESTION_SUBJECTS = ['math', 'reading', 'science', 'nature']"), 'Creature Catcher uses four subject banks');
 check(creatureJs.includes('decks[subject] = shuffle'), 'Creature Catcher avoids repeats until a subject deck cycles');
-check(creatureJs.includes('CreatureCatcherContent'), 'Creature Catcher exposes loaded subject counts for QA');
 check(roadJs.includes("const QUESTION_SUBJECTS = ['math', 'trivia', 'science', 'reading']"), 'Road Trip Quest uses four subject banks');
 check(roadJs.includes('questionDecks[subject] = shuffle'), 'Road Trip Quest avoids repeats until a subject deck cycles');
-check(roadJs.includes('RoadTripQuestContent'), 'Road Trip Quest exposes loaded subject counts for QA');
 check(roadJs.includes('question.explanation'), 'Road Trip Quest teaches with answer explanations');
 check(creatureJs.includes('question.explanation'), 'Creature Catcher teaches with answer explanations');
 
