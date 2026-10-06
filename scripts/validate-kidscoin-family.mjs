@@ -12,8 +12,26 @@ const safeSlug = value => typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)
 const unique = list => new Set(list).size === list.length;
 
 const manifest = JSON.parse(await readFile(path.join(root, base, 'family.json'), 'utf8'));
+const packs = await Promise.all(
+  ['family-question-pack-2.json', 'family-question-pack-3.json'].map(async file =>
+    JSON.parse(await readFile(path.join(root, base, file), 'utf8'))
+  )
+);
+const mergedLessons = manifest.lessons.map(lesson => {
+  const ids = new Set();
+  const questions = [
+    ...(lesson.questions || []),
+    ...packs.flatMap(pack => pack.questionsByLesson?.[lesson.id] || [])
+  ].filter(question => {
+    if (!question?.id || ids.has(question.id)) return false;
+    ids.add(question.id);
+    return true;
+  });
+  return { ...lesson, questions };
+});
 const html = await readFile(path.join(root, base, 'index.html'), 'utf8');
 const js = await readFile(path.join(root, base, 'game.js'), 'utf8');
+const loader = await readFile(path.join(root, base, 'family-data-loader.js'), 'utf8');
 
 check(manifest.schemaVersion === 2, 'family schema version is 2');
 check(manifest.source?.file === 'KidsCoin_Family_App (5).html', 'manifest names the recovered source');
@@ -43,11 +61,12 @@ for (const task of manifest.tasks) {
 
 check(Array.isArray(manifest.lessons) && manifest.lessons.length === 6, 'six open learning lessons exist');
 check(unique(manifest.lessons.map(item => item.id)), 'lesson IDs are unique');
+check(packs.length === 2 && packs.every(pack => pack.review?.status === 'reviewed'), 'two reviewed question expansion packs load');
 const questionIds = [];
 let questionCount = 0;
-for (const lesson of manifest.lessons) {
+for (const lesson of mergedLessons) {
   check(safeSlug(lesson.id), `${lesson.id}: lesson id is safe`);
-  check(Array.isArray(lesson.questions) && lesson.questions.length >= 6, `${lesson.id}: at least six questions exist`);
+  check(Array.isArray(lesson.questions) && lesson.questions.length === 20, `${lesson.id}: exactly twenty merged questions exist`);
   check(lesson.kc === 3 && lesson.xp === 9, `${lesson.id}: first mastery reward is 3 KC / 9 XP`);
   for (const question of lesson.questions || []) {
     questionCount += 1;
@@ -59,7 +78,7 @@ for (const lesson of manifest.lessons) {
     check(typeof question.explanation === 'string' && question.explanation.trim().length >= 15, `${question.id}: explanation is useful`);
   }
 }
-check(questionCount >= 36, 'KidsCoin publishes at least 36 learning questions');
+check(questionCount === 120, 'KidsCoin publishes 120 merged learning questions');
 check(unique(questionIds), 'KidsCoin question IDs are unique');
 
 check(Array.isArray(manifest.rewards) && manifest.rewards.length === 8, 'eight parent-approved rewards exist');
@@ -86,6 +105,8 @@ check(js.includes("state.taskAssignments[task.id] = 'all'"), 'default chores are
 check(js.includes('Learning is always unlocked'), 'child dashboard explains unlocked learning');
 check(js.includes('questions: drawLessonQuestions'), 'lessons draw multi-question rounds');
 check(js.includes('round.questions.length'), 'lesson rounds track multiple questions');
+check(loader.includes('family-question-pack-2.json') && loader.includes('family-question-pack-3.json'), 'loader includes both reviewed question packs');
+check(loader.includes('packIds') && loader.includes('packs.flatMap'), 'loader merges all question packs without duplicate IDs');
 check(!js.includes('disabledTasks'), 'old global task-disable gate is removed');
 check(!js.includes('disabledRewards'), 'old global reward-disable gate is removed');
 for (const forbidden of ['KIDZ_PRICE_BASE','livePrice(','staked *','Leaflet','navigator.geolocation']) check(!js.includes(forbidden), `game code excludes ${forbidden}`);
@@ -98,4 +119,4 @@ if (failures.length) {
   failures.forEach(message => console.error(`  ✗ ${message}`));
   process.exit(1);
 }
-console.log(`KidsCoin Family validation passed: ${checks.length} checks, ${manifest.tasks.length} chores, ${manifest.lessons.length} lessons, ${questionCount} questions, ${manifest.rewards.length} rewards.`);
+console.log(`KidsCoin Family validation passed: ${checks.length} checks, ${manifest.tasks.length} chores, ${mergedLessons.length} lessons, ${questionCount} merged questions, ${manifest.rewards.length} rewards.`);
