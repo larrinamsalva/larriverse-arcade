@@ -209,6 +209,7 @@ function initialize() {
       renderCards("news");
       break;
     case "repair":
+      state.deck = challengeRound(repairs, 8);
       state.order = shuffle([0, 1, 2, 3]);
       state.position = 0;
       renderRepair();
@@ -424,8 +425,8 @@ function renderCards(mode) {
 }
 
 function renderRepair() {
-  const item = repairs[state.step];
-  stage(`Repair ${state.step + 1} of ${repairs.length}`);
+  const item = state.deck[state.step];
+  stage(`Repair ${state.step + 1} of ${state.deck.length}`);
   board.innerHTML = `<div class="message-card"><span class="message-icon">${item.icon}</span><h2 class="board-title">${esc(item.title)}</h2><p>Choose the next step. Done steps stay at the top.</p></div><div class="repair-list" style="margin-top:1rem">${Array.from({ length: state.position }, (_, i) => `<div class="repair-step done">✓ ${i + 1}. ${esc(item.steps[i])}</div>`).join("")}${state.order
     .filter((i) => i >= state.position)
     .map(
@@ -433,8 +434,8 @@ function renderRepair() {
         `<button class="repair-step" data-repair="${i}">${esc(item.steps[i])}</button>`,
     )
     .join("")}</div>`;
-  progress(state.step * 4 + state.position, repairs.length * 4);
-  updateScore(((state.step * 4 + state.position) / (repairs.length * 4)) * 100);
+  progress(state.step * 4 + state.position, state.deck.length * 4);
+  updateScore(((state.step * 4 + state.position) / (state.deck.length * 4)) * 100);
   bind("[data-repair]", (node) => {
     const i = Number(node.dataset.repair);
     if (i !== state.position) {
@@ -450,11 +451,11 @@ function renderRepair() {
     renderRepair();
   });
   if (state.position === 4)
-    button(state.step === repairs.length - 1 ? "See my repairs" : "Next repair", () => {
+    button(state.step === state.deck.length - 1 ? "See my repairs" : "Next repair", () => {
       state.step++;
-      if (state.step === repairs.length) {
+      if (state.step === state.deck.length) {
         finish(
-          `You inspected, chose safe materials, repaired, and tested ${repairs.length} different objects. Each one got another chance.`,
+          `You inspected, chose safe materials, repaired, and tested ${state.deck.length} different objects from a twenty-scenario repair bank. Each one got another chance.`,
           100,
         );
       } else {
