@@ -1,6 +1,6 @@
 # LarriVerse Arcade — Cabinet Gallery
 
-Automated Chromium creates **candidate evidence** for the lobby and all 28 cabinets at desktop and mobile sizes: **58 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
+Automated Chromium creates **candidate evidence** for the lobby and all 29 cabinets at desktop and mobile sizes: **60 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
 
 | Cabinet | Launch path | Candidate evidence | Public gallery |
 | --- | --- | --- | --- |
@@ -12,6 +12,7 @@ Automated Chromium creates **candidate evidence** for the lobby and all 28 cabin
 | Cipher Club | `games/cipher-club/index.html` | generated automatically | pending human approval |
 | Trade Town | `games/trade-town/index.html` | generated automatically | pending human approval |
 | Critter Council | `games/critter-council/index.html` | generated automatically | pending human approval |
+| Traffic Town | `games/traffic-town/index.html` | generated automatically | pending human approval |
 | Pocket Planet | `games/pocket-planet/index.html` | generated automatically | pending human approval |
 | Scam Sleuth | `games/scam-sleuth/index.html` | generated automatically | pending human approval |
 | Kindness Quest | `games/kindness-quest/index.html` | generated automatically | pending human approval |
@@ -44,3 +45,5 @@ Use only clean demo data. Reject any image showing personal profile names, famil
 Approved images are eventually committed under `docs/screenshots/<project>/<subject>.png` together with `docs/release-approval.json`. Until those exact files and hashes are present, this document does not claim a finished public gallery.
 
 See [GALLERY-APPROVAL.md](GALLERY-APPROVAL.md) for the full human review, physical-device, and release-decision workflow.
+
+- **Traffic Town** — Read traffic signs & choose safe actions with ten-question rounds drawn from a 30-question non-repeating bank.
