@@ -523,6 +523,48 @@ select:focus-visible,
   background: #d3c8fb;
   border-color: #7961d2;
 }
+.tile.rover.trail:not(.player):not(.rock) {
+  background: #e5f7f1;
+  border-color: #8fcdb8;
+  color: #34705d;
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+.tile.rover.goal:not(.player) {
+  background: #fff2b8;
+  border-color: #ddc664;
+}
+.rover-stats {
+  justify-content: center;
+}
+.rover-lesson {
+  background: #eef7ff;
+  border: 1px solid #d5e7f7;
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+}
+.rover-efficiency {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin: 0.75rem auto 1rem;
+  padding: 0.65rem 0.8rem;
+  max-width: 560px;
+  border-radius: 12px;
+  background: #f7f3ff;
+  border: 1px solid #e2d8f7;
+  color: #5d4c83;
+  font-size: 0.8rem;
+}
+.rover-efficiency strong {
+  color: #40336d;
+}
+.rover-stars {
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+}
 .route-legend {
   display: flex;
   justify-content: center;
@@ -692,8 +734,26 @@ select:focus-visible,
   border-radius: 7px;
   padding: 0.35rem 0.45rem;
   font-size: 0.85rem;
-  min-width: 34px;
-  min-height: 36px;
+  min-width: 38px;
+  min-height: 40px;
+  display: inline-grid;
+  place-items: center;
+  gap: 0.05rem;
+}
+.command-list button small {
+  display: block;
+  font-size: 0.58rem;
+  line-height: 1;
+  color: #7665a4;
+}
+.command-list button.active-command {
+  background: #fff1af;
+  border-color: #d1ac32;
+  color: #4f3d05;
+  box-shadow: 0 0 0 3px #f3d76f80;
+}
+.command-list button.active-command small {
+  color: #4f3d05;
 }
 .beat-grid {
   display: grid;
@@ -1147,10 +1207,26 @@ html.larriverse-high-contrast .choice-button,
 html.larriverse-high-contrast .repair-step,
 html.larriverse-high-contrast .stat-chip,
 html.larriverse-high-contrast .message-card,
-html.larriverse-high-contrast .command-list {
+html.larriverse-high-contrast .command-list,
+html.larriverse-high-contrast .rover-efficiency,
+html.larriverse-high-contrast .rover-lesson {
   background: #111;
   color: #fff;
   border-color: #fff;
+}
+html.larriverse-high-contrast .command-list button {
+  background: #000;
+  color: #fff;
+  border-color: #fff;
+}
+html.larriverse-high-contrast .command-list button small,
+html.larriverse-high-contrast .rover-efficiency strong {
+  color: #fff;
+}
+html.larriverse-high-contrast .command-list button.active-command {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 0 0 3px #fff;
 }
 html.larriverse-high-contrast .item-button small,
 html.larriverse-high-contrast .message-card p,
