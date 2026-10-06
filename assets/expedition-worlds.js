@@ -34,6 +34,7 @@ export const pipePaths = [
   [10,11,16,21,22,17,12,7,8,13,14],
   [10,5,0,1,6,7,12,17,22,23,18,19,14],
 ];
+export const directions = ["north", "east", "south", "west"];
 
 export const islands = [
   { name: "Sprout Island", fuel: 1, needs: { water: 2, seeds: 1 } },
