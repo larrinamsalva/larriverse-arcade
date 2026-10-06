@@ -7,6 +7,7 @@ import {
   repairs,
   sorting,
   trafficQuestions,
+  robotLevels,
 } from "../../assets/skill-worlds.js";
 
 async function round(page, id, play) {
@@ -231,30 +232,79 @@ test("Energy Island: store a surplus and power the island at night", async ({
       .click();
   });
 });
-test("Robot Rover: debug a collision and solve three command worlds", async ({
+test("Robot Rover: debug a collision, show execution state, and solve eight worlds at par", async ({
   page,
 }) => {
   await round(page, "robot-rover", async () => {
-    const command = async (c) => page.locator(`[data-command="${c}"]`).click();
-    for (const c of ["L", "F", "F", "F"]) await command(c);
+    expect(robotLevels).toHaveLength(8);
+    await expect(page.locator("#stageLabel")).toContainText("Robot world 1 of 8");
+    await expect(page.locator("#gameBoard")).toContainText(
+      "Forward moves Rover in the direction it is facing.",
+    );
+    await expect(page.locator(".rover-stats")).toContainText("→ East");
+
+    const command = async (cmd) =>
+      page.locator(`[data-command="${cmd}"]`).click();
+
+    for (const cmd of "LFFF") await command(cmd);
     await page
       .getByRole("button", { name: "Run my code", exact: true })
       .click();
-    await expect(page.locator("#feedback")).toContainText("rock or edge");
+    await expect(page.locator("#feedback")).toContainText("hit a rock or edge");
+    await expect(page.locator(".tile.rover.trail")).toHaveCount(2);
     await page.getByRole("button", { name: "Clear code", exact: true }).click();
-    for (const [i, program] of ["FF", "FFRFF", "LFFFFRFFFFRFF"].entries()) {
-      for (const c of program) await command(c);
+
+    const programs = [
+      "FF",
+      "FFRFF",
+      "FFFFLFFFF",
+      "LFFFFRFFFFRFF",
+      "LLFFLFFFRF",
+      "LFFRFFFFRFF",
+      "RFFFRFFFFRFFF",
+      "FLFFRFLFFLFFFLF",
+    ];
+    expect(programs.map((program) => program.length)).toEqual(
+      robotLevels.map((level) => level.par),
+    );
+
+    for (const [i, program] of programs.entries()) {
+      for (const cmd of program) await command(cmd);
       await page
         .getByRole("button", { name: "Run my code", exact: true })
         .click();
+
+      if (i === 0) {
+        await expect(page.locator(".command-list .active-command")).toHaveCount(
+          1,
+        );
+      }
       await expect(page.locator("#feedback")).toContainText("found the star");
+      await expect(page.locator(".rover-stars")).toContainText("⭐⭐⭐");
+      await expect(page.locator(".tile.rover.trail")).not.toHaveCount(0);
+
+      if (i === 0) {
+        await page.evaluate(() =>
+          window.LarriVerseArcade.setSettings({ reducedMotion: true }),
+        );
+      }
       await page
         .getByRole("button", {
-          name: i === 2 ? "See my rover" : "Next world",
+          name: i === programs.length - 1 ? "See my rover" : "Next world",
           exact: true,
         })
         .click();
+
+      if (i < programs.length - 1) {
+        await expect(page.locator("#stageLabel")).toContainText(
+          `Robot world ${i + 2} of 8`,
+        );
+      }
     }
+
+    await expect(page.locator("#finishMessage")).toContainText(
+      "24 of 24 efficiency stars",
+    );
   });
 });
 test("Lemonade Lab: four forecasts and a ledger balancing revenue minus cost", async ({
