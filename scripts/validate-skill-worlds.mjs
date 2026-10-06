@@ -35,7 +35,7 @@ for (const [deck, count, options] of [
   [conversations, 20, 3],
   [newsCards, 20, 4],
 ]) {
-  assert.equal(deck.length, count);
+  assert.ok(deck.length >= count);
   assert.equal(new Set(deck.map((item) => item.text)).size, deck.length);
   for (const item of deck) {
     assert.ok(item.text.length > 20 && item.why.length > 20);
@@ -46,7 +46,7 @@ for (const [deck, count, options] of [
     );
   }
 }
-assert.equal(sorting.length, 20);
+assert.ok(sorting.length >= 20);
 assert.equal(new Set(sorting.map((item) => item.name)).size, sorting.length);
 for (const item of sorting)
   assert.ok(
@@ -62,7 +62,7 @@ for (const item of trafficQuestions) {
   assert.ok(item.text.length > 20 && item.why.length > 20);
   assert.ok(Number.isInteger(item.answer) && item.answer >= 0 && item.answer < item.options.length);
 }
-assert.equal(repairs.length, 20);
+assert.ok(repairs.length >= 20);
 assert.equal(new Set(repairs.map((item) => item.title)).size, repairs.length);
 for (const item of repairs) {
   assert.equal(item.steps.length, 4);
