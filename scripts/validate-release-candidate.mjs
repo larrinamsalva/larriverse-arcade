@@ -21,6 +21,7 @@ const qaJs = read('qa/qa.js');
 const notes = read('docs/RELEASE-NOTES-1.0.0.md');
 const checklist = read('docs/RELEASE-CHECKLIST.md');
 const gallery = read('docs/CABINET-GALLERY.md');
+const repositoryMetadata = read('docs/REPOSITORY-METADATA.md');
 const workflow = read('.github/workflows/release.yml');
 
 assert(packageJson.version === '1.0.0', 'package version must remain 1.0.0');
@@ -31,6 +32,9 @@ assert(release.tag === `v${packageJson.version}`, 'tag must match package versio
 assert(release.releaseState === 'candidate', 'release state must remain candidate before the tag is created');
 assert(release.humanChecksRequired === true, 'human release checks must remain required');
 assert(release.cabinetCount === catalog.length, 'release count must match catalog');
+assert(packageJson.description.includes(`${release.cabinetCount} free life-skill games`), 'package description game count must match release count');
+assert(repositoryMetadata.includes(`${release.cabinetCount} free life-skill games`), 'repository metadata game count must match release count');
+assert(repositoryMetadata.includes(`all ${release.cabinetCount} cabinets`), 'repository metadata cabinet count must match release count');
 assert(Array.isArray(release.cabinets) && release.cabinets.length === catalog.length, 'release must list every cabinet');
 assert(release.privacy.uploadsData === false, 'QA console must not upload data');
 assert(release.privacy.requestsLocation === false, 'QA console must not request location');
