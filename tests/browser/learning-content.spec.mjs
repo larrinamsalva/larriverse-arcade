@@ -33,7 +33,14 @@ test.describe('LarriVerse unlocked learning and question data', () => {
     await expect(page.locator('#view')).toContainText('Learning is always unlocked');
 
     await page.locator('[data-tab="learn"]').click();
+    await expect(page.locator('.section-head')).toContainText('6 lessons · 120 questions');
     await expect(page.locator('.lesson-card')).toHaveCount(6);
+    await expect(page.locator('.lesson-card').first()).toContainText('20 questions');
+    expect(await page.evaluate(() => window.KidsCoinFamilyData)).toMatchObject({
+      version: 3,
+      lessons: 6,
+      questions: 120
+    });
     await expect(page.locator('#parentGate')).not.toHaveAttribute('open', '');
     await page.locator('[data-lesson]').first().click();
     await expect(page.locator('#lessonDialog')).toHaveAttribute('open', '');
