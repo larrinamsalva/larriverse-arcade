@@ -93,9 +93,9 @@ export const worlds = [
     minutes: "3 min",
     art: 4,
     skill: "Repair before replacing",
-    desc: "Practice from a bank of twenty small repair-and-care challenges before replacing something.",
+    desc: "Practice from a bank of twenty-plus small repair-and-care challenges before replacing something.",
     mission:
-      "Try eight different repair situations each round from a twenty-scenario bank. Put the steps in a sensible order: inspect first, choose a safe fix, make the small repair, then test it.",
+      "Try eight different repair situations each round from a twenty-plus-scenario bank. Put the steps in a sensible order: inspect first, choose a safe fix, make the small repair, then test it.",
     take: "Looking closely can save time, materials, and money. Small repairs can give things a second life.",
     mode: "repair",
   },
