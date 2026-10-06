@@ -93,9 +93,9 @@ export const worlds = [
     minutes: "3 min",
     art: 4,
     skill: "Repair before replacing",
-    desc: "Practice eight small repair-and-care challenges before replacing something.",
+    desc: "Practice from a bank of twenty small repair-and-care challenges before replacing something.",
     mission:
-      "Work through eight different repair situations. Put the steps in a sensible order: inspect first, choose a safe fix, make the small repair, then test it.",
+      "Try eight different repair situations each round from a twenty-scenario bank. Put the steps in a sensible order: inspect first, choose a safe fix, make the small repair, then test it.",
     take: "Looking closely can save time, materials, and money. Small repairs can give things a second life.",
     mode: "repair",
   },
@@ -460,7 +460,139 @@ export const repairs = [
       "Roll the wagon slowly and check that the wheel stays straight",
     ],
     hint: "Loose moving parts can pinch fingers. Inspect first and let an adult handle tools or small fasteners.",
+  },,
+  {
+    icon: "🖍️",
+    title: "A crayon box divider is loose",
+    steps: [
+      "Empty the box and inspect where the divider came loose",
+      "Choose a small paper-safe reinforcement with an adult",
+      "Line the divider back up and secure it",
+      "Put a few crayons back and test whether it stays in place",
+    ],
+    hint: "Empty and inspect first so you can see the weak spot before reinforcing it.",
   },
+  {
+    icon: "🧢",
+    title: "A cap strap has twisted",
+    steps: [
+      "Check how the strap normally lies through the buckle",
+      "Loosen the buckle without forcing it",
+      "Untwist and thread the strap back through",
+      "Adjust the fit and check that the buckle holds",
+    ],
+    hint: "Follow the original path of the strap instead of pulling harder on a twist.",
+  },
+  {
+    icon: "📦",
+    title: "A storage box lid sags",
+    steps: [
+      "Remove the contents and inspect the bent lid",
+      "Choose a flat cardboard reinforcement",
+      "Place the reinforcement under the weak area",
+      "Close the empty box and test the lid before refilling it",
+    ],
+    hint: "Take the load off first, strengthen the weak area, then test before adding weight back.",
+  },
+  {
+    icon: "🧤",
+    title: "A glove seam is starting to open",
+    steps: [
+      "Stop using the glove and inspect how far the seam has opened",
+      "Ask an adult to choose thread and a safe sewing method",
+      "Have the loose seam stitched without pulling it too tight",
+      "Turn the glove right-side out and check the repaired seam",
+    ],
+    hint: "Small seam openings are easier to repair before they become larger tears.",
+  },
+  {
+    icon: "🧺",
+    title: "A fabric basket handle is loose",
+    steps: [
+      "Empty the basket and inspect both handle attachment points",
+      "Ask an adult to choose a safe fabric repair method",
+      "Secure the loose attachment to match the stronger side",
+      "Lift the empty basket gently to test before adding anything",
+    ],
+    hint: "Test a handle with no load first so a weak repair does not drop the basket.",
+  },
+  {
+    icon: "🪁",
+    title: "A paper kite corner is torn",
+    steps: [
+      "Lay the kite flat and line up the torn paper",
+      "Choose a light paper repair patch with an adult",
+      "Apply the small patch without covering the frame joint",
+      "Lift the kite gently and check that the corner stays flat",
+    ],
+    hint: "A light repair preserves the shape better than adding a heavy patch.",
+  },
+  {
+    icon: "🗂️",
+    title: "A folder pocket is peeling open",
+    steps: [
+      "Empty the folder and inspect the loose pocket edge",
+      "Choose paper-safe repair tape with an adult",
+      "Line up the pocket edge and reinforce the seam",
+      "Slide one sheet inside and check that the pocket holds",
+    ],
+    hint: "Test with one light sheet before putting the whole stack back.",
+  },
+  {
+    icon: "🎧",
+    title: "Headphone padding has slipped",
+    steps: [
+      "Unplug the headphones and inspect how the pad attaches",
+      "Check the manufacturer's simple reattachment method with an adult",
+      "Fit the pad back into its groove without using glue",
+      "Gently check that the pad stays seated before using the headphones",
+    ],
+    hint: "For electronics, unplug first and use only simple external fixes the product is designed for.",
+  },
+  {
+    icon: "🧹",
+    title: "A broom head feels loose",
+    steps: [
+      "Stop sweeping and inspect how the handle connects to the head",
+      "Ask an adult whether the connection is threaded or uses a safe fastener",
+      "Have the adult reseat or secure the connection",
+      "Push the broom lightly on the floor and check for wobble",
+    ],
+    hint: "Do not keep using a loose tool. Identify the connection before trying to tighten anything.",
+  },
+  {
+    icon: "🪑",
+    title: "A cardboard play stool rocks",
+    steps: [
+      "Take all weight off the stool and inspect each folded support",
+      "Find the support that is bent or not fully seated",
+      "Refold or reseat the cardboard support with an adult",
+      "Press down with hands only to test stability before anyone sits on it",
+    ],
+    hint: "Never test a wobbly seat with a person first. Check it unloaded and use only for its intended lightweight play use.",
+  },
+  {
+    icon: "🧵",
+    title: "A drawstring has slipped inside a bag",
+    steps: [
+      "Empty the bag and find which opening the drawstring entered",
+      "Ask an adult for a blunt safe threading helper",
+      "Guide the string slowly back through the fabric channel",
+      "Pull both ends evenly and test the bag closure",
+    ],
+    hint: "A blunt threading helper is safer than using a sharp object to chase the string.",
+  },
+  {
+    icon: "📏",
+    title: "A paper ruler edge is bent",
+    steps: [
+      "Lay the ruler flat and inspect the bent edge",
+      "Smooth the paper gently between two flat surfaces",
+      "Add a thin clear reinforcement with an adult if needed",
+      "Compare the ruler against a straight edge to check it",
+    ],
+    hint: "A measuring tool should be checked after repair so a bent edge does not give misleading results.",
+  }
 ];
 
 export const sorting = [
