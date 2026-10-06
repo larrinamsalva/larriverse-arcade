@@ -1,8 +1,10 @@
 # LarriVerse Arcade ✦
 
-A free, kid- and teen-friendly arcade with **28 playable games**, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
+A free, kid- and teen-friendly arcade with **29 playable games**, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
 
 The latest expansion adds **eight new expeditions**: bridges, water networks, island deliveries, pantry planning, compass maps, secret codes, shopping comparisons, and inclusive town building. See [the expedition guide](docs/EXPEDITIONS.md).
+
+Traffic Town adds a 7+ road-awareness world with 30 unique common U.S. traffic-sign questions served ten at a time without repeats until the bank cycles.
 
 The modern expansion adds twelve adventures: **Pocket Planet, Scam Sleuth, Kindness Quest, Fact Finder, Repair Café, Time Trail, Garden Guardians, Energy Island, Reuse Rally, Robot Rover, Lemonade Lab, and Beat Builder**. These cover money choices, privacy, media literacy, listening and boundaries, repair and reuse, planning, resource care, coding, small business, and music. See [the full game guide](docs/MODERN-ARCADE.md) for mechanics, architecture, and artwork provenance.
 
@@ -110,7 +112,7 @@ Launch any live game from the root arcade lobby.
 
 ## Release candidate
 
-The arcade is at **1.0.0 rc.1**, with 28 playable games. Automation produces candidate evidence; it does not approve a formal release. The existing [release checklist](docs/RELEASE-CHECKLIST.md) still requires hands-on desktop play, real physical-phone QA, human visual/gameplay approval, and print review. No final approval record has been created by this polish pass.
+The arcade is at **1.0.0 rc.1**, with 29 playable games. Automation produces candidate evidence; it does not approve a formal release. The existing [release checklist](docs/RELEASE-CHECKLIST.md) still requires hands-on desktop play, real physical-phone QA, human visual/gameplay approval, and print review. No final approval record has been created by this polish pass.
 
 All eight recovered browser concepts are now connected to the shared arcade. Larger React and React Native recovery sources are historical inputs, not playable cabinets shipped in this repository.
 
@@ -147,9 +149,9 @@ KidsCoin Family separates source-grounded family features, tasks, reviewed lesso
 
 The original eight cabinets keep independent engines and local saves. `assets/cabinet-shell.js` adds shared branding, player context, comfort controls, and an arcade return while preserving their replay and continue actions. `assets/arcade-accessibility.css` provides reflow and focus rules across game and progress routes.
 
-All twenty newer worlds use `assets/skill-games.js`, which implements twelve practice modes and delegates eight expedition modes to `assets/expedition-games.js`. Their definitions live in `assets/skill-worlds.js` and `assets/expedition-worlds.js`; the lobby reads `games/catalog.json`. Each game preserves its individual board and safety notes. See [MODERN-ARCADE.md](docs/MODERN-ARCADE.md), [EXPEDITIONS.md](docs/EXPEDITIONS.md), and [V1-POLISH.md](docs/V1-POLISH.md).
+All twenty-one newer worlds use `assets/skill-games.js`, which implements twelve practice modes and delegates eight expedition modes to `assets/expedition-games.js`. Their definitions live in `assets/skill-worlds.js` and `assets/expedition-worlds.js`; the lobby reads `games/catalog.json`. Each game preserves its individual board and safety notes. See [MODERN-ARCADE.md](docs/MODERN-ARCADE.md), [EXPEDITIONS.md](docs/EXPEDITIONS.md), and [V1-POLISH.md](docs/V1-POLISH.md).
 
-`assets/arcade-discovery.js` computes optional Continue Playing, Recommended for You, and Try Something New links from the current catalog and aggregate local session history. It writes no records and makes no ability judgment. Search and topic filters still expose all 28 games.
+`assets/arcade-discovery.js` computes optional Continue Playing, Recommended for You, and Try Something New links from the current catalog and aggregate local session history. It writes no records and makes no ability judgment. Search and topic filters still expose all 29 games.
 
 ## Validation
 
@@ -186,7 +188,7 @@ npm run gallery:build
 npm run gallery:verify
 ```
 
-The gallery contains the lobby plus 28 games in desktop/mobile Chromium: **58 images**. Explicit descriptions, PNG dimensions, byte counts, and SHA-256 hashes are verified before the offline human review bundle is uploaded. Missing descriptions fail the build. See [BROWSER-QA.md](docs/BROWSER-QA.md) and [GALLERY-APPROVAL.md](docs/GALLERY-APPROVAL.md).
+The gallery contains the lobby plus 29 games in desktop/mobile Chromium: **60 images**. Explicit descriptions, PNG dimensions, byte counts, and SHA-256 hashes are verified before the offline human review bundle is uploaded. Missing descriptions fail the build. See [BROWSER-QA.md](docs/BROWSER-QA.md) and [GALLERY-APPROVAL.md](docs/GALLERY-APPROVAL.md).
 
 Repository description, homepage, and topic suggestions are documented in [REPOSITORY-METADATA.md](docs/REPOSITORY-METADATA.md).
 
