@@ -1,6 +1,6 @@
 # LarriVerse 1.0 polish
 
-This pass keeps exactly **29 games**: eight original cabinets, twelve practice worlds, and eight expeditions. It preserves independent engines, saved progress, learning content, fictional KC, and existing real-world safety boundaries. `release.json` remains a release candidate with mandatory human approval.
+This pass keeps exactly **29 games**: eight original cabinets, thirteen practice worlds, and eight expeditions. It preserves independent engines, saved progress, learning content, fictional KC, and existing real-world safety boundaries. `release.json` remains a release candidate with mandatory human approval.
 
 ## Gallery evidence
 

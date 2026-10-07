@@ -2,11 +2,13 @@
 
 This checklist covers the 29-game arcade, including the original eight recovered browser concepts.
 
+For the order of testing and the files to keep, start with [RELEASE-TESTING.md](RELEASE-TESTING.md).
+
 Open `qa/index.html` from the deployed site to record device-local route checks, manual cabinet results, browser notes, and an exportable QA report. The console does not upload results or convert a reachable route into a gameplay pass. Desktop and physical-phone progress are stored as separate local records.
 
 ## Required automated checks
 
-- [x] Root catalog contains exactly 28 unique cabinets.
+- [x] Root catalog contains exactly 29 unique cabinets.
 - [x] All 29 cabinets are marked playable.
 - [x] Every cabinet has a route back to the arcade lobby.
 - [x] Every playable cabinet loads the shared Arcade SDK before its own engine.
@@ -15,7 +17,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Brain Sweat Expanded keeps queued hazardous activity payloads physically absent.
 - [x] Chill Brain keeps sound optional and avoids health claims.
 - [x] KidsCoin Family keeps family data local and parent controlled.
-- [x] KidsCoin combines six ten-question lessons for 60 open family-planning questions.
+- [x] KidsCoin combines six twenty-question lessons for 120 open family-planning questions.
 - [x] Shared learning packs combine into 120 unique reviewed questions across five subjects.
 - [x] Creature Catcher and Road Trip Quest offer Starter, Growing, Challenge, and Mixed paths.
 - [x] Learning-path choice, recent question IDs, and local accuracy stay in browser storage without collecting age.
@@ -60,7 +62,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 
 ## Cabinet launch pass
 
-- [ ] KidsCoin Family App — open a ten-question lesson bank without a PIN, finish one three-question round, assign a chore, approve its KC, and restore the save.
+- [ ] KidsCoin Family App — open a twenty-question lesson bank without a PIN, finish one three-question round, assign a chore, approve its KC, and restore the save.
 - [ ] Brain Sweat Expanded — complete one reviewed activity and confirm queued tiers remain locked.
 - [ ] Brain Sweat Life Skills — complete one reviewed lesson and confirm world progress persists.
 - [ ] Bubble Resonance Φ369 — finish one run with sound optional and medical boundary visible.
@@ -195,7 +197,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 
 ## Modern arcade expansion
 
-The collection includes 29 playable games: eight original cabinets, twelve practice worlds listed below, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (60 images). The formal release still requires the documented human review.
+The collection includes 29 playable games: eight original cabinets, thirteen practice worlds listed below, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (60 images). The formal release still requires the documented human review.
 
 - **Traffic Town** — Read traffic signs & choose safe actions. Complete a round, inspect explanations, replay for a fresh set, and check one saved completion with sound off.
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
