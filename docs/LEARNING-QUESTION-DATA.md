@@ -5,8 +5,8 @@ Phase 17 moved the smallest repeated quiz sets into reviewed JSON data and opene
 ## KidsCoin Family
 
 - All six learning lessons are open to every device-local explorer without entering Parent Mode.
-- Each lesson now combines six original questions with four expansion questions for ten questions per lesson.
-- The full KidsCoin bank contains 60 family-planning questions.
+- Each lesson now combines six original questions with fourteen expansion questions for twenty questions per lesson.
+- The full KidsCoin bank contains 120 family-planning questions.
 - Each play session draws a shuffled three-question round.
 - Two correct answers master the lesson.
 - The first mastery awards 3 Family KC and 9 XP; later rounds are reward-free practice.
@@ -56,4 +56,4 @@ Every shared question includes:
 
 ## Boundaries
 
-Question data, path choice, recent-question history, accuracy, and cabinet progress remain device-local. The learning system does not request location, upload answers, create public child profiles, collect age, or add real-money or cryptocurrency features. Brain Sweat keeps its larger reviewed content system, and Road Trip Quest GPS keeps its separate 28-question source-grounded bank.
+Question data, path choice, recent-question history, accuracy, and cabinet progress remain device-local. The learning system does not request location, upload answers, create public child profiles, collect age, or add real-money or cryptocurrency features. Brain Sweat keeps its larger reviewed content system. Road Trip Quest GPS preserves its 28 source-grounded questions and merges reviewed shared questions into its Math, Science, Reading, and Trivia pools; each combined subject has at least twenty questions.

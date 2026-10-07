@@ -1,10 +1,10 @@
 # LarriVerse Arcade 1.0
 
-LarriVerse Arcade 1.0 is a release candidate with 28 independently playable games: eight original cabinets, twelve practice worlds, and eight expeditions. They share device-local progress, fictional rewards, comfort controls, validation, and privacy and safety boundaries. Human visual/gameplay approval and real physical-phone QA remain required before the formal release.
+LarriVerse Arcade 1.0 is a release candidate with 29 independently playable games: eight original cabinets, thirteen practice worlds, and eight expeditions. They share device-local progress, fictional rewards, comfort controls, validation, and privacy and safety boundaries. Human visual/gameplay approval and real physical-phone QA remain required before the formal release.
 
 ## Eight original cabinets
 
-1. **KidsCoin Family App** — unlocked learning with 60 questions, parent-assigned chores, fictional Family KC, local profiles, parent-approved KC awards and reward redemptions, notes, grace days, and a family ledger.
+1. **KidsCoin Family App** — unlocked learning with 120 questions across six twenty-question lessons, three-question rounds, parent-assigned chores, fictional Family KC, local profiles, parent-approved KC awards and reward redemptions, notes, grace days, and a family ledger.
 2. **Brain Sweat Expanded** — 69 reviewed hands-on activities across six worlds while higher-risk tiers remain visible and review gated.
 3. **Brain Sweat Life Skills** — 60 reviewed questions across twelve lessons in the original six-world learning map.
 4. **Bubble Resonance Φ369** — a precision bubble arcade preserving the source's six colors, PHI-chain scoring, resonance, gems, levels, and creative frequency themes.
@@ -22,8 +22,8 @@ LarriVerse Arcade 1.0 is a release candidate with 28 independently playable game
 - The selected path, recent question IDs, attempts, correct answers, and local accuracy remain in the browser.
 - Recently seen questions are held back until a subject deck needs a fresh cycle.
 - Every reusable question includes four choices, a correct answer, a teaching explanation, and a difficulty label.
-- KidsCoin Family combines its original 36 questions with a 24-question expansion pack for 60 family-planning questions, ten per lesson.
-- Brain Sweat retains its larger reviewed content system, while Road Trip Quest GPS retains its separate recovered 28-question bank.
+- KidsCoin Family combines its original 36 questions with an 84-question expansion pack for 120 family-planning questions, twenty per lesson. Rounds still draw three questions.
+- Brain Sweat retains its larger reviewed content system. Road Trip Quest GPS retains its 28 recovered questions and adds reviewed shared questions so each of its four subjects has at least twenty questions.
 
 ## Learning Goals
 
@@ -101,9 +101,9 @@ LarriVerse Arcade 1.0 is a release candidate with 28 independently playable game
 ## 1.0 polish candidate
 
 - Shared LarriVerse context, arcade return, comfort dialog, local profile summary, and replay/return treatment across original cabinets.
-- Optional device-local discovery alongside all 28 searchable and filterable games.
+- Optional device-local discovery alongside all 29 searchable and filterable games.
 - Focus and reflow hardening at 320px, 390px, tablet, desktop, and 200% text; numbered Bubble Resonance cues and keyboard aiming; stationary Road Trip collection under reduced motion.
-- Explicit deterministic metadata and integrity verification for all 58 release gallery images, including the eight expeditions.
+- Explicit deterministic metadata and integrity verification for all 60 release gallery images, including the eight expeditions.
 - Shared local branding and public page metadata, with repository setting recommendations documented.
 - Physical-phone, human visual/gameplay, sound/touch, and print release gates remain pending.
 
@@ -116,7 +116,7 @@ GitHub Actions verifies routes, syntax, combined question counts, expansion-pack
 
 ## Modern arcade expansion
 
-The collection includes 29 playable games: eight original cabinets, twelve practice worlds listed below, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (60 images). The formal release still requires the documented human review.
+The collection includes 29 playable games: eight original cabinets, thirteen practice worlds including Traffic Town, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (60 images). The formal release still requires the documented human review.
 
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.

@@ -84,7 +84,7 @@ The playable release includes:
 - four task groups: The Forge, The Shield, The Scrolls, and The Quest
 - twelve default family tasks with 3, 6, or 9 Family KC rewards
 - parent approval and rejection queues before task rewards are granted
-- six reviewed wallet-skill lessons about earning, needs and wants, saving goals, reading a ledger, planning rewards, and the fictional-reward boundary
+- six reviewed wallet-skill lessons with 20 questions each (120 total), drawing three questions per round, about earning, needs and wants, saving goals, reading a ledger, planning rewards, and the fictional-reward boundary
 - a device-local Family KC ledger with earn and redemption history
 - eight parent-approved reward requests with no cash checkout
 - custom parent-created tasks and rewards
@@ -113,6 +113,8 @@ Launch any live game from the root arcade lobby.
 ## Release candidate
 
 The arcade is at **1.0.0 rc.1**, with 29 playable games. Automation produces candidate evidence; it does not approve a formal release. The existing [release checklist](docs/RELEASE-CHECKLIST.md) still requires hands-on desktop play, real physical-phone QA, human visual/gameplay approval, and print review. No final approval record has been created by this polish pass.
+
+Start the hands-on phase with the [desktop and phone testing guide](docs/RELEASE-TESTING.md). It links the live QA console, explains the three evidence files, and keeps incomplete checks pending.
 
 All eight recovered browser concepts are now connected to the shared arcade. Larger React and React Native recovery sources are historical inputs, not playable cabinets shipped in this repository.
 
@@ -149,7 +151,7 @@ KidsCoin Family separates source-grounded family features, tasks, reviewed lesso
 
 The original eight cabinets keep independent engines and local saves. `assets/cabinet-shell.js` adds shared branding, player context, comfort controls, and an arcade return while preserving their replay and continue actions. `assets/arcade-accessibility.css` provides reflow and focus rules across game and progress routes.
 
-All twenty-one newer worlds use `assets/skill-games.js`, which implements twelve practice modes and delegates eight expedition modes to `assets/expedition-games.js`. Their definitions live in `assets/skill-worlds.js` and `assets/expedition-worlds.js`; the lobby reads `games/catalog.json`. Each game preserves its individual board and safety notes. See [MODERN-ARCADE.md](docs/MODERN-ARCADE.md), [EXPEDITIONS.md](docs/EXPEDITIONS.md), and [V1-POLISH.md](docs/V1-POLISH.md).
+All twenty-one newer worlds use `assets/skill-games.js`, which implements thirteen practice modes and delegates eight expedition modes to `assets/expedition-games.js`. Their definitions live in `assets/skill-worlds.js` and `assets/expedition-worlds.js`; the lobby reads `games/catalog.json`. Each game preserves its individual board and safety notes. See [MODERN-ARCADE.md](docs/MODERN-ARCADE.md), [EXPEDITIONS.md](docs/EXPEDITIONS.md), and [V1-POLISH.md](docs/V1-POLISH.md).
 
 `assets/arcade-discovery.js` computes optional Continue Playing, Recommended for You, and Try Something New links from the current catalog and aggregate local session history. It writes no records and makes no ability judgment. Search and topic filters still expose all 29 games.
 
