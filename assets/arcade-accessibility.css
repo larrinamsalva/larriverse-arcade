@@ -193,7 +193,7 @@ html.larriverse-high-contrast .filter.active { outline: 3px solid #ffdf83; outli
 html.larriverse-high-contrast input::placeholder { color: #ddd; }
 }
 .bubble-controls { display: flex; flex-wrap: wrap; gap: .65rem; justify-content: center; padding: .75rem; }
-.bubble-controls button { min-width: 44px; border: 1px solid #abb3cf; border-radius: 12px; padding: .65rem; background: #22283c; color: #fff; font: inherit; }
+.bubble-controls button { min-width: 44px; border: 1px solid var(--bubble-line, #abb3cf); border-radius: 12px; padding: .65rem; background: var(--bubble-control, #22283c); color: var(--bubble-control-text, #fff); font: inherit; }
 #bubbleStatus, #bubbleKeys { text-align: center; line-height: 1.5; }
 html.larriverse-reduced-motion *, html.larriverse-reduced-motion *::before, html.larriverse-reduced-motion *::after {
   animation: none !important;

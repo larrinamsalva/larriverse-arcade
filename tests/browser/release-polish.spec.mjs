@@ -290,6 +290,39 @@ test('Bubble Resonance fills the play area, settles shallow bank shots, and keep
   await expect(page.locator('[data-lv-comfort]')).toBeFocused();
 });
 
+test('Bubble Resonance shooter and cabinet follow light and dark color modes', async ({ page }) => {
+  await page.goto('/games/bubble-resonance-phi369/index.html');
+
+  async function readThemeSample() {
+    return page.locator('#game').evaluate(async canvas => {
+      await new Promise(requestAnimationFrame);
+      const pixel = [...canvas.getContext('2d').getImageData(460, 581, 1, 1).data];
+      return {
+        mode: canvas.dataset.colorMode,
+        launcherPixel: pixel,
+        pageBackground: getComputedStyle(document.body).backgroundImage,
+        fieldBackground: getComputedStyle(canvas.closest('.playfield')).backgroundImage
+      };
+    });
+  }
+
+  await page.evaluate(() => window.LarriVerseArcade.setSettings({ theme: 'light' }));
+  await expect(page.locator('html')).toHaveClass(/larriverse-light/);
+  await expect(page.locator('#game')).toHaveAttribute('data-color-mode', 'light');
+  const light = await readThemeSample();
+
+  await page.evaluate(() => window.LarriVerseArcade.setSettings({ theme: 'dark' }));
+  await expect(page.locator('html')).toHaveClass(/larriverse-dark/);
+  await expect(page.locator('#game')).toHaveAttribute('data-color-mode', 'dark');
+  const dark = await readThemeSample();
+
+  expect(light.mode).toBe('light');
+  expect(dark.mode).toBe('dark');
+  expect(light.launcherPixel).not.toEqual(dark.launcherPixel);
+  expect(light.pageBackground).not.toBe(dark.pageBackground);
+  expect(light.fieldBackground).not.toBe(dark.fieldBackground);
+});
+
 test('Bubble Resonance declares a real win when the board is cleared', async ({ page }) => {
   await page.addInitScript(() => { Math.random = () => .01; });
   await page.goto('/games/bubble-resonance-phi369/index.html');
