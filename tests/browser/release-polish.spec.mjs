@@ -392,6 +392,74 @@ test('Chill Brain cabinet and shared comfort choices stay in sync without enabli
   await expect(page.locator('html')).not.toHaveClass(/larriverse-high-contrast/);
 });
 
+test('Chill Brain light cards keep text dark and locked badge labels readable', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('larriverse.arcade.settings.v1', JSON.stringify({
+      theme: 'light',
+      reducedMotion: true,
+      highContrast: false,
+      largeText: false
+    }));
+    localStorage.setItem('larriverse.chillBrain.v1', JSON.stringify({
+      onboardingComplete: true,
+      guide: { name: 'Little Sprout', age: '', avatar: '🦋', profile: 'little' },
+      sessions: 0,
+      completedMissionIds: [],
+      totalSeconds: 0,
+      breathCycles: 0,
+      soundSessions: 0,
+      skills: {},
+      badges: [],
+      practiceDates: [],
+      lastMissionId: null
+    }));
+  });
+  await page.goto('/games/chill-brain-rewards/index.html');
+  await expect(page.locator('.mission-card')).toHaveCount(4);
+
+  const results = await page.evaluate(() => {
+    const channels = color => (color.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+    const luminance = color => {
+      const [red, green, blue] = channels(color).map(channel => {
+        const value = channel / 255;
+        return value <= .03928 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4;
+      });
+      return .2126 * red + .7152 * green + .0722 * blue;
+    };
+    const contrast = (foreground, background) => {
+      const first = luminance(foreground);
+      const second = luminance(background);
+      return (Math.max(first, second) + .05) / (Math.min(first, second) + .05);
+    };
+    const pairs = [
+      ['profile detail', '.profile-row small', '.profile-row > div'],
+      ['mission description', '.mission-card p', '.mission-card'],
+      ['mission metadata', '.mission-meta span', '.mission-meta span'],
+      ['skill label', '.skill-card b', '.skill-card'],
+      ['locked badge label', '.badge.locked b', '.badge.locked'],
+      ['privacy note', '.notice-card p', '.notice-card'],
+      ['settings detail', '.toggle-row small', '.dialog-card']
+    ];
+    return {
+      contrast: pairs.map(([label, textSelector, surfaceSelector]) => {
+        const textStyle = getComputedStyle(document.querySelector(textSelector));
+        const surfaceStyle = getComputedStyle(document.querySelector(surfaceSelector));
+        return { label, ratio: contrast(textStyle.color, surfaceStyle.backgroundColor) };
+      }),
+      lockedOpacity: getComputedStyle(document.querySelector('.badge.locked')).opacity,
+      lockedFilter: getComputedStyle(document.querySelector('.badge.locked')).filter,
+      lockedIconOpacity: getComputedStyle(document.querySelector('.badge.locked span')).opacity
+    };
+  });
+
+  for (const result of results.contrast) {
+    expect(result.ratio, `${result.label} contrast`).toBeGreaterThanOrEqual(7);
+  }
+  expect(results.lockedOpacity).toBe('1');
+  expect(results.lockedFilter).toBe('none');
+  expect(Number(results.lockedIconOpacity)).toBeLessThan(1);
+});
+
 test('high contrast gives progress navigation a dark surface and keeps printed reports readable', async ({ page }) => {
   for (const route of ['today/', 'goals/', 'passport/', 'report/']) {
     await page.emulateMedia({ media: 'screen' });
