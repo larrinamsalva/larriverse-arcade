@@ -9,3 +9,88 @@ html.larriverse-high-contrast .selected{outline:3px solid #ffdf83;outline-offset
 @media(max-width:600px){.cargo-shelf{grid-template-columns:repeat(2,minmax(0,1fr))}.island-requests,.market-stalls{grid-template-columns:1fr}.island-request{display:grid;grid-template-columns:1fr auto}.island-request span{grid-column:1/-1}.bridge-spans{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.bridge-landscape{padding-top:65px}.tool-shelf{gap:8px}.build-tool{flex-basis:100px;min-height:96px}.pipe-grid{gap:5px;padding:8px}.pipe-labels{font-size:.85rem}.pipe-labels .object-icon{width:28px;height:28px}.picnic-basket{padding:12px;gap:7px;border-width:5px}.picnic-slot{padding:8px 4px;min-height:110px}.picnic-slot .object-icon{width:50px;height:50px}.map-clue{flex-direction:column;gap:8px;text-align:center}.compass-grid{gap:4px;padding:6px}.map-tile{border-radius:8px}.cipher-workshop{flex-direction:column;gap:15px}.cipher-key{gap:3px}.cipher-key span{padding:10px 2px;font-size:.8rem}.letter-keys{grid-template-columns:repeat(4,minmax(0,1fr))}.market-stall{padding:15px}.neighbor-requests{grid-template-columns:1fr}.town-plots{gap:6px}.town-plot{min-height:130px}.town-plot .object-icon{width:52px;height:52px}.town-plot b{font-size:.75rem}.town-plot small{font-size:.65rem}.world-scene{margin:0 0 14px}.board-intro{font-size:.95rem}}
 
 .treasure-marker{position:absolute;top:2px;right:2px;width:22px;height:22px;pointer-events:none}
+
+/* Illustrated world layer: every mode keeps its own palette and recognizable props. */
+.world-scene {
+  --scene-sky: #a9e6f2;
+  --scene-hill-back: #b5dfa9;
+  --scene-hill-front: #78bd83;
+  --scene-water: #62c3d0;
+  border: 2px solid #c1ded9;
+  box-shadow: inset 0 -8px 18px #3d7b6c18, 0 8px 20px #304d6d12;
+}
+.world-scene--bridge,.world-scene--repair{--scene-sky:#aee5f3;--scene-hill-back:#c3dfa1;--scene-hill-front:#78b978;--scene-water:#59bfd0}
+.world-scene--pipes,.world-scene--harbor{--scene-sky:#b9e7f0;--scene-hill-back:#a9d8c4;--scene-hill-front:#66b5a3;--scene-water:#42aeca}
+.world-scene--pantry,.world-scene--market,.world-scene--trade{--scene-sky:#ffe5ad;--scene-hill-back:#c9e29b;--scene-hill-front:#81c480;--scene-water:#68c8cb}
+.world-scene--music{--scene-sky:#d2c4fa;--scene-hill-back:#c9b7ee;--scene-hill-front:#7b6cbb;--scene-water:#4f9fbe}
+.world-scene--robot,.world-scene--energy{--scene-sky:#bddcf5;--scene-hill-back:#c4d1a8;--scene-hill-front:#789a82;--scene-water:#61b6c8}
+.world-scene--traffic,.world-scene--route{--scene-sky:#a8dff2;--scene-hill-back:#c2dda0;--scene-hill-front:#75b681;--scene-water:#65c1cc}
+.world-scene--cipher,.world-scene--messages,.world-scene--news{--scene-sky:#d9d0fa;--scene-hill-back:#c9d8b0;--scene-hill-front:#80b889;--scene-water:#75bfcc}
+.world-scene .scene-sky{fill:var(--scene-sky)}
+.world-scene .scene-hill-back{fill:var(--scene-hill-back)}
+.world-scene .scene-hill-front{fill:var(--scene-hill-front)}
+.world-scene .scene-water{fill:var(--scene-water)}
+.world-scene .scene-cloud{fill:#fffdf5}
+.world-scene .scene-sun{fill:#ffdb71;stroke:#f4bf50}
+.world-scene .scene-moon,.world-scene .scene-stars{display:none;fill:#fff0a9}
+.world-scene .scene-flowers path{stroke:#3e8b58;stroke-width:3}
+.world-scene .flower-0{fill:#ff86aa}.world-scene .flower-1{fill:#ffd65e}.world-scene .flower-2{fill:#8b79dc}.world-scene .flower-center{fill:#fff3b2}
+.world-scene .scene-butterfly{fill:#e887b5;stroke:#795486;stroke-linecap:round}
+.world-scene .scene-friend>path:first-child{fill:#c5acec}.world-scene .scene-friend.friend-two>path:first-child{fill:#ffd087}.world-scene .scene-friend circle{fill:#4d4961}.world-scene .scene-friend path:last-child{stroke:#4d4961}
+.world-scene--traffic .scene-hill-front{fill:#7db381}.world-scene--traffic .scene-water{fill:#717b85}
+.world-scene--music .scene-sun{fill:#ff8eb8;stroke:#ffbdd7}.world-scene--music .scene-cloud{fill:#fff0fb}
+html.larriverse-dark .world-scene{--scene-sky:#211d48;--scene-hill-back:#263d54;--scene-hill-front:#1c534c;--scene-water:#215b77;border-color:#554a80;background:#211d48;box-shadow:inset 0 -12px 28px #08071c88,0 8px 26px #05040f55}
+html.larriverse-dark .world-scene .scene-sun{display:none}
+html.larriverse-dark .world-scene .scene-moon,html.larriverse-dark .world-scene .scene-stars{display:block}
+html.larriverse-dark .world-scene .scene-cloud{fill:#bbb2d6;opacity:.35}
+html.larriverse-dark .world-scene .scene-flowers{filter:drop-shadow(0 0 5px #fff09d)}
+html.larriverse-dark .world-scene .scene-butterfly{fill:#9a8bfa;filter:drop-shadow(0 0 5px #8ee7f5)}
+
+/* Bridge Buddies: boards are straight, grained, bolted, supported, and visually dimensional. */
+.bridge-landscape{
+  min-height:355px;
+  padding:90px 46px 58px;
+  background:linear-gradient(#aee7f4 0 30%,#a8dc94 30% 58%,#54bacb 58% 100%);
+  border:2px solid #98c9c0;
+  box-shadow:inset 0 -18px 30px #277e9b35;
+}
+.bridge-landscape::before{content:"";position:absolute;left:0;right:0;top:57%;height:18px;background:repeating-linear-gradient(100deg,#c5f4f5 0 22px,transparent 23px 47px);opacity:.65}
+.bridge-landscape::after{content:"";position:absolute;left:0;right:0;bottom:0;height:50px;background:linear-gradient(13deg,#389ab3aa,transparent 55%)}
+.bridge-scenery{position:absolute;inset:0;pointer-events:none}
+.bridge-tree{position:absolute;top:33px;width:82px;height:82px}.bridge-tree .object-icon{width:100%;height:100%}.tree-left{left:5px}.tree-right{right:4px;transform:scale(.88)}
+.bridge-flowers{position:absolute;top:140px;width:80px;height:24px;background:radial-gradient(circle at 8px 8px,#ff8eaf 0 5px,transparent 6px),radial-gradient(circle at 29px 12px,#ffd25e 0 5px,transparent 6px),radial-gradient(circle at 51px 7px,#9b7de6 0 5px,transparent 6px),radial-gradient(circle at 71px 13px,#fff0a1 0 5px,transparent 6px)}
+.flowers-left{left:8px}.flowers-right{right:8px}
+.bridge-abutment{position:absolute;z-index:1;top:154px;width:54px;height:105px;background:linear-gradient(135deg,#a7b2b5,#667783);clip-path:polygon(14% 0,86% 0,100% 100%,0 100%);box-shadow:inset 9px 0 #cbd4d5,inset -7px 0 #4b5e69}
+.abutment-left{left:16px}.abutment-right{right:16px}
+.bridge-spans{position:relative;z-index:3;gap:9px;padding:0 1px 18px}
+.bridge-span{background:#fff9e9e8;border:2px solid #ddc59e;padding:9px 4px 11px;box-shadow:0 8px 0 #356e6f55,0 13px 18px #234b5d2b;backdrop-filter:blur(3px)}
+.bridge-span::before{content:"";position:absolute;left:-7px;right:-7px;top:48px;height:11px;background:linear-gradient(#e1a66b,#a86439);border:2px solid #6f4128;box-shadow:0 4px 0 #75482e;pointer-events:none}
+.bridge-structure{position:relative;z-index:1;filter:drop-shadow(0 5px 2px #51402c35)}
+.bridge-span b{color:#573922;font-size:.88rem}.bridge-span small{color:#6d5c4e}
+.load-label{position:relative;z-index:2;background:#fff0b6;border:1px solid #d7b759;color:#4b3b2c;box-shadow:0 2px 0 #bc9947}
+.bridge-span.weak{outline:4px solid #d64e4e;animation:bridge-shake .35s ease-in-out 2}.bridge-span.weak::after{content:"Needs stronger support";position:absolute;z-index:4;left:5px;right:5px;top:62px;padding:3px;border-radius:6px;background:#a72f35;color:#fff;font-size:.58rem;font-weight:900}
+.bridge-cart{z-index:5;left:4%;top:72px;width:88px;filter:drop-shadow(0 6px 3px #263c4a44)}
+.bridge-cart-art{display:block;width:100%;height:auto}
+.crossed .bridge-cart{animation:cart-crossing 2.4s ease-in-out forwards}
+.bridge-river{position:absolute;z-index:1;inset:auto 0 8px;height:50px;overflow:hidden;pointer-events:none}.bridge-river i{position:absolute;left:-5%;width:110%;height:12px;border-top:4px solid #bdf5f2;border-radius:50%;opacity:.7}.bridge-river i:nth-child(1){top:4px}.bridge-river i:nth-child(2){top:22px;left:-17%}.bridge-river i:nth-child(3){top:39px;left:7%}
+.build-tool{position:relative;background:linear-gradient(#fffaf0,#f5ead7);box-shadow:0 5px 0 #cbb99755;transition:transform .18s ease,box-shadow .18s ease}.build-tool:hover{transform:translateY(-2px);box-shadow:0 8px 13px #5d49371f}.build-tool.selected{background:linear-gradient(#f7f0ff,#e7dcff);box-shadow:0 0 0 3px #ede7fc,0 6px 0 #a693d1}.build-tool .object-icon{width:52px;height:52px}.erase-tool{width:48px;height:34px;border:3px dashed #ab745b;border-radius:7px;background:linear-gradient(135deg,#fff 40%,#ef9c92 41% 58%,#fff 59%)}
+@keyframes bridge-shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+
+/* Expedition material finish. */
+.pipe-tile{background:linear-gradient(145deg,#fffdf6,#e5eceb);border:1px solid #bcc9c8}.pipe-tile svg{filter:drop-shadow(0 3px 2px #49616b25)}
+.picnic-basket{position:relative;background:repeating-linear-gradient(0deg,#e1aa6f 0 7px,#f0c890 7px 14px);border-color:#9f6c43;box-shadow:inset 0 0 0 4px #f4d2a6,0 8px 18px #60492f24}
+.picnic-basket::before{content:"";position:absolute;inset:10px;border:2px dashed #a36b44;border-radius:16px;pointer-events:none}
+.picnic-slot{position:relative;z-index:1;border:1px solid #e8d5b9;box-shadow:0 4px 0 #9d724433}
+.supply-card .object-icon,.market-stall .object-icon{filter:drop-shadow(0 5px 3px #59452c2b)}
+.town-map{background:linear-gradient(90deg,#d8e6c1 88%,#5cb5c9 88%);border:2px solid #a4c19d}
+
+html.larriverse-dark :is(.build-tool,.bridge-span,.supply-card,.island-request,.market-stall,.town-plot,.map-tile,.pipe-tile,.picnic-slot,.cipher-workshop,.map-clue){background:#2d2846;color:#f7f4ff;border-color:#6a608d}
+html.larriverse-dark :is(.bridge-span b,.bridge-span small,.load-label,.market-stall strong,.market-stall small,.town-plot small,.island-request small){color:#f7f4ff}
+html.larriverse-dark .load-label{background:#4c4168;border-color:#8275a3;box-shadow:none}
+html.larriverse-dark .bridge-landscape{background:linear-gradient(#231e49 0 30%,#294955 30% 58%,#205d78 58% 100%);border-color:#554a80}
+html.larriverse-dark .bridge-span::before{filter:brightness(.75)}
+html.larriverse-dark .picnic-basket{background:repeating-linear-gradient(0deg,#79543b 0 7px,#9a704d 7px 14px);border-color:#bb8c62}
+
+@media(max-width:600px){
+  .bridge-landscape{min-height:560px;padding:82px 12px 58px}.bridge-spans{gap:10px}.bridge-cart{top:60px;width:70px}.bridge-abutment{display:none}.bridge-tree{width:65px;height:65px}.bridge-flowers{top:119px}.bridge-span::before{top:46px}.bridge-span.weak::after{top:60px}.world-scene>svg{min-height:145px;object-fit:cover}.scene-object{transform-box:fill-box}
+}
