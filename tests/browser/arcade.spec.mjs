@@ -30,11 +30,15 @@ function watchPage(page) {
 async function prepareCleanDevice(page, context) {
   await context.clearPermissions();
   await page.addInitScript(() => {
+    if (sessionStorage.getItem('larriverse.browserQaPrepared') === 'true') return;
+    sessionStorage.setItem('larriverse.browserQaPrepared', 'true');
     localStorage.clear();
     localStorage.setItem('larriverse.arcade.settings.v1', JSON.stringify({
       reducedMotion: true,
       highContrast: false,
-      largeText: false
+      largeText: false,
+      theme: 'system',
+      bloomHidden: false
     }));
   });
 }
@@ -105,7 +109,13 @@ test.describe('LarriVerse browser release gate', () => {
 
     expect(restored.profile.name).toBe('QA Player');
     expect(restored.profile.games['browser-qa'].highScore).toBe(90);
-    expect(restored.settings).toEqual({ reducedMotion: true, highContrast: true, largeText: true });
+    expect(restored.settings).toEqual({
+      reducedMotion: true,
+      highContrast: true,
+      largeText: true,
+      theme: 'system',
+      bloomHidden: false
+    });
     expect(restored.keys.every(key => key.startsWith('larriverse.'))).toBeTruthy();
     await expect(page.locator('html')).toHaveClass(/larriverse-reduced-motion/);
     await expect(page.locator('html')).toHaveClass(/larriverse-high-contrast/);
@@ -122,6 +132,41 @@ test.describe('LarriVerse browser release gate', () => {
 
     expect(observed.forbidden).toEqual([]);
     expect(observed.errors).toEqual([]);
+  });
+
+  test('day, night, device theme, and Bloom controls persist without blocking play', async ({ page, context }) => {
+    await prepareCleanDevice(page, context);
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+    await expect(page.locator('.bloom-guide[data-bloom-for="arcade-home"]')).toBeVisible();
+    await page.locator('[data-open-control]:visible').first().click();
+    await expect(page.locator('#controlCenter')).toBeVisible();
+    await page.locator('#themePreference').selectOption('dark');
+    await expect(page.locator('html')).toHaveClass(/larriverse-dark/);
+    await expect(page.locator('html')).toHaveAttribute('data-larriverse-theme-preference', 'dark');
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await expect(page.locator('html')).toHaveClass(/larriverse-dark/);
+
+    await page.locator('[data-open-control]:visible').first().click();
+    await page.locator('#themePreference').selectOption('system');
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await expect(page.locator('html')).toHaveClass(/larriverse-dark/);
+    await expect(page.locator('html')).toHaveAttribute('data-larriverse-theme-preference', 'system');
+
+    await page.goto('/games/bridge-buddies/index.html', { waitUntil: 'domcontentloaded' });
+    const guide = page.locator('.bloom-guide[data-bloom-for="bridge-buddies"]');
+    await expect(guide).toBeVisible();
+    await expect(guide.locator('.bloom-message')).toContainText(/planks, beams, and triangle braces/i);
+    await guide.locator('.bloom-hint').click();
+    await expect(guide).toHaveAttribute('data-pose', 'thinking');
+    await guide.locator('.bloom-hide').click();
+    await expect(guide).toBeHidden();
+    await expect(page.locator('[data-bloom-peek="bridge-buddies"]')).toBeVisible();
+    await page.locator('[data-bloom-peek="bridge-buddies"]').click();
+    await expect(guide).toBeVisible();
+    await expect(page.locator('[data-lv-theme-cycle]')).toBeVisible();
+    await assertNoHorizontalOverflow(page);
   });
 
   for (const cabinet of release.cabinets) {
