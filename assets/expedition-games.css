@@ -76,6 +76,50 @@ html.larriverse-dark .world-scene .scene-butterfly{fill:#9a8bfa;filter:drop-shad
 .build-tool{position:relative;background:linear-gradient(#fffaf0,#f5ead7);box-shadow:0 5px 0 #cbb99755;transition:transform .18s ease,box-shadow .18s ease}.build-tool:hover{transform:translateY(-2px);box-shadow:0 8px 13px #5d49371f}.build-tool.selected{background:linear-gradient(#f7f0ff,#e7dcff);box-shadow:0 0 0 3px #ede7fc,0 6px 0 #a693d1}.build-tool .object-icon{width:52px;height:52px}.erase-tool{width:48px;height:34px;border:3px dashed #ab745b;border-radius:7px;background:linear-gradient(135deg,#fff 40%,#ef9c92 41% 58%,#fff 59%)}
 @keyframes bridge-shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
 
+/* Bridge Buddies depth pass: distinct materials, real-looking supports, piers, and cargo. */
+.bridge-tool-shelf .build-tool{flex-basis:145px;min-height:154px;padding:10px 9px 13px}
+.bridge-tool-art{display:block;width:100%;max-width:142px;height:78px;overflow:visible;filter:drop-shadow(0 7px 4px #3d2c2138)}
+.bridge-tool-shelf .build-tool.selected .bridge-tool-art{filter:drop-shadow(0 7px 4px #5e459345)}
+.bridge-landscape{
+  --bridge-sky:#aee7f4;
+  --bridge-bank:#a8dc94;
+  --bridge-water:#54bacb;
+  background:linear-gradient(var(--bridge-sky) 0 30%,var(--bridge-bank) 30% 58%,var(--bridge-water) 58% 100%);
+  isolation:isolate;
+}
+.bridge-crossing--market{--bridge-sky:#b9e9f2;--bridge-bank:#d7d894;--bridge-water:#50b5c7}
+.bridge-crossing--festival{--bridge-sky:#c8e5f4;--bridge-bank:#91cf82;--bridge-water:#55b6cc}
+.bridge-crossing--library{--bridge-sky:#c9e0f4;--bridge-bank:#a9ce89;--bridge-water:#5baec2}
+.bridge-crossing--garden{--bridge-sky:#bce9ec;--bridge-bank:#7fc879;--bridge-water:#54b8c4}
+.bridge-crossing--river{--bridge-sky:#a8deed;--bridge-bank:#8ec690;--bridge-water:#3ca8c4}
+.bridge-crossing--night{--bridge-sky:#29305e;--bridge-bank:#496f68;--bridge-water:#235775}
+.bridge-crossing--parade{--bridge-sky:#b9e6f5;--bridge-bank:#9bd17d;--bridge-water:#54b5ca}
+.bridge-scenery::before{content:"";position:absolute;inset:0;pointer-events:none}
+.bridge-crossing--night .bridge-scenery::before{background:radial-gradient(circle at 15% 12%,#fff2a8 0 2px,transparent 3px),radial-gradient(circle at 31% 8%,#fff 0 1px,transparent 2px),radial-gradient(circle at 65% 13%,#fff2a8 0 2px,transparent 3px),radial-gradient(circle at 82% 7%,#fff 0 1px,transparent 2px),radial-gradient(circle at 93% 19%,#fff2a8 0 2px,transparent 3px)}
+.bridge-crossing--festival .bridge-scenery::after,.bridge-crossing--parade .bridge-scenery::after{content:"";position:absolute;left:18%;right:18%;top:39px;height:19px;background:linear-gradient(145deg,#ef7ea7 0 48%,transparent 50%) 0 0/34px 18px repeat-x;filter:drop-shadow(0 2px 1px #53415244);transform:rotate(-1deg)}
+.bridge-landmark{position:absolute;z-index:1;right:98px;top:48px;width:72px;height:72px;filter:drop-shadow(0 7px 4px #2c4a4b35)}
+.bridge-landmark .object-icon{width:100%;height:100%}
+.bridge-load-plaque{position:absolute;z-index:4;left:50%;top:12px;translate:-50% 0;min-width:165px;padding:7px 13px;border:2px solid #805335;border-radius:9px;background:linear-gradient(#f4c98d,#c9874d);color:#4b2f1e;text-align:center;box-shadow:0 5px 0 #5f3a25,0 8px 12px #2c3b4138;line-height:1.1}
+.bridge-load-plaque::before,.bridge-load-plaque::after{content:"";position:absolute;top:-13px;width:3px;height:13px;background:#675244}.bridge-load-plaque::before{left:18px}.bridge-load-plaque::after{right:18px}
+.bridge-load-plaque b,.bridge-load-plaque small{display:block}.bridge-load-plaque b{font-size:.75rem}.bridge-load-plaque small{margin-top:4px;font-size:.62rem;font-weight:800;color:#65432d}
+.bridge-piers{position:absolute;z-index:2;left:39px;right:39px;top:145px;bottom:47px;display:grid;grid-template-columns:repeat(5,1fr);justify-items:center;pointer-events:none}
+.bridge-piers i{width:34px;height:100%;background:linear-gradient(100deg,#c5cbca 0 22%,#7b898d 23% 72%,#56666d 73%);border:2px solid #4c5c62;clip-path:polygon(14% 0,86% 0,100% 100%,0 100%);box-shadow:inset 5px 0 #e2e6e4,5px 8px 9px #193f4f38}
+.bridge-piers i:nth-child(2n){background:linear-gradient(100deg,#d3d6d2 0 20%,#8a9595 21% 73%,#5d6c70 74%)}
+.bridge-piers i:first-child,.bridge-piers i:last-child{opacity:.55}
+.bridge-span{overflow:visible;background:linear-gradient(155deg,#fffdf2e8,#f6ebd6dc);box-shadow:0 8px 0 #416d6955,0 15px 22px #173f512f}
+.bridge-span::before{background:linear-gradient(#f0bd7d 0 24%,#c47a43 25% 72%,#754126 73%);box-shadow:inset 0 2px #ffe0ac,0 5px 0 #5f351f,0 9px 10px #24445045}
+.bridge-span:not(.empty){border-color:#bd8b5d}.bridge-span:not(.empty) .bridge-structure{filter:drop-shadow(0 8px 3px #2e2b283d)}
+.bridge-landscape .load-label{z-index:6}
+.bridge-structure{height:92px;overflow:visible}
+.bridge-cart{left:0;top:65px;width:92px;filter:drop-shadow(0 9px 5px #17364355)}
+.bridge-cart-art{overflow:visible}
+.bridge-river{z-index:1;height:58px}.bridge-river i{border-top-width:5px;filter:drop-shadow(0 3px 1px #27798b55)}
+.bridge-crossing--night .bridge-tree,.bridge-crossing--night .bridge-landmark{filter:brightness(.72) saturate(.8) drop-shadow(0 7px 4px #10142f66)}
+.bridge-crossing--night .bridge-load-plaque{filter:brightness(.82)}
+html.larriverse-dark .bridge-load-plaque{background:linear-gradient(#a66b40,#684026);color:#fff5df;border-color:#d29a6d;box-shadow:0 5px 0 #2c1b13,0 8px 12px #05040f66}
+html.larriverse-dark .bridge-load-plaque small{color:#ffe1bd}
+html.larriverse-high-contrast .bridge-load-plaque{background:#111;color:#fff;border:2px solid #fff;box-shadow:0 5px 0 #fff}html.larriverse-high-contrast .bridge-load-plaque small{color:#fff}
+
 /* Expedition material finish. */
 .pipe-tile{background:linear-gradient(145deg,#fffdf6,#e5eceb);border:1px solid #bcc9c8}.pipe-tile svg{filter:drop-shadow(0 3px 2px #49616b25)}
 .picnic-basket{position:relative;background:repeating-linear-gradient(0deg,#e1aa6f 0 7px,#f0c890 7px 14px);border-color:#9f6c43;box-shadow:inset 0 0 0 4px #f4d2a6,0 8px 18px #60492f24}
@@ -97,5 +141,5 @@ html.larriverse-dark .pantry-challenge{background:linear-gradient(145deg,#302947
 html.larriverse-high-contrast .pantry-challenge,html.larriverse-high-contrast .pantry-rules span{background:#111;color:#fff;border:2px solid #fff}
 
 @media(max-width:600px){
-  .bridge-landscape{min-height:560px;padding:82px 12px 58px}.bridge-spans{gap:10px}.bridge-cart{top:60px;width:70px}.bridge-abutment{display:none}.bridge-tree{width:65px;height:65px}.bridge-flowers{top:119px}.bridge-span::before{top:46px}.bridge-span.weak::after{top:60px}.world-scene>svg{min-height:145px;object-fit:cover}.scene-object{transform-box:fill-box}
+  .bridge-tool-shelf .build-tool{flex-basis:calc(50% - 8px);min-height:137px}.bridge-tool-art{height:67px}.bridge-landscape{min-height:584px;padding:88px 12px 58px}.bridge-spans{gap:10px}.bridge-cart{left:-8px;top:63px;width:68px}.bridge-span:first-child .load-label{transform:translateX(24px)}.bridge-abutment,.bridge-piers{display:none}.bridge-tree{width:58px;height:58px}.tree-right{display:none}.bridge-landmark{right:8px;top:15px;width:52px;height:52px}.bridge-load-plaque{top:9px;min-width:142px;padding:6px 9px}.bridge-load-plaque b{font-size:.68rem}.bridge-load-plaque small{font-size:.57rem}.bridge-flowers{top:126px}.bridge-span::before{top:46px}.bridge-span.weak::after{top:60px}.bridge-structure{height:86px}.world-scene>svg{min-height:145px;object-fit:cover}.scene-object{transform-box:fill-box}
 }

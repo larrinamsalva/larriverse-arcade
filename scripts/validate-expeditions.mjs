@@ -19,6 +19,10 @@ assert.ok(pantryFoods.length >= 12);
 assert.equal(new Set(pantryFoods.map(food => food.id)).size, pantryFoods.length);
 assert.ok(pantryFoods.every(food => ["main", "fruit", "vegetable"].includes(food.group)));
 assert.equal(new Set(bridgeLevels.map(level => level.name)).size, bridgeLevels.length);
+assert.equal(new Set(bridgeLevels.map(level => level.scene)).size, bridgeLevels.length);
+assert.equal(new Set(bridgeLevels.map(level => level.vehicle)).size, bridgeLevels.length);
+assert.equal(new Set(bridgeLevels.map(level => level.cargo)).size, bridgeLevels.length);
+assert.ok(bridgeLevels.every(level => level.landmark && level.cargo.length >= 10));
 assert.equal(new Set(tradeLevels.map(level => level.name)).size, tradeLevels.length);
 for (const world of expeditions) {
   assert.equal(catalog.filter(game => game.id === world.id).length, 1);
