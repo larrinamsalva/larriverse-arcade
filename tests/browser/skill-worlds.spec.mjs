@@ -326,11 +326,34 @@ test("Time Trail: use a legal route, gather all flags, and reach the picnic", as
   page,
 }) => {
   await round(page, "time-trail", async () => {
+    await expect(page.locator("#missionText")).toContainText("16 steps");
+    await expect(page.locator(".route-stats .stat-chip").first()).toContainText(
+      /Steps left\s*16/,
+    );
     await page.locator('[data-tile="4"]').click();
     await expect(page.locator("#feedback")).toContainText("nearby");
-    for (const tile of [15, 10, 5, 0, 1, 2, 3, 4, 9, 14, 9, 4])
+    await page.locator('[data-tile="15"]').click();
+    await expect(page.locator(".route-stats .stat-chip").first()).toContainText(
+      /Steps left\s*15/,
+    );
+    for (const tile of [10, 5, 0, 1, 2, 3, 4, 9, 14, 9, 4])
       await page.locator(`[data-tile="${tile}"]`).click();
   });
+});
+test("Time Trail: stop the route at exactly sixteen steps", async ({ page }) => {
+  await page.goto("/games/time-trail/index.html");
+  for (let move = 0; move < 16; move++) {
+    await page.locator(`[data-tile="${move % 2 === 0 ? 15 : 20}"]`).click();
+  }
+  await expect(page.locator(".route-stats .stat-chip").first()).toContainText(
+    /Steps left\s*0/,
+  );
+  await expect(page.locator("#feedback")).toContainText(
+    "16-step trail is finished",
+  );
+  await expect(
+    page.getByRole("button", { name: "Try a new route", exact: true }),
+  ).toBeVisible();
 });
 test("Garden Guardians: share twelve drops and include pollinator flowers", async ({
   page,

@@ -111,7 +111,7 @@ export const worlds = [
     skill: "Planning & tradeoffs",
     desc: "Find a clever route through the park and collect every mission flag.",
     mission:
-      "Move to nearby path tiles. Visit all three flags and reach the picnic before your 18-step plan runs out.",
+      "You have 16 steps. Move to nearby path tiles, visit all three flags, and reach the picnic.",
     take: "Plan the whole route before the first step. If a route does not work, reset and try a different one.",
     mode: "route",
   },

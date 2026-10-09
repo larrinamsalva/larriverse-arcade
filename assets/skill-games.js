@@ -627,6 +627,7 @@ function renderRepair() {
 
 const routeRocks = new Set([6, 7, 8, 16, 17, 18]);
 const routeFlags = [10, 2, 14];
+const ROUTE_STEP_LIMIT = 16;
 function adjacent(a, b) {
   return (
     Math.abs(Math.floor(a / 5) - Math.floor(b / 5)) +
@@ -636,13 +637,14 @@ function adjacent(a, b) {
 }
 function renderRoute() {
   stage("Three flags. One picnic.");
-  board.innerHTML = `<div class="stat-row">${chip("Steps left", 18 - state.moves)}${chip("Flags found", `${state.flags.size}/3`)}</div><div class="route-legend"><span>🧑 You</span><span>🚩 Mission</span><span>🧺 Finish</span></div><div class="tile-grid" aria-label="Park route grid">${Array.from(
+  board.innerHTML = `<p class="route-instruction"><strong>16-step trail</strong><span>Move one square at a time. Collect every flag before the picnic.</span></p><div class="stat-row route-stats">${chip("Steps left", ROUTE_STEP_LIMIT - state.moves)}${chip("Flags found", `${state.flags.size}/3`)}</div><div class="route-legend"><span>🧑 You</span><span>🚩 Mission</span><span>🧺 Finish</span></div><div class="tile-grid" aria-label="Park route grid">${Array.from(
     { length: 25 },
     (_, i) => {
       const rock = routeRocks.has(i),
         flag = routeFlags.includes(i),
+        finishTile = i === 4,
         player = i === state.player;
-      return `<button class="tile ${rock ? "rock" : ""} ${player ? "player" : ""} ${flag ? "flag" : ""} ${state.visited.has(i) ? "visited" : ""}" data-tile="${i}" aria-label="Row ${Math.floor(i / 5) + 1}, column ${(i % 5) + 1}, ${player ? "your position" : rock ? "rock" : flag ? (state.flags.has(i) ? "flag collected" : "mission flag") : i === 4 ? "picnic finish" : "path"}" ${rock || player ? "disabled" : ""}>${player ? "🧑" : rock ? "🪨" : flag ? (state.flags.has(i) ? "✓" : "🚩") : i === 4 ? "🧺" : "·"}</button>`;
+      return `<button class="tile ${rock ? "rock" : ""} ${player ? "player" : ""} ${flag ? "flag" : ""} ${finishTile ? "finish" : ""} ${state.visited.has(i) ? "visited" : ""}" data-tile="${i}" aria-label="Row ${Math.floor(i / 5) + 1}, column ${(i % 5) + 1}, ${player ? "your position" : rock ? "rock" : flag ? (state.flags.has(i) ? "flag collected" : "mission flag") : finishTile ? "picnic finish" : "path"}" ${rock || player ? "disabled" : ""}>${player ? "🧑" : rock ? "🪨" : flag ? (state.flags.has(i) ? "✓" : "🚩") : finishTile ? "🧺" : "·"}</button>`;
     },
   ).join("")}</div>`;
   bind("[data-tile]", (node) => moveRoute(Number(node.dataset.tile)));
@@ -650,10 +652,10 @@ function renderRoute() {
   updateScore(state.flags.size * 25);
   hint =
     "Walk up the left side, across the top to the flag, then around the right side for the last flag. Backtracking uses steps, too.";
-  if (state.moves >= 18) button("Try a new route", initialize);
+  if (state.moves >= ROUTE_STEP_LIMIT) button("Try a new route", initialize);
 }
 function moveRoute(next) {
-  if (finished || state.moves >= 18) return;
+  if (finished || state.moves >= ROUTE_STEP_LIMIT) return;
   if (
     next < 0 ||
     next >= 25 ||
@@ -676,16 +678,16 @@ function moveRoute(next) {
     );
     return;
   }
-  if (state.moves >= 18)
+  if (state.moves >= ROUTE_STEP_LIMIT)
     say(
-      "Your 18-step plan ran out. Start again and try fewer detours. The rocks do not move.",
+      "Your 16-step trail is finished. Start again and try fewer detours. The rocks do not move.",
       "try",
     );
   else
     say(
       next === 4
         ? "Visit all three flags before finishing at the picnic."
-        : `You have ${18 - state.moves} steps left. Look ahead to your next flag.`,
+        : `You have ${ROUTE_STEP_LIMIT - state.moves} steps left. Look ahead to your next flag.`,
     );
 }
 
