@@ -14,6 +14,10 @@ const expedition = read('assets/expedition-games.js');
 const expeditionCss = read('assets/expedition-games.css');
 const bubbleGame = read('games/bubble-resonance-phi369/game.js');
 const bubbleCss = read('games/bubble-resonance-phi369/game.css');
+const roadTripGame = read('games/road-trip-quest/game.js');
+const roadTripHtml = read('games/road-trip-quest/index.html');
+const gpsGame = read('games/road-trip-quest-gps/game.js');
+const gpsHtml = read('games/road-trip-quest-gps/index.html');
 const [{ trafficSignSvg }, { trafficQuestions }] = await Promise.all([
   import('../assets/arcade-scenes.js'),
   import('../assets/expanded-scenarios.js')
@@ -43,9 +47,13 @@ check(accessibility.includes('.bloom-guide'), 'Bloom has a reusable shared visua
 check(accessibility.includes('html.larriverse-dark'), 'shared dark-theme styles exist');
 check(accessibility.includes('prefers-reduced-motion: reduce'), 'Bloom and scenery respect reduced motion');
 
-for (const token of ['bridgePartDrawing', 'bridgeCartSvg', 'lemonadeStandSvg', 'musicStudioSvg', 'trafficSignSvg']) {
+for (const token of ['bridgePartDrawing', 'bridgeCartSvg', 'lemonadeStandSvg', 'musicStudioSvg', 'trafficSignSvg', 'placeSvg']) {
   check(scenes.includes(`function ${token}`) || scenes.includes(`const ${token}`), `${token} detailed artwork is present`);
 }
+for (const object of ['tree', 'boat', 'car', 'truck', 'airplane', 'trafficLight', 'fuel', 'house', 'pine', 'mountain']) {
+  check(scenes.includes(`${object}: '`), `${object} has a code-native dimensional model`);
+}
+check(scenes.includes('object-ground-shadow') && scenes.includes('object-model--'), 'shared object drawings include cast shadows and model-specific groups');
 for (const detail of ['wood-grain', 'bridge-structure', 'bridge-abutment', 'bridge-river']) {
   check(scenes.includes(detail) || expedition.includes(detail) || expeditionCss.includes(detail), `Bridge Buddies retains ${detail} detail`);
 }
@@ -55,12 +63,17 @@ const signSymbols = renderedSigns.map(svg => svg.replace(/ aria-label="[^"]+"/, 
 check(trafficQuestions.length === 30, 'Traffic Town keeps its complete 30-sign learning set');
 check(new Set(signSymbols).size === trafficQuestions.length, 'every Traffic Town sign has distinct identifying artwork');
 check(renderedSigns.every(svg => /<svg class="traffic-sign-art"[^>]+role="img"/.test(svg)), 'traffic sign artwork retains accessible image semantics');
+check(renderedSigns.every(svg => svg.includes('sign-depth') && svg.includes('sign-sheen') && svg.includes('sign-ground-shadow')), 'every traffic sign includes depth, reflected light, and a cast shadow');
 check(game.includes('lemonadeStandSvg(forecast.name)'), 'Lemonade Lab renders its detailed stand and weather');
 check(game.includes('musicStudioSvg()'), 'Beat Builder renders the illustrated studio');
 check(game.includes('iconSvg("robot", "rover-token")'), 'Robot Rover uses a detailed mechanical rover instead of an emoji');
 check(bubbleGame.includes('CANVAS_THEMES') && bubbleGame.includes('drawShooter'), 'Bubble Resonance has a theme-aware illustrated launcher');
 check(bubbleGame.includes('canvas.dataset.colorMode'), 'Bubble Resonance exposes the resolved canvas color mode for QA');
 check(bubbleCss.includes('html.larriverse-light') && bubbleCss.includes('--bubble-field'), 'Bubble Resonance cabinet has a complete light-theme palette');
+check(roadTripGame.includes("import { iconSvg }") && roadTripGame.includes("icon:'airplane'") && roadTripGame.includes("icon:'truck'"), 'Road Trip Quest uses dimensional shared vehicle and scenery models');
+check(!roadTripHtml.includes('<div class="car" id="car" aria-label="Player car">🚗'), 'Road Trip Quest no longer uses a flat emoji player car');
+check(gpsGame.includes('placeSvg(poi.type') && gpsGame.includes("iconSvg('car', 'gps-car-art')"), 'Road Trip GPS renders dimensional place markers and player vehicle');
+check(!gpsHtml.includes('aria-label="Player position">🚙'), 'Road Trip GPS no longer uses a flat emoji player vehicle');
 check(game.includes('larriverse:bloom-message'), 'game feedback reaches Bloom locally');
 check(!sdk.includes('fetch(') && !sdk.includes('WebSocket'), 'Bloom remains scripted, local, and network-free');
 

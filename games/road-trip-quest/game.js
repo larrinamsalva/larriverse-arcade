@@ -1,3 +1,5 @@
+import { iconSvg } from '../../assets/arcade-scenes.js';
+
 (() => {
   'use strict';
 
@@ -46,7 +48,18 @@
     {emoji:'🦁',name:'Pride Lion',bonus:65,desc:'Roaring for adventure!'}
   ];
 
-  const SCENERY = ['🌲','🌳','🏠','⛽','🚦','🏗️','🌾','🌵','⛰️','🏔️','🌊','🦅','🐄','🌻'];
+  const SCENERY = [
+    { icon:'pine', label:'pine tree' },
+    { icon:'tree', label:'shade tree' },
+    { icon:'house', label:'roadside house' },
+    { icon:'fuel', label:'fuel station' },
+    { icon:'trafficLight', label:'traffic light' },
+    { icon:'truck', label:'delivery truck' },
+    { icon:'airplane', label:'airplane' },
+    { icon:'mountain', label:'mountain' },
+    { icon:'boat', label:'sailboat' },
+    { icon:'lighthouse', label:'lighthouse' }
+  ];
   const $ = selector => document.querySelector(selector);
   const fresh = () => ({
     score:0,
@@ -214,10 +227,14 @@
   }
 
   function spawnScenery() {
+    const scenery = pick(SCENERY);
     const element = document.createElement('span');
-    element.textContent = pick(SCENERY);
+    element.className = `scenery-object scenery-object--${scenery.icon}`;
+    element.innerHTML = iconSvg(scenery.icon, 'scenery-art');
+    element.title = scenery.label;
     element.style.bottom = `${4 + Math.random() * 30}px`;
     element.style.animationDuration = `${5 + Math.random() * 4}s`;
+    element.style.setProperty('--scenery-scale', `${.8 + Math.random() * .42}`);
     $('#skyline').append(element);
     element.addEventListener('animationend', () => element.remove());
   }
@@ -556,6 +573,11 @@
   }
 
   async function init() {
+    document.querySelectorAll('[data-demo-object]').forEach(slot => {
+      slot.innerHTML = iconSvg(slot.dataset.demoObject, 'demo-object-art');
+    });
+    $('#car').innerHTML = iconSvg('car', 'player-car-art');
+    $('#battleCar').innerHTML = iconSvg('car', 'battle-car-art');
     $('#startButton').disabled = true;
     $('#roadMessage').textContent = 'Loading the expanded learning question bank…';
     await loadQuestions();

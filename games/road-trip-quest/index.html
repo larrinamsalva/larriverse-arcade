@@ -38,10 +38,10 @@
       <div class="title-card">
         <p class="eyebrow">Collect · Battle · Conquer</p>
         <h1 id="gameTitle">Road Trip<br><span>Quest!</span></h1>
-        <div class="road-demo" aria-hidden="true"><span>🌲</span><i></i><b>🚗</b><i></i><span>⛰️</span></div>
+        <div class="road-demo" aria-hidden="true"><span data-demo-object="pine"></span><i></i><b data-demo-object="car"></b><i></i><span data-demo-object="mountain"></span></div>
         <p>Collect power items as you drive, answer questions from a 96-question Math, Trivia, Science and Reading pool, defeat eight city bosses, and build your Hero Collection.</p>
         <div id="learningPathControl"></div>
-        <button class="primary" id="startButton">Start the engine 🚗</button>
+        <button class="primary" id="startButton">Start the engine</button>
         <button class="secondary" id="newTripButton">Reset saved trip</button>
         <div class="profile-chip" id="profileChip">Loading player…</div>
       </div>
@@ -64,7 +64,7 @@
         <div class="skyline" id="skyline" aria-hidden="true"></div>
         <div class="road" id="road" tabindex="0" role="application" aria-label="Drive with left and right arrow keys or the lane buttons">
           <div class="lane-line one"></div><div class="lane-line two"></div>
-          <div class="car" id="car" aria-label="Player car">🚗</div>
+          <div class="car" id="car" aria-label="Player car"></div>
           <div class="road-message" id="roadMessage">Collect items to charge the boss meter!</div>
         </div>
         <p id="motionRoadNote" class="motion-road-note" hidden>Reduced motion: items stay still. Move to an item’s lane with the lane buttons or arrow keys, then tap the item or focus it and press Enter to collect. Your inventory and battles work the same way.</p>
@@ -88,7 +88,7 @@
     <dialog id="questionDialog" class="dialog">
       <form method="dialog" class="dialog-card" id="questionForm">
         <p class="eyebrow" id="questionMode">Boss battle</p>
-        <div class="opponents"><div><span>🚗</span><small>You</small><div class="hp"><i id="playerHp"></i></div></div><b>VS</b><div><span id="bossEmoji">🚕</span><small id="bossName">King Cabbie</small><div class="hp"><i id="bossHp"></i></div></div></div>
+        <div class="opponents"><div><span id="battleCar"></span><small>You</small><div class="hp"><i id="playerHp"></i></div></div><b>VS</b><div><span id="bossEmoji">🚕</span><small id="bossName">King Cabbie</small><div class="hp"><i id="bossHp"></i></div></div></div>
         <div class="subject" id="subjectBadge">Math</div>
         <h2 id="questionText">Question</h2>
         <div class="item-row" id="battleItems" aria-label="Use a collected item"></div>
@@ -120,7 +120,7 @@
   </main>
   <script src="../../assets/arcade-sdk.js"></script>
   <script src="../../assets/learning-path.js"></script>
-  <script src="game.js"></script>
+  <script type="module" src="game.js"></script>
 <script src="../../assets/cabinet-shell.js"></script>
 </body>
 </html>

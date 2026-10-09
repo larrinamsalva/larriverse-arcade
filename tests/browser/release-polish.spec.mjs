@@ -439,3 +439,28 @@ test('progress views keep shared comfort controls visible on narrow screens with
     await checkReflow(page, `${route} comfort access`);
   }
 });
+
+test('dimensional object models replace flat road-trip scenery and preserve sign identity', async ({ page }) => {
+  await page.goto('/games/road-trip-quest/index.html');
+  await expect(page.locator('#startButton')).toBeEnabled();
+  await expect(page.locator('.road-demo .demo-object-art')).toHaveCount(3);
+  await expect(page.locator('#car .player-car-art .object-model--car')).toHaveCount(1);
+  await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: false }));
+  await page.locator('#startButton').click();
+  await expect(page.locator('#skyline .scenery-art').first()).toBeAttached({ timeout: 2_500 });
+
+  await page.goto('/games/traffic-town/index.html');
+  const sign = page.locator('.traffic-sign-art').first();
+  await expect(sign).toBeVisible();
+  await expect(sign.locator('.sign-depth')).toHaveCount(1);
+  await expect(sign.locator('.sign-sheen')).toHaveCount(1);
+  await expect(sign.locator('.sign-ground-shadow')).toHaveCount(1);
+
+  await page.goto('/games/road-trip-quest-gps/index.html');
+  await page.waitForFunction(() => window.RoadTripGpsContent);
+  await expect(page.locator('#boundaryVehicle .boundary-car-art .object-model--car')).toHaveCount(1);
+  await page.locator('#demoButton').click();
+  await expect(page.locator('#player .gps-car-art .object-model--car')).toHaveCount(1);
+  await expect(page.locator('.poi .poi-art').first()).toBeVisible();
+  expect(await page.locator('.poi .poi-art').count()).toBeGreaterThan(5);
+});

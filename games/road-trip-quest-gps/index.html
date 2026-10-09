@@ -40,7 +40,7 @@
         <h1>Find nearby-style quests without sharing your location.</h1>
         <p>This rebuild preserves the recovered proximity hunt, place categories, question catches, collectibles, XP levels, and collection book. It does not load external maps or upload coordinates.</p>
         <div class="boundary">
-          <span>🚗</span>
+          <span id="boundaryVehicle" aria-hidden="true"></span>
           <div><strong>Never play while driving.</strong><p>A passenger may play, or use it after the vehicle is safely parked. This is not navigation or an emergency-location service.</p></div>
         </div>
         <div class="mode-grid">
@@ -84,7 +84,7 @@
         <div class="road road-b"></div>
         <div class="park-zone"></div>
         <div id="poiLayer"></div>
-        <div id="player" class="player" aria-label="Player position">🚙</div>
+        <div id="player" class="player" aria-label="Player position"></div>
         <div class="range-ring" id="rangeRing"></div>
       </section>
 
@@ -104,7 +104,7 @@
   <dialog id="encounterDialog" class="dialog-card encounter">
     <div>
       <button class="close-x" id="closeEncounter" aria-label="Close">×</button>
-      <span id="placeTag" class="place-tag">🌲 Park</span>
+      <span id="placeTag" class="place-tag"><span>Park</span></span>
       <div id="rewardEmoji" class="reward-emoji">🦄</div>
       <h2 id="rewardName">Park Unicorn</h2>
       <p id="placeName">Park Quest</p>
@@ -160,7 +160,7 @@
 
   <noscript>This cabinet needs JavaScript enabled.</noscript>
   <script src="../../assets/arcade-sdk.js"></script>
-  <script src="game.js"></script>
+  <script type="module" src="game.js"></script>
 <script src="../../assets/cabinet-shell.js"></script>
 </body>
 </html>
