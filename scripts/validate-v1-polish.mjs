@@ -6,7 +6,7 @@ import { discoverGames } from '../assets/arcade-discovery.js';
 
 const release = JSON.parse(fs.readFileSync('release.json', 'utf8'));
 const catalog = JSON.parse(fs.readFileSync('games/catalog.json', 'utf8'));
-assert.equal(catalog.length, 29, 'this polish pass must keep exactly 29 games');
+assert.equal(catalog.length, 30, 'this polish pass must keep exactly 30 games');
 assert.equal(release.releaseState, 'candidate', 'automation cannot complete the formal release');
 assert.equal(release.humanChecksRequired, true);
 assert.equal(release.deviceQa.physicalPhoneTouchRequired, true);
@@ -24,9 +24,9 @@ for (const project of release.galleryReview.projects) {
     descriptions.push(metadata.defaultAlt);
   }
 }
-assert.equal(descriptions.length, 60);
-assert.equal(new Set(descriptions).size, 60, 'each image needs its own subject and viewport description');
-assert.throws(() => galleryMetadata({ id: 'game-29', title: 'Unknown game' }, { id: 'desktop-chromium' }), /Missing gallery description/);
+assert.equal(descriptions.length, 62);
+assert.equal(new Set(descriptions).size, 62, 'each image needs its own subject and viewport description');
+assert.throws(() => galleryMetadata({ id: 'game-30', title: 'Unknown game' }, { id: 'desktop-chromium' }), /Missing gallery description/);
 assert.throws(() => galleryMetadata({ id: 'lobby', title: '' }, { id: 'desktop-chromium' }), /Invalid gallery title/);
 assert.throws(() => galleryMetadata(subjects[0], { id: 'unknown' }), /Unknown gallery project/);
 
@@ -65,4 +65,4 @@ for (const name of ['gallery-metadata.mjs', 'verify-gallery-review.mjs']) {
 for (const name of ['arcade-discovery.js', 'cabinet-shell.js']) {
   assert.equal(spawnSync(process.execPath, ['--check', `assets/${name}`]).status, 0);
 }
-console.log('LarriVerse 1.0 polish validated: 29 preserved routes, 60 deterministic gallery descriptions, local optional discovery, and shared comfort access.');
+console.log('LarriVerse 1.0 polish validated: 30 preserved routes, 62 deterministic gallery descriptions, local optional discovery, and shared comfort access.');

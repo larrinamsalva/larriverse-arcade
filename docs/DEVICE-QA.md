@@ -29,7 +29,7 @@ Only `main` can deploy automatically. The workflow validates the complete arcade
 2. Select **Desktop or laptop browser**.
 3. Enter the actual computer/browser description and tester name.
 4. Check all routes.
-5. Complete each cabinet focus task and mark all 29 results.
+5. Complete each cabinet focus task and mark all 30 results.
 6. Complete the six device-wide checks.
 7. Export the `desktop` QA JSON.
 
@@ -39,7 +39,7 @@ Only `main` can deploy automatically. The workflow validates the complete arcade
 2. Open it in the phone's normal browser—not desktop device emulation.
 3. Select **Physical phone browser**.
 4. Enter the actual phone/browser description and tester name.
-5. Complete all 29 cabinet focus tasks with touch controls.
+5. Complete all 30 cabinet focus tasks with touch controls.
 6. Check scrolling, orientation, narrow layout, sound behavior, backup/restore, privacy, and accessibility.
 7. Export the `physical-phone` QA JSON from the phone.
 8. Move that JSON to the computer using the user's normal trusted file-sharing method.

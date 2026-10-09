@@ -1,6 +1,6 @@
 # LarriVerse Automated Browser QA
 
-Phase 12 adds a pinned Playwright/Chromium release gate for the complete 29-game arcade.
+Phase 12 adds a pinned Playwright/Chromium release gate for the complete 30-game arcade.
 
 ## What automation now proves
 
@@ -26,9 +26,9 @@ Road Trip Quest GPS receives an extra check: geolocation permission is never gra
 
 ## Screenshot evidence
 
-Each run captures a clean viewport screenshot for the lobby and all 29 cabinets in both browser projects. GitHub Actions uploads these images with the HTML Playwright report and failure traces as a temporary artifact.
+Each run captures a clean viewport screenshot for the lobby and all 30 cabinets in both browser projects. GitHub Actions uploads these images with the HTML Playwright report and failure traces as a temporary artifact.
 
-After keyboard checks, capture clears transient focus and scroll offsets so a skip-link focus ring cannot cover the header. `npm run gallery:build` assembles the 60 images; `npm run gallery:verify` checks their deterministic subject/view descriptions, PNG dimensions, sizes, and hashes. Mobile descriptions refer to the visible opening view instead of assuming an entire board fits above the fold.
+After keyboard checks, capture clears transient focus and scroll offsets so a skip-link focus ring cannot cover the header. `npm run gallery:build` assembles the 62 images; `npm run gallery:verify` checks their deterministic subject/view descriptions, PNG dimensions, sizes, and hashes. Mobile descriptions refer to the visible opening view instead of assuming an entire board fits above the fold.
 
 The screenshot contexts begin with empty browser storage, reduced motion enabled, and no location permission. They are QA evidence, not automatically approved marketing images. A human must still inspect them before copying selected images into `docs/screenshots/`.
 

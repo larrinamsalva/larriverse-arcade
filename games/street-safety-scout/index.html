@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#164e63">
+  <meta name="description" content="Identify signal lights, caution and emergency signs, vehicle hazard lights, and hidden street hazards in a calm twelve-stop safety game. Free practice; progress stays in this browser.">
+  <title>Street Safety Scout · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="game.css">
+  <link rel="stylesheet" href="../../assets/emoji.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+  <link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/street-safety-scout/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LarriVerse Arcade">
+  <meta property="og:title" content="Street Safety Scout · LarriVerse Arcade">
+  <meta property="og:description" content="Spot traffic signals, warning signs, emergency clues, vehicle lights, and street hazards in a visual road-safety practice game.">
+  <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/street-safety-scout/">
+  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="800">
+  <meta property="og:image:alt" content="Illustrated LarriVerse learning worlds with playful maps, buildings, roads, and adventure scenes.">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body data-classic="street-safety-scout">
+  <a class="skip-link" href="#playArea">Skip to game</a>
+  <header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+    <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+    <div class="lv-context"><strong>Street Safety Scout</strong><small>Identify signs, signals &amp; hazards</small></div>
+    <nav class="lv-tools" aria-label="Arcade tools">
+      <a class="lv-button" href="../../index.html">Back to Arcade</a>
+      <button class="lv-button" type="button" data-lv-comfort>Comfort &amp; accessibility</button>
+    </nav>
+    <span data-lv-profile>Progress stays in this browser.</span>
+  </header>
+
+  <main class="game-shell">
+    <section class="world-banner" aria-labelledby="gameTitle">
+      <div class="hero-copy">
+        <p class="eyebrow">Game 30 · Road-awareness adventure</p>
+        <h1 id="gameTitle">Street Safety <span>Scout</span></h1>
+        <p>Read the light. Spot the warning. Choose the safest first move before the scene changes.</p>
+        <div class="hero-tags" aria-label="Challenge areas">
+          <span>🚦 Signals</span><span>⚠️ Caution</span><span>🚑 Emergency</span><span>◇ Hazards</span>
+        </div>
+      </div>
+      <div class="hero-scene" aria-hidden="true">
+        <svg viewBox="0 0 460 250">
+          <defs>
+            <linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#9de8f4"/><stop offset="1" stop-color="#e6fbff"/></linearGradient>
+            <linearGradient id="heroRoad" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#53626b"/><stop offset="1" stop-color="#26333c"/></linearGradient>
+            <filter id="heroShadow"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-opacity=".3"/></filter>
+          </defs>
+          <rect width="460" height="250" rx="26" fill="url(#heroSky)"/>
+          <path d="M0 155 460 125v125H0Z" fill="url(#heroRoad)"/>
+          <path d="m36 218 76-5m71-5 76-5m71-5 76-5" stroke="#fff4b1" stroke-width="7" stroke-linecap="round"/>
+          <g filter="url(#heroShadow)" transform="translate(70 38)">
+            <path d="M32 74v116" stroke="#687882" stroke-width="12"/>
+            <path d="M36 76h79" stroke="#687882" stroke-width="11"/>
+            <rect x="84" y="24" width="61" height="126" rx="18" fill="#1c2830" stroke="#64757f" stroke-width="5"/>
+            <circle cx="114" cy="53" r="17" fill="#ff4e55"/><circle cx="114" cy="87" r="17" fill="#f3a928" opacity=".24"/><circle cx="114" cy="121" r="17" fill="#4bd17b" opacity=".24"/>
+            <circle cx="108" cy="47" r="6" fill="#fff" opacity=".6"/>
+          </g>
+          <g filter="url(#heroShadow)" transform="translate(290 49)">
+            <path d="M58 92v89" stroke="#687882" stroke-width="9"/>
+            <path d="m58 5 54 54-54 54L4 59Z" fill="#ff9f35" stroke="#fff2cf" stroke-width="6"/>
+            <path d="M35 73q20-27 45 0M58 37v40" fill="none" stroke="#272c32" stroke-width="8" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(246 168)" filter="url(#heroShadow)">
+            <path d="M8 35 29 9h72l25 26 18 4v31H0V45Z" fill="#2f80c8" stroke="#173f62" stroke-width="4"/>
+            <path d="M34 14h30v23H18Zm35 0h28l19 23H69Z" fill="#c9f3ff" stroke="#275877" stroke-width="3"/>
+            <rect x="10" y="43" width="123" height="17" rx="6" fill="#56a4df"/>
+            <circle cx="30" cy="69" r="14" fill="#202a31" stroke="#91a5ae" stroke-width="5"/><circle cx="111" cy="69" r="14" fill="#202a31" stroke="#91a5ae" stroke-width="5"/>
+            <circle cx="8" cy="48" r="7" fill="#ffb52e"/><circle cx="136" cy="48" r="7" fill="#ffb52e"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="safety-layout">
+      <aside class="mission-panel" aria-labelledby="missionHeading">
+        <div class="scout-badge" aria-hidden="true">🦺</div>
+        <p class="eyebrow">Your mission</p>
+        <h2 id="missionHeading">Clear 12 safety stops</h2>
+        <p>Each round mixes signals, caution signs, emergency clues, and vehicle or roadway hazards from a 30-scenario bank.</p>
+        <div class="progress-wrap">
+          <div class="progress-label"><span id="progressText">Ready to scout</span><b id="progressNumber">0 / 12</b></div>
+          <div class="progress-track" role="progressbar" aria-label="Round progress" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0"><span id="progressFill"></span></div>
+        </div>
+        <dl class="round-stats">
+          <div><dt>Score</dt><dd id="scoreValue">0</dd></div>
+          <div><dt>Streak</dt><dd id="streakValue">0</dd></div>
+          <div><dt>Best</dt><dd id="bestValue">—</dd></div>
+        </dl>
+        <button type="button" class="secondary" id="hintButton">Bloom’s clue</button>
+        <button type="button" class="secondary" id="soundButton" aria-pressed="false">Sound off</button>
+        <button type="button" class="text-button" id="restartButton">Start a new route</button>
+        <p class="safety-note"><b>Practice only:</b> signs and laws can vary. Kids should explore with an adult. Never use this game while driving or during a real emergency.</p>
+      </aside>
+
+      <section class="play-card" id="playArea" tabindex="-1" aria-labelledby="playHeading">
+        <div id="startPanel" class="start-panel">
+          <div>
+            <p class="eyebrow">Scout briefing</p>
+            <h2 id="playHeading">Four kinds of clues</h2>
+            <p>Look closely at the picture, decide what it means, and choose the safest first action. There is no timer and every explanation teaches the next clue.</p>
+          </div>
+          <div class="zone-grid">
+            <article><span>🚦</span><b>Signal lights</b><small>Steady, flashing, arrows, walks, rails</small></article>
+            <article><span>⚠️</span><b>Caution signs</b><small>Schools, work zones, bikes, water</small></article>
+            <article><span>🚑</span><b>Emergency awareness</b><small>Sirens, move over, buses, routes</small></article>
+            <article><span>◇</span><b>Street hazards</b><small>Vehicle lights, hidden people, fog</small></article>
+          </div>
+          <button type="button" class="primary start-button" id="startButton">Start safety route</button>
+        </div>
+
+        <div id="challengePanel" class="challenge-panel" hidden>
+          <div class="challenge-top">
+            <span class="category-chip" id="categoryChip">Signal lights</span>
+            <span class="stop-count" id="stopCount">Stop 1 of 12</span>
+          </div>
+          <figure class="scenario-visual" id="scenarioVisual"></figure>
+          <div class="question-copy">
+            <p class="eyebrow" id="challengeTitle">Steady red light</p>
+            <h2 id="challengePrompt">What is the safest first action?</h2>
+          </div>
+          <div class="answer-grid" id="answerGrid"></div>
+          <output class="feedback" id="feedback" aria-live="polite"></output>
+          <button type="button" class="primary next-button" id="nextButton" hidden>Next safety stop</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="learning-strip" aria-label="Street Safety Scout boundaries">
+      <span>🧭</span>
+      <p><b>Notice first, act safely.</b> This game uses common U.S. road-safety patterns and calm first actions. Always follow current local signs, officials, emergency directions, and the rules where you live.</p>
+    </section>
+  </main>
+
+  <dialog class="result-dialog" id="resultDialog" aria-labelledby="resultTitle">
+    <div class="result-card">
+      <span class="result-icon" aria-hidden="true">🏅</span>
+      <p class="eyebrow">Route complete</p>
+      <h2 id="resultTitle">Safety Scout badge earned!</h2>
+      <p id="resultMessage"></p>
+      <div class="result-score"><strong id="resultScore">0</strong><span>practice score</span></div>
+      <p class="reward-message" id="rewardMessage"></p>
+      <div class="result-actions">
+        <button type="button" class="primary" id="playAgainButton">Scout another route</button>
+        <a class="secondary" href="../../index.html">Back to Arcade</a>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="../../assets/arcade-sdk.js"></script>
+  <script type="module" src="game.js"></script>
+  <script src="../../assets/cabinet-shell.js"></script>
+</body>
+</html>

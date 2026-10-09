@@ -53,6 +53,10 @@
       welcome: 'Safety helper Bloom reporting! Let’s use sign shape, color, symbol, and words together.',
       hint: 'Ask what the sign wants road users to notice or do. Shape and color often give the first clue.'
     },
+    'street-safety-scout': {
+      welcome: 'Scout vest ready! Let’s notice signals, warning signs, emergency clues, and vehicle lights before choosing a calm first move.',
+      hint: 'Look at color, shape, position, and what is changing around the clue. Then choose the most predictable safe action.'
+    },
     'pocket-planet': {
       welcome: 'Let’s pack the things we need and still protect coins for your telescope dream.',
       hint: 'Cover water, lunch, and the bus pass first. Check that at least six coins remain.'

@@ -5,7 +5,7 @@
   "tag": "v1.0.0",
   "title": "LarriVerse Arcade 1.0",
   "releaseState": "candidate",
-  "cabinetCount": 29,
+  "cabinetCount": 30,
   "humanChecksRequired": true,
   "qaRoute": "qa/index.html",
   "releaseNotes": "docs/RELEASE-NOTES-1.0.0.md",
@@ -35,7 +35,7 @@
   },
   "galleryReview": {
     "schema": "larriverse-gallery-review",
-    "expectedImages": 60,
+    "expectedImages": 62,
     "projects": [
       "desktop-chromium",
       "mobile-chromium"
@@ -196,6 +196,12 @@
       "title": "Traffic Town",
       "route": "games/traffic-town/index.html",
       "manualFocus": "Complete a ten-question Traffic Town round, verify sign meanings and explanations, replay to see a different set, and confirm road-awareness guidance remains age-appropriate and not a licensing claim."
+    },
+    {
+      "id": "street-safety-scout",
+      "title": "Street Safety Scout",
+      "route": "games/street-safety-scout/index.html",
+      "manualFocus": "Complete a twelve-stop route, confirm all four safety zones appear, inspect the detailed signs and vehicle-light scenes, replay for unseen scenarios, and verify the game defers to local rules and real emergency directions."
     },
     {
       "id": "pocket-planet",
