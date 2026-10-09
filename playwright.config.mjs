@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const localChromiumPath = process.env.LARRIVERSE_CHROMIUM_PATH;
+
 export default defineConfig({
   testDir: './tests/browser',
   timeout: 30_000,
@@ -17,7 +19,13 @@ export default defineConfig({
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'off',
-    reducedMotion: 'reduce'
+    reducedMotion: 'reduce',
+    ...(localChromiumPath ? {
+      launchOptions: {
+        executablePath: localChromiumPath,
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--no-zygote']
+      }
+    } : {})
   },
   projects: [
     {

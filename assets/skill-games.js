@@ -9,7 +9,13 @@ import {
   robotLevels,
 } from "./skill-worlds.js";
 import { createExpedition } from "./expedition-games.js";
-import { mountScene, iconSvg } from "./arcade-scenes.js";
+import {
+  mountScene,
+  iconSvg,
+  lemonadeStandSvg,
+  musicStudioSvg,
+  trafficSignSvg,
+} from "./arcade-scenes.js";
 const world = worlds.find((item) => item.id === document.body.dataset.world);
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
@@ -77,6 +83,15 @@ $("takeaway").textContent = world.take;
 function say(text, kind = "info") {
   feedback.textContent = text;
   feedback.className = `feedback ${kind}`;
+  if (kind === "good" || kind === "try") {
+    window.dispatchEvent(new CustomEvent("larriverse:bloom-message", {
+      detail: {
+        gameId: world.id,
+        pose: kind === "good" ? "cheer" : "thinking",
+        message: kind === "good" ? text : `Nice try! Every mistake teaches us something. ${text}`,
+      },
+    }));
+  }
 }
 function updateScore(value) {
   score = Math.max(0, Math.min(100, Math.round(value)));
@@ -176,6 +191,13 @@ function finish(message, finalScore = score) {
       "Your browser could not save this round. You can still keep playing.";
   }
   finishDialog.showModal();
+  window.dispatchEvent(new CustomEvent("larriverse:bloom-message", {
+    detail: {
+      gameId: world.id,
+      pose: "celebrate",
+      message: `WOW! You did it! ${message}`,
+    },
+  }));
 }
 function initialize() {
   stopMusic();
@@ -374,7 +396,10 @@ function renderCards(mode) {
       : item.text;
   const actual = mode === "sorting" ? item.bin : item.answer;
   const display = shuffle(labels.map((label, index) => ({ label, index })));
-  board.innerHTML = `<div class="message-card"><span class="message-icon" aria-hidden="true">${item.icon}</span><h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""}">${display.map((choice) => `<button class="choice-button" data-answer="${choice.index}">${esc(choice.label)}</button>`).join("")}</div>${mode === "sorting" ? '<p class="board-note" style="margin-top:1rem">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
+  const messageArt = mode === "traffic"
+    ? trafficSignSvg(item.title)
+    : `<span class="message-icon" aria-hidden="true">${item.icon}</span>`;
+  board.innerHTML = `<div class="message-card ${mode === "traffic" ? "traffic-message" : ""}">${messageArt}<div class="message-copy"><h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""}">${display.map((choice) => `<button class="choice-button" data-answer="${choice.index}">${esc(choice.label)}</button>`).join("")}</div>${mode === "sorting" ? '<p class="board-note" style="margin-top:1rem">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
   progress(state.step, deck.length);
   bind("[data-answer]", (node) => {
     if (state.answered) return;
@@ -734,7 +759,16 @@ function renderRobot() {
           : visited
             ? "visited path"
             : "path";
-    return `<div class="tile rover ${rock ? "rock" : ""} ${player ? "player" : ""} ${visited ? "trail" : ""} ${goal ? "goal" : ""}" aria-label="Row ${Math.floor(i / 5) + 1}, column ${(i % 5) + 1}: ${label}">${player ? `🤖<small>${["↑", "→", "↓", "←"][state.dir]}</small>` : goal ? "⭐" : rock ? "🪨" : visited ? "•" : "·"}</div>`;
+      const art = player
+        ? `${iconSvg("robot", "rover-token")}<small>${["↑", "→", "↓", "←"][state.dir]}</small>`
+        : goal
+          ? iconSvg("star", "rover-goal")
+          : rock
+            ? iconSvg("rock", "rover-rock")
+            : visited
+              ? '<span class="rover-trail-dot" aria-hidden="true"></span>'
+              : '<span class="rover-path-dot" aria-hidden="true"></span>';
+      return `<div class="tile rover ${rock ? "rock" : ""} ${player ? "player" : ""} ${visited ? "trail" : ""} ${goal ? "goal" : ""}" aria-label="Row ${Math.floor(i / 5) + 1}, column ${(i % 5) + 1}: ${label}">${art}</div>`;
   }).join("")}</div><div class="rover-efficiency"><strong>${esc(level.name)}</strong><span>Target: ${level.par} commands for ⭐⭐⭐</span>${currentStars ? `<span class="rover-stars" aria-label="${currentStars} efficiency stars">${"⭐".repeat(currentStars)}${"☆".repeat(3 - currentStars)}</span>` : "<span>Reach the star to earn 1–3 efficiency stars.</span>"}</div><div class="command-bar" aria-label="Add rover commands"><button class="secondary" data-command="F" ${running || state.reached ? "disabled" : ""}>↑ Forward</button><button class="secondary" data-command="L" ${running || state.reached ? "disabled" : ""}>↶ Turn left</button><button class="secondary" data-command="R" ${running || state.reached ? "disabled" : ""}>↷ Turn right</button></div><div class="command-list" aria-label="Your command list">${state.commands.length ? state.commands.map((cmd, i) => `<button class="${i === state.activeCommand ? "active-command" : ""}" data-remove="${i}" aria-label="Remove command ${i + 1}: ${cmd === "F" ? "forward" : cmd === "L" ? "left turn" : "right turn"}" ${i === state.activeCommand ? 'aria-current="step"' : ""} ${running || state.reached ? "disabled" : ""}><small>${i + 1}</small>${cmd === "F" ? "↑" : cmd === "L" ? "↶" : "↷"}</button>`).join("") : '<span class="board-note" style="margin:0">Your program goes here (up to 32 commands).</span>'}</div>`;
   bind("[data-command]", (node) => {
     if (running || state.reached) return;
@@ -873,7 +907,7 @@ const marketWeather = [
 function renderMarket() {
   const forecast = marketWeather[Math.min(state.day, 3)];
   stage(`Lemonade stand · Day ${Math.min(state.day + 1, 4)} of 4`);
-  board.innerHTML = `<div class="stat-row">${chip("Coins in till", state.cash)}${chip("Supply cost", "1 coin/cup")}${chip("Days tried", `${state.day}/4`)}</div><div class="stand-scene">🍋 ${forecast.icon} 🥤<small>${forecast.name} · ${forecast.base} customers at a 2-coin price</small></div><p class="board-note">A higher price brings fewer buyers in this toy town. Unsold cups are not carried to tomorrow. Watch costs and sales.</p><div class="field-grid"><label>Cups to make<select id="stockInput">${[2, 4, 6, 8, 10, 12].map((n) => `<option value="${n}" ${state.stock === n ? "selected" : ""}>${n} cups · ${n} coins</option>`).join("")}</select></label><label>Price per cup<select id="priceInput">${[1, 2, 3, 4, 5].map((n) => `<option value="${n}" ${state.price === n ? "selected" : ""}>${n} coin${n === 1 ? "" : "s"}</option>`).join("")}</select></label></div>${state.ledger.length ? `<table class="ledger"><caption>Your business ledger</caption><thead><tr><th>Day</th><th>Made / sold</th><th>Costs</th><th>Revenue</th><th>Profit</th></tr></thead><tbody>${state.ledger.map((entry, i) => `<tr><td>${i + 1}</td><td>${entry.stock} / ${entry.sold}</td><td>${entry.stock}</td><td>${entry.revenue}</td><td>${entry.profit}</td></tr>`).join("")}</tbody></table>` : ""}`;
+  board.innerHTML = `<div class="stat-row">${chip("Coins in till", state.cash)}${chip("Supply cost", "1 coin/cup")}${chip("Days tried", `${state.day}/4`)}</div><div class="stand-scene">${lemonadeStandSvg(forecast.name)}<div class="weather-caption"><b>${esc(forecast.name)}</b><span>${forecast.base} customers at a 2-coin price</span></div></div><p class="board-note">A higher price brings fewer buyers in this toy town. Unsold cups are not carried to tomorrow. Watch costs and sales.</p><div class="field-grid"><label>Cups to make<select id="stockInput">${[2, 4, 6, 8, 10, 12].map((n) => `<option value="${n}" ${state.stock === n ? "selected" : ""}>${n} cups · ${n} coins</option>`).join("")}</select></label><label>Price per cup<select id="priceInput">${[1, 2, 3, 4, 5].map((n) => `<option value="${n}" ${state.price === n ? "selected" : ""}>${n} coin${n === 1 ? "" : "s"}</option>`).join("")}</select></label></div>${state.ledger.length ? `<table class="ledger"><caption>Your business ledger</caption><thead><tr><th>Day</th><th>Made / sold</th><th>Costs</th><th>Revenue</th><th>Profit</th></tr></thead><tbody>${state.ledger.map((entry, i) => `<tr><td>${i + 1}</td><td>${entry.stock} / ${entry.sold}</td><td>${entry.stock}</td><td>${entry.revenue}</td><td>${entry.profit}</td></tr>`).join("")}</tbody></table>` : ""}`;
   $("stockInput").addEventListener("change", (event) => {
     state.stock = Number(event.target.value);
   });
@@ -923,7 +957,7 @@ function renderMarket() {
 const trackNames = ["Kick", "Clap", "Hi-hat"];
 function renderMusic() {
   stage("Your little rhythm studio");
-  board.innerHTML = `<p class="board-note">Tap squares to make a pattern. Four steps make one beat. Play is visual even with sound off.</p><div class="beat-numbers">${Array.from({ length: 16 }, (_, i) => `<span>${i % 4 === 0 ? i / 4 + 1 : "·"}</span>`).join("")}</div>${state.tracks.map((track, row) => `<div class="track-label">${["🥁", "👏", "✨"][row]} ${trackNames[row]}</div><div class="beat-grid">${track.map((on, col) => `<button class="beat-cell ${on ? "active" : ""}" data-beat="${row},${col}" aria-pressed="${on}" aria-label="${trackNames[row]}, step ${col + 1}">${col + 1}</button>`).join("")}</div>`).join("")}<div class="pattern-goals"><span>Kick: steps 1, 5, 9, 13</span><span>Clap: steps 5, 13</span><span>Hi-hat: odd steps</span></div><label class="board-note">Tempo <select id="tempoInput">${[80, 100, 120, 140].map((n) => `<option value="${n}" ${n === state.bpm ? "selected" : ""}>${n} BPM</option>`).join("")}</select></label>`;
+  board.innerHTML = `${musicStudioSvg()}<p class="board-note">Tap glowing pads to make a pattern. Four steps make one beat. Play is visual even with sound off.</p><div class="beat-numbers">${Array.from({ length: 16 }, (_, i) => `<span>${i % 4 === 0 ? i / 4 + 1 : "·"}</span>`).join("")}</div>${state.tracks.map((track, row) => `<div class="track-label"><span class="track-symbol track-symbol-${row}" aria-hidden="true"></span>${trackNames[row]}</div><div class="beat-grid">${track.map((on, col) => `<button class="beat-cell ${on ? "active" : ""}" data-beat="${row},${col}" aria-pressed="${on}" aria-label="${trackNames[row]}, step ${col + 1}">${col + 1}</button>`).join("")}</div>`).join("")}<div class="pattern-goals"><span>Kick: steps 1, 5, 9, 13</span><span>Clap: steps 5, 13</span><span>Hi-hat: odd steps</span></div><label class="board-note">Tempo <select id="tempoInput">${[80, 100, 120, 140].map((n) => `<option value="${n}" ${n === state.bpm ? "selected" : ""}>${n} BPM</option>`).join("")}</select></label>`;
   bind("[data-beat]", (node) => {
     const [row, col] = node.dataset.beat.split(",").map(Number);
     state.tracks[row][col] = !state.tracks[row][col];
@@ -1016,6 +1050,11 @@ $("restartButton").addEventListener("click", initialize);
 $("hintButton").addEventListener("click", () => {
   $("hintText").textContent = hint;
   $("hintText").hidden = !$("hintText").hidden;
+  if (!$("hintText").hidden) {
+    window.dispatchEvent(new CustomEvent("larriverse:bloom-message", {
+      detail: { gameId: world.id, pose: "thinking", message: hint },
+    }));
+  }
 });
 $("playAgain").addEventListener("click", initialize);
 $("closeFinish").addEventListener("click", () => finishDialog.close());

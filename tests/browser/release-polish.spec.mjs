@@ -295,8 +295,9 @@ test('Bubble Resonance declares a real win when the board is cleared', async ({ 
   await page.goto('/games/bubble-resonance-phi369/index.html');
   await expect(page.locator('#limit')).toHaveText('CLEAR');
 
-  const box = await page.locator('#game').boundingBox();
-  await page.mouse.click(box.x + box.width * .5, box.y + box.height * .35);
+  const game = page.locator('#game');
+  const box = await game.boundingBox();
+  await game.click({ position: { x: box.width * .5, y: box.height * .35 } });
   await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
   await expect(page.locator('#limit')).toHaveText('WIN', { timeout: 5000 });
   await expect(page.locator('#message')).toContainText('BOARD CLEARED');
@@ -317,9 +318,10 @@ test('Bubble Resonance adds and animates a fresh top row after five misses', asy
   await expect(page.locator('#dropIn')).toHaveText('5');
   await expect(page.locator('#limit')).toHaveText('CLEAR');
 
-  const box = await page.locator('#game').boundingBox();
+  const game = page.locator('#game');
+  const box = await game.boundingBox();
   for (const fraction of [.1, .3, .5, .7, .9]) {
-    await page.mouse.click(box.x + box.width * fraction, box.y + box.height * .35);
+    await game.click({ position: { x: box.width * fraction, y: box.height * .35 } });
     await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
     await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false', { timeout: 5000 });
   }

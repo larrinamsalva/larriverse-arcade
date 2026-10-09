@@ -2,6 +2,8 @@
 
 A free, kid- and teen-friendly arcade with **29 playable games**, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
 
+The magical visual system adds cheerful daylight, moonlit dark mode, a follow-device option, richer SVG materials and scenery, and **Bloom**, a hideable local adventure buddy with a different welcome and hint for every game. See the [magical makeover guide](docs/MAGICAL-MAKEOVER.md).
+
 The latest expansion adds **eight new expeditions**: bridges, water networks, island deliveries, pantry planning, compass maps, secret codes, shopping comparisons, and inclusive town building. See [the expedition guide](docs/EXPEDITIONS.md).
 
 Traffic Town adds a 7+ road-awareness world with 30 unique common U.S. traffic-sign questions served ten at a time without repeats until the bank cycles.
@@ -122,7 +124,7 @@ All eight recovered browser concepts are now connected to the shared arcade. Lar
 
 Each browser game lives in its own `games/<slug>/` cabinet. The root arcade lobby reads `games/catalog.json`, allowing new games without rewriting the lobby.
 
-`assets/arcade-sdk.js` provides the shared browser API:
+`assets/arcade-sdk.js` provides the shared browser API, device-local theme preferences, and the reusable Bloom guide:
 
 ```js
 const profile = LarriVerseArcade.summary();
@@ -179,6 +181,8 @@ It checks:
 - KidsCoin Family's source features, eight avatars, four task groups, twelve tasks, six reviewed lessons, eight reward requests, and four streak milestones
 - KidsCoin Family keeps rewards fictional and device-local, loads the SDK first, hashes the local PIN, and excludes token-price, staking, blockchain, geolocation, and real-purchase code
 - lobby integration and playable-cabinet counts
+- all 29 contextual Bloom guides, three saved themes, local-only behavior, and reduced-motion coverage
+- detailed Bridge Buddies, Lemonade Lab, Beat Builder, Robot Rover, Traffic Town, and Pantry Picnic artwork contracts
 
 Pull requests run the same checks through `.github/workflows/validate.yml`. Complete browser QA uses the pinned runner in `.github/workflows/browser-qa.yml`:
 

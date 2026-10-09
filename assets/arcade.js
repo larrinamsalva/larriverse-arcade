@@ -155,6 +155,13 @@ function syncSettings() {
   document.querySelector('#reducedMotion').checked = settings.reducedMotion;
   document.querySelector('#highContrast').checked = settings.highContrast;
   document.querySelector('#largeText').checked = settings.largeText;
+  document.querySelector('#themePreference').value = settings.theme;
+  document.querySelectorAll('[data-theme-cycle]').forEach(button => {
+    const label = sdk.themeLabel(settings.theme);
+    button.innerHTML = `${settings.theme === 'dark' ? '☾' : settings.theme === 'light' ? '☀' : '◐'} <span>${label}</span>`;
+    button.setAttribute('aria-label', `Theme: ${label}. Change color theme`);
+    button.title = `Theme: ${label}. Switch to the next theme.`;
+  });
 }
 
 function openControlCenter() {
@@ -218,6 +225,15 @@ function bindControlCenter() {
       restartFeatureRotation();
       setControlMessage('Comfort settings saved for every cabinet.', 'success');
     });
+  });
+
+  document.querySelector('#themePreference').addEventListener('change', event => {
+    sdk.setSettings({ theme: event.target.value });
+    setControlMessage(`${sdk.themeLabel(event.target.value)} theme selected.`, 'success');
+  });
+
+  document.querySelectorAll('[data-theme-cycle]').forEach(button => {
+    button.addEventListener('click', () => sdk.cycleTheme());
   });
 
   document.querySelector('#saveProfile').addEventListener('click', () => {
@@ -293,3 +309,12 @@ document.addEventListener('keydown', event => {
 bindControlCenter();
 syncSettings();
 renderProfile();
+sdk?.mountBloom({
+  gameId: 'arcade-home',
+  title: 'LarriVerse Arcade',
+  heading: 'Meet Bloom, your adventure buddy!',
+  variant: 'home',
+  after: document.querySelector('.welcome-row'),
+  target: document.querySelector('main'),
+  focusTarget: document.querySelector('#games')
+});

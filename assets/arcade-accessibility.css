@@ -260,3 +260,227 @@ html.larriverse-reduced-motion *, html.larriverse-reduced-motion *::before, html
   }
   html.larriverse-high-contrast :is(p, small, h1, h2, h3, li, span, strong, b, output, a, .eyebrow) { color: #111 !important; }
 }
+
+/* Magical Makeover foundation: shared day/night theme and Bloom guide. */
+html { color-scheme: light; }
+html.larriverse-dark { color-scheme: dark; background: #151126; --ink: #f6f3ff; --text: #f6f3ff; --muted: #c9c4de; --line: #4b456d; --panel: #26213f; --panel2: #30294c; --paper: #221d38; --bg: #151126; }
+html.larriverse-light { color-scheme: light; }
+html.larriverse-dark body {
+  color: #f6f3ff;
+  background-color: #151126;
+  background-image:
+    radial-gradient(circle at 12% 7%, #7862cc2b 0 2px, transparent 3px),
+    radial-gradient(circle at 80% 12%, #fff2a84d 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 66% 31%, #a8dfff33 0 1px, transparent 2px),
+    linear-gradient(155deg, #17132f, #1c2440 54%, #142d3a);
+  background-size: 130px 130px, 190px 190px, 110px 110px, auto;
+}
+html.larriverse-dark :is(.nav-wrap, .nav, footer, .mobile-dock, .control-center, .control-card,
+  .lv-cabinet-shell, .lv-comfort-dialog, .lv-comfort-card, .game-nav, .world-banner,
+  .mission-card, .play-card, .finish-card, .card, .dialog-card, .dialog-shell, .result-shell,
+  .result-card, .landing-card, .setup-shell) {
+  background-color: #231e3a;
+  color: #f6f3ff;
+  border-color: #4b456d;
+}
+html.larriverse-dark :is(.game-card, .game-body, .player-pill, .search, .filter, .secondary,
+  .nav-control, .nav-theme, .feature-pager button, .discovery-group, .discovery-card,
+  .family-strip, .quick-quest, .profile-fields input, .toggle-row select,
+  .lv-button, button[data-lv-comfort], .lv-theme-cycle, .lv-close,
+  .choice-button, .item-button, .stat-chip, .message-card, .repair-step, .field-grid label,
+  .ledger, .command-list, .rover-efficiency, .pattern-goals span, .board-note) {
+  background-color: #2c2747;
+  color: #f8f6ff;
+  border-color: #5a527e;
+}
+html.larriverse-dark :is(p, small, .game-body p, .progress-line, .game-badges, .feature-note,
+  .control-intro, .control-section p, .toggle-row small, .lv-comfort-card small,
+  .local-note, .small-note, .board-intro, .board-note) { color: #d1cce4; }
+html.larriverse-dark :is(.spotlight, .quick-quest, .family-strip) {
+  background-image: linear-gradient(135deg, #2d2850, #1c3850);
+  border-color: #64598d;
+}
+html.larriverse-dark .spotlight-copy p { color: #ddd8ed; }
+html.larriverse-dark :is(.primary, .launch, .filter.active) { background: #8d72ef; color: #fff; border-color: #b8a5ff; }
+html.larriverse-dark :is(.primary, .launch) { box-shadow: 0 4px 0 #493d83; }
+html.larriverse-dark .danger { background: #4a2737; color: #ffdbe0; border-color: #9e6172; }
+html.larriverse-dark :is(input, select, textarea) { background-color: #1d1932; color: #fff; border-color: #625a83; }
+html.larriverse-dark input::placeholder { color: #aaa4c2; }
+html.larriverse-dark .world-score { background: #332d51; color: #f9f7ff; border-color: #63598a; }
+html.larriverse-dark .world-heading p { color: #d4cfe7; }
+html.larriverse-dark .feedback.good { background: #173d37; color: #c6ffe2; }
+html.larriverse-dark .feedback.try { background: #4a3221; color: #ffe6bd; }
+html.larriverse-dark .meter { background: #494262; }
+html.larriverse-dark .meter i { background: linear-gradient(90deg, #70d7bc, #d7bbff); }
+html.larriverse-dark .game-footer { color: #c9c4dc; }
+
+.nav-actions { display: flex; align-items: center; gap: .55rem; }
+.nav-theme, .lv-theme-cycle {
+  min-height: 44px;
+  border: 1px solid #cec5e7;
+  border-radius: 14px;
+  padding: .6rem .8rem;
+  background: #fff9e9;
+  color: #51408d;
+  font-weight: 850;
+  cursor: pointer;
+}
+.toggle-row select, .lv-comfort-card select {
+  min-width: 145px;
+  min-height: 44px;
+  padding: .55rem .7rem;
+  border: 1px solid #bdb0dc;
+  border-radius: 11px;
+  background: #fff;
+  color: #31294f;
+  font: inherit;
+  font-weight: 750;
+}
+.lv-comfort-card label > select { flex: 0 1 175px; }
+
+.bloom-guide {
+  --bloom-panel: #fff9e9;
+  --bloom-line: #e1c86f;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(132px, 190px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(.8rem, 2.5vw, 1.7rem);
+  width: min(1120px, calc(100% - 2rem));
+  margin: 1rem auto 1.35rem;
+  padding: clamp(.85rem, 2vw, 1.35rem);
+  overflow: hidden;
+  border: 2px solid var(--bloom-line);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 12% 22%, #fff 0 2px, transparent 3px),
+    radial-gradient(circle at 92% 20%, #fff0ac 0 3px, transparent 4px),
+    linear-gradient(125deg, var(--bloom-panel), #f1eaff 58%, #dff8ec);
+  color: #352c52;
+  box-shadow: 0 8px 0 #b9a5d94a, 0 20px 45px #4a38611a;
+}
+.bloom-guide::before, .bloom-guide::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 999px;
+  opacity: .45;
+}
+.bloom-guide::before { width: 230px; height: 230px; left: -80px; top: -95px; background: #ffd96b; }
+.bloom-guide::after { width: 310px; height: 180px; right: -100px; bottom: -120px; background: #79d7bd; }
+.bloom-guide--home { width: 100%; margin: 0 0 1.35rem; }
+.bloom-portrait { position: relative; display: grid; place-items: center; min-width: 0; }
+.bloom-character { display: block; width: min(170px, 100%); height: auto; overflow: visible; filter: drop-shadow(0 12px 10px #59406626); }
+.bloom-name {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  padding: .3rem .55rem;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: #6d51c7;
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 950;
+  letter-spacing: .12em;
+  box-shadow: 0 3px 0 #47328c;
+}
+.bloom-copy { min-width: 0; }
+.bloom-eyebrow { margin: 0 0 .25rem; color: #6a50a2; font-size: .73rem; font-weight: 950; letter-spacing: .12em; text-transform: uppercase; }
+.bloom-title { margin: 0 0 .45rem; color: #382b5d; font-size: clamp(1.25rem, 2.4vw, 1.85rem); }
+.bloom-message { max-width: 720px; margin: 0 0 .85rem; color: #514967; font-size: clamp(.92rem, 1.4vw, 1.03rem); line-height: 1.55; }
+.bloom-actions { display: flex; flex-wrap: wrap; gap: .55rem; }
+.bloom-actions button, .bloom-peek {
+  min-height: 44px;
+  border: 1px solid #9d89ce;
+  border-radius: 13px;
+  padding: .65rem .9rem;
+  background: #fff;
+  color: #503b93;
+  font: 850 .88rem/1.2 ui-rounded, "Trebuchet MS", system-ui, sans-serif;
+  cursor: pointer;
+}
+.bloom-actions .bloom-start { background: #6d51c7; color: #fff; border-color: #6d51c7; box-shadow: 0 4px 0 #47328c; }
+.bloom-actions .bloom-hide { border-color: transparent; background: transparent; color: #655d72; }
+.bloom-peek {
+  position: fixed;
+  z-index: 45;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  background: #fff7cf;
+  box-shadow: 0 6px 0 #9c7fc8, 0 12px 28px #17122940;
+}
+.bloom-peek span { color: #df7d9e; font-size: 1.2rem; }
+.bloom-guide[hidden], .bloom-peek[hidden] { display: none !important; }
+.bloom-petals, .bloom-character { transform-box: fill-box; transform-origin: center; }
+.bloom-guide[data-pose="welcome"] .bloom-character { animation: bloom-float 3.4s ease-in-out infinite; }
+.bloom-guide[data-pose="thinking"] .bloom-character { animation: bloom-think 2.5s ease-in-out infinite; }
+.bloom-guide[data-pose="thinking"] .bloom-mouth { d: path("M78 112q12-7 24 0"); }
+.bloom-guide[data-pose="cheer"] .bloom-character, .bloom-guide[data-pose="celebrate"] .bloom-character { animation: bloom-cheer .75s ease-in-out 2; }
+.bloom-guide[data-pose="cheer"] .bloom-arm-left, .bloom-guide[data-pose="celebrate"] .bloom-arm-left { d: path("M49 105Q20 82 17 58"); }
+.bloom-guide[data-pose="cheer"] .bloom-arm-right, .bloom-guide[data-pose="celebrate"] .bloom-arm-right { d: path("M132 104q28-22 34-46"); }
+@keyframes bloom-float { 50% { transform: translateY(-7px) rotate(1.5deg); } }
+@keyframes bloom-think { 50% { transform: translateY(-3px) rotate(-4deg); } }
+@keyframes bloom-cheer { 45% { transform: translateY(-13px) scale(1.04) rotate(-2deg); } 75% { transform: translateY(0) rotate(2deg); } }
+
+html.larriverse-dark .bloom-guide {
+  --bloom-panel: #282148;
+  --bloom-line: #7662af;
+  color: #fff;
+  background:
+    radial-gradient(circle at 12% 22%, #fff7ba 0 1.5px, transparent 3px),
+    radial-gradient(circle at 88% 25%, #b8ddff 0 2px, transparent 3px),
+    linear-gradient(125deg, #282148, #1d3150 58%, #173e42);
+  box-shadow: 0 8px 0 #0b0a1e66, 0 24px 55px #05040f66;
+}
+html.larriverse-dark .bloom-guide::before { background: #7255bf; }
+html.larriverse-dark .bloom-guide::after { background: #257b76; }
+html.larriverse-dark :is(.bloom-title, .bloom-message) { color: #f8f5ff; }
+html.larriverse-dark .bloom-eyebrow { color: #ddcfff; }
+html.larriverse-dark .bloom-actions button { background: #30294d; color: #f8f5ff; border-color: #8174a9; }
+html.larriverse-dark .bloom-actions .bloom-start { background: #8d72ef; border-color: #b6a7ff; box-shadow: 0 4px 0 #493d83; }
+html.larriverse-dark .bloom-actions .bloom-hide { background: transparent; color: #cbc5df; border-color: transparent; }
+html.larriverse-dark .bloom-peek { background: #312852; color: #fff; border-color: #8e7cc0; }
+
+/* Give the eight recovered classics distinct illustrated atmosphere in either theme. */
+body[data-classic="kidscoin-family"] { background-image: linear-gradient(145deg, #fff4c9, #dff7e9); }
+body[data-classic="brain-sweat-expanded"] { background-image: linear-gradient(145deg, #e3f2ff, #f1e5ff); }
+body[data-classic="brain-sweat-life-skills"] { background-image: linear-gradient(145deg, #e7f7db, #fff0d8); }
+body[data-classic="chill-brain-rewards"] { background-image: radial-gradient(circle at top, #dff7ff, #dfddf9 65%, #bfded5); }
+body[data-classic="road-trip-quest-gps"] { background-image: linear-gradient(145deg, #d5eff0, #e7f2cf); }
+html.larriverse-dark body[data-classic] { background-image: linear-gradient(155deg, #17132f, #1b2944 58%, #123640); }
+
+html.larriverse-high-contrast .bloom-guide { background: #000 !important; color: #fff !important; border: 3px solid #fff !important; box-shadow: none; }
+html.larriverse-high-contrast :is(.bloom-title, .bloom-message, .bloom-eyebrow) { color: #fff !important; }
+html.larriverse-high-contrast .bloom-guide::before, html.larriverse-high-contrast .bloom-guide::after { display: none; }
+
+@media (max-width: 700px) {
+  .nav-actions { margin-left: auto; }
+  .nav-theme span { display: none; }
+  .bloom-guide { grid-template-columns: 92px minmax(0, 1fr); width: min(100% - 1rem, 1120px); border-radius: 22px; gap: .75rem; padding: .75rem; }
+  .bloom-guide--home { width: 100%; }
+  .bloom-character { width: 100px; }
+  .bloom-name { right: -2px; bottom: -1px; font-size: .58rem; }
+  .bloom-title { font-size: 1.15rem; }
+  .bloom-message { font-size: .86rem; margin-bottom: .65rem; }
+  .bloom-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bloom-actions button { padding: .55rem .5rem; font-size: .78rem; }
+  .bloom-actions .bloom-hide { grid-column: 1 / -1; min-height: 36px; }
+  .bloom-peek { bottom: calc(4.8rem + env(safe-area-inset-bottom)); }
+  .toggle-row { align-items: flex-start; }
+  .toggle-row select, .lv-comfort-card select { min-width: 0; width: min(48%, 170px); }
+}
+@media (max-width: 430px) {
+  .bloom-guide { grid-template-columns: 72px minmax(0, 1fr); }
+  .bloom-character { width: 78px; }
+  .bloom-eyebrow { font-size: .62rem; }
+  .bloom-title { font-size: 1rem; }
+  .bloom-actions { grid-template-columns: minmax(0, 1fr); }
+  .bloom-actions .bloom-hide { grid-column: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bloom-character, .bloom-petals, .bloom-sparkles { animation: none !important; }
+}
+html.larriverse-reduced-motion :is(.bloom-character, .bloom-petals, .bloom-sparkles) { animation: none !important; }
+@media print { .bloom-guide, .bloom-peek, .nav-theme, .lv-theme-cycle { display: none !important; } }

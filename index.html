@@ -29,7 +29,7 @@
   <header class="nav-wrap"><nav class="nav" aria-label="Arcade navigation">
     <a class="brand" href="index.html"><span class="brand-mark">✦</span><span>LarriVerse<small>THE CURIOSITY ARCADE</small></span></a>
     <div class="nav-pills"><a class="current" href="#games">Play</a><a href="today/">My day</a><a href="passport/">Passport</a><a href="report/">For families</a></div>
-    <button class="nav-control" type="button" data-open-control aria-label="Open settings and saves">⚙ <span>Settings</span></button>
+    <div class="nav-actions"><button class="nav-theme" type="button" data-theme-cycle aria-label="Change color theme">◐ <span>Device</span></button><button class="nav-control" type="button" data-open-control aria-label="Open settings and saves">⚙ <span>Settings</span></button></div>
   </nav></header>
   <main>
     <div class="welcome-row"><div><p class="eyebrow">Small games. Big discoveries.</p><h1>What will you explore today?</h1></div><span class="player-pill" id="profileStat"><b>🌟</b> Player One · Level 1</span></div>
@@ -69,6 +69,7 @@
 
       <section class="control-section" aria-labelledby="comfortTitle">
         <h3 id="comfortTitle">Comfort controls</h3>
+        <label class="toggle-row"><span><b>Color theme</b><small>Choose cheerful daylight, magical night, or follow this device.</small></span><select id="themePreference" aria-label="Color theme"><option value="light">Light</option><option value="dark">Dark</option><option value="system">Follow device</option></select></label>
         <label class="toggle-row"><span><b>Reduce motion</b><small>Stops decorative motion and spotlight changes. Your device's motion preference also applies.</small></span><input id="reducedMotion" type="checkbox"></label>
         <label class="toggle-row"><span><b>High contrast</b><small>Strengthens text, borders, and focus visibility.</small></span><input id="highContrast" type="checkbox"></label>
         <label class="toggle-row"><span><b>Larger text</b><small>Raises the base text size across the arcade.</small></span><input id="largeText" type="checkbox"></label>
