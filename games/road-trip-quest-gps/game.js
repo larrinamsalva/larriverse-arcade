@@ -1,3 +1,5 @@
+import { iconSvg, placeSvg } from '../../assets/arcade-scenes.js';
+
 (() => {
   'use strict';
 
@@ -106,6 +108,8 @@
     for (const [subject, questions] of Object.entries(world.questions)) {
       if (questions.length < 20) throw new Error(`GPS needs at least twenty ${subject} questions`);
     }
+    $('#boundaryVehicle').innerHTML = iconSvg('car', 'boundary-car-art');
+    $('#player').innerHTML = iconSvg('car', 'gps-car-art');
     bind();
     renderSharedProfile();
     renderHud();
@@ -284,10 +288,9 @@
   function renderField() {
     $('#poiLayer').innerHTML = field.map(poi => {
       const style = world.placeTypes[poi.type] || world.placeTypes.default;
-      const emoji = (style.tag || '📍').split(' ')[0];
       return `<button class="poi" data-poi="${poi.id}" data-distance=""
         style="left:${poi.x}%;top:${poi.y}%;--poi-bg:${style.bg};--poi-glow:${style.glow}"
-        aria-label="${esc(poi.label)}">${emoji}</button>`;
+        aria-label="${esc(poi.label)}">${placeSvg(poi.type, 'poi-art')}</button>`;
     }).join('');
 
     $('#poiLayer').querySelectorAll('[data-poi]').forEach(button => {
@@ -345,7 +348,7 @@
     currentEncounter = poi;
     currentQuestion = null;
     const style = world.placeTypes[poi.type] || world.placeTypes.default;
-    $('#placeTag').textContent = style.tag;
+    $('#placeTag').innerHTML = `${placeSvg(poi.type, 'place-tag-art')}<span>${esc(questLabel(poi.type).replace(/ Quest$/, ''))}</span>`;
     $('#placeTag').style.color = style.color;
     $('#rewardEmoji').textContent = poi.reward.emoji;
     $('#rewardName').textContent = poi.reward.name;

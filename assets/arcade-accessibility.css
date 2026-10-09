@@ -455,6 +455,17 @@ html.larriverse-high-contrast .bloom-guide { background: #000 !important; color:
 html.larriverse-high-contrast :is(.bloom-title, .bloom-message, .bloom-eyebrow) { color: #fff !important; }
 html.larriverse-high-contrast .bloom-guide::before, html.larriverse-high-contrast .bloom-guide::after { display: none; }
 
+/* Shared dimensional finish for code-native game objects. */
+.object-icon, .place-art, .traffic-sign-art { overflow: visible; }
+.object-model { filter: drop-shadow(0 3px 1.5px rgba(26, 37, 46, .28)); }
+.object-ground-shadow, .sign-ground-shadow { transform-box: fill-box; transform-origin: center; }
+.sign-depth { opacity: .32; filter: brightness(.38) saturate(.7); }
+.sign-face { filter: drop-shadow(0 2px 1px rgba(22, 28, 32, .22)); }
+html.larriverse-dark :is(.object-ground-shadow, .sign-ground-shadow) { opacity: .42; }
+html.larriverse-dark .object-model { filter: drop-shadow(0 4px 2px rgba(0, 0, 0, .48)); }
+html.larriverse-high-contrast .object-model { filter: drop-shadow(0 2px 0 #000); }
+html.larriverse-high-contrast :is(.object-ground-shadow, .sign-ground-shadow) { fill: #000; opacity: .7; }
+
 @media (max-width: 700px) {
   .nav-actions { margin-left: auto; }
   .nav-theme span { display: none; }
