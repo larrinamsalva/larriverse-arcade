@@ -4,6 +4,14 @@
   if (!sdk) return;
   const header = document.querySelector('.lv-cabinet-shell');
   const gameId = document.body.dataset.classic || document.body.dataset.world;
+  const gameTitle = document.title.split('·')[0].trim();
+  const navTools = document.querySelector('.game-nav .nav-right') || header?.querySelector('.lv-tools');
+  const themeButton = document.createElement('button');
+  themeButton.type = 'button';
+  themeButton.className = 'lv-theme-cycle';
+  themeButton.dataset.lvThemeCycle = 'true';
+  themeButton.addEventListener('click', () => sdk.cycleTheme());
+  if (navTools && !navTools.querySelector('[data-lv-theme-cycle]')) navTools.prepend(themeButton);
   const dialog = document.createElement('dialog');
   dialog.id = 'lvComfortDialog';
   dialog.className = 'lv-comfort-dialog';
@@ -12,9 +20,11 @@
     <button class="lv-close" value="close" aria-label="Close comfort controls">×</button>
     <p class="lv-eyebrow">LarriVerse Arcade</p><h2 id="lvComfortTitle">Make it comfortable</h2>
     <p>These choices apply across the arcade and stay in this browser. Sound controls stay with each game.</p>
+    <label><span><b>Color theme</b><small>Choose cheerful daylight, magical night, or follow this device.</small></span><select data-lv-theme aria-label="Color theme"><option value="light">Light</option><option value="dark">Dark</option><option value="system">Follow device</option></select></label>
     <label><span><b>Reduce motion</b><small>Stops decorative motion and spotlight changes. Your device's motion preference also applies.</small></span><input type="checkbox" data-lv-setting="reducedMotion"></label>
     <label><span><b>High contrast</b><small>Stronger text, edges, and keyboard focus.</small></span><input type="checkbox" data-lv-setting="highContrast"></label>
     <label><span><b>Larger text</b><small>More room to read, with controls that wrap.</small></span><input type="checkbox" data-lv-setting="largeText"></label>
+    <label><span><b>Show Bloom</b><small>Keep the friendly local guide visible in every game.</small></span><input type="checkbox" data-lv-bloom></label>
     <output class="lv-comfort-status" aria-live="polite"></output>
     <div class="lv-tools"><button class="lv-button" value="done">Back to my game</button><a class="lv-button" href="${gameId ? '../../' : '../'}index.html#games">Back to Arcade</a></div>
     <p class="lv-local-note">KC are fictional game coins. No purchases, ads, or progress uploads.</p>
@@ -32,6 +42,12 @@
     dialog.querySelectorAll('[data-lv-setting]').forEach(input => {
       input.checked = settings[input.dataset.lvSetting];
     });
+    dialog.querySelector('[data-lv-theme]').value = settings.theme;
+    dialog.querySelector('[data-lv-bloom]').checked = !settings.bloomHidden;
+    const label = sdk.themeLabel(settings.theme);
+    themeButton.textContent = `${settings.theme === 'dark' ? '☾' : settings.theme === 'light' ? '☀' : '◐'} ${label}`;
+    themeButton.setAttribute('aria-label', `Theme: ${label}. Change color theme`);
+    themeButton.title = `Theme: ${label}. Switch to the next theme.`;
   }
 
   function pauseForComfort() {
@@ -56,6 +72,16 @@
     if (!dialog.open) dialog.showModal();
   });
   dialog.addEventListener('change', event => {
+    if (event.target.matches('[data-lv-theme]')) {
+      sdk.setSettings({ theme: event.target.value });
+      dialog.querySelector('output').textContent = `${sdk.themeLabel(event.target.value)} theme selected.`;
+      return;
+    }
+    if (event.target.matches('[data-lv-bloom]')) {
+      sdk.setSettings({ bloomHidden: !event.target.checked });
+      dialog.querySelector('output').textContent = event.target.checked ? 'Bloom is ready to help.' : 'Bloom is hidden. Use the Bloom button to bring the guide back.';
+      return;
+    }
     const key = event.target.dataset.lvSetting;
     if (!key) return;
     sdk.setSettings({ [key]: event.target.checked });
@@ -83,6 +109,18 @@
       link.href = '../../index.html';
       link.textContent = 'Back to Arcade';
       container.append(link);
+    });
+  }
+
+  if (gameId) {
+    const banner = document.querySelector('.world-banner');
+    sdk.mountBloom({
+      gameId,
+      title: gameTitle,
+      heading: `Welcome to ${gameTitle}`,
+      after: banner || header,
+      target: document.querySelector('.game-shell, main, #app') || document.body,
+      focusTarget: document.querySelector('#playArea, #gameScreen, #world, main, #app')
     });
   }
 
