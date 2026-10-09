@@ -1,12 +1,12 @@
 # Public repository metadata
 
-The project homepage is [LarriVerse Arcade](https://larrinamsalva.github.io/larriverse-arcade/). The README, package metadata, canonical page links, and Open Graph cards use that address. A shared local star favicon identifies the arcade and all 29 cabinets.
+The project homepage is [LarriVerse Arcade](https://larrinamsalva.github.io/larriverse-arcade/). The README, package metadata, canonical page links, and Open Graph cards use that address. A shared local star favicon identifies the arcade and all 30 cabinets.
 
 Suggested GitHub About settings, to apply through repository settings when available:
 
 | Setting | Suggested value |
 | --- | --- |
-| Description | 29 free life-skill games for kids and teens. Accessible, privacy-first, device-local progress. No ads or purchases. |
+| Description | 30 free life-skill games for kids and teens. Accessible, privacy-first, device-local progress. No ads or purchases. |
 | Website | https://larrinamsalva.github.io/larriverse-arcade/ |
 | Topics | `educational-games`, `life-skills`, `kids-games`, `teen-games`, `accessibility`, `privacy-first`, `local-first`, `javascript`, `github-pages`, `mit-license` |
 

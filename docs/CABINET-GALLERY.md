@@ -1,6 +1,6 @@
 # LarriVerse Arcade — Cabinet Gallery
 
-Automated Chromium creates **candidate evidence** for the lobby and all 29 cabinets at desktop and mobile sizes: **60 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
+Automated Chromium creates **candidate evidence** for the lobby and all 30 cabinets at desktop and mobile sizes: **62 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
 
 | Cabinet | Launch path | Candidate evidence | Public gallery |
 | --- | --- | --- | --- |
@@ -13,6 +13,7 @@ Automated Chromium creates **candidate evidence** for the lobby and all 29 cabin
 | Trade Town | `games/trade-town/index.html` | generated automatically | pending human approval |
 | Critter Council | `games/critter-council/index.html` | generated automatically | pending human approval |
 | Traffic Town | `games/traffic-town/index.html` | generated automatically | pending human approval |
+| Street Safety Scout | `games/street-safety-scout/index.html` | generated automatically | pending human approval |
 | Pocket Planet | `games/pocket-planet/index.html` | generated automatically | pending human approval |
 | Scam Sleuth | `games/scam-sleuth/index.html` | generated automatically | pending human approval |
 | Kindness Quest | `games/kindness-quest/index.html` | generated automatically | pending human approval |
@@ -47,3 +48,4 @@ Approved images are eventually committed under `docs/screenshots/<project>/<subj
 See [GALLERY-APPROVAL.md](GALLERY-APPROVAL.md) for the full human review, physical-device, and release-decision workflow.
 
 - **Traffic Town** — Read traffic signs & choose safe actions with ten-question rounds drawn from a 30-question non-repeating bank.
+- **Street Safety Scout** — Identify signals, caution and emergency signs, vehicle lights, and hazards through balanced twelve-stop routes drawn from a 30-scenario bank.

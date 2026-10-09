@@ -31,7 +31,7 @@ function check(condition, message) {
   if (!condition) failures.push(message);
 }
 
-check(catalog.length === 29, 'makeover contract expects all 29 preserved cabinets');
+check(catalog.length === 30, 'makeover contract expects all 30 preserved cabinets');
 for (const cabinet of catalog) {
   check(sdk.includes(`'${cabinet.id}':`), `Bloom needs contextual guidance for ${cabinet.id}`);
   const html = read(cabinet.href.replace(/^\.\//, ''));

@@ -1,6 +1,6 @@
 # LarriVerse Magical Makeover
 
-This branch upgrades the existing 29-cabinet arcade without replacing gameplay, question banks, local progress, rewards, accessibility controls, release evidence, or manual approval.
+This branch upgrades the existing 30-cabinet arcade without replacing gameplay, question banks, local progress, rewards, accessibility controls, release evidence, or manual approval.
 
 ## Shared foundation
 
@@ -8,7 +8,7 @@ This branch upgrades the existing 29-cabinet arcade without replacing gameplay, 
 - Dark mode changes both interface surfaces and world scenery: stars, moonlight, glowing flowers, deeper terrain, and readable controls.
 - Every cabinet receives a visible theme shortcut and the three-way selector remains available in Comfort & accessibility.
 - Bloom is a reusable, local SVG guide with welcome, thinking, cheering, and celebration poses.
-- Bloom has a different welcome and hint for every one of the 29 games.
+- Bloom has a different welcome and hint for every one of the 30 games.
 - Bloom can be hidden or restored, never needs an account, never sends child data, and respects reduced motion.
 - Existing feedback can update Bloom with encouraging, non-shaming language.
 
@@ -21,6 +21,7 @@ This branch upgrades the existing 29-cabinet arcade without replacing gameplay, 
 - **Beat Builder:** illustrated studio, speakers, animated equalizer, stage lighting, custom track symbols, dimensional rhythm pads, playhead glow, and dancing Bloom.
 - **Robot Rover:** a paneled rover with antenna, face display, body lights, arms, wheels, and fasteners; faceted rock obstacles; glowing goal stars; and clear trail markers.
 - **Traffic Town:** all 30 rendered traffic signs have distinct identifying symbols, shapes, and colors, including octagon, inverted triangle, rectangle, pentagon, circle, crossbuck, warning diamond, prohibition slash, and construction orange.
+- **Street Safety Scout:** 30 distinct code-native scenes combine dimensional signals, reflective sign faces, school buses, emergency vehicles, car lights, road surfaces, water, fog, crosswalks, and cast shadows with accessible image labels.
 - **Pantry Picnic:** detailed vector bread, beans, apples, and carrots plus a layered wicker basket, cloth texture, and dimensional food cards.
 
 ### Every other cabinet

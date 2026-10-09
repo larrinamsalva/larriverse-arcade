@@ -1,6 +1,6 @@
-# LarriVerse: 29 worlds for curious kids
+# LarriVerse: 30 worlds for curious kids
 
-The arcade now contains twenty skill adventures and the original eight cabinets. The latest eight adventures are described in [the expedition guide](EXPEDITIONS.md). The lobby uses illustrated covers, short descriptions, skill filters, search, a surprise-game launcher, and the existing profile and comfort controls. There is no required sign-up, advertising, checkout, or public leaderboard. Ages are broad suggestions; adults can help younger players with reading.
+The arcade now contains twenty-two newer skill adventures and the original eight cabinets. The eight expedition adventures are described in [the expedition guide](EXPEDITIONS.md). The lobby uses illustrated covers, short descriptions, skill filters, search, a surprise-game launcher, and the existing profile and comfort controls. There is no required sign-up, advertising, checkout, or public leaderboard. Ages are broad suggestions; adults can help younger players with reading.
 
 | Game | What players do | Skill practiced |
 | --- | --- | --- |
@@ -25,7 +25,7 @@ Finishing a round awards shared XP, three fictional KC, one completion, and nume
 
 Scenarios and repair orders shuffle where useful. The route, robot, energy, garden, and business simulations have deliberately stable conditions so players can learn by trying a new plan. The energy and market rules are simplified toy models, not real engineering or financial forecasts. Toy Town's waste rules are explicit and are not a claim that every local service accepts the same materials.
 
-All sound is generated locally at low volume and starts off. Music playback pauses when the page is hidden, and leaving the page stops timers and audio. Fullscreen is not required. No canvas or WebGL support is required for these twenty worlds; they use semantic HTML controls so they work on older phones and with keyboard navigation.
+All sound is generated locally at low volume and starts off. Music playback pauses when the page is hidden, and leaving the page stops timers and audio. Fullscreen is not required. No canvas or WebGL support is required for the twenty-two newer worlds; they use semantic HTML controls and code-native SVG so they work on older phones and with keyboard navigation.
 
 ## Original artwork
 
@@ -35,7 +35,7 @@ Generation brief: one landscape atlas, exactly four columns and three rows of eq
 
 ## Verification
 
-Run `npm run validate` for structural and content contracts, then `npm run test:browser` after installing the pinned Playwright runner and Chromium as described in `docs/BROWSER-QA.md`. The new full-round tests exercise all twenty-one game modes on desktop and mobile viewports, including saved completion, replay, and error paths. The release-manifest route tests capture all 29 cabinets and the lobby in both viewports. Gallery and QA counts now follow the manifest. The formal tagged release retains its separate physical-device and human approval gates.
+Run `npm run validate` for structural and content contracts, then `npm run test:browser` after installing the pinned Playwright runner and Chromium as described in `docs/BROWSER-QA.md`. The full-round tests exercise all twenty-one shared-engine modes plus Street Safety Scout on desktop and mobile viewports, including saved completion, replay, and error paths. The release-manifest route tests capture all 30 cabinets and the lobby in both viewports. Gallery and QA counts now follow the manifest. The formal tagged release retains its separate physical-device and human approval gates.
 
 ### Local symbol font
 
@@ -45,3 +45,7 @@ Run `npm run validate` for structural and content contracts, then `npm run test:
 ## Traffic Town
 
 Traffic Town adds early road-awareness practice for ages 7+. Its 30 unique sign and safe-action questions are served ten at a time, and a session rotates through unseen questions before cycling. It teaches common U.S. sign patterns without presenting itself as a driver's license course or a substitute for official local DMV materials.
+
+## Street Safety Scout
+
+Street Safety Scout is Game 30, a visual road-awareness companion for ages 8+. A twelve-stop route draws three scenes from each of four zones: signal lights, caution signs, emergency awareness, and vehicle or roadway hazards. Its 30-scenario bank rotates unseen scenes between consecutive routes. Detailed code-native SVGs show signal position, sign shape and color, vehicle lamps, reflected light, and street context. There is no timer; every answer receives a calm explanation. The game is educational practice, not driving instruction or emergency assistance, and it directs players to current local controls, officials, and laws.

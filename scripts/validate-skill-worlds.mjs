@@ -13,7 +13,8 @@ import {
 } from "../assets/skill-worlds.js";
 const catalog = JSON.parse(fs.readFileSync("games/catalog.json", "utf8"));
 const release = JSON.parse(fs.readFileSync("release.json", "utf8"));
-assert.equal(worlds.length, catalog.filter(game => game.integration === "arcade-sdk-v3").length);
+const standaloneV3Cabinets = new Set(["street-safety-scout"]);
+assert.equal(worlds.length, catalog.filter(game => game.integration === "arcade-sdk-v3" && !standaloneV3Cabinets.has(game.id)).length);
 assert.equal(new Set(worlds.map((w) => w.id)).size, worlds.length);
 assert.equal(new Set(worlds.map((w) => w.mode)).size, worlds.length);
 assert.equal(new Set(worlds.map((w) => `${w.artSet || "original"}:${w.art}`)).size, worlds.length);

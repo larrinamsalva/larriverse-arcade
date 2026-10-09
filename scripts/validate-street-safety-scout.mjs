@@ -1,0 +1,47 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { streetSafetyCategories, streetSafetyScenarios } from '../games/street-safety-scout/scenarios.js';
+
+const read = file => fs.readFileSync(file, 'utf8');
+const html = read('games/street-safety-scout/index.html');
+const game = read('games/street-safety-scout/game.js');
+const css = read('games/street-safety-scout/game.css');
+const catalog = JSON.parse(read('games/catalog.json'));
+const release = JSON.parse(read('release.json'));
+
+assert.equal(streetSafetyScenarios.length, 30, 'Street Safety Scout needs exactly 30 scenarios');
+assert.deepEqual(streetSafetyCategories, [
+  'Signal lights',
+  'Caution signs',
+  'Emergency awareness',
+  'Vehicle & road hazards'
+]);
+assert.equal(new Set(streetSafetyScenarios.map(item => item.id)).size, 30, 'scenario ids must be unique');
+assert.equal(new Set(streetSafetyScenarios.map(item => item.visual)).size, 30, 'each scenario needs a distinct visual treatment');
+
+for (const category of streetSafetyCategories) {
+  assert.ok(streetSafetyScenarios.filter(item => item.category === category).length >= 6, `${category} needs enough scenes for two non-repeating rounds`);
+}
+
+for (const item of streetSafetyScenarios) {
+  assert.ok(streetSafetyCategories.includes(item.category), `${item.id} has a known category`);
+  assert.equal(item.options.length, 3, `${item.id} has three choices`);
+  assert.ok(Number.isInteger(item.answer) && item.answer >= 0 && item.answer < item.options.length, `${item.id} has a valid answer`);
+  assert.ok(item.title.length >= 5 && item.prompt.length >= 30, `${item.id} has useful question copy`);
+  assert.ok(item.why.length >= 45 && item.hint.length >= 25, `${item.id} teaches with an explanation and hint`);
+}
+
+assert.equal(catalog.filter(item => item.id === 'street-safety-scout').length, 1, 'catalog includes Game 30 once');
+assert.equal(release.cabinets.filter(item => item.id === 'street-safety-scout').length, 1, 'release manifest includes Game 30 once');
+assert.equal(release.cabinetCount, catalog.length, 'release and catalog counts agree');
+assert.ok(html.includes('Game 30') && html.includes('30-scenario bank'), 'page explains the Game 30 mission');
+assert.ok(html.includes('Practice only:') && html.includes('Never use this game while driving'), 'page keeps its real-world safety boundary');
+assert.ok(game.includes('ROUND_SIZE = 12') && game.includes('selected.length < 3'), 'rounds draw three scenes from each category');
+assert.ok(game.includes('sessionStorage') && game.includes('ROTATION_KEY'), 'session replay rotates unseen scenarios');
+assert.ok(game.includes("sdk.award(GAME_ID") && game.includes('larriverse:bloom-message'), 'completion saves locally and reaches Bloom');
+assert.ok(game.includes('role="img"') && game.includes('aria-label='), 'generated scenes retain accessible image semantics');
+assert.ok(css.includes('html.larriverse-dark') && css.includes('html.larriverse-high-contrast'), 'shared theme and contrast modes are styled');
+assert.ok(css.includes('prefers-reduced-motion') && css.includes('max-width: 420px'), 'motion and small-screen modes are styled');
+assert.ok(!game.includes('fetch(') && !game.includes('WebSocket'), 'the game stays local-only');
+
+console.log('Street Safety Scout validated: 30 distinct scenarios, four balanced safety zones, non-repeating rounds, accessible visuals, and local-only progress.');

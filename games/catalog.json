@@ -198,6 +198,28 @@
     "integration": "arcade-sdk-v3"
   },
   {
+    "id": "street-safety-scout",
+    "title": "Street Safety Scout",
+    "icon": "🦺",
+    "category": "Road smarts",
+    "topic": "Everyday life",
+    "age": "8+",
+    "minutes": "6 min",
+    "art": 5,
+    "artSet": "traffic",
+    "skill": "Identify signs, signals & hazards",
+    "desc": "Spot signal lights, caution and emergency signs, vehicle lights, and hidden street hazards.",
+    "mission": "Complete twelve visual safety stops drawn evenly from a thirty-scenario bank of signals, warnings, emergency awareness, and street hazards.",
+    "take": "Notice the clue first, then choose a calm, predictable action. Always follow current local signs, officials, emergency directions, and the rules where you live.",
+    "available": true,
+    "featured": true,
+    "isNew": true,
+    "status": "Playable",
+    "href": "games/street-safety-scout/index.html",
+    "source": "Original LarriVerse street-safety world, 2026",
+    "integration": "arcade-sdk-v3"
+  },
+  {
     "id": "pocket-planet",
     "title": "Pocket Planet",
     "icon": "🪙",

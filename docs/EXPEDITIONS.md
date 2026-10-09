@@ -1,6 +1,6 @@
 # Eight new expeditions
 
-The arcade has 29 playable games: eight original cabinets, thirteen skill worlds, and eight new expeditions. Every expedition uses short hands-on challenges, encouraging feedback, optional hints, no timer, keyboard and touch controls, sound off by default, and device-local progress.
+The arcade has 30 playable games: eight original cabinets, fourteen practice worlds, and eight new expeditions. Every expedition uses short hands-on challenges, encouraging feedback, optional hints, no timer, keyboard and touch controls, sound off by default, and device-local progress.
 
 | Game | What children do | A practical discovery |
 | --- | --- | --- |
@@ -38,4 +38,4 @@ Refreshed skill-world atlas: 4:3 image, four columns and three rows. Top row: pi
 
 `assets/expedition-worlds.js` holds metadata and challenge models. `assets/expedition-logic.js` holds flow tracing, map targets, cipher conversion, shopping comparison and neighbor needs. `assets/expedition-games.js` renders eight distinct modes in the common game shell. `assets/arcade-scenes.js` owns the original SVG drawings and banners. The shared SDK saves one completion and practice-run award per finished round; starting over does not award a second completion.
 
-Run `npm run validate`, then `npm run test:browser` using the pinned Playwright runner described in [Browser QA](BROWSER-QA.md). Tests exercise complete rounds, wrong choices, restarts, saved progress, keyboard interaction, comfort settings and desktop/mobile overflow. The release gallery captures the lobby and 29 cabinets in both viewports: 60 images. Browser emulation does not replace the project's physical-phone and human approval requirements for a formal tagged release.
+Run `npm run validate`, then `npm run test:browser` using the pinned Playwright runner described in [Browser QA](BROWSER-QA.md). Tests exercise complete rounds, wrong choices, restarts, saved progress, keyboard interaction, comfort settings and desktop/mobile overflow. The release gallery captures the lobby and 30 cabinets in both viewports: 62 images. Browser emulation does not replace the project's physical-phone and human approval requirements for a formal tagged release.
