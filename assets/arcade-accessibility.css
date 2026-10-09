@@ -301,7 +301,7 @@ html.larriverse-dark :is(.spotlight, .quick-quest, .family-strip) {
   border-color: #64598d;
 }
 html.larriverse-dark .spotlight-copy p { color: #ddd8ed; }
-html.larriverse-dark :is(.primary, .launch, .filter.active) { background: #8d72ef; color: #fff; border-color: #b8a5ff; }
+html.larriverse-dark :is(.primary, .launch, .filter.active) { background: #5d43bd; color: #fff; border-color: #a997ef; }
 html.larriverse-dark :is(.primary, .launch) { box-shadow: 0 4px 0 #493d83; }
 html.larriverse-dark .danger { background: #4a2737; color: #ffdbe0; border-color: #9e6172; }
 html.larriverse-dark :is(input, select, textarea) { background-color: #1d1932; color: #fff; border-color: #625a83; }
@@ -313,6 +313,29 @@ html.larriverse-dark .feedback.try { background: #4a3221; color: #ffe6bd; }
 html.larriverse-dark .meter { background: #494262; }
 html.larriverse-dark .meter i { background: linear-gradient(90deg, #70d7bc, #d7bbff); }
 html.larriverse-dark .game-footer { color: #c9c4dc; }
+html.larriverse-dark :is(.lv-brand, [data-lv-profile], .lv-context, .lv-context small) { color: #f2edff; }
+html.larriverse-dark .learning-path { background: #231e3a; color: #f7f4ff; border: 1px solid #625b80; }
+html.larriverse-dark .learning-path :is(.learning-path__head small, .learning-path__note) { color: #d8d2ec !important; }
+html.larriverse-dark .learning-path__choices button { background: #30294c; color: #f7f4ff; border-color: #70678f; }
+html.larriverse-dark .learning-path__choices button[aria-pressed="true"] { background: #503b8f; color: #fff; border-color: #b3a2ef; }
+
+html.larriverse-light body[data-classic="creature-catcher"] .round-banner {
+  padding: .8rem 1.25rem;
+  border: 1px solid #ffffff80;
+  border-radius: 22px;
+  background: rgba(9, 31, 60, .9);
+  color: #fff;
+  box-shadow: 0 12px 30px #10203b40;
+}
+html.larriverse-light body[data-classic="creature-catcher"] .primary {
+  background: linear-gradient(135deg, #5835bb, #a5265e);
+  color: #fff;
+}
+html.larriverse-dark body[data-classic="creature-catcher"] .instructions div {
+  background: #30294c;
+  color: #f7f4ff;
+  border: 1px solid #665d88;
+}
 
 .nav-actions { display: flex; align-items: center; gap: .55rem; }
 .nav-theme, .lv-theme-cycle {
@@ -439,7 +462,7 @@ html.larriverse-dark .bloom-guide::after { background: #257b76; }
 html.larriverse-dark :is(.bloom-title, .bloom-message) { color: #f8f5ff; }
 html.larriverse-dark .bloom-eyebrow { color: #ddcfff; }
 html.larriverse-dark .bloom-actions button { background: #30294d; color: #f8f5ff; border-color: #8174a9; }
-html.larriverse-dark .bloom-actions .bloom-start { background: #8d72ef; border-color: #b6a7ff; box-shadow: 0 4px 0 #493d83; }
+html.larriverse-dark .bloom-actions .bloom-start { background: #5d43bd; border-color: #a997ef; box-shadow: 0 4px 0 #332573; }
 html.larriverse-dark .bloom-actions .bloom-hide { background: transparent; color: #cbc5df; border-color: transparent; }
 html.larriverse-dark .bloom-peek { background: #312852; color: #fff; border-color: #8e7cc0; }
 
@@ -451,19 +474,50 @@ body[data-classic="chill-brain-rewards"] { background-image: radial-gradient(cir
 body[data-classic="road-trip-quest-gps"] { background-image: linear-gradient(145deg, #d5eff0, #e7f2cf); }
 html.larriverse-dark body[data-classic] { background-image: linear-gradient(155deg, #17132f, #1b2944 58%, #123640); }
 
+/* Dark-first classics keep their original luminous artwork on a deep game board in day mode. */
+html.larriverse-light body:is([data-classic="kidscoin-family"], [data-classic="brain-sweat-expanded"], [data-classic="brain-sweat-life-skills"]) main {
+  color: #f7fbff;
+  background: linear-gradient(145deg, #102840, #151b35 58%, #26364a);
+  border: 1px solid #526b82;
+  border-radius: 28px;
+  box-shadow: 0 14px 0 #22334633, 0 28px 55px #30485b26;
+}
+
 html.larriverse-high-contrast .bloom-guide { background: #000 !important; color: #fff !important; border: 3px solid #fff !important; box-shadow: none; }
 html.larriverse-high-contrast :is(.bloom-title, .bloom-message, .bloom-eyebrow) { color: #fff !important; }
 html.larriverse-high-contrast .bloom-guide::before, html.larriverse-high-contrast .bloom-guide::after { display: none; }
 
 /* Shared dimensional finish for code-native game objects. */
 .object-icon, .place-art, .traffic-sign-art { overflow: visible; }
-.object-model { filter: drop-shadow(0 3px 1.5px rgba(26, 37, 46, .28)); }
+.object-model { filter: drop-shadow(0 3px 1.5px rgba(26, 37, 46, .28)) drop-shadow(0 7px 5px rgba(26, 37, 46, .12)); }
+.object-depth {
+  opacity: .3;
+  filter: brightness(.42) saturate(.72);
+  pointer-events: none;
+}
+.object-material-highlight,
+.object-material-shadow {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.object-material-highlight { stroke: #fff; stroke-width: 2.5; opacity: .34; }
+.object-material-shadow { stroke: #172532; stroke-width: 3; opacity: .22; }
+.object-ground-shadow--soft { filter: blur(1.2px); }
+.object-ground-shadow--contact { filter: blur(.35px); }
 .object-ground-shadow, .sign-ground-shadow { transform-box: fill-box; transform-origin: center; }
-.sign-depth { opacity: .32; filter: brightness(.38) saturate(.7); }
-.sign-face { filter: drop-shadow(0 2px 1px rgba(22, 28, 32, .22)); }
+.sign-depth { opacity: .42; filter: brightness(.34) saturate(.66); }
+.sign-face { filter: drop-shadow(0 2px 1px rgba(22, 28, 32, .28)) drop-shadow(0 5px 3px rgba(22, 28, 32, .12)); }
+.sign-reflection { mix-blend-mode: screen; pointer-events: none; }
+.sign-fastener { filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .45)); }
+.place-art .object-model--place { filter: drop-shadow(0 4px 2px rgba(26, 37, 46, .3)) drop-shadow(0 9px 7px rgba(26, 37, 46, .14)); }
 html.larriverse-dark :is(.object-ground-shadow, .sign-ground-shadow) { opacity: .42; }
 html.larriverse-dark .object-model { filter: drop-shadow(0 4px 2px rgba(0, 0, 0, .48)); }
+html.larriverse-dark .object-depth { opacity: .48; filter: brightness(.27) saturate(.6); }
+html.larriverse-dark .object-material-highlight { opacity: .25; }
 html.larriverse-high-contrast .object-model { filter: drop-shadow(0 2px 0 #000); }
+html.larriverse-high-contrast .object-depth { opacity: .65; filter: brightness(0); }
 html.larriverse-high-contrast :is(.object-ground-shadow, .sign-ground-shadow) { fill: #000; opacity: .7; }
 
 @media (max-width: 700px) {

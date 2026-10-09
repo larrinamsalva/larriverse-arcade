@@ -1,7 +1,7 @@
 import { streetSafetyCategories, streetSafetyScenarios } from './scenarios.js';
 
 const GAME_ID = 'street-safety-scout';
-const ROUND_SIZE = 12;
+const ROUND_SIZE = 15;
 const ROTATION_KEY = 'larriverse.streetSafetyScout.rotation.v1';
 const sdk = window.LarriVerseArcade;
 const $ = selector => document.querySelector(selector);
@@ -123,11 +123,11 @@ function signSymbol(type) {
   const black = '#172126';
   const figures = {
     school: `<g fill="${black}"><circle cx="338" cy="102" r="12"/><circle cx="386" cy="116" r="10"/><path d="m330 119-24 45 17 9 14-24 16 26 16-9-27-47Zm49 11-20 35 13 7 11-19 13 20 13-8-21-35Z"/></g>`,
-    'road-work': `<g fill="none" stroke="${black}" stroke-width="11" stroke-linecap="round"><circle cx="350" cy="101" r="12" fill="${black}"/><path d="m350 119-10 48m9-29 35 22m-43 5-30 41m29-39 29 38M387 154l26 62M395 174h42"/></g>`,
+    'road-work': `<g fill="${black}"><circle cx="345" cy="102" r="13"/><path d="m328 125 27-9 20 48-22 9 27 40h-22l-22-32-18 33h-23l28-58-20 14-11-17Z"/><path d="m393 142 13-5 31 77-14 5Z"/><path d="m378 173 48-18 8 18-49 17Z"/></g>`,
     slippery: `<g fill="none" stroke="${black}" stroke-width="9" stroke-linecap="round"><path d="M305 122h84l21 30v30H288v-30Z" fill="${black}"/><circle cx="315" cy="183" r="11" fill="${black}"/><circle cx="385" cy="183" r="11" fill="${black}"/><path d="M297 211q21-24 43 0t43 0 43 0"/></g>`,
     merge: `<g fill="none" stroke="${black}" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"><path d="M344 205V94m-18 21 18-25 18 25M410 202v-49q0-24-36-41"/></g>`,
-    flagger: `<g fill="none" stroke="${black}" stroke-width="10" stroke-linecap="round"><circle cx="350" cy="103" r="12" fill="${black}"/><path d="m350 119-1 61m0-40-35 25m36-16 36 19m-37 11-24 35m25-35 25 35M388 88v88"/><path d="M389 91h40l-15 21 15 20h-40Z" fill="${black}"/></g>`,
-    pedestrian: `<g fill="none" stroke="${black}" stroke-width="12" stroke-linecap="round"><circle cx="365" cy="99" r="13" fill="${black}"/><path d="m362 119-18 53m11-30 39 14m-47 14-32 43m38-43 30 42"/></g>`,
+    flagger: `<g fill="${black}"><circle cx="345" cy="102" r="13"/><path d="m328 124 28-8 18 51-21 8 25 39h-22l-21-32-19 32h-23l29-57-23 17-11-17Z"/><path d="M393 82h10v105h-10Z"/><path d="m402 87 52 13-20 20 20 21-52 9Z"/></g>`,
+    pedestrian: `<g fill="${black}"><circle cx="362" cy="99" r="14"/><path d="m345 121 27-8 18 51-20 8 28 40h-22l-24-31-20 32h-24l31-57-24 14-10-17Z"/></g>`,
     bicycle: `<g fill="none" stroke="${black}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><circle cx="318" cy="184" r="31"/><circle cx="407" cy="184" r="31"/><path d="m318 184 35-53 28 53h-63l27-34h48m-40-19 40-4m-18 0 32 57"/><circle cx="367" cy="99" r="10" fill="${black}"/></g>`
   };
   return figures[type] || '';
@@ -208,11 +208,35 @@ function hazardScene(item) {
   return '';
 }
 
+function roadsideScene(item) {
+  const shoulder = `<path d="M548 183h212v157H596Z" fill="#bda778"/><path d="M573 183h187v157H621Z" fill="#9b8763"/><g fill="#d9c99f" opacity=".9"><circle cx="624" cy="225" r="6"/><circle cx="696" cy="251" r="8"/><circle cx="655" cy="302" r="5"/><circle cx="730" cy="319" r="7"/></g><path d="M548 183 596 340" stroke="#eef4f0" stroke-width="8"/>`;
+  const roadsideSign = (lines, color = '#ffd24f') => `<g filter="url(#shadow)" transform="translate(78 36)"><ellipse cx="132" cy="277" rx="61" ry="11" fill="#142932" opacity=".28"/><path d="M137 133v145" stroke="#43525b" stroke-width="16"/><path d="M131 133v143" stroke="url(#metal)" stroke-width="9"/><rect x="13" y="15" width="244" height="128" rx="13" fill="#574421" opacity=".62" transform="translate(8 9)"/><rect x="13" y="15" width="244" height="128" rx="13" fill="${color}" stroke="#fff4d0" stroke-width="7"/>${lines.map((line, index) => `<text x="135" y="${67 + index * 42}" text-anchor="middle" fill="#172126" font-size="${lines.length > 1 ? 28 : 34}" font-weight="1000">${line}</text>`).join('')}<path d="M30 31h168" stroke="#fff" stroke-width="8" opacity=".32" stroke-linecap="round"/></g>`;
+
+  if (item.visual === 'roadside-soft-shoulder') {
+    return svgScene(item.title, `${shoulder}${roadsideSign(['SOFT', 'SHOULDER'])}<path d="M592 225q38 18 70 7t61 13" fill="none" stroke="#6f5d45" stroke-width="8" stroke-linecap="round" opacity=".7"/><path d="M605 256q34 17 62 7t54 10" fill="none" stroke="#6f5d45" stroke-width="8" stroke-linecap="round" opacity=".5"/>`);
+  }
+  if (item.visual === 'roadside-dropoff') {
+    return svgScene(item.title, `<path d="M545 183h215v157H611Z" fill="#9c7855"/><path d="m545 183 66 157" stroke="#f8f8ed" stroke-width="8"/><path d="M567 191h193v38H584Z" fill="#5b4938" opacity=".68"/>${roadsideSign(['SHOULDER', 'DROP-OFF'], '#ff9b32')}<g filter="url(#shadow)"><path d="m521 291 28-65 28 65Z" fill="#ff8b26" stroke="#fff4dc" stroke-width="5"/><path d="M536 262h26" stroke="#fff" stroke-width="8"/></g>`);
+  }
+  if (item.visual === 'roadside-disabled') {
+    return svgScene(item.title, `${shoulder}<g filter="url(#shadow)" transform="translate(488 171)"><path d="M0 43 29 8h122l38 35 22 8v78H-11V57Z" fill="url(#carBlue)" stroke="#143e61" stroke-width="6"/><path d="M43 16h58v43H12Zm69 0h31l31 43h-62Z" fill="#c6eef5" stroke="#30657f" stroke-width="4"/><rect x="7" y="76" width="195" height="29" rx="8" fill="#165681"/><circle cx="38" cy="127" r="22" fill="#19242a" stroke="#a9b8bd" stroke-width="7"/><circle cx="168" cy="127" r="22" fill="#19242a" stroke="#a9b8bd" stroke-width="7"/><rect class="pulse-light" x="5" y="64" width="32" height="19" rx="7" fill="#ffb52e" filter="url(#glow)"/><rect class="pulse-light" x="173" y="64" width="32" height="19" rx="7" fill="#ffb52e" filter="url(#glow)"/></g><g filter="url(#shadow)" transform="translate(408 272)"><path d="m0 48 28-48 28 48Z" fill="#f04a44" stroke="#fff" stroke-width="5"/><path d="m17 33 11-18 11 18Z" fill="#fff"/></g>`);
+  }
+  if (item.visual === 'roadside-worker') {
+    return svgScene(item.title, `${shoulder}<g filter="url(#shadow)" transform="translate(565 111)"><circle cx="55" cy="34" r="24" fill="#8b5c3f"/><path d="M29 56h54l20 84-32 7-10-50-10 50-32-7Z" fill="#ff8e2f" stroke="#5d3f2d" stroke-width="5"/><path d="m31 67 51 54M81 67l-51 54" stroke="#fff7ad" stroke-width="12"/><path d="M37 142 28 221h28l8-58 8 58h28l-14-79Z" fill="#29475b"/><path d="m28 78-35 58m91-58 36 50" stroke="#8b5c3f" stroke-width="17" stroke-linecap="round"/><path d="M19 13q36-24 72 0l-7 16H26Z" fill="#ffd44f" stroke="#735321" stroke-width="4"/></g><g filter="url(#shadow)" fill="#ff8b26" stroke="#fff4dc" stroke-width="5"><path d="m453 317 25-62 25 62Z"/><path d="m694 326 23-58 23 58Z"/></g><g stroke="#fff" stroke-width="8"><path d="M465 286h26M705 297h24"/></g>`);
+  }
+  if (item.visual === 'roadside-tractor') {
+    return svgScene(item.title, `<path d="M0 184h760v156H0Z" fill="#56646b"/><path d="M0 199h760" stroke="#e3ecee" stroke-width="12"/><path d="M520 184h240v156H582Z" fill="#b99562"/><path d="M570 183h190" stroke="#eef5ec" stroke-width="8"/>${roadsideSign(['TRACTOR', 'CROSSING'])}<g filter="url(#shadow)" transform="translate(454 135)"><circle cx="79" cy="122" r="48" fill="#20282d" stroke="#9aa6a8" stroke-width="10"/><circle cx="202" cy="132" r="30" fill="#20282d" stroke="#9aa6a8" stroke-width="8"/><path d="M58 50h99l35 74H48Z" fill="#4f9f45" stroke="#28572a" stroke-width="7"/><path d="M89 5h71v69H79Z" fill="#377f3e" stroke="#28572a" stroke-width="7"/><path d="M98 14h49v45H92Z" fill="#bce6ed" stroke="#37606c" stroke-width="5"/><path d="M151 76h55l22 47h-54Z" fill="#62ad4c" stroke="#28572a" stroke-width="6"/><path d="M111 5V-25h13V5" stroke="#273b31" stroke-width="8"/><circle cx="79" cy="122" r="18" fill="#d9c8a4"/><circle cx="202" cy="132" r="11" fill="#d9c8a4"/><rect x="153" y="81" width="37" height="15" rx="6" fill="#ffe17a"/></g>`);
+  }
+
+  return svgScene(item.title, `<path d="M0 184h760v156H0Z" fill="#3e4a50"/><path d="M0 199h760" stroke="#e6ecea" stroke-width="11"/><path d="M545 183h215v157H595Z" fill="#46684a"/><g opacity=".7" fill="#284b36"><path d="M552 185q34-49 70 0Zm75 0q42-61 87 0Zm73 0q31-47 62 0Z"/></g><g filter="url(#shadow)" transform="translate(489 103)" fill="#30251f" stroke="#1c1714" stroke-width="4"><ellipse cx="95" cy="83" rx="70" ry="39"/><path d="m42 79-17 104h19l29-83 37 3 18 80h20l-2-99Z"/><path d="M145 65q43-26 66 6-25 1-38 19l-31 7Z"/><path d="M187 63q4-25 20-34m-15 21 19-6m-15 11-10-18" fill="none" stroke-width="7" stroke-linecap="round"/><path d="M31 66Q8 38 16 17q17 14 34 3 4 21-19 46Z"/><path d="M164 72q-28-34-43-50" fill="none" stroke-width="9" stroke-linecap="round"/></g><g transform="translate(665 139) scale(.53)" fill="#3a2c25" stroke="#1c1714" stroke-width="5"><ellipse cx="70" cy="72" rx="55" ry="31"/><path d="m27 69-12 90h17l23-70 30 2 17 68h18l-2-82Z"/><path d="M108 58q34-20 51 6-20 1-30 16l-25 6Z"/></g>`, { night: true });
+}
+
 function safetyVisual(item) {
   if (item.visual.startsWith('signal-') || item.visual.startsWith('arrow-') || item.visual.startsWith('pedestrian-') || item.visual === 'railroad') return trafficSignalScene(item);
   if (item.visual.startsWith('sign-')) return signScene(item);
   if (item.visual.startsWith('emergency-') || item.visual.startsWith('bus-')) return emergencyScene(item);
   if (item.visual.startsWith('vehicle-')) return vehicleScene(item);
+  if (item.visual.startsWith('roadside-')) return roadsideScene(item);
   return hazardScene(item);
 }
 

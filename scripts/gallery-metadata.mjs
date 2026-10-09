@@ -9,10 +9,10 @@ const descriptions = Object.freeze({
   'compass-cove': 'Compass Cove numbered island grid with named landmarks, a north-east-south-west compass, a treasure clue, and a map legend.',
   'cipher-club': 'Cipher Club toy alphabet workshop with a shared number key, encode-or-decode instructions, message slots, and letter keys.',
   'trade-town': 'Trade Town pretend market with a shopping request, budget, bundle quantities, unit prices, delivery fees, and return controls.',
-  'critter-council': 'Critter Council woodland town with neighbor requests, six numbered building plots, a token budget, and inclusive building choices.',
+  'critter-council': 'Critter Council level-one woodland town with four high-contrast neighbor requests, a twenty-level advancement track, six numbered building plots, a token budget, and inclusive building choices.',
   'beat-builder': 'Beat Builder rhythm grid with named instrument rows, numbered beats, pattern controls, and sound off by default.',
   'lemonade-lab': 'Lemonade Lab pretend business board with a weather forecast, price and stock choices, and a locally saved practice ledger.',
-  'robot-rover': 'Robot Rover numbered garden grid with a start and goal, command buttons, a sequence area, and run-and-debug controls.',
+  'robot-rover': 'Robot Rover dimensional space grid with a start and goal, four-rank trail, command buttons, a sequence area, and run-and-debug controls.',
   'reuse-rally': 'Reuse Rally sorting board with named objects, labeled reuse and recycling choices, and the displayed town rules.',
   'energy-island': 'Energy Island resource board with generation choices, storage controls, demand labels, and a day-and-night practice mission.',
   'garden-guardians': 'Garden Guardians planting board with named crops and flowers, water choices, a twelve-drop budget, and garden feedback.',
@@ -27,11 +27,13 @@ const descriptions = Object.freeze({
   'kidscoin-family': 'KidsCoin Family dashboard with fictional reward boundaries, open learning choices, parent controls, and device-local progress.',
   'brain-sweat-expanded': 'Brain Sweat Expanded workshop with reviewed skill worlds, local progress, visible review gates, and shared arcade navigation.',
   'brain-sweat-life-skills': 'Brain Sweat Life Skills lesson hub with reviewed worlds, playable question totals, queued-content protections, and shared comfort controls.',
-  'bubble-resonance-phi369': 'Bubble Resonance playfield with numbered frequency bubbles, an aiming guide, keyboard controls, sound off, and the creative-theme boundary.',
+  'bubble-resonance-phi369': 'Bubble Resonance first-stage playfield with glossy round numbered bubbles, rotating row, burst, and color-sweep powers, a twenty-level progress track, an aiming guide, keyboard controls, and sound off.',
   'chill-brain-rewards': 'Chill Brain onboarding view with gentle practice choices, optional sound, shared comfort controls, and local progress context.',
   'creature-catcher': 'Creature Catcher opening card with a learning-path choice, start and return controls, and a locally saved field-guide introduction.',
   'road-trip-quest': 'Road Trip Quest opening card with learning-path choices, a start button, saved-trip controls, and shared arcade context.',
-  'road-trip-quest-gps': 'Road Trip Quest GPS opening view with Demo Mode, optional Live Movement, the passenger-only warning, and privacy controls.'
+  'road-trip-quest-gps': 'Road Trip Quest GPS opening view with Demo Mode, optional Live Movement, the passenger-only warning, and privacy controls.',
+  'weather-watchers': 'Weather Watchers level-one picture challenge with a dimensional sky scene, visible weather clues, four-rank advancement trail, three illustrated choices, and local progress.',
+  'garden-grow-harvest': 'Garden Grow and Harvest level-one picture challenge with a dimensional garden bed, realistic tool or plant model, four-rank advancement trail, three illustrated choices, and local progress.'
 });
 
 // Mobile captures begin at the top of the page; most boards are farther down.
@@ -45,10 +47,10 @@ const mobileDescriptions = Object.freeze({
   'compass-cove': 'Compass Cove illustrated introduction and landmark treasure mission, with LarriVerse navigation, sound off, and shared comfort controls.',
   'cipher-club': 'Cipher Club illustrated introduction and toy shared-key mission, with LarriVerse navigation, sound off, and shared comfort controls.',
   'trade-town': 'Trade Town illustrated introduction and pretend-shopping mission, with LarriVerse navigation, sound off, and shared comfort controls.',
-  'critter-council': 'Critter Council illustrated introduction and inclusive-town mission, with LarriVerse navigation, sound off, and shared comfort controls.',
+  'critter-council': 'Critter Council illustrated introduction and twenty-neighborhood inclusive-town mission, with LarriVerse navigation, sound off, and shared comfort controls.',
   'beat-builder': 'Beat Builder illustrated introduction to rhythm and patterns, with LarriVerse navigation, local personal best, and shared comfort controls.',
   'lemonade-lab': 'Lemonade Lab illustrated introduction to a pretend small business, with LarriVerse navigation, local personal best, and shared comfort controls.',
-  'robot-rover': 'Robot Rover illustrated introduction to sequencing and debugging, with LarriVerse navigation, local personal best, and shared comfort controls.',
+  'robot-rover': 'Robot Rover illustrated twenty-world introduction to sequencing and debugging, with a four-rank trail, local personal best, and shared comfort controls.',
   'reuse-rally': 'Reuse Rally illustrated introduction to sorting and thoughtful reuse, with LarriVerse navigation, local personal best, and shared comfort controls.',
   'energy-island': 'Energy Island illustrated introduction to energy and storage, with LarriVerse navigation, local personal best, and shared comfort controls.',
   'garden-guardians': 'Garden Guardians illustrated introduction to resource care and diverse gardens, with LarriVerse navigation and shared comfort controls.',
@@ -63,11 +65,13 @@ const mobileDescriptions = Object.freeze({
   'kidscoin-family': 'KidsCoin Family opening dashboard with shared LarriVerse player context, an arcade return, comfort controls, and fictional reward framing.',
   'brain-sweat-expanded': 'Brain Sweat Expanded opening workshop introduction with shared LarriVerse player context, an arcade return, and comfort controls.',
   'brain-sweat-life-skills': 'Brain Sweat Life Skills opening lesson introduction with shared LarriVerse player context, an arcade return, and comfort controls.',
-  'bubble-resonance-phi369': 'Bubble Resonance opening playfield and score area beneath shared LarriVerse player context, an arcade return, and comfort controls.',
+  'bubble-resonance-phi369': 'Bubble Resonance opening round-bubble playfield, three clearly labeled power bubbles, first of twenty stage indicator, and score area beneath shared LarriVerse player context and comfort controls.',
   'chill-brain-rewards': 'Chill Brain gentle onboarding introduction beneath shared LarriVerse player context, an arcade return, and comfort controls.',
   'creature-catcher': 'Creature Catcher illustrated opening dialog introducing its question safari, with instructions and a scrollable learning-path and start area.',
   'road-trip-quest': 'Road Trip Quest opening adventure title beneath shared LarriVerse player context, an arcade return, and comfort controls.',
-  'road-trip-quest-gps': 'Road Trip Quest GPS opening Demo Mode introduction beneath shared LarriVerse player context, an arcade return, and comfort controls.'
+  'road-trip-quest-gps': 'Road Trip Quest GPS opening Demo Mode introduction beneath shared LarriVerse player context, an arcade return, and comfort controls.',
+  'weather-watchers': 'Weather Watchers illustrated introduction to sky clues, clouds, safe preparation, and simple forecasts, with four visible levels and shared comfort controls.',
+  'garden-grow-harvest': 'Garden Grow and Harvest illustrated introduction to bed building, planting, crop care, harvesting, and freshness, with four visible levels and shared comfort controls.'
 });
 
 export function galleryMetadata(subject, project) {

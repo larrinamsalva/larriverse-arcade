@@ -1,6 +1,6 @@
-# LarriVerse: 30 worlds for curious kids
+# LarriVerse: 32 worlds for curious kids
 
-The arcade now contains twenty-two newer skill adventures and the original eight cabinets. The eight expedition adventures are described in [the expedition guide](EXPEDITIONS.md). The lobby uses illustrated covers, short descriptions, skill filters, search, a surprise-game launcher, and the existing profile and comfort controls. There is no required sign-up, advertising, checkout, or public leaderboard. Ages are broad suggestions; adults can help younger players with reading.
+The arcade now contains twenty-four newer skill adventures and the original eight cabinets. The eight expedition adventures are described in [the expedition guide](EXPEDITIONS.md). The lobby uses illustrated covers, short descriptions, skill filters, search, a surprise-game launcher, and the existing profile and comfort controls. There is no required sign-up, advertising, checkout, or public leaderboard. Ages are broad suggestions; adults can help younger players with reading.
 
 | Game | What players do | Skill practiced |
 | --- | --- | --- |
@@ -13,19 +13,21 @@ The arcade now contains twenty-two newer skill adventures and the original eight
 | Garden Guardians | Plant six plots with diverse plants and share twelve water drops across days | Limited resources and biodiversity |
 | Energy Island | Build a power mix and test it across sunny, cloudy, night, and breezy conditions | Supply, storage, and system thinking |
 | Reuse Rally | Sort ten objects using clearly stated Toy Town rules | Reuse and local waste rules |
-| Robot Rover | Build and debug command sequences across three grid worlds | Algorithms, sequencing, debugging |
+| Robot Rover | Build and debug command sequences across twenty grid worlds and four ranks | Algorithms, sequencing, debugging |
 | Lemonade Lab | Choose inventory and price for four days, then inspect costs, sales, and profit | Small business decisions and ledgers |
 | Beat Builder | Compose in a three-track, sixteen-step sequencer, solve a pattern challenge, or save a freestyle | Rhythm, patterns, creative expression |
+| Weather Watchers | Read 25 illustrated sky, cloud, safety, and forecast challenges across four levels | Weather observation, forecast reading, preparation |
+| Garden Grow & Harvest | Build, plant, care, harvest, and store produce in 24 illustrated challenges | Gardening sequence, plant care, food freshness |
 
 ## Technical guide
 
-New worlds have independent `games/<slug>/index.html` routes. `assets/skill-worlds.js` owns metadata and scenario content. `assets/skill-games.js` implements twelve modes and delegates eight new modes to `assets/expedition-games.js` with one common game shell. `assets/skill-games.css` provides responsive boards, touch targets, keyboard focus, reduced motion, and high contrast. `assets/classic-polish.css` adds finishing to the original games; their gameplay and storage remain independently owned.
+New worlds have independent `games/<slug>/index.html` routes. `assets/skill-worlds.js` owns metadata and scenario content. `assets/skill-games.js` implements the shared practice modes and delegates eight expedition modes to `assets/expedition-games.js` with one common game shell. `assets/skill-games.css` provides responsive boards, touch targets, keyboard focus, reduced motion, and high contrast. `assets/classic-polish.css` adds finishing to the original games; their gameplay and storage remain independently owned.
 
 Finishing a round awards shared XP, three fictional KC, one completion, and numeric practice metrics through the existing Arcade SDK. Points summarize game choices, not real-world competence or personal worth. Progress appears in the passport and family report and travels through the existing schema-checked backup. A result cannot award twice by closing and reopening the same round. Restart begins a new practice run. Unfinished boards are not persisted; completed runs and personal bests are.
 
 Scenarios and repair orders shuffle where useful. The route, robot, energy, garden, and business simulations have deliberately stable conditions so players can learn by trying a new plan. The energy and market rules are simplified toy models, not real engineering or financial forecasts. Toy Town's waste rules are explicit and are not a claim that every local service accepts the same materials.
 
-All sound is generated locally at low volume and starts off. Music playback pauses when the page is hidden, and leaving the page stops timers and audio. Fullscreen is not required. No canvas or WebGL support is required for the twenty-two newer worlds; they use semantic HTML controls and code-native SVG so they work on older phones and with keyboard navigation.
+All sound is generated locally at low volume and starts off. Music playback pauses when the page is hidden, and leaving the page stops timers and audio. Fullscreen is not required. No canvas or WebGL support is required for the twenty-four newer worlds; they use semantic HTML controls and code-native SVG so they work on older phones and with keyboard navigation.
 
 ## Original artwork
 
@@ -35,7 +37,7 @@ Generation brief: one landscape atlas, exactly four columns and three rows of eq
 
 ## Verification
 
-Run `npm run validate` for structural and content contracts, then `npm run test:browser` after installing the pinned Playwright runner and Chromium as described in `docs/BROWSER-QA.md`. The full-round tests exercise all twenty-one shared-engine modes plus Street Safety Scout on desktop and mobile viewports, including saved completion, replay, and error paths. The release-manifest route tests capture all 30 cabinets and the lobby in both viewports. Gallery and QA counts now follow the manifest. The formal tagged release retains its separate physical-device and human approval gates.
+Run `npm run validate` for structural and content contracts, then `npm run test:browser` after installing the pinned Playwright runner and Chromium as described in `docs/BROWSER-QA.md`. Full-round tests exercise the shared-engine modes and Street Safety Scout on desktop and mobile viewports, including saved completion, replay, and error paths. The release-manifest route tests capture all 32 cabinets and the lobby in both viewports. Gallery and QA counts follow the manifest. The formal tagged release retains its separate physical-device and human approval gates.
 
 ### Local symbol font
 
@@ -44,8 +46,8 @@ Run `npm run validate` for structural and content contracts, then `npm run test:
 
 ## Traffic Town
 
-Traffic Town adds early road-awareness practice for ages 7+. Its 30 unique sign and safe-action questions are served ten at a time, and a session rotates through unseen questions before cycling. It teaches common U.S. sign patterns without presenting itself as a driver's license course or a substitute for official local DMV materials.
+Traffic Town adds early road-awareness practice for ages 7+. Its 40 unique sign and safe-action questions are served ten at a time, and four consecutive rounds rotate through the full bank before cycling. Its dimensional signs include cattle, deer, tractors, lane directions, dead ends, clearances, grades, and work zones. It teaches common U.S. sign patterns without presenting itself as a driver's license course or a substitute for official local DMV materials.
 
 ## Street Safety Scout
 
-Street Safety Scout is Game 30, a visual road-awareness companion for ages 8+. A twelve-stop route draws three scenes from each of four zones: signal lights, caution signs, emergency awareness, and vehicle or roadway hazards. Its 30-scenario bank rotates unseen scenes between consecutive routes. Detailed code-native SVGs show signal position, sign shape and color, vehicle lamps, reflected light, and street context. There is no timer; every answer receives a calm explanation. The game is educational practice, not driving instruction or emergency assistance, and it directs players to current local controls, officials, and laws.
+Street Safety Scout is Game 30, a visual road-awareness companion for ages 8+. A fifteen-stop route draws three scenes from each of five zones: signal lights, caution signs, emergency awareness, vehicle or roadway hazards, and roadside caution. Its 36-scenario bank rotates unseen scenes between consecutive routes. Detailed code-native SVGs show signal position, sign shape and color, vehicle lamps, roadside workers, stopped vehicles, tractors, animals, reflected light, and street context. There is no timer; every answer receives a calm explanation. The game is educational practice, not driving instruction or emergency assistance, and it directs players to current local controls, officials, and laws.

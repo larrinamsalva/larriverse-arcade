@@ -8,6 +8,8 @@ import {
   sorting,
   trafficQuestions,
   robotLevels,
+  weatherChallenges,
+  gardenGrowthChallenges,
 } from "../../assets/skill-worlds.js";
 
 async function round(page, id, play) {
@@ -68,6 +70,73 @@ async function chooseDeck(page, deck, labels, roundSize = 6) {
       .click();
   }
 }
+async function completePicturePath(page, deck) {
+  const seen = new Set();
+  let priorRank = null;
+  await expect(page.locator(".level-node")).toHaveCount(4);
+  for (let i = 0; i < deck.length; i++) {
+    const title = await page.locator(".learning-question .board-title").innerText();
+    const item = deck.find((entry) => entry.title === title);
+    expect(item, `challenge ${title} belongs to the learning bank`).toBeTruthy();
+    expect(seen.has(item.id), `${item.id} appears only once`).toBe(false);
+    seen.add(item.id);
+    await expect(page.locator(".learning-scene-art")).toHaveAttribute("role", "img");
+    await expect(page.locator(".picture-choice")).toHaveCount(3);
+    if (item.rank !== priorRank) {
+      await expect(page.locator("#stageLabel")).toContainText(item.rank);
+      priorRank = item.rank;
+    }
+    await page.getByRole("button", { name: item.options[item.answer].label, exact: true }).click();
+    await expect(page.locator("#feedback")).toHaveClass(/good/);
+    await page.locator("#gameActions button").click();
+  }
+  expect(seen.size).toBe(deck.length);
+}
+function shortestRobotProgram(level) {
+  const moves = [-5, 1, 5, -1];
+  const adjacent = (a, b) =>
+    Math.abs(Math.floor(a / 5) - Math.floor(b / 5)) +
+      Math.abs((a % 5) - (b % 5)) ===
+    1;
+  const queue = [{ player: level.start, dir: level.dir, program: "" }];
+  const seen = new Set([`${level.start}:${level.dir}`]);
+  for (let index = 0; index < queue.length; index++) {
+    const state = queue[index];
+    if (state.player === level.goal) return state.program;
+    const forward = state.player + moves[state.dir];
+    if (
+      forward >= 0 &&
+      forward < 25 &&
+      adjacent(forward, state.player) &&
+      !level.rocks.includes(forward)
+    ) {
+      const key = `${forward}:${state.dir}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        queue.push({
+          player: forward,
+          dir: state.dir,
+          program: `${state.program}F`,
+        });
+      }
+    }
+    for (const [command, dir] of [
+      ["L", (state.dir + 3) % 4],
+      ["R", (state.dir + 1) % 4],
+    ]) {
+      const key = `${state.player}:${dir}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        queue.push({
+          player: state.player,
+          dir,
+          program: `${state.program}${command}`,
+        });
+      }
+    }
+  }
+  throw new Error(`No route found for ${level.name}`);
+}
 
 test("Pocket Planet: needs, savings, unaffordable purchase, and saved completion", async ({
   page,
@@ -106,6 +175,50 @@ test("Scam Sleuth: complete shuffled messages and explanatory feedback", async (
     ]),
   );
 });
+test("Scam Sleuth: center evidence stays readable in light, dark, and high contrast", async ({
+  page,
+}) => {
+  await page.goto("/games/scam-sleuth/index.html");
+  const readContrast = async (theme) => {
+    await page.evaluate((selectedTheme) =>
+      window.LarriVerseArcade.setSettings({ theme: selectedTheme, highContrast: false, largeText: false, reducedMotion: true }), theme);
+    await expect(page.locator("html")).toHaveClass(new RegExp(`larriverse-${theme}`));
+    return page.evaluate(() => {
+      const channels = (color) => (color.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+      const luminance = (color) => {
+        const values = channels(color).map((channel) => {
+          const value = channel / 255;
+          return value <= .03928 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4;
+        });
+        return .2126 * values[0] + .7152 * values[1] + .0722 * values[2];
+      };
+      const contrast = (foreground, background) => {
+        const first = luminance(foreground), second = luminance(background);
+        return (Math.max(first, second) + .05) / (Math.min(first, second) + .05);
+      };
+      return [
+        ["stage label", ".play-top", ".play-card"],
+        ["message title", ".message-card .board-title", ".message-card"],
+        ["message details", ".message-card p", ".message-card"],
+        ["answer choice", ".choice-button", ".choice-button"],
+        ["feedback", ".feedback", ".feedback"],
+      ].map(([label, textSelector, surfaceSelector]) => {
+        const text = getComputedStyle(document.querySelector(textSelector));
+        const surface = getComputedStyle(document.querySelector(surfaceSelector));
+        const backgrounds = surface.backgroundImage.match(/rgb\([^)]+\)/g) || [surface.backgroundColor];
+        return { label, ratio: Math.min(...backgrounds.map((background) => contrast(text.color, background))) };
+      });
+    });
+  };
+  for (const theme of ["light", "dark"]) {
+    const readings = await readContrast(theme);
+    for (const reading of readings)
+      expect(reading.ratio, `${theme} ${reading.label} contrast`).toBeGreaterThanOrEqual(4.5);
+  }
+  await page.evaluate(() => window.LarriVerseArcade.setSettings({ highContrast: true }));
+  await expect(page.locator(".message-card")).toHaveCSS("background-color", "rgb(17, 17, 17)");
+  await expect(page.locator(".message-card p")).toHaveCSS("color", "rgb(255, 255, 255)");
+});
 test("Kindness Quest: listen, set boundaries, and repair", async ({ page }) => {
   await round(page, "kindness-quest", () => chooseDeck(page, conversations));
 });
@@ -124,14 +237,34 @@ test("Fact Finder: inspect sources, opinions, advertising, and claims", async ({
 test("Reuse Rally: sort objects with the displayed town rules", async ({
   page,
 }) => {
-  await round(page, "reuse-rally", () =>
-    chooseDeck(page, sorting, ["Reuse", "Recycle", "Compost", "Trash"]),
-  );
+  await round(page, "reuse-rally", async () => {
+    for (let i = 0; i < 6; i++) {
+      const art = page.locator(".reuse-item-art");
+      await expect(art).toBeVisible();
+      await expect(art.locator(".object-model")).toHaveCount(1);
+      const box = await art.boundingBox();
+      expect(box?.width).toBeGreaterThanOrEqual(90);
+      expect(box?.height).toBeGreaterThanOrEqual(90);
+      const text = await page.locator(".message-card").innerText();
+      const item = sorting.find((entry) => text.includes(entry.name));
+      expect(item).toBeTruthy();
+      await expect(art.locator(`.object-model--${item.art}`)).toHaveCount(1);
+      await page.getByRole("button", {
+        name: ["Reuse", "Recycle", "Compost", "Trash"][item.bin],
+        exact: true,
+      }).click();
+      await expect(page.locator("#feedback")).toHaveClass(/good/);
+      await page.getByRole("button", {
+        name: i === 5 ? "See what I learned" : "Next discovery",
+        exact: true,
+      }).click();
+    }
+  });
 });
 test("Traffic Town: identify ten different signs and safe road meanings", async ({ page }) => {
   await round(page, "traffic-town", () => chooseDeck(page, trafficQuestions, null, 10));
 });
-test("Traffic Town: consecutive rounds rotate to ten unseen signs", async ({ page }) => {
+test("Traffic Town: four consecutive rounds rotate through forty unseen signs", async ({ page }) => {
   await page.goto("/games/traffic-town/index.html");
   const playTrafficRound = async () => {
     const seen = [];
@@ -146,12 +279,15 @@ test("Traffic Town: consecutive rounds rotate to ten unseen signs", async ({ pag
     }
     return seen;
   };
-  const first = await playTrafficRound();
-  await expect(page.locator("#finishDialog")).toBeVisible();
-  await page.getByRole("button", { name: "Try another round", exact: true }).click();
-  const second = await playTrafficRound();
-  expect(second.filter((text) => first.includes(text))).toEqual([]);
-  await expect(page.locator("#finishDialog")).toBeVisible();
+  const allSeen = [];
+  for (let roundIndex = 0; roundIndex < 4; roundIndex += 1) {
+    const roundSeen = await playTrafficRound();
+    expect(roundSeen.filter((text) => allSeen.includes(text))).toEqual([]);
+    allSeen.push(...roundSeen);
+    await expect(page.locator("#finishDialog")).toBeVisible();
+    if (roundIndex < 3) await page.getByRole("button", { name: "Try another round", exact: true }).click();
+  }
+  expect(new Set(allSeen).size).toBe(trafficQuestions.length);
 });
 test("Repair Café: draw eight unique repairs from a twenty-scenario bank", async ({
   page,
@@ -223,6 +359,22 @@ test("Garden Guardians: share twelve drops and include pollinator flowers", asyn
       .click();
   });
 });
+test("Weather Watchers: complete 25 illustrated challenges across four ranks", async ({
+  page,
+}) => {
+  expect(weatherChallenges).toHaveLength(25);
+  await round(page, "weather-watchers", () =>
+    completePicturePath(page, weatherChallenges),
+  );
+});
+test("Garden Grow & Harvest: complete 24 picture jobs from soil to storage", async ({
+  page,
+}) => {
+  expect(gardenGrowthChallenges).toHaveLength(24);
+  await round(page, "garden-grow-harvest", () =>
+    completePicturePath(page, gardenGrowthChallenges),
+  );
+});
 test("Energy Island: store a surplus and power the island at night", async ({
   page,
 }) => {
@@ -245,12 +397,16 @@ test("Energy Island: store a surplus and power the island at night", async ({
       .click();
   });
 });
-test("Robot Rover: debug a collision, show execution state, and solve eight worlds at par", async ({
+test("Robot Rover: debug a collision, show execution state, and solve twenty worlds at par", async ({
   page,
 }) => {
   await round(page, "robot-rover", async () => {
-    expect(robotLevels).toHaveLength(8);
-    await expect(page.locator("#stageLabel")).toContainText("Robot world 1 of 8");
+    expect(robotLevels).toHaveLength(20);
+    await expect(page.locator("#stageLabel")).toContainText("Robot world 1 of 20");
+    await expect(page.locator(".rover-level-trail .level-node")).toHaveCount(4);
+    await expect(page.locator(".rover-level-trail .level-node.active")).toContainText(
+      "Rover Rookie",
+    );
     await expect(page.locator("#gameBoard")).toContainText(
       "Forward moves Rover in the direction it is facing.",
     );
@@ -267,16 +423,7 @@ test("Robot Rover: debug a collision, show execution state, and solve eight worl
     await expect(page.locator(".tile.rover.trail")).toHaveCount(2);
     await page.getByRole("button", { name: "Clear code", exact: true }).click();
 
-    const programs = [
-      "FF",
-      "FFRFF",
-      "FFFFLFFFF",
-      "LFFFFRFFFFRFF",
-      "LLFFLFFFRF",
-      "LFFRFFFFRFF",
-      "RFFFRFFFFRFFF",
-      "FLFFRFLFFLFFFLF",
-    ];
+    const programs = robotLevels.map(shortestRobotProgram);
     expect(programs.map((program) => program.length)).toEqual(
       robotLevels.map((level) => level.par),
     );
@@ -310,14 +457,21 @@ test("Robot Rover: debug a collision, show execution state, and solve eight worl
 
       if (i < programs.length - 1) {
         await expect(page.locator("#stageLabel")).toContainText(
-          `Robot world ${i + 2} of 8`,
+          `Robot world ${i + 2} of 20`,
         );
+        if ([4, 9, 14].includes(i)) {
+          await expect(page.locator("#feedback")).toContainText("unlocked");
+          await expect(
+            page.locator(".rover-level-trail .level-node.active"),
+          ).toContainText(robotLevels[i + 1].rank);
+        }
       }
     }
 
     await expect(page.locator("#finishMessage")).toContainText(
-      "24 of 24 efficiency stars",
+      "60 of 60 efficiency stars",
     );
+    await expect(page.locator("#finishMessage")).toContainText("across 4 ranks");
   });
 });
 test("Lemonade Lab: four forecasts and a ledger balancing revenue minus cost", async ({

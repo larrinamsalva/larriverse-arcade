@@ -20,10 +20,10 @@ An earlier Evidence Preflight implementation checked obsolete field names (`devi
 
 1. Open the Release Room from the deployed HTTPS site.
 2. Run the deployment check.
-3. Confirm the exact source commit, release digest, 30 cabinet routes, and private-path exclusions.
+3. Confirm the exact source commit, release digest, 32 cabinet routes, and private-path exclusions.
 4. Complete and export one schema-v2 desktop QA report.
 5. Complete and export one schema-v2 physical-phone QA report from a touch-capable phone.
-6. Review and approve the 62-image gallery artifact.
+6. Review and approve the 66-image gallery artifact.
 7. Load all three JSON files into the Release Room.
 8. Export the private `larriverse-evidence-bundle` JSON.
 9. Import that bundle into `qa/release-approval.html`.
@@ -59,4 +59,4 @@ The bundle contains tester names or initials, device/browser descriptions, revie
 
 A green deployment check proves that the intended static candidate is available. A valid evidence bundle proves that the three files are structurally compatible and tamper-evident. Neither result replaces hands-on play testing or the final human decision.
 
-Only the separate `larriverse-release-approval` record, committed with the exact 62 approved screenshots and accepted by the repository verifier, can unlock tag publication.
+Only the separate `larriverse-release-approval` record, committed with the exact 66 approved screenshots and accepted by the repository verifier, can unlock tag publication.

@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import { bridgeLevels, bridgeParts, pipePaths, directions, islands, expeditions, pantryFoods, pantryChallenges, PANTRY_ROUND_SIZE, compassClues, landmarks, cipherLevels, tradeLevels } from "../../assets/expedition-worlds.js";
-import { checkPantryBox, compassTarget, encode } from "../../assets/expedition-logic.js";
+import { bridgeLevels, bridgeParts, pipePaths, directions, harborLevels, expeditions, pantryFoods, pantryChallenges, PANTRY_ROUND_SIZE, compassClues, landmarks, cipherLevels, tradeLevels, townParts, townLevels } from "../../assets/expedition-worlds.js";
+import { checkPantryBox, compassTarget, encode, checkTownLevel } from "../../assets/expedition-logic.js";
 
 async function adventure(page,id,play) {
   const errors = []; page.on("pageerror",error => errors.push(error.message));
@@ -23,7 +23,7 @@ async function adventure(page,id,play) {
 const action = (page,name) => page.getByRole("button",{name,exact:true}).click();
 async function next(page,last) { await action(page,last ? "Celebrate my discoveries" : "Next challenge"); }
 
-test("Bridge Buddies: keyboard building, weak supports, eight budgeted crossings and saved completion",async({page})=>{
+test("Bridge Buddies: keyboard building, weak supports, twenty budgeted crossings and saved completion",async({page})=>{
   await adventure(page,"bridge-buddies",async()=>{
     const toolDrawings=await page.locator(".bridge-tool-art").evaluateAll(nodes=>nodes.map(node=>node.innerHTML));
     expect(toolDrawings).toHaveLength(bridgeParts.length);
@@ -50,7 +50,8 @@ test("Bridge Buddies: keyboard building, weak supports, eight budgeted crossings
     }
   });
 });
-test("Water Works: leak feedback, clockwise rotations, filter and eight connected networks",async({page})=>{
+test("Water Works: leak feedback, clockwise rotations, filter and twenty connected networks",async({page})=>{
+  test.setTimeout(60_000);
   await adventure(page,"water-works",async()=>{
     await action(page,"Send the water"); await expect(page.locator("#feedback")).toHaveClass(/try/);
     for (let round=0;round<pipePaths.length;round++) {
@@ -67,17 +68,22 @@ test("Water Works: leak feedback, clockwise rotations, filter and eight connecte
 });
 test("Harbor Helpers: capacity, rejected wrong supplies, efficient deliveries and fuel",async({page})=>{
   await adventure(page,"harbor-helpers",async()=>{
-    await page.locator('[data-cargo="wood"]').click(); await action(page,"Sail to this island");
-    await expect(page.locator("#feedback")).toContainText("did not ask");
-    // Loading replaces the shelf: each tap must resolve the current button.
+    await page.locator('[data-cargo="wood"]').click(); await action(page,"Sail to Sprout Island");
+    await expect(page.locator("#feedback")).toContainText("does not match");
+    await action(page,"Unload the boat");
     await page.locator('[data-cargo="water"]').click(); await page.locator('[data-cargo="water"]').click(); await page.locator('[data-cargo="seeds"]').click();
-    await expect(page.locator("#feedback")).toContainText("holds three"); await action(page,"Unload the boat");
-    for(let index=0;index<3;index++) {
-      await page.locator(`[data-island="${index}"]`).click();
-      for(const [id,count] of Object.entries(islands[index].needs)) for(let crate=0;crate<count;crate++) await page.locator(`[data-cargo="${id}"]`).click();
-      await action(page,"Sail to this island");
+    await page.locator('[data-cargo="wood"]').click();
+    await expect(page.locator("#feedback")).toContainText("holds 3 crates"); await action(page,"Unload the boat");
+    const ranks=["Dock Helper","Route Planner","Harbor Captain","Community Admiral"];
+    for(let index=0;index<harborLevels.length;index++) {
+      await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-level",String(index+1));
+      await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-rank",ranks[Math.floor(index/5)]);
+      for(const [id,count] of Object.entries(harborLevels[index].needs)) for(let crate=0;crate<count;crate++) await page.locator(`[data-cargo="${id}"]`).click();
+      await action(page,`Sail to ${harborLevels[index].name}`);
+      await expect(page.locator("#feedback")).toHaveClass(/good/);
+      await next(page,index===harborLevels.length-1);
     }
-    await expect(page.locator("#finishMessage")).toContainText("used 6 fuel");
+    await expect(page.locator("#finishMessage")).toContainText("20 island deliveries");
   });
 });
 function pantrySolution(challenge) {
@@ -135,7 +141,7 @@ test("Pantry Picnic: eight-question rounds exhaust all twenty-four challenges be
   await page.reload(); await expect(page.locator("#bestScore")).not.toHaveText("—");
   expect(errors).toEqual([]);
 });
-test("Compass Cove: landmark clues, wrong-turn feedback and eight distinct treasures",async({page})=>{
+test("Compass Cove: landmark clues, wrong-turn feedback and twenty distinct treasures",async({page})=>{
   await adventure(page,"compass-cove",async()=>{
     await page.locator('[data-map="0"]').click(); await expect(page.locator("#feedback")).toHaveClass(/try/);
     const targets=compassClues.map(clue=>compassTarget(landmarks[clue.landmark],clue));
@@ -148,13 +154,13 @@ test("Compass Cove: landmark clues, wrong-turn feedback and eight distinct treas
     }
   });
 });
-test("Cipher Club: shared keys, incorrect messages, encode and decode eight rounds",async({page})=>{
+test("Cipher Club: shared keys, incorrect messages, encode and decode twenty rounds",async({page})=>{
   await adventure(page,"cipher-club",async()=>{
     await action(page,"Check my message"); await expect(page.locator("#feedback")).toContainText("shared key 1");
     for(let index=0;index<cipherLevels.length;index++) {
       const level=cipherLevels[index];
       for(let turn=0;turn<level.shift;turn++)await page.locator('[data-key="1"]').click();
-      if(index===0) { for(let letter=0;letter<3;letter++)await page.locator('[data-letter="A"]').click(); await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/try/); await action(page,"Clear my answer"); }
+      if(index===0) { for(let letter=0;letter<level.word.length;letter++)await page.locator('[data-letter="A"]').click(); await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/try/); await action(page,"Clear my answer"); }
       const answer=level.encode ? encode(level.word,level.shift) : level.word;
       for(const letter of answer)await page.locator(`[data-letter="${letter}"]`).click();
       await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/good/); await next(page,index===cipherLevels.length-1);
@@ -190,13 +196,61 @@ test("Trade Town: budgets, returns, fees and eight best whole-cost comparisons",
     await expect(page.locator("#finishScore")).toHaveText("100");
   });
 });
-test("Critter Council: listen to requests, move buildings, make room for every neighbor",async({page})=>{
+function townSolution(level) {
+  const ids=townParts.map(part=>part.id);
+  for(let park=0;park<6;park++)for(let hut=0;hut<6;hut++)for(let ramp=0;ramp<6;ramp++)for(let bench=0;bench<6;bench++) {
+    if(new Set([park,hut,ramp,bench]).size<4)continue;
+    const plots=Array(6).fill(null);
+    [park,hut,ramp,bench].forEach((plot,index)=>{plots[plot]=ids[index];});
+    if(checkTownLevel(level,plots).every(Boolean))return plots;
+  }
+  return null;
+}
+test("Critter Council: eighty requests guide twenty levels of inclusive town planning",async({page})=>{
   await adventure(page,"critter-council",async()=>{
     for(const [id,index]of [["park",3],["hut",0],["ramp",1],["bench",5]]) { await page.locator(`[data-tool="${id}"]`).click(); await page.locator(`[data-plot="${index}"]`).click(); }
     await action(page,"Invite the neighbors"); await expect(page.locator("#feedback")).toHaveClass(/try/);
-    for(const [id,index]of [["park",0],["bench",1],["ramp",2],["hut",3]]) { await page.locator(`[data-tool="${id}"]`).click(); await page.locator(`[data-plot="${index}"]`).click(); }
-    await expect(page.locator(".neighbor-requests .met")).toHaveCount(4); await action(page,"Invite the neighbors");
+    const ranks=["Kind Listener","Neighborhood Helper","Access Planner","Council Champion"];
+    for(let round=0;round<townLevels.length;round++) {
+      const solution=townSolution(townLevels[round]);
+      expect(solution).toBeTruthy();
+      await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-level",String(round+1));
+      await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-rank",ranks[Math.floor(round/5)]);
+      for(const [index,id] of solution.entries()) if(id) { await page.locator(`[data-tool="${id}"]`).click(); await page.locator(`[data-plot="${index}"]`).click(); }
+      await expect(page.locator(".neighbor-requests .met")).toHaveCount(4);
+      await action(page,"Invite the neighbors"); await expect(page.locator("#feedback")).toHaveClass(/good/);
+      await next(page,round===townLevels.length-1);
+    }
+    await expect(page.locator("#finishMessage")).toContainText("twenty neighborhoods");
   });
+});
+test("Critter Council center cards stay readable in light and high-contrast modes",async({page})=>{
+  await page.goto("/games/critter-council/index.html");
+  await page.evaluate(()=>window.LarriVerseArcade.setSettings({theme:"light",highContrast:false,largeText:false,reducedMotion:true}));
+  await expect(page.locator("html")).toHaveClass(/larriverse-light/);
+  const readings=await page.evaluate(()=>{
+    const rgb=color=>(color.match(/[\d.]+/g)||[]).slice(0,3).map(Number);
+    const luminance=color=>{
+      const values=rgb(color).map(channel=>{const value=channel/255;return value<=.03928?value/12.92:((value+.055)/1.055)**2.4;});
+      return .2126*values[0]+.7152*values[1]+.0722*values[2];
+    };
+    const ratio=(foreground,background)=>{const a=luminance(foreground),b=luminance(background);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);};
+    return [
+      ["challenge title",".town-challenge-card h2",".town-challenge-card"],
+      ["neighbor name",".neighbor-requests b",".neighbor-requests p"],
+      ["neighbor request",".neighbor-requests small",".neighbor-requests p"],
+      ["building detail",".town-tool-shelf .build-tool small",".town-tool-shelf .build-tool"],
+      ["plot detail",".town-plot small",".town-plot"]
+    ].map(([label,textSelector,surfaceSelector])=>{
+      const foreground=getComputedStyle(document.querySelector(textSelector)).color,surface=getComputedStyle(document.querySelector(surfaceSelector));
+      const stops=surface.backgroundImage.match(/rgb\([^)]+\)/g)||[surface.backgroundColor];
+      return{label,ratio:Math.min(...stops.map(color=>ratio(foreground,color))),foreground,background:surface.backgroundImage};
+    });
+  });
+  for(const reading of readings)expect(reading.ratio,`${reading.label} contrast`).toBeGreaterThanOrEqual(4.5);
+  await page.evaluate(()=>window.LarriVerseArcade.setSettings({highContrast:true}));
+  await expect(page.locator(".neighbor-requests p").first()).toHaveCSS("background-color","rgb(17, 17, 17)");
+  await expect(page.locator(".neighbor-requests small").first()).toHaveCSS("color","rgb(255, 255, 255)");
 });
 test("Eight expeditions remain usable with larger text, high contrast and reduced motion",async({page})=>{
   for(const world of expeditions) {

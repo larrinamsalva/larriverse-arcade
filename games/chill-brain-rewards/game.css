@@ -122,6 +122,21 @@ html:not(.larriverse-dark):not(.larriverse-high-contrast) body:not(.high-contras
   opacity: 1;
 }
 
+html.larriverse-dark body[data-classic="chill-brain-rewards"] .topbar {
+  background: rgba(28, 35, 56, .96);
+  color: #f6f3ff;
+  border-color: #625b80;
+}
+
+html.larriverse-dark body[data-classic="chill-brain-rewards"] .topbar :is(.brand strong, .brand small, .back-link) {
+  color: #f6f3ff;
+}
+
+html:not(.larriverse-dark):not(.larriverse-high-contrast) body[data-classic="chill-brain-rewards"] .primary {
+  background: linear-gradient(135deg, #0b5d49, #087052);
+  color: #fff;
+}
+
 html.larriverse-dark body[data-classic="chill-brain-rewards"] :is(
   .profile-row > div,
   .skill-card,

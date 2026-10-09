@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const catalog = JSON.parse(read('games/catalog.json'));
+const release = JSON.parse(read('release.json'));
 const sdk = read('assets/arcade-sdk.js');
 const shell = read('assets/cabinet-shell.js');
 const accessibility = read('assets/arcade-accessibility.css');
@@ -31,7 +32,7 @@ function check(condition, message) {
   if (!condition) failures.push(message);
 }
 
-check(catalog.length === 30, 'makeover contract expects all 30 preserved cabinets');
+check(catalog.length === release.cabinetCount, 'makeover contract covers every declared cabinet');
 for (const cabinet of catalog) {
   check(sdk.includes(`'${cabinet.id}':`), `Bloom needs contextual guidance for ${cabinet.id}`);
   const html = read(cabinet.href.replace(/^\.\//, ''));
@@ -61,7 +62,7 @@ for (const detail of ['wood-grain', 'bridge-structure', 'bridge-abutment', 'brid
 check(game.includes('trafficSignSvg(item.title)'), 'Traffic Town renders recognizable sign artwork');
 const renderedSigns = trafficQuestions.map(question => trafficSignSvg(question.title));
 const signSymbols = renderedSigns.map(svg => svg.replace(/ aria-label="[^"]+"/, ''));
-check(trafficQuestions.length === 30, 'Traffic Town keeps its complete 30-sign learning set');
+check(trafficQuestions.length === 40, 'Traffic Town keeps its complete 40-sign learning set');
 check(new Set(signSymbols).size === trafficQuestions.length, 'every Traffic Town sign has distinct identifying artwork');
 check(renderedSigns.every(svg => /<svg class="traffic-sign-art"[^>]+role="img"/.test(svg)), 'traffic sign artwork retains accessible image semantics');
 check(renderedSigns.every(svg => svg.includes('sign-depth') && svg.includes('sign-sheen') && svg.includes('sign-ground-shadow')), 'every traffic sign includes depth, reflected light, and a cast shadow');
@@ -70,6 +71,10 @@ check(game.includes('musicStudioSvg()'), 'Beat Builder renders the illustrated s
 check(game.includes('iconSvg("robot", "rover-token")'), 'Robot Rover uses a detailed mechanical rover instead of an emoji');
 check(bubbleGame.includes('CANVAS_THEMES') && bubbleGame.includes('drawShooter'), 'Bubble Resonance has a theme-aware illustrated launcher');
 check(bubbleGame.includes('canvas.dataset.colorMode'), 'Bubble Resonance exposes the resolved canvas color mode for QA');
+check(bubbleGame.includes('const BUBBLE_LEVELS=[') && bubbleGame.includes("['Phi Finale',6,6,4"), 'Bubble Resonance has twenty-stage progression through Phi Finale');
+check(bubbleGame.includes('function bubble(') && bubbleGame.includes('ctx.arc(x,y,r*.94') && !bubbleGame.includes('function hex('), 'Bubble Resonance uses circular bubble artwork instead of hexagons');
+check(bubbleGame.includes("row:{name:'Row Wave'") && bubbleGame.includes("burst:{name:'Star Burst'") && bubbleGame.includes("sweep:{name:'Color Sweep'"), 'Bubble Resonance includes row, neighbor-burst, and matching-number power bubbles');
+check(bubbleGame.includes('POWER_INTERVAL=5') && bubbleGame.includes('function activatePower('), 'Bubble Resonance delivers and activates special bubbles on a predictable cadence');
 check(bubbleCss.includes('html.larriverse-light') && bubbleCss.includes('--bubble-field'), 'Bubble Resonance cabinet has a complete light-theme palette');
 check(chillCss.includes('--chill-ink: #173b32') && chillCss.includes('--chill-copy: #304d45'), 'Chill Brain light cards use a deliberately dark reading palette');
 check(chillCss.includes('.badge.locked span') && chillCss.includes('filter: grayscale(1)') && chillCss.includes('opacity: 1'), 'Chill Brain keeps locked badge labels fully opaque while muting only their icons');

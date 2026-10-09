@@ -7,6 +7,23 @@ export function townNeeds(plots) {
   const park = plots.indexOf("park"), hut = plots.indexOf("hut"), ramp = plots.indexOf("ramp"), bench = plots.indexOf("bench");
   return [park >= 0 && park < 3, hut >= 3, ramp === 2 || ramp === 5, bench >= 0 && park >= 0 && adjacent(bench, park)];
 }
+export function townRequestMet(request, plots) {
+  const index = plots.indexOf(request.part);
+  if (index < 0) return false;
+  const rule = request.rule || {};
+  if (rule.type === "plot") return index === rule.value;
+  if (rule.type === "row") return Math.floor(index / 3) === rule.value;
+  if (rule.type === "column") return index % 3 === rule.value;
+  const other = plots.indexOf(rule.other);
+  if (other < 0) return false;
+  if (rule.type === "adjacent") return adjacent(index, other);
+  if (rule.type === "sameRow") return Math.floor(index / 3) === Math.floor(other / 3);
+  if (rule.type === "differentRow") return Math.floor(index / 3) !== Math.floor(other / 3);
+  return false;
+}
+export function checkTownLevel(level, plots) {
+  return level.requests.map(request => townRequestMet(request, plots));
+}
 export function traceWater(cells) {
   let tile = 10, incoming = 3;
   const seen = [];

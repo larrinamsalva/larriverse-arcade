@@ -25,7 +25,7 @@ test('Game 30 completes a balanced visual safety route and saves local progress'
   await page.keyboard.press('Enter');
 
   const categories = new Map();
-  for (let index = 0; index < 12; index += 1) {
+  for (let index = 0; index < 15; index += 1) {
     const item = await answerCurrent(page, index === 0);
     categories.set(item.category, (categories.get(item.category) || 0) + 1);
     const visual = page.locator('#scenarioVisual svg');
@@ -39,14 +39,15 @@ test('Game 30 completes a balanced visual safety route and saves local progress'
     'Signal lights': 3,
     'Caution signs': 3,
     'Emergency awareness': 3,
-    'Vehicle & road hazards': 3
+    'Vehicle & road hazards': 3,
+    'Roadside caution': 3
   });
   await expect(page.locator('#resultDialog')).toBeVisible();
-  await expect(page.locator('#resultMessage')).toContainText('11 of 12');
+  await expect(page.locator('#resultMessage')).toContainText('14 of 15');
   const saved = await page.evaluate(() => window.LarriVerseArcade.summary().games['street-safety-scout']);
   expect(saved.completions).toBe(1);
-  expect(saved.metrics.safetyStops).toBe(12);
-  expect(saved.metrics.safetyClues).toBe(11);
+  expect(saved.metrics.safetyStops).toBe(15);
+  expect(saved.metrics.safetyClues).toBe(14);
   expect(errors).toEqual([]);
 });
 
@@ -61,7 +62,7 @@ test('scenario decks finish each category cycle before repeating and reflow at 3
 
   for (let routeIndex = 0; routeIndex < 4; routeIndex += 1) {
     const route = [];
-    for (let index = 0; index < 12; index += 1) {
+    for (let index = 0; index < 15; index += 1) {
       const item = await answerCurrent(page);
       route.push(item);
       await page.locator('#nextButton').click();

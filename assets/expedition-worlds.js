@@ -1,12 +1,12 @@
 export const expeditions = [
-  { id: "bridge-buddies", title: "Bridge Buddies", icon: "🌉", topic: "Build & create", category: "Little engineers", age: "8+", minutes: "7 min", art: 0, mode: "bridge", skill: "Test, improve, try again", desc: "Build bridges for eight different crossings and discover which supports fit each load.", mission: "Build four bridge spans within each token budget. Test every crossing, learn from weak spots, and help eight carts get across.", take: "Choose the right support for the job. Test a small model, notice what happened, and change one thing at a time." },
-  { id: "water-works", title: "Water Works", icon: "💧", topic: "Planet", category: "Flow & resources", age: "7+", minutes: "7 min", art: 1, mode: "pipes", skill: "See how a system connects", desc: "Turn the pipes. Follow eight different flow paths. Bring water through the toy filter to town.", mission: "Rotate the blue pipes to connect the reservoir on the left to the house on the right. Pass through the toy filter in all eight networks.", take: "Trace a problem from its starting point and check each connection. This toy filter does not make real water safe to drink." },
-  { id: "harbor-helpers", title: "Harbor Helpers", icon: "⛵", topic: "Adventures", category: "Cooperative adventures", age: "8+", minutes: "5 min", art: 2, mode: "harbor", skill: "Plan deliveries together", desc: "Load your boat and help three island communities share supplies.", mission: "Deliver nine crates to three islands. Your boat holds three crates and has twelve fuel tokens. Check what each island needs before sailing.", take: "A useful delivery starts with listening. Plan loads and routes together so supplies reach the neighbors who asked for them." },
+  { id: "bridge-buddies", title: "Bridge Buddies", icon: "🌉", topic: "Build & create", category: "Little engineers", age: "8+", minutes: "12 min", art: 0, mode: "bridge", skill: "Test, improve, try again", desc: "Advance through twenty different crossings and discover which realistic supports fit each load.", mission: "Build four bridge spans within each token budget. Move through four builder ranks, learn from weak spots, and help twenty cargo trucks cross.", take: "Choose the right support for the job. Test a small model, notice what happened, and change one thing at a time." },
+  { id: "water-works", title: "Water Works", icon: "💧", topic: "Planet", category: "Flow & resources", age: "7+", minutes: "12 min", art: 1, mode: "pipes", skill: "See how a system connects", desc: "Turn the pipes through twenty advancing flow puzzles and bring water through the toy filter to town.", mission: "Rotate each pipe network from the reservoir to town. Pass through the toy filter while advancing from Flow Finder to Waterworks Master.", take: "Trace a problem from its starting point and check each connection. This toy filter does not make real water safe to drink." },
+  { id: "harbor-helpers", title: "Harbor Helpers", icon: "⛵", topic: "Adventures", category: "Cooperative adventures", age: "8+", minutes: "12 min", art: 2, mode: "harbor", skill: "Plan deliveries together", desc: "Load your boat for twenty advancing island deliveries and bring each community exactly what it requested.", mission: "Read each island request, choose the matching crates, stay within the boat limit, and advance through twenty harbor routes.", take: "A useful delivery starts with listening. Plan loads and routes together so supplies reach the neighbors who asked for them." },
   { id: "pantry-picnic", title: "Pantry Picnic", icon: "🥪", topic: "Everyday life", category: "Little life skills", age: "7+", minutes: "7 min", art: 3, mode: "pantry", skill: "Use what you already have", desc: "Solve eight colorful picnic challenges from a rotating bank of twenty-four pantry plans.", mission: "Pack eight pretend picnic boxes, each with one main and two produce portions. Follow each request, use marked leftovers first, and meet all twenty-four challenges before they repeat.", take: "Check what you already have before getting more. Planning portions can reduce waste; ask an adult about allergies, food preparation, and safe storage." },
-  { id: "compass-cove", title: "Compass Cove", icon: "🧭", topic: "Adventures", category: "Map adventures", age: "7+", minutes: "6 min", art: 4, mode: "compass", skill: "Read landmarks and directions", desc: "Explore a tiny island with a compass, a map, and eight hidden treasures.", mission: "Find eight treasures by following clues from island landmarks. North is up, east is right, south is down, and west is left on this map.", take: "Start from a landmark you can identify. A map and a compass help you explain a route and check where a direction will take you." },
-  { id: "cipher-club", title: "Cipher Club", icon: "🔎", topic: "Digital life", category: "Secret-code workshop", age: "8+", minutes: "6 min", art: 5, mode: "cipher", skill: "Make meaning with a shared key", desc: "Turn the code wheel and solve eight tiny secret messages for your clubhouse.", mission: "Use the toy A–H alphabet and a shared number key to encode or decode eight three-letter clubhouse messages. The alphabet wraps around after H.", take: "A shared rule can change how a message looks. This tiny code is easy to break and must never be used to protect passwords or real secrets." },
+  { id: "compass-cove", title: "Compass Cove", icon: "🧭", topic: "Adventures", category: "Map adventures", age: "7+", minutes: "12 min", art: 4, mode: "compass", skill: "Read landmarks and directions", desc: "Explore a tiny island through twenty advancing compass clues and hidden treasures.", mission: "Find twenty treasures by following clues from island landmarks. Advance from Shore Scout to Master Navigator while north stays up on the map.", take: "Start from a landmark you can identify. A map and a compass help you explain a route and check where a direction will take you." },
+  { id: "cipher-club", title: "Cipher Club", icon: "🔎", topic: "Digital life", category: "Secret-code workshop", age: "8+", minutes: "12 min", art: 5, mode: "cipher", skill: "Make meaning with a shared key", desc: "Turn the code wheel and solve twenty messages that grow from three to five letters.", mission: "Use the toy A–H alphabet and a shared number key to encode or decode twenty clubhouse messages. Advance through four code ranks as the words grow longer.", take: "A shared rule can change how a message looks. This tiny code is easy to break and must never be used to protect passwords or real secrets." },
   { id: "trade-town", title: "Trade Town", icon: "🪙", topic: "Money", category: "Smart shopping", age: "8+", minutes: "7 min", art: 6, mode: "trade", skill: "Compare the whole deal", desc: "Visit the market for eight shopping challenges and compare bundles, prices, and extra fees.", mission: "Fill eight shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.", take: "The biggest pack is not always the best fit. Compare the whole cost, including fees, with how much you actually need." },
-  { id: "critter-council", title: "Critter Council", icon: "🌱", topic: "People", category: "Community builders", age: "8+", minutes: "5 min", art: 7, mode: "town", skill: "Design for different needs", desc: "Build a woodland town where every little neighbor feels welcome.", mission: "Listen to four neighbors. Place a shaded park, quiet reading hut, step-free ramp, and bench near the park on six plots using twelve builder tokens.", take: "People can need different things from the same place. Ask, listen, and design so more neighbors can take part comfortably." },
+  { id: "critter-council", title: "Critter Council", icon: "🌱", topic: "People", category: "Community builders", age: "8+", minutes: "12 min", art: 7, mode: "town", skill: "Design for different needs", desc: "Listen to eighty neighbor requests while building twenty welcoming woodland neighborhoods.", mission: "Advance through twenty town-planning levels. Place a shaded park, quiet reading hut, step-free ramp, and bench so every set of four neighbor requests is met.", take: "People can need different things from the same place. Ask, listen, and design so more neighbors can take part comfortably." },
 ].map(world => ({ ...world, artSet: "expedition" }));
 
 export const bridgeParts = [
@@ -23,6 +23,18 @@ export const bridgeLevels = [
   { name: "River crossing", loads: [9, 4, 6, 2], budget: 13, scene: "river", vehicle: "water", landmark: "drop", cargo: "Water barrels" },
   { name: "Night crossing", loads: [5, 8, 3, 7], budget: 14, scene: "night", vehicle: "lanterns", landmark: "star", cargo: "Night lanterns" },
   { name: "Parade crossing", loads: [7, 9, 6, 3], budget: 13, scene: "parade", vehicle: "parade", landmark: "music", cargo: "Parade decorations" },
+  { name: "Mountain pass", loads: [4, 9, 6, 8], budget: 14, scene: "mountain", vehicle: "tools", landmark: "mountain", cargo: "Repair tools" },
+  { name: "Farm road bridge", loads: [3, 7, 5, 9], budget: 13, scene: "farm", vehicle: "harvest", landmark: "seed", cargo: "Harvest crates" },
+  { name: "Coastal mail span", loads: [8, 6, 4, 7], budget: 14, scene: "coast", vehicle: "mail", landmark: "lighthouse", cargo: "Island mail bags" },
+  { name: "School creek bridge", loads: [5, 3, 8, 6], budget: 13, scene: "school", vehicle: "science", landmark: "book", cargo: "Science kits" },
+  { name: "Canyon trail crossing", loads: [9, 7, 3, 5], budget: 14, scene: "canyon", vehicle: "bikes", landmark: "rock", cargo: "Trail bicycles" },
+  { name: "Snowmelt crossing", loads: [6, 4, 9, 7], budget: 14, scene: "snow", vehicle: "blankets", landmark: "mountain", cargo: "Warm blankets" },
+  { name: "Solar field span", loads: [7, 5, 8, 3], budget: 13, scene: "solar", vehicle: "solar", landmark: "sun", cargo: "Solar panels" },
+  { name: "Orchard bridge", loads: [3, 8, 6, 9], budget: 14, scene: "orchard", vehicle: "orchard", landmark: "apple", cargo: "Orchard baskets" },
+  { name: "Harbor rescue span", loads: [9, 6, 4, 8], budget: 14, scene: "harbor", vehicle: "rescue", landmark: "lighthouse", cargo: "Rescue supplies" },
+  { name: "Community art walk", loads: [4, 5, 7, 9], budget: 14, scene: "art", vehicle: "art", landmark: "star", cargo: "Community artwork" },
+  { name: "Sports park crossing", loads: [8, 9, 5, 6], budget: 14, scene: "sports", vehicle: "sports", landmark: "star", cargo: "Sports equipment" },
+  { name: "Sunrise finale bridge", loads: [9, 8, 7, 9], budget: 16, scene: "sunrise", vehicle: "celebration", landmark: "sun", cargo: "Celebration lights" },
 ];
 export const pipePaths = [
   [10,11,6,7,12,13,18,19,14],
@@ -33,19 +45,50 @@ export const pipePaths = [
   [10,15,16,17,18,13,12,7,8,9,14],
   [10,11,16,21,22,17,12,7,8,13,14],
   [10,5,0,1,6,7,12,17,22,23,18,19,14],
+  [10,11,12,13,14],
+  [10,11,12,13,18,19,14],
+  [10,11,12,13,8,9,14],
+  [10,11,12,17,18,13,14],
+  [10,11,12,7,8,13,14],
+  [10,11,16,17,12,13,14],
+  [10,5,6,11,12,13,14],
+  [10,15,16,17,12,13,14],
+  [10,11,12,13,18,23,24,19,14],
+  [10,11,12,13,8,3,4,9,14],
+  [10,11,12,17,22,23,18,13,14],
+  [10,11,12,7,2,3,4,9,14],
 ];
 export const directions = ["north", "east", "south", "west"];
 
-export const islands = [
-  { name: "Sprout Island", fuel: 1, needs: { water: 2, seeds: 1 } },
-  { name: "Workshop Island", fuel: 2, needs: { wood: 2, seeds: 1 } },
-  { name: "Story Island", fuel: 3, needs: { books: 2, wood: 1 } },
-];
 export const cargo = [
-  { id: "water", name: "Water", icon: "drop", count: 2 },
-  { id: "seeds", name: "Seeds", icon: "seed", count: 2 },
-  { id: "wood", name: "Wood", icon: "wood", count: 3 },
-  { id: "books", name: "Books", icon: "book", count: 2 },
+  { id: "water", name: "Water barrels", icon: "drop", count: 4 },
+  { id: "seeds", name: "Seed boxes", icon: "seed", count: 4 },
+  { id: "wood", name: "Lumber", icon: "wood", count: 4 },
+  { id: "books", name: "Book crates", icon: "book", count: 4 },
+  { id: "food", name: "Food baskets", icon: "bread", count: 4 },
+  { id: "tools", name: "Tool cases", icon: "metal", count: 4 },
+];
+export const harborLevels = [
+  { name: "Sprout Island", icon: "tree", fuel: 1, capacity: 3, needs: { water: 2, seeds: 1 } },
+  { name: "Workshop Island", icon: "hut", fuel: 2, capacity: 3, needs: { wood: 2, tools: 1 } },
+  { name: "Story Island", icon: "lighthouse", fuel: 3, capacity: 3, needs: { books: 2, wood: 1 } },
+  { name: "Beacon Point", icon: "lighthouse", fuel: 2, capacity: 3, needs: { water: 1, books: 1 } },
+  { name: "Orchard Key", icon: "apple", fuel: 2, capacity: 3, needs: { seeds: 2, food: 1 } },
+  { name: "Maker Bay", icon: "metal", fuel: 3, capacity: 3, needs: { tools: 1, wood: 1, books: 1 } },
+  { name: "Turtle Beach", icon: "drop", fuel: 2, capacity: 3, needs: { water: 1, food: 2 } },
+  { name: "Library Isle", icon: "book", fuel: 3, capacity: 3, needs: { books: 2, food: 1 } },
+  { name: "Garden Key", icon: "seed", fuel: 2, capacity: 3, needs: { seeds: 1, water: 1, tools: 1 } },
+  { name: "Festival Harbor", icon: "music", fuel: 3, capacity: 3, needs: { food: 1, wood: 2 } },
+  { name: "Mountain Dock", icon: "mountain", fuel: 4, capacity: 4, needs: { water: 2, food: 1, books: 1 } },
+  { name: "Sunflower Island", icon: "sun", fuel: 3, capacity: 4, needs: { seeds: 2, tools: 1, wood: 1 } },
+  { name: "Rainwater Cay", icon: "drop", fuel: 4, capacity: 4, needs: { books: 1, water: 2, tools: 1 } },
+  { name: "Picnic Point", icon: "bread", fuel: 2, capacity: 4, needs: { food: 2, books: 1, seeds: 1 } },
+  { name: "Builder Reef", icon: "wood", fuel: 4, capacity: 4, needs: { wood: 2, water: 1, tools: 1 } },
+  { name: "Seedling Shore", icon: "tree", fuel: 3, capacity: 4, needs: { seeds: 2, food: 2 } },
+  { name: "Repair Point", icon: "metal", fuel: 4, capacity: 4, needs: { tools: 2, books: 1, water: 1 } },
+  { name: "Learning Cove", icon: "book", fuel: 3, capacity: 4, needs: { books: 2, seeds: 1, food: 1 } },
+  { name: "Community Key", icon: "market", fuel: 4, capacity: 4, needs: { water: 1, wood: 1, food: 1, tools: 1 } },
+  { name: "Celebration Harbor", icon: "star", fuel: 4, capacity: 4, needs: { water: 1, seeds: 1, books: 1, tools: 1 } },
 ];
 export const pantryFoods = [
   { id: "bread", name: "Bread sandwich", group: "main", icon: "bread" },
@@ -241,10 +284,16 @@ export const landmarks = [
   { id: 14, name: "Fountain", icon: "drop" },
 ];
 export const compassClues = [
-  { landmark: 0, east: 2, south: -3 }, { landmark: 1, east: -2, south: 2 },
-  { landmark: 2, east: 4, south: -1 }, { landmark: 3, east: -1, south: -2 },
-  { landmark: 4, east: 3, south: 2 }, { landmark: 0, east: 4, south: -4 },
-  { landmark: 1, east: -4, south: 3 }, { landmark: 2, east: 2, south: 2 },
+  { landmark: 0, east: 1, south: -1 }, { landmark: 1, east: -1, south: 1 },
+  { landmark: 2, east: 1, south: -1 }, { landmark: 3, east: 1, south: -1 },
+  { landmark: 4, east: -1, south: -1 }, { landmark: 0, east: 2, south: -2 },
+  { landmark: 1, east: -2, south: 2 }, { landmark: 2, east: 2, south: 2 },
+  { landmark: 3, east: -2, south: -2 }, { landmark: 4, east: 2, south: 2 },
+  { landmark: 0, east: 4, south: -3 }, { landmark: 1, east: -4, south: 3 },
+  { landmark: 2, east: 5, south: -2 }, { landmark: 3, east: 3, south: -2 },
+  { landmark: 4, east: 3, south: 1 }, { landmark: 0, east: 3, south: -4 },
+  { landmark: 1, east: -5, south: 5 }, { landmark: 2, east: 5, south: 1 },
+  { landmark: 3, east: -2, south: -4 }, { landmark: 4, east: 3, south: 3 },
 ];
 
 export const cipherLevels = [
@@ -252,6 +301,12 @@ export const cipherLevels = [
   { shift: 3, word: "DAD", encode: true }, { shift: 5, word: "BEE", encode: false },
   { shift: 7, word: "CAB", encode: true }, { shift: 4, word: "FAD", encode: false },
   { shift: 6, word: "EGG", encode: true }, { shift: 1, word: "HAD", encode: false },
+  { shift: 2, word: "AGE", encode: true }, { shift: 3, word: "BAD", encode: false },
+  { shift: 4, word: "BAG", encode: true }, { shift: 5, word: "FEE", encode: false },
+  { shift: 6, word: "FACE", encode: true }, { shift: 7, word: "CAGE", encode: false },
+  { shift: 1, word: "BEAD", encode: true }, { shift: 2, word: "HEAD", encode: false },
+  { shift: 3, word: "FADE", encode: true }, { shift: 4, word: "FEED", encode: false },
+  { shift: 5, word: "BADGE", encode: true }, { shift: 6, word: "BEACH", encode: false },
 ];
 export const tradeLevels = [
   { name: "Apples for the picnic", icon: "apple", need: 6, budget: 8, deals: [
@@ -282,4 +337,208 @@ export const tradeLevels = [
 export const townParts = [
   { id: "park", name: "Shaded park", cost: 4, icon: "tree" }, { id: "hut", name: "Reading hut", cost: 4, icon: "hut" },
   { id: "ramp", name: "Step-free ramp", cost: 3, icon: "ramp" }, { id: "bench", name: "Bench", cost: 1, icon: "bench" },
+];
+
+const townRequest = (neighbor, part, text, rule) => ({ neighbor, part, text, rule });
+export const townLevels = [
+  {
+    id: "welcome-grove", name: "Welcome Grove", intro: "The first council wants shade, quiet, river access, and a friendly resting place.",
+    celebration: "Welcome Grove now gives every neighbor a comfortable way to join in.", budget: 12,
+    requests: [
+      townRequest("Moss", "park", "Please put the park in the shaded top row.", { type: "row", value: 0 }),
+      townRequest("Pip", "hut", "My reading hut belongs in the quiet bottom row.", { type: "row", value: 1 }),
+      townRequest("Tess", "ramp", "Place the step-free ramp beside the river in the right column.", { type: "column", value: 2 }),
+      townRequest("Bram", "bench", "I would like the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "river-reading", name: "River Reading Row", intro: "This neighborhood is planning a cool lower garden and a riverside reading nook.",
+    celebration: "River Reading Row balances a calm book corner with an easy route to the water.", budget: 12,
+    requests: [
+      townRequest("Fern", "park", "Keep the park in the bottom row where the garden is coolest.", { type: "row", value: 1 }),
+      townRequest("Otis", "hut", "I want the reading hut in the river-side right column.", { type: "column", value: 2 }),
+      townRequest("Luma", "ramp", "Build the ramp somewhere in the top row.", { type: "row", value: 0 }),
+      townRequest("Nib", "bench", "Set the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "market-meadow", name: "Market Meadow", intro: "The market neighbors have chosen exact center plots for their busiest shared spaces.",
+    celebration: "Market Meadow has a clear center, a river route, and a shaded place to pause.", budget: 12,
+    requests: [
+      townRequest("Clover", "park", "Please use top-center plot 2 for the park.", { type: "plot", value: 1 }),
+      townRequest("Reed", "hut", "The reading hut should be on bottom-center plot 5.", { type: "plot", value: 4 }),
+      townRequest("Ari", "ramp", "Keep the ramp in the river-side right column.", { type: "column", value: 2 }),
+      townRequest("Juniper", "bench", "Put the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "lantern-lane", name: "Lantern Lane", intro: "Lantern Lane needs a central gathering space and a quiet corner for stories.",
+    celebration: "Lantern Lane is ready for peaceful reading and bright community evenings.", budget: 12,
+    requests: [
+      townRequest("Ember", "park", "Make bottom-center plot 5 our gathering park.", { type: "plot", value: 4 }),
+      townRequest("Sage", "hut", "Place the reading hut on top-left plot 1.", { type: "plot", value: 0 }),
+      townRequest("Wren", "ramp", "The ramp needs to stay in the right river column.", { type: "column", value: 2 }),
+      townRequest("Flicker", "bench", "Keep the bench one plot away from the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "story-circle", name: "Story Circle", intro: "A sunny river overlook will become a place for stories, rest, and easy movement.",
+    celebration: "Story Circle now connects shade, books, rest, and access in one welcoming plan.", budget: 12,
+    requests: [
+      townRequest("Acorn", "park", "Use top-right plot 3 for the shaded park.", { type: "plot", value: 2 }),
+      townRequest("Mira", "hut", "The reading hut needs the quiet bottom row.", { type: "row", value: 1 }),
+      townRequest("Sol", "ramp", "Place the ramp on bottom-right plot 6.", { type: "plot", value: 5 }),
+      townRequest("Tumble", "bench", "Put the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "creek-corner", name: "Creek Corner", intro: "The second council rank begins with connected routes between the left path and quiet row.",
+    celebration: "Creek Corner has a connected layout that makes gathering and moving easier.", budget: 12,
+    requests: [
+      townRequest("Pebble", "park", "Keep the park in the left column near the trail.", { type: "column", value: 0 }),
+      townRequest("Ivy", "hut", "My hut belongs in the quiet bottom row.", { type: "row", value: 1 }),
+      townRequest("Rue", "ramp", "Build the ramp directly beside the reading hut.", { type: "adjacent", other: "hut" }),
+      townRequest("Chip", "bench", "Place the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "hilltop-hollow", name: "Hilltop Hollow", intro: "Neighbors want the lively and quiet spaces on different rows with short connections.",
+    celebration: "Hilltop Hollow separates busy and quiet spaces while keeping every path close.", budget: 12,
+    requests: [
+      townRequest("Poppy", "park", "Put the park in the shaded top row.", { type: "row", value: 0 }),
+      townRequest("Ash", "hut", "Keep the hut on the other row from the park.", { type: "differentRow", other: "park" }),
+      townRequest("Kite", "ramp", "Place the ramp directly beside the park.", { type: "adjacent", other: "park" }),
+      townRequest("Mallow", "bench", "Set the bench directly beside the reading hut.", { type: "adjacent", other: "hut" }),
+    ],
+  },
+  {
+    id: "meadow-middle", name: "Meadow Middle", intro: "This plan uses the middle column as a community spine between two quieter edges.",
+    celebration: "Meadow Middle has a strong center and clear access from both sides.", budget: 12,
+    requests: [
+      townRequest("Dew", "park", "Keep the park in the center column.", { type: "column", value: 1 }),
+      townRequest("Quill", "hut", "Use top-left plot 1 for the reading hut.", { type: "plot", value: 0 }),
+      townRequest("Brook", "ramp", "The ramp must be in the river-side right column.", { type: "column", value: 2 }),
+      townRequest("Hazel", "bench", "Place the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "library-path", name: "Library Path", intro: "The library path needs a clear top-row rest stop and a lower river entrance.",
+    celebration: "Library Path now has an easy-to-follow route from rest to reading.", budget: 12,
+    requests: [
+      townRequest("Maple", "park", "Place the park on top-left plot 1.", { type: "plot", value: 0 }),
+      townRequest("Ink", "hut", "Keep the reading hut in the bottom row.", { type: "row", value: 1 }),
+      townRequest("Skip", "ramp", "Use bottom-right plot 6 for the ramp.", { type: "plot", value: 5 }),
+      townRequest("Page", "bench", "Keep the bench on the same row as the park.", { type: "sameRow", other: "park" }),
+    ],
+  },
+  {
+    id: "sunset-bank", name: "Sunset Bank", intro: "The river overlook needs a lower park, a top reading area, and a nearby resting place.",
+    celebration: "Sunset Bank gives every neighbor a comfortable view and a clear way through.", budget: 12,
+    requests: [
+      townRequest("Goldie", "park", "Make bottom-right plot 6 the sunset park.", { type: "plot", value: 5 }),
+      townRequest("Moon", "hut", "Keep the reading hut in the top row.", { type: "row", value: 0 }),
+      townRequest("Drift", "ramp", "Place the ramp on the same row as the hut.", { type: "sameRow", other: "hut" }),
+      townRequest("Glow", "bench", "Put the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "access-square", name: "Access Square", intro: "Now an Access Planner, you will connect exact gathering spots with flexible routes.",
+    celebration: "Access Square makes the busy corner reachable while protecting a quiet reading row.", budget: 12,
+    requests: [
+      townRequest("Birch", "park", "Use top-left plot 1 for the park.", { type: "plot", value: 0 }),
+      townRequest("Echo", "hut", "Place the hut somewhere in the bottom row.", { type: "row", value: 1 }),
+      townRequest("Rill", "ramp", "Keep the ramp on the same row as the hut.", { type: "sameRow", other: "hut" }),
+      townRequest("Nook", "bench", "Set the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "river-garden", name: "River Garden", intro: "Two exact landmarks anchor this garden while the ramp and bench complete the route.",
+    celebration: "River Garden now links its center lawn and reading overlook without blocking access.", budget: 12,
+    requests: [
+      townRequest("Thyme", "park", "Put the park on bottom-center plot 5.", { type: "plot", value: 4 }),
+      townRequest("Finch", "hut", "Place the reading hut on top-right plot 3.", { type: "plot", value: 2 }),
+      townRequest("Ripple", "ramp", "Keep the ramp in the river-side right column.", { type: "column", value: 2 }),
+      townRequest("Basil", "bench", "Place the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "friendship-green", name: "Friendship Green", intro: "This council wants the park centered above a lower quiet corner and an opposite-row rest stop.",
+    celebration: "Friendship Green has distinct spaces that still feel connected.", budget: 12,
+    requests: [
+      townRequest("Lark", "park", "Use top-center plot 2 for the park.", { type: "plot", value: 1 }),
+      townRequest("Mossy", "hut", "Place the hut on bottom-left plot 4.", { type: "plot", value: 3 }),
+      townRequest("Skim", "ramp", "Build the ramp on top-right plot 3.", { type: "plot", value: 2 }),
+      townRequest("Daisy", "bench", "Keep the bench on the other row from the park.", { type: "differentRow", other: "park" }),
+    ],
+  },
+  {
+    id: "festival-clearing", name: "Festival Clearing", intro: "Festival paths work best when gathering, access, and resting spaces share clear relationships.",
+    celebration: "Festival Clearing is ready for a lively event with quiet space still protected.", budget: 12,
+    requests: [
+      townRequest("Fiddle", "park", "Use bottom-left plot 4 for the park.", { type: "plot", value: 3 }),
+      townRequest("Verse", "hut", "Place the reading hut on top-center plot 2.", { type: "plot", value: 1 }),
+      townRequest("Tempo", "ramp", "Keep the ramp on the same row as the park.", { type: "sameRow", other: "park" }),
+      townRequest("Chime", "bench", "Put the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "sunrise-steps", name: "Sunrise Steps", intro: "A sunrise park above the river needs a lower access point and a close bench.",
+    celebration: "Sunrise Steps welcomes early readers, quiet visitors, and neighbors using the ramp.", budget: 12,
+    requests: [
+      townRequest("Sunny", "park", "Put the park on top-right plot 3.", { type: "plot", value: 2 }),
+      townRequest("Umber", "hut", "Place the reading hut on bottom-left plot 4.", { type: "plot", value: 3 }),
+      townRequest("Current", "ramp", "Use bottom-right plot 6 for the ramp.", { type: "plot", value: 5 }),
+      townRequest("Ray", "bench", "Set the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "makers-meadow", name: "Makers Meadow", intro: "Council Champions combine exact landmarks with relative requests from several neighbors.",
+    celebration: "Makers Meadow has a flexible plan where creating, reading, and resting can happen together.", budget: 12,
+    requests: [
+      townRequest("Tinker", "park", "Use bottom-center plot 5 for the park.", { type: "plot", value: 4 }),
+      townRequest("Scroll", "hut", "Place the hut on top-left plot 1.", { type: "plot", value: 0 }),
+      townRequest("Glide", "ramp", "Keep the ramp on the other row from the park.", { type: "differentRow", other: "park" }),
+      townRequest("Rest", "bench", "Put the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "blossom-crossing", name: "Blossom Crossing", intro: "Two different neighbors need their routes directly connected to the same central park.",
+    celebration: "Blossom Crossing gives both resting and step-free routes a direct park connection.", budget: 12,
+    requests: [
+      townRequest("Bloom", "park", "Make top-center plot 2 the park.", { type: "plot", value: 1 }),
+      townRequest("Tale", "hut", "Put the reading hut on bottom-right plot 6.", { type: "plot", value: 5 }),
+      townRequest("Wheel", "ramp", "Build the ramp directly beside the park.", { type: "adjacent", other: "park" }),
+      townRequest("Petal", "bench", "Place the bench directly beside the park too.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "quiet-creek", name: "Quiet Creek", intro: "A diagonal plan can still feel connected when every important destination has a nearby partner.",
+    celebration: "Quiet Creek now joins reading, access, gathering, and rest without crowding one corner.", budget: 12,
+    requests: [
+      townRequest("Willow", "park", "Use bottom-left plot 4 for the park.", { type: "plot", value: 3 }),
+      townRequest("Hush", "hut", "Put the reading hut on top-right plot 3.", { type: "plot", value: 2 }),
+      townRequest("Ford", "ramp", "Place the ramp directly beside the reading hut.", { type: "adjacent", other: "hut" }),
+      townRequest("Pause", "bench", "Set the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "starlight-bank", name: "Starlight Bank", intro: "The evening council wants two top-row services above a river park and its bench.",
+    celebration: "Starlight Bank is easy to navigate in a simple two-row plan.", budget: 12,
+    requests: [
+      townRequest("Nova", "park", "Use bottom-right plot 6 for the park.", { type: "plot", value: 5 }),
+      townRequest("Fable", "hut", "Place the hut on top-left plot 1.", { type: "plot", value: 0 }),
+      townRequest("Comet", "ramp", "Keep the ramp on the same row as the hut.", { type: "sameRow", other: "hut" }),
+      townRequest("Twinkle", "bench", "Put the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
+  {
+    id: "council-commons", name: "Council Commons", intro: "The final plan combines exact places and two different neighbor-to-neighbor connections.",
+    celebration: "Council Commons is complete. You listened to eighty requests across twenty welcoming neighborhoods!", budget: 12,
+    requests: [
+      townRequest("Harmony", "park", "Make bottom-center plot 5 the council park.", { type: "plot", value: 4 }),
+      townRequest("Reader", "hut", "Place the reading hut on top-right plot 3.", { type: "plot", value: 2 }),
+      townRequest("Access", "ramp", "Build the ramp directly beside the reading hut.", { type: "adjacent", other: "hut" }),
+      townRequest("Welcome", "bench", "Set the bench directly beside the park.", { type: "adjacent", other: "park" }),
+    ],
+  },
 ];

@@ -252,13 +252,22 @@ test('Bubble Resonance fills the play area, settles shallow bank shots, and keep
     Math.random = () => ((calls++ % 6) + .25) / 6;
   });
   await page.goto('/games/bubble-resonance-phi369/index.html');
-  await expect(page.locator('#legend span')).toHaveCount(6);
+  await expect(page.locator('#legend .number-legend span')).toHaveCount(6);
+  await expect(page.locator('#legend .power-legend span')).toHaveCount(3);
+  await expect(page.locator('#legend .power-legend')).toContainText('Row Wave');
+  await expect(page.locator('#legend .power-legend')).toContainText('Star Burst');
+  await expect(page.locator('#legend .power-legend')).toContainText('Color Sweep');
   await expect(page.locator('#bubbleStatus')).toContainText('Match the numbers');
   await expect(page.locator('#sound')).toHaveAttribute('aria-pressed', 'false');
   await expect(page.locator('#limit')).toHaveText('CLEAR');
   const bubbleSource = fs.readFileSync('games/bubble-resonance-phi369/game.js', 'utf8');
   expect(bubbleSource).not.toContain('grid[7].fill(null)');
   expect(bubbleSource).toContain('grid[ROWS-1].some(Boolean)');
+  expect(bubbleSource).toContain('function bubble(');
+  expect(bubbleSource).toContain('ctx.arc(x,y,r*.94');
+  expect(bubbleSource).not.toContain('function hex(');
+  await expect(page.locator('#level')).toHaveText('1 / 20');
+  await expect(page.locator('#levelName')).toHaveText('First Ripple');
 
   const widthUse = await page.locator('#game').evaluate(node => {
     const canvas = node.getBoundingClientRect();
@@ -323,19 +332,30 @@ test('Bubble Resonance shooter and cabinet follow light and dark color modes', a
   expect(light.fieldBackground).not.toBe(dark.fieldBackground);
 });
 
-test('Bubble Resonance declares a real win when the board is cleared', async ({ page }) => {
+test('Bubble Resonance advances through twenty round-bubble levels before declaring a win', async ({ page }) => {
+  test.setTimeout(60_000);
   await page.addInitScript(() => { Math.random = () => .01; });
   await page.goto('/games/bubble-resonance-phi369/index.html');
   await expect(page.locator('#limit')).toHaveText('CLEAR');
 
   const game = page.locator('#game');
   const box = await game.boundingBox();
-  await game.click({ position: { x: box.width * .5, y: box.height * .35 } });
-  await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
-  await expect(page.locator('#limit')).toHaveText('WIN', { timeout: 5000 });
-  await expect(page.locator('#message')).toContainText('BOARD CLEARED');
-  await expect(page.locator('#message')).toContainText('you win');
-  await expect(page.locator('#reset')).toHaveText('Play again');
+  for(let level=1;level<=20;level++) {
+    await expect(page.locator('#level')).toHaveText(`${level} / 20`);
+    await game.click({ position: { x: box.width * .5, y: box.height * .35 } });
+    await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
+    await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false', { timeout: 5000 });
+    if(level<20) {
+      await expect(page.locator('#limit')).toHaveText('NEXT');
+      await expect(page.locator('#message')).toContainText(`LEVEL ${level} CLEAR`);
+      await expect(page.locator('#reset')).toHaveText(`Continue to level ${level+1}`);
+      await page.locator('#reset').click();
+    }
+  }
+  await expect(page.locator('#limit')).toHaveText('WIN');
+  await expect(page.locator('#message')).toContainText('ALL 20 LEVELS CLEARED');
+  await expect(page.locator('#message')).toContainText('round bubble');
+  await expect(page.locator('#reset')).toHaveText('Play all 20 again');
   await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false');
 
   const result = await page.evaluate(() => window.LarriVerseArcade.summary().games['bubble-resonance-phi369']);
@@ -345,7 +365,7 @@ test('Bubble Resonance declares a real win when the board is cleared', async ({ 
 test('Bubble Resonance adds and animates a fresh top row after five misses', async ({ page }) => {
   await page.addInitScript(() => {
     let calls = 0;
-    Math.random = () => (++calls <= 96 ? .01 : .2);
+    Math.random = () => (++calls <= 96 ? .01 : .5);
   });
   await page.goto('/games/bubble-resonance-phi369/index.html');
   await expect(page.locator('#dropIn')).toHaveText('5');
@@ -361,12 +381,34 @@ test('Bubble Resonance adds and animates a fresh top row after five misses', asy
 
   await expect(page.locator('#dropIn')).toHaveText('5');
   await expect(page.locator('#message')).toContainText('CEILING DROP');
+  await expect(page.locator('#bubbleStatus')).toContainText('Row Wave power');
   await expect(page.locator('#limit')).toHaveText('CLEAR');
 
   const bubbleSource = fs.readFileSync('games/bubble-resonance-phi369/game.js', 'utf8');
   expect(bubbleSource).toContain('Fresh bubbles are moving the field down one row');
   expect(bubbleSource).toContain('dropOffset=-HEX');
   expect(bubbleSource).toContain('for(let c=0;c<COLS;c++)shifted[0][c]');
+});
+
+test('Bubble Resonance power bubbles activate a visible field-clearing effect', async ({ page }) => {
+  await page.addInitScript(() => {
+    let calls = 0;
+    Math.random = () => (++calls <= 96 ? .01 : .5);
+  });
+  await page.goto('/games/bubble-resonance-phi369/index.html');
+  const game = page.locator('#game');
+  const box = await game.boundingBox();
+  for (const fraction of [.1, .3, .5, .7, .9]) {
+    await game.click({ position: { x: box.width * fraction, y: box.height * .35 } });
+    await expect(game).toHaveAttribute('aria-busy', 'true');
+    await expect(game).toHaveAttribute('aria-busy', 'false', { timeout: 5000 });
+  }
+  await expect(page.locator('#bubbleStatus')).toContainText('Row Wave power');
+  await game.click({ position: { x: box.width * .5, y: box.height * .35 } });
+  await expect(game).toHaveAttribute('aria-busy', 'true');
+  await expect(game).toHaveAttribute('aria-busy', 'false', { timeout: 5000 });
+  await expect(page.locator('#message')).toContainText('ROW WAVE');
+  await expect(page.locator('#score')).not.toHaveText('0');
 });
 
 test('Chill Brain cabinet and shared comfort choices stay in sync without enabling sound', async ({ page }) => {
@@ -513,6 +555,7 @@ test('dimensional object models replace flat road-trip scenery and preserve sign
   await expect(page.locator('#startButton')).toBeEnabled();
   await expect(page.locator('.road-demo .demo-object-art')).toHaveCount(3);
   await expect(page.locator('#car .player-car-art .object-model--car')).toHaveCount(1);
+  await expect(page.locator('#car .player-car-art .object-depth--car')).toHaveCount(1);
   await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: false }));
   await page.locator('#startButton').click();
   await expect(page.locator('#skyline .scenery-art').first()).toBeAttached({ timeout: 2_500 });
@@ -522,6 +565,8 @@ test('dimensional object models replace flat road-trip scenery and preserve sign
   await expect(sign).toBeVisible();
   await expect(sign.locator('.sign-depth')).toHaveCount(1);
   await expect(sign.locator('.sign-sheen')).toHaveCount(1);
+  await expect(sign.locator('.sign-reflection')).toHaveCount(1);
+  await expect(sign.locator('.sign-fastener')).toHaveCount(1);
   await expect(sign.locator('.sign-ground-shadow')).toHaveCount(1);
 
   await page.goto('/games/road-trip-quest-gps/index.html');
