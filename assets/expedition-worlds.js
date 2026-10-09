@@ -15,14 +15,14 @@ export const bridgeParts = [
   { id: "triangle", name: "Triangle brace", cost: 4, capacity: 9 },
 ];
 export const bridgeLevels = [
-  { name: "Creek crossing", loads: [4, 7, 5, 8], budget: 14 },
-  { name: "Market crossing", loads: [3, 6, 9, 6], budget: 12 },
-  { name: "Festival crossing", loads: [8, 3, 5, 7], budget: 13 },
-  { name: "Library crossing", loads: [2, 5, 8, 4], budget: 13 },
-  { name: "Garden crossing", loads: [6, 6, 3, 9], budget: 13 },
-  { name: "River crossing", loads: [9, 4, 6, 2], budget: 13 },
-  { name: "Night crossing", loads: [5, 8, 3, 7], budget: 14 },
-  { name: "Parade crossing", loads: [7, 9, 6, 3], budget: 13 },
+  { name: "Creek crossing", loads: [4, 7, 5, 8], budget: 14, scene: "creek", vehicle: "timber", landmark: "rock", cargo: "Trail timber" },
+  { name: "Market crossing", loads: [3, 6, 9, 6], budget: 12, scene: "market", vehicle: "produce", landmark: "market", cargo: "Market produce" },
+  { name: "Festival crossing", loads: [8, 3, 5, 7], budget: 13, scene: "festival", vehicle: "festival", landmark: "music", cargo: "Festival drums" },
+  { name: "Library crossing", loads: [2, 5, 8, 4], budget: 13, scene: "library", vehicle: "books", landmark: "book", cargo: "Library books" },
+  { name: "Garden crossing", loads: [6, 6, 3, 9], budget: 13, scene: "garden", vehicle: "garden", landmark: "seed", cargo: "Garden plants" },
+  { name: "River crossing", loads: [9, 4, 6, 2], budget: 13, scene: "river", vehicle: "water", landmark: "drop", cargo: "Water barrels" },
+  { name: "Night crossing", loads: [5, 8, 3, 7], budget: 14, scene: "night", vehicle: "lanterns", landmark: "star", cargo: "Night lanterns" },
+  { name: "Parade crossing", loads: [7, 9, 6, 3], budget: 13, scene: "parade", vehicle: "parade", landmark: "music", cargo: "Parade decorations" },
 ];
 export const pipePaths = [
   [10,11,6,7,12,13,18,19,14],

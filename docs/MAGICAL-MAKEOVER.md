@@ -16,7 +16,7 @@ This branch upgrades the existing 30-cabinet arcade without replacing gameplay, 
 
 ### Highest-priority cabinets
 
-- **Bridge Buddies:** straight-edged planks; grain and knots; thick beams; triangle braces; bolts; stone abutments; dimensional shadows; a detailed wooden cart; river ripples; flowers; and trees.
+- **Bridge Buddies:** unmistakably different plank, beam, and triangle-brace models; layered wood faces and grain; bolts; a continuous deck; stone abutments and piers; dimensional shadows; and eight detailed cargo vehicles carrying timber, produce, drums, books, plants, water barrels, lanterns, or parade decorations through changing crossing scenes.
 - **Lemonade Lab:** a full wooden stand with separate boards, grain, fasteners, striped canopy, lemons, cups, customer, plants, and changing sunny, rainy, festival, and quiet-day scenes. Bloom wears a Lemon Lab apron.
 - **Beat Builder:** illustrated studio, speakers, animated equalizer, stage lighting, custom track symbols, dimensional rhythm pads, playhead glow, and dancing Bloom.
 - **Robot Rover:** a paneled rover with antenna, face display, body lights, arms, wheels, and fasteners; faceted rock obstacles; glowing goal stars; and clear trail markers.

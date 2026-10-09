@@ -2,7 +2,7 @@
 // Missing subjects are release-evidence errors, never an invented fallback.
 const descriptions = Object.freeze({
   lobby: 'LarriVerse Arcade opening lobby with illustrated featured adventures, a local player summary, shared settings, and optional discovery sections.',
-  'bridge-buddies': 'Bridge Buddies model bridge with four numbered spans, support choices, load labels, a token budget, and a test-crossing control.',
+  'bridge-buddies': 'Bridge Buddies dimensional model bridge with distinct plank, beam, and triangle-brace choices, four numbered spans, stone piers, a detailed cargo vehicle, load labels, a token budget, and a test-crossing control.',
   'water-works': 'Water Works opening mission and pipe puzzle with numbered rotating pipes, reservoir and town labels, and a marked toy filter.',
   'harbor-helpers': 'Harbor Helpers island map with supply requests, cargo choices, boat capacity, fuel tokens, and delivery controls.',
   'pantry-picnic': 'Pantry Picnic rotating challenge card, detailed pretend food shelf, marked leftovers, three picnic slots, portion rules, and packing controls.',

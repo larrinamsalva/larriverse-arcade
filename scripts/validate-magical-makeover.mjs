@@ -55,7 +55,7 @@ for (const object of ['tree', 'boat', 'car', 'truck', 'airplane', 'trafficLight'
   check(scenes.includes(`${object}: '`), `${object} has a code-native dimensional model`);
 }
 check(scenes.includes('object-ground-shadow') && scenes.includes('object-model--'), 'shared object drawings include cast shadows and model-specific groups');
-for (const detail of ['wood-grain', 'bridge-structure', 'bridge-abutment', 'bridge-river']) {
+for (const detail of ['wood-grain', 'bridge-structure', 'bridge-abutment', 'bridge-river', 'bridge-tool-art', 'bridge-piers', 'bridge-load-plaque', 'bridge-vehicle--']) {
   check(scenes.includes(detail) || expedition.includes(detail) || expeditionCss.includes(detail), `Bridge Buddies retains ${detail} detail`);
 }
 check(game.includes('trafficSignSvg(item.title)'), 'Traffic Town renders recognizable sign artwork');

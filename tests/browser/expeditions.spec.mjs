@@ -25,9 +25,22 @@ async function next(page,last) { await action(page,last ? "Celebrate my discover
 
 test("Bridge Buddies: keyboard building, weak supports, eight budgeted crossings and saved completion",async({page})=>{
   await adventure(page,"bridge-buddies",async()=>{
+    const toolDrawings=await page.locator(".bridge-tool-art").evaluateAll(nodes=>nodes.map(node=>node.innerHTML));
+    expect(toolDrawings).toHaveLength(bridgeParts.length);
+    expect(new Set(toolDrawings).size).toBe(bridgeParts.length);
+    await expect(page.locator(".bridge-piers i")).toHaveCount(5);
+    const vehicleCoversFirstLoad=await page.evaluate(()=>{
+      const vehicle=document.querySelector(".bridge-cart")?.getBoundingClientRect();
+      const label=document.querySelector('[data-span="0"] .load-label')?.getBoundingClientRect();
+      return Boolean(vehicle&&label&&vehicle.left<label.right&&vehicle.right>label.left&&vehicle.top<label.bottom&&vehicle.bottom>label.top);
+    });
+    expect(vehicleCoversFirstLoad).toBe(false);
     for (let index=0;index<4;index++) await page.locator(`[data-span="${index}"]`).click();
     await action(page,"Test the crossing"); await expect(page.locator("#feedback")).toHaveClass(/try/);
     for (let round=0;round<bridgeLevels.length;round++) {
+      await expect(page.locator(".bridge-landscape")).toHaveClass(new RegExp(`bridge-crossing--${bridgeLevels[round].scene}`));
+      await expect(page.locator(".bridge-cart-art")).toHaveClass(new RegExp(`bridge-vehicle--${bridgeLevels[round].vehicle}`));
+      await expect(page.locator(".bridge-load-plaque")).toContainText(bridgeLevels[round].cargo);
       for (let index=0;index<4;index++) {
         const support = bridgeParts.find(part=>part.capacity>=bridgeLevels[round].loads[index]);
         await page.locator(`[data-tool="${support.id}"]`).focus(); await page.keyboard.press("Enter");
