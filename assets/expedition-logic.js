@@ -23,6 +23,33 @@ export function traceWater(cells) {
   }
   return { ok: false, seen, tile, reason: "Follow the water and check each connection." };
 }
+export function checkPantryBox(challenge, box, foods) {
+  const foodById = new Map(foods.map(food => [food.id, food]));
+  const entries = Object.entries(box).filter(([, count]) => Number.isInteger(count) && count > 0);
+  const total = entries.reduce((sum, [, count]) => sum + count, 0);
+  if (total !== 3) return { ok: false, reason: "Pack exactly three portions: one main and two fruits or vegetables." };
+
+  const groupCount = group => entries.reduce((sum, [id, count]) => sum + (foodById.get(id)?.group === group ? count : 0), 0);
+  const mains = groupCount("main"), fruits = groupCount("fruit"), vegetables = groupCount("vegetable");
+  if (mains !== 1 || fruits + vegetables !== 2) return { ok: false, reason: "This picnic needs one main and two produce portions." };
+
+  if (challenge.produce && (fruits !== challenge.produce.fruit || vegetables !== challenge.produce.vegetable)) {
+    const fruitWords = `${challenge.produce.fruit} fruit portion${challenge.produce.fruit === 1 ? "" : "s"}`;
+    const vegetableWords = `${challenge.produce.vegetable} vegetable portion${challenge.produce.vegetable === 1 ? "" : "s"}`;
+    return { ok: false, reason: `Check the request again: it needs ${fruitWords} and ${vegetableWords}.` };
+  }
+
+  for (const [id, required] of Object.entries(challenge.mustUse || {})) {
+    if ((box[id] || 0) < required) return { ok: false, reason: `Use the marked ${foodById.get(id)?.name || "leftover"} before opening something new.` };
+  }
+
+  if (challenge.differentProduce) {
+    const produceKinds = entries.filter(([id]) => foodById.get(id)?.group !== "main").length;
+    if (produceKinds < 2) return { ok: false, reason: "Choose two different produce items for this picnic request." };
+  }
+
+  return { ok: true, reason: challenge.why };
+}
 export function cheapestShop(level) {
   let best = Infinity;
   for (let a = 0; a <= level.need; a++) for (let b = 0; b <= level.need; b++) for (let c = 0; c <= level.need; c++) {

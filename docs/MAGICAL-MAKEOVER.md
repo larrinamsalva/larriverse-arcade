@@ -22,7 +22,7 @@ This branch upgrades the existing 30-cabinet arcade without replacing gameplay, 
 - **Robot Rover:** a paneled rover with antenna, face display, body lights, arms, wheels, and fasteners; faceted rock obstacles; glowing goal stars; and clear trail markers.
 - **Traffic Town:** all 30 rendered traffic signs have distinct identifying symbols, shapes, and colors, including octagon, inverted triangle, rectangle, pentagon, circle, crossbuck, warning diamond, prohibition slash, and construction orange.
 - **Street Safety Scout:** 30 distinct code-native scenes combine dimensional signals, reflective sign faces, school buses, emergency vehicles, car lights, road surfaces, water, fog, crosswalks, and cast shadows with accessible image labels.
-- **Pantry Picnic:** detailed vector bread, beans, apples, and carrots plus a layered wicker basket, cloth texture, and dimensional food cards.
+- **Pantry Picnic:** thirteen detailed vector foods, including rice, wraps, pasta, fruit, and vegetables, plus a layered wicker basket, cloth texture, and dimensional food cards.
 
 ### Every other cabinet
 

@@ -30,8 +30,8 @@
       hint: 'Choose an island before loading. A full boat helps only when every crate matches its request.'
     },
     'pantry-picnic': {
-      welcome: 'Picnic time! We’ll pack colorful food and give useful leftovers a delicious second chance.',
-      hint: 'Each box needs one main and two fruits or vegetables. Use the marked leftovers first.'
+      welcome: 'Picnic time! We’ll solve eight requests from a pantry of twenty-four different challenges.',
+      hint: 'Read the request card, pack one main and two produce portions, and use every marked leftover first.'
     },
     'compass-cove': {
       welcome: 'Treasure maps ready! We’ll begin at a landmark and count each compass step carefully.',

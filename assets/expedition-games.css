@@ -81,6 +81,9 @@ html.larriverse-dark .world-scene .scene-butterfly{fill:#9a8bfa;filter:drop-shad
 .picnic-basket{position:relative;background:repeating-linear-gradient(0deg,#e1aa6f 0 7px,#f0c890 7px 14px);border-color:#9f6c43;box-shadow:inset 0 0 0 4px #f4d2a6,0 8px 18px #60492f24}
 .picnic-basket::before{content:"";position:absolute;inset:10px;border:2px dashed #a36b44;border-radius:16px;pointer-events:none}
 .picnic-slot{position:relative;z-index:1;border:1px solid #e8d5b9;box-shadow:0 4px 0 #9d724433}
+.picnic-slot.filled{width:100%;color:#443b57;cursor:pointer}.picnic-slot.filled:hover{transform:translateY(-2px);box-shadow:0 7px 10px #60492f24}.picnic-slot.filled small{color:#73695f;font-weight:700}
+.pantry-challenge{margin-bottom:16px;padding:18px 20px;border:2px solid #edcfaa;border-radius:20px;background:linear-gradient(145deg,#fffaf0,#fff0d5);color:#443b57;box-shadow:0 7px 18px #60492f17}.pantry-challenge h2{margin:2px 0 7px;font-size:1.28rem}.pantry-challenge p{margin:0;line-height:1.55}.pantry-challenge .eyebrow{color:#8b5a38;font-size:.76rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em}
+.pantry-rules{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}.pantry-rules span{padding:6px 9px;border:1px solid #deb98b;border-radius:999px;background:#fff;color:#664a38;font-size:.76rem;font-weight:850}
 .supply-card .object-icon,.market-stall .object-icon{filter:drop-shadow(0 5px 3px #59452c2b)}
 .town-map{background:linear-gradient(90deg,#d8e6c1 88%,#5cb5c9 88%);border:2px solid #a4c19d}
 
@@ -90,6 +93,8 @@ html.larriverse-dark .load-label{background:#4c4168;border-color:#8275a3;box-sha
 html.larriverse-dark .bridge-landscape{background:linear-gradient(#231e49 0 30%,#294955 30% 58%,#205d78 58% 100%);border-color:#554a80}
 html.larriverse-dark .bridge-span::before{filter:brightness(.75)}
 html.larriverse-dark .picnic-basket{background:repeating-linear-gradient(0deg,#79543b 0 7px,#9a704d 7px 14px);border-color:#bb8c62}
+html.larriverse-dark .pantry-challenge{background:linear-gradient(145deg,#302947,#3d3048);color:#f8f3ff;border-color:#7e668d}html.larriverse-dark .pantry-challenge .eyebrow{color:#ffd69b}html.larriverse-dark .pantry-rules span{background:#211d35;color:#fff3d8;border-color:#8c759a}html.larriverse-dark .picnic-slot.filled,html.larriverse-dark .picnic-slot.filled small{color:#f7f4ff}
+html.larriverse-high-contrast .pantry-challenge,html.larriverse-high-contrast .pantry-rules span{background:#111;color:#fff;border:2px solid #fff}
 
 @media(max-width:600px){
   .bridge-landscape{min-height:560px;padding:82px 12px 58px}.bridge-spans{gap:10px}.bridge-cart{top:60px;width:70px}.bridge-abutment{display:none}.bridge-tree{width:65px;height:65px}.bridge-flowers{top:119px}.bridge-span::before{top:46px}.bridge-span.weak::after{top:60px}.world-scene>svg{min-height:145px;object-fit:cover}.scene-object{transform-box:fill-box}
