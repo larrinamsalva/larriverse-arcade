@@ -12,6 +12,8 @@ const scenes = read('assets/arcade-scenes.js');
 const game = read('assets/skill-games.js');
 const expedition = read('assets/expedition-games.js');
 const expeditionCss = read('assets/expedition-games.css');
+const bubbleGame = read('games/bubble-resonance-phi369/game.js');
+const bubbleCss = read('games/bubble-resonance-phi369/game.css');
 const [{ trafficSignSvg }, { trafficQuestions }] = await Promise.all([
   import('../assets/arcade-scenes.js'),
   import('../assets/expanded-scenarios.js')
@@ -56,6 +58,9 @@ check(renderedSigns.every(svg => /<svg class="traffic-sign-art"[^>]+role="img"/.
 check(game.includes('lemonadeStandSvg(forecast.name)'), 'Lemonade Lab renders its detailed stand and weather');
 check(game.includes('musicStudioSvg()'), 'Beat Builder renders the illustrated studio');
 check(game.includes('iconSvg("robot", "rover-token")'), 'Robot Rover uses a detailed mechanical rover instead of an emoji');
+check(bubbleGame.includes('CANVAS_THEMES') && bubbleGame.includes('drawShooter'), 'Bubble Resonance has a theme-aware illustrated launcher');
+check(bubbleGame.includes('canvas.dataset.colorMode'), 'Bubble Resonance exposes the resolved canvas color mode for QA');
+check(bubbleCss.includes('html.larriverse-light') && bubbleCss.includes('--bubble-field'), 'Bubble Resonance cabinet has a complete light-theme palette');
 check(game.includes('larriverse:bloom-message'), 'game feedback reaches Bloom locally');
 check(!sdk.includes('fetch(') && !sdk.includes('WebSocket'), 'Bloom remains scripted, local, and network-free');
 
