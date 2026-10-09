@@ -1,6 +1,6 @@
 # LarriVerse Arcade — Cabinet Gallery
 
-Automated Chromium creates **candidate evidence** for the lobby and all 30 cabinets at desktop and mobile sizes: **62 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
+Automated Chromium creates **candidate evidence** for the lobby and all 32 cabinets at desktop and mobile sizes: **66 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
 
 | Cabinet | Launch path | Candidate evidence | Public gallery |
 | --- | --- | --- | --- |
@@ -34,6 +34,8 @@ Automated Chromium creates **candidate evidence** for the lobby and all 30 cabin
 | Creature Catcher | `games/creature-catcher/index.html` | generated automatically | pending human approval |
 | Road Trip Quest | `games/road-trip-quest/index.html` | generated automatically | pending human approval |
 | Road Trip Quest GPS | `games/road-trip-quest-gps/index.html` | generated automatically | pending human approval |
+| Weather Watchers | `games/weather-watchers/index.html` | generated automatically | pending human approval |
+| Garden Grow & Harvest | `games/garden-grow-harvest/index.html` | generated automatically | pending human approval |
 
 Run `npm run test:browser`, `npm run gallery:build`, and `npm run gallery:verify` to generate and verify the complete review pack. The builder uses explicit descriptions in `scripts/gallery-metadata.mjs`; missing subject metadata fails instead of inserting an undefined value. Verification checks coverage, title/alt text, viewports, dimensions, byte counts, and image hashes.
 
@@ -47,5 +49,7 @@ Approved images are eventually committed under `docs/screenshots/<project>/<subj
 
 See [GALLERY-APPROVAL.md](GALLERY-APPROVAL.md) for the full human review, physical-device, and release-decision workflow.
 
-- **Traffic Town** — Read traffic signs & choose safe actions with ten-question rounds drawn from a 30-question non-repeating bank.
-- **Street Safety Scout** — Identify signals, caution and emergency signs, vehicle lights, and hazards through balanced twelve-stop routes drawn from a 30-scenario bank.
+- **Traffic Town** — Read traffic signs & choose safe actions with ten-question rounds drawn from a 40-question non-repeating bank.
+- **Street Safety Scout** — Identify signals, caution and emergency signs, vehicle lights, roadside warnings, and hazards through balanced fifteen-stop routes drawn from a 36-scenario bank.
+- **Weather Watchers** — Complete 25 illustrated sky, cloud, weather-preparation, and forecast-reading challenges across four advancement levels.
+- **Garden Grow & Harvest** — Complete 24 illustrated bed-building, planting, care, harvest, and food-freshness challenges across four advancement levels.

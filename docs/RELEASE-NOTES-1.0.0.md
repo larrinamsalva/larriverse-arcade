@@ -1,6 +1,6 @@
 # LarriVerse Arcade 1.0
 
-LarriVerse Arcade 1.0 is a release candidate with 30 independently playable games: eight original cabinets, fourteen practice worlds, and eight expeditions. They share device-local progress, fictional rewards, comfort controls, validation, and privacy and safety boundaries. Human visual/gameplay approval and real physical-phone QA remain required before the formal release.
+LarriVerse Arcade 1.0 is a release candidate with 32 independently playable games: eight original cabinets, sixteen practice worlds, and eight expeditions. They share device-local progress, fictional rewards, comfort controls, validation, and privacy and safety boundaries. Human visual/gameplay approval and real physical-phone QA remain required before the formal release.
 
 ## Eight original cabinets
 
@@ -52,7 +52,7 @@ LarriVerse Arcade 1.0 is a release candidate with 30 independently playable game
 ## Progress Passport
 
 - A first-class `/passport/` route turns existing local saves into a private progress view.
-- The Passport shows shared level progress, XP, Arcade KC, sessions, completed sessions, current learning goals, all 30 cabinet stamps, adaptive-learning trails, per-subject accuracy, and friendly achievement labels.
+- The Passport shows shared level progress, XP, Arcade KC, sessions, completed sessions, current learning goals, all 32 cabinet stamps, adaptive-learning trails, per-subject accuracy, and friendly achievement labels.
 - One gentle next mission recommends an unvisited cabinet, a practiced subject below 75% accuracy, or the least-completed cabinet.
 - The page supports keyboard focus, mobile layouts, larger text, high contrast, reduced motion, and a print-specific layout.
 - A downloadable `larriverse-progress-passport` summary contains totals and learning statistics without raw family records or location data.
@@ -61,7 +61,7 @@ LarriVerse Arcade 1.0 is a release candidate with 30 independently playable game
 ## Family Learning Report
 
 - A first-class `/report/` route presents the same local progress in a calmer family-review format.
-- The report summarizes current goals, shared totals, all 30 cabinet participation records, adaptive learning paths, aggregate subject accuracy, and up to five recent cabinet timestamps.
+- The report summarizes current goals, shared totals, all 32 cabinet participation records, adaptive learning paths, aggregate subject accuracy, and up to five recent cabinet timestamps.
 - Growing strengths require at least two answers and at least 80% accuracy; gentle practice opportunities require at least two answers and below 75% accuracy.
 - Short histories are described as needing more data instead of being treated as ability conclusions.
 - Generated conversation starters invite celebration, curiosity, and optional practice without grading or punishment language.
@@ -101,9 +101,9 @@ LarriVerse Arcade 1.0 is a release candidate with 30 independently playable game
 ## 1.0 polish candidate
 
 - Shared LarriVerse context, arcade return, comfort dialog, local profile summary, and replay/return treatment across original cabinets.
-- Optional device-local discovery alongside all 30 searchable and filterable games.
+- Optional device-local discovery alongside all 32 searchable and filterable games.
 - Focus and reflow hardening at 320px, 390px, tablet, desktop, and 200% text; numbered Bubble Resonance cues and keyboard aiming; stationary Road Trip collection under reduced motion.
-- Explicit deterministic metadata and integrity verification for all 62 release gallery images, including the eight expeditions and Street Safety Scout.
+- Explicit deterministic metadata and integrity verification for all 66 release gallery images, including the eight expeditions, Street Safety Scout, Weather Watchers, and Garden Grow & Harvest.
 - Shared local branding and public page metadata, with repository setting recommendations documented.
 - Physical-phone, human visual/gameplay, sound/touch, and print release gates remain pending.
 
@@ -111,12 +111,12 @@ See [V1-POLISH.md](V1-POLISH.md) for the implementation and privacy boundaries.
 
 ## Release qualification
 
-GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all 30 cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
+GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all 32 cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
 
 
 ## Modern arcade expansion
 
-The collection includes 30 playable games: eight original cabinets, fourteen practice worlds including Traffic Town and Street Safety Scout, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (62 images). The formal release still requires the documented human review.
+The collection includes 32 playable games: eight original cabinets, sixteen practice worlds including Traffic Town, Street Safety Scout, Weather Watchers, and Garden Grow & Harvest, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (66 images). The formal release still requires the documented human review.
 
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
@@ -148,14 +148,16 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 
 ### Traffic Town
 
-- **Traffic Town** — Read traffic signs & choose safe actions through ten-question rounds drawn from a 30-question unique bank.
+- **Traffic Town** — Read traffic signs & choose safe actions through ten-question rounds drawn from a 40-question unique bank.
 - Adds early road-awareness practice for ages 7+ using common U.S. sign patterns and safe-choice explanations.
 - Consecutive rounds rotate through unseen questions before the bank cycles.
 - This is educational practice, not a driver's-license course or substitute for official local DMV materials and age-appropriate licensing rules.
 
 ### Street Safety Scout
 
-- **Street Safety Scout** — Identify signals, caution and emergency signs, vehicle lights, and street hazards through twelve-stop routes drawn from a 30-scenario bank.
+- **Street Safety Scout** — Identify signals, caution and emergency signs, vehicle lights, and street hazards through fifteen-stop routes drawn from a 36-scenario bank.
+- **Weather Watchers** — Read sun, stars, cloud forms, rain, snow, fog, wind, safety choices, and simple forecast panels through 25 picture challenges and four ranks.
+- **Garden Grow & Harvest** — Build a bed, plant seeds and seedlings, care for crops, harvest produce, and keep it fresh through 24 picture challenges and four ranks.
 - Every route includes three scenes from each of four safety zones, with no timer and a teaching explanation after every choice.
 - Consecutive routes rotate through unseen scenarios while enough remain in each category.
 - Detailed code-native SVG scenes use light position, sign shape, color, depth, reflections, and contextual roadway clues instead of emoji-only questions.

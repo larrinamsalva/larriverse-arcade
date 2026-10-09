@@ -26,7 +26,7 @@
       hint: 'Start at the reservoir and trace one pipe at a time. Turn the first piece where the flow leaks.'
     },
     'harbor-helpers': {
-      welcome: 'Three island neighbors are waiting. Let’s load only what each community needs.',
+      welcome: 'Twenty island neighbors are waiting along the route. Let’s load only what each community needs.',
       hint: 'Choose an island before loading. A full boat helps only when every crate matches its request.'
     },
     'pantry-picnic': {
@@ -46,8 +46,8 @@
       hint: 'First cover the number of items needed. Then compare the total cost, including every fee.'
     },
     'critter-council': {
-      welcome: 'Our woodland neighbors have different needs. Let’s design a town that welcomes everyone.',
-      hint: 'Read each neighbor request, then notice the shaded row, quiet row, river edge, and nearby plots.'
+      welcome: 'Twenty woodland neighborhoods are ready for thoughtful plans. Let’s listen to every neighbor and welcome everyone.',
+      hint: 'Read all four requests on each level, then notice exact plots, rows, columns, and which spaces need to be beside each other.'
     },
     'traffic-town': {
       welcome: 'Safety helper Bloom reporting! Let’s use sign shape, color, symbol, and words together.',
@@ -85,6 +85,14 @@
       welcome: 'Let’s grow a lively garden with carrots, beans, flowers, and a careful water plan.',
       hint: 'Plant all six plots with a mix of types, then water each plot on two different days.'
     },
+    'weather-watchers': {
+      welcome: 'Weather station ready! Let’s look for sun, stars, cloud shapes, rain, wind, and forecast clues across four levels.',
+      hint: 'Name what the picture really shows first. Then use the words and symbols to make a careful plan with a trusted adult.'
+    },
+    'garden-grow-harvest': {
+      welcome: 'Garden gloves ready! We’ll build the bed, plant gently, care for crops, harvest, and keep garden food fresh.',
+      hint: 'Follow the growing order and inspect the pictures: soil first, packet directions next, then water, care, harvest, and clean storage.'
+    },
     'energy-island': {
       welcome: 'The island needs dependable power in sun, wind, clouds, and night. Let’s build a balanced system.',
       hint: 'Make extra energy when you can and include a battery so stored power can help at night.'
@@ -94,8 +102,8 @@
       hint: 'If it still works, try reuse. Then follow the town rules for recycling, compost, and trash.'
     },
     'robot-rover': {
-      welcome: 'Rover is charged! We’ll build a command sequence, test it, and learn from every trail.',
-      hint: 'Check the direction Rover faces before each Forward command. Turns happen in place.'
+      welcome: 'Rover is charged! Twenty worlds and four explorer ranks are ready for your code.',
+      hint: 'Check the direction Rover faces before each Forward command. Turns happen in place, and every five worlds unlocks a new rank.'
     },
     'lemonade-lab': {
       welcome: 'Apron on! We’ll watch the weather, choose a batch and price, then read the business ledger.',
@@ -118,8 +126,8 @@
       hint: 'There is no need to rush. Think about how the choice could work in everyday life.'
     },
     'bubble-resonance-phi369': {
-      welcome: 'Let’s line up a clever bank shot and clear the glowing bubble board together.',
-      hint: 'Use the wall angle to reach tucked-away colors, and look for groups that open the board.'
+      welcome: 'Twenty fields of glossy round bubbles and three rotating power bubbles are ready. Let’s line up a clever bank shot and clear them together.',
+      hint: 'Watch the next-bubble preview. Row Wave clears a row, Star Burst clears touching bubbles, and Color Sweep clears every matching number.'
     },
     'chill-brain-rewards': {
       welcome: 'I’m right here with you. Choose a gentle pause, breathe comfortably, and go at your own pace.',

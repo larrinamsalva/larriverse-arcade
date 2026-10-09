@@ -1,6 +1,6 @@
 # LarriVerse Magical Makeover
 
-This branch upgrades the existing 30-cabinet arcade without replacing gameplay, question banks, local progress, rewards, accessibility controls, release evidence, or manual approval.
+This branch upgrades the original 30 cabinets and adds two complete picture-learning worlds, bringing the arcade to 32 without replacing gameplay, question banks, local progress, rewards, accessibility controls, release evidence, or manual approval.
 
 ## Shared foundation
 
@@ -8,7 +8,7 @@ This branch upgrades the existing 30-cabinet arcade without replacing gameplay, 
 - Dark mode changes both interface surfaces and world scenery: stars, moonlight, glowing flowers, deeper terrain, and readable controls.
 - Every cabinet receives a visible theme shortcut and the three-way selector remains available in Comfort & accessibility.
 - Bloom is a reusable, local SVG guide with welcome, thinking, cheering, and celebration poses.
-- Bloom has a different welcome and hint for every one of the 30 games.
+- Bloom has a different welcome and hint for every one of the 32 games.
 - Bloom can be hidden or restored, never needs an account, never sends child data, and respects reduced motion.
 - Existing feedback can update Bloom with encouraging, non-shaming language.
 
@@ -16,12 +16,12 @@ This branch upgrades the existing 30-cabinet arcade without replacing gameplay, 
 
 ### Highest-priority cabinets
 
-- **Bridge Buddies:** unmistakably different plank, beam, and triangle-brace models; layered wood faces and grain; bolts; a continuous deck; stone abutments and piers; dimensional shadows; and eight detailed cargo vehicles carrying timber, produce, drums, books, plants, water barrels, lanterns, or parade decorations through changing crossing scenes.
+- **Bridge Buddies:** unmistakably different plank, beam, and triangle-brace models; layered wood faces and grain; bolts; a continuous deck; stone abutments and piers; dimensional shadows; and twenty detailed cargo vehicles moving through distinct crossing scenes and four advancement ranks.
 - **Lemonade Lab:** a full wooden stand with separate boards, grain, fasteners, striped canopy, lemons, cups, customer, plants, and changing sunny, rainy, festival, and quiet-day scenes. Bloom wears a Lemon Lab apron.
 - **Beat Builder:** illustrated studio, speakers, animated equalizer, stage lighting, custom track symbols, dimensional rhythm pads, playhead glow, and dancing Bloom.
 - **Robot Rover:** a paneled rover with antenna, face display, body lights, arms, wheels, and fasteners; faceted rock obstacles; glowing goal stars; and clear trail markers.
-- **Traffic Town:** all 30 rendered traffic signs have distinct identifying symbols, shapes, and colors, including octagon, inverted triangle, rectangle, pentagon, circle, crossbuck, warning diamond, prohibition slash, and construction orange.
-- **Street Safety Scout:** 30 distinct code-native scenes combine dimensional signals, reflective sign faces, school buses, emergency vehicles, car lights, road surfaces, water, fog, crosswalks, and cast shadows with accessible image labels.
+- **Traffic Town:** all 40 rendered traffic signs have distinct identifying symbols, shapes, and colors, including dimensional cow, deer, tractor, truck, turn-only, dead-end, clearance, and work-zone signs.
+- **Street Safety Scout:** 36 distinct code-native scenes combine dimensional signals, reflective sign faces, school buses, emergency vehicles, car lights, roadside workers, farm equipment, animals, road surfaces, water, fog, crosswalks, and cast shadows with accessible image labels.
 - **Pantry Picnic:** thirteen detailed vector foods, including rice, wraps, pasta, fruit, and vegetables, plus a layered wicker basket, cloth texture, and dimensional food cards.
 
 ### Every other cabinet
@@ -41,7 +41,7 @@ This branch upgrades the existing 30-cabinet arcade without replacing gameplay, 
 
 ## Verification
 
-- `npm run validate` includes a dedicated magical-makeover contract in addition to the existing validators, including a distinct-art check across all 30 Traffic Town signs.
+- `npm run validate` includes a dedicated magical-makeover contract in addition to the existing validators, including a distinct-art check across all 40 Traffic Town signs.
 - Browser QA covers theme persistence, device-theme response, Bloom hints, hide/restore, overflow, all cabinet routes, mobile/desktop layouts, accessibility settings, saves, and gameplay flows.
 - The existing GitHub Actions browser gate produces genuine desktop/mobile screenshots and the offline review gallery. The release approval gate is unchanged.
 

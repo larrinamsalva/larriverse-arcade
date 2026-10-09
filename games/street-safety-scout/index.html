@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#164e63">
-  <meta name="description" content="Identify signal lights, caution and emergency signs, vehicle hazard lights, and hidden street hazards in a calm twelve-stop safety game. Free practice; progress stays in this browser.">
+  <meta name="description" content="Identify signal lights, caution and emergency signs, roadside warnings, vehicle hazard lights, and hidden street hazards in a calm fifteen-stop safety game. Free practice; progress stays in this browser.">
   <title>Street Safety Scout · LarriVerse Arcade</title>
   <link rel="stylesheet" href="game.css">
   <link rel="stylesheet" href="../../assets/emoji.css">
@@ -42,7 +42,7 @@
         <h1 id="gameTitle">Street Safety <span>Scout</span></h1>
         <p>Read the light. Spot the warning. Choose the safest first move before the scene changes.</p>
         <div class="hero-tags" aria-label="Challenge areas">
-          <span>🚦 Signals</span><span>⚠️ Caution</span><span>🚑 Emergency</span><span>◇ Hazards</span>
+          <span>🚦 Signals</span><span>⚠️ Caution</span><span>🚑 Emergency</span><span>◇ Hazards</span><span>🛣️ Roadside</span>
         </div>
       </div>
       <div class="hero-scene" aria-hidden="true">
@@ -82,11 +82,11 @@
       <aside class="mission-panel" aria-labelledby="missionHeading">
         <div class="scout-badge" aria-hidden="true">🦺</div>
         <p class="eyebrow">Your mission</p>
-        <h2 id="missionHeading">Clear 12 safety stops</h2>
-        <p>Each round mixes signals, caution signs, emergency clues, and vehicle or roadway hazards from a 30-scenario bank.</p>
+        <h2 id="missionHeading">Clear 15 safety stops</h2>
+        <p>Each round mixes signals, caution signs, emergency clues, vehicle hazards, and roadside caution from a 36-scenario bank.</p>
         <div class="progress-wrap">
-          <div class="progress-label"><span id="progressText">Ready to scout</span><b id="progressNumber">0 / 12</b></div>
-          <div class="progress-track" role="progressbar" aria-label="Round progress" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0"><span id="progressFill"></span></div>
+          <div class="progress-label"><span id="progressText">Ready to scout</span><b id="progressNumber">0 / 15</b></div>
+          <div class="progress-track" role="progressbar" aria-label="Round progress" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0"><span id="progressFill"></span></div>
         </div>
         <dl class="round-stats">
           <div><dt>Score</dt><dd id="scoreValue">0</dd></div>
@@ -103,7 +103,7 @@
         <div id="startPanel" class="start-panel">
           <div>
             <p class="eyebrow">Scout briefing</p>
-            <h2 id="playHeading">Four kinds of clues</h2>
+            <h2 id="playHeading">Five kinds of clues</h2>
             <p>Look closely at the picture, decide what it means, and choose the safest first action. There is no timer and every explanation teaches the next clue.</p>
           </div>
           <div class="zone-grid">
@@ -111,6 +111,7 @@
             <article><span>⚠️</span><b>Caution signs</b><small>Schools, work zones, bikes, water</small></article>
             <article><span>🚑</span><b>Emergency awareness</b><small>Sirens, move over, buses, routes</small></article>
             <article><span>◇</span><b>Street hazards</b><small>Vehicle lights, hidden people, fog</small></article>
+            <article><span>🛣️</span><b>Roadside caution</b><small>Shoulders, workers, tractors, animals</small></article>
           </div>
           <button type="button" class="primary start-button" id="startButton">Start safety route</button>
         </div>
@@ -118,7 +119,7 @@
         <div id="challengePanel" class="challenge-panel" hidden>
           <div class="challenge-top">
             <span class="category-chip" id="categoryChip">Signal lights</span>
-            <span class="stop-count" id="stopCount">Stop 1 of 12</span>
+            <span class="stop-count" id="stopCount">Stop 1 of 15</span>
           </div>
           <figure class="scenario-visual" id="scenarioVisual"></figure>
           <div class="question-copy">

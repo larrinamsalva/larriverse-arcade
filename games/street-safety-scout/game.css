@@ -323,7 +323,7 @@ h1, h2, h3, p { margin-top: 0; }
 
 .zone-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: .75rem;
 }
 
@@ -339,6 +339,7 @@ h1, h2, h3, p { margin-top: 0; }
 .zone-grid article:nth-child(2) { background: linear-gradient(155deg, #fffaf0, #ffefd2); border-color: #deb96e; }
 .zone-grid article:nth-child(3) { background: linear-gradient(155deg, #fff6f3, #ffe5df); border-color: #dfa799; }
 .zone-grid article:nth-child(4) { background: linear-gradient(155deg, #f5f1ff, #ebe5ff); border-color: #b9acd9; }
+.zone-grid article:nth-child(5) { background: linear-gradient(155deg, #f4faef, #e1f0d5); border-color: #9fbe87; }
 
 .zone-grid span {
   display: block;
@@ -385,6 +386,7 @@ h1, h2, h3, p { margin-top: 0; }
 .category-chip[data-category="Caution signs"] { background: #fff0c9; color: #68470c; }
 .category-chip[data-category="Emergency awareness"] { background: #ffe0dc; color: #7b2e25; }
 .category-chip[data-category="Vehicle & road hazards"] { background: #e8e1fb; color: #4c3b7b; }
+.category-chip[data-category="Roadside caution"] { background: #e3f0d5; color: #315824; }
 .stop-count { color: #4d6471; background: #eef4f5; }
 
 .scenario-visual {
@@ -432,10 +434,11 @@ h1, h2, h3, p { margin-top: 0; }
   padding: .9rem;
   border: 2px solid #a9c2c9;
   border-radius: 15px;
-  background: #fff;
+  background: linear-gradient(155deg, #fff, #eaf3f5);
   color: #173e50;
   font-weight: 850;
   line-height: 1.42;
+  box-shadow: 0 5px 0 rgba(92, 126, 137, .28);
 }
 
 .answer-button:hover:not(:disabled) {
@@ -581,6 +584,7 @@ html.larriverse-dark body[data-classic="street-safety-scout"] :is(.zone-grid art
 }
 
 html.larriverse-dark body[data-classic="street-safety-scout"] :is(.zone-grid b, .learning-strip b) { color: #f7f4ff; }
+html.larriverse-dark body[data-classic="street-safety-scout"] .text-button { color: #e8ddff; }
 html.larriverse-dark body[data-classic="street-safety-scout"] :is(.zone-grid small, .progress-label, .round-stats dt, .stop-count) { color: #d7d0e8; }
 html.larriverse-dark body[data-classic="street-safety-scout"] .round-stats dd { color: #8cebd7; }
 html.larriverse-dark body[data-classic="street-safety-scout"] .progress-track { background: #17142a; border-color: #70678f; }

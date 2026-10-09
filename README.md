@@ -1,14 +1,16 @@
 # LarriVerse Arcade ✦
 
-A free, kid- and teen-friendly arcade with **30 playable games**, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
+A free, kid- and teen-friendly arcade with **32 playable games**, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
 
 The magical visual system adds cheerful daylight, moonlit dark mode, a follow-device option, richer SVG materials and scenery, and **Bloom**, a hideable local adventure buddy with a different welcome and hint for every game. See the [magical makeover guide](docs/MAGICAL-MAKEOVER.md).
 
 The latest expansion adds **eight new expeditions**: bridges, water networks, island deliveries, pantry planning, compass maps, secret codes, shopping comparisons, and inclusive town building. See [the expedition guide](docs/EXPEDITIONS.md).
 
-Traffic Town adds a 7+ road-awareness world with 30 unique common U.S. traffic-sign questions served ten at a time without repeats until the bank cycles.
+Traffic Town adds a 7+ road-awareness world with 40 unique common U.S. traffic-sign questions served ten at a time without repeats until the bank cycles.
 
-**Street Safety Scout is Game 30:** a visual 8+ companion with 30 unique scenarios covering signal lights, caution signs, emergency awareness, vehicle lights, and hidden roadway hazards. Each untimed route draws three stops from each zone and rotates unseen scenes before repeating them.
+**Street Safety Scout is Game 30:** a visual 8+ companion with 36 unique scenarios covering signal lights, caution signs, emergency awareness, vehicle lights, and hidden roadway hazards. Each untimed route draws three stops from each zone and rotates unseen scenes before repeating them.
+
+**Weather Watchers and Garden Grow & Harvest are Games 31 and 32.** Weather Watchers teaches sky observation, common cloud clues, weather preparation, and simple forecast symbols through 25 illustrated challenges. Garden Grow & Harvest teaches bed building, seed and transplant care, crop support, harvesting, and food freshness through 24 illustrated challenges. Both use four visible advancement levels.
 
 The modern expansion adds twelve adventures: **Pocket Planet, Scam Sleuth, Kindness Quest, Fact Finder, Repair Café, Time Trail, Garden Guardians, Energy Island, Reuse Rally, Robot Rover, Lemonade Lab, and Beat Builder**. These cover money choices, privacy, media literacy, listening and boundaries, repair and reuse, planning, resource care, coding, small business, and music. See [the full game guide](docs/MODERN-ARCADE.md) for mechanics, architecture, and artwork provenance.
 
@@ -20,7 +22,7 @@ A 60-second learning safari where players catch creatures, answer mixed question
 
 ### Bubble Resonance Φ369
 
-A precision bubble-shooter built from Larrina's original PHI·369 prototype. Players aim and bank shots, match six frequency colors, drop floating clusters, raise Tφ coherence, and build resonance through PHI-chain score multipliers.
+A twenty-level bubble-shooter built from Larrina's original PHI·369 prototype. Players aim glossy round numbered bubbles, bank shots, match six frequency colors, drop floating clusters, raise Tφ coherence, and build resonance through PHI-chain score multipliers.
 
 The frequency names are preserved as creative game themes. The cabinet explicitly does not present them as medical claims.
 
@@ -116,7 +118,7 @@ Launch any live game from the root arcade lobby.
 
 ## Release candidate
 
-The arcade is at **1.0.0 rc.1**, with 30 playable games. Automation produces candidate evidence; it does not approve a formal release. The existing [release checklist](docs/RELEASE-CHECKLIST.md) still requires hands-on desktop play, real physical-phone QA, human visual/gameplay approval, and print review. No final approval record has been created by this polish pass.
+The arcade is at **1.0.0 rc.1**, with 32 playable games. Automation produces candidate evidence; it does not approve a formal release. The existing [release checklist](docs/RELEASE-CHECKLIST.md) still requires hands-on desktop play, real physical-phone QA, human visual/gameplay approval, and print review. No final approval record has been created by this polish pass.
 
 Start the hands-on phase with the [desktop and phone testing guide](docs/RELEASE-TESTING.md). It links the live QA console, explains the three evidence files, and keeps incomplete checks pending.
 
@@ -155,9 +157,9 @@ KidsCoin Family separates source-grounded family features, tasks, reviewed lesso
 
 The original eight cabinets keep independent engines and local saves. `assets/cabinet-shell.js` adds shared branding, player context, comfort controls, and an arcade return while preserving their replay and continue actions. `assets/arcade-accessibility.css` provides reflow and focus rules across game and progress routes.
 
-Twenty-one shared-engine worlds use `assets/skill-games.js`, which implements thirteen practice modes and delegates eight expedition modes to `assets/expedition-games.js`. Their definitions live in `assets/skill-worlds.js` and `assets/expedition-worlds.js`. Street Safety Scout has a dedicated visual engine and 30-scenario module; the lobby reads every cabinet from `games/catalog.json`. Each game preserves its individual board and safety notes. See [MODERN-ARCADE.md](docs/MODERN-ARCADE.md), [EXPEDITIONS.md](docs/EXPEDITIONS.md), and [V1-POLISH.md](docs/V1-POLISH.md).
+Twenty-one shared-engine worlds use `assets/skill-games.js`, which implements thirteen practice modes and delegates eight expedition modes to `assets/expedition-games.js`. Their definitions live in `assets/skill-worlds.js` and `assets/expedition-worlds.js`. Street Safety Scout has a dedicated visual engine and 36-scenario module; the lobby reads every cabinet from `games/catalog.json`. Each game preserves its individual board and safety notes. See [MODERN-ARCADE.md](docs/MODERN-ARCADE.md), [EXPEDITIONS.md](docs/EXPEDITIONS.md), and [V1-POLISH.md](docs/V1-POLISH.md).
 
-`assets/arcade-discovery.js` computes optional Continue Playing, Recommended for You, and Try Something New links from the current catalog and aggregate local session history. It writes no records and makes no ability judgment. Search and topic filters still expose all 30 games.
+`assets/arcade-discovery.js` computes optional Continue Playing, Recommended for You, and Try Something New links from the current catalog and aggregate local session history. It writes no records and makes no ability judgment. Search and topic filters still expose all 32 games.
 
 ## Validation
 
@@ -183,7 +185,7 @@ It checks:
 - KidsCoin Family's source features, eight avatars, four task groups, twelve tasks, six reviewed lessons, eight reward requests, and four streak milestones
 - KidsCoin Family keeps rewards fictional and device-local, loads the SDK first, hashes the local PIN, and excludes token-price, staking, blockchain, geolocation, and real-purchase code
 - lobby integration and playable-cabinet counts
-- all 30 contextual Bloom guides, three saved themes, local-only behavior, and reduced-motion coverage
+- all 32 contextual Bloom guides, three saved themes, local-only behavior, and reduced-motion coverage
 - detailed Bridge Buddies, Lemonade Lab, Beat Builder, Robot Rover, Traffic Town, Street Safety Scout, and Pantry Picnic artwork contracts
 
 Pull requests run the same checks through `.github/workflows/validate.yml`. Complete browser QA uses the pinned runner in `.github/workflows/browser-qa.yml`:
@@ -196,7 +198,7 @@ npm run gallery:build
 npm run gallery:verify
 ```
 
-The gallery contains the lobby plus 30 games in desktop/mobile Chromium: **62 images**. Explicit descriptions, PNG dimensions, byte counts, and SHA-256 hashes are verified before the offline human review bundle is uploaded. Missing descriptions fail the build. See [BROWSER-QA.md](docs/BROWSER-QA.md) and [GALLERY-APPROVAL.md](docs/GALLERY-APPROVAL.md).
+The gallery contains the lobby plus 32 games in desktop/mobile Chromium: **66 images**. Explicit descriptions, PNG dimensions, byte counts, and SHA-256 hashes are verified before the offline human review bundle is uploaded. Missing descriptions fail the build. See [BROWSER-QA.md](docs/BROWSER-QA.md) and [GALLERY-APPROVAL.md](docs/GALLERY-APPROVAL.md).
 
 Repository description, homepage, and topic suggestions are documented in [REPOSITORY-METADATA.md](docs/REPOSITORY-METADATA.md).
 

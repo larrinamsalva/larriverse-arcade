@@ -7,6 +7,8 @@ import {
   sorting,
   trafficQuestions,
   robotLevels,
+  weatherChallenges,
+  gardenGrowthChallenges,
 } from "./skill-worlds.js";
 import { createExpedition } from "./expedition-games.js";
 import {
@@ -15,6 +17,10 @@ import {
   lemonadeStandSvg,
   musicStudioSvg,
   trafficSignSvg,
+  weatherSceneSvg,
+  weatherChoiceSvg,
+  gardenLessonSvg,
+  gardenChoiceSvg,
 } from "./arcade-scenes.js";
 const world = worlds.find((item) => item.id === document.body.dataset.world);
 const sdk = window.LarriVerseArcade;
@@ -58,6 +64,13 @@ function challengeRound(pool, count) {
     sessionStorage.setItem(storageKey, JSON.stringify([...seen, ...picked.map(challengeKey)]));
   } catch {}
   return picked;
+}
+function rankedDeck(pool) {
+  const rankOrder = [...new Set(pool.map((item) => item.rank))];
+  const rotated = challengeRound(pool, pool.length);
+  return rankOrder.flatMap((rank) =>
+    rotated.filter((item) => item.rank === rank),
+  );
 }
 const chip = (label, value) =>
   `<span class="stat-chip">${esc(label)}<b>${esc(value)}</b></span>`;
@@ -294,6 +307,16 @@ function initialize() {
       state.bpm = 100;
       renderMusic();
       break;
+    case "weather-reading":
+      state.deck = rankedDeck(weatherChallenges);
+      state.ranks = [...new Set(weatherChallenges.map((item) => item.rank))];
+      renderLearningPath("weather");
+      break;
+    case "garden-grow":
+      state.deck = rankedDeck(gardenGrowthChallenges);
+      state.ranks = [...new Set(gardenGrowthChallenges.map((item) => item.rank))];
+      renderLearningPath("garden");
+      break;
     default:
       expedition?.start();
   }
@@ -398,6 +421,8 @@ function renderCards(mode) {
   const display = shuffle(labels.map((label, index) => ({ label, index })));
   const messageArt = mode === "traffic"
     ? trafficSignSvg(item.title)
+    : mode === "sorting"
+      ? iconSvg(item.art, "message-icon reuse-item-art")
     : `<span class="message-icon" aria-hidden="true">${item.icon}</span>`;
   board.innerHTML = `<div class="message-card ${mode === "traffic" ? "traffic-message" : ""}">${messageArt}<div class="message-copy"><h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""}">${display.map((choice) => `<button class="choice-button" data-answer="${choice.index}">${esc(choice.label)}</button>`).join("")}</div>${mode === "sorting" ? '<p class="board-note" style="margin-top:1rem">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
   progress(state.step, deck.length);
@@ -447,6 +472,113 @@ function renderCards(mode) {
           : mode === "traffic"
             ? "Use the sign shape, color, symbol, and words together. Ask what the sign wants road users to notice or do."
           : "Try reuse first for things that still work. For this town: clean paper/cardboard/metal recycle; fruit scraps compost; ceramics/tissues go in trash.";
+}
+
+function renderLearningPath(mode) {
+  const item = state.deck[state.step];
+  const rankIndex = state.ranks.indexOf(item.rank);
+  const rankItems = state.deck.filter((entry) => entry.rank === item.rank);
+  const rankStep = state.deck
+    .slice(0, state.step + 1)
+    .filter((entry) => entry.rank === item.rank).length;
+  const display = shuffle(
+    item.options.map((option, index) => ({ ...option, index })),
+  );
+  const isWeather = mode === "weather";
+  state.answered = false;
+  stage(
+    `Level ${rankIndex + 1} of ${state.ranks.length} · ${item.rank} · ${rankStep}/${rankItems.length}`,
+  );
+  const trail = state.ranks
+    .map((rank, index) => {
+      const status =
+        index < rankIndex ? "complete" : index === rankIndex ? "active" : "";
+      return `<span class="level-node ${status}"><b>${index < rankIndex ? "✓" : index + 1}</b><small>${esc(rank)}</small></span>`;
+    })
+    .join("");
+  const scene = isWeather
+    ? weatherSceneSvg(item.scene)
+    : gardenLessonSvg(item.scene);
+  const choices = display
+    .map(
+      (choice) => `<button class="picture-choice" data-learning-answer="${choice.index}">
+        ${isWeather ? weatherChoiceSvg(choice.art) : gardenChoiceSvg(choice.art)}
+        <span>${esc(choice.label)}</span>
+      </button>`,
+    )
+    .join("");
+  board.innerHTML = `<div class="level-trail" aria-label="Adventure levels">${trail}</div>
+    <div class="learning-scene">${scene}<span class="scene-label">${isWeather ? "Look at the whole sky" : "Look closely at the garden"}</span></div>
+    <div class="clue-row" aria-label="Picture clues">${item.clues.map((clue) => `<span>✦ ${esc(clue)}</span>`).join("")}</div>
+    <section class="learning-question" aria-labelledby="learningQuestionTitle">
+      <p class="eyebrow">${esc(item.rank)} challenge</p>
+      <h2 class="board-title" id="learningQuestionTitle">${esc(item.title)}</h2>
+      <p class="learning-prompt">${esc(item.prompt)}</p>
+      <div class="picture-choice-grid">${choices}</div>
+    </section>`;
+  progress(
+    state.step,
+    state.deck.length,
+    `Level ${rankIndex + 1}: ${item.rank} · ${state.step} of ${state.deck.length} complete`,
+  );
+  bind("[data-learning-answer]", (node) => {
+    if (state.answered) return;
+    state.answered = true;
+    const picked = Number(node.dataset.learningAnswer);
+    const good = picked === item.answer;
+    if (good) {
+      state.correct += 1;
+      tone();
+    }
+    node.classList.add(good ? "correct" : "wrong");
+    board.querySelectorAll("[data-learning-answer]").forEach((option) => {
+      option.disabled = true;
+      if (Number(option.dataset.learningAnswer) === item.answer)
+        option.classList.add("correct");
+    });
+    say(
+      `${good ? "Great observation!" : "Here is the clue to remember:"} ${item.why}`,
+      good ? "good" : "try",
+    );
+    updateScore((state.correct / state.deck.length) * 100);
+    progress(
+      state.step + 1,
+      state.deck.length,
+      `${state.step + 1} of ${state.deck.length} challenges complete`,
+    );
+    const nextItem = state.deck[state.step + 1];
+    const nextRank = nextItem && nextItem.rank !== item.rank;
+    const nextLabel =
+      state.step === state.deck.length - 1
+        ? "See my adventure results"
+        : nextRank
+          ? `Advance to ${nextItem.rank}`
+          : isWeather
+            ? "Read the next sky"
+            : "Try the next garden job";
+    const next = button(nextLabel, () => {
+      state.step += 1;
+      if (state.step === state.deck.length) {
+        finish(
+          isWeather
+            ? `You completed all ${state.deck.length} weather challenges and made ${state.correct} strong sky-reading choices across four levels.`
+            : `You completed all ${state.deck.length} garden challenges and made ${state.correct} strong growing choices from soil to safe storage.`,
+        );
+      } else {
+        renderLearningPath(mode);
+        say(
+          nextRank
+            ? `Level ${state.ranks.indexOf(state.deck[state.step].rank) + 1} unlocked. Look for the picture clues.`
+            : "Look closely at the picture, clues, and words before choosing.",
+          nextRank ? "good" : "info",
+        );
+      }
+    });
+    next.focus({ preventScroll: true });
+  });
+  hint = isWeather
+    ? "Name what you can actually see first: sun, cloud shape, stars, falling water, fog, or moving branches. A forecast is a useful possibility, not a promise."
+    : "Follow the garden's order: prepare soil, read the packet, plant gently, check before watering, observe before treating, then harvest and store cleanly.";
 }
 
 function renderRepair() {
@@ -744,8 +876,16 @@ function renderRobot() {
   const directions = ["↑ North", "→ East", "↓ South", "← West"];
   const trail = new Set(state.trail || [level.start]);
   const currentStars = state.levelStars[state.level] || 0;
-  stage(`Robot world ${state.level + 1} of ${robotLevels.length} · ${level.name}`);
-  board.innerHTML = `<div class="stat-row rover-stats">${chip("Facing", directions[state.dir])}${chip("World", `${state.level + 1}/${robotLevels.length}`)}${chip("3-star target", `${level.par} cmds`)}${chip("Stars earned", `${roverStarTotal()}/${robotLevels.length * 3}`)}</div><p class="board-note rover-lesson"><strong>Forward moves Rover in the direction it is facing.</strong> Left and Right turn Rover in place. The dotted trail shows where it has traveled.</p><div class="tile-grid rover-grid" aria-label="Robot path grid">${Array.from({ length: 25 }, (_, i) => {
+  const ranks = [...new Set(robotLevels.map((item) => item.rank))];
+  const rankIndex = ranks.indexOf(level.rank);
+  const rankTrail = ranks
+    .map((rank, index) => {
+      const status = index < rankIndex ? "complete" : index === rankIndex ? "active" : "";
+      return `<span class="level-node ${status}"><b>${index < rankIndex ? "✓" : index + 1}</b><small>${esc(rank)}</small></span>`;
+    })
+    .join("");
+  stage(`Robot world ${state.level + 1} of ${robotLevels.length} · ${level.rank} · ${level.name}`);
+  board.innerHTML = `<div class="level-trail rover-level-trail" aria-label="Rover advancement ranks">${rankTrail}</div><div class="stat-row rover-stats">${chip("Facing", directions[state.dir])}${chip("World", `${state.level + 1}/${robotLevels.length}`)}${chip("Rank", level.rank)}${chip("3-star target", `${level.par} cmds`)}${chip("Stars earned", `${roverStarTotal()}/${robotLevels.length * 3}`)}</div><p class="board-note rover-lesson"><strong>Forward moves Rover in the direction it is facing.</strong> Left and Right turn Rover in place. The dotted trail shows where it has traveled.</p><div class="tile-grid rover-grid rover-zone--${level.zone}" aria-label="${esc(level.name)} rover path grid">${Array.from({ length: 25 }, (_, i) => {
     const rock = level.rocks.includes(i);
     const player = i === state.player;
     const goal = i === level.goal;
@@ -810,11 +950,12 @@ function renderRobot() {
         const totalStars = roverStarTotal();
         const finalScore = Math.round((totalStars / (robotLevels.length * 3)) * 100);
         finish(
-          `You sequenced, tested, and improved programs in ${robotLevels.length} rover worlds and earned ${totalStars} of ${robotLevels.length * 3} efficiency stars.`,
+          `You sequenced, tested, and improved programs in ${robotLevels.length} rover worlds across ${ranks.length} ranks and earned ${totalStars} of ${robotLevels.length * 3} efficiency stars.`,
           finalScore,
         );
         return;
       }
+      const completedRank = robotLevels[state.level].rank;
       state.level++;
       state.commands = [];
       state.reached = false;
@@ -823,10 +964,11 @@ function renderRobot() {
       state.dir = robotLevels[state.level].dir;
       state.trail = [state.player];
       renderRobot();
-      say(`Welcome to ${robotLevels[state.level].name}. Check Rover's facing direction before you build the next program.`);
+      const nextLevel = robotLevels[state.level];
+      say(`${nextLevel.rank !== completedRank ? `${nextLevel.rank} unlocked! ` : ""}Welcome to ${nextLevel.name}. Check Rover's facing direction before you build the next program.`);
     });
   const completed = state.level + (state.reached ? 1 : 0);
-  progress(completed, robotLevels.length, `${completed} of ${robotLevels.length} rover worlds solved`);
+  progress(completed, robotLevels.length, `${completed} of ${robotLevels.length} rover worlds solved · ${level.rank}`);
   updateScore(Math.round((roverStarTotal() / (robotLevels.length * 3)) * 100));
   hint = level.hint;
 }

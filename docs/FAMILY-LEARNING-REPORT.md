@@ -5,12 +5,12 @@ The Family Learning Report is a private, printable summary at `/report/`. It hel
 ## What it shows
 
 - shared arcade name, avatar, level, XP, sessions, and completed sessions
-- how many of the 30 playable cabinets have been visited and completed
+- how many of the 32 playable cabinets have been visited and completed
 - aggregate Math, Reading, Science, Nature, and Trivia answer history from Creature Catcher and Road Trip Quest
 - selected adaptive-learning paths and recent-question counts
 - growing strengths when a subject has at least two answers and at least 80% accuracy
 - gentle practice opportunities when a subject has at least two answers and below 75% accuracy
-- all 30 cabinet participation records and up to five recent cabinet timestamps
+- all 32 cabinet participation records and up to five recent cabinet timestamps
 - optional conversation starters based on the local snapshot
 
 A subject with too little history is described as needing more data. The report does not turn a single answer or a short session into a conclusion.

@@ -132,6 +132,7 @@ html.larriverse-high-contrast .bridge-load-plaque{background:#111;color:#fff;bor
 .town-map{background:linear-gradient(90deg,#d8e6c1 88%,#5cb5c9 88%);border:2px solid #a4c19d}
 
 html.larriverse-dark :is(.build-tool,.bridge-span,.supply-card,.island-request,.market-stall,.town-plot,.map-tile,.pipe-tile,.picnic-slot,.cipher-workshop,.map-clue){background:#2d2846;color:#f7f4ff;border-color:#6a608d}
+html.larriverse-dark :is(.tile-number,.cipher-message strong){color:#fff}
 html.larriverse-dark :is(.bridge-span b,.bridge-span small,.load-label,.market-stall strong,.market-stall small,.town-plot small,.island-request small){color:#f7f4ff}
 html.larriverse-dark .load-label{background:#4c4168;border-color:#8275a3;box-shadow:none}
 html.larriverse-dark .bridge-landscape{background:linear-gradient(#231e49 0 30%,#294955 30% 58%,#205d78 58% 100%);border-color:#554a80}
@@ -143,3 +144,77 @@ html.larriverse-high-contrast .pantry-challenge,html.larriverse-high-contrast .p
 @media(max-width:600px){
   .bridge-tool-shelf .build-tool{flex-basis:calc(50% - 8px);min-height:137px}.bridge-tool-art{height:67px}.bridge-landscape{min-height:584px;padding:88px 12px 58px}.bridge-spans{gap:10px}.bridge-cart{left:-8px;top:63px;width:68px}.bridge-span:first-child .load-label{transform:translateX(24px)}.bridge-abutment,.bridge-piers{display:none}.bridge-tree{width:58px;height:58px}.tree-right{display:none}.bridge-landmark{right:8px;top:15px;width:52px;height:52px}.bridge-load-plaque{top:9px;min-width:142px;padding:6px 9px}.bridge-load-plaque b{font-size:.68rem}.bridge-load-plaque small{font-size:.57rem}.bridge-flowers{top:126px}.bridge-span::before{top:46px}.bridge-span.weak::after{top:60px}.bridge-structure{height:86px}.world-scene>svg{min-height:145px;object-fit:cover}.scene-object{transform-box:fill-box}
 }
+
+/* Twenty-level progression and stronger light-mode reading surfaces. */
+.adventure-advancement{display:grid;grid-template-columns:1fr auto;gap:5px 14px;align-items:center;margin:0 0 16px;padding:13px 16px;border:2px solid #355675;border-radius:18px;background:linear-gradient(145deg,#294a6b,#19364f);color:#fff;box-shadow:0 7px 0 #122b3d,0 11px 20px #1733482e}
+.adventure-advancement span{font-size:.76rem;font-weight:900;letter-spacing:.075em;text-transform:uppercase;color:#ffe3a1}
+.adventure-advancement b{font-size:.9rem;color:#fff}
+.adventure-rank-track{grid-column:1/-1;height:10px;overflow:hidden;border:1px solid #88a9bf;border-radius:999px;background:#102a3d;box-shadow:inset 0 2px 3px #06172388}
+.adventure-rank-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#6bd6cc,#ffe07e);box-shadow:0 0 9px #b5fff1}
+.board-intro,.small-note{color:#38455a}
+.expedition-stats .stat-chip{border:1px solid #9ebbc9;background:linear-gradient(145deg,#f8fdff,#dceef4);color:#223b4e;box-shadow:0 3px 0 #8eaab955}
+.build-tool,.bridge-span,.pipe-tile,.supply-card,.map-clue,.cipher-workshop,.cipher-answer span{color:#24364b}
+.build-tool,.bridge-span,.pipe-tile,.supply-card{border-color:#a9b9c2}
+.map-clue{border:2px solid #a99ad1;background:linear-gradient(145deg,#fbf8ff,#e6dcfa);color:#27334a;box-shadow:0 6px 0 #9d8ac355}
+.cipher-workshop{border:2px solid #a79ac8;background:linear-gradient(145deg,#fbf8ff,#e5dcf4);color:#27334a;box-shadow:0 7px 0 #9587b855}
+.cipher-key span{border:1px solid #d2b76d;background:#fff0bf;color:#3d3150}.cipher-key i{color:#705b8c}
+.cipher-answer{flex-wrap:wrap}.cipher-answer span{background:linear-gradient(#f7f2ff,#ddd2f1);border-color:#8871b2;box-shadow:0 4px 0 #77609e55}
+.letter-keys button{border:1px solid #79aaa4;background:linear-gradient(#e9faf7,#c2e5df);color:#254f4b;box-shadow:0 3px 0 #60989166}
+
+/* Each new Bridge Buddies crossing has its own grounded palette. */
+.bridge-crossing--mountain{--bridge-sky:#b9d8ea;--bridge-bank:#839c82;--bridge-water:#4f9fb3}
+.bridge-crossing--farm{--bridge-sky:#c9e7ef;--bridge-bank:#c5cf72;--bridge-water:#5db1be}
+.bridge-crossing--coast{--bridge-sky:#b2e3f2;--bridge-bank:#e0cd83;--bridge-water:#3da6c7}
+.bridge-crossing--school{--bridge-sky:#c4e4ee;--bridge-bank:#91c17c;--bridge-water:#5bb4c3}
+.bridge-crossing--canyon{--bridge-sky:#c8dff0;--bridge-bank:#c3865f;--bridge-water:#4d9fb7}
+.bridge-crossing--snow{--bridge-sky:#d9eaf2;--bridge-bank:#e8eef0;--bridge-water:#6faabd}
+.bridge-crossing--solar{--bridge-sky:#a9ddf2;--bridge-bank:#b7cc72;--bridge-water:#4da7bf}
+.bridge-crossing--orchard{--bridge-sky:#c4e9ee;--bridge-bank:#7fb36d;--bridge-water:#55b1bd}
+.bridge-crossing--harbor{--bridge-sky:#aeddec;--bridge-bank:#8bb5a2;--bridge-water:#328da9}
+.bridge-crossing--art{--bridge-sky:#d0dff1;--bridge-bank:#9cc27d;--bridge-water:#61aebd}
+.bridge-crossing--sports{--bridge-sky:#b8e1ee;--bridge-bank:#79b973;--bridge-water:#4aa8ba}
+.bridge-crossing--sunrise{--bridge-sky:#ffd3a3;--bridge-bank:#9fbd78;--bridge-water:#5ca9bd}
+.bridge-crossing--mountain .bridge-scenery::before{background:linear-gradient(145deg,transparent 0 68%,#738693 69% 76%,transparent 77%) 0 0/120px 90px repeat-x;opacity:.55}
+.bridge-crossing--snow .bridge-scenery::before{background:radial-gradient(circle,#fff 0 2px,transparent 3px) 0 0/37px 31px;opacity:.8}
+.bridge-crossing--sunrise .bridge-scenery::before{background:radial-gradient(circle at 80% 12%,#ffefac 0 28px,#f7a76988 29px 43px,transparent 44px)}
+
+/* Harbor Helpers uses one readable request and one destination per level. */
+.harbor-map{margin-bottom:15px;border:2px solid #77aeb9;border-radius:25px;background:#55b7ca;box-shadow:0 8px 0 #4c8fa055,0 13px 22px #244c5c22;overflow:hidden}
+.harbor-request-card{margin:0 0 16px;padding:17px 19px;border:2px solid #977c47;border-radius:20px;background:linear-gradient(145deg,#fff8dc,#f1d995);color:#2f3544;box-shadow:0 6px 0 #a78b5255}
+.harbor-request-card .eyebrow{margin:0;color:#6b4b25;font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.harbor-request-card h2{margin:4px 0 7px;color:#25384a;font-size:1.3rem}.harbor-request-card p:last-child{margin:0;line-height:1.6}
+.cargo-shelf{grid-template-columns:repeat(3,minmax(0,1fr))}
+.supply-card{background:linear-gradient(145deg,#fffdf4,#e9f3ee);box-shadow:0 5px 0 #91a9a055}.supply-card small{color:#4d5d6b}
+
+html.larriverse-dark .adventure-advancement{border-color:#7fa7bd;background:linear-gradient(145deg,#243f58,#182c45);box-shadow:0 7px 0 #0b1723}
+html.larriverse-dark .expedition-stats .stat-chip{border-color:#746993;background:#2d2846;color:#f7f4ff}
+html.larriverse-dark :is(.harbor-request-card,.cipher-key span,.cipher-answer span,.letter-keys button){border-color:#746993;background:#2d2846;color:#f7f4ff}
+html.larriverse-dark .harbor-request-card :is(.eyebrow,h2){color:#ffe0a0}
+html.larriverse-high-contrast :is(.adventure-advancement,.harbor-request-card,.expedition-stats .stat-chip,.cipher-key span,.letter-keys button){border:2px solid #fff;background:#111;color:#fff;box-shadow:none}
+html.larriverse-high-contrast .harbor-request-card :is(.eyebrow,h2),html.larriverse-high-contrast .adventure-advancement span{color:#fff}
+
+@media(max-width:600px){
+  .adventure-advancement{padding:11px 13px}.adventure-advancement span{font-size:.68rem}.adventure-advancement b{font-size:.78rem}
+  .cargo-shelf{grid-template-columns:repeat(2,minmax(0,1fr))}.harbor-request-card{padding:14px}
+  .cipher-answer{gap:6px}.cipher-answer span{width:48px;height:54px;font-size:1.55rem}
+}
+
+/* Critter Council: twenty readable neighborhood plans with high-contrast request cards. */
+body[data-world="critter-council"] .play-card{border:2px solid #7b9da6;background:linear-gradient(155deg,#fffdf8,#e4f1ed);color:#203747;box-shadow:0 10px 0 #6f929966,0 18px 34px #355d6424}
+.town-challenge-card{margin:0 0 15px;padding:17px 19px;border:2px solid #977c47;border-radius:20px;background:linear-gradient(145deg,#fff8d8,#efd58c);color:#243747;box-shadow:0 6px 0 #a4864d55}
+.town-challenge-card .eyebrow{margin:0;color:#68491f;font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.town-challenge-card h2{margin:4px 0 7px;color:#1e3546;font-size:1.3rem}.town-challenge-card p:last-child{margin:0;color:#304453;font-weight:650;line-height:1.6}
+.neighbor-requests{gap:11px}.neighbor-requests p{display:grid;grid-template-columns:auto 1fr;gap:1px 9px;align-items:start;padding:13px 14px;border:2px solid #8aaab5;border-radius:15px;background:linear-gradient(145deg,#fbfeff,#dcebf0);color:#20384a;box-shadow:0 4px 0 #7899a555;font-size:.88rem;line-height:1.5}.neighbor-requests p>span{grid-row:1/3;color:#526d78;font-size:1.05rem;font-weight:1000}.neighbor-requests p b{color:#17364b}.neighbor-requests p small{display:block;color:#304c5d;font-size:.78rem;font-weight:700;line-height:1.5}.neighbor-requests p.met{border-color:#5e8d65;background:linear-gradient(145deg,#f1faed,#cfe6c7);color:#254d31;box-shadow:0 4px 0 #648b6855}.neighbor-requests p.met>span,.neighbor-requests p.met b,.neighbor-requests p.met small{color:#214d2d}
+.town-tool-shelf .build-tool{min-height:126px;border-color:#8fa8ad;background:linear-gradient(145deg,#fffdf5,#e7efeb);color:#203747;box-shadow:0 5px 0 #7d999455}.town-tool-shelf .build-tool small{color:#405662;font-weight:700}.town-tool-shelf .build-tool.selected{border-color:#624b9e;background:linear-gradient(145deg,#f8f3ff,#dfd4f4);box-shadow:0 0 0 3px #d8cbef,0 5px 0 #826eac66}.town-tool-shelf .build-tool:disabled{opacity:.78}
+.town-map{border:3px solid #6e9482;background:linear-gradient(90deg,#cfe2b8 0 86%,#55b4c5 86% 100%);box-shadow:inset -14px 0 18px #247d8d33,0 7px 0 #5d7f7060}.town-shade,.town-quiet{color:#173c2d;font-size:.76rem;font-weight:900;letter-spacing:.025em}.town-plot{border:2px solid #8fa78d;background:linear-gradient(145deg,#fff8df,#e5edc5);color:#203c37;box-shadow:0 5px 0 #728e7466}.town-plot b{color:#173a34}.town-plot small{color:#3f5b57;font-weight:750}.town-plot.empty{background:linear-gradient(145deg,#f2f5d8,#dbe4b7)}.town-plot:disabled{opacity:1}
+html.larriverse-dark body[data-world="critter-council"] .play-card{border-color:#6d8297;background:linear-gradient(155deg,#26243d,#1e3140);color:#f7f4ff;box-shadow:0 10px 0 #111c29}
+html.larriverse-dark .town-challenge-card,html.larriverse-dark .neighbor-requests p,html.larriverse-dark .town-tool-shelf .build-tool,html.larriverse-dark .town-plot{border-color:#776c98;background:linear-gradient(145deg,#37314e,#29263f);color:#f7f4ff;box-shadow:0 4px 0 #171425}
+html.larriverse-dark .town-challenge-card :is(.eyebrow,h2,p),html.larriverse-dark .neighbor-requests p :is(span,b,small),html.larriverse-dark .town-tool-shelf .build-tool :is(b,small),html.larriverse-dark .town-plot :is(b,small){color:#f7f4ff}
+html.larriverse-dark .neighbor-requests p.met{border-color:#78a97b;background:linear-gradient(145deg,#294633,#20382a)}html.larriverse-dark .neighbor-requests p.met :is(span,b,small){color:#eaffdf}
+html.larriverse-dark .town-map{border-color:#657b72;background:linear-gradient(90deg,#304936 0 86%,#276d7b 86% 100%);box-shadow:inset -14px 0 18px #081c2380,0 7px 0 #111b18}html.larriverse-dark :is(.town-shade,.town-quiet){color:#e4f5dc}
+html.larriverse-high-contrast body[data-world="critter-council"] :is(.play-card,.town-challenge-card,.neighbor-requests p,.town-tool-shelf .build-tool,.town-map,.town-plot){border:2px solid #fff;background:#111;color:#fff;box-shadow:none}html.larriverse-high-contrast body[data-world="critter-council"] :is(.town-challenge-card,.neighbor-requests p,.town-tool-shelf .build-tool,.town-plot) :is(.eyebrow,h2,p,span,b,small),html.larriverse-high-contrast body[data-world="critter-council"] :is(.town-shade,.town-quiet){color:#fff}
+
+/* Material depth for the bridge fleet and its loaded cargo. */
+.bridge-cart-art{overflow:visible;filter:drop-shadow(0 6px 3px #20313d4d) drop-shadow(0 12px 7px #20313d22)}
+.bridge-cargo{filter:drop-shadow(0 2px 1px #3f2c1f44)}
+
+@media(max-width:600px){.town-challenge-card{padding:14px}.town-tool-shelf .build-tool{flex-basis:calc(50% - 8px);min-height:112px}.neighbor-requests p{padding:11px 12px}.town-map{padding:9px}.town-shade,.town-quiet{font-size:.68rem}}

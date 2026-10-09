@@ -328,6 +328,72 @@ export const streetSafetyScenarios = Object.freeze([
     why: 'Fog shortens how far you can see. A slower speed and more space improve reaction time; high beams can reflect glare back in fog.',
     hint: 'Match your speed and following space to how far you can actually see.',
     visual: 'scene-fog'
+  },
+  {
+    id: 'soft-shoulder',
+    category: 'Roadside caution',
+    title: 'Soft shoulder',
+    prompt: 'A yellow roadside sign says SOFT SHOULDER. What condition should a road user expect?',
+    options: ['The unpaved edge may not support a vehicle safely, so stay on the roadway and slow if needed.', 'The shoulder is a special passing lane.', 'The road becomes soft enough for walking barefoot.'],
+    answer: 0,
+    why: 'A soft shoulder can be loose, uneven, or lower than the travel lane. Entering it suddenly can reduce control or make returning to pavement difficult.',
+    hint: 'Compare the firm travel lane with the loose edge beside it.',
+    visual: 'roadside-soft-shoulder'
+  },
+  {
+    id: 'shoulder-dropoff',
+    category: 'Roadside caution',
+    title: 'Shoulder drop-off',
+    prompt: 'An orange sign warns SHOULDER DROP-OFF beside fresh road work. What is the safe response?',
+    options: ['Swerve onto the shoulder to test its height.', 'Stay in the lane, reduce speed as posted, and avoid sudden moves near the pavement edge.', 'Drive with one wheel on each surface.'],
+    answer: 1,
+    why: 'A drop-off means the shoulder is lower than the travel lane. Smooth steering and a safer speed help prevent a tire from catching the pavement edge.',
+    hint: 'The two road surfaces are temporarily at different heights.',
+    visual: 'roadside-dropoff'
+  },
+  {
+    id: 'disabled-vehicle-roadside',
+    category: 'Roadside caution',
+    title: 'Disabled vehicle ahead',
+    prompt: 'A car is stopped on the shoulder with hazard lights flashing. What should approaching road users do?',
+    options: ['Slow down, give the stopped vehicle extra space, and move over when safe and required.', 'Stop beside it in the travel lane to ask questions.', 'Pass closely because hazard lights make a shield.'],
+    answer: 0,
+    why: 'A disabled vehicle may have people, tools, or debris nearby. More space and a lower speed protect both the stopped travelers and moving traffic.',
+    hint: 'Flashing hazards mean the roadside area needs extra room.',
+    visual: 'roadside-disabled'
+  },
+  {
+    id: 'roadside-maintenance-worker',
+    category: 'Roadside caution',
+    title: 'Roadside worker and cones',
+    prompt: 'A maintenance worker in a bright vest is beside the road with cones. What is the safest first plan?',
+    options: ['Keep full speed because the worker is outside the lane.', 'Slow down, follow temporary controls, and leave generous space.', 'Drive between the cones to get a closer look.'],
+    answer: 1,
+    why: 'Workers can be close to moving traffic and equipment may enter the lane. Slowing early and following the cone path makes your movement predictable.',
+    hint: 'Cones create a temporary safety space around a person at work.',
+    visual: 'roadside-worker'
+  },
+  {
+    id: 'farm-equipment-entry',
+    category: 'Roadside caution',
+    title: 'Tractor entering the road',
+    prompt: 'A tractor is approaching from a farm driveway beside the road. What should a road user expect?',
+    options: ['The tractor may enter slowly and need extra room, so reduce speed and be patient.', 'The tractor must disappear before reaching the pavement.', 'Pass immediately even if the view ahead is blocked.'],
+    answer: 0,
+    why: 'Farm equipment is often wide and slow and may need a large turning path. Patience and clear following space are safer than a rushed pass.',
+    hint: 'Think about the tractor’s speed, width, and turning room.',
+    visual: 'roadside-tractor'
+  },
+  {
+    id: 'deer-near-roadside',
+    category: 'Roadside caution',
+    title: 'Deer near the roadway',
+    prompt: 'One deer is standing near the roadside at dusk. What hidden risk should you remember?',
+    options: ['Deer always stay still when they see lights.', 'More animals may follow; slow down, scan both sides, and be ready to stop safely.', 'Swerve into the opposite lane before the deer moves.'],
+    answer: 1,
+    why: 'Wild animals can move suddenly and often travel in groups. A controlled slowdown preserves space without creating the extra danger of an abrupt swerve.',
+    hint: 'The animal you see may not be the only one nearby.',
+    visual: 'roadside-deer'
   }
 ]);
 
@@ -335,5 +401,6 @@ export const streetSafetyCategories = Object.freeze([
   'Signal lights',
   'Caution signs',
   'Emergency awareness',
-  'Vehicle & road hazards'
+  'Vehicle & road hazards',
+  'Roadside caution'
 ]);

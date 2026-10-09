@@ -43,12 +43,64 @@ const drawings = {
   house: '<path d="M16 43h64l10 8v38H16Z" fill="#a85f4a" stroke="#6e4035" stroke-width="3"/><path d="M16 43h64v46H16Z" fill="#f0b77d"/><path d="M79 43 90 51v38H79Z" fill="#ba7250"/><path d="M7 44 47 10l45 33-12 7-33-25-29 25Z" fill="#526f9d" stroke="#364c70" stroke-width="4"/><path d="m18 43 29-25 32 25-7 3-25-19-23 19Z" fill="#829ac1"/><rect x="42" y="57" width="18" height="32" rx="2" fill="#6b4d54" stroke="#49363e" stroke-width="3"/><circle cx="56" cy="73" r="2" fill="#ffd66b"/><g fill="#9dd7e2" stroke="#527f8b" stroke-width="2"><rect x="23" y="55" width="13" height="15" rx="2"/><rect x="66" y="55" width="10" height="15" rx="2"/></g><path d="M29.5 56v13M24 62h11M71 56v13M67 62h8" stroke="#effcff" stroke-width="2"/><path d="M12 90h81" stroke="#554139" stroke-width="5" stroke-linecap="round"/>',
   fuel: '<path d="M21 20h45v69H21Z" fill="#e15f55" stroke="#873a39" stroke-width="4"/><path d="M27 27h33v25H27Z" fill="#d8f2f0" stroke="#4e737b" stroke-width="3"/><path d="M30 30h27l-5 16H30Z" fill="#8fcbd2"/><rect x="28" y="60" width="31" height="7" rx="3" fill="#ffd76e"/><path d="M66 32h9q10 0 10 11v30q0 10 8 10" fill="none" stroke="#313b42" stroke-width="6" stroke-linecap="round"/><path d="m76 31 9 5v18h-9Z" fill="#55646c" stroke="#303a40" stroke-width="3"/><path d="M14 90h62" stroke="#4f4341" stroke-width="7" stroke-linecap="round"/><path d="M26 22h35" stroke="#ffaaa0" stroke-width="3"/>',
   trafficLight: '<path d="M48 9h10v18H48Z" fill="#69767e"/><path d="M38 25h31l7 7v54H38Z" fill="#27323b" stroke="#141b22" stroke-width="4"/><path d="M38 25h24v61H38Z" fill="#3c4b55"/><path d="M69 25 76 32v54h-7Z" fill="#172028"/><g stroke="#12171c" stroke-width="3"><circle cx="54" cy="40" r="9" fill="#ef5451"/><circle cx="54" cy="58" r="9" fill="#efc449"/><circle cx="54" cy="76" r="9" fill="#4bc06e"/></g><path d="M48 35q5-4 10 0M48 53q5-4 10 0M48 71q5-4 10 0" stroke="#fff" stroke-width="2" opacity=".65" fill="none"/><path d="M54 86v7M37 94h34" stroke="#59666f" stroke-width="7" stroke-linecap="round"/>',
+  cloud: '<g stroke="#738997" stroke-width="3"><path d="M17 69q-8-23 17-29 7-26 32-16 17 6 17 24 18 3 16 21-2 15-20 15H35Q20 84 17 69Z" fill="#dce9ed"/><path d="M22 65q5-17 21-17 8-22 29-17" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/><path d="M35 81h44" stroke="#a6bac3" stroke-width="5" stroke-linecap="round"/></g>',
+  rainCloud: '<g stroke="#526b79" stroke-width="3"><path d="M13 56q-7-21 16-27 8-25 31-15 16 6 16 22 17 3 15 20-2 14-19 14H30Q16 70 13 56Z" fill="#91a9b6"/><path d="M19 52q5-15 19-16 8-18 26-15" fill="none" stroke="#c8d8df" stroke-width="6" stroke-linecap="round"/></g><g stroke="#3da9d0" stroke-width="7" stroke-linecap="round"><path d="m27 77-5 11m26-11-5 11m27-11-5 11"/></g>',
+  snowCloud: '<g stroke="#607784" stroke-width="3"><path d="M13 51q-7-20 16-26 8-23 31-14 16 6 16 21 17 3 15 19-2 13-19 13H30Q16 64 13 51Z" fill="#c5d7df"/><path d="M19 47q5-14 19-15 8-17 26-14" fill="none" stroke="#edf7fa" stroke-width="6" stroke-linecap="round"/></g><g stroke="#68b6d3" stroke-width="3" stroke-linecap="round"><path d="M28 73v16m-7-8h14M22 75l12 12m0-12L22 87M57 72v18m-8-9h16M50 75l14 12m0-12L50 87M82 74v14m-6-7h12"/></g>',
+  moon: '<path d="M72 13Q37 24 42 57q5 27 35 29Q57 99 34 83 11 66 17 39 24 10 53 7q11-1 19 6Z" fill="#ffe8a3" stroke="#a88a45" stroke-width="4"/><path d="M30 31q11-15 27-17" fill="none" stroke="#fff6c9" stroke-width="6" stroke-linecap="round"/><g fill="#d2b565"><circle cx="42" cy="44" r="5"/><circle cx="54" cy="69" r="4"/></g>',
+  rainbow: '<path d="M10 81a40 40 0 0 1 80 0" fill="none" stroke="#dd5864" stroke-width="14"/><path d="M17 81a33 33 0 0 1 66 0" fill="none" stroke="#f2a43e" stroke-width="11"/><path d="M24 81a26 26 0 0 1 52 0" fill="none" stroke="#f3d35a" stroke-width="9"/><path d="M31 81a19 19 0 0 1 38 0" fill="none" stroke="#5fba72" stroke-width="8"/><g fill="#eef7f8" stroke="#91aab4" stroke-width="2"><circle cx="15" cy="80" r="11"/><circle cx="85" cy="80" r="11"/></g>',
+  wind: '<g fill="none" stroke="#5aa6bd" stroke-width="7" stroke-linecap="round"><path d="M9 30h54q18 0 18-13 0-10-11-10-8 0-11 8"/><path d="M17 52h66q12 0 12 11 0 12-13 12-9 0-12-8"/><path d="M7 74h43"/></g><g fill="#79bd73"><path d="m19 22 9-14 7 17Zm25 48 10-13 6 17Z"/></g>',
+  rake: '<path d="M61 10 35 75" stroke="#9a6338" stroke-width="9" stroke-linecap="round"/><path d="M64 8 38 73" stroke="#e0aa69" stroke-width="3" stroke-linecap="round"/><path d="M18 67 60 84" stroke="#59666d" stroke-width="8" stroke-linecap="round"/><g stroke="#445159" stroke-width="5" stroke-linecap="round"><path d="m23 69-6 15m15-12-6 16m15-12-5 16m14-12-5 15m14-11-4 14"/></g>',
+  fork: '<path d="M49 43v48" stroke="#5f6f78" stroke-width="9" stroke-linecap="round"/><path d="M49 44v47" stroke="#d7e2e5" stroke-width="3" stroke-linecap="round"/><path d="M25 12v22q0 14 24 14t24-14V12M37 12v27M49 12v31M61 12v27" fill="none" stroke="#6d7d85" stroke-width="7" stroke-linecap="round"/><path d="M29 12h40" stroke="#f2f8f9" stroke-width="2" opacity=".8"/>',
+  paintBrush: '<path d="m62 8 17 11-35 55-17-11Z" fill="#d99b54" stroke="#7d512f" stroke-width="4"/><path d="m58 13 10 7-31 48-9-6Z" fill="#f1bd70"/><path d="m27 62 18 12-9 15-26 7 8-25Z" fill="#5aa5c1" stroke="#385e72" stroke-width="4" stroke-linejoin="round"/><path d="m18 72 18 12" stroke="#d9e3e4" stroke-width="7"/><path d="m13 89 22-2-16 8Z" fill="#86cde0"/>',
+  wateringCan: '<path d="M22 42h52l-5 42H25Z" fill="#61b7c2" stroke="#326b78" stroke-width="4"/><path d="M26 43q2-24 22-24t22 24" fill="none" stroke="#4f8791" stroke-width="7"/><path d="M22 52 6 39 3 48l20 19" fill="#82ced2" stroke="#326b78" stroke-width="4" stroke-linejoin="round"/><path d="M74 49q22-5 21 14-1 15-22 15" fill="none" stroke="#326b78" stroke-width="7"/><path d="M29 48h37l-2 9H27Z" fill="#a6e1df"/><circle cx="14" cy="42" r="2" fill="#e9fbfa"/>',
+  gardenBed: '<path d="M10 48 50 28l40 20-41 23Z" fill="#9b633f" stroke="#5e3b2c" stroke-width="4"/><path d="M10 48v25l39 19V71Z" fill="#bd7a49" stroke="#5e3b2c" stroke-width="4"/><path d="m49 71 41-23v25L49 92Z" fill="#754a35" stroke="#5e3b2c" stroke-width="4"/><path d="M20 48 50 35l29 14-30 16Z" fill="#6c4932"/><path d="M24 44q25 10 51 1M21 55q25 10 52 1" fill="none" stroke="#ae7950" stroke-width="3"/>',
+  compost: '<path d="M23 22h54l9 65H14Z" fill="#cf9b55" stroke="#76532f" stroke-width="4" stroke-linejoin="round"/><path d="M23 22h54l5 15H18Z" fill="#edc275"/><path d="m50 43 7 12 14 2-10 10 3 14-14-7-13 7 2-14-10-10 14-2Z" fill="#5b9f57"/><path d="M29 29h43" stroke="#fff0ad" stroke-width="4"/>',
+  plantLabel: '<path d="M48 42v48" stroke="#8b5b38" stroke-width="7" stroke-linecap="round"/><path d="M18 12h64v41H18Z" fill="#fff3bd" stroke="#825d35" stroke-width="4"/><path d="M29 26h42M29 37h30" stroke="#5c7552" stroke-width="5" stroke-linecap="round"/>',
+  trellis: '<g stroke="#8c5a37" stroke-width="6" stroke-linecap="round"><path d="M19 11v78M50 11v78M81 11v78M12 27h76M12 52h76M12 77h76"/></g><path d="M20 83q17-29 30-16 12-32 31-17" fill="none" stroke="#4e9a58" stroke-width="7" stroke-linecap="round"/><g fill="#81c96f"><ellipse cx="32" cy="68" rx="9" ry="5" transform="rotate(-25 32 68)"/><ellipse cx="60" cy="58" rx="9" ry="5" transform="rotate(20 60 58)"/></g>',
+  tomatoPlant: '<path d="M50 88V26M49 46 29 35m21 25 25-15m-25 29-23-8" fill="none" stroke="#3f8550" stroke-width="7" stroke-linecap="round"/><g fill="#6db762" stroke="#3f8550" stroke-width="2"><ellipse cx="28" cy="34" rx="13" ry="7" transform="rotate(25 28 34)"/><ellipse cx="74" cy="44" rx="13" ry="7" transform="rotate(-25 74 44)"/><ellipse cx="27" cy="65" rx="13" ry="7" transform="rotate(20 27 65)"/></g><g fill="#e7655e" stroke="#9e3f3f" stroke-width="3"><circle cx="43" cy="54" r="10"/><circle cx="63" cy="68" r="11"/><circle cx="43" cy="79" r="9"/></g><path d="m43 44 3 7 7 2-7 3-3 7-3-7-7-3 7-2Z" fill="#64a85d"/>',
+  magnifier: '<circle cx="42" cy="40" r="25" fill="#dff5f5" fill-opacity=".65" stroke="#506b79" stroke-width="7"/><path d="m59 59 28 28" stroke="#506b79" stroke-width="12" stroke-linecap="round"/><path d="M29 29q10-9 22-3" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>',
+  lettuce: '<g fill="#69b969" stroke="#3e7f4b" stroke-width="3"><path d="M50 86Q9 82 18 48q5-18 23-9-2-26 12-30 17 12 10 32 21-11 27 10 8 30-40 35Z"/><path d="M50 82Q22 72 29 50q5-13 18-4 0-19 9-24 12 11 4 27 14-5 20 8 5 19-30 25Z" fill="#91d47a"/></g><path d="M50 78V27m0 26L35 43m15 23 18-16" stroke="#d0ed99" stroke-width="4" stroke-linecap="round"/>',
+  basket: '<path d="M15 43h70l-8 43H23Z" fill="#d9a64e" stroke="#7c552b" stroke-width="4"/><path d="M29 44q1-31 21-31t21 31" fill="none" stroke="#9a6b31" stroke-width="7"/><g stroke="#fff0a0" stroke-width="3"><path d="M24 55h53M21 68h58M35 45l-4 38m18-38v40m17-40 3 38"/></g><g fill="#e9635d" stroke="#963f3c" stroke-width="2"><circle cx="37" cy="43" r="9"/><circle cx="55" cy="40" r="9"/></g><g fill="#67b663" stroke="#3e7f48" stroke-width="2"><circle cx="68" cy="46" r="8"/></g>',
+  refrigerator: '<path d="M24 8h52v82H24Z" fill="#d9edf0" stroke="#536c77" stroke-width="4"/><path d="M24 38h52" stroke="#536c77" stroke-width="4"/><path d="M67 19v11m0 19v19" stroke="#7f9aa4" stroke-width="5" stroke-linecap="round"/><path d="M28 12h35L28 35Z" fill="#f7ffff" opacity=".75"/><path d="M31 90v5m38-5v5" stroke="#455a63" stroke-width="6"/>',
+  tomato: '<path d="M50 24c-27 0-37 18-33 38 4 22 21 29 33 27 13 2 30-5 34-27 4-20-6-38-34-38Z" fill="#e8665c" stroke="#9a3e3b" stroke-width="4"/><path d="m50 28-8-15m8 14 16-11m-16 11-20-8m20 8 5-17" fill="none" stroke="#43894d" stroke-width="7" stroke-linecap="round"/><path d="M29 43q8-10 19-11" fill="none" stroke="#ffa69a" stroke-width="6" stroke-linecap="round"/>',
+  bottle: '<path d="M39 12h22v15l7 9 5 47q1 8-8 8H35q-9 0-8-8l5-47 7-9Z" fill="#69c7cf" fill-opacity=".82" stroke="#326d78" stroke-width="4" stroke-linejoin="round"/><path d="M33 41h35l2 28H30Z" fill="#45a8b6"/><path d="M32 54h38l1 15H30Z" fill="#8be0dc"/><rect x="37" y="8" width="26" height="10" rx="3" fill="#6659a7" stroke="#3e376d" stroke-width="3"/><path d="M39 24h22M37 35h26M37 46q-3 23 1 35" fill="none" stroke="#d8ffff" stroke-width="4" stroke-linecap="round" opacity=".8"/><path d="M61 39q5 20 3 40" fill="none" stroke="#2d7887" stroke-width="3" opacity=".55"/>',
+  can: '<path d="M27 22h46v61q0 8-23 8t-23-8Z" fill="#a9bac5" stroke="#52636f" stroke-width="4"/><ellipse cx="50" cy="22" rx="23" ry="8" fill="#dce6e9" stroke="#52636f" stroke-width="4"/><ellipse cx="50" cy="22" rx="14" ry="4" fill="#7e909b"/><path d="M27 37h46v34H27Z" fill="#78b9c8"/><path d="M27 43h46M27 65h46" stroke="#d9f4f4" stroke-width="3"/><path d="M36 29v49q0 7 8 9" fill="none" stroke="#f7ffff" stroke-width="5" stroke-linecap="round" opacity=".65"/><path d="M64 31v48" stroke="#647983" stroke-width="3" opacity=".55"/>',
+  brokenMug: '<path d="M19 29h26l6 8 8-8h12l-5 51q-1 9-22 9T23 80Z" fill="#f1c878" stroke="#805c39" stroke-width="4" stroke-linejoin="round"/><path d="M70 41q20-3 20 15T67 72" fill="none" stroke="#805c39" stroke-width="8"/><path d="M70 45q13-1 13 11T68 65" fill="none" stroke="#ffe5a5" stroke-width="4"/><path d="m52 38-8 15 10 8-9 18" fill="none" stroke="#9a6042" stroke-width="3" stroke-linejoin="round"/><path d="M27 38h16M29 42v31" stroke="#fff3bf" stroke-width="5" stroke-linecap="round" opacity=".8"/><path d="M24 75q21 8 43 0" fill="none" stroke="#c18c4d" stroke-width="3"/>',
+  cardboardBox: '<path d="m13 37 36-19 38 18-37 22Z" fill="#e6b36f" stroke="#795035" stroke-width="4" stroke-linejoin="round"/><path d="M13 37v36l37 20V58Z" fill="#c9854c" stroke="#795035" stroke-width="4" stroke-linejoin="round"/><path d="m50 58 37-22v37L50 93Z" fill="#a9673f" stroke="#795035" stroke-width="4" stroke-linejoin="round"/><path d="m31 28 38 19M31 28l37-1" fill="none" stroke="#f4d193" stroke-width="5"/><path d="M21 44v24l21 12" fill="none" stroke="#efbd7b" stroke-width="4" opacity=".7"/><path d="m57 61 22-13v10L57 71Z" fill="#f1c77f" opacity=".6"/>',
+  appleCore: '<path d="M34 30q16 8 32 0l-7 17q-5 9 0 18l8 18q-17 10-34 0l8-18q5-9 0-18Z" fill="#ffe4a2" stroke="#8f6c3c" stroke-width="3"/><path d="M29 28q4-14 20-9 16-6 23 8-5 12-21 10-17 3-22-9Z" fill="#e9655e" stroke="#9d403e" stroke-width="3"/><path d="M30 84q7-13 21-8 13-5 20 8-9 13-21 8-12 5-20-8Z" fill="#d94e4c" stroke="#91383a" stroke-width="3"/><path d="M50 19V8m2 8q13-12 23-2-6 11-22 8" fill="#6aaf63" stroke="#3d7e48" stroke-width="4" stroke-linecap="round"/><g fill="#5b4130"><ellipse cx="45" cy="53" rx="3" ry="5" transform="rotate(-20 45 53)"/><ellipse cx="56" cy="62" rx="3" ry="5" transform="rotate(18 56 62)"/></g><path d="M35 25q8-6 15-2" stroke="#ffaaa0" stroke-width="4" stroke-linecap="round"/>',
+  tissue: '<path d="m15 70 8-29 17-7 7-22 18 18 18 4 4 31-15 22-28-5-20 5Z" fill="#edf8f8" stroke="#718c95" stroke-width="3" stroke-linejoin="round"/><path d="m24 42 22 18 19-30m-19 30-2 22m2-22 37 5M24 70l20-9m21-31 7 57" fill="none" stroke="#b7d4d8" stroke-width="3"/><path d="m28 43 15-5 5-18" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="m24 70 20 12 28 5" fill="none" stroke="#607b85" stroke-width="3" opacity=".4"/>',
+  shirt: '<path d="m35 15 15 7 15-7 24 19-15 18-9-8v45H35V44l-9 8-15-18Z" fill="#788ed4" stroke="#465889" stroke-width="4" stroke-linejoin="round"/><path d="M35 16q2 16 15 16t15-16" fill="#dce5ff" stroke="#465889" stroke-width="3"/><path d="M37 47v36h21M17 34l12 8m54-8-12 8" fill="none" stroke="#acbdf0" stroke-width="5" stroke-linecap="round"/><path d="M65 45v40" stroke="#40517f" stroke-width="3" opacity=".45"/>',
+  paper: '<path d="M22 17h44l14 14v58H22Z" fill="#f7fbf4" stroke="#60727b" stroke-width="4" stroke-linejoin="round"/><path d="M66 17v15h14" fill="#cbdce1" stroke="#60727b" stroke-width="4" stroke-linejoin="round"/><path d="M31 42h39M31 54h39M31 66h31M31 78h24" stroke="#84a0aa" stroke-width="4" stroke-linecap="round"/><path d="M26 21h31" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M75 37v46" stroke="#536a74" stroke-width="3" opacity=".35"/>',
+  jar: '<path d="M29 25h42l4 10v43q0 12-25 12T25 78V35Z" fill="#bfe8ed" fill-opacity=".65" stroke="#527984" stroke-width="4"/><ellipse cx="50" cy="78" rx="25" ry="12" fill="#8dccd2" fill-opacity=".35" stroke="#527984" stroke-width="3"/><rect x="26" y="14" width="48" height="14" rx="4" fill="#d79b55" stroke="#7c5432" stroke-width="4"/><path d="M30 19h40M32 36v37q0 7 8 10" fill="none" stroke="#f5ffff" stroke-width="5" stroke-linecap="round" opacity=".8"/><path d="M67 37v40" stroke="#60939c" stroke-width="3" opacity=".45"/>',
+  paperPlate: '<ellipse cx="50" cy="56" rx="40" ry="29" fill="#e5e8df" stroke="#68767a" stroke-width="4"/><ellipse cx="50" cy="55" rx="30" ry="20" fill="#fffdf0" stroke="#bcc5bc" stroke-width="3"/><path d="M20 48q7-12 20-17" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><g fill="#bd8a45" opacity=".75"><ellipse cx="42" cy="51" rx="9" ry="6"/><circle cx="60" cy="62" r="7"/><path d="m52 39 9 4-4 7-10-3Z"/></g><path d="M72 65q-18 13-39 3" fill="none" stroke="#8b9693" stroke-width="3" opacity=".4"/>',
+  giftBag: '<path d="M20 31h60l-7 59H27Z" fill="#cf73a5" stroke="#784461" stroke-width="4" stroke-linejoin="round"/><path d="M20 31h60l-4 13H23Z" fill="#f39abc"/><path d="M34 35q0-23 16-23t16 23" fill="none" stroke="#76506d" stroke-width="6"/><path d="m29 21 10 13 10-18 11 18 12-14" fill="#f5dc72" stroke="#9f7931" stroke-width="2" stroke-linejoin="round"/><path d="M31 48v34" stroke="#ffc0d5" stroke-width="5" stroke-linecap="round"/><path d="M70 48 66 83" stroke="#8e4e70" stroke-width="3" opacity=".5"/>',
+  foilBall: '<path d="m16 55 8-25 21-17 27 8 14 23-3 28-22 17-29-5Z" fill="#aebbc2" stroke="#52616a" stroke-width="4" stroke-linejoin="round"/><path d="m24 30 25 13-4-30m4 30 23-22m-23 22 12 46M49 43 32 84m29 5 22-17M16 55l33-12 37 1" fill="none" stroke="#e5edef" stroke-width="3"/><path d="m26 34 20-16m5 29 28-1" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="m18 57 31-14 12 45" fill="none" stroke="#6f7d84" stroke-width="3" opacity=".6"/>',
+  orangePeel: '<path d="M24 26q43-18 51 10 7 22-20 28-24 5-20 22" fill="none" stroke="#b6632c" stroke-width="23" stroke-linecap="round"/><path d="M24 24q41-15 47 12 4 17-20 21-20 4-18 26" fill="none" stroke="#f4a23e" stroke-width="17" stroke-linecap="round"/><path d="M25 19q28-8 40 5" fill="none" stroke="#ffd18a" stroke-width="5" stroke-linecap="round"/><path d="M32 85q14 4 25-2" fill="none" stroke="#d77b31" stroke-width="4"/><path d="M22 21q2-12 14-10" fill="#68ad60" stroke="#3f7d49" stroke-width="4" stroke-linecap="round"/>',
+  brokenMirror: '<path d="m18 18 58-7 10 25-13 14 9 27-27 13-12-16-24 7-7-29Z" fill="#a8d6df" stroke="#4d6873" stroke-width="4" stroke-linejoin="round"/><path d="m20 23 50-6L33 61 17 53Z" fill="#e9fbff" opacity=".8"/><path d="M52 14 45 45l15 12-18 17m3-29-26 8m41 4 24-20m-24 20 19 18" fill="none" stroke="#577986" stroke-width="3"/><path d="M27 29q12-8 22-7" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="m73 51 8 25-24 11" fill="none" stroke="#36515d" stroke-width="3" opacity=".55"/>',
+  storageBox: '<path d="M17 34h66l-5 53H22Z" fill="#70b7c5" stroke="#385f6d" stroke-width="4" stroke-linejoin="round"/><path d="M14 27h72l4 12H10Z" fill="#9fd6dc" stroke="#385f6d" stroke-width="4" stroke-linejoin="round"/><path d="M26 43h48l-3 35H29Z" fill="#8ecbd2"/><rect x="39" y="48" width="22" height="10" rx="3" fill="#e7f5ef" stroke="#547783" stroke-width="3"/><path d="M26 41v35q0 7 8 8M77 43l-4 39" fill="none" stroke="#c8f0ef" stroke-width="4" opacity=".7"/><path d="M11 36h77" stroke="#527783" stroke-width="3"/>',
+  newspaper: '<path d="m14 25 59-10 13 62-58 11Z" fill="#eef1eb" stroke="#56666d" stroke-width="4" stroke-linejoin="round"/><path d="m22 31 44-8 2 13-44 8Z" fill="#5d7581"/><path d="m25 50 20-4 6 29-20 4Zm31-6 17-3m-15 11 17-3m-15 11 17-3m-15 11 17-3" fill="none" stroke="#83969c" stroke-width="4"/><path d="m18 28 45-8" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="m73 22 10 50" stroke="#44555d" stroke-width="3" opacity=".45"/>',
+  lettuceScraps: '<g stroke="#3d7c49" stroke-width="3" stroke-linejoin="round"><path d="M14 67q5-30 31-27 5 27-17 42Z" fill="#77c96f"/><path d="M41 45q5-31 32-29 9 25-14 43Z" fill="#91d67b"/><path d="M54 77q9-27 32-19 4 23-18 32Z" fill="#63b761"/></g><path d="M22 70q9-12 20-24M51 48q8-14 17-25M64 79q8-10 17-15" fill="none" stroke="#d1ef9c" stroke-width="4" stroke-linecap="round"/><path d="M18 72q8 3 15-2M46 47q9 2 16-2" fill="none" stroke="#f0ffd1" stroke-width="3"/>',
+  chipBag: '<path d="M24 14h52l7 75H17Z" fill="#8c69c5" stroke="#503d78" stroke-width="4" stroke-linejoin="round"/><path d="M24 14h52l-3 13H27Zm-5 62h62l2 13H17Z" fill="#d1b4f0"/><ellipse cx="50" cy="52" rx="23" ry="18" fill="#f1c850" stroke="#8c6930" stroke-width="3"/><g fill="#e9a844" stroke="#95652f" stroke-width="2"><path d="m35 50 10-10 8 13-12 8Z"/><path d="m54 45 12 7-8 11-10-8Z"/></g><path d="M29 30 25 71" stroke="#c8b0ed" stroke-width="5" stroke-linecap="round"/><path d="M72 30 77 76" stroke="#49346f" stroke-width="3" opacity=".45"/><path d="M29 19h42M22 83h57" stroke="#f1e1ff" stroke-width="3" stroke-dasharray="4 3"/>',
   mountain: '<path d="M7 87 38 29l10 13L65 13l30 74Z" fill="#667986" stroke="#445560" stroke-width="3" stroke-linejoin="round"/><path d="M7 87 38 29l10 13L65 13 54 87Z" fill="#8798a3"/><path d="m27 49 11-20 10 13 17-29 13 32-12-8-9 11-10-10-9 11Z" fill="#edf3f2"/><path d="m17 78 21-19 14 12 16-20 18 27" fill="none" stroke="#526871" stroke-width="4"/><path d="M11 88h82" stroke="#4f5f68" stroke-width="5" stroke-linecap="round"/>',
+};
+
+const objectHighlights = {
+  tree: '<path class="object-material-highlight" d="M23 37q7-13 19-16M51 19q10-6 20 2"/><path class="object-material-shadow" d="M35 67q12 6 25 0"/>',
+  pine: '<path class="object-material-highlight" d="M48 13 33 39M43 37 27 60"/><path class="object-material-shadow" d="M53 19 70 48M55 42 74 63"/>',
+  boat: '<path class="object-material-highlight" d="M21 68h60M28 79h47"/><path class="object-material-shadow" d="M52 18v41"/>',
+  car: '<path class="object-material-highlight" d="M25 58h51M34 39h31"/><path class="object-material-shadow" d="M37 72h27"/>',
+  truck: '<path class="object-material-highlight" d="M13 44h44M67 53h12"/><path class="object-material-shadow" d="M13 74h77"/>',
+  airplane: '<path class="object-material-highlight" d="M18 54 48 47 53 21M60 50l25 5"/><path class="object-material-shadow" d="M43 60 55 83"/>',
+  hut: '<path class="object-material-highlight" d="m18 40 30-25 30 25M23 48v37"/><path class="object-material-shadow" d="M76 49v36"/>',
+  house: '<path class="object-material-highlight" d="m17 41 30-25 31 25M21 48v37"/><path class="object-material-shadow" d="M77 49v36"/>',
+  trafficLight: '<path class="object-material-highlight" d="M41 29h17M41 32v49"/><path class="object-material-shadow" d="M69 32v49"/>',
+  road: '<path class="object-material-highlight" d="m43 9-13 79M58 9l14 79"/>',
 };
 
 export const iconDrawing = name => {
   const objectName = drawings[name] ? name : 'seed';
-  return `<ellipse class="object-ground-shadow" cx="50" cy="92" rx="38" ry="6" fill="#20313d" opacity=".2"/><g class="object-model object-model--${objectName}">${drawings[objectName]}</g>`;
+  const drawing = drawings[objectName];
+  return `<ellipse class="object-ground-shadow object-ground-shadow--soft" cx="50" cy="93" rx="40" ry="6.5" fill="#20313d" opacity=".15"/><ellipse class="object-ground-shadow object-ground-shadow--contact" cx="50" cy="91" rx="25" ry="3.5" fill="#17232d" opacity=".25"/><g class="object-depth object-depth--${objectName}" transform="translate(2.5 3)">${drawing}</g><g class="object-model object-model--${objectName}">${drawing}${objectHighlights[objectName] || ''}</g>`;
 };
 export const iconSvg = (name, className = 'object-icon') => `<svg class="${className}" viewBox="0 0 100 100" aria-hidden="true" focusable="false">${iconDrawing(name)}</svg>`;
 
@@ -110,6 +162,18 @@ function bridgeCargoDrawing(kind) {
     water: '<g stroke="#4f7280" stroke-width="2"><path d="M22 12h30v36H22Z" fill="#73bdd0"/><path d="M59 12h30v36H59Z" fill="#5aa9c0"/><ellipse cx="37" cy="12" rx="15" ry="6" fill="#a7dbe4"/><ellipse cx="74" cy="12" rx="15" ry="6" fill="#a7dbe4"/><path d="M22 25h30m7 0h30" stroke="#d4f3f4" stroke-width="3"/></g>',
     lanterns: '<path d="M21 8h69" stroke="#5f5179" stroke-width="3"/><g stroke="#9c6931" stroke-width="2"><path d="M28 8v9m25-9v14m28-14v9"/><path d="m20 17 8-7 8 7-3 17H23Z" fill="#ffd96d"/><path d="m45 22 8-7 8 7-3 19H48Z" fill="#f39bb7"/><path d="m73 17 8-7 8 7-3 17H76Z" fill="#82d9ca"/></g><g fill="#fff3b2"><circle cx="28" cy="22" r="3"/><circle cx="53" cy="28" r="3"/><circle cx="81" cy="22" r="3"/></g>',
     parade: '<path d="M25 45V4m58 41V4" stroke="#6d4f36" stroke-width="3"/><path d="m28 6 25 9-25 9Zm52 0-25 9 25 9Z" fill="#f080a5" stroke="#9f4b72" stroke-width="2"/><g fill="#ffd368" stroke="#a4782f" stroke-width="2"><circle cx="42" cy="33" r="10"/><circle cx="61" cy="28" r="11"/><circle cx="78" cy="36" r="9"/></g><path d="M42 43v8m19-12v12m17-6v6" stroke="#9d7440" stroke-width="2"/>',
+    tools: '<path d="M19 20h75v30H19Z" fill="#cf5f4e" stroke="#743733" stroke-width="3"/><path d="M24 13h65l7 7H19Z" fill="#ef8a67" stroke="#743733" stroke-width="3"/><rect x="43" y="8" width="27" height="10" rx="4" fill="none" stroke="#56646b" stroke-width="5"/><path d="M31 29h49M55 22v25" stroke="#ffd28a" stroke-width="3"/><path d="m76 7 8 8-24 24-10 2 2-10Z" fill="#aebbc0" stroke="#526169" stroke-width="2"/>',
+    harvest: '<g stroke="#8a5a2d" stroke-width="2"><rect x="17" y="25" width="38" height="23" rx="3" fill="#e6b85b"/><rect x="55" y="17" width="39" height="31" rx="3" fill="#d9a443"/><path d="M20 31h32m6-7h33M27 25v23m48-31v31" stroke="#fff0a0"/></g><g fill="#e9813d" stroke="#9a492d" stroke-width="2"><circle cx="35" cy="19" r="9"/><circle cx="48" cy="18" r="8"/></g><path d="M41 10V4m8 7 5-7" stroke="#4d8a4e" stroke-width="3"/>',
+    mail: '<g stroke="#4e6b86" stroke-width="2"><path d="M19 11h34v36H19Z" fill="#d9ecf3"/><path d="M58 17h36v30H58Z" fill="#bcdce8"/><path d="m20 13 16 15 16-15M59 19l17 13 17-13" fill="none" stroke="#6e91a6" stroke-width="3"/></g><path d="M27 35h18m39 2h-18" stroke="#e26f74" stroke-width="4"/><circle cx="53" cy="18" r="5" fill="#f1c95c"/>',
+    science: '<g stroke="#5a527e" stroke-width="2"><path d="M18 22h35v26H18Zm42 0h35v26H60Z" fill="#c4b7ed"/><path d="M22 22h27l-4-8H26Zm42 0h27l-4-8H68Z" fill="#8d79cd"/></g><path d="M33 27v9l-7 9h20l-7-9v-9m38 1v7q0 8 9 8" fill="none" stroke="#f5fbff" stroke-width="3"/><path d="M29 41h14m35-5h9" stroke="#69d4c3" stroke-width="4"/>',
+    bikes: '<g fill="none" stroke="#424f58" stroke-width="4"><circle cx="31" cy="34" r="15"/><circle cx="82" cy="34" r="15"/><path d="m31 34 20-27 15 27H31L47 15h29m-25-8h13m2 27 13-28" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M20 50h75" stroke="#8f5f3f" stroke-width="5"/>',
+    blankets: '<g stroke="#65517b" stroke-width="2"><path d="M17 15h78v33H17Z" fill="#8f79cf"/><path d="M22 9h68l5 6H17Z" fill="#b9a5ec"/><path d="M22 25h68M34 15v33m45-33v33" stroke="#f5d17d" stroke-width="4"/></g><path d="M20 48h75" stroke="#4e4161" stroke-width="4"/>',
+    solar: '<g transform="skewX(-12)" stroke="#314a68" stroke-width="2"><path d="M28 10h65v34H28Z" fill="#3f77a7"/><path d="M30 12h61v30H30Z" fill="#75b4d2"/><path d="M50 12v30m20-30v30M30 27h61" stroke="#d8f6ff"/></g><path d="M55 43v8m-18 0h40" stroke="#5b6570" stroke-width="5" stroke-linecap="round"/><circle cx="20" cy="17" r="9" fill="#ffd76d" stroke="#b8872f" stroke-width="2"/>',
+    orchard: '<g stroke="#765037" stroke-width="2"><path d="M18 19h38l-5 29H23Zm43 0h36l-5 29H66Z" fill="#d89a60"/><path d="M22 29h31m12 0h29M31 19v29m51-29v29" stroke="#f2c486"/></g><g fill="#e25d59" stroke="#903d3c" stroke-width="2"><circle cx="29" cy="17" r="7"/><circle cx="43" cy="15" r="7"/><circle cx="70" cy="16" r="7"/><circle cx="84" cy="15" r="7"/></g><path d="m29 10 3-5m39 5 4-5" stroke="#4a8a4e" stroke-width="3"/>',
+    rescue: '<g stroke="#6a747a" stroke-width="2"><path d="M19 14h76v34H19Z" fill="#edf3f3"/><path d="M24 8h66l5 6H19Z" fill="#fff"/></g><path d="M57 19v24M45 31h24" stroke="#d94a4f" stroke-width="8"/><rect x="27" y="23" width="11" height="16" rx="3" fill="#58a9cf"/><rect x="76" y="23" width="11" height="16" rx="3" fill="#58a9cf"/>',
+    art: '<path d="M19 8h48v41H19Z" fill="#fff5dd" stroke="#6e4e3e" stroke-width="3"/><path d="M25 42 38 24l10 9 12-18" fill="none" stroke="#65a96b" stroke-width="5"/><circle cx="31" cy="18" r="6" fill="#ffd15e"/><path d="M72 14q25 2 20 21-5 16-20 12-8-2-4-10 4-6 9-4 5-3 1-8-8-4-6-11Z" fill="#d99bdd" stroke="#76517c" stroke-width="2"/><g fill="#f16f78"><circle cx="82" cy="22" r="3"/><circle cx="87" cy="31" r="3"/></g>',
+    sports: '<g stroke="#4e5561" stroke-width="2"><circle cx="35" cy="30" r="18" fill="#f3f5ef"/><path d="m35 12 7 10-7 8-10-5 2-10m8 15 8 13m-8-13-13 9m20-17 9 5" fill="none"/><circle cx="78" cy="29" r="17" fill="#e7834f"/><path d="M62 29h32M78 12q-8 17 0 34m0-34q8 17 0 34" fill="none"/></g><path d="M17 50h78" stroke="#6f4b36" stroke-width="5"/>',
+    celebration: '<path d="M17 9q38 14 78 0" fill="none" stroke="#5f5272" stroke-width="3"/><g stroke="#9a6c2b" stroke-width="2"><path d="M25 11v10m18-6v11m19-10v10m19-13v10"/><circle cx="25" cy="24" r="6" fill="#ffd65f"/><circle cx="43" cy="29" r="6" fill="#f18caf"/><circle cx="62" cy="29" r="6" fill="#72d5c1"/><circle cx="81" cy="26" r="6" fill="#9f8be4"/></g><path d="M24 40h59l8 8H17Z" fill="#d29355" stroke="#75472d" stroke-width="3"/><path d="M29 43h50" stroke="#f4c88b" stroke-width="3"/>',
   };
   return cargo[kind] || cargo.timber;
 }
@@ -137,6 +201,152 @@ function svgText(value) {
   return String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 }
 
+const weatherIconName = kind => {
+  if (/clear-night/.test(kind)) return 'moon';
+  if (/rainbow/.test(kind)) return 'rainbow';
+  if (/snow|frost|winter/.test(kind)) return 'snowCloud';
+  if (/storm|rain|paper-hat/.test(kind)) return 'rainCloud';
+  if (/fog|cloud|changing/.test(kind)) return 'cloud';
+  if (/wind|flying/.test(kind)) return 'wind';
+  if (/indoors|secure|locked/.test(kind)) return 'house';
+  if (/tree|shade/.test(kind)) return 'tree';
+  if (/road|visible/.test(kind)) return 'road';
+  if (/water|bottle/.test(kind)) return 'drop';
+  if (/clock|hourly|plan-ahead/.test(kind)) return 'book';
+  if (/thermometer|high-low/.test(kind)) return 'sun';
+  return 'sun';
+};
+
+export function weatherChoiceSvg(kind) {
+  const icon = weatherIconName(kind);
+  const paired = /partly-cloudy|current-later|maybe-rain|shade-water|plan-ahead/.test(kind);
+  const warning = /empty-bottle|bare-feet|road-danger|dark-clothes|flying-items|ignore|storm-now|no-change/.test(kind);
+  const second = /shade-water/.test(kind) ? 'drop' : /partly-cloudy|current-later|plan-ahead/.test(kind) ? 'cloud' : 'sun';
+  const clockFace = /clock|hourly/.test(kind)
+    ? '<g transform="translate(55 52)"><circle r="27" fill="#fff7dc" stroke="#665777" stroke-width="4"/><path d="M0-18V2l14 8" fill="none" stroke="#665777" stroke-width="5" stroke-linecap="round"/></g>'
+    : '';
+  const thermometer = /thermometer|high-low/.test(kind)
+    ? '<g transform="translate(66 22)"><rect x="-8" y="0" width="16" height="49" rx="8" fill="#f3f7f7" stroke="#596d77" stroke-width="4"/><circle cy="55" r="14" fill="#e85f58" stroke="#8b3939" stroke-width="4"/><path d="M0 17v38" stroke="#e85f58" stroke-width="8" stroke-linecap="round"/></g>'
+    : '';
+  return `<svg class="learning-choice-art weather-choice-art" viewBox="0 0 120 108" aria-hidden="true" focusable="false">
+    <defs><linearGradient id="weather-card-${svgText(kind)}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e8f7ff"/><stop offset="1" stop-color="#dfe8fb"/></linearGradient></defs>
+    <rect x="5" y="5" width="110" height="98" rx="20" fill="url(#weather-card-${svgText(kind)})" stroke="#7794ad" stroke-width="3"/>
+    ${clockFace || thermometer || `<g transform="translate(${paired ? 9 : 15} 8) scale(${paired ? '.64' : '.9'})">${iconDrawing(icon)}</g>`}
+    ${paired && !clockFace && !thermometer ? `<g transform="translate(58 34) scale(.5)">${iconDrawing(second)}</g>` : ''}
+    ${warning ? '<g transform="translate(90 20)"><circle r="14" fill="#fff3cb" stroke="#a55a2e" stroke-width="3"/><path d="M0-7v9m0 6h.1" stroke="#8a3d28" stroke-width="4" stroke-linecap="round"/></g>' : ''}
+  </svg>`;
+}
+
+const forecastPanels = {
+  'rain-chance': '<g transform="translate(102 42)"><rect width="556" height="164" rx="24" fill="#f8fbff" stroke="#536d88" stroke-width="4"/><g transform="translate(42 30) scale(.8)">' + iconDrawing('rainCloud') + '</g><text x="185" y="74" fill="#253a52" font-size="29" font-weight="900">40% chance of rain</text><text x="185" y="111" fill="#52677d" font-size="18" font-weight="700">Possible during this time</text><path d="M185 130h310" stroke="#9eb2c6" stroke-width="5" stroke-linecap="round"/></g>',
+  'high-low': '<g transform="translate(112 42)"><rect width="536" height="164" rx="24" fill="#fffaf0" stroke="#6f6572" stroke-width="4"/><g transform="translate(44 31) scale(.78)">' + iconDrawing('sun') + '</g><text x="178" y="76" fill="#28394d" font-size="33" font-weight="900">HIGH 75°</text><text x="178" y="119" fill="#40556c" font-size="27" font-weight="850">LOW 52°</text><path d="M430 38v82" stroke="#df655d" stroke-width="12" stroke-linecap="round"/><circle cx="430" cy="128" r="20" fill="#df655d"/></g>',
+  'hourly-rain': '<g transform="translate(70 43)"><rect width="620" height="160" rx="24" fill="#f8fbff" stroke="#536d88" stroke-width="4"/><g transform="translate(38 20)"><text x="45" y="25" text-anchor="middle" fill="#334b64" font-size="17" font-weight="900">NOON</text><g transform="translate(4 28) scale(.64)">' + iconDrawing('sun') + '</g></g><path d="M205 27v105" stroke="#ccd8e3" stroke-width="3"/><g transform="translate(246 20)"><text x="45" y="25" text-anchor="middle" fill="#334b64" font-size="17" font-weight="900">3 PM</text><g transform="translate(4 28) scale(.64)">' + iconDrawing('rainCloud') + '</g></g><path d="M414 27v105" stroke="#ccd8e3" stroke-width="3"/><g transform="translate(454 20)"><text x="50" y="25" text-anchor="middle" fill="#334b64" font-size="17" font-weight="900">6 PM</text><g transform="translate(9 28) scale(.64)">' + iconDrawing('cloud') + '</g></g></g>',
+  'wind-report': '<g transform="translate(112 42)"><rect width="536" height="164" rx="24" fill="#f4fbfc" stroke="#4f7180" stroke-width="4"/><g transform="translate(42 31) scale(.78)">' + iconDrawing('wind') + '</g><text x="190" y="79" fill="#263e51" font-size="36" font-weight="900">W 12 mph</text><text x="190" y="115" fill="#52697b" font-size="18" font-weight="750">wind from the west</text><path d="M462 123H357m0 0 24-18m-24 18 24 18" fill="none" stroke="#537b8c" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></g>',
+  'sun-times': '<g transform="translate(95 42)"><rect width="570" height="164" rx="24" fill="#fff9e9" stroke="#74644e" stroke-width="4"/><g transform="translate(31 34) scale(.72)">' + iconDrawing('sun') + '</g><text x="152" y="70" fill="#304257" font-size="24" font-weight="900">SUNRISE 7:10</text><path d="M152 87h350" stroke="#d8c79d" stroke-width="3"/><g transform="translate(409 32) scale(.7)">' + iconDrawing('moon') + '</g><text x="152" y="126" fill="#304257" font-size="24" font-weight="900">SUNSET 6:35</text></g>',
+  'current-later': '<g transform="translate(73 42)"><rect width="614" height="164" rx="24" fill="#f8fbff" stroke="#526b86" stroke-width="4"/><g transform="translate(35 18)"><text x="62" y="24" text-anchor="middle" fill="#334a62" font-size="17" font-weight="900">NOW</text><g transform="translate(18 30) scale(.68)">' + iconDrawing('sun') + '</g></g><path d="M238 25v112" stroke="#ccd8e3" stroke-width="3"/><path d="m274 81 45 0m0 0-14-13m14 13-14 13" fill="none" stroke="#768aa0" stroke-width="7" stroke-linecap="round"/><g transform="translate(374 18)"><text x="78" y="24" text-anchor="middle" fill="#334a62" font-size="17" font-weight="900">LATER</text><g transform="translate(35 30) scale(.68)">' + iconDrawing('rainCloud') + '</g><path d="m77 47-12 22h12l-8 20 27-30H84l10-12Z" fill="#ffe05d" stroke="#9c7326" stroke-width="2"/></g></g>',
+  'three-day': '<g transform="translate(62 42)"><rect width="636" height="164" rx="24" fill="#f8fbff" stroke="#526b86" stroke-width="4"/><g transform="translate(24 18)"><text x="68" y="22" text-anchor="middle" fill="#344b62" font-size="16" font-weight="900">MON</text><g transform="translate(25 26) scale(.63)">' + iconDrawing('rainCloud') + '</g><path d="m67 46-10 18h10l-7 18 23-27H72l9-9Z" fill="#ffdf5d"/></g><path d="M211 24v116M424 24v116" stroke="#ccd8e3" stroke-width="3"/><g transform="translate(238 18)"><text x="68" y="22" text-anchor="middle" fill="#344b62" font-size="16" font-weight="900">TUE</text><g transform="translate(25 26) scale(.63)">' + iconDrawing('sun') + '</g><g transform="translate(75 60) scale(.38)">' + iconDrawing('cloud') + '</g></g><g transform="translate(448 18)"><text x="68" y="22" text-anchor="middle" fill="#344b62" font-size="16" font-weight="900">WED</text><g transform="translate(25 26) scale(.63)">' + iconDrawing('rainCloud') + '</g></g></g>',
+};
+
+export function weatherSceneSvg(kind) {
+  if (forecastPanels[kind]) return `<svg class="learning-scene-art weather-learning-art" viewBox="0 0 760 245" role="img" aria-label="Illustrated ${svgText(kind.replaceAll('-', ' '))} weather report"><defs><linearGradient id="forecast-sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#86cfe6"/><stop offset="1" stop-color="#dff3ee"/></linearGradient></defs><rect width="760" height="245" rx="22" fill="url(#forecast-sky)"/><circle cx="700" cy="35" r="20" fill="#ffe27a" opacity=".8"/>${forecastPanels[kind]}<path d="M0 224q130-28 260 0t260 0 240 0v21H0Z" fill="#62ac72"/></svg>`;
+  const night = kind === 'clear-night';
+  const rainy = kind === 'rainy' || kind === 'stormy' || kind === 'towering-cloud';
+  const snow = kind === 'snowy';
+  const fog = kind === 'foggy';
+  const windy = kind === 'windy';
+  const hot = kind === 'hot';
+  const frost = kind === 'frosty';
+  const showSun = /sunny|partly-cloudy|puffy-clouds|wispy-clouds|rainbow|hot/.test(kind);
+  const showCloud = /rainy|stormy|cloudy|partly-cloudy|puffy-clouds|towering-cloud|foggy|wispy-clouds|rainbow/.test(kind);
+  const skyTop = night ? '#17264f' : rainy ? '#758b9b' : hot ? '#58c4df' : '#7fd2e8';
+  const skyBottom = night ? '#33446f' : rainy ? '#c0cbd0' : '#d9f4ef';
+  const cloudIcon = snow ? 'snowCloud' : rainy ? 'rainCloud' : 'cloud';
+  const aria = ({sunny:'sunny blue sky',rainy:'rain falling from gray clouds','clear-night':'clear night with moon and stars','partly-cloudy':'sun peeking around clouds',cloudy:'overcast cloud cover',foggy:'fog hiding distant objects','wispy-clouds':'thin high wispy clouds','puffy-clouds':'small puffy fair-weather clouds','towering-cloud':'tall dark storm cloud',windy:'wind bending a tree and flag',frosty:'frost crystals on cold grass',rainbow:'rainbow with sun and droplets',stormy:'lightning and rain','hot':'strong hot sun',snowy:'falling snow'}[kind] || kind.replaceAll('-', ' '));
+  return `<svg class="learning-scene-art weather-learning-art" viewBox="0 0 760 245" role="img" aria-label="Illustrated ${svgText(aria)}">
+    <defs><linearGradient id="sky-${svgText(kind)}" x1="0" y1="0" x2="0" y2="1"><stop stop-color="${skyTop}"/><stop offset="1" stop-color="${skyBottom}"/></linearGradient><linearGradient id="weather-ground" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#7dcc78"/><stop offset="1" stop-color="#3f9660"/></linearGradient></defs>
+    <rect width="760" height="245" rx="22" fill="url(#sky-${svgText(kind)})"/>
+    ${night ? '<g fill="#fff4b5"><circle cx="78" cy="34" r="3"/><circle cx="157" cy="69" r="2"/><circle cx="285" cy="30" r="3"/><circle cx="465" cy="58" r="2"/><circle cx="615" cy="31" r="3"/><path d="m369 24 4 9 9 4-9 4-4 9-4-9-9-4 9-4Z"/></g><g transform="translate(594 15) scale(.72)">' + iconDrawing('moon') + '</g>' : ''}
+    ${showSun && !night ? `<g transform="translate(${kind === 'partly-cloudy' ? 585 : 625} 8) scale(${hot ? '.88' : '.7'})">${iconDrawing('sun')}</g>` : ''}
+    ${kind === 'wispy-clouds' ? '<g fill="none" stroke="#f5fbff" stroke-width="12" stroke-linecap="round" opacity=".88"><path d="M75 61q75-49 176-8M185 89q83-42 168-3M407 52q76-35 145-7"/></g>' : ''}
+    ${showCloud && kind !== 'wispy-clouds' ? `<g transform="translate(${kind === 'towering-cloud' ? 205 : 90} ${kind === 'towering-cloud' ? -7 : 25}) scale(${kind === 'towering-cloud' ? '2.25' : kind === 'cloudy' ? '1.35' : '1.05'})">${iconDrawing(cloudIcon)}</g>${kind === 'cloudy' ? `<g transform="translate(390 20) scale(1.28)">${iconDrawing('cloud')}</g>` : ''}` : ''}
+    ${kind === 'rainbow' ? `<g transform="translate(270 34) scale(1.55)">${iconDrawing('rainbow')}</g>` : ''}
+    ${kind === 'stormy' || kind === 'towering-cloud' ? '<path d="m353 79-24 43h25l-18 47 55-67h-28l25-23Z" fill="#ffe361" stroke="#9a7022" stroke-width="4"/>' : ''}
+    <path d="M0 179q125-52 254 0t252-4 254 0v70H0Z" fill="url(#weather-ground)"/>
+    <g transform="translate(545 129) scale(.95)">${iconDrawing('house')}</g>
+    <g transform="translate(94 121) rotate(${windy ? '10' : '0'} 50 90) scale(.88)">${iconDrawing('tree')}</g>
+    ${windy ? '<path d="M228 129v65" stroke="#665341" stroke-width="7"/><path d="m230 132 70 17-70 26Z" fill="#f08b6f" stroke="#8e4a3e" stroke-width="3"/><g fill="none" stroke="#eafcff" stroke-width="5" stroke-linecap="round"><path d="M340 117h102q27 0 27-18M322 144h139M351 169h83q24 0 24 17"/></g>' : ''}
+    ${rainy ? '<g stroke="#4c9fbe" stroke-width="5" stroke-linecap="round"><path d="m101 108-8 21m55-25-8 21m62-18-8 21m55-22-8 21m63-20-8 21m57-20-8 21m58-18-8 21m55-22-8 21m55-20-8 21"/></g>' : ''}
+    ${snow ? '<g fill="#fff" stroke="#77aac0" stroke-width="2"><circle cx="110" cy="80" r="6"/><circle cx="185" cy="112" r="5"/><circle cx="270" cy="75" r="6"/><circle cx="353" cy="121" r="5"/><circle cx="450" cy="82" r="6"/><circle cx="522" cy="114" r="5"/><circle cx="683" cy="91" r="6"/></g>' : ''}
+    ${fog ? '<g fill="none" stroke="#f5fbfa" stroke-width="18" stroke-linecap="round" opacity=".78"><path d="M22 102h286M120 132h390M23 160h337M315 187h420"/></g>' : ''}
+    ${frost ? '<g fill="#e9fbff" stroke="#83bfd3" stroke-width="2"><path d="M30 211h700" stroke="#dff8fb" stroke-width="8"/><path d="M80 190v30m-13-15h26m-22-11 18 22m0-22-18 22M245 193v27m-11-14h22m-19-10 16 20m0-20-16 20M470 191v29m-12-15h24m-20-10 17 21m0-21-17 21"/></g>' : ''}
+  </svg>`;
+}
+
+const gardenIconName = kind => {
+  if (/sunny|hot/.test(kind)) return 'sun';
+  if (/shade|covered/.test(kind)) return 'tree';
+  if (/walkway|path|sidewalk/.test(kind)) return 'road';
+  if (/rake/.test(kind)) return 'rake';
+  if (/paint-brush/.test(kind)) return 'paintBrush';
+  if (/fork/.test(kind)) return 'fork';
+  if (/wire|spray/.test(kind)) return 'metal';
+  if (/raised-bed|puddle-bed|dry-bed|roof-bed|empty-row/.test(kind)) return 'gardenBed';
+  if (/compost|mulch/.test(kind)) return 'compost';
+  if (/plastic/.test(kind)) return 'wrap';
+  if (/salt/.test(kind)) return 'rice';
+  if (/label/.test(kind)) return 'plantLabel';
+  if (/rock|concrete/.test(kind)) return 'rock';
+  if (/toy/.test(kind)) return 'robot';
+  if (/seed|spacing|shelf/.test(kind)) return 'seed';
+  if (/carrot/.test(kind)) return 'carrot';
+  if (/tomato|stem|roots/.test(kind)) return /cut-tomato/.test(kind) ? 'refrigerator' : 'tomatoPlant';
+  if (/trellis|box/.test(kind)) return 'trellis';
+  if (/water|puddle/.test(kind)) return 'wateringCan';
+  if (/soil-test|weed|leaf-check|guess/.test(kind)) return 'magnifier';
+  if (/lettuce|step-plant/.test(kind)) return 'lettuce';
+  if (/basket|bucket/.test(kind)) return 'basket';
+  if (/moldy/.test(kind)) return 'berries';
+  if (/berry/.test(kind)) return 'refrigerator';
+  if (/clock/.test(kind)) return 'sun';
+  return 'seed';
+};
+
+export function gardenChoiceSvg(kind) {
+  const icon = gardenIconName(kind);
+  const warning = /shade-bed|walkway-bed|paint-brush|fork|puddle-bed|concrete|plastic|salt|roof-bed|hidden|shelf-seed|deep-seed|seed-pile|empty-row|move-carrot|pull-stem|dry-roots|box|hard-spray|dry-bed|guess-water|clock|wet-label|sidewalk-water|taste-plant|pull-all|buried-plant|tight-wire|covered-plant|unknown-spray|trash-garden|moldy|tiny-carrots|rotten|uproot|step-plant|dirty-bucket|hot-berries|hot-tomato|buried-tomato/.test(kind);
+  const ripeFruit = /ripe-tomato/.test(kind) ? `<g transform="translate(65 46) scale(.42)">${iconDrawing('tomato')}</g>` : '';
+  return `<svg class="learning-choice-art garden-choice-art" viewBox="0 0 120 108" aria-hidden="true" focusable="false">
+    <defs><linearGradient id="garden-card-${svgText(kind)}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eef9df"/><stop offset="1" stop-color="#d6edc7"/></linearGradient></defs>
+    <rect x="5" y="5" width="110" height="98" rx="20" fill="url(#garden-card-${svgText(kind)})" stroke="#698b55" stroke-width="3"/>
+    <g transform="translate(13 7) scale(.92)">${iconDrawing(icon)}</g>${ripeFruit}
+    ${warning ? '<g transform="translate(94 20)"><circle r="14" fill="#fff0c7" stroke="#a95a2f" stroke-width="3"/><path d="m-6-6 12 12m0-12L-6 6" stroke="#913b2b" stroke-width="4" stroke-linecap="round"/></g>' : ''}
+  </svg>`;
+}
+
+export function gardenLessonSvg(kind) {
+  const icon = gardenIconName(kind);
+  const storage = /basket|berry|cut-tomato|ripe-tomato|carrot-harvest|lettuce-harvest/.test(kind);
+  const lessonIcon = storage
+    ? /berry/.test(kind) ? 'berries'
+      : /carrot/.test(kind) ? 'carrot'
+        : /lettuce/.test(kind) ? 'lettuce'
+          : /basket/.test(kind) ? 'basket'
+            : 'tomato'
+    : icon;
+  const watering = /watering|water|soil-test/.test(kind);
+  return `<svg class="learning-scene-art garden-learning-art" viewBox="0 0 760 245" role="img" aria-label="Illustrated garden lesson about ${svgText(kind.replaceAll('-', ' '))}">
+    <defs><linearGradient id="garden-sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#91dbea"/><stop offset="1" stop-color="#e8f6d7"/></linearGradient><linearGradient id="garden-soil" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8b5b3e"/><stop offset="1" stop-color="#5d3c2d"/></linearGradient></defs>
+    <rect width="760" height="245" rx="22" fill="url(#garden-sky)"/>
+    <g transform="translate(648 10) scale(.66)">${iconDrawing('sun')}</g>
+    <path d="M0 164q155-38 315 2t445-8v87H0Z" fill="#70bd6c"/>
+    <g opacity=".62" stroke="#fff1c5" stroke-width="5"><path d="M20 133h720M54 99v93m83-93v93m83-93v93m83-93v93m83-93v93m83-93v93m83-93v93m83-93v93"/></g>
+    ${storage ? '<g transform="translate(104 95) scale(1.2)">' + iconDrawing('basket') + '</g><g transform="translate(525 73) scale(1.28)">' + iconDrawing('refrigerator') + '</g><path d="M225 197h305" stroke="#7d5036" stroke-width="19"/><path d="M240 187h275" stroke="#d49a5c" stroke-width="11"/>' : '<g transform="translate(105 126) scale(1.45)">' + iconDrawing('gardenBed') + '</g><g transform="translate(517 113) scale(.92)">' + iconDrawing('tomatoPlant') + '</g>'}
+    <g transform="translate(306 72) scale(1.28)">${iconDrawing(lessonIcon)}</g>
+    ${watering ? '<g fill="#79cde3" stroke="#368cab" stroke-width="2"><path d="M474 114q-10 15-10 23 0 9 10 9t10-9q0-8-10-23Z"/><path d="M500 130q-8 12-8 19 0 8 8 8t8-8q0-7-8-19Z"/></g>' : ''}
+    <g fill="#f5cb58" stroke="#9d7a2e" stroke-width="2"><circle cx="53" cy="204" r="7"/><circle cx="689" cy="192" r="6"/></g>
+  </svg>`;
+}
+
 export function trafficSignSvg(title) {
   const upper = String(title).toUpperCase();
   const diamond = (symbol, fill = '#ffd34f') => `<path d="M60 6 114 60 60 114 6 60Z" fill="${fill}" stroke="#323638" stroke-width="5"/>${symbol}`;
@@ -149,11 +359,13 @@ export function trafficSignSvg(title) {
   else if (upper === 'DO NOT ENTER') sign = '<circle cx="60" cy="60" r="51" fill="#d83d3d" stroke="#fff" stroke-width="5"/><rect x="20" y="51" width="80" height="18" rx="4" fill="#fff"/>';
   else if (upper === 'WRONG WAY') sign = '<rect x="8" y="27" width="104" height="66" rx="7" fill="#d83d3d" stroke="#fff" stroke-width="5"/><text x="60" y="55" text-anchor="middle" fill="#fff" font-size="16" font-weight="900">WRONG</text><text x="60" y="78" text-anchor="middle" fill="#fff" font-size="18" font-weight="900">WAY</text>';
   else if (upper === 'ONE WAY') sign = '<rect x="6" y="27" width="108" height="66" rx="5" fill="#fff" stroke="#222" stroke-width="5"/><path d="M23 60h55M68 42l21 18-21 18" fill="none" stroke="#222" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><text x="53" y="88" text-anchor="middle" fill="#222" font-size="11" font-weight="900">ONE WAY</text>';
+  else if (upper === 'RIGHT TURN ONLY') sign = ruleSign('<path d="M55 86V57q0-14 14-14h15M76 29l15 14-15 14" fill="none" stroke="#25292b" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><text x="60" y="103" text-anchor="middle" fill="#25292b" font-size="11" font-weight="900">ONLY</text>');
+  else if (upper === 'LEFT TURN ONLY') sign = ruleSign('<path d="M65 86V57q0-14-14-14H36M44 29 29 43l15 14" fill="none" stroke="#25292b" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><text x="60" y="103" text-anchor="middle" fill="#25292b" font-size="11" font-weight="900">ONLY</text>');
   else if (upper === 'NO U-TURN') sign = prohibition('<path d="M77 78V51q0-20-17-20T43 51v7M32 50l11 10 11-10" fill="none" stroke="#25292b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>');
   else if (upper === 'NO LEFT TURN') sign = prohibition('<path d="M85 79V61q0-16-16-16H41M52 31 38 45l14 14" fill="none" stroke="#25292b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>');
   else if (upper === 'KEEP RIGHT') sign = ruleSign('<path d="M56 24v24q0 15 15 26l8 6M79 80 64 78m15 2-4-15" fill="none" stroke="#25292b" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="43" cy="68" rx="8" ry="22" fill="#25292b"/>');
-  else if (/SCHOOL/.test(upper)) sign = '<path d="M60 6 108 39 91 112H29L12 39Z" fill="#d9f15d" stroke="#29332c" stroke-width="5"/><circle cx="43" cy="45" r="9" fill="#202826"/><circle cx="72" cy="43" r="10" fill="#202826"/><path d="m43 54-8 30m8-18 19 13m10-26 10 33m-10-19-18 14" stroke="#202826" stroke-width="7" stroke-linecap="round"/>';
-  else if (upper === 'PEDESTRIAN CROSSING') sign = diamond('<circle cx="59" cy="32" r="8" fill="#22282a"/><path d="m58 42-8 25m8-18 15 14M51 64 38 88m17-23 18 24" fill="none" stroke="#22282a" stroke-width="8" stroke-linecap="round"/>');
+  else if (/SCHOOL/.test(upper)) sign = '<path d="M60 6 108 39 91 112H29L12 39Z" fill="#d9f15d" stroke="#29332c" stroke-width="5"/><g fill="#202826"><circle cx="43" cy="42" r="9"/><circle cx="74" cy="40" r="10"/><path d="m35 54 14-4 9 23-12 5 3 24H38l-5-31-10 13-7-6Zm31-2 16-5 9 26-13 5 9 22H76L64 74 52 84l-7-7Z"/></g>';
+  else if (upper === 'PEDESTRIAN CROSSING') sign = diamond('<g fill="#22282a"><circle cx="59" cy="31" r="9"/><path d="m49 43 15-4 9 28-11 4 14 19H64L52 74 43 92H31l14-29Z"/></g>');
   else if (upper === 'BICYCLE CROSSING') sign = diamond('<g fill="none" stroke="#22282a" stroke-width="5"><circle cx="38" cy="77" r="15"/><circle cx="82" cy="77" r="15"/><path d="m38 77 15-26 14 26H38l10-18h26M51 45h13" stroke-linecap="round" stroke-linejoin="round"/></g>');
   else if (/RAILROAD CROSSBUCK/.test(upper)) sign = '<path d="M17 22 103 98M103 22 17 98" stroke="#fff" stroke-width="20"/><path d="M17 22 103 98M103 22 17 98" stroke="#333" stroke-width="4"/><text x="60" y="35" text-anchor="middle" transform="rotate(41 60 35)" fill="#222" font-size="10" font-weight="900">RAILROAD</text><text x="60" y="86" text-anchor="middle" transform="rotate(-41 60 86)" fill="#222" font-size="10" font-weight="900">CROSSING</text>';
   else if (/RAILROAD AHEAD/.test(upper)) sign = '<circle cx="60" cy="60" r="51" fill="#ffd34f" stroke="#333" stroke-width="5"/><path d="M35 30 85 90M85 30 35 90" stroke="#333" stroke-width="8"/><text x="60" y="65" text-anchor="middle" fill="#333" font-size="19" font-weight="900">R R</text>';
@@ -164,10 +376,18 @@ export function trafficSignSvg(title) {
   else if (upper === 'SIGNAL AHEAD') sign = diamond('<rect x="45" y="24" width="30" height="70" rx="8" fill="#25292b"/><circle cx="60" cy="39" r="8" fill="#e8504f"/><circle cx="60" cy="59" r="8" fill="#f3c74d"/><circle cx="60" cy="79" r="8" fill="#5abf78"/>');
   else if (upper === 'STOP AHEAD') sign = diamond('<path d="m45 33 15-6 15 6 6 15-6 15-15 6-15-6-6-15Z" fill="#d93e3e" stroke="#fff" stroke-width="3"/><text x="60" y="52" text-anchor="middle" fill="#fff" font-size="10" font-weight="900">STOP</text><path d="M60 76v17m0 0-8-10m8 10 8-10" fill="none" stroke="#25292b" stroke-width="5" stroke-linecap="round"/>');
   else if (upper === 'YIELD AHEAD') sign = diamond('<path d="m60 69-18-33h36Z" fill="#fff" stroke="#d94343" stroke-width="5"/><path d="M60 75v18m0 0-8-10m8 10 8-10" fill="none" stroke="#25292b" stroke-width="5" stroke-linecap="round"/>');
-  else if (upper === 'ROAD WORK') sign = diamond('<circle cx="53" cy="34" r="7" fill="#25292b"/><path d="m52 42-8 24m8-17 18 14M45 64 34 88m14-24 15 23M68 46l-6 42" fill="none" stroke="#25292b" stroke-width="7" stroke-linecap="round"/>', '#f49a3f');
+  else if (upper === 'ROAD WORK') sign = diamond('<g fill="#25292b"><circle cx="48" cy="32" r="8"/><path d="m39 44 16-6 11 26-12 5 14 22H56L45 73 35 91H23l15-31Z"/><path d="m69 43 8-3 14 45-8 3Z"/><path d="m62 60 25-8 3 10-25 8Z"/></g>', '#f49a3f');
   else if (upper === 'DETOUR') sign = '<rect x="5" y="27" width="110" height="67" rx="5" fill="#f49a3f" stroke="#323638" stroke-width="5"/><path d="M20 60h58M69 43l20 17-20 17" fill="none" stroke="#25292b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><text x="58" y="88" text-anchor="middle" fill="#25292b" font-size="10" font-weight="900">DETOUR</text>';
-  else if (upper === 'FLAGGER AHEAD') sign = diamond('<circle cx="52" cy="33" r="7" fill="#25292b"/><path d="m52 41-1 28m1-19-15 13m15-11 13 13M51 68 40 91m11-22 14 21M68 31v36m1-34 19 7-19 8" fill="none" stroke="#25292b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>', '#f49a3f');
+  else if (upper === 'FLAGGER AHEAD') sign = diamond('<g fill="#25292b"><circle cx="47" cy="32" r="8"/><path d="m37 44 17-5 10 29-12 4 13 20H53L43 75 34 92H22l14-31-11 9-6-8Z"/><path d="M69 28h6v61h-6Z"/><path d="m74 31 23 7-23 13Z"/></g>', '#f49a3f');
   else if (upper === 'DEER CROSSING') sign = diamond('<path d="M31 69q13-26 33-18l15 8 13-7-6 15-18 8-5 18-7-1 1-20-15 2-7 18-7-2 8-27m32-10 6-17m-3 9 9-7m-10 8-8-8" fill="#25292b" stroke="#25292b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>');
+  else if (upper === 'COW CROSSING') sign = diamond('<path d="M26 55q7-15 25-14h27l10-9 8 3-4 15-8 8-3 25h-9l-2-22H47l-3 24h-9l-1-24-10-2Z" fill="#25292b"/><path d="m31 49-9-9m56 4 8-13m-2 3 9-2" fill="none" stroke="#25292b" stroke-width="5" stroke-linecap="round"/>');
+  else if (upper === 'TRACTOR CROSSING') sign = diamond('<g fill="#25292b"><circle cx="42" cy="78" r="17"/><circle cx="83" cy="82" r="10"/><path d="M36 44h28l9 25H30Zm28 10h17l9 18H68ZM45 32h8v14h-8Z"/></g><g fill="#ffd34f"><circle cx="42" cy="78" r="7"/><circle cx="83" cy="82" r="4"/><path d="M43 50h15l6 15H42Z"/></g>');
+  else if (upper === 'DEAD END') sign = '<rect x="13" y="17" width="94" height="87" rx="8" fill="#ffd34f" stroke="#323638" stroke-width="5"/><text x="60" y="53" text-anchor="middle" fill="#25292b" font-size="19" font-weight="900">DEAD</text><text x="60" y="79" text-anchor="middle" fill="#25292b" font-size="20" font-weight="900">END</text>';
+  else if (upper === 'T INTERSECTION') sign = diamond('<path d="M29 42h62M60 42v51" fill="none" stroke="#25292b" stroke-width="11" stroke-linecap="round"/>');
+  else if (upper === 'TWO-WAY TRAFFIC') sign = diamond('<path d="M44 92V30m0 0-10 13m10-13 10 13M77 29v63m0 0-10-13m10 13 10-13" fill="none" stroke="#25292b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>');
+  else if (upper === 'LOW CLEARANCE') sign = diamond('<path d="M28 72h64v20H28Z" fill="#25292b"/><path d="M36 61V39m0 0-7 9m7-9 7 9M84 39v22m0 0-7-9m7 9 7-9" fill="none" stroke="#25292b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><text x="60" y="57" text-anchor="middle" fill="#25292b" font-size="13" font-weight="900">12′ 6″</text>');
+  else if (upper === 'STEEP HILL') sign = diamond('<path d="m23 45 75 35v14H23Z" fill="#25292b"/><g fill="#ffd34f" stroke="#25292b" stroke-width="3"><path d="m52 56 29 13 5 17-40-18Z"/><circle cx="55" cy="73" r="7"/><circle cx="80" cy="84" r="7"/></g>');
+  else if (upper === 'TRUCK CROSSING') sign = diamond('<g fill="#25292b"><path d="M25 49h46v31H25Zm46 10h16l12 13v8H71Z"/><circle cx="39" cy="84" r="9"/><circle cx="82" cy="84" r="9"/></g><g fill="#ffd34f"><path d="M76 64h9l7 9H76Z"/><circle cx="39" cy="84" r="3"/><circle cx="82" cy="84" r="3"/></g>');
   else if (upper === 'DIVIDED HIGHWAY BEGINS') sign = diamond('<path d="M36 91V29m48 62V29" stroke="#25292b" stroke-width="7" stroke-linecap="round"/><path d="M52 92q16-14 5-31t3-33q16 16 3 34T69 92Z" fill="#25292b"/>');
   else if (upper === 'DIVIDED HIGHWAY ENDS') sign = diamond('<path d="M36 29v62m48-62v62" stroke="#25292b" stroke-width="7" stroke-linecap="round"/><path d="M52 28q16 14 5 31t3 33q16-16 3-34T69 28Z" fill="#25292b"/>');
   else if (upper === 'NO PASSING ZONE') sign = '<path d="M4 12h103L60 108 4 88Z" fill="#ffd34f" stroke="#323638" stroke-width="5"/><path d="M27 43h24v37H27Zm34 13h24v24H61Z" fill="#25292b"/><circle cx="34" cy="82" r="6" fill="#25292b"/><circle cx="47" cy="82" r="6" fill="#25292b"/><circle cx="67" cy="82" r="6" fill="#25292b"/><circle cx="80" cy="82" r="6" fill="#25292b"/>';
@@ -183,6 +403,8 @@ export function trafficSignSvg(title) {
     <path class="sign-sheen" d="M57 113v27" stroke="#e4ecef" stroke-width="2" opacity=".85"/>
     <g class="sign-depth" transform="translate(3 4)">${sign}</g>
     <g class="sign-face">${sign}</g>
+    <path class="sign-reflection" d="M28 25q13-10 30-11" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".32"/>
+    <circle class="sign-fastener" cx="60" cy="16" r="2.6" fill="#e9eef0" stroke="#4c5961" stroke-width="1.2"/>
     <circle cx="60" cy="109" r="3" fill="#e9eef0" stroke="#4c5961" stroke-width="1.5"/>
     <path d="M40 142h42" stroke="#39454d" stroke-width="9" stroke-linecap="round"/>
     <path d="M43 139h35" stroke="#9aa7ad" stroke-width="3" stroke-linecap="round"/>
@@ -193,6 +415,7 @@ const themes = {
   budget: ['coin', 'boat', 'tree'], messages: ['key', 'hut', 'robot'], conversation: ['tree', 'bench', 'book'], news: ['book', 'market', 'key'],
   repair: ['wood', 'metal', 'hut'], route: ['truck', 'airplane', 'lighthouse'], garden: ['carrot', 'seed', 'tree'], energy: ['sun', 'house', 'seed'],
   sorting: ['book', 'seed', 'wood'], traffic: ['trafficLight', 'car', 'truck'], robot: ['robot', 'rock', 'star'], market: ['market', 'lemon', 'cup'], music: ['speaker', 'music', 'speaker'],
+  'weather-reading': ['cloud', 'rainbow', 'wind'], 'garden-grow': ['rake', 'wateringCan', 'tomatoPlant'],
   bridge: ['wood', 'boat', 'tree'], pipes: ['drop', 'metal', 'drop'], harbor: ['boat', 'lighthouse', 'wood'], pantry: ['bread', 'apple', 'carrot'],
   compass: ['lighthouse', 'mountain', 'boat'], cipher: ['key', 'hut', 'book'], trade: ['market', 'coin', 'apple'], town: ['tree', 'house', 'ramp'],
 };
