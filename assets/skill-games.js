@@ -1103,7 +1103,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 const expedition = world.artSet === "expedition" ? createExpedition(world, {
-  board, actions, esc, chip, stage, bind, button, tone, say, finish, progress, score: updateScore,
+  board, actions, esc, chip, stage, bind, button, tone, say, finish, progress, score: updateScore, challengeRound,
 }) : null;
 mountScene(world);
 syncComfort();

@@ -1,5 +1,5 @@
-import { bridgeParts, bridgeLevels, pipePaths, directions, islands, cargo, pantryFoods, landmarks, compassClues, cipherLevels, tradeLevels, townParts } from "./expedition-worlds.js";
-import { alphabet, wrap, encode, compassTarget, townNeeds, traceWater, cheapestShop } from "./expedition-logic.js";
+import { bridgeParts, bridgeLevels, pipePaths, directions, islands, cargo, pantryFoods, pantryChallenges, PANTRY_ROUND_SIZE, landmarks, compassClues, cipherLevels, tradeLevels, townParts } from "./expedition-worlds.js";
+import { alphabet, wrap, encode, compassTarget, townNeeds, traceWater, checkPantryBox, cheapestShop } from "./expedition-logic.js";
 import {
   iconSvg,
   iconDrawing,
@@ -33,6 +33,7 @@ export function createExpedition(world, a) {
     }
     if (world.mode === "cipher") Object.assign(s, { shift: 0, tokens: [] });
     if (world.mode === "trade") s.cart = [0,0,0];
+    if (world.mode === "pantry") s.box = {};
   }
   function nextLevel(count, message) {
     a.button(s.level === count - 1 ? "Celebrate my discoveries" : "Next challenge", () => {
@@ -95,21 +96,48 @@ export function createExpedition(world, a) {
     a.button("Refill & replan", start, "secondary");
   }
   function pantry() {
-    a.stage(`Picnic box ${s.packed + 1} of 3`); a.progress(s.packed, 3); a.score(s.packed / 3 * 100);
+    const challenge = s.pantryDeck[s.level];
+    const availableFoods = pantryFoods.filter(item => challenge.stock[item.id]);
     const packedItems = pantryFoods.flatMap(item => Array(s.box[item.id] || 0).fill(item));
-    a.board.innerHTML = `<p class="board-intro">One main + two fruit or vegetable portions. Use marked leftovers first.</p><div class="picnic-basket">${[0,1,2].map(index => `<div class="picnic-slot">${packedItems[index] ? `${iconSvg(packedItems[index].icon)}<b>${packedItems[index].name}</b>` : `<span>${index === 0 ? "A main" : "Fruit or veg"}</span>`}</div>`).join("")}</div><div class="cargo-shelf">${pantryFoods.map(item => `<button type="button" class="supply-card" data-food="${item.id}" data-focus="food-${item.id}" ${s.stock[item.id] - (s.box[item.id] || 0) <= 0 ? "disabled" : ""}>${iconSvg(item.icon)}<b>${item.name}</b><small>${s.stock[item.id] - (s.box[item.id] || 0)} left · ${item.group === "main" ? "main" : "fruit / veg"}</small>${item.leftover ? '<span class="leftover-tag">Use first</span>' : ""}</button>`).join("")}</div><p class="small-note">Pretend portions for play. An adult can help with real food, allergies, and preparation.</p>`;
-    a.bind("[data-food]", node => { if (total(s.box) >= 3) { a.say("This box holds three portions. Empty it to try another mix.", "try"); return; } const id = node.dataset.food; s.box[id] = (s.box[id] || 0) + 1; render(); });
-    a.button("Pack this picnic", () => {
-      const main = pantryFoods.filter(item => item.group === "main").reduce((sum,item) => sum + (s.box[item.id] || 0), 0);
-      const colors = total(s.box) - main;
-      if (main !== 1 || colors !== 2) { a.say("Try one main and two fruit or vegetable portions.", "try"); return; }
-      if (s.stock.bread > 0 && !s.box.bread) { a.say("Use the leftover bread first before choosing the beans.", "try"); return; }
-      if ((s.box.carrot || 0) < Math.min(2, s.stock.carrot)) { a.say("Use the marked carrot leftovers first. They can fill the fruit or vegetable spaces.", "try"); return; }
-      Object.entries(s.box).forEach(([id,count]) => { s.stock[id] -= count; }); s.box = {}; s.packed++; render();
-      if (s.packed === 3) a.finish("Three colorful picnics packed, and the pantry is empty! You used leftovers before getting more food.", 100);
-      else a.say("Picnic packed! Let's make the next box with what is still here.", "good");
+    const groupLabel = item => item.group === "main" ? "main" : item.group;
+    const produceRule = challenge.produce
+      ? `${challenge.produce.fruit} fruit · ${challenge.produce.vegetable} vegetable`
+      : "2 fruits or vegetables";
+    a.stage(`${challenge.name} · ${s.level + 1} of ${PANTRY_ROUND_SIZE}`);
+    a.progress(s.level + (s.passed ? 1 : 0), PANTRY_ROUND_SIZE, `${s.level + (s.passed ? 1 : 0)} of ${PANTRY_ROUND_SIZE} picnic challenges solved`);
+    a.score((s.level + (s.passed ? 1 : 0)) / PANTRY_ROUND_SIZE * 100);
+    a.board.innerHTML = `<article class="pantry-challenge" data-pantry-challenge="${challenge.id}"><p class="eyebrow">From a 24-challenge pantry</p><h2>${a.esc(challenge.name)}</h2><p>${a.esc(challenge.prompt)}</p><div class="pantry-rules" aria-label="Picnic request"><span>1 main</span><span>${produceRule}</span>${challenge.differentProduce ? "<span>2 different produce choices</span>" : ""}<span>Use marked leftovers first</span></div></article><div class="picnic-basket">${[0,1,2].map(index => packedItems[index] ? `<button type="button" class="picnic-slot filled" data-unpack="${packedItems[index].id}" data-focus="packed-${index}" ${s.passed ? "disabled" : ""} aria-label="Remove ${a.esc(packedItems[index].name)} from the picnic box">${iconSvg(packedItems[index].icon)}<b>${a.esc(packedItems[index].name)}</b><small>Tap to put back</small></button>` : `<div class="picnic-slot"><span>${index === 0 ? "A main" : "Fruit or vegetable"}</span></div>`).join("")}</div><div class="cargo-shelf">${availableFoods.map(item => {
+      const remaining = challenge.stock[item.id] - (s.box[item.id] || 0);
+      const required = challenge.mustUse?.[item.id] || 0;
+      return `<button type="button" class="supply-card" data-food="${item.id}" data-focus="food-${item.id}" ${remaining <= 0 || s.passed ? "disabled" : ""}>${iconSvg(item.icon)}<b>${a.esc(item.name)}</b><small>${remaining} available · ${groupLabel(item)}</small>${required ? `<span class="leftover-tag">Use first${required > 1 ? ` · ${required}` : ""}</span>` : ""}</button>`;
+    }).join("")}</div><p class="small-note">Pretend portions for play. Ask an adult about allergies, real food preparation, and safe storage.</p>`;
+    a.bind("[data-food]", node => {
+      if (total(s.box) >= 3) { a.say("This box holds three portions. Put one back or clear the box to change your plan.", "try"); return; }
+      const id = node.dataset.food;
+      if ((s.box[id] || 0) >= challenge.stock[id]) return;
+      s.box[id] = (s.box[id] || 0) + 1;
+      render();
     });
-    a.button("Empty this box", () => { s.box = {}; render(); a.say("Your pretend food is back in the pantry."); }, "secondary");
+    a.bind("[data-unpack]", node => {
+      const id = node.dataset.unpack;
+      s.box[id]--;
+      if (!s.box[id]) delete s.box[id];
+      render();
+    });
+    if (s.passed) {
+      nextLevel(PANTRY_ROUND_SIZE, `You solved ${PANTRY_ROUND_SIZE} picnic challenges from a twenty-four-plan pantry. The next round rotates in new requests before any repeat.`);
+    } else {
+      a.button("Check this picnic", () => {
+        const result = checkPantryBox(challenge, s.box, pantryFoods);
+        if (!result.ok) { a.say(result.reason, "try"); return; }
+        s.passed = true;
+        s.quality.push(100);
+        render();
+        a.say(result.reason, "good");
+        a.tone(1);
+      });
+      a.button("Clear my box", () => { s.box = {}; render(); a.say("Everything is back on the pretend shelf. Try a new plan."); }, "secondary");
+    }
   }
   function compass() {
     const clue = compassClues[s.level], landmark = landmarks[clue.landmark];
@@ -178,7 +206,7 @@ export function createExpedition(world, a) {
   }
   const painters = { bridge, pipes, harbor, pantry, compass, cipher, trade, town };
   function start() {
-    s = { level: 0, quality: [], found: [], tool: "park", plots: Array(6).fill(null), stock: resetCount(world.mode === "pantry" ? pantryFoods : cargo), load: {}, delivered: islands.map(() => ({})), island: 0, fuel: 12, box: {}, packed: 0 };
+    s = { level: 0, quality: [], found: [], tool: "park", plots: Array(6).fill(null), stock: resetCount(cargo), load: {}, delivered: islands.map(() => ({})), island: 0, fuel: 12, box: {}, pantryDeck: world.mode === "pantry" ? a.challengeRound(pantryChallenges, PANTRY_ROUND_SIZE) : [] };
     resetLevel(); render();
   }
   return { start };

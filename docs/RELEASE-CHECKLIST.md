@@ -73,7 +73,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Bridge Buddies — Build four bridge spans within your token budget. Test each crossing, learn from the weak spots, and help three carts get across.
 - [ ] Water Works — Rotate the blue pipes to connect the reservoir on the left to the house on the right. Pass through the toy filter in all three networks.
 - [ ] Harbor Helpers — Deliver nine crates to three islands. Your boat holds three crates and has twelve fuel tokens. Check what each island needs before sailing.
-- [ ] Pantry Picnic — Pack three pretend picnic boxes, each with one main and two fruit or vegetable portions. Use the marked leftovers first and finish the pantry.
+- [ ] Pantry Picnic — Complete eight rotating picnic challenges from a twenty-four-plan bank. Follow each request, use marked leftovers first, and confirm three sessions exhaust the bank before repeating.
 - [ ] Compass Cove — Find five treasures by following clues from island landmarks. North is up, east is right, south is down, and west is left on this map.
 - [ ] Cipher Club — Use the toy A–H alphabet and a shared number key to encode or decode five three-letter clubhouse messages. The alphabet wraps around after H.
 - [ ] Trade Town — Fill three shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.

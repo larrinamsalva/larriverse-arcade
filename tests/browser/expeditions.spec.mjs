@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import { bridgeLevels, bridgeParts, pipePaths, directions, islands, expeditions, compassClues, landmarks, cipherLevels, tradeLevels } from "../../assets/expedition-worlds.js";
-import { compassTarget, encode } from "../../assets/expedition-logic.js";
+import { bridgeLevels, bridgeParts, pipePaths, directions, islands, expeditions, pantryFoods, pantryChallenges, PANTRY_ROUND_SIZE, compassClues, landmarks, cipherLevels, tradeLevels } from "../../assets/expedition-worlds.js";
+import { checkPantryBox, compassTarget, encode } from "../../assets/expedition-logic.js";
 
 async function adventure(page,id,play) {
   const errors = []; page.on("pageerror",error => errors.push(error.message));
@@ -67,15 +67,60 @@ test("Harbor Helpers: capacity, rejected wrong supplies, efficient deliveries an
     await expect(page.locator("#finishMessage")).toContainText("used 6 fuel");
   });
 });
-test("Pantry Picnic: leftovers before new food, three balanced boxes and empty pantry",async({page})=>{
-  await adventure(page,"pantry-picnic",async()=>{
-    for(const id of ["beans","apple","apple"]) await page.locator(`[data-food="${id}"]`).click();
-    await action(page,"Pack this picnic"); await expect(page.locator("#feedback")).toContainText("leftover bread"); await action(page,"Empty this box");
-    for(const box of [["bread","carrot","carrot"],["bread","carrot","apple"],["beans","apple","apple"]]) {
-      for(const id of box)await page.locator(`[data-food="${id}"]`).click(); await action(page,"Pack this picnic");
+function pantrySolution(challenge) {
+  const ids = Object.keys(challenge.stock), solutions = [];
+  const search = (index, remaining, box) => {
+    if (index === ids.length) {
+      if (!remaining && checkPantryBox(challenge, box, pantryFoods).ok) solutions.push({ ...box });
+      return;
     }
-    await expect(page.locator("[data-food]:disabled")).toHaveCount(4);
-  });
+    const id = ids[index];
+    for (let count = 0; count <= Math.min(challenge.stock[id], remaining); count++) {
+      if (count) box[id] = count; else delete box[id];
+      search(index + 1, remaining - count, box);
+    }
+    delete box[id];
+  };
+  search(0, 3, {});
+  return solutions[0];
+}
+test("Pantry Picnic: eight-question rounds exhaust all twenty-four challenges before repeating",async({page})=>{
+  const errors=[]; page.on("pageerror",error=>errors.push(error.message));
+  const challengeById=new Map(pantryChallenges.map(challenge=>[challenge.id,challenge]));
+  await page.goto("/games/pantry-picnic/index.html");
+  await expect(page.locator(".world-scene svg")).toBeVisible();
+  await expect(page.locator("#soundToggle")).toHaveAttribute("aria-pressed","false");
+  const allSeen=[];
+  for(let round=0;round<3;round++) {
+    const roundSeen=[];
+    for(let index=0;index<PANTRY_ROUND_SIZE;index++) {
+      const card=page.locator("[data-pantry-challenge]");
+      const id=await card.getAttribute("data-pantry-challenge");
+      expect(challengeById.has(id)).toBe(true);
+      roundSeen.push(id); allSeen.push(id);
+      if(round===0&&index===0) {
+        await action(page,"Check this picnic");
+        await expect(page.locator("#feedback")).toContainText("exactly three portions");
+      }
+      const solution=pantrySolution(challengeById.get(id));
+      expect(solution).toBeTruthy();
+      for(const [food,count] of Object.entries(solution)) for(let portion=0;portion<count;portion++) await page.locator(`[data-food="${food}"]`).click();
+      await action(page,"Check this picnic");
+      await expect(page.locator("#feedback")).toHaveClass(/good/);
+      await action(page,index===PANTRY_ROUND_SIZE-1?"Celebrate my discoveries":"Next challenge");
+    }
+    expect(new Set(roundSeen).size).toBe(PANTRY_ROUND_SIZE);
+    await expect(page.locator("#finishDialog")).toBeVisible();
+    if(round<2) await page.locator("#playAgain").click();
+  }
+  expect(new Set(allSeen).size).toBe(pantryChallenges.length);
+  const saved=await page.evaluate(()=>window.LarriVerseArcade.summary().games["pantry-picnic"]);
+  expect(saved.completions).toBe(3); expect(saved.metrics.practiceRuns).toBe(3);
+  await page.locator("#closeFinish").click();
+  const size=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:document.documentElement.clientWidth}));
+  expect(size.scroll).toBeLessThanOrEqual(size.width+4);
+  await page.reload(); await expect(page.locator("#bestScore")).not.toHaveText("—");
+  expect(errors).toEqual([]);
 });
 test("Compass Cove: landmark clues, wrong-turn feedback and eight distinct treasures",async({page})=>{
   await adventure(page,"compass-cove",async()=>{

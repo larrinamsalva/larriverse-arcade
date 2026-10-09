@@ -5,7 +5,7 @@ const descriptions = Object.freeze({
   'bridge-buddies': 'Bridge Buddies model bridge with four numbered spans, support choices, load labels, a token budget, and a test-crossing control.',
   'water-works': 'Water Works opening mission and pipe puzzle with numbered rotating pipes, reservoir and town labels, and a marked toy filter.',
   'harbor-helpers': 'Harbor Helpers island map with supply requests, cargo choices, boat capacity, fuel tokens, and delivery controls.',
-  'pantry-picnic': 'Pantry Picnic pretend food shelf with marked leftovers, three picnic slots, portion labels, and packing controls.',
+  'pantry-picnic': 'Pantry Picnic rotating challenge card, detailed pretend food shelf, marked leftovers, three picnic slots, portion rules, and packing controls.',
   'compass-cove': 'Compass Cove numbered island grid with named landmarks, a north-east-south-west compass, a treasure clue, and a map legend.',
   'cipher-club': 'Cipher Club toy alphabet workshop with a shared number key, encode-or-decode instructions, message slots, and letter keys.',
   'trade-town': 'Trade Town pretend market with a shopping request, budget, bundle quantities, unit prices, delivery fees, and return controls.',

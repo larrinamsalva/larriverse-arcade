@@ -7,13 +7,13 @@ The arcade has 30 playable games: eight original cabinets, fourteen practice wor
 | Bridge Buddies | Choose supports for four spans and test three crossings within a budget | Test a model, notice weak spots, and improve a plan |
 | Water Works | Rotate pipes through three networks and trace the flow through a toy filter | Systems depend on connected parts; troubleshoot from the start |
 | Harbor Helpers | Match nine supply crates to three island requests with boat and fuel limits | Listen before helping and plan shared resources |
-| Pantry Picnic | Pack three boxes using marked leftovers first | Check what you already have and plan to reduce waste |
+| Pantry Picnic | Solve eight rotating packing challenges from a twenty-four-plan pantry | Check what you already have, follow the request, and plan to reduce waste |
 | Compass Cove | Follow five landmark clues on a compass map | Explain a route using directions and reference points |
 | Cipher Club | Encode and decode five messages using an A–H wheel | A shared rule changes the meaning of a pattern |
 | Trade Town | Compare bundles, unit prices and extra fees for three requests | Judge the whole deal and buy enough for the actual need |
 | Critter Council | Place a park, hut, ramp and bench around four neighbors' requests | Ask about different needs and make room for more people |
 
-The bridge is a simplified toy model. Pipe filters and picnic portions are pretend: these games do not establish real water safety or food handling. The small cipher is easy to break and cannot protect real secrets. Coins and builder tokens are fictional. The town includes a step-free route and different comfort needs without asking players for personal information.
+The bridge is a simplified toy model. Pipe filters and picnic portions are pretend: these games do not establish real water safety or food handling. Pantry Picnic asks an adult to help with allergies, preparation, and safe storage. The small cipher is easy to break and cannot protect real secrets. Coins and builder tokens are fictional. The town includes a step-free route and different comfort needs without asking players for personal information.
 
 ## Graphics and assets
 
