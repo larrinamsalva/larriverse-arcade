@@ -51,7 +51,7 @@ test('Game 30 completes a balanced visual safety route and saves local progress'
   expect(errors).toEqual([]);
 });
 
-test('scenario decks finish each category cycle before repeating and reflow at 320 pixels', async ({ page }) => {
+test('four routes cover all sixty scenes before repeating and reflow at 320 pixels', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 760 });
   await page.goto('/games/street-safety-scout/index.html');
   await page.locator('#startButton').click();
@@ -83,6 +83,11 @@ test('scenario decks finish each category cycle before repeating and reflow at 3
     if (routeIndex < 3) await page.locator('#playAgainButton').click();
   }
   expect(routes[1].filter(item => routes[0].some(first => first.id === item.id))).toEqual([]);
+  const allIds = routes.flat().map(item => item.id);
+  expect(new Set(allIds).size).toBe(streetSafetyScenarios.length);
+  for (const category of Object.keys(poolSizes)) {
+    expect(cycleSeen.get(category).size, `${category} covers its complete twelve-scene pool`).toBe(poolSizes[category]);
+  }
   const layout = await page.evaluate(() => ({
     scrollWidth: document.documentElement.scrollWidth,
     clientWidth: document.documentElement.clientWidth

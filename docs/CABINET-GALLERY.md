@@ -50,6 +50,6 @@ Approved images are eventually committed under `docs/screenshots/<project>/<subj
 See [GALLERY-APPROVAL.md](GALLERY-APPROVAL.md) for the full human review, physical-device, and release-decision workflow.
 
 - **Traffic Town** — Read traffic signs & choose safe actions with ten-question rounds drawn from a 40-question non-repeating bank.
-- **Street Safety Scout** — Identify signals, caution and emergency signs, vehicle lights, roadside warnings, and hazards through balanced fifteen-stop routes drawn from a 36-scenario bank.
+- **Street Safety Scout** — Identify signals, caution and emergency signs, vehicle lights, roadside warnings, and hazards through balanced fifteen-stop routes drawn from a 60-scenario bank.
 - **Weather Watchers** — Complete 25 illustrated sky, cloud, weather-preparation, and forecast-reading challenges across four advancement levels.
 - **Garden Grow & Harvest** — Complete 24 illustrated bed-building, planting, care, harvest, and food-freshness challenges across four advancement levels.

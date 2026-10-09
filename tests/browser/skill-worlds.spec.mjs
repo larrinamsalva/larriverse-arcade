@@ -264,7 +264,7 @@ test("Reuse Rally: sort objects with the displayed town rules", async ({
 test("Traffic Town: identify ten different signs and safe road meanings", async ({ page }) => {
   await round(page, "traffic-town", () => chooseDeck(page, trafficQuestions, null, 10));
 });
-test("Traffic Town: four consecutive rounds rotate through forty unseen signs", async ({ page }) => {
+test("Traffic Town: six consecutive rounds rotate through sixty unseen signs", async ({ page }) => {
   await page.goto("/games/traffic-town/index.html");
   const playTrafficRound = async () => {
     const seen = [];
@@ -280,12 +280,12 @@ test("Traffic Town: four consecutive rounds rotate through forty unseen signs", 
     return seen;
   };
   const allSeen = [];
-  for (let roundIndex = 0; roundIndex < 4; roundIndex += 1) {
+  for (let roundIndex = 0; roundIndex < 6; roundIndex += 1) {
     const roundSeen = await playTrafficRound();
     expect(roundSeen.filter((text) => allSeen.includes(text))).toEqual([]);
     allSeen.push(...roundSeen);
     await expect(page.locator("#finishDialog")).toBeVisible();
-    if (roundIndex < 3) await page.getByRole("button", { name: "Try another round", exact: true }).click();
+    if (roundIndex < 5) await page.getByRole("button", { name: "Try another round", exact: true }).click();
   }
   expect(new Set(allSeen).size).toBe(trafficQuestions.length);
 });

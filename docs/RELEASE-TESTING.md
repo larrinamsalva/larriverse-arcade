@@ -18,7 +18,7 @@ Start with these recent changes, then complete all 32 cabinet tasks shown by the
 | --- | --- |
 | KidsCoin Family | Six lessons show 20 questions each and 120 total. Open learning without a parent PIN, finish a three-question round, and confirm a chore reward still waits for parent approval. |
 | Repair Café | Complete eight different repairs. Try a later step first and read the feedback. Finish the eighth repair and confirm saved completion and replay. |
-| Traffic Town | Complete four ten-question rounds and confirm all 40 signs appear once before the bank cycles. |
+| Traffic Town | Complete six ten-question rounds and confirm all 60 signs appear once before the bank cycles. |
 | Street Safety Scout | Complete two fifteen-stop routes, confirm three scenes from each of the five safety zones per route, and verify the second route uses unseen scenarios. |
 | Weather Watchers | Complete all 25 picture challenges, advance through four levels, and inspect sky scenes and forecast panels in light and dark themes. |
 | Garden Grow & Harvest | Complete all 24 picture challenges, advance through four levels, and inspect the tools, plants, harvest, and freshness guidance in light and dark themes. |

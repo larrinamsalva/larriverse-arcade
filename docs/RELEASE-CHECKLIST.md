@@ -91,7 +91,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Lemonade Lab — Complete a full Lemonade Lab round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Beat Builder — Complete a full Beat Builder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 
-- [ ] Traffic Town — complete four ten-question rounds, confirm all 40 signs appear before the bank cycles, inspect the dimensional cow/deer/tractor/turn signs, read the explanations, and verify the game does not claim to replace official permit study or licensing.
+- [ ] Traffic Town — complete six ten-question rounds, confirm all 60 signs appear before the bank cycles, inspect the dimensional regulatory, caution, service, animal, farm, route, and emergency signs, read the explanations, and verify the game does not claim to replace official permit study or licensing.
 - [ ] Street Safety Scout — complete two fifteen-stop routes, confirm each route contains three scenes from all five safety zones, verify the second route uses unseen scenes, inspect roadside-caution art, and confirm local-law and real-emergency boundaries stay visible.
 
 ## Learning Goals pass
