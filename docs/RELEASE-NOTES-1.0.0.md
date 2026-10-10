@@ -1,6 +1,6 @@
 # LarriVerse Arcade 1.0
 
-LarriVerse Arcade 1.0 is a release candidate with 32 independently playable games: eight original cabinets, sixteen practice worlds, and eight expeditions. They share device-local progress, fictional rewards, comfort controls, validation, and privacy and safety boundaries. Human visual/gameplay approval and real physical-phone QA remain required before the formal release.
+LarriVerse Arcade 1.0 is a release candidate with 32 independently playable games: eight original cabinets, seventeen practice worlds, and eight expeditions. They share device-local progress, fictional rewards, comfort controls, validation, and privacy and safety boundaries. Human visual/gameplay approval and real physical-phone QA remain required before the formal release.
 
 ## Eight original cabinets
 
@@ -116,7 +116,7 @@ GitHub Actions verifies routes, syntax, combined question counts, expansion-pack
 
 ## Modern arcade expansion
 
-The collection includes 32 playable games: eight original cabinets, sixteen practice worlds including Traffic Town, Street Safety Scout, Weather Watchers, and Garden Grow & Harvest, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (66 images). The formal release still requires the documented human review.
+The collection includes 32 playable games: eight original cabinets, seventeen practice worlds including Traffic Town, Street Safety Scout, Weather Watchers, and Garden Grow & Harvest, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (66 images). The formal release still requires the documented human review.
 
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
@@ -162,3 +162,7 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 - Consecutive routes rotate through unseen scenarios while enough remain in each category.
 - Detailed code-native SVG scenes use light position, sign shape, color, depth, reflections, and contextual roadway clues instead of emoji-only questions.
 - This is calm awareness practice, not driving instruction or emergency assistance; current local controls, officials, and laws always take priority.
+
+### Kids Sudoku World
+
+- **Kids Sudoku World** — a fully playable 60-puzzle, six-chapter new cabinet with 4×4, 6×6 and 9×9 Sudoku, validated unique solutions, free hints, pencil notes, keyboard/touch play, number/picture helpers, saved checkpoints and star progress. The game requires manual phone, desktop and screenshot approval like every other cabinet.
