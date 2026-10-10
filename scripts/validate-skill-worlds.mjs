@@ -25,7 +25,7 @@ import {
 } from "../assets/arcade-scenes.js";
 const catalog = JSON.parse(fs.readFileSync("games/catalog.json", "utf8"));
 const release = JSON.parse(fs.readFileSync("release.json", "utf8"));
-const standaloneV3Cabinets = new Set(["street-safety-scout", "kids-sudoku", "word-search-world"]);
+const standaloneV3Cabinets = new Set(["street-safety-scout", "kids-sudoku", "word-search-world", "crossword-world"]);
 assert.equal(worlds.length, catalog.filter(game => game.integration === "arcade-sdk-v3" && !standaloneV3Cabinets.has(game.id)).length);
 assert.equal(new Set(worlds.map((w) => w.id)).size, worlds.length);
 assert.equal(new Set(worlds.map((w) => w.mode)).size, worlds.length);
