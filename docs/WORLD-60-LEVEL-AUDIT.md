@@ -19,12 +19,18 @@ These existing games already had 60: **Pantry Picnic, Traffic Town, Street Safet
 
 **Main catalog after this PR: 20 of 35 cabinets have 60 distinct sequential puzzles or questions.** Four more expedition worlds have expanded from 20 to 60. The table below lists only worlds still below the goal. **Word Search World** and **Crossword World** have merged with 60 levels apiece and are included in the 16 complete cabinets.
 
+## Trade Town and Critter Council next batch
+
+- **Trade Town**: 8 original + 52 distinct market orders, increasingly complex delivery fees and bundle comparisons, every order affordable.
+- **Critter Council**: 20 original + 40 new 2×3 neighborhood layouts with four achievable neighbor requests apiece, totaling 240 requests. Preserve earlier saved progress.
+- **22 of 35** fixed-sequence cabinets now offer 60 levels once this stacked change is merged on top of the preceding expedition pack.
+
 ## Remaining fixed-length worlds and accurate gap
 
 | World | Actual playable challenges | More required |
 | --- | ---: | ---: |
-| Trade Town | 8 | 52 |
-| Critter Council | 20 | 40 |
+| Trade Town | **60** | **0** |
+| Critter Council | **60** | **0** |
 | Pocket Planet | 30 | 30 |
 | Garden Guardians | 8 | 52 |
 | Energy Island | 8 | 52 |
