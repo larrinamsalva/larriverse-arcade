@@ -25,8 +25,7 @@ for(const [i,level] of SUDOKU_LEVELS.entries()){
   for(let at=0;at<size*size;at++){
     if(level.puzzle[at]!=="0")assert.equal(level.puzzle[at],level.solution[at]);
     assert.equal(new Set(sudokuPeers(at,size,level.boxRows,level.boxCols)).size,
-      3*(size-1)-((size-1)+(level.boxRows-1)+(level.boxCols-1)
-       +((level.boxRows-1)*(level.boxCols-1))), "peer cells are unique");
+      2*(size-1)+(level.boxRows-1)*(level.boxCols-1), "peer cells are unique");
   }
   assert.equal(sudokuConflicts(level.solution.split("").map(Number),level).size,0);
   assert.ok(sudokuSolved(level.solution.split("").map(Number),level),`Level ${i+1} solves correctly`);
