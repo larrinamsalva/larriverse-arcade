@@ -1,6 +1,6 @@
 # LarriVerse Arcade 1.0 — Release Checklist
 
-This checklist covers the 32-game arcade, including the original eight recovered browser concepts.
+This checklist covers the 33-game arcade, including the original eight recovered browser concepts.
 
 For the order of testing and the files to keep, start with [RELEASE-TESTING.md](RELEASE-TESTING.md).
 
@@ -8,8 +8,8 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 
 ## Required automated checks
 
-- [x] Root catalog contains exactly 32 unique cabinets.
-- [x] All 32 cabinets are marked playable.
+- [x] Root catalog contains exactly 33 unique cabinets.
+- [x] All 33 cabinets are marked playable.
 - [x] Every cabinet has a route back to the arcade lobby.
 - [x] Every playable cabinet loads the shared Arcade SDK before its own engine.
 - [x] Shared JavaScript and every cabinet engine pass `node --check`.
@@ -25,9 +25,9 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Learning Goals supports six preset goal types, three slots, safe target choices, restart, remove, and clear.
 - [x] Learning Goals counts only progress after the pinned baseline and blocks a fourth goal.
 - [x] Learning Goals stores no free text, deadlines, streaks, grades, family records, or location data and uploads nothing.
-- [x] Progress Passport publishes current goals, all 32 cabinet stamps, adaptive-learning trails, achievements, level progress, and a suggested next mission.
+- [x] Progress Passport publishes current goals, all 33 cabinet stamps, adaptive-learning trails, achievements, level progress, and a suggested next mission.
 - [x] Progress Passport is read-only, requests no location, uploads no data, and excludes raw family and location records from its summary export.
-- [x] Family Learning Report publishes current goals, aggregate strengths, practice opportunities, learning paths, all 32 cabinet rows, recent activity, and conversation starters.
+- [x] Family Learning Report publishes current goals, aggregate strengths, practice opportunities, learning paths, all 33 cabinet rows, recent activity, and conversation starters.
 - [x] Family Learning Report requires at least two answers before describing a subject pattern, uses 80% for strengths and below 75% for practice, and explicitly rejects grading, diagnosis, ranking, and certification claims.
 - [x] Family Learning Report is read-only, stores no review notes, requests no location, uploads no data, and excludes raw family and coordinate records from its export.
 - [x] Road Trip Quest GPS defaults to Demo Mode and never saves or uploads coordinates.
@@ -36,14 +36,14 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] Reduced motion, high contrast, and larger text are shared through the SDK.
 - [x] Release metadata matches package version, catalog routes, notes, and gallery targets.
 - [x] Version tags validate the complete arcade before GitHub can publish a release.
-- [x] Automated Chromium pass covers the lobby and all 32 cabinets at 1440×900 and 390×844.
+- [x] Automated Chromium pass covers the lobby and all 33 cabinets at 1440×900 and 390×844.
 - [x] Browser automation performs a real profile/settings/reward/backup/restore round trip.
 - [x] Browser automation changes an adaptive learning path, reloads it, and verifies local recent-question memory.
 - [x] Browser automation pins three goals, advances local counters, reloads, verifies completion, checks safe storage and export, restarts one, removes one, and confirms Passport and Report stay read-only.
-- [x] Browser automation seeds a realistic Progress Passport and verifies totals, all 32 stamps, accuracy, achievements, next mission, and safe export fields.
-- [x] Browser automation seeds a realistic Family Learning Report and verifies strength, practice, neutral subject, all 32 cabinet rows, recent activity, healthy boundaries, and safe export fields.
+- [x] Browser automation seeds a realistic Progress Passport and verifies totals, all 33 stamps, accuracy, achievements, next mission, and safe export fields.
+- [x] Browser automation seeds a realistic Family Learning Report and verifies strength, practice, neutral subject, all 33 cabinet rows, recent activity, healthy boundaries, and safe export fields.
 - [x] Browser evidence is captured without granting location permission.
-- [x] Successful Browser QA builds an offline gallery review with 66 hashed images.
+- [x] Successful Browser QA builds an offline gallery review with 68 hashed images.
 - [x] The tag workflow requires a committed final approval JSON and exact approved image hashes.
 - [x] Guided QA exports schema-v2 desktop and schema-v2 physical-phone reports with separate local records.
 - [x] The physical-phone report requires touch capability and six completed device-wide checks.
@@ -51,7 +51,7 @@ Open `qa/index.html` from the deployed site to record device-local route checks,
 - [x] The Pages build publishes `/goals/`, `/passport/`, and `/report/` and records them in the deployment manifest.
 - [x] The Pages build excludes the final release approval record and private evidence files.
 - [x] Every deployed build contains a tamper-evident deployment identity tied to its source commit.
-- [x] Deployment Readiness checks HTTPS, release alignment, 32 routes, and private-path exclusion.
+- [x] Deployment Readiness checks HTTPS, release alignment, 33 routes, and private-path exclusion.
 - [x] Evidence Preflight validates three human evidence files without approving the release.
 - [x] Evidence Preflight, Release Room, and Final Approval use one shared schema-v2 evidence contract.
 - [x] The shared contract uses `deviceClass` and `environment.maxTouchPoints` and rejects obsolete device fields.
@@ -111,7 +111,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 
 ## Progress Passport pass
 
-- [ ] Open `/passport/` after playing multiple cabinets and confirm all 32 stamps appear.
+- [ ] Open `/passport/` after playing multiple cabinets and confirm all 33 stamps appear.
 - [ ] Confirm current goals, XP, level, Arcade KC, session totals, completions, achievements, and last-played dates match the local saves.
 - [ ] Confirm Creature Catcher and Road Trip Quest show the selected learning paths, recent-question counts, and correct per-subject accuracy.
 - [ ] Print or save the print preview and confirm no navigation, mission prompt, or private-data warning is clipped.
@@ -125,7 +125,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Confirm strengths require at least two answers and at least 80% accuracy.
 - [ ] Confirm practice opportunities require at least two answers and below 75% accuracy.
 - [ ] Confirm subjects with too little history show “more data needed” instead of an ability conclusion.
-- [ ] Confirm all 32 cabinet rows appear and recent activity is ordered by real local timestamps.
+- [ ] Confirm all 33 cabinet rows appear and recent activity is ordered by real local timestamps.
 - [ ] Confirm conversation starters are optional, supportive, and contain no punishment or ranking language.
 - [ ] Print or save the print preview and confirm navigation, action buttons, and toast messages are hidden without clipping report content.
 - [ ] Download the `larriverse-family-learning-report` JSON and confirm it contains no chores, approvals, parent-control material, family notes, review notes, or coordinate records.
@@ -155,7 +155,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 ## Visual gallery approval
 
 - [ ] Download the successful `larriverse-gallery-review-<run>` artifact and open its offline `index.html`.
-- [ ] Review all 66 desktop/mobile images and their SHA-256 digests.
+- [ ] Review all 68 desktop/mobile images and their SHA-256 digests.
 - [ ] No personal names, family notes, location prompts, coordinates, or real saved progress appear.
 - [ ] Useful alt text is approved for every image.
 - [ ] Export the `larriverse-gallery-approval` JSON.
@@ -167,19 +167,19 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Open the guided QA route on the actual desktop/laptop and export a complete schema-v2 desktop report.
 - [ ] Send the QA link to one physical phone and export a complete schema-v2 physical-phone report.
 - [ ] Confirm the phone report names the real phone, reports touch capability, and is not desktop emulation.
-- [ ] Confirm both reports contain 32 reachable routes, 32 cabinet passes, and six device-wide checks.
+- [ ] Confirm both reports contain 33 reachable routes, 33 cabinet passes, and six device-wide checks.
 
 ## Deployment and evidence rehearsal
 
 - [ ] Open `qa/readiness.html` on the deployed site and confirm its deployment identity matches the merged commit.
-- [ ] Confirm Readiness shows all five checks passed and all 32 cabinet routes reachable.
+- [ ] Confirm Readiness shows all five checks passed and all 33 cabinet routes reachable.
 - [ ] Confirm the Learning Goals, Progress Passport, and Family Learning Report routes are published and the final approval record, repository scripts, and workflow files are not publicly reachable.
 - [ ] Load the gallery, desktop, and phone files through evidence preflight and resolve every structural issue.
 
 ## Release Room handoff
 
 - [ ] Open `qa/release-room.html` from the live HTTPS deployment.
-- [ ] Confirm the exact deployment commit, release digest, 32/32 cabinet routes, and private-path exclusion.
+- [ ] Confirm the exact deployment commit, release digest, 33/33 cabinet routes, and private-path exclusion.
 - [ ] Load the approved gallery JSON, desktop QA JSON, and physical-phone QA JSON.
 - [ ] Export the private evidence bundle and keep it out of the public Pages artifact.
 - [ ] Import the evidence bundle into `qa/release-approval.html` and confirm the three original hashes are preserved.
@@ -189,7 +189,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Import the Release Room evidence bundle—or both device QA reports and the gallery approval—into `qa/release-approval.html`.
 - [ ] Complete the sound, touch, gameplay, accessibility, backup, privacy, and release-decision confirmations.
 - [ ] Export the final approval JSON.
-- [ ] Commit it as `docs/release-approval.json` with the exact 66 approved images under `docs/screenshots/`.
+- [ ] Commit it as `docs/release-approval.json` with the exact 68 approved images under `docs/screenshots/`.
 
 ## Release decision
 
@@ -198,7 +198,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 
 ## Modern arcade expansion
 
-The collection includes 32 playable games: eight original cabinets, sixteen practice worlds listed below, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (66 images). The formal release still requires the documented human review.
+The collection includes 33 playable games: eight original cabinets, sixteen practice worlds listed below, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (68 images). The formal release still requires the documented human review.
 
 - **Traffic Town** — Read traffic signs & choose safe actions. Complete a round, inspect explanations, replay for a fresh set, and check one saved completion with sound off.
 - **Street Safety Scout** — Identify signs, signals, vehicle lights, roadside warnings, and hazards. Complete a fifteen-stop route, inspect explanations, replay for unseen scenes, and check one saved completion with sound off.
@@ -230,3 +230,5 @@ The collection includes 32 playable games: eight original cabinets, sixteen prac
 - **Critter Council** — Design for different needs.
 
 See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
+
+- [ ] **Kids Sudoku World** — Solve representative Levels 1, 20→21, 40→41, and 59→60. Check each 4×4, 6×6, and 9×9 board, correct row/column/box rules, pencil notes, hint, undo, picture mode, mistake feedback, local reload, keyboard and touch controls, high contrast, dark mode, sound-off and full 60-level completion. Preserve all human approval requirements.

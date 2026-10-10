@@ -5,7 +5,7 @@
   "tag": "v1.0.0",
   "title": "LarriVerse Arcade 1.0",
   "releaseState": "candidate",
-  "cabinetCount": 32,
+  "cabinetCount": 33,
   "humanChecksRequired": true,
   "qaRoute": "qa/index.html",
   "releaseNotes": "docs/RELEASE-NOTES-1.0.0.md",
@@ -35,7 +35,7 @@
   },
   "galleryReview": {
     "schema": "larriverse-gallery-review",
-    "expectedImages": 66,
+    "expectedImages": 68,
     "projects": [
       "desktop-chromium",
       "mobile-chromium"
@@ -334,6 +334,12 @@
       "title": "Garden Grow & Harvest",
       "route": "games/garden-grow-harvest/index.html",
       "manualFocus": "Complete all twenty-four picture challenges across four levels, inspect dimensional garden tools and plants, and verify planting, care, harvest, and food-storage guidance remains readable in every theme and at mobile width."
+    },
+    {
+      "id": "kids-sudoku",
+      "title": "Kids Sudoku World",
+      "route": "games/kids-sudoku/index.html",
+      "manualFocus": "Play starter 4×4, junior 6×6, and classic 9×9 Sudoku. Verify all 60 unique puzzles, hints, undo, pencil notes, picture helpers, keyboard and touch, conflict warnings, correct solution validation, unlocked level selection, stars, local save/reload, mobile and high-contrast themes. Human gallery, physical phone, and release approval remain mandatory."
     }
   ]
 }

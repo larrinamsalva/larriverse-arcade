@@ -1,6 +1,6 @@
 # LarriVerse Arcade — Cabinet Gallery
 
-Automated Chromium creates **candidate evidence** for the lobby and all 32 cabinets at desktop and mobile sizes: **66 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
+Automated Chromium creates **candidate evidence** for the lobby and all 33 cabinets at desktop and mobile sizes: **68 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
 
 | Cabinet | Launch path | Candidate evidence | Public gallery |
 | --- | --- | --- | --- |
@@ -36,6 +36,7 @@ Automated Chromium creates **candidate evidence** for the lobby and all 32 cabin
 | Road Trip Quest GPS | `games/road-trip-quest-gps/index.html` | generated automatically | pending human approval |
 | Weather Watchers | `games/weather-watchers/index.html` | generated automatically | pending human approval |
 | Garden Grow & Harvest | `games/garden-grow-harvest/index.html` | generated automatically | pending human approval |
+| Kids Sudoku World | `games/kids-sudoku/index.html` | generated automatically | pending human approval |
 
 Run `npm run test:browser`, `npm run gallery:build`, and `npm run gallery:verify` to generate and verify the complete review pack. The builder uses explicit descriptions in `scripts/gallery-metadata.mjs`; missing subject metadata fails instead of inserting an undefined value. Verification checks coverage, title/alt text, viewports, dimensions, byte counts, and image hashes.
 
@@ -53,3 +54,5 @@ See [GALLERY-APPROVAL.md](GALLERY-APPROVAL.md) for the full human review, physic
 - **Street Safety Scout** — Identify signals, caution and emergency signs, vehicle lights, roadside warnings, and hazards through balanced fifteen-stop routes drawn from a 60-scenario bank.
 - **Weather Watchers** — Complete 25 illustrated sky, cloud, weather-preparation, and forecast-reading challenges across four advancement levels.
 - **Garden Grow & Harvest** — Complete 24 illustrated bed-building, planting, care, harvest, and food-freshness challenges across four advancement levels.
+
+- **Kids Sudoku World** — Six chapters covering 60 original and uniquely solvable 4×4, 6×6 and 9×9 boards. Verify visible outlined boxes, numeric/picture entry, difficulty progression, accessibility, saved local checkpoints and no pressure timer.

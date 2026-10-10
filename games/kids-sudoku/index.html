@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#7761d7">
+  <meta name="description" content="Kids Sudoku World: 60 colorful puzzles, from friendly 4×4 grids to 6×6 challenges and classic 9×9 Sudoku. Free, offline-ready practice with local progress.">
+  <title>Kids Sudoku World · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="game.css">
+  <link rel="stylesheet" href="../../assets/emoji.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+  <link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/kids-sudoku/">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="LarriVerse Arcade">
+  <meta property="og:title" content="Kids Sudoku World · 60 Puzzle Adventures">
+  <meta property="og:description" content="A colorful sixty-level Sudoku adventure, starting with 4×4 and ending with 9×9.">
+  <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/kids-sudoku/">
+  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+  <meta property="og:image:type" content="image/webp"><meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="800"><meta property="og:image:alt" content="Colorful illustrated learning worlds in LarriVerse Arcade">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body data-classic="kids-sudoku">
+  <a class="skip-link" href="#sudokuBoard">Skip to puzzle</a>
+  <header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+    <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+    <div class="lv-context"><strong>Kids Sudoku World</strong><small>Patterns · Logic · Patience</small></div>
+    <nav class="lv-tools" aria-label="Arcade tools">
+      <a class="lv-button" href="../../index.html">Back to Arcade</a>
+      <button class="lv-button" type="button" data-lv-comfort>Comfort &amp; accessibility</button>
+    </nav>
+    <span data-lv-profile>Progress stays in this browser.</span>
+  </header>
+  <main class="sudoku-shell">
+    <section class="sudoku-hero">
+      <div><p class="eyebrow">🧩 New world · 60 levels · 6 chapters</p>
+      <h1>Kids <span>Sudoku World!</span></h1>
+      <p class="eyebrow">Logic, number patterns &amp; reasoning</p>
+      <p>Meet the friendly number creatures. Fill each row, each column, and each outlined box with every number exactly once. Start small, grow your skills, and reach the Sudoku Summit!</p>
+      <div class="hero-pills"><span>🐱 Easy 4×4</span><span>🦊 Junior 6×6</span><span>🦉 Classic 9×9</span><span>✨ Free hints</span></div></div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-cloud">✦</div><div class="art-face">🐱</div><div class="art-grid">
+          <span>1</span><span>🌟</span><span>3</span><span>4</span>
+          <span>3</span><span>4</span><span>1</span><span>2</span>
+          <span>2</span><span>1</span><span>4</span><span>3</span>
+          <span>4</span><span>3</span><span>2</span><span>1</span>
+        </div><div class="art-face small">🦊</div>
+      </div>
+    </section>
+    <section class="chapter-track" aria-label="Six adventure chapters" id="chapterTrack"></section>
+    <section class="puzzle-layout">
+      <div class="game-card sudoku-play">
+        <div class="game-heading">
+          <div><p class="eyebrow" id="levelName">Level 1 of 60</p><h2 id="puzzleName">Little Patterns</h2>
+          <p id="stageDescription">Complete one row at a time.</p></div>
+          <label class="level-chooser">Choose unlocked level
+            <select id="levelSelect" aria-label="Choose an unlocked Sudoku level"></select>
+          </label>
+        </div>
+        <div class="status-strip" aria-label="Puzzle stats">
+          <div><small>Level</small><strong id="levelCounter">1 / 60</strong></div>
+          <div><small>Filled</small><strong id="filledCounter">0</strong></div>
+          <div><small>Stars</small><strong id="starCounter">0 / 180</strong></div>
+          <div><small>Hints used</small><strong id="hintCounter">0</strong></div>
+        </div>
+        <div class="progress-track" role="progressbar" id="progressTrack" aria-label="Sudoku levels completed" aria-valuemin="0" aria-valuemax="60" aria-valuenow="0"><span id="progressFill"></span></div>
+        <div class="sudoku-grid-wrap"><div id="sudokuBoard" role="group" aria-label="Sudoku puzzle grid" tabindex="-1"></div></div>
+        <div class="play-switches">
+          <button type="button" id="pictureMode" aria-pressed="false">🐱 Picture helpers: off</button>
+          <button type="button" id="noteMode" aria-pressed="false">✏️ Pencil notes: off</button>
+          <button type="button" id="toggleGuide" aria-expanded="true">📚 How to play</button>
+        </div>
+        <div id="numberPad" role="group" aria-label="Number choices"></div>
+        <div class="puzzle-buttons">
+          <button type="button" id="eraseButton">⌫ Erase</button>
+          <button type="button" id="undoButton">↶ Undo</button>
+          <button type="button" id="hintButton">💡 Free hint</button>
+          <button type="button" id="checkButton">✓ Check board</button>
+          <button type="button" id="resetButton">↺ Restart puzzle</button>
+        </div>
+        <p id="feedback" class="puzzle-feedback" role="status" aria-live="polite">Choose an empty square, then choose a number to begin.</p>
+        <section id="celebration" class="celebration" hidden aria-live="polite">
+          <div class="celebration-emoji">🎉 🧩 ⭐</div>
+          <h3 id="winTitle">Puzzle solved!</h3>
+          <p id="winText">Beautiful work!</p>
+          <button type="button" id="nextLevel" class="primary">Next Level →</button>
+        </section>
+      </div>
+      <aside class="game-card play-guide" id="playGuide" aria-label="Sudoku tips">
+        <h2>🦊 Your puzzle buddy</h2>
+        <p id="buddyMessage">Every empty square has one right number. Use what you already know!</p>
+        <div class="mini-rule"><span>1</span><p><strong>Each row</strong> needs every number exactly once.</p></div>
+        <div class="mini-rule"><span>2</span><p><strong>Each column</strong> needs every number exactly once.</p></div>
+        <div class="mini-rule"><span>3</span><p><strong>Each bold-outlined box</strong> needs every number exactly once.</p></div>
+        <div class="guide-sample"><b>GIVEN</b><b>YOUR NUMBER</b><b>CONFLICT</b></div>
+        <p>Tap a cell, choose a number, or press the number keys. Arrow keys move around the grid. Erase removes a choice. Pencil notes help you think. H gives a free hint.</p>
+        <p class="safe-note">No ads, purchases, timers, or pressure. Your 60-level progress stays in this browser. Number rules stay the same in picture mode.</p>
+      </aside>
+    </section>
+  </main>
+  <script src="../../assets/arcade-sdk.js"></script>
+  <script type="module" src="game.js"></script>
+  <script src="../../assets/cabinet-shell.js"></script>
+</body>
+</html>
