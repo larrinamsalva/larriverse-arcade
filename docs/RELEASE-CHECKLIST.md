@@ -79,14 +79,14 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Trade Town — Fill three shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.
 - [ ] Critter Council — Complete twenty neighborhoods and eighty requests, verify all four advancement ranks, and check the central cards in light, dark, and high-contrast modes.
 - [ ] Pocket Planet — Play ten projects focused on food, gardening, and building. Reject irrelevant supplies and incorrect step orders, check that no purchase or coins are requested, replay thirty unique projects, and verify themes, keyboard/touch, local completion, and sound-off.
-- [ ] Scam Sleuth — Complete a full Scam Sleuth round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
-- [ ] Kindness Quest — Complete a full Kindness Quest round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
-- [ ] Fact Finder — Complete a full Fact Finder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
-- [ ] Repair Café — Complete a full Repair Café round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Scam Sleuth — Complete ten unique questions per round and all sixty across six no-repeat rounds; verify correct and incorrect feedback, saved completions, sound-off, accessibility and keyboard/mobile use.
+- [ ] Kindness Quest — Complete ten unique questions per round and all sixty across six no-repeat rounds; verify correct and incorrect feedback, saved completions, sound-off, accessibility and keyboard/mobile use.
+- [ ] Fact Finder — Complete ten unique questions per round and all sixty across six no-repeat rounds; verify correct and incorrect feedback, saved completions, sound-off, accessibility and keyboard/mobile use.
+- [ ] Repair Café — Complete ten unique questions per round and all sixty across six no-repeat rounds; verify correct and incorrect feedback, saved completions, sound-off, accessibility and keyboard/mobile use.
 - [ ] Time Trail — Complete 60 progressively longer routes across six chapters; check 5×5, 6×6 and 7×7 maps, 3–5 collectible flags, reachable finish, limits, retries, on-device checkpoint/reload, saved best stars, theme contrast, touch/keyboard and sound-off. Keep manual approval.
 - [ ] Garden Guardians — Complete all eight gardens, check crop quotas and scarce-water targets, visit all four ranks, test light/dark/high-contrast on phone, and verify stars, keyboard use, and local completion.
 - [ ] Energy Island — Complete eight islands and four ranks, verify shifting four-day forecasts, solar/wind/battery budgets, after-dark storage, clear-build, energy log, accessibility, and local completion.
-- [ ] Reuse Rally — Complete a full Reuse Rally round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Reuse Rally — Complete ten unique questions per round and all sixty across six no-repeat rounds; verify correct and incorrect feedback, saved completions, sound-off, accessibility and keyboard/mobile use.
 - [ ] Robot Rover — Complete a full Robot Rover round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Lemonade Lab — Complete a full Lemonade Lab round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Beat Builder — Complete a full Beat Builder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
