@@ -388,7 +388,6 @@ test("Garden Guardians: finish eight gardens, four ranks, and changing water goa
         await page.getByRole("button", { name: "Next day" }).click();
       }
       await expect(page.locator(".stat-row")).toContainText(`Ready plants${level.target}/${level.target}`);
-      await page.getByRole("button", { name: "Next day" }).click();
       await page.getByRole("button", { name: levelIndex === 7 ? "Visit my garden" : "Next garden" }).click();
       if (levelIndex < 7)
         await expect(page.locator(".stat-row")).toContainText(`Garden stars${(levelIndex + 1) * 3}/24`);
