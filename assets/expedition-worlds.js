@@ -1,3 +1,4 @@
+import { tradeExtraLevels, townExtraLevels } from "./next-expedition-levels.js";
 import { newPantryChallenges } from "./pantry-extra-challenges.js";
 import { extraPipePaths, extraHarborLevels, extraCompassClues, extraCipherLevels } from "./sixty-expedition-puzzles.js";
 
@@ -8,8 +9,8 @@ export const expeditions = [
   { id: "pantry-picnic", title: "Pantry Picnic", icon: "🥪", topic: "Everyday life", category: "Little life skills", age: "7+", minutes: "10 min", art: 3, mode: "pantry", skill: "Use what you already have", desc: "Explore sixty food-planning questions in themed picnic adventures, ten per round.", mission: "Plan ten picnic boxes per round across sixty different food challenges. Follow each request, choose one main and two produce portions, use marked leftovers, and see every question before a repeat.", take: "Check what you already have before getting more. Planning portions can reduce waste; ask an adult about allergies, food preparation, and safe storage." },
   { id: "compass-cove", title: "Compass Cove", icon: "🧭", topic: "Adventures", category: "Map adventures", age: "7+", minutes: "12 min", art: 4, mode: "compass", skill: "Read landmarks and directions", desc: "Explore a tiny island through sixty unique compass routes and hidden treasures.", mission: "Find sixty routes to treasure by following clues from island landmarks. Advance from Shore Scout to Master Navigator while north stays up on the map.", take: "Start from a landmark you can identify. A map and a compass help you explain a route and check where a direction will take you." },
   { id: "cipher-club", title: "Cipher Club", icon: "🔎", topic: "Digital life", category: "Secret-code workshop", age: "8+", minutes: "12 min", art: 5, mode: "cipher", skill: "Make meaning with a shared key", desc: "Turn the code wheel and solve sixty messages that grow from three to nine letters.", mission: "Use the toy A–H alphabet and a shared number key to encode or decode sixty clubhouse messages. Advance through twelve code ranks as the words grow longer.", take: "A shared rule can change how a message looks. This tiny code is easy to break and must never be used to protect passwords or real secrets." },
-  { id: "trade-town", title: "Trade Town", icon: "🪙", topic: "Money", category: "Smart shopping", age: "8+", minutes: "7 min", art: 6, mode: "trade", skill: "Compare the whole deal", desc: "Visit the market for eight shopping challenges and compare bundles, prices, and extra fees.", mission: "Fill eight shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.", take: "The biggest pack is not always the best fit. Compare the whole cost, including fees, with how much you actually need." },
-  { id: "critter-council", title: "Critter Council", icon: "🌱", topic: "People", category: "Community builders", age: "8+", minutes: "12 min", art: 7, mode: "town", skill: "Design for different needs", desc: "Listen to eighty neighbor requests while building twenty welcoming woodland neighborhoods.", mission: "Advance through twenty town-planning levels. Place a shaded park, quiet reading hut, step-free ramp, and bench so every set of four neighbor requests is met.", take: "People can need different things from the same place. Ask, listen, and design so more neighbors can take part comfortably." },
+  { id: "trade-town", title: "Trade Town", icon: "🪙", topic: "Money", category: "Smart shopping", age: "8+", minutes: "7 min", art: 6, mode: "trade", skill: "Compare the whole deal", desc: "Visit the market for sixty shopping challenges and compare bundles, prices, and extra fees.", mission: "Fill sixty shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.", take: "The biggest pack is not always the best fit. Compare the whole cost, including fees, with how much you actually need." },
+  { id: "critter-council", title: "Critter Council", icon: "🌱", topic: "People", category: "Community builders", age: "8+", minutes: "12 min", art: 7, mode: "town", skill: "Design for different needs", desc: "Listen to 240 different neighbor requests while building sixty welcoming woodland neighborhoods.", mission: "Advance through sixty town-planning levels. Place a shaded park, quiet reading hut, step-free ramp, and bench so every set of four neighbor requests is met.", take: "People can need different things from the same place. Ask, listen, and design so more neighbors can take part comfortably." },
 ].map(world => ({ ...world, artSet: "expedition" }));
 
 export const bridgeParts = [
@@ -340,7 +341,7 @@ const originalCipherLevels = [
   { shift: 5, word: "BADGE", encode: true }, { shift: 6, word: "BEACH", encode: false },
 ];
 export const cipherLevels = [...originalCipherLevels, ...extraCipherLevels];
-export const tradeLevels = [
+const originalTradeLevels = [
   { name: "Apples for the picnic", icon: "apple", need: 6, budget: 8, deals: [
     { name: "Single apple", quantity: 1, price: 2, fee: 0 }, { name: "Small basket", quantity: 3, price: 3, fee: 0 }, { name: "Big basket", quantity: 6, price: 7, fee: 0 },
   ] },
@@ -366,13 +367,15 @@ export const tradeLevels = [
     { name: "Two bottles", quantity: 2, price: 3, fee: 0 }, { name: "Five-bottle delivery", quantity: 5, price: 5, fee: 1 }, { name: "Ten-bottle case", quantity: 10, price: 10, fee: 1 },
   ] },
 ];
+export const tradeLevels = [...originalTradeLevels, ...tradeExtraLevels];
+
 export const townParts = [
   { id: "park", name: "Shaded park", cost: 4, icon: "tree" }, { id: "hut", name: "Reading hut", cost: 4, icon: "hut" },
   { id: "ramp", name: "Step-free ramp", cost: 3, icon: "ramp" }, { id: "bench", name: "Bench", cost: 1, icon: "bench" },
 ];
 
 const townRequest = (neighbor, part, text, rule) => ({ neighbor, part, text, rule });
-export const townLevels = [
+const originalTownLevels = [
   {
     id: "welcome-grove", name: "Welcome Grove", intro: "The first council wants shade, quiet, river access, and a friendly resting place.",
     celebration: "Welcome Grove now gives every neighbor a comfortable way to join in.", budget: 12,
@@ -574,3 +577,4 @@ export const townLevels = [
     ],
   },
 ];
+export const townLevels = [...originalTownLevels, ...townExtraLevels];
