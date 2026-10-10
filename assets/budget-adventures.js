@@ -1,73 +1,12 @@
-// Twenty offline-only budgeting missions. All prices and coins are fictional.
-// Each plan has three needs, three tempting extras, and an achievable savings goal.
-// Five unseen plans are played per session; the existing rotation helper handles replays.
-const rawPlans = [
-  ["island-picnic", "Island Picnic", "🏝️", "Pack lunch for a day beside the sea.", "Telescope fund", 24, 6,
-    [["Drinking water","💧",4],["Picnic lunch","🥪",5],["Bus pass","🚌",3]],
-    [["A little kite","🪁",5],["Island stickers","⭐",2],["Giant toy boat","⛵",9]]],
-  ["bicycle-care", "Bicycle Care", "🚲", "Get your bicycle ready for a safe weekend ride.", "Future bike adventures", 30, 8,
-    [["Tire patch","🛞",6],["Bike light","🔦",5],["Helmet","🪖",8]],
-    [["Colorful bell","🔔",5],["Handlebar ribbons","🎀",2],["Fancy wheel kit","✨",10]]],
-  ["field-trip", "Field Trip", "🚌", "Plan a school trip and bring what you need.", "Next school trip", 28, 6,
-    [["Travel ticket","🎫",7],["Water bottle","💧",3],["Packed lunch","🥪",6]],
-    [["Souvenir pack","🎁",8],["Fun scarf","🧣",5],["Small pin","📍",2]]],
-  ["library-day", "Library Day", "📚", "Prepare for a reading and drawing afternoon.", "New storybooks", 22, 5,
-    [["Notebook","📓",4],["Pencils","✏️",3],["Bus ride","🚌",4]],
-    [["Big wall poster","🖼️",7],["Bookmark","🔖",2],["Stickers","🌟",4]]],
-  ["campout", "Campout", "🏕️", "Make a smart list for a supervised campout.", "Next outdoor trip", 35, 10,
-    [["Flashlight","🔦",7],["Drinking water","💧",6],["Dry socks","🧦",5]],
-    [["Big music speaker","🔊",12],["Marshmallows","🍡",5],["Playing cards","🃏",3]]],
-  ["garden-stall", "Garden Stall", "🌱", "Start a tiny garden without spending everything.", "Next seed season", 25, 7,
-    [["Seed packet","🌾",4],["Trowel","🪏",6],["Potting soil","🪴",5]],
-    [["Garden gnome","🧙",9],["Garden gloves","🧤",4],["Plant labels","🏷️",2]]],
-  ["pet-day", "Pet Care", "🐶", "Plan a practice budget for a furry friend.", "Future pet care", 32, 8,
-    [["Pet food","🥣",9],["Water bowl","💧",6],["Leash","🦮",5]],
-    [["Fancy bed","🛏️",9],["Chew toy","🧸",5],["Collar ribbon","🎀",2]]],
-  ["carnival", "Neighborhood Carnival", "🎡", "Enjoy the fair while keeping some coins aside.", "Next celebration", 30, 9,
-    [["Entry ticket","🎟️",5],["Bus ride","🚌",5],["Lunch","🥙",6]],
-    [["Giant plush prize","🧸",12],["Balloon","🎈",6],["Photo booth","📸",4]]],
-  ["beach-trip", "Beach Day", "🏖️", "Pack for a beach visit with a trusted adult.", "Next beach visit", 27, 8,
-    [["Sunscreen","🧴",6],["Water bottle","💧",4],["Shade umbrella","⛱️",5]],
-    [["Giant toy raft","🛟",10],["Shell craft kit","🐚",5],["Postcard","💌",2]]],
-  ["science-fair", "Science Fair", "🔬", "Build a display for your classroom experiment.", "Future experiments", 28, 8,
-    [["Safety glasses","🥽",6],["Display board","📋",4],["Batteries","🔋",5]],
-    [["Toy rocket","🚀",10],["Sparkly trim","✨",6],["Star stickers","⭐",3]]],
-  ["art-class", "Art Workshop", "🎨", "Bring supplies for a community painting lesson.", "Next art class", 26, 7,
-    [["Paintbrushes","🖌️",5],["Sketchpad","📒",6],["Paint set","🎨",5]],
-    [["Fancy frame","🖼️",9],["Glitter pen","🖊️",4],["Ribbon","🎀",2]]],
-  ["farmers-market", "Farmers Market", "🥕", "Shop for a pretend picnic using local produce.", "Next market trip", 30, 8,
-    [["Vegetables","🥕",7],["Fruit","🍎",6],["Reusable bag","🛍️",4]],
-    [["Giant sweet treat","🍬",10],["Flowers","💐",6],["Seed packet","🌱",3]]],
-  ["park-cleanup", "Park Cleanup", "🌳", "Help organize a grown-up-supervised park project.", "Community projects", 29, 8,
-    [["Work gloves","🧤",5],["Trash grabber","🦾",7],["Drinking water","💧",4]],
-    [["Portable speaker","🔊",11],["Fancy badge","🏅",6],["Raffle ticket","🎟️",2]]],
-  ["reading-nook", "Reading Nook", "🪑", "Make a cozy spot for a quiet afternoon.", "New books", 25, 6,
-    [["Reading lamp","💡",5],["Book","📖",7],["Cushion","🛋️",4]],
-    [["Deluxe poster","🖼️",8],["Magnetic bookmark","🔖",4],["Star sticker","⭐",2]]],
-  ["bike-route", "Bike Route", "🚴", "Check safety needs before riding with an adult.", "Next cycling trip", 34, 9,
-    [["Tire pump","🛞",7],["Front light","💡",8],["Drinking water","💧",5]],
-    [["Fancy horn","📣",12],["Colorful bell","🔔",6],["Reflective decal","✨",3]]],
-  ["bake-sale", "Bake Sale", "🧁", "Organize a pretend bake sale with an adult.", "Future baking", 30, 8,
-    [["Flour","🌾",6],["Fruit","🍓",5],["Baking cups","🧁",4]],
-    [["Party lights","💡",13],["Decorative ribbons","🎀",8],["Price signs","🏷️",5]]],
-  ["museum-trip", "Space Museum", "🪐", "Visit imaginary planets on a museum day.", "Next museum trip", 33, 10,
-    [["Museum ticket","🎫",9],["Packed lunch","🥪",6],["Train pass","🚆",5]],
-    [["Astronaut plush","👩‍🚀",12],["Postcard","💌",5],["Star badge","🌟",3]]],
-  ["houseplants", "Houseplant Care", "🪴", "Give a windowsill plant a new home.", "Future plants", 27, 7,
-    [["Potting soil","🌱",5],["Plant pot","🪴",7],["Seedling","🌿",6]],
-    [["Garden statue","🗿",8],["Painted pebbles","🪨",4],["Plant label","🏷️",2]]],
-  ["craft-fair", "Craft Fair", "🧶", "Set up a pretend booth for handmade crafts.", "Next creative project", 31, 9,
-    [["Booth ticket","🎟️",8],["Craft supplies","🧶",7],["Paper bags","🛍️",5]],
-    [["Giant banner","🚩",10],["Ribbons","🎀",4],["Gift tags","🏷️",2]]],
-  ["movie-night", "Movie Night", "🎬", "Plan a family movie evening on a budget.", "Next family outing", 28, 8,
-    [["Movie tickets","🎟️",9],["Shared snack","🍿",5],["Water bottles","💧",4]],
-    [["Big toy souvenir","🧸",9],["Sticker pack","⭐",3],["Collectible card","🃏",1]]],
-];
-
-export const budgetAdventures = rawPlans.map(([id, title, icon, story, goal, coins, save, needs, extras]) => ({
-  id, title, icon, story, goal, coins, save,
-  items: [
-    ...needs.map(([name, icon, cost]) => ({name, icon, cost, need: true})),
-    ...extras.map(([name, icon, cost]) => ({name, icon, cost, need: false})),
+// Thirty offline-only Pocket Planet projects: grow, build and eat.
+// No coin prices, paid unlocks, stores or shopping decisions. Kids select useful
+// supplies and then practice the correct three-step order, with age-safe guidance.
+const rawProjects = [["seed-tray","Seed Starter Tray","🌱","grow","Start tiny plants in a tray before moving them to the garden.","A tray of seedlings",["Seed packets|🌾","Potting soil|🪴","Watering can|💧"],["Toy car|🚗","Sunglasses|🕶️","Balloon|🎈"],["Fill the tray with soil","Place the seeds gently","Water the soil lightly"]],["tomato-pot","Tomato Pot","🍅","grow","Prepare a sunny container for a tomato seedling.","A healthy tomato plant",["Tomato seedling|🌿","Large plant pot|🪴","Potting mix|🌱"],["Comic book|📚","Beach ball|🏖️","Toy drum|🥁"],["Put potting mix in the pot","Set the seedling in place","Water and find a sunny spot"]],["flower-corner","Flower Corner","🌻","grow","Create a little patch where pollinators can visit.","A flower patch",["Flower seeds|🌼","Garden soil|🟫","Watering can|💧"],["Toy rocket|🚀","Kite|🪁","Pillow|🛏️"],["Loosen the garden soil","Sow flower seeds","Water carefully"]],["herb-planter","Kitchen Herbs","🌿","grow","Grow fresh herbs in a safe windowsill planter.","A pot of herbs",["Basil seeds|🌱","Small pot|🪴","Potting mix|🟫"],["Flashlight|🔦","Playing cards|🃏","Plastic dinosaur|🦖"],["Add soil to the pot","Sow the herb seeds","Water and place near light"]],["bean-vines","Bean Vines","🫘","grow","Help bean plants climb as they grow.","A bean vine garden",["Bean seeds|🫘","Garden soil|🟫","Climbing frame|🪵"],["Skateboard|🛹","Toy boat|⛵","Poster|🖼️"],["Prepare soil near the frame","Plant the bean seeds","Guide growing vines to support"]],["strawberry-tub","Strawberry Tub","🍓","grow","Make a cozy place for strawberry plants.","A strawberry planter",["Strawberry plants|🍓","Wide planter|🪴","Potting mix|🌱"],["Party hat|🥳","Soccer ball|⚽","Sticker sheet|⭐"],["Fill the planter with mix","Space the strawberry plants","Water their roots"]],["leafy-greens","Leafy Greens","🥬","grow","Plant a patch of salad greens.","A leafy green bed",["Lettuce seeds|🌱","Garden bed|🟫","Watering can|💧"],["Toy guitar|🎸","Paintbrush|🖌️","Marbles|🔵"],["Prepare the growing bed","Scatter the seeds as directed","Water gently and check growth"]],["compost-corner","Compost Corner","🍂","grow","Turn approved plant scraps into future soil food with an adult.","A compost starter",["Plant food scraps|🍎","Dry leaves|🍂","Compost bin|🗑️"],["Plastic bottle caps|🧢","Battery|🔋","Ribbon|🎀"],["Put scraps in the bin","Mix in dry leaves","Ask an adult to turn and check it"]],["rain-garden","Rain Garden","🌧️","grow","Plant flowers in a space that can soak up rain.","A rain-friendly flower bed",["Native flower seeds|🌼","Soil|🟫","Mulch|🍂"],["Toy train|🚂","Pencil case|✏️","Beach towel|🏖️"],["Prepare the soil","Plant rain-garden flowers","Cover bare soil with mulch"]],["sprout-jar","Sprout Observation","🔍","grow","Watch seeds begin growing in a jar, but do not eat these classroom sprouts.","An observation jar",["Dry beans|🫘","Clear jar|🫙","Damp paper towel|🧻"],["Paint set|🎨","Stickers|⭐","Bouncy ball|🏀"],["Line the jar with damp towel","Place beans where you can see them","Observe and keep the towel damp"]],["mini-bridge","Mini Bridge","🌉","build","Build a pretend bridge model between two toy riverbanks.","A sturdy model bridge",["Planks|🪵","Support beams|🏗️","Bridge base|🧱"],["Candy|🍬","Kite|🪁","Pillow|🛏️"],["Set down the bridge base","Add strong supports","Lay planks across the top"]],["bird-shelter","Bird Shelter Model","🐦","build","Assemble a simple birdhouse model with an adult handling tools.","A little bird shelter",["Wood panels|🪵","Roof piece|🏠","Safe fasteners|🔩"],["Toy car|🚗","Candy wrapper|🍬","Beach ball|🏖️"],["Join the wall panels with adult help","Secure the roof","Find a suitable outdoor location"]],["box-fort","Box Fort","📦","build","Make a pretend indoor fort from clean boxes.","A play fort",["Cardboard boxes|📦","Paper tape|🧻","Soft floor mat|🧩"],["Plant fertilizer|🌱","Heavy stones|🪨","Glass cups|🥛"],["Spread the soft mat","Arrange boxes with a grown-up","Join the boxes with tape"]],["toy-car","Toy Car Model","🚙","build","Put together a little rolling toy car.","A rolling model car",["Four wheels|🛞","Axles|🔩","Car chassis|🚗"],["Flower seeds|🌾","Teacup|🍵","Blanket|🧣"],["Set the axles under the chassis","Attach the wheels","Roll and test the model"]],["bug-hotel","Bug Hotel Model","🐞","build","Make a sheltered nook for helpful insects using found garden materials.","A tiny bug habitat",["Hollow stems|🎋","Wooden frame|🪵","Rain cover|🏠"],["Glitter|✨","Plastic bags|🛍️","Video game|🎮"],["Place stems inside the frame","Fit a rain cover above","Ask an adult to locate it safely"]],["paper-kite","Paper Kite","🪁","build","Put together a light paper kite for a clear day.","A kite that catches wind",["Light paper|📄","Kite frame|🪵","String|🧵"],["Heavy brick|🧱","Jar of soil|🫙","Water bottle|💧"],["Attach the paper to the frame","Tie the string securely","Fly in a safe open area with an adult"]],["pinwheel","Pinwheel","🌬️","build","Build a spinning wind toy from classroom materials.","A colorful spinner",["Paper blades|🎨","Safe pin connector|📍","Cardboard stick|🪵"],["Potting soil|🌱","Toothbrush|🪥","Fruit bowl|🍇"],["Fold the blades with adult help","Connect blades to the stick","Hold up and watch the wind"]],["toy-raft","Toy Raft","🛶","build","Make a small pretend raft for a tabletop water tray.","A floating model",["Cork floats|🪵","Light platform|📦","String ties|🧵"],["Sandbag|🏖️","Picture frame|🖼️","Soil bag|🟫"],["Line up the floating corks","Tie on the light platform","Test gently in a shallow tray"]],["garden-sign","Garden Sign","🏷️","build","Make a readable sign for a planted garden bed.","A plant label sign",["Wood scrap|🪵","Paint markers|🖍️","Wooden stake|📍"],["Toy telescope|🔭","Marshmallows|🍡","Football|🏈"],["Write the plant name clearly","Decorate the sign","Ask an adult to set the stake"]],["recycled-planter","Reused Planter","♻️","build","Give a clean used container a new job as a plant pot.","A reusable planter",["Clean container|🪣","Potting mix|🌱","Small plant|🌿"],["Remote control|🎮","Ribbon bow|🎀","Toy truck|🚚"],["Ask an adult to check drainage","Fill with planting mix","Set the plant in and water"]],["fruit-bowl","Fruit Bowl","🍎","eat","Prepare a colorful no-cook fruit snack after washing your hands.","A fresh fruit bowl",["Washed apples|🍎","Banana slices|🍌","Berries|🫐"],["Paint|🎨","Garden soil|🟫","Batteries|🔋"],["Wash hands and fruit","Ask an adult to cut if needed","Combine fruit in a clean bowl"]],["sandwich","Veggie Sandwich","🥪","eat","Prepare a simple sandwich with help choosing allergy-safe foods.","A crunchy sandwich",["Bread|🍞","Lettuce|🥬","Tomato slices|🍅"],["Tape|🧻","Pebbles|🪨","Crayons|🖍️"],["Wash hands and vegetables","Arrange vegetables on bread","Close the sandwich and enjoy"]],["picnic-plate","Picnic Plate","🧺","eat","Pack a balanced snack plate and keep perishable foods cool.","A picnic snack plate",["Carrot sticks|🥕","Apple slices|🍎","Whole grain crackers|🍘"],["Glue|🧴","Flower seeds|🌾","Screws|🔩"],["Wash hands and produce","Add fruit and vegetables","Pack safely for the picnic"]],["salad-bowl","Salad Bowl","🥗","eat","Put together a simple garden salad.","A crunchy salad",["Leafy greens|🥬","Cucumber|🥒","Tomatoes|🍅"],["Rocks|🪨","Soap flakes|🧼","Paint|🎨"],["Wash hands and vegetables","Cut produce with adult help","Mix vegetables in a bowl"]],["yogurt-parfait","Yogurt Parfait","🍓","eat","Layer a cool snack using ingredients that fit your food needs.","A layered parfait",["Yogurt|🥣","Berries|🫐","Oat flakes|🌾"],["Garden mulch|🍂","Glue|🧴","Marbles|🔵"],["Wash hands and berries","Spoon yogurt into a cup","Top with berries and oats"]],["veggie-wrap","Veggie Wrap","🌯","eat","Fill a soft wrap with colorful vegetables.","A lunch wrap",["Soft tortilla|🫓","Shredded lettuce|🥬","Carrot ribbons|🥕"],["String|🧵","Garden soil|🟫","Paintbrush|🖌️"],["Wash hands and vegetables","Spread veggies over the wrap","Roll it into a bundle"]],["berry-smoothie","Berry Smoothie","🥤","eat","Prepare a fruit drink with an adult operating the blender.","A cold berry smoothie",["Washed berries|🫐","Milk or safe alternative|🥛","Banana|🍌"],["Craft glue|🧴","Dirt|🟫","Toy blocks|🧱"],["Wash hands and fruit","Ask an adult to blend ingredients","Pour into a clean cup"]],["trail-snack","Hiking Snack","🥾","eat","Make a no-cook hike snack with an adult checking for allergies.","A snack for a hike",["Dried fruit|🍇","Whole grain cereal|🥣","Pumpkin seeds|🎃"],["Glass beads|📿","Paint|🎨","Potting soil|🌱"],["Wash hands and check allergies","Mix the edible ingredients","Pack portions in a food container"]],["apple-crunch","Apple Crunch","🍏","eat","Create a quick crunchy snack from fresh foods.","A crunchy apple snack",["Washed apple|🍎","Yogurt dip|🥣","Cinnamon|🌿"],["Stickers|⭐","Wood chips|🪵","Soap|🧼"],["Wash the apple and hands","Ask an adult to slice the apple","Add dip and a little cinnamon"]],["rainbow-snack","Rainbow Snack Plate","🌈","eat","Pick colorful fruits and vegetables to make a rainbow plate.","A colorful snack plate",["Red strawberries|🍓","Orange carrots|🥕","Green cucumber|🥒"],["Toy coins|🪙","Glue stick|🧴","Battery|🔋"],["Wash hands and produce","Arrange produce by color","Enjoy your rainbow of foods"]]];
+export const resourceAdventures = rawProjects.map(([id,title,icon,kind,story,goal,needs,extras,steps]) => ({
+  id,title,icon,kind,story,goal,
+  items:[
+    ...needs.map((value)=>{const [name,icon]=value.split("|");return {name,icon,need:true};}),
+    ...extras.map((value)=>{const [name,icon]=value.split("|");return {name,icon,need:false};}),
   ],
+  steps,
 }));
