@@ -218,3 +218,8 @@ html.larriverse-high-contrast body[data-world="critter-council"] :is(.play-card,
 .bridge-cargo{filter:drop-shadow(0 2px 1px #3f2c1f44)}
 
 @media(max-width:600px){.town-challenge-card{padding:14px}.town-tool-shelf .build-tool{flex-basis:calc(50% - 8px);min-height:112px}.neighbor-requests p{padding:11px 12px}.town-map{padding:9px}.town-shade,.town-quiet{font-size:.68rem}}
+
+/* Longer six-to-nine-letter cipher challenges stay readable on phones. */
+.cipher-answer{flex-wrap:wrap;gap:clamp(4px,1.1vw,10px)}
+.cipher-answer span{width:clamp(29px,6vw,58px);height:clamp(39px,7vw,62px);font-size:clamp(1rem,3vw,1.8rem)}
+.cipher-word-clue{margin:9px auto 0;max-width:38ch;line-height:1.45;font-size:.89rem}
