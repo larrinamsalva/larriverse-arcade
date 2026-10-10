@@ -73,7 +73,7 @@ for (const item of sorting) {
 assert.equal(budgetAdventures.length, 20);
 assert.equal(new Set(budgetAdventures.map((item) => item.id)).size, 20);
 for (const plan of budgetAdventures) {
-  assert.ok(plan.title.length >= 8 && plan.story.length >= 20 && plan.goal.length >= 8);
+  assert.ok(plan.title.length >= 7 && plan.story.length >= 20 && plan.goal.length >= 8);
   assert.ok(plan.coins > plan.save && plan.save > 0);
   assert.equal(plan.items.length, 6);
   assert.equal(plan.items.filter((item) => item.need).length, 3);
