@@ -704,5 +704,26 @@
     "href": "games/word-search-world/index.html",
     "source": "Original LarriVerse Word Search World, 2026",
     "integration": "arcade-sdk-v3"
+  },
+  {
+    "id": "crossword-world",
+    "title": "Crossword World",
+    "icon": "🧠",
+    "category": "Patterns & puzzles",
+    "topic": "Brain games",
+    "age": "7+",
+    "minutes": "12 min",
+    "art": 2,
+    "skill": "Vocabulary, reading & word reasoning",
+    "desc": "Solve sixty clue-based real crosswords with crossing Across and Down words, growing harder each chapter.",
+    "mission": "Finish sixty connected clue puzzles over six increasingly difficult chapters. Start with friendly garden words and advance through weather, kindness, building, budgeting, and geography; use hints, check letters, and earn stars.",
+    "take": "Read each clue, look where words cross, use hints when needed, and learn how word meanings can guide each answer.",
+    "available": true,
+    "featured": true,
+    "isNew": true,
+    "status": "Playable",
+    "href": "games/crossword-world/index.html",
+    "source": "Original LarriVerse Crossword World, 2026",
+    "integration": "arcade-sdk-v3"
   }
 ]
