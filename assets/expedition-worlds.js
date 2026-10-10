@@ -1,7 +1,7 @@
 import { newPantryChallenges } from "./pantry-extra-challenges.js";
 
 export const expeditions = [
-  { id: "bridge-buddies", title: "Bridge Buddies", icon: "🌉", topic: "Build & create", category: "Little engineers", age: "8+", minutes: "12 min", art: 0, mode: "bridge", skill: "Test, improve, try again", desc: "Build and test twenty bridges with unlimited free supports, improving their strength to safely carry each load.", mission: "Build four strong bridge spans with unlimited materials. Test each span\u0027s vehicle load, replace weak supports, and help twenty cargo trucks cross through four builder ranks.", take: "Choose the right support for the job. Test a small model, notice what happened, and change one thing at a time." },
+  { id: "bridge-buddies", title: "Bridge Buddies", icon: "🌉", topic: "Build & create", category: "Little engineers", age: "8+", minutes: "12 min", art: 0, mode: "bridge", skill: "Test, improve, try again", desc: "Build and test sixty distinct bridge-load plans with unlimited free supports, from first spans to reinforced summit crossings.", mission: "Build four strong spans per level across sixty increasingly demanding crossings. All supports stay free and replaceable. Move through twelve bridge-builder ranks and carry each cargo safely.", take: "Choose the right support for the job. Test a small model, notice what happened, and change one thing at a time." },
   { id: "water-works", title: "Water Works", icon: "💧", topic: "Planet", category: "Flow & resources", age: "7+", minutes: "12 min", art: 1, mode: "pipes", skill: "See how a system connects", desc: "Turn the pipes through twenty advancing flow puzzles and bring water through the toy filter to town.", mission: "Rotate each pipe network from the reservoir to town. Pass through the toy filter while advancing from Flow Finder to Waterworks Master.", take: "Trace a problem from its starting point and check each connection. This toy filter does not make real water safe to drink." },
   { id: "harbor-helpers", title: "Harbor Helpers", icon: "⛵", topic: "Adventures", category: "Cooperative adventures", age: "8+", minutes: "12 min", art: 2, mode: "harbor", skill: "Plan deliveries together", desc: "Load your boat for twenty advancing island deliveries and bring each community exactly what it requested.", mission: "Read each island request, choose the matching crates, stay within the boat limit, and advance through twenty harbor routes.", take: "A useful delivery starts with listening. Plan loads and routes together so supplies reach the neighbors who asked for them." },
   { id: "pantry-picnic", title: "Pantry Picnic", icon: "🥪", topic: "Everyday life", category: "Little life skills", age: "7+", minutes: "10 min", art: 3, mode: "pantry", skill: "Use what you already have", desc: "Explore sixty food-planning questions in themed picnic adventures, ten per round.", mission: "Plan ten picnic boxes per round across sixty different food challenges. Follow each request, choose one main and two produce portions, use marked leftovers, and see every question before a repeat.", take: "Check what you already have before getting more. Planning portions can reduce waste; ask an adult about allergies, food preparation, and safe storage." },
@@ -16,7 +16,7 @@ export const bridgeParts = [
   { id: "beam", name: "Beam", capacity: 6 },
   { id: "triangle", name: "Triangle brace", capacity: 9 },
 ];
-export const bridgeLevels = [
+const bridgeBaseLevels = [
   { name: "Creek crossing", loads: [4, 7, 5, 8], scene: "creek", vehicle: "timber", landmark: "rock", cargo: "Trail timber" },
   { name: "Market crossing", loads: [3, 6, 9, 6], scene: "market", vehicle: "produce", landmark: "market", cargo: "Market produce" },
   { name: "Festival crossing", loads: [8, 3, 5, 7], scene: "festival", vehicle: "festival", landmark: "music", cargo: "Festival drums" },
@@ -38,6 +38,30 @@ export const bridgeLevels = [
   { name: "Sports park crossing", loads: [8, 9, 5, 6], scene: "sports", vehicle: "sports", landmark: "star", cargo: "Sports equipment" },
   { name: "Sunrise finale bridge", loads: [9, 8, 7, 9], scene: "sunrise", vehicle: "celebration", landmark: "sun", cargo: "Celebration lights" },
 ];
+const bridgeSignatures = new Set(bridgeBaseLevels.map(level => level.loads.join(":")));
+const harderBridges = [1, 2].flatMap(chapter => bridgeBaseLevels.map((base, index) => {
+  let loads;
+  // Twenty distinct four-span engineering plans per chapter. Later loads
+  // require stronger braces, but every span remains solvable with free tools.
+  for (let attempt = 0; attempt < 200; attempt++) {
+    let number = chapter === 1 ? 65 + index * 27 + attempt : 7 + index * 3 + attempt;
+    const minimum = chapter === 1 ? 5 : 7, baseRange = chapter === 1 ? 5 : 3;
+    loads = Array.from({length: 4}, () => {
+      const value = minimum + number % baseRange;
+      number = Math.floor(number / baseRange);
+      return value;
+    });
+    if (loads.every(load => load >= minimum) && !bridgeSignatures.has(loads.join(":"))) break;
+  }
+  if (bridgeSignatures.has(loads.join(":"))) throw Error("Repeated bridge load sequence");
+  bridgeSignatures.add(loads.join(":"));
+  return {
+    ...base, name: `${chapter === 1 ? "Reinforced" : "Summit"} ${base.name}`,
+    loads, cargo: `${chapter === 1 ? "Carefully packed" : "Heavy"} ${base.cargo}`,
+  };
+}));
+export const bridgeLevels = [...bridgeBaseLevels, ...harderBridges];
+
 export const pipePaths = [
   [10,11,6,7,12,13,18,19,14],
   [10,5,6,11,12,17,18,13,14],

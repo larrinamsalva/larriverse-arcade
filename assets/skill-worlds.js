@@ -1,6 +1,7 @@
 import { expeditions } from "./expedition-worlds.js";
 import { messageExtras, conversationExtras, newsExtras, sortingExtras, trafficQuestions } from "./expanded-scenarios.js";
 import { sixtyMessageExtras, sixtyConversationExtras, sixtyNewsExtras, sixtySortingExtras, sixtyRepairExtras } from "./sixty-world-extras.js";
+import { weatherExtendedChallenges, gardenExtendedChallenges } from "./sixty-garden-weather-challenges.js";
 export { trafficQuestions };
 export const worlds = [
   ...expeditions,
@@ -224,7 +225,7 @@ export const worlds = [
     artSet: "weather",
     skill: "Read the sky & a simple forecast",
     desc: "Look closely at realistic sky scenes, name the weather, read forecast clues, and choose a safe plan.",
-    mission: "Advance through four weather-reader levels and all twenty-five picture challenges: spot sky clues, recognize clouds, prepare safely, and read simple forecast symbols.",
+    mission: "Advance through four weather-reader ranks and all sixty unique picture challenges: spot sky clues, recognize clouds, prepare safely, and read simple forecast symbols.",
     take: "The sky gives clues, not promises. Check a current local forecast with a trusted adult, and always follow real weather alerts and safety directions.",
     mode: "weather-reading",
   },
@@ -240,7 +241,7 @@ export const worlds = [
     artSet: "garden-learning",
     skill: "Build, grow, harvest & keep food fresh",
     desc: "Choose the right picture to build a garden, plant seeds, care for crops, harvest produce, and keep it fresh.",
-    mission: "Advance through four grower levels and all twenty-four picture challenges: build the bed, plant wisely, care for crops, then harvest and store food safely.",
+    mission: "Advance through four grower ranks and all sixty unique picture challenges: build the bed, plant wisely, care for crops, then harvest and store food safely.",
     take: "Every plant and climate is different. Read the seed packet, work with a trusted adult, use tools safely, and wash garden food before eating it.",
     mode: "garden-grow",
   },
@@ -1205,6 +1206,7 @@ export const weatherChallenges = [
     answer: 0,
     why: "The mild, partly cloudy day is the best starting plan. A trusted adult should still check the latest forecast and alerts.",
   },
+  ...weatherExtendedChallenges,
 ];
 
 export const gardenGrowthChallenges = [
@@ -1568,4 +1570,5 @@ export const gardenGrowthChallenges = [
     answer: 0,
     why: "Refrigerate cut tomatoes promptly in a clean covered container. Whole uncut tomatoes are often stored differently, so ask an adult.",
   },
+  ...gardenExtendedChallenges,
 ];

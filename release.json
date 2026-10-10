@@ -146,7 +146,7 @@
     {
       "id": "bridge-buddies",
       "title": "Bridge Buddies",
-      "manualFocus": "Play twenty crossings; build all four spans with unlimited materials (including four triangle braces), check loads and weak support feedback, swap and clear freely, use touch/keyboard, ensure saved completion and readable styles in light/dark/high-contrast modes.",
+      "manualFocus": "Solve all sixty unique four-span bridge load puzzles, including reinforced stages 21–40 and summit stages 41–60. Verify unlimited free tools, weak-support feedback, structural correctness, twelve ranked milestones, keyboard/touch, progress and saved completion in all comfort themes. Human device/gallery review required.",
       "route": "games/bridge-buddies/index.html"
     },
     {
@@ -297,7 +297,7 @@
       "id": "bubble-resonance-phi369",
       "title": "Bubble Resonance Φ369",
       "route": "games/bubble-resonance-phi369/index.html",
-      "manualFocus": "Clear all twenty named stages and specifically verify an empty Level 10 board automatically advances to Level 11 with a visible fallback button. Test special bubble clears, immediate manual Next without skipping another level, timer cancellation on reset, and the final win. Check glossy numbered bubbles, light/dark contrast, mobile/keyboard, optional audio and creative-theme medical boundary. Keep human release approval."
+      "manualFocus": "Clear representative stages 10→11, 20→21, 40→41, 59→60 and final Stage 60 win. Test manual Next without double advancement, reset/timer cancellation, special bubble clears, keyboard/mouse/touch, and number/contrast visibility. Preserve final human release approval."
     },
     {
       "id": "chill-brain-rewards",
@@ -327,13 +327,13 @@
       "id": "weather-watchers",
       "title": "Weather Watchers",
       "route": "games/weather-watchers/index.html",
-      "manualFocus": "Complete all twenty-five picture challenges across four levels, verify sun, stars, cloud types, rain, snow, fog, wind, safety choices, and forecast panels remain readable in every theme and at mobile width."
+      "manualFocus": "Complete all sixty illustrated questions, fifteen in each of four weather ranks, verify unique prompts and answer feedback, current sky/forecast safety distinctions, scene/choice artwork, keyboard/touch, reduced motion, and readable light/dark modes."
     },
     {
       "id": "garden-grow-harvest",
       "title": "Garden Grow & Harvest",
       "route": "games/garden-grow-harvest/index.html",
-      "manualFocus": "Complete all twenty-four picture challenges across four levels, inspect dimensional garden tools and plants, and verify planting, care, harvest, and food-storage guidance remains readable in every theme and at mobile width."
+      "manualFocus": "Complete sixty illustrated questions, fifteen in each of four ranks. Inspect clearly distinct 3D-style watering can (rounded body, handle, spout) and raised wooden bed (planks, soil, sprouts), planting/care/harvest guidance, mobile keyboard/touch, dark/light contrast and saved completion."
     },
     {
       "id": "kids-sudoku",

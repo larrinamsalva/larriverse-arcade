@@ -13,7 +13,7 @@ export function createExpedition(world, a) {
   const part = id => bridgeParts.find(item => item.id === id);
   const tool = (item, selected, disabled = false) => `<button type="button" class="build-tool ${selected === item.id ? "selected" : ""}" data-tool="${item.id}" data-focus="tool-${item.id}" aria-pressed="${selected === item.id}" ${disabled ? "disabled" : ""}>${item.capacity ? `<svg class="bridge-tool-art" viewBox="0 0 140 96" aria-hidden="true">${bridgePartDrawing(item.id)}</svg>` : iconSvg(item.icon || "wood")}<b>${a.esc(item.name)}</b><small>${item.capacity ? `Holds load ${item.capacity}` : "Choose and place"}</small></button>`;
   const rankNames = {
-    bridge: ["Trail Builder", "Town Builder", "River Engineer", "Master Bridge Maker"],
+    bridge: ["Trail Builder", "Town Builder", "River Engineer", "Bridge Maker", "Safe Support Planner", "Span Surveyor", "Reinforced Designer", "Load Tester", "Cargo Engineer", "Mountain Builder", "Summit Engineer", "Master Bridge Maker"],
     pipes: ["Flow Finder", "Pipe Planner", "Network Engineer", "Waterworks Master"],
     harbor: ["Dock Helper", "Route Planner", "Harbor Captain", "Community Admiral"],
     compass: ["Shore Scout", "Trail Finder", "Cove Navigator", "Master Navigator"],

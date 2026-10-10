@@ -30,7 +30,7 @@ async function startGame(page) {
   await page.route("**/games/bubble-resonance-phi369/game.js",route=>
     route.fulfill({status:200,contentType:"text/javascript",body:gameCode+"\n"+testHooks}));
   await page.goto("/games/bubble-resonance-phi369/");
-  await expect(page.locator("#level")).toHaveText("1 / 20");
+  await expect(page.locator("#level")).toHaveText("1 / 60");
   await expect(page.locator("#game")).toBeVisible();
 }
 
@@ -43,7 +43,7 @@ test("Bubble Shooter: clearing level 10 automatically advances to level 11",asyn
   await expect(page.locator("#message")).toContainText("LEVEL 10 CLEAR");
   await expect(page.locator("#levelAction")).toBeVisible();
   await expect(page.locator("#bubbleStatus")).toContainText("Level 11");
-  await expect(page.locator("#level")).toHaveText("11 / 20",{timeout:7000});
+  await expect(page.locator("#level")).toHaveText("11 / 60",{timeout:7000});
   await expect(page.locator("#levelName")).toHaveText("Prism Path");
   await expect(page.locator("#game")).toHaveAttribute("aria-busy","false");
   expect(await page.evaluate(()=>window.__bubbleQA.state())).toEqual(expect.objectContaining({
@@ -57,24 +57,42 @@ test("Bubble Shooter: manual Next advances once and cancels the automatic timer"
   await page.evaluate(()=>window.__bubbleQA.prime(10));
   await page.evaluate(()=>window.__bubbleQA.clear());
   await page.locator("#levelAction").click();
-  await expect(page.locator("#level")).toHaveText("11 / 20");
+  await expect(page.locator("#level")).toHaveText("11 / 60");
   await page.waitForTimeout(2600);
-  await expect(page.locator("#level")).toHaveText("11 / 20");
+  await expect(page.locator("#level")).toHaveText("11 / 60");
 });
 
-test("Bubble Shooter: clearing with a power bubble advances, but level 20 wins",async({page})=>{
+test("Bubble Shooter: clearing with a power bubble advances, but level 60 wins",async({page})=>{
   await startGame(page);
   await page.evaluate(()=>window.__bubbleQA.prime(10,"row"));
   await page.evaluate(()=>window.__bubbleQA.clear());
-  await expect(page.locator("#level")).toHaveText("11 / 20",{timeout:7000});
+  await expect(page.locator("#level")).toHaveText("11 / 60",{timeout:7000});
 
-  await page.evaluate(()=>window.__bubbleQA.prime(20));
+  await page.evaluate(()=>window.__bubbleQA.prime(60));
   await page.evaluate(()=>window.__bubbleQA.clear());
-  await expect(page.locator("#message")).toContainText("ALL 20 LEVELS CLEARED");
-  await expect(page.locator("#levelAction")).toHaveText("Play all 20 again");
+  await expect(page.locator("#message")).toContainText("ALL 60 LEVELS CLEARED");
+  await expect(page.locator("#levelAction")).toHaveText("Play all 60 again");
   await page.waitForTimeout(2600);
-  await expect(page.locator("#level")).toHaveText("20 / 20");
+  await expect(page.locator("#level")).toHaveText("60 / 60");
   expect(await page.evaluate(()=>window.__bubbleQA.state())).toEqual(expect.objectContaining({
-    level:20,gameOver:true,won:true
+    level:60,gameOver:true,won:true
   }));
+});
+
+test("Bubble Shooter: level 20 is not the final level of its sixty-stage adventure",async({page})=>{
+ await startGame(page);
+ await page.evaluate(()=>window.__bubbleQA.prime(20));
+ await page.evaluate(()=>window.__bubbleQA.clear());
+ await expect(page.locator("#message")).toContainText("LEVEL 20 CLEAR");
+ await expect(page.locator("#level")).toHaveText("21 / 60",{timeout:7000});
+ await expect(page.locator("#levelName")).toHaveText("Moonlight Mirrors");
+});
+test("Bubble Shooter: levels 40 and 59 advance through the final chapters",async({page})=>{
+ await startGame(page);
+ for(const stage of [40,59]){
+  await page.evaluate(n=>window.__bubbleQA.prime(n),stage);
+  await page.evaluate(()=>window.__bubbleQA.clear());
+  await expect(page.locator("#level")).toHaveText((stage+1)+" / 60",{timeout:7000});
+ }
+ await expect(page.locator("#levelName")).toHaveText("Grand Resonance Finale");
 });

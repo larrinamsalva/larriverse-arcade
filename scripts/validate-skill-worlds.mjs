@@ -294,8 +294,8 @@ for (const level of robotLevels) {
   assert.equal(shortestRoverProgram(level), level.par);
 }
 for (const [name, deck, expected, sceneArt, choiceArt] of [
-  ["Weather Watchers", weatherChallenges, 25, weatherSceneSvg, weatherChoiceSvg],
-  ["Garden Grow & Harvest", gardenGrowthChallenges, 24, gardenLessonSvg, gardenChoiceSvg],
+  ["Weather Watchers", weatherChallenges, 60, weatherSceneSvg, weatherChoiceSvg],
+  ["Garden Grow & Harvest", gardenGrowthChallenges, 60, gardenLessonSvg, gardenChoiceSvg],
 ]) {
   assert.equal(deck.length, expected, `${name} has its complete challenge bank`);
   assert.equal(new Set(deck.map((item) => item.id)).size, deck.length, `${name} challenge ids are unique`);
@@ -323,5 +323,5 @@ for (const file of [
 ])
   execFileSync(process.execPath, ["--check", file]);
 console.log(
-  `Skill worlds validated: ${worlds.length} unique modes, complete 25-question weather and 24-question garden paths, twenty solvable budgeting missions, replay banks, Traffic Town road-sign practice, repair sequences, and twenty shortest-path-verified rover grids.`,
+  `Skill worlds validated: ${worlds.length} unique modes, complete 60-question weather and 60-question garden paths, twenty solvable budgeting missions, replay banks, Traffic Town road-sign practice, repair sequences, and twenty shortest-path-verified rover grids.`,
 );

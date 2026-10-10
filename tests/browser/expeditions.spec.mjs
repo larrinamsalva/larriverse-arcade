@@ -23,7 +23,8 @@ async function adventure(page,id,play) {
 const action = (page,name) => page.getByRole("button",{name,exact:true}).click();
 async function next(page,last) { await action(page,last ? "Celebrate my discoveries" : "Next challenge"); }
 
-test("Bridge Buddies: keyboard building, weak supports, twenty unlimited crossings and saved completion",async({page})=>{
+test("Bridge Buddies: sixty keyboard-playable increasingly strong crossings and saved completion",async({page})=>{
+  test.setTimeout(240000);
   await adventure(page,"bridge-buddies",async()=>{
     const toolDrawings=await page.locator(".bridge-tool-art").evaluateAll(nodes=>nodes.map(node=>node.innerHTML));
     expect(toolDrawings).toHaveLength(bridgeParts.length);

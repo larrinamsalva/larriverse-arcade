@@ -266,7 +266,7 @@ test('Bubble Resonance fills the play area, settles shallow bank shots, and keep
   expect(bubbleSource).toContain('function bubble(');
   expect(bubbleSource).toContain('ctx.arc(x,y,r*.94');
   expect(bubbleSource).not.toContain('function hex(');
-  await expect(page.locator('#level')).toHaveText('1 / 20');
+  await expect(page.locator('#level')).toHaveText('1 / 60');
   await expect(page.locator('#levelName')).toHaveText('First Ripple');
 
   const widthUse = await page.locator('#game').evaluate(node => {
@@ -332,7 +332,7 @@ test('Bubble Resonance shooter and cabinet follow light and dark color modes', a
   expect(light.fieldBackground).not.toBe(dark.fieldBackground);
 });
 
-test('Bubble Resonance advances through twenty round-bubble levels before declaring a win', async ({ page }) => {
+test('Bubble Resonance advances through the first twenty of sixty levels with no premature victory', async ({ page }) => {
   test.setTimeout(60_000);
   await page.addInitScript(() => { Math.random = () => .01; });
   await page.goto('/games/bubble-resonance-phi369/index.html');
@@ -341,12 +341,12 @@ test('Bubble Resonance advances through twenty round-bubble levels before declar
   const game = page.locator('#game');
   const box = await game.boundingBox();
   for(let level=1;level<=20;level++) {
-    await expect(page.locator('#level')).toHaveText(`${level} / 20`);
+    await expect(page.locator('#level')).toHaveText(`${level} / 60`);
     const scoreAtStart = await page.locator('#score').innerText();
     await game.click({ position: { x: box.width * .5, y: box.height * .35 } });
     await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
     await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false', { timeout: 5000 });
-    if(level<20) {
+    if(level<=20) {
       await expect(page.locator('#limit')).toHaveText('NEXT');
       await expect(page.locator('#message')).toContainText(`LEVEL ${level} CLEAR`);
       await expect(page.locator('#reset')).toHaveText(`Continue to level ${level+1}`);
@@ -355,20 +355,18 @@ test('Bubble Resonance advances through twenty round-bubble levels before declar
       const clearedScore = await page.locator('#score').innerText();
       expect(Number(clearedScore.replaceAll(',', ''))).toBeGreaterThanOrEqual(Number(scoreAtStart.replaceAll(',', '')));
       await page.locator('#levelAction').click();
-      await expect(page.locator('#level')).toHaveText(`${level+1} / 20`);
+      await expect(page.locator('#level')).toHaveText(`${level+1} / 60`);
       await expect(page.locator('#score')).toHaveText(clearedScore);
     }
   }
-  await expect(page.locator('#limit')).toHaveText('WIN');
-  await expect(page.locator('#message')).toContainText('ALL 20 LEVELS CLEARED');
-  await expect(page.locator('#message')).toContainText('round bubble');
-  await expect(page.locator('#reset')).toHaveText('Play all 20 again');
-  await expect(page.locator('#levelAction')).toBeVisible();
-  await expect(page.locator('#levelAction')).toHaveText('Play all 20 again');
+  await expect(page.locator('#level')).toHaveText('21 / 60');
+  await expect(page.locator('#levelName')).toHaveText('Moonlight Mirrors');
+  await expect(page.locator('#limit')).toHaveText('CLEAR');
   await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false');
-
+  // The player has not beaten all 60 stages, so the arcade must not
+  // report a completed run merely because the old level-20 cap was crossed.
   const result = await page.evaluate(() => window.LarriVerseArcade.summary().games['bubble-resonance-phi369']);
-  expect(result.completions).toBe(1);
+  expect(result?.completions || 0).toBe(0);
 });
 
 test('Bubble Resonance adds and animates a fresh top row after five misses', async ({ page }) => {

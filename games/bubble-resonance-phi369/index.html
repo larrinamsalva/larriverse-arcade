@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#060810">
-  <meta name="description" content="Aim glossy round bubbles and unleash row, burst, and color-sweep powers through 20 matching levels. Free game practice in LarriVerse Arcade.">
+  <meta name="description" content="Aim glossy round bubbles and unleash row, burst, and color-sweep powers through 60 matching levels. Free game practice in LarriVerse Arcade.">
   <title>Bubble Resonance Φ369 · LarriVerse Arcade</title>
   <link rel="stylesheet" href="game.css">
   <link rel="stylesheet" href="../../assets/classic-polish.css">
@@ -15,7 +15,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LarriVerse Arcade">
   <meta property="og:title" content="Bubble Resonance Φ369 · LarriVerse Arcade">
-  <meta property="og:description" content="Aim glossy round bubbles and unleash row, burst, and color-sweep powers through 20 matching levels in LarriVerse Arcade.">
+  <meta property="og:description" content="Aim glossy round bubbles and unleash row, burst, and color-sweep powers through 60 matching levels in LarriVerse Arcade.">
   <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/bubble-resonance-phi369/">
   <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
   <meta property="og:image:type" content="image/webp">
@@ -42,7 +42,7 @@
       <div>
         <p class="eyebrow">PHI · 3 · 6 · 9 ENGINE</p>
         <h1>Bubble Resonance</h1>
-        <p>Aim glossy round bubbles, bank shots off the walls, and connect three matching numbers through 20 named levels. Watch for Row Wave, Star Burst, and Color Sweep power bubbles that clear the field in special ways.</p>
+        <p>Aim glossy round bubbles, bank shots off the walls, and connect three matching numbers through 60 named levels. Watch for Row Wave, Star Burst, and Color Sweep power bubbles that clear the field in special ways.</p>
       </div>
       <div class="best">PERSONAL BEST <b id="bestScore">0</b></div>
     </header>
@@ -52,17 +52,17 @@
         <div><small>Score</small><b id="score">0</b></div>
         <div><small>Resonance</small><b id="combo">×1</b></div>
         <div class="title">BUBBLE RESONANCE<span>PHI·369 ENGINE</span></div>
-        <div><small>Level</small><b id="level">1 / 20</b></div>
+        <div><small>Level</small><b id="level">1 / 60</b></div>
         <div><small>Drop in</small><b id="dropIn">5</b></div>
         <div><small>Bottom</small><b id="limit">CLEAR</b></div>
       </div>
       <div class="coherence"><span>Tφ COHERENCE</span><i><em id="coherenceFill"></em></i><b id="coherenceValue">50</b></div>
-      <div class="level-track" id="levelTrack" role="progressbar" aria-label="Bubble level progress" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" aria-valuetext="0 of 20 stages cleared"><span><small>Current stage</small><b id="levelName">First Ripple</b></span><i><em id="levelFill"></em></i><strong id="levelProgress">1 of 20</strong></div>
+      <div class="level-track" id="levelTrack" role="progressbar" aria-label="Bubble level progress" aria-valuemin="0" aria-valuemax="60" aria-valuenow="0" aria-valuetext="0 of 60 stages cleared"><span><small>Current stage</small><b id="levelName">First Ripple</b></span><i><em id="levelFill"></em></i><strong id="levelProgress">1 of 60</strong></div>
       <div class="playfield">
         <canvas id="game" tabindex="0" aria-describedby="bubbleKeys bubbleStatus" width="1000" height="600" aria-label="Bubble Resonance playfield"></canvas>
         <div id="message" class="message" aria-live="polite"><b></b><span></span><button type="button" id="levelAction" hidden>Next level</button></div>
       </div>
-      <p id="bubbleStatus" role="status"></p><p id="bubbleKeys">Match three round bubbles with the same number. A special bubble arrives regularly: Row Wave clears its landing row, Star Burst clears touching bubbles, and Color Sweep clears every bubble with its number. Clear every bubble to advance automatically to the next of 20 levels. A Next level button is also available after each clear. Non-matching shots eventually bring a fresh row down from the ceiling. Keep the stack above the launch zone. Use ← → to aim, Enter or Space to fire while the board is focused, or the buttons below.</p><div class="bubble-controls"><button type="button" id="aimLeft">← Aim left</button><button type="button" id="fireAimed">Fire bubble</button><button type="button" id="aimRight">Aim right →</button></div>
+      <p id="bubbleStatus" role="status"></p><p id="bubbleKeys">Match three round bubbles with the same number. A special bubble arrives regularly: Row Wave clears its landing row, Star Burst clears touching bubbles, and Color Sweep clears every bubble with its number. Clear every bubble to advance automatically to the next of 60 levels. A Next level button is also available after each clear. Non-matching shots eventually bring a fresh row down from the ceiling. Keep the stack above the launch zone. Use ← → to aim, Enter or Space to fire while the board is focused, or the buttons below.</p><div class="bubble-controls"><button type="button" id="aimLeft">← Aim left</button><button type="button" id="fireAimed">Fire bubble</button><button type="button" id="aimRight">Aim right →</button></div>
       <div id="legend" class="legend"></div>
       <div class="controls">
         <button id="reset">↺ Start over</button>
