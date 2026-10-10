@@ -40,8 +40,8 @@ const row=catalog.find(x=>x.id==="kids-sudoku");
 assert.ok(row?.available&&row.integration==="arcade-sdk-v3");
 assert.match(row.mission,/60 uniquely solvable puzzles/);
 assert.ok(release.cabinets.some(x=>x.id==="kids-sudoku"));
-assert.equal(release.cabinetCount,33);
-assert.equal(release.galleryReview.expectedImages,68);
+assert.equal(release.cabinetCount,catalog.length);
+assert.equal(release.galleryReview.expectedImages,(catalog.length+1)*2);
 const engine=fs.readFileSync("games/kids-sudoku/game.js","utf8");
 const html=fs.readFileSync("games/kids-sudoku/index.html","utf8");
 for(const selector of ["levelSelect","sudokuBoard","pictureMode","noteMode","numberPad",
