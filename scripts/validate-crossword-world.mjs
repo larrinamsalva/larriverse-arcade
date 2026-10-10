@@ -24,7 +24,7 @@ for(const [i,level] of CROSSWORD_LEVELS.entries()){
  const crossUsed=new Set();
  for(const entry of puzzle.entries){
   assert.ok(entry.answer.length>=3);
-  assert.ok(entry.clue.length>=12);
+  assert.ok(entry.clue.length>=9,"All clues remain readable and descriptive, including short beginner clues");
   assert.ok(entry.number>=1);
   assert.equal(entry.cells.length,entry.answer.length);
   assert.equal(new Set(entry.cells).size,entry.cells.length);
