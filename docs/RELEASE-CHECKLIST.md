@@ -230,3 +230,5 @@ The collection includes 32 playable games: eight original cabinets, sixteen prac
 - **Critter Council** — Design for different needs.
 
 See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
+
+- [ ] **Kids Sudoku World** — Solve representative Levels 1, 20→21, 40→41, and 59→60. Check each 4×4, 6×6, and 9×9 board, correct row/column/box rules, pencil notes, hint, undo, picture mode, mistake feedback, local reload, keyboard and touch controls, high contrast, dark mode, sound-off and full 60-level completion. Preserve all human approval requirements.
