@@ -570,3 +570,529 @@ export const sixtyConversationExtras = [
    options:[...options.slice(3-answer),...options.slice(0,3-answer)],answer,
    why:kind+' A respectful choice gives people room to speak, feel safe, and take responsibility.'};
 });
+
+export const sixtyNewsExtras = [
+  [
+    "🌧️",
+    "A local rain gauge report records 12 millimeters of rainfall between 8 a.m. and noon, with a station ID and date.",
+    0,
+    "A measured amount, a date, and a named station make the observation checkable."
+  ],
+  [
+    "🍲",
+    "A reviewer says tomato soup tastes better than every other lunch, without measuring anything.",
+    1,
+    "Taste rankings describe personal preferences rather than a fact everyone must share."
+  ],
+  [
+    "🧃",
+    "A juice-company post says 'Sponsored' and invites viewers to buy its newly launched fruit drink.",
+    2,
+    "A promotional message from the seller is advertising, even when it includes nutrition claims."
+  ],
+  [
+    "🌋",
+    "A repost claims a volcano erupted this morning but provides no location or original source.",
+    3,
+    "A dramatic claim without a place, date, or original report needs independent checking."
+  ],
+  [
+    "🌱",
+    "A garden diary lists how many of its 16 beans germinated and includes labeled pictures for each day.",
+    0,
+    "The dated garden observations can be inspected, though one garden is a limited sample."
+  ],
+  [
+    "📚",
+    "A student calls a mystery novel the most exciting book the class has ever read.",
+    1,
+    "Excitement and enjoyment are opinions, so other readers may disagree."
+  ],
+  [
+    "🛍️",
+    "A creator's product review includes a clear statement that the backpack company paid for the post.",
+    2,
+    "A paid promotion is advertising; the disclosure helps readers understand the relationship."
+  ],
+  [
+    "📸",
+    "An image says it shows a rare animal seen nearby, but no photographer or location is named.",
+    3,
+    "Without an original image source, the animal's identity and location are unverified."
+  ],
+  [
+    "⛅",
+    "A weather station chart shows temperatures collected every hour on a particular day.",
+    0,
+    "Time-stamped measurements are evidence about conditions at that station."
+  ],
+  [
+    "🎨",
+    "The art club leader declares watercolors more beautiful than all other painting styles.",
+    1,
+    "Beauty judgments vary from one person to another and cannot be settled by popularity."
+  ],
+  [
+    "🎧",
+    "A video includes an affiliate link promising the reviewer a commission for every headphone purchase.",
+    2,
+    "A commission linked to purchases makes the message commercial promotion."
+  ],
+  [
+    "🛰️",
+    "A social post claims a new planet was discovered but does not name the astronomers or telescope.",
+    3,
+    "Big scientific discoveries should be checked against research institutions and reliable reporting."
+  ],
+  [
+    "🐦",
+    "A bird count reports seven sparrows in a park during a dated morning observation.",
+    0,
+    "The count is evidence about that observation, not every morning in the park."
+  ],
+  [
+    "🍕",
+    "A food blogger says pineapple is the perfect pizza topping for everyone.",
+    1,
+    "Food preferences differ. A confident slogan does not turn a preference into evidence."
+  ],
+  [
+    "👟",
+    "A shoe company's poster offers 20 percent off its running shoes for this weekend.",
+    2,
+    "Discount offers are advertising meant to influence a purchase."
+  ],
+  [
+    "🏫",
+    "A message claims school will be canceled tomorrow, but it comes from an anonymous account.",
+    3,
+    "Check directly with the school before treating a schedule rumor as confirmed."
+  ],
+  [
+    "🚲",
+    "A class records the number of bicycles parked at school on five named weekdays.",
+    0,
+    "Recorded counts and dates provide observations that others could verify."
+  ],
+  [
+    "🐱",
+    "A writer says cats make better pets than dogs in every household.",
+    1,
+    "What makes a good pet depends on a family's needs and preferences."
+  ],
+  [
+    "🎮",
+    "A streamer marks a segment 'ad' while promoting paid upgrades for a game.",
+    2,
+    "An explicitly labeled advertisement tries to promote a product or purchase."
+  ],
+  [
+    "🪄",
+    "An edited-looking video claims a magnet makes a heavy table float, with no demonstration details.",
+    3,
+    "Extraordinary demonstrations need clear methods and independent verification."
+  ],
+  [
+    "🌎",
+    "A science-class graph shows Earth temperatures measured at a particular location over ten years.",
+    0,
+    "A documented data series is evidence, though interpreting long-term changes requires context."
+  ],
+  [
+    "🎷",
+    "A musician says saxophone music is more fun than piano music.",
+    1,
+    "How fun a music style feels is a personal assessment."
+  ],
+  [
+    "💼",
+    "A post by a cleaning company advertises its new service packages and booking discounts.",
+    2,
+    "A company offering services for sale is publishing an advertisement."
+  ],
+  [
+    "🦕",
+    "A post says a living dinosaur was found in a shopping mall but gives no traceable witnesses.",
+    3,
+    "Extraordinary sightings without dependable sources should be checked before sharing."
+  ],
+  [
+    "🪵",
+    "A class tests two wooden bridges with the same weights and records which bends more.",
+    0,
+    "Controlled observations and recorded results give evidence about the tested models."
+  ],
+  [
+    "🏔️",
+    "A travel writer says the mountains are the happiest place to spend a weekend.",
+    1,
+    "Happiness and preferred vacation destinations are subjective."
+  ],
+  [
+    "🛏️",
+    "A furniture company's banner says 'Buy now' and links directly to its online bed store.",
+    2,
+    "The message is trying to sell something, so it belongs in the advertising category."
+  ],
+  [
+    "🪐",
+    "A forwarded headline claims the Moon will turn green tonight but has no source date.",
+    3,
+    "Check a trusted astronomy source before accepting a spectacular undated claim."
+  ],
+  [
+    "🐢",
+    "A wildlife survey notes three turtles observed by a pond and describes its counting method.",
+    0,
+    "A method and recorded observations are evidence about that survey."
+  ],
+  [
+    "🏀",
+    "A spectator says yesterday's game was the most thrilling match in sports history.",
+    1,
+    "Calling a match 'most thrilling' expresses the spectator's opinion."
+  ],
+  [
+    "🍪",
+    "A bakery's social account announces a paid giveaway for its cookies and promotes ordering online.",
+    2,
+    "A commercial account using a giveaway to encourage sales is advertising."
+  ],
+  [
+    "🪄",
+    "A rumor claims one ordinary houseplant can clean all air pollution in minutes without supporting tests.",
+    3,
+    "Claims about dramatic health or environmental effects require credible tests and context."
+  ],
+  [
+    "🧪",
+    "A student records the water temperature before and after adding ice to a cup, with readings.",
+    0,
+    "The recorded thermometer readings give measurable evidence for that cup."
+  ],
+  [
+    "🎬",
+    "A critic calls an animated film the funniest movie ever released.",
+    1,
+    "Humor varies; film reviews express opinions even when reviewers are experienced."
+  ],
+  [
+    "🧼",
+    "An influencer labels a cleaning-product demonstration as paid by the soap manufacturer.",
+    2,
+    "Payment for promoting the product makes this advertising."
+  ],
+  [
+    "📰",
+    "A headline says a famous bridge was destroyed today, but the linked story is from years ago.",
+    3,
+    "The headline may lack time context. Check the actual date and current sources."
+  ],
+  [
+    "🚰",
+    "A classroom chart gives measured daily water usage for one week with labeled units.",
+    0,
+    "Units and dated measurements let readers examine what happened during that week."
+  ],
+  [
+    "🥾",
+    "A hiker writes that the forest trail is far more beautiful than the beach.",
+    1,
+    "Comparing beauty is a preference rather than universally testable evidence."
+  ],
+  [
+    "📱",
+    "An app maker pays for a social media post showing its latest premium subscription.",
+    2,
+    "The business paid for a product promotion, which makes the post advertising."
+  ],
+  [
+    "🌪️",
+    "A viral storm image is claimed to be from your town yesterday, but its oldest copy is undated.",
+    3,
+    "Find the original photo and a reliable local report before accepting the time and place."
+  ]
+].map(([icon,text,answer,why])=>({icon,text,answer,why}));
+
+export const sixtySortingExtras = [
+  [
+    "Clean jam jar ready for storage",
+    "🫙",
+    "jar",
+    0,
+    "In Toy Town, a sound clean glass jar can be reused for storing small household items."
+  ],
+  [
+    "Rinsed drink can from the picnic",
+    "🥫",
+    "can",
+    1,
+    "Toy Town recycles empty clean metal food and drink cans; real community collection rules may differ."
+  ],
+  [
+    "Apple skin from snack time",
+    "🍎",
+    "appleCore",
+    2,
+    "Toy Town composts ordinary fruit scraps, including apple peels from snacks."
+  ],
+  [
+    "Torn used tissue from a cold",
+    "🤧",
+    "tissue",
+    3,
+    "Used tissues do not go into Toy Town's recycling and are handled as trash."
+  ],
+  [
+    "Cardboard storage box still sturdy",
+    "📦",
+    "cardboardBox",
+    0,
+    "A usable sturdy box can hold supplies again before recycling is considered."
+  ],
+  [
+    "Dry newspaper after reading",
+    "📰",
+    "newspaper",
+    1,
+    "Toy Town accepts clean dry newspapers in its paper-recycling collection."
+  ],
+  [
+    "Banana peel after breakfast",
+    "🍌",
+    "banana",
+    2,
+    "Banana peels are fruit scraps that Toy Town's compost bin accepts."
+  ],
+  [
+    "Chipped ceramic cup with sharp edge",
+    "☕",
+    "brokenMug",
+    3,
+    "Broken ceramic is not recycled in Toy Town; ask an adult to handle sharp pieces."
+  ],
+  [
+    "Reusable water bottle after a hike",
+    "🥤",
+    "bottle",
+    0,
+    "Wash and refill a safe reusable bottle instead of treating it as single-use waste."
+  ],
+  [
+    "Clean flattened cereal carton",
+    "📦",
+    "cardboardBox",
+    1,
+    "Toy Town recycles clean dry cardboard after any usable boxes have been saved for reuse."
+  ],
+  [
+    "Orange peel from a lunch box",
+    "🍊",
+    "orangePeel",
+    2,
+    "Toy Town accepts orange peels as compostable plant scraps."
+  ],
+  [
+    "Greasy disposable picnic plate",
+    "🍽️",
+    "paperPlate",
+    3,
+    "Toy Town does not accept grease-soaked paper plates in its paper recycling."
+  ],
+  [
+    "Gift bag with handles intact",
+    "🛍️",
+    "giftBag",
+    0,
+    "A gift bag in good condition can be used again for another present."
+  ],
+  [
+    "Rinsed food tin without sharp edges",
+    "🥫",
+    "can",
+    1,
+    "Toy Town recycles clean empty food tins as metal containers."
+  ],
+  [
+    "Vegetable lettuce trimmings",
+    "🥬",
+    "lettuceScraps",
+    2,
+    "Plant-based kitchen trimmings are accepted by Toy Town's compost program."
+  ],
+  [
+    "Mixed-material candy wrapper",
+    "🍬",
+    "chipBag",
+    3,
+    "Toy Town does not put multilayer candy wrappers in ordinary curbside recycling."
+  ],
+  [
+    "Unworn spare shirt that fits",
+    "👕",
+    "shirt",
+    0,
+    "A good shirt can be worn, swapped, or donated instead of thrown away."
+  ],
+  [
+    "Clean empty glass bottle for recycling",
+    "🫙",
+    "jar",
+    1,
+    "Toy Town recycles clean unbroken glass containers that no longer have a reuse purpose."
+  ],
+  [
+    "Core from a sliced pear",
+    "🍐",
+    "appleCore",
+    2,
+    "Toy Town's compost accepts ordinary fruit cores; avoid composting plastic stickers."
+  ],
+  [
+    "Piece of a shattered mirror",
+    "🪞",
+    "brokenMirror",
+    3,
+    "Mirror glass is handled differently from bottles and jars, and broken pieces can cut."
+  ],
+  [
+    "Reusable sandwich container",
+    "🍱",
+    "storageBox",
+    0,
+    "Wash and use a food-safe storage container again rather than replacing it for each lunch."
+  ],
+  [
+    "Clean flattened delivery box",
+    "📦",
+    "cardboardBox",
+    1,
+    "When it is not needed again, Toy Town recycles dry, clean shipping cardboard."
+  ],
+  [
+    "Wilted spinach leaves",
+    "🥬",
+    "lettuceScraps",
+    2,
+    "Toy Town accepts leafy vegetable scraps for compost."
+  ],
+  [
+    "Foil-lined snack pouch",
+    "🍿",
+    "chipBag",
+    3,
+    "Mixed plastic-and-foil snack pouches are not accepted in Toy Town's regular recycling."
+  ],
+  [
+    "Finished storybook in good shape",
+    "📚",
+    "book",
+    0,
+    "Share a readable book with a friend or community shelf instead of discarding it."
+  ],
+  [
+    "Clean aluminum foil gathered together",
+    "✨",
+    "foilBall",
+    1,
+    "Toy Town accepts clean foil in a sufficiently large bundled piece; local facilities may differ."
+  ],
+  [
+    "Old banana skins from cooking",
+    "🍌",
+    "banana",
+    2,
+    "Toy Town composts plant-based banana skins rather than putting them into mixed trash."
+  ],
+  [
+    "Cracked ceramic saucer",
+    "🍽️",
+    "brokenMug",
+    3,
+    "Ceramics do not belong with bottle-and-jar recycling in Toy Town."
+  ],
+  [
+    "Clean reusable tote bag",
+    "🛍️",
+    "giftBag",
+    0,
+    "A sound tote can be used for many shopping trips rather than disposed of."
+  ],
+  [
+    "Flat clean office paper",
+    "📄",
+    "paper",
+    1,
+    "Toy Town recycles clean loose sheets and other accepted dry paper products."
+  ],
+  [
+    "Apple core without a plastic sticker",
+    "🍎",
+    "appleCore",
+    2,
+    "Fruit cores break down in Toy Town's composting system."
+  ],
+  [
+    "Food-stained paper cup",
+    "🥤",
+    "paperPlate",
+    3,
+    "A coated or food-soiled paper cup does not belong in Toy Town's ordinary paper-recycling bin."
+  ],
+  [
+    "Secondhand jacket with working buttons",
+    "🧥",
+    "shirt",
+    0,
+    "A wearable jacket can be passed to someone who needs it instead of becoming waste."
+  ],
+  [
+    "Clean unused newspaper page",
+    "📰",
+    "newspaper",
+    1,
+    "Toy Town accepts clean printed newspaper in its paper-recycling collection."
+  ],
+  [
+    "Fresh vegetable peels from cooking",
+    "🥕",
+    "lettuceScraps",
+    2,
+    "Toy Town's compost program accepts ordinary vegetable peels."
+  ],
+  [
+    "Shattered glass mirror with loose shards",
+    "🪞",
+    "brokenMirror",
+    3,
+    "Ask an adult to handle broken mirror glass safely; Toy Town does not recycle it curbside."
+  ],
+  [
+    "Empty sturdy jar with screw lid",
+    "🫙",
+    "jar",
+    0,
+    "A clean jar with a lid makes a reusable organizer for craft materials."
+  ],
+  [
+    "Clean foil tray from baking",
+    "✨",
+    "foilBall",
+    1,
+    "Toy Town puts clean recyclable aluminum in its collection when accepted locally."
+  ],
+  [
+    "Orange rind after making juice",
+    "🍊",
+    "orangePeel",
+    2,
+    "Orange rinds are compostable fruit scraps under Toy Town's simple sorting rules."
+  ],
+  [
+    "Plastic-and-foil potato chip bag",
+    "🥔",
+    "chipBag",
+    3,
+    "Multilayer chip bags go in Toy Town's trash because its curbside system cannot separate the layers."
+  ]
+].map(([name,icon,art,bin,why])=>({name,icon,art,bin,why}));
