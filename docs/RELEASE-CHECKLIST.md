@@ -73,7 +73,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Bridge Buddies — Finish twenty bridge challenges with free unlimited planks, beams and triangle braces. Verify that four strongest braces can cross without any token restrictions, and confirm weak supports can be replaced or cleared at no cost. Test keyboard/touch, light/dark themes, and saved completion.
 - [ ] Water Works — Rotate the pipes through all twenty advancing networks, passing through the toy filter from the left reservoir to the right-side town.
 - [ ] Harbor Helpers — Complete twenty advancing island deliveries, matching each load exactly to its request and respecting the displayed boat capacity.
-- [ ] Pantry Picnic — Complete eight rotating picnic challenges from a twenty-four-plan bank. Follow each request, use marked leftovers first, and confirm three sessions exhaust the bank before repeating.
+- [ ] Pantry Picnic — Finish ten scenarios per round from 60 different picnic requests across six themes. Confirm six rounds show every question once before repeating, all 60 are solvable, leftover constraints are honored, and touchscreen/keyboard, light/dark/high-contrast, sound-off and local completion work.
 - [ ] Compass Cove — Find twenty treasures through four advancement ranks by following clues from island landmarks. North is up, east is right, south is down, and west is left on this map.
 - [ ] Cipher Club — Use the toy A–H alphabet and a shared number key to encode or decode twenty messages that grow from three to five letters.
 - [ ] Trade Town — Fill three shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.
