@@ -207,7 +207,7 @@
       "id": "pocket-planet",
       "title": "Pocket Planet",
       "route": "games/pocket-planet/index.html",
-      "manualFocus": "Complete five varied budget missions, check savings and extras, replay to see all twenty plans, and verify local progress, keyboard/touch, and sound-off behavior."
+      "manualFocus": "Complete all ten material-first projects, select the right foods, plants and building supplies, try a wrong step then correct it, replay to see thirty projects, and verify sound-off, readable contrast, touch and local completion."
     },
     {
       "id": "scam-sleuth",
@@ -237,7 +237,7 @@
       "id": "time-trail",
       "title": "Time Trail",
       "route": "games/time-trail/index.html",
-      "manualFocus": "Complete a full Time Trail round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+      "manualFocus": "Complete all twenty trails and four ranks, verify flags and different maps, glowing adjacent moves, retry after running out of steps, stars, sound-off, contrast, touch/keyboard, and saved completion."
     },
     {
       "id": "garden-guardians",
