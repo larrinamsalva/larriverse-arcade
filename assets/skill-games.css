@@ -1656,3 +1656,68 @@ html.larriverse-high-contrast .picture-choice.wrong { outline: 5px dashed #ffd36
   .learning-choice-art { width: 78px; height: 76px; }
   .scene-label { left: .45rem; bottom: .45rem; }
 }
+
+/* Pocket Planet: a clear, colorful budget board with distinct day/night states. */
+body[data-world="pocket-planet"] .budget-hero {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 2px solid #7db4a0;
+  border-radius: 20px;
+  color: #20443d;
+  background: linear-gradient(115deg, #ddf7e9 0%, #e8f4ff 55%, #fbecff 100%);
+  box-shadow: 0 5px 0 #b8d9d1;
+}
+body[data-world="pocket-planet"] .budget-illustration {
+  display: grid;
+  flex: 0 0 5rem;
+  place-items: center;
+  min-height: 5rem;
+  font-size: 3rem;
+  border-radius: 18px;
+  background: #fff7d9;
+  border: 2px solid #c9ab61;
+  box-shadow: inset 0 -5px 0 #f5dfac;
+}
+body[data-world="pocket-planet"] .budget-hero .board-title { margin: .1rem 0; color: inherit; }
+body[data-world="pocket-planet"] .budget-hero p { margin: .25rem 0; color: inherit; }
+body[data-world="pocket-planet"] .budget-kicker { font-size: .75rem; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; }
+body[data-world="pocket-planet"] .budget-goal { font-weight: 750; }
+body[data-world="pocket-planet"] .item-button {
+  box-shadow: inset 0 -5px 0 #e6eaf3, 0 3px 7px #1a30491a;
+  transition: transform .12s ease, border-color .12s ease;
+}
+body[data-world="pocket-planet"] .item-button:hover:not(:disabled) { transform: translateY(-2px); }
+body[data-world="pocket-planet"] .item-button.selected { box-shadow: inset 0 -5px 0 #b9e3ce; }
+html.larriverse-dark body[data-world="pocket-planet"] .budget-hero {
+  color: #f0fffc;
+  border-color: #65bca3;
+  background: linear-gradient(115deg, #20423d 0%, #283d62 60%, #3d2c56 100%);
+  box-shadow: 0 5px 0 #152522;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .budget-illustration {
+  background: #483f61; border-color: #b7a5e9; box-shadow: inset 0 -5px 0 #302746;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .item-button small,
+html.larriverse-dark body[data-world="pocket-planet"] .stat-chip b { color: #fff; }
+html.larriverse-dark body[data-world="pocket-planet"] .item-button.selected {
+  background: #225540; color: #fff; border-color: #8bdfad;
+  box-shadow: inset 0 -5px 0 #193e2c;
+}
+html.larriverse-high-contrast body[data-world="pocket-planet"] .budget-hero,
+html.larriverse-high-contrast body[data-world="pocket-planet"] .budget-illustration {
+  color: #fff !important; background: #111 !important; border: 2px solid #fff !important; box-shadow: none !important;
+}
+html.larriverse-high-contrast body[data-world="pocket-planet"] .budget-hero :is(h2, p),
+html.larriverse-high-contrast body[data-world="pocket-planet"] .item-button small,
+html.larriverse-high-contrast body[data-world="pocket-planet"] .stat-chip b { color: #fff !important; }
+@media (max-width: 550px) {
+  body[data-world="pocket-planet"] .budget-hero { align-items: flex-start; gap: .7rem; padding: .85rem; }
+  body[data-world="pocket-planet"] .budget-illustration { flex-basis: 3.5rem; min-height: 3.5rem; font-size: 2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="pocket-planet"] .item-button { transition: none; }
+}
+html.larriverse-reduced-motion body[data-world="pocket-planet"] .item-button { transition: none; }
