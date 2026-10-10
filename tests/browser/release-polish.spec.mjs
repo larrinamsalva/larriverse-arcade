@@ -266,7 +266,7 @@ test('Bubble Resonance fills the play area, settles shallow bank shots, and keep
   expect(bubbleSource).toContain('function bubble(');
   expect(bubbleSource).toContain('ctx.arc(x,y,r*.94');
   expect(bubbleSource).not.toContain('function hex(');
-  await expect(page.locator('#level')).toHaveText('1 / 20');
+  await expect(page.locator('#level')).toHaveText('1 / 60');
   await expect(page.locator('#levelName')).toHaveText('First Ripple');
 
   const widthUse = await page.locator('#game').evaluate(node => {
