@@ -80,7 +80,7 @@ for(const [id,n] of ready)assert.ok(n>=60,id+" regressed");
 assert.equal(ready.length,14,"Four worlds gained sixty-stage coverage in this pass");
 assert.ok(gps.questions&&Object.values(gps.questions).reduce((n,a)=>n+a.length,0)===gps.source.questionCount);
 for(const item of weatherChallenges.concat(gardenGrowthChallenges)){
- assert.ok(item.options[item.answer].label.length>4);
+ assert.ok(item.options[item.answer].label.trim().length>=2, "Short but clear weather labels such as Fog remain valid");
  assert.ok(item.why.length>40);
 }
 for(const id of ["weather-watchers","garden-grow-harvest","bridge-buddies","bubble-resonance-phi369"]){
