@@ -10,7 +10,7 @@ import {
   weatherChallenges,
   gardenGrowthChallenges,
 } from "./skill-worlds.js";
-import { budgetAdventures } from "./budget-adventures.js";
+import { resourceAdventures } from "./budget-adventures.js";
 import { createExpedition } from "./expedition-games.js";
 import { timeTrailLevelsWithGoals as timeTrailLevels } from "./time-trail-level.js";
 import { gardenLevels, energyLevels } from "./garden-energy-levels.js";
@@ -231,10 +231,9 @@ function initialize() {
   refreshBest();
   switch (world.mode) {
     case "budget":
-      state.deck = challengeRound(budgetAdventures, 5);
+      state.deck = challengeRound(resourceAdventures, 10);
       state.passed = 0;
-      state.selected = new Set();
-      renderBudget();
+      startResourceProject();
       break;
     case "messages":
       state.deck = challengeRound(messages, 6);
@@ -316,88 +315,76 @@ function initialize() {
   }
 }
 
-function budgetLeft() {
-  const plan = state.deck[state.step];
-  return plan.coins - [...state.selected].reduce(
-    (total, index) => total + plan.items[index].cost, 0,
-  );
+function startResourceProject() {
+  state.selected=new Set();
+  state.phase="gather";
+  state.makeStep=0;
+  state.stepOrder=shuffle([0,1,2]);
+  renderBudget();
 }
-
 function renderBudget() {
-  const plan = state.deck[state.step];
-  const left = budgetLeft();
-  const needs = [...state.selected].filter((index) => plan.items[index].need).length;
-  stage(`Pocket Planet · Adventure ${state.step + 1}/${state.deck.length}`);
-  board.innerHTML = `
+  const plan=state.deck[state.step];
+  const chosen=[...state.selected].filter(i=>plan.items[i].need).length;
+  stage(`Pocket Planet · Project ${state.step+1}/${state.deck.length}`);
+  const banner=`
     <div class="budget-hero">
       <span class="budget-illustration" aria-hidden="true">${esc(plan.icon)}</span>
       <div>
-        <p class="budget-kicker">Money mission ${state.step + 1} of ${state.deck.length}</p>
+        <p class="budget-kicker">${esc(plan.kind)} project ${state.step+1} of ${state.deck.length}</p>
         <h2 class="board-title">${esc(plan.title)}</h2>
         <p>${esc(plan.story)}</p>
-        <p class="budget-goal">🌟 Saving for: <strong>${esc(plan.goal)}</strong></p>
+        <p class="budget-goal">🌟 We're making: <strong>${esc(plan.goal)}</strong></p>
       </div>
     </div>
-    <p class="board-note">Choose your three needs first. Extras are optional. Tap a packed item again to return it.</p>
     <div class="stat-row" aria-live="polite">
-      ${chip("Starting coins", plan.coins)}
-      ${chip("Coins left", left)}
-      ${chip("Needs packed", `${needs}/3`)}
-      ${chip("Save at least", `${plan.save} coins`)}
-    </div>
-    <div class="item-grid">
-      ${plan.items.map((item, i) => `<button class="item-button ${state.selected.has(i) ? "selected" : ""}" data-buy="${i}" aria-pressed="${state.selected.has(i)}"><span class="item-icon" aria-hidden="true">${esc(item.icon)}</span>${esc(item.name)}<small>${item.cost} coins · ${item.need ? "Need" : "Extra fun"}${state.selected.has(i) ? " · Packed" : ""}</small></button>`).join("")}
+      ${chip("Projects completed",`${state.passed}/${state.deck.length}`)}
+      ${chip("Useful supplies",`${chosen}/3`)}
+      ${chip("Making steps",`${state.makeStep}/3`)}
     </div>`;
-  bind("[data-buy]", (node) => {
-    const i = Number(node.dataset.buy);
-    if (state.selected.has(i)) {
-      state.selected.delete(i);
-      say("Returned! Those coins are back in your budget.");
-    } else if (plan.items[i].cost > budgetLeft()) {
-      say("Not enough coins left for that choice. Return something first.", "try");
-      return;
-    } else {
-      state.selected.add(i);
-      tone();
-      say(`${plan.items[i].name} packed! Check your savings goal, too.`);
-    }
-    renderBudget();
-  });
-  progress(state.passed, state.deck.length,
-    `${state.passed} of ${state.deck.length} budget missions completed`);
-  updateScore((state.passed / state.deck.length) * 100);
-  button("Try my plan", () => {
-    if (needs < 3) {
-      say("Your plan still needs all three essential items. Find the cards marked Need.", "try");
-      return;
-    }
-    if (left < plan.save) {
-      say(`Your ${plan.goal} savings goal needs ${plan.save} coins. Try returning an extra.`, "try");
-      return;
-    }
-    state.passed += 1;
-    updateScore((state.passed / state.deck.length) * 100);
-    progress(state.passed, state.deck.length,
-      `${state.passed} of ${state.deck.length} budget missions completed`);
-    if (state.step === state.deck.length - 1) {
-      finish(`You made five smart plans, protected savings, and checked needs before extras. Your final plan saved ${left} coins!`, 100);
-      return;
-    }
-    say(`Great plan! You covered all three needs and saved ${left} coins.`, "good");
-    button("Next money mission", () => {
-      state.step += 1;
-      state.selected = new Set();
+  if(state.phase==="gather"){
+    board.innerHTML=banner+`<p class="board-note">Choose THREE useful things to ${esc(plan.kind)}. Some objects do not belong in this project. Tap again to remove one.</p>
+      <div class="item-grid">${plan.items.map((item,i)=>`<button class="item-button ${state.selected.has(i)?"selected":""}" data-supply="${i}" aria-pressed="${state.selected.has(i)}"><span class="item-icon" aria-hidden="true">${esc(item.icon)}</span>${esc(item.name)}<small>${state.selected.has(i)?"✓ In your kit":"Tap to choose"}</small></button>`).join("")}</div>`;
+    bind("[data-supply]",node=>{
+      const i=Number(node.dataset.supply);
+      if(state.selected.has(i))state.selected.delete(i);
+      else if(state.selected.size===3){say("Your kit holds three supplies. Put one item back first.","try");return;}
+      else{state.selected.add(i);tone();}
       renderBudget();
     });
-    // Lock purchases and the submit action while the next mission is waiting.
-    board.querySelectorAll("[data-buy]").forEach((item) => { item.disabled = true; });
-    actions.querySelectorAll("button").forEach((item) => {
-      if (item.textContent === "Try my plan") item.remove();
+    button("Use my supplies",()=>{
+      if(state.selected.size!==3){say("Choose exactly three supplies before starting.","try");return;}
+      if(chosen!==3){say("Some things in your kit do not help with this project. Swap them for useful supplies.","try");return;}
+      state.phase="make";tone();renderBudget();say("Great supplies! Now put the steps in the right order.","good");
     });
-  });
-  const requiredCost = plan.items.filter((item) => item.need)
-    .reduce((sum, item) => sum + item.cost, 0);
-  hint = `The three needs cost ${requiredCost} coins together. Save ${plan.save} more for your ${plan.goal}. Extras can wait.`;
+  }else if(state.phase==="make"){
+    board.innerHTML=banner+`<p class="board-note">You have the right supplies. What should happen next? Choose the steps in a sensible order.</p>
+      <div class="planet-workbench" aria-label="Project workbench">
+        ${plan.items.filter(item=>item.need).map(item=>`<span>${esc(item.icon)} ${esc(item.name)}</span>`).join("")}
+      </div>
+      <div class="planet-step-status">Step ${state.makeStep+1} of 3</div>
+      <div class="choice-grid planet-step-choices">${state.stepOrder.map(i=>`<button class="choice-button ${i<state.makeStep?"correct":""}" data-make-step="${i}" ${i<state.makeStep?"disabled":""}>${i<state.makeStep?"✓ ":""}${esc(plan.steps[i])}</button>`).join("")}</div>`;
+    bind("[data-make-step]",node=>{
+      const i=Number(node.dataset.makeStep);
+      if(i!==state.makeStep){say("Think about what should happen first. Try another step.","try");return;}
+      state.makeStep++;tone();
+      if(state.makeStep===3){
+        state.passed++;
+        if(state.step===state.deck.length-1){
+          finish(`You finished ${state.deck.length} hands-on projects! You learned to choose supplies and plan how to grow, build, and prepare food.`,100);
+          return;
+        }
+        state.phase="next";renderBudget();say(`${plan.goal} completed! Your next project is ready.`,"good");
+      }else{renderBudget();say("Good work! What comes next?","good");}
+    });
+  }else{
+    board.innerHTML=banner+`<div class="planet-project-complete" role="status"><strong>🌟 ${esc(plan.goal)} completed!</strong><p>You chose useful supplies and followed all three steps.</p></div>`;
+    button("Next project",()=>{state.step++;startResourceProject();});
+  }
+  progress(state.passed,state.deck.length,`${state.passed} of ${state.deck.length} projects completed`);
+  updateScore(Math.round(state.passed/state.deck.length*100));
+  hint=state.phase==="gather"
+    ? `Look for things you can use to create ${plan.goal.toLowerCase()}. Unrelated objects do not belong in this kit.`
+    : `First: ${plan.steps[0]}. What should happen after that?`;
 }
 
 function renderCards(mode) {
