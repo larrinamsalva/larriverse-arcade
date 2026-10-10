@@ -172,43 +172,54 @@ function pointerIndex(event){
  return row>=0&&col>=0&&row<n&&col<n?row*n+col:-1;
 }
 const board=$("wordGrid");
-// Track drag gestures at window level so pointer-up is never missed if
-// capture changes or the finger crosses an element boundary.
-board.addEventListener("pointerdown",event=>{
+// Mouse and touch are separate streams. Mouse tests and desktop users get
+// stable mousedown/mousemove/mouseup events; touch/stylus uses pointer events.
+function beginDrag(event,input){
  if(celebrating||event.button!==0)return;
- const start=pointerIndex(event);if(start<0)return;
+ const start=pointerIndex(event);
+ if(start<0)return;
  event.preventDefault();
- drag={start,last:start,moved:false,pointerId:event.pointerId};
+ drag={start,last:start,moved:false,input,pointerId:input==="pointer"?event.pointerId:null};
  setPreview(start,start);
-});
-window.addEventListener("pointermove",event=>{
- if(!drag||drag.pointerId!==event.pointerId)return;
+}
+function moveDrag(event,input){
+ if(!drag||drag.input!==input||(input==="pointer"&&drag.pointerId!==event.pointerId))return;
  const next=pointerIndex(event);
  if(next<0)return;
  if(next!==drag.start)drag.moved=true;
  if(next!==drag.last){drag.last=next;setPreview(drag.start,next)}
-});
-window.addEventListener("pointerup",event=>{
- if(!drag||drag.pointerId!==event.pointerId)return;
- const state=drag;
- const hit=pointerIndex(event);
- const end=hit>=0?hit:state.last;
- // A short drag may deliver only down and up, without any move events.
- // Compare endpoints instead of relying solely on "moved".
+}
+function endDrag(event,input){
+ if(!drag||drag.input!==input||(input==="pointer"&&drag.pointerId!==event.pointerId))return;
+ const state=drag;drag=null;
+ let end=pointerIndex(event);
+ if(end<0||(end===state.start&&state.moved))end=state.last;
  if(end!==state.start||state.moved){
-  drag=null;pending=-1;
-  const selected=lineCells(state.start,end,puzzle.size);
-  if(selected.length>1)acceptSelection(selected);
+  pending=-1;
+  const cells=lineCells(state.start,end,puzzle.size);
+  if(cells.length>1)acceptSelection(cells);
   else feedback("Follow a straight row, column or diagonal.","try");
   clearSelection();
- }else{
-  drag=null;
-  tapCell(state.start);
- }
+ }else tapCell(state.start);
+}
+board.addEventListener("pointerdown",event=>{
+ if(event.pointerType==="mouse")return;
+ beginDrag(event,"pointer");
+});
+window.addEventListener("pointermove",event=>{
+ if(event.pointerType==="mouse")return;
+ moveDrag(event,"pointer");
+});
+window.addEventListener("pointerup",event=>{
+ if(event.pointerType==="mouse")return;
+ endDrag(event,"pointer");
 });
 window.addEventListener("pointercancel",event=>{
- if(drag&&drag.pointerId===event.pointerId)clearSelection();
+ if(drag?.input==="pointer"&&drag.pointerId===event.pointerId)clearSelection();
 });
+board.addEventListener("mousedown",event=>beginDrag(event,"mouse"));
+window.addEventListener("mousemove",event=>moveDrag(event,"mouse"));
+window.addEventListener("mouseup",event=>endDrag(event,"mouse"));
 board.addEventListener("keydown",event=>{
  const focus=event.target.closest?.("[data-cell]");if(!focus)return;
  const i=Number(focus.dataset.cell),n=puzzle.size;
