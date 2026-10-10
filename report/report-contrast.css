@@ -85,3 +85,20 @@ html.larriverse-high-contrast body .meter span { background: #ffeb00 !important;
     .empty-card, .subject-card, .path-card, .cabinet-row, .activity-list li,
     .starter-list li, .report-nav) :is(h1,h2,h3,p,small,strong,b,span,time,a) { color: #111 !important; }
 }
+
+/* Learning Goals cards are shared with other pages and originally almost transparent. */
+html:not(.larriverse-dark) body :is(.shared-goal-card,.shared-goal-empty) {
+  background:#eef8f1;border:2px solid #81a999;color:#173c30;
+}
+html.larriverse-dark body :is(.shared-goal-card,.shared-goal-empty) {
+  background:#392e50;border:2px solid #9586bd;color:#fff;
+}
+html.larriverse-dark body :is(.shared-goal-card,.shared-goal-empty) :is(strong,p,small,span,a) {
+  color:#fff;opacity:1;
+}
+html.larriverse-high-contrast body :is(.shared-goal-card,.shared-goal-empty) {
+  background:#080808!important;border:2px solid #fff!important;color:#fff!important;
+}
+html.larriverse-high-contrast body :is(.shared-goal-card,.shared-goal-empty) :is(strong,p,small,span,a) {
+  color:#fff!important;opacity:1!important;
+}
