@@ -12,6 +12,7 @@ import {
   gardenGrowthChallenges,
 } from "../../assets/skill-worlds.js";
 import { budgetAdventures } from "../../assets/budget-adventures.js";
+import { gardenLevels, energyLevels } from "../../assets/garden-energy-levels.js";
 
 async function round(page, id, play) {
   const errors = [];
