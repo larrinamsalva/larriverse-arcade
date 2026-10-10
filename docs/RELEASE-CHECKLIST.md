@@ -70,7 +70,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Creature Catcher — change the learning path, finish a round, reload, and confirm the path, recent memory, and field guide persist.
 - [ ] Road Trip Quest — change the learning path, win one city battle, reload, and confirm path and route progress persist.
 - [ ] Road Trip Quest GPS — complete one Demo Mode encounter and verify Live Movement remains opt-in.
-- [ ] Bridge Buddies — Complete twenty advancing crossings, verify all dimensional cargo vehicles and scene palettes, and confirm each bridge stays within its token budget.
+- [ ] Bridge Buddies — Finish twenty bridge challenges with free unlimited planks, beams and triangle braces. Verify that four strongest braces can cross without any token restrictions, and confirm weak supports can be replaced or cleared at no cost. Test keyboard/touch, light/dark themes, and saved completion.
 - [ ] Water Works — Rotate the pipes through all twenty advancing networks, passing through the toy filter from the left reservoir to the right-side town.
 - [ ] Harbor Helpers — Complete twenty advancing island deliveries, matching each load exactly to its request and respecting the displayed boat capacity.
 - [ ] Pantry Picnic — Complete eight rotating picnic challenges from a twenty-four-plan bank. Follow each request, use marked leftovers first, and confirm three sessions exhaust the bank before repeating.
