@@ -1812,3 +1812,52 @@ html.larriverse-high-contrast body[data-world="energy-island"] .energy-scene {
 html.larriverse-high-contrast body[data-world="energy-island"] .energy-scene :is(strong,b,small,p) {
   color: #fff !important;
 }
+
+/* Time Trail's last four chapters expand the grid without shrinking controls
+   into unreadable dots on phones. The six-chapter tracker wraps cleanly. */
+body[data-world="time-trail"] .nature-level-trail {
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+body[data-world="time-trail"] .route-map--6 {grid-template-columns:repeat(6,minmax(0,1fr))}
+body[data-world="time-trail"] .route-map--7 {grid-template-columns:repeat(7,minmax(0,1fr))}
+body[data-world="time-trail"] .route-map--6 .tile {
+  min-width:0;min-height:42px;font-size:1.3rem;padding:0
+}
+body[data-world="time-trail"] .route-map--7 .tile {
+  min-width:0;min-height:35px;font-size:1.12rem;padding:0;border-radius:9px
+}
+body[data-world="time-trail"] .route-zone--valley {
+  background:linear-gradient(125deg,#c9eae5,#e6f8ec 65%,#d2e8f6)
+}
+body[data-world="time-trail"] .route-zone--cloud {
+  background:linear-gradient(125deg,#d8e9fd,#f6ebfd 65%,#e9f7f7)
+}
+body[data-world="time-trail"] .route-zone--mountain {
+  background:linear-gradient(125deg,#dde6ee,#f3e8df 65%,#e7f2df)
+}
+body[data-world="time-trail"] .route-zone--summit {
+  background:linear-gradient(125deg,#efe2fc,#fdf0ce 65%,#e8e6ff)
+}
+body[data-world="time-trail"] .route-level-hero small {
+  display:block;margin-top:.35rem;font-weight:900;color:inherit
+}
+body[data-world="time-trail"] .trail-local-note {
+  font-size:.84rem;text-align:center;color:#365c50;font-weight:750;margin:.35rem 0 1rem
+}
+html.larriverse-dark body[data-world="time-trail"] .trail-local-note {color:#daf3e6}
+html.larriverse-dark body[data-world="time-trail"] :is(
+  .route-zone--valley,.route-zone--cloud,.route-zone--mountain,.route-zone--summit) {
+  background:linear-gradient(125deg,#253b4e,#332d53)
+}
+html.larriverse-high-contrast body[data-world="time-trail"] .trail-local-note {color:#fff!important}
+@media(max-width:690px) {
+  body[data-world="time-trail"] .nature-level-trail {
+    grid-template-columns:repeat(2,minmax(0,1fr))
+  }
+  body[data-world="time-trail"] .route-map--7 {
+    gap:.22rem;padding:.38rem
+  }
+  body[data-world="time-trail"] .route-map--7 .tile {
+    font-size:1rem;min-height:32px;border-radius:7px
+  }
+}
