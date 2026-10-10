@@ -71,11 +71,11 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Road Trip Quest — change the learning path, win one city battle, reload, and confirm path and route progress persist.
 - [ ] Road Trip Quest GPS — complete one Demo Mode encounter and verify Live Movement remains opt-in.
 - [ ] Bridge Buddies — Finish sixty bridge challenges with free unlimited planks, beams and triangle braces. Verify that four strongest braces can cross without any token restrictions, and confirm weak supports can be replaced or cleared at no cost. Test keyboard/touch, light/dark themes, and saved completion.
-- [ ] Water Works — Rotate the pipes through all twenty advancing networks, passing through the toy filter from the left reservoir to the right-side town.
-- [ ] Harbor Helpers — Complete twenty advancing island deliveries, matching each load exactly to its request and respecting the displayed boat capacity.
+- [ ] Water Works — Rotate the pipes through all sixty increasingly winding networks, passing through the toy filter from the left reservoir to the right-side town.
+- [ ] Harbor Helpers — Complete sixty advancing island deliveries, matching each load exactly to its request and respecting the displayed boat capacity.
 - [ ] Pantry Picnic — Finish ten scenarios per round from 60 different picnic requests across six themes. Confirm six rounds show every question once before repeating, all 60 are solvable, leftover constraints are honored, and touchscreen/keyboard, light/dark/high-contrast, sound-off and local completion work.
-- [ ] Compass Cove — Find twenty treasures through four advancement ranks by following clues from island landmarks. North is up, east is right, south is down, and west is left on this map.
-- [ ] Cipher Club — Use the toy A–H alphabet and a shared number key to encode or decode twenty messages that grow from three to five letters.
+- [ ] Compass Cove — Follow sixty unique treasure routes through twelve advancement ranks by following clues from island landmarks. North is up, east is right, south is down, and west is left on this map.
+- [ ] Cipher Club — Use the toy A–H alphabet and a shared number key to encode or decode sixty messages that grow from three to nine letters.
 - [ ] Trade Town — Fill three shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.
 - [ ] Critter Council — Complete twenty neighborhoods and eighty requests, verify all four advancement ranks, and check the central cards in light, dark, and high-contrast modes.
 - [ ] Pocket Planet — Play ten projects focused on food, gardening, and building. Reject irrelevant supplies and incorrect step orders, check that no purchase or coins are requested, replay thirty unique projects, and verify themes, keyboard/touch, local completion, and sound-off.
