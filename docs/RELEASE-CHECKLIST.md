@@ -78,7 +78,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Cipher Club — Use the toy A–H alphabet and a shared number key to encode or decode twenty messages that grow from three to five letters.
 - [ ] Trade Town — Fill three shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.
 - [ ] Critter Council — Complete twenty neighborhoods and eighty requests, verify all four advancement ranks, and check the central cards in light, dark, and high-contrast modes.
-- [ ] Pocket Planet — Complete a full Pocket Planet round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Pocket Planet — Complete all five budget missions using touch and keyboard, check needs-versus-extras and savings warnings, then replay until all twenty unique missions appear. Verify local completion and sound-off behavior.
 - [ ] Scam Sleuth — Complete a full Scam Sleuth round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Kindness Quest — Complete a full Kindness Quest round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Fact Finder — Complete a full Fact Finder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
