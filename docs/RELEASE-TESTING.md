@@ -1,12 +1,12 @@
 # LarriVerse release testing: start here
 
-The current candidate has 32 games, a 66-image desktop/mobile gallery, and six KidsCoin lessons with 20 questions each. KidsCoin rounds still contain three questions. Repair Café draws eight unique repairs from its twenty-scenario bank.
+The current candidate has 32 games, a 66-image desktop/mobile gallery, and six KidsCoin lessons with 20 questions each. KidsCoin rounds still contain three questions. Repair Café draws ten unique repairs from its twenty-scenario bank.
 
 Automated checks provide evidence. The hands-on desktop, physical-phone, gallery, print, and final release checks remain human decisions.
 
 ## 1. Confirm the live candidate
 
-Open [Deployment Readiness](https://larrinamsalva.github.io/larriverse-arcade/qa/readiness.html). Confirm **5/5**, **32/32** routes, and hidden private files. Keep the displayed source commit with your test notes. If it changes during testing, confirm which build the reports and gallery describe before final approval.
+Open [Deployment Readiness](https://larrinamsalva.github.io/larriverse-arcade/qa/readiness.html). Confirm **5/5**, **33/33** routes, and hidden private files. Keep the displayed source commit with your test notes. If it changes during testing, confirm which build the reports and gallery describe before final approval.
 
 ## 2. Test on the desktop or laptop
 
