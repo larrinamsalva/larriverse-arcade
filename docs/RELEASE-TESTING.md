@@ -1,18 +1,18 @@
 # LarriVerse release testing: start here
 
-The current candidate has 34 games, a 70-image desktop/mobile gallery, and six KidsCoin lessons with 20 questions each. KidsCoin rounds still contain three questions. Repair Café draws ten unique repairs from its twenty-scenario bank.
+The current candidate has 35 games, a 72-image desktop/mobile gallery, and six KidsCoin lessons with 20 questions each. KidsCoin rounds still contain three questions. Repair Café draws ten unique repairs from its twenty-scenario bank.
 
 Automated checks provide evidence. The hands-on desktop, physical-phone, gallery, print, and final release checks remain human decisions.
 
 ## 1. Confirm the live candidate
 
-Open [Deployment Readiness](https://larrinamsalva.github.io/larriverse-arcade/qa/readiness.html). Confirm **5/5**, **34/34** routes, and hidden private files. Keep the displayed source commit with your test notes. If it changes during testing, confirm which build the reports and gallery describe before final approval.
+Open [Deployment Readiness](https://larrinamsalva.github.io/larriverse-arcade/qa/readiness.html). Confirm **5/5**, **35/35** routes, and hidden private files. Keep the displayed source commit with your test notes. If it changes during testing, confirm which build the reports and gallery describe before final approval.
 
 ## 2. Test on the desktop or laptop
 
 Open [Guided QA](https://larrinamsalva.github.io/larriverse-arcade/qa/), select **Desktop or laptop browser**, and enter the actual device/browser and tester name or initials.
 
-Start with these recent changes, then complete all 34 cabinet tasks shown by the console:
+Start with these recent changes, then complete all 35 cabinet tasks shown by the console:
 
 | Game | Check during play |
 | --- | --- |
@@ -30,13 +30,13 @@ Complete the six device-wide checks: controls, accessibility, backup/restore, pr
 
 Open the same [Guided QA link](https://larrinamsalva.github.io/larriverse-arcade/qa/) in the phone's normal browser and select **Physical phone browser**. Use the real phone/browser description and tester name or initials.
 
-Complete all 34 cabinet tasks with touch, then all six device-wide checks. Include scrolling, orientation, enlarged text, contrast, reduced motion, sound, and backup/restore. Desktop mobile emulation cannot supply this report. Export the phone QA JSON and move it to the computer using your usual trusted method.
+Complete all 35 cabinet tasks with touch, then all six device-wide checks. Include scrolling, orientation, enlarged text, contrast, reduced motion, sound, and backup/restore. Desktop mobile emulation cannot supply this report. Export the phone QA JSON and move it to the computer using your usual trusted method.
 
 ## 4. Review the gallery
 
 Download the successful Browser QA gallery artifact, or use a verified gallery review pack prepared from the same candidate. Extract the ZIP and open `gallery-review/index.html` when using the prepared test pack; GitHub's gallery-only artifact places `index.html` at its root.
 
-Inspect all 70 images for readable controls, clipping, useful alt text, and private data. The gallery begins pending. Approve or reject each image based on your inspection, complete the five gallery checks, and export the gallery approval JSON only when every image has genuinely passed.
+Inspect all 72 images for readable controls, clipping, useful alt text, and private data. The gallery begins pending. Approve or reject each image based on your inspection, complete the five gallery checks, and export the gallery approval JSON only when every image has genuinely passed.
 
 ## 5. Keep these three files
 

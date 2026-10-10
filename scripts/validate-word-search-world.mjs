@@ -41,8 +41,8 @@ const catalog=JSON.parse(fs.readFileSync("games/catalog.json","utf8"));
 const release=JSON.parse(fs.readFileSync("release.json","utf8"));
 assert.ok(catalog.some(x=>x.id==="word-search-world"&&x.available));
 assert.ok(release.cabinets.some(x=>x.id==="word-search-world"));
-assert.equal(release.cabinetCount,34);
-assert.equal(release.galleryReview.expectedImages,70);
+assert.equal(release.cabinetCount,catalog.length);
+assert.equal(release.galleryReview.expectedImages,(catalog.length+1)*2);
 const html=fs.readFileSync("games/word-search-world/index.html","utf8");
 const engine=fs.readFileSync("games/word-search-world/game.js","utf8");
 for(const id of ["wordGrid","wordList","levelPicker","hintButton","clearSelection","restartLevel",
