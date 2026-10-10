@@ -125,6 +125,10 @@
       welcome: 'Real-life skills grow through practice. Choose a lesson that feels useful or interesting today.',
       hint: 'There is no need to rush. Think about how the choice could work in everyday life.'
     },
+    'kids-sudoku': {
+      welcome: 'Welcome to Kids Sudoku World! We will grow from small four-number patterns to classic Sudoku across sixty levels. No rush, just curiosity!',
+      hint: 'Each row, each column, and each outlined little box needs every number just once. Check what is already there, and use the free hint when you want a clue.'
+    },
     'bubble-resonance-phi369': {
       welcome: 'Twenty fields of glossy round bubbles and three rotating power bubbles are ready. Let’s line up a clever bank shot and clear them together.',
       hint: 'Watch the next-bubble preview. Row Wave clears a row, Star Burst clears touching bubbles, and Color Sweep clears every matching number.'
