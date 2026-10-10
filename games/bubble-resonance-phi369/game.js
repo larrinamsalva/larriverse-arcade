@@ -216,9 +216,9 @@ function win(){
   cancelLevelAdvance();
   gameOver=true;won=true;levelCleared=false;shot=null;dropAnimation=null;
   canvas.setAttribute('aria-busy','false');award();
-  $('#reset').textContent='Play all 20 again';
-  announce('ALL 20 LEVELS CLEARED','Every round bubble is clear — you win!','#d4c44a',true);
-  setLevelAction('Play all 20 again');tone(880,'sine',.65,.14);hud();
+  $('#reset').textContent=`Play all ${MAX_LEVEL} again`;
+  announce(`ALL ${MAX_LEVEL} LEVELS CLEARED`,'Every round bubble is clear — you win!','#d4c44a',true);
+  setLevelAction(`Play all ${MAX_LEVEL} again`);tone(880,'sine',.65,.14);hud();
 }
 function end(title='FIELD EXPLORED',sub=`score: ${score} · cleared: ${cleared} · try another round when ready`){
   cancelLevelAdvance();
