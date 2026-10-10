@@ -15,16 +15,16 @@
 
 These existing games already had 60: **Pantry Picnic, Traffic Town, Street Safety Scout, Scam Sleuth, Kindness Quest, Fact Finder, Repair Café, Time Trail, Reuse Rally, Kids Sudoku.**
 
-**Main catalog after this PR: 16 of 35 cabinets have 60 distinct sequential puzzles or questions.** **Word Search World** and **Crossword World** have merged with 60 levels apiece and are included in the 16 complete cabinets.
+**Main catalog after this PR: 20 of 35 cabinets have 60 distinct sequential puzzles or questions.** Four additional expedition worlds have expanded from 20 to 60. The table below is the remaining work queue; the four completed items above are retained for a transparent change record. **Word Search World** and **Crossword World** have merged with 60 levels apiece and are included in the 16 complete cabinets.
 
 ## Remaining fixed-length worlds and accurate gap
 
 | World | Actual playable challenges | More required |
 | --- | ---: | ---: |
-| Water Works | 20 | 40 |
-| Harbor Helpers | 20 | 40 |
-| Compass Cove | 20 | 40 |
-| Cipher Club | 20 | 40 |
+| Water Works | **60** | 0 |
+| Harbor Helpers | **60** | 0 |
+| Compass Cove | **60** | 0 |
+| Cipher Club | **60** | 0 |
 | Trade Town | 8 | 52 |
 | Critter Council | 20 | 40 |
 | Pocket Planet | 30 | 30 |
@@ -60,6 +60,13 @@ Those games must get genuinely new, **solvable** routes, transactions, layouts, 
 ## Suggested rollout
 
 1. **Completed:** Word Search PR #58 and Crossword PR #59 merged after successful validation and browser QA. Keep the same check requirements for PR #60.
-2. **Infrastructure expedition pack**: Water Works, Harbor Helpers, Compass Cove, Cipher Club.
+2. **Completed in this PR:** Water Works, Harbor Helpers, Compass Cove, Cipher Club expanded with forty new solvable challenges each.
 3. **Builder/economy pack**: Trade Town, Critter Council, Pocket Planet, Garden Guardians, Energy Island, Robot Rover.
 4. **Creative/adventure pack**: Lemonade Lab, Beat Builder, Creature Catcher, Road Trip and family/Brain Sweat mini-worlds. Design sixty actual tasks per mode rather than relabeling existing play.
+
+### Expedition expansion verification
+
+- Water Works: 60 unique simple pipe routes through the filter, from nine to 21 tiles, with actual flow tracing and turn-to-solve validation.
+- Harbor Helpers: 60 named islands and 60 distinct, capacity-safe crate requests. Later islands require more cargo categories, with no paid materials.
+- Compass Cove: 60 different landmark-and-step routes on a **36-tile** map. Targets may repeat because 60 unique destinations are mathematically impossible on 36 cells; route identities must not repeat.
+- Cipher Club: 60 different real English words using the A–H toy cipher, including longer six-to-nine-letter vocabulary and helpful meanings. It is a puzzle, not real encryption.
