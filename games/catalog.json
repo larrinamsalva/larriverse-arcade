@@ -683,5 +683,26 @@
     "href": "games/kids-sudoku/index.html",
     "source": "Original LarriVerse Sudoku World, 2026",
     "integration": "arcade-sdk-v3"
+  },
+  {
+    "id": "word-search-world",
+    "title": "Word Search World",
+    "icon": "🔎",
+    "category": "Patterns & puzzles",
+    "topic": "Brain games",
+    "age": "6+",
+    "minutes": "12 min",
+    "art": 2,
+    "skill": "Vocabulary, focus & reading",
+    "desc": "Find hidden words across 60 gradually harder themed puzzles, from friendly 6×6 grids to 12×12 challenges.",
+    "mission": "Explore 60 uniquely themed word-search levels across six chapters: gardens, weather, kindness, building tools, money skills, and geography. Learn across, down, diagonal and backwards words with hints, stars and saved progress.",
+    "take": "Search rows, columns and diagonals carefully. Work at your own pace; the next puzzle unlocks when all words are found.",
+    "available": true,
+    "featured": true,
+    "isNew": true,
+    "status": "Playable",
+    "href": "games/word-search-world/index.html",
+    "source": "Original LarriVerse Word Search World, 2026",
+    "integration": "arcade-sdk-v3"
   }
 ]

@@ -5,7 +5,7 @@
   "tag": "v1.0.0",
   "title": "LarriVerse Arcade 1.0",
   "releaseState": "candidate",
-  "cabinetCount": 33,
+  "cabinetCount": 34,
   "humanChecksRequired": true,
   "qaRoute": "qa/index.html",
   "releaseNotes": "docs/RELEASE-NOTES-1.0.0.md",
@@ -35,7 +35,7 @@
   },
   "galleryReview": {
     "schema": "larriverse-gallery-review",
-    "expectedImages": 68,
+    "expectedImages": 70,
     "projects": [
       "desktop-chromium",
       "mobile-chromium"
@@ -340,6 +340,12 @@
       "title": "Kids Sudoku World",
       "route": "games/kids-sudoku/index.html",
       "manualFocus": "Play starter 4×4, junior 6×6, and classic 9×9 Sudoku. Verify all 60 unique puzzles, hints, undo, pencil notes, picture helpers, keyboard and touch, conflict warnings, correct solution validation, unlocked level selection, stars, local save/reload, mobile and high-contrast themes. Human gallery, physical phone, and release approval remain mandatory."
+    },
+    {
+      "id": "word-search-world",
+      "title": "Word Search World",
+      "route": "games/word-search-world/index.html",
+      "manualFocus": "Complete levels 1 and 10 with finger drags and tapping the first and last letter, inspect diagonal and backwards word selections, and verify levels 20→21, 40→41, 50→51 and 59→60. Confirm 60 generated grids, hints, keyboard arrows, found-word coloring, local save/reload, stars, completed chapter badges, responsive 6×6/12×12 boards, dark/light/high-contrast contrast, and a final 60-level victory. Keep mandatory physical phone and screenshot approval."
     }
   ]
 }
