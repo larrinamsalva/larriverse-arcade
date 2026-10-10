@@ -12,6 +12,7 @@ import {
 } from "./skill-worlds.js";
 import { budgetAdventures } from "./budget-adventures.js";
 import { createExpedition } from "./expedition-games.js";
+import { timeTrail, shortestTrailPath } from "./time-trail-level.js";
 import { gardenLevels, energyLevels } from "./garden-energy-levels.js";
 import {
   mountScene,
@@ -254,10 +255,10 @@ function initialize() {
       renderRepair();
       break;
     case "route":
-      state.player = 20;
+      state.player = timeTrail.start;
       state.moves = 0;
       state.flags = new Set();
-      state.visited = new Set([20]);
+      state.visited = new Set([timeTrail.start]);
       renderRoute();
       break;
     case "garden":
@@ -636,9 +637,10 @@ function renderRepair() {
   hint = item.hint;
 }
 
-const routeRocks = new Set([6, 7, 8, 16, 17, 18]);
-const routeFlags = [10, 2, 14];
-const ROUTE_STEP_LIMIT = 16;
+const routeRocks = new Set(timeTrail.rocks);
+const routeFlags = timeTrail.flags;
+const ROUTE_STEP_LIMIT = timeTrail.stepLimit;
+const ROUTE_BEST_STEPS = shortestTrailPath(timeTrail).length - 1;
 function adjacent(a, b) {
   return (
     Math.abs(Math.floor(a / 5) - Math.floor(b / 5)) +
@@ -647,22 +649,23 @@ function adjacent(a, b) {
   );
 }
 function renderRoute() {
-  stage("Three flags. One picnic.");
-  board.innerHTML = `<p class="route-instruction"><strong>16-step trail</strong><span>Move one square at a time. Collect every flag before the picnic.</span></p><div class="stat-row route-stats">${chip("Steps left", ROUTE_STEP_LIMIT - state.moves)}${chip("Flags found", `${state.flags.size}/3`)}</div><div class="route-legend"><span>🧑 You</span><span>🚩 Mission</span><span>🧺 Finish</span></div><div class="tile-grid" aria-label="Park route grid">${Array.from(
+  stage("Three flags. One shorter trail.");
+  board.innerHTML = `<p class="route-instruction"><strong>${ROUTE_STEP_LIMIT} moves maximum</strong><span>Collect three flags, then reach the picnic. Glowing tiles are one move away.</span></p><div class="stat-row route-stats">${chip("Steps left", ROUTE_STEP_LIMIT - state.moves)}${chip("Flags found", `${state.flags.size}/3`)}${chip("Shortest route", `${ROUTE_BEST_STEPS} moves`)}</div><div class="route-legend"><span>🧑 You</span><span>🚩 Mission</span><span>🧺 Finish</span><span>✨ Glowing = next move</span></div><div class="tile-grid" aria-label="Park route grid">${Array.from(
     { length: 25 },
     (_, i) => {
       const rock = routeRocks.has(i),
         flag = routeFlags.includes(i),
-        finishTile = i === 4,
+        finishTile = i === timeTrail.finish,
+        reachable = state.moves < ROUTE_STEP_LIMIT && !rock && adjacent(state.player, i) && i !== state.player,
         player = i === state.player;
-      return `<button class="tile ${rock ? "rock" : ""} ${player ? "player" : ""} ${flag ? "flag" : ""} ${finishTile ? "finish" : ""} ${state.visited.has(i) ? "visited" : ""}" data-tile="${i}" aria-label="Row ${Math.floor(i / 5) + 1}, column ${(i % 5) + 1}, ${player ? "your position" : rock ? "rock" : flag ? (state.flags.has(i) ? "flag collected" : "mission flag") : finishTile ? "picnic finish" : "path"}" ${rock || player ? "disabled" : ""}>${player ? "🧑" : rock ? "🪨" : flag ? (state.flags.has(i) ? "✓" : "🚩") : finishTile ? "🧺" : "·"}</button>`;
+      return `<button class="tile ${rock ? "rock" : ""} ${player ? "player" : ""} ${reachable ? "route-reachable" : ""} ${flag ? "flag" : ""} ${finishTile ? "finish" : ""} ${state.visited.has(i) ? "visited" : ""}" data-tile="${i}" aria-label="Row ${Math.floor(i / 5) + 1}, column ${(i % 5) + 1}, ${player ? "your position" : rock ? "rock" : flag ? (state.flags.has(i) ? "flag collected" : "mission flag") : finishTile ? "picnic finish" : "path"}${reachable ? ", next possible move" : ""}" ${rock || player || state.moves >= ROUTE_STEP_LIMIT ? "disabled" : ""}>${player ? "🧑" : rock ? "🪨" : flag ? (state.flags.has(i) ? "✓" : "🚩") : finishTile ? "🧺" : "·"}</button>`;
     },
   ).join("")}</div>`;
   bind("[data-tile]", (node) => moveRoute(Number(node.dataset.tile)));
-  progress(state.flags.size, 3, `${state.flags.size} of 3 flags found`);
+  progress(state.flags.size, routeFlags.length, `${state.flags.size} of ${routeFlags.length} flags found`);
   updateScore(state.flags.size * 25);
   hint =
-    "Walk up the left side, across the top to the flag, then around the right side for the last flag. Backtracking uses steps, too.";
+    "The first flag is one tile above you. Follow the left edge, collect the next flag, then turn right across the top toward the picnic. You can finish in eight moves!";
   if (state.moves >= ROUTE_STEP_LIMIT) button("Try a new route", initialize);
 }
 function moveRoute(next) {
@@ -682,21 +685,21 @@ function moveRoute(next) {
   if (routeFlags.includes(next)) state.flags.add(next);
   tone();
   renderRoute();
-  if (next === 4 && state.flags.size === 3) {
+  if (next === timeTrail.finish && state.flags.size === routeFlags.length) {
     finish(
       `You visited every flag and reached the picnic in ${state.moves} steps. A route is a plan you can test.`,
-      Math.min(100, 115 - state.moves),
+      Math.max(80, 100 - Math.max(0, state.moves - ROUTE_BEST_STEPS) * 5),
     );
     return;
   }
   if (state.moves >= ROUTE_STEP_LIMIT)
     say(
-      "Your 16-step trail is finished. Start again and try fewer detours. The rocks do not move.",
+      `Your ${ROUTE_STEP_LIMIT}-move trail is finished. Try a shorter route using the glowing neighboring tiles.`,
       "try",
     );
   else
     say(
-      next === 4
+      next === timeTrail.finish
         ? "Visit all three flags before finishing at the picnic."
         : `You have ${ROUTE_STEP_LIMIT - state.moves} steps left. Look ahead to your next flag.`,
     );

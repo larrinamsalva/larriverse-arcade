@@ -357,38 +357,41 @@ test("Repair Café: draw eight unique repairs from a twenty-scenario bank", asyn
     expect(new Set(seen).size).toBe(8);
   });
 });
-test("Time Trail: use a legal route, gather all flags, and reach the picnic", async ({
-  page,
-}) => {
+test("Time Trail: eight clear moves collect every flag and reach the picnic", async ({ page }) => {
+  const path = shortestTrailPath(timeTrail);
+  expect(path).toEqual([20, 15, 10, 5, 0, 1, 2, 3, 4]);
   await round(page, "time-trail", async () => {
-    await expect(page.locator("#missionText")).toContainText("16 steps");
-    await expect(page.locator(".route-stats .stat-chip").first()).toContainText(
-      /Steps left\s*16/,
-    );
+    await expect(page.locator("#missionText")).toContainText("12 moves allowed");
+    await expect(page.locator(".route-instruction")).toContainText("12 moves maximum");
+    await expect(page.locator(".route-stats")).toContainText("Shortest route8 moves");
+    await expect(page.locator(".route-stats .stat-chip").first()).toContainText(/Steps left\s*12/);
+    await expect(page.locator(".tile.route-reachable")).toHaveCount(2);
     await page.locator('[data-tile="4"]').click();
     await expect(page.locator("#feedback")).toContainText("nearby");
-    await page.locator('[data-tile="15"]').click();
-    await expect(page.locator(".route-stats .stat-chip").first()).toContainText(
-      /Steps left\s*15/,
-    );
-    for (const tile of [10, 5, 0, 1, 2, 3, 4, 9, 14, 9, 4])
+    await expect(page.locator(".route-stats .stat-chip").first()).toContainText(/Steps left\s*12/);
+    for (const [index, tile] of path.slice(1).entries()) {
+      await expect(page.locator(`[data-tile="${tile}"]`)).toHaveClass(/route-reachable/);
       await page.locator(`[data-tile="${tile}"]`).click();
+      if (index < path.length - 2)
+        await expect(page.locator(".route-stats .stat-chip").first())
+          .toContainText(new RegExp(`Steps left\\s*${12 - (index + 1)}`));
+    }
+    await expect(page.locator("#finishMessage")).toContainText("in 8 steps");
+    await expect(page.locator("#finishScore")).toHaveText("100");
   });
 });
-test("Time Trail: stop the route at exactly sixteen steps", async ({ page }) => {
+test("Time Trail: the twelve-move limit is exact and tiles disable", async ({ page }) => {
   await page.goto("/games/time-trail/index.html");
-  for (let move = 0; move < 16; move++) {
+  for (let move = 0; move < timeTrail.stepLimit; move++) {
     await page.locator(`[data-tile="${move % 2 === 0 ? 15 : 20}"]`).click();
   }
-  await expect(page.locator(".route-stats .stat-chip").first()).toContainText(
-    /Steps left\s*0/,
-  );
-  await expect(page.locator("#feedback")).toContainText(
-    "16-step trail is finished",
-  );
-  await expect(
-    page.getByRole("button", { name: "Try a new route", exact: true }),
-  ).toBeVisible();
+  await expect(page.locator(".route-stats .stat-chip").first()).toContainText(/Steps left\s*0/);
+  await expect(page.locator("#feedback")).toContainText("12-move trail is finished");
+  await expect(page.locator(".tile.route-reachable")).toHaveCount(0);
+  await expect(page.locator('[data-tile="15"]')).toBeDisabled();
+  await page.getByRole("button", { name: "Try a new route", exact: true }).click();
+  await expect(page.locator(".route-stats .stat-chip").first()).toContainText(/Steps left\s*12/);
+  await expect(page.locator(".tile.route-reachable")).toHaveCount(2);
 });
 test("Garden Guardians: finish eight gardens, four ranks, and changing water goals", async ({ page }) => {
   test.setTimeout(120000);
