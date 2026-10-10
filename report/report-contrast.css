@@ -1,0 +1,123 @@
+/* Report-specific color pairings, loaded AFTER the shared accessibility stylesheet.
+   Prevent light cards inheriting white text when Dark Mode is enabled. */
+html.larriverse-light body .cabinet-row.unvisited,
+html:not(.larriverse-dark) body .cabinet-row.unvisited {
+  opacity: 1;
+  background: #f3f7f5;
+  color: #203b35;
+}
+html.larriverse-dark {
+  --ink: #f6f4ff;
+  --muted: #e0daf5;
+  --paper: #241e3b;
+  --green: #b8f6db;
+  --green-dark: #c7fbe5;
+  --mint: #3d3359;
+  --line: #756a9c;
+  --shadow: 0 12px 24px #05030e66;
+}
+html.larriverse-dark body { color: var(--ink); }
+html.larriverse-dark body :is(.report-hero, .privacy-note, .report-section, .boundary-card,
+  .stat-grid article, .insight-panel, .insight-card, .empty-card, .subject-card,
+  .path-card, .cabinet-row, .activity-list li, .starter-list li, .report-nav) {
+  background: #29223f;
+  border-color: #8074ae;
+  color: #fcfbff;
+}
+html.larriverse-dark body :is(.insight-panel, .subject-card, .cabinet-row.unvisited,
+  .path-card, .activity-list li, .starter-list li) { background: #322a49; }
+html.larriverse-dark body .cabinet-row.unvisited { opacity: 1; }
+html.larriverse-dark body :is(.report-hero, .report-section, .privacy-note, .boundary-card,
+  .stat-grid article, .insight-panel, .insight-card, .empty-card, .subject-card,
+  .path-card, .cabinet-row, .activity-list li, .starter-list li, .report-nav)
+  :is(h1, h2, h3, strong, b, p, small, span, time, .cabinet-date, .cabinet-metric small,
+  .lede, .report-date, .section-head > p, .subsection-head > p) { color: #f6f4ff; }
+html.larriverse-dark body :is(.lede, .report-date, .cabinet-date,
+  .cabinet-metric small, .section-head > p, .subsection-head > p,
+  .empty-card p, .subject-card p, .path-card p, .activity-list span,
+  .insight-card span, .privacy-note p) { color: #dfd8f2; }
+html.larriverse-dark body .report-nav nav a,
+html.larriverse-dark body .report-nav .brand,
+html.larriverse-dark body footer a { color: #d6ffe8; }
+html.larriverse-dark body .primary { color: #172e27; background: #b8f6db; border-color: #b8f6db; }
+html.larriverse-dark body .secondary {
+  background: #392e59; color: #fbfaff; border-color: #b9afe9;
+}
+html.larriverse-dark body .level-seal {
+  background: linear-gradient(140deg, #5e3e26, #8b6736);
+  border-color: #ffe4a0; color: #fff8de;
+}
+html.larriverse-dark body .level-seal :is(strong, span, small) { color: #fff8de; }
+html.larriverse-dark body .meter { background: #5c5173; }
+html.larriverse-dark body .meter span { background: #a8f2cc; }
+
+/* The learning report must also have legible dark ink on white in light mode.
+   Scope these to this page; never override the comfort dialog styles. */
+html.larriverse-light body :is(.report-section, .report-hero, .privacy-note, .stat-grid article,
+  .cabinet-row, .path-card, .subject-card, .insight-panel, .insight-card, .empty-card) {
+  color: #17332f;
+}
+html.larriverse-light body .report-nav { background: #fffef9; color: #17332f; }
+
+/* Strictly monochrome, large readable contrast for users who request it. */
+html.larriverse-high-contrast body :is(.report-hero, .privacy-note, .report-section,
+  .boundary-card, .stat-grid article, .insight-panel, .insight-card,
+  .empty-card, .subject-card, .path-card, .cabinet-row, .activity-list li,
+  .starter-list li, .report-nav) {
+  background: #080808 !important; color: #fff !important;
+  border: 2px solid #fff !important; opacity: 1 !important;
+}
+html.larriverse-high-contrast body :is(.report-hero, .privacy-note, .report-section,
+  .boundary-card, .stat-grid article, .insight-panel, .insight-card,
+  .empty-card, .subject-card, .path-card, .cabinet-row, .activity-list li,
+  .starter-list li, .report-nav) :is(h1,h2,h3,p,small,strong,b,span,time,a) {
+  color: #fff !important;
+}
+html.larriverse-high-contrast body .meter { background: #fff !important; }
+html.larriverse-high-contrast body .meter span { background: #ffeb00 !important; }
+@media print {
+  html.larriverse-dark body :is(.report-hero, .privacy-note, .report-section,
+    .boundary-card, .stat-grid article, .insight-panel, .insight-card,
+    .empty-card, .subject-card, .path-card, .cabinet-row, .activity-list li,
+    .starter-list li, .report-nav) { background: #fff !important; color: #111 !important; }
+  html.larriverse-dark body :is(.report-hero, .privacy-note, .report-section,
+    .boundary-card, .stat-grid article, .insight-panel, .insight-card,
+    .empty-card, .subject-card, .path-card, .cabinet-row, .activity-list li,
+    .starter-list li, .report-nav) :is(h1,h2,h3,p,small,strong,b,span,time,a) { color: #111 !important; }
+}
+
+/* Learning Goals cards are shared with other pages and originally almost transparent. */
+html:not(.larriverse-dark) body :is(.shared-goal-card,.shared-goal-empty) {
+  background:#eef8f1;border:2px solid #81a999;color:#173c30;
+}
+html.larriverse-dark body :is(.shared-goal-card,.shared-goal-empty) {
+  background:#392e50;border:2px solid #9586bd;color:#fff;
+}
+html.larriverse-dark body :is(.shared-goal-card,.shared-goal-empty) :is(strong,p,small,span,a) {
+  color:#fff;opacity:1;
+}
+html.larriverse-high-contrast body :is(.shared-goal-card,.shared-goal-empty) {
+  background:#080808!important;border:2px solid #fff!important;color:#fff!important;
+}
+html.larriverse-high-contrast body :is(.shared-goal-card,.shared-goal-empty) :is(strong,p,small,span,a) {
+  color:#fff!important;opacity:1!important;
+}
+
+/* Print uses black ink on white, even if the on-screen high-contrast theme
+   was enabled. This also preserves grayscale legibility for paper reports. */
+@media print {
+  html.larriverse-high-contrast body #reportMain,
+  html.larriverse-high-contrast body #reportMain :is(h1,h2,h3,p,small,strong,b,span,time,a),
+  html.larriverse-dark.larriverse-high-contrast body #reportMain :is(h1,h2,h3,p,small,strong,b,span,time,a) {
+    color: #111 !important;
+    text-shadow: none !important;
+  }
+  html.larriverse-high-contrast body #reportMain :is(.report-hero,.privacy-note,.report-section,
+    .boundary-card,.stat-grid article,.insight-panel,.insight-card,.empty-card,
+    .subject-card,.path-card,.cabinet-row,.activity-list li,.starter-list li,
+    .shared-goal-card,.shared-goal-empty) {
+    color: #111 !important;
+    background: #fff !important;
+    border-color: #777 !important;
+  }
+}

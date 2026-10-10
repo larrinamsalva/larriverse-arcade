@@ -148,3 +148,50 @@ test.describe('LarriVerse Family Learning Report', () => {
     expect(errors).toEqual([]);
   });
 });
+
+
+test('Family report: dark, light and high-contrast cards remain readable', async ({page}) => {
+  await page.goto('/report/');
+  const assess = async (theme, highContrast) => {
+    await page.evaluate(({theme, highContrast}) =>
+      window.LarriVerseArcade.setSettings({theme, highContrast, reducedMotion: true}),
+      {theme, highContrast});
+    await expect(page.locator('html')).toHaveClass(new RegExp(highContrast?'larriverse-high-contrast':`larriverse-${theme}`));
+    const ratios = await page.evaluate(() => {
+      const rgb = css => (css.match(/\d+(?:\.\d+)?/g) || []).slice(0,3).map(Number);
+      const lum = components => components.map(n => {
+        const s=n/255;
+        return s<=0.04045?s/12.92:((s+0.055)/1.055)**2.4;
+      }).reduce((sum,value,i)=>sum+value*[0.2126,0.7152,0.0722][i],0);
+      const ratio=(fg,bg)=>{
+        const l1=lum(rgb(fg)),l2=lum(rgb(bg));
+        return (Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05);
+      };
+      const targets=[
+        ['hero','#reportTitle','.report-hero'],
+        ['hero detail','.lede','.report-hero'],
+        ['goals','.section-head > p','#goals'],
+        ['empty goal','.shared-goal-empty strong','.shared-goal-empty'],
+        ['cabinet','.cabinet-title','.cabinet-row.unvisited'],
+        ['cabinet detail','.cabinet-metric small','.cabinet-row.unvisited'],
+      ];
+      return targets.map(([name,foreground,background])=>{
+        const element=document.querySelector(foreground);
+        const panel=document.querySelector(background);
+        if(!element||!panel)return {name,missing:true};
+        const style=getComputedStyle(element);
+        const panelStyle=getComputedStyle(panel);
+        return {name,value:ratio(style.color,panelStyle.backgroundColor),
+          foreground:style.color,background:panelStyle.backgroundColor};
+      });
+    });
+    for(const item of ratios){
+      expect(item.missing,`${item.name} selector present`).toBeUndefined();
+      expect(item.value,`${theme} contrast ${item.name} ${item.foreground} / ${item.background}`).toBeGreaterThanOrEqual(4.5);
+    }
+    await expect(page.locator('.cabinet-row.unvisited').first()).toHaveCSS('opacity','1');
+  };
+  await assess('light', false);
+  await assess('dark', false);
+  await assess('dark', true);
+});

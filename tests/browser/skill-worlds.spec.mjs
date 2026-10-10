@@ -11,8 +11,9 @@ import {
   weatherChallenges,
   gardenGrowthChallenges,
 } from "../../assets/skill-worlds.js";
-import { budgetAdventures } from "../../assets/budget-adventures.js";
+import { resourceAdventures } from "../../assets/budget-adventures.js";
 import { gardenLevels, energyLevels } from "../../assets/garden-energy-levels.js";
+import { timeTrailLevelsWithGoals as timeTrailLevels, shortestTrailPath } from "../../assets/time-trail-level.js";
 
 async function round(page, id, play) {
   const errors = [];
@@ -140,64 +141,68 @@ function shortestRobotProgram(level) {
   throw new Error(`No route found for ${level.name}`);
 }
 
-test("Pocket Planet: five different budgets, needs, savings, and saved completion", async ({ page }) => {
-  await round(page, "pocket-planet", async () => {
-    const seen = new Set();
-    for (let step = 0; step < 5; step++) {
-      const title = await page.locator(".budget-hero h2").innerText();
-      const plan = budgetAdventures.find((candidate) => candidate.title === title);
-      expect(plan, `known money mission: ${title}`).toBeTruthy();
-      expect(seen.has(plan.id), `${plan.id} has not repeated this round`).toBe(false);
+async function completePlanetProject(page,plan,testMistakes=false) {
+  if(testMistakes){
+    await page.getByRole("button",{name:"Use my supplies"}).click();
+    await expect(page.locator("#feedback")).toContainText("exactly three");
+    await page.locator('[data-supply="3"]').click();
+    await page.locator('[data-supply="4"]').click();
+    await page.locator('[data-supply="5"]').click();
+    await page.getByRole("button",{name:"Use my supplies"}).click();
+    await expect(page.locator("#feedback")).toContainText("do not help");
+    for(let i=3;i<6;i++)await page.locator(`[data-supply="${i}"]`).click();
+  }
+  for(let i=0;i<3;i++)await page.locator(`[data-supply="${i}"]`).click();
+  await page.getByRole("button",{name:"Use my supplies"}).click();
+  if(testMistakes){
+    await page.locator('[data-make-step="2"]').click();
+    await expect(page.locator("#feedback")).toContainText("Try another step");
+  }
+  for(let i=0;i<3;i++){
+    await page.locator(`[data-make-step="${i}"]`).click();
+    if(i<2)await expect(page.locator(".planet-step-status")).toContainText(`Step ${i+2} of 3`);
+  }
+}
+test("Pocket Planet: ten building, food and garden projects without coins",async({page})=>{
+  test.setTimeout(180000);
+  expect(resourceAdventures).toHaveLength(30);
+  await round(page,"pocket-planet",async()=>{
+    const seen=new Set();
+    for(let i=0;i<10;i++){
+      const title=await page.locator(".budget-hero h2").innerText();
+      const plan=resourceAdventures.find(p=>p.title===title);
+      expect(plan).toBeTruthy();
+      expect(seen.has(plan.id)).toBe(false);
       seen.add(plan.id);
-      await expect(page.locator("#stageLabel")).toContainText(`Adventure ${step + 1}/5`);
-      await expect(page.locator(".budget-hero")).toContainText(plan.goal);
-      await expect(page.locator("[data-buy]")).toHaveCount(6);
-      await page.getByRole("button", { name: "Try my plan" }).click();
-      await expect(page.locator("#feedback")).toContainText("still needs");
-      for (let index = 0; index < 3; index++)
-        await page.locator(`[data-buy="${index}"]`).click();
-      const left = plan.coins - plan.items.filter((item) => item.need)
-        .reduce((sum, item) => sum + item.cost, 0);
-      const tempting = plan.items.findIndex(
-        (item) => !item.need && item.cost <= left && left - item.cost < plan.save,
-      );
-      expect(tempting, `${plan.id} has an extra that risks savings`).toBeGreaterThanOrEqual(3);
-      await page.locator(`[data-buy="${tempting}"]`).click();
-      await page.getByRole("button", { name: "Try my plan" }).click();
-      await expect(page.locator("#feedback")).toContainText("savings goal needs");
-      await page.locator(`[data-buy="${tempting}"]`).click();
-      await page.getByRole("button", { name: "Try my plan" }).click();
-      if (step < 4) {
-        await expect(page.locator("#feedback")).toContainText("Great plan");
-        await page.getByRole("button", { name: "Next money mission" }).click();
-      }
+      await expect(page.locator("#stageLabel")).toContainText(`Project ${i+1}/10`);
+      await expect(page.locator("[data-supply]")).toHaveCount(6);
+      await expect(page.locator("#gameBoard")).not.toContainText(/coins left|starting coins|price per/);
+      await completePlanetProject(page,plan,i===0);
+      if(i<9)await page.getByRole("button",{name:"Next project"}).click();
     }
-    expect(seen.size).toBe(5);
+    expect(seen.size).toBe(10);
+    await expect(page.locator("#finishMessage")).toContainText("10 hands-on projects");
   });
 });
-
-test("Pocket Planet: four replays reveal all twenty missions without repeats", async ({ page }) => {
-  test.setTimeout(90000);
+test("Pocket Planet: three replays show all thirty projects once",async({page})=>{
+  test.setTimeout(240000);
   await page.goto("/games/pocket-planet/index.html");
-  const seen = new Set();
-  for (let round = 0; round < 4; round++) {
-    for (let stage = 0; stage < 5; stage++) {
-      const title = await page.locator(".budget-hero h2").innerText();
-      const plan = budgetAdventures.find((item) => item.title === title);
+  const seen=new Set();
+  for(let round=0;round<3;round++){
+    for(let i=0;i<10;i++){
+      const title=await page.locator(".budget-hero h2").innerText();
+      const plan=resourceAdventures.find(p=>p.title===title);
       expect(plan).toBeTruthy();
-      expect(seen.has(plan.id), `${plan.id} should not repeat in four rounds`).toBe(false);
+      expect(seen.has(plan.id)).toBe(false);
       seen.add(plan.id);
-      for (let i = 0; i < 3; i++)
-        await page.locator(`[data-buy="${i}"]`).click();
-      await page.getByRole("button", { name: "Try my plan" }).click();
-      if (stage < 4)
-        await page.getByRole("button", { name: "Next money mission" }).click();
+      await completePlanetProject(page,plan);
+      if(i<9)await page.getByRole("button",{name:"Next project"}).click();
     }
     await expect(page.locator("#finishDialog")).toBeVisible();
     await page.locator("#closeFinish").click();
-    if (round < 3) await page.locator("#restartButton").click();
+    if(round<2)await page.locator("#restartButton").click();
   }
-  expect(seen.size).toBe(20);
+  expect(seen.size).toBe(30);
 });
 test("Scam Sleuth: complete shuffled messages and explanatory feedback", async ({
   page,
@@ -357,40 +362,41 @@ test("Repair Café: draw eight unique repairs from a twenty-scenario bank", asyn
     expect(new Set(seen).size).toBe(8);
   });
 });
-test("Time Trail: eight clear moves collect every flag and reach the picnic", async ({ page }) => {
-  const path = shortestTrailPath(timeTrail);
-  expect(path).toEqual([20, 15, 10, 5, 0, 1, 2, 3, 4]);
-  await round(page, "time-trail", async () => {
-    await expect(page.locator("#missionText")).toContainText("12 moves allowed");
-    await expect(page.locator(".route-instruction")).toContainText("12 moves maximum");
-    await expect(page.locator(".route-stats")).toContainText("Shortest route8 moves");
-    await expect(page.locator(".route-stats .stat-chip").first()).toContainText(/Steps left\s*12/);
-    await expect(page.locator(".tile.route-reachable")).toHaveCount(2);
+test("Time Trail: explore twenty different solvable maps across four ranks",async({page})=>{
+  test.setTimeout(240000);
+  expect(timeTrailLevels).toHaveLength(20);
+  await round(page,"time-trail",async()=>{
+    await expect(page.locator(".route-level-hero")).toContainText(timeTrailLevels[0].name);
+    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(4);
     await page.locator('[data-tile="4"]').click();
-    await expect(page.locator("#feedback")).toContainText("nearby");
-    await expect(page.locator(".route-stats .stat-chip").first()).toContainText(/Steps left\s*12/);
-    for (const [index, tile] of path.slice(1).entries()) {
-      await expect(page.locator(`[data-tile="${tile}"]`)).toHaveClass(/route-reachable/);
-      await page.locator(`[data-tile="${tile}"]`).click();
-      if (index < path.length - 2)
-        await expect(page.locator(".route-stats .stat-chip").first())
-          .toContainText(new RegExp(`Steps left\\s*${12 - (index + 1)}`));
+    await expect(page.locator("#feedback")).toContainText("glowing nearby");
+    for(const [index,level] of timeTrailLevels.entries()){
+      const path=shortestTrailPath(level);
+      await expect(page.locator("#stageLabel")).toContainText(`Map ${index+1} of 20`);
+      await expect(page.locator(".route-level-hero")).toContainText(level.name);
+      await expect(page.locator(".route-stats")).toContainText(`Shortest route${level.bestMoves} moves`);
+      await expect(page.locator(".route-stats")).toContainText(`Steps left${level.stepLimit}`);
+      for(const tile of path.slice(1)){
+        await expect(page.locator(`[data-tile="${tile}"]`)).toHaveClass(/route-reachable/);
+        await page.locator(`[data-tile="${tile}"]`).click();
+      }
+      await expect(page.locator("#feedback")).toContainText("3 stars earned");
+      await page.getByRole("button",{name:index===19?"See all my trails":"Next trail"}).click();
+      if(index<19)await expect(page.locator(".route-stats")).toContainText(`Trail stars${(index+1)*3}/60`);
     }
-    await expect(page.locator("#finishMessage")).toContainText("in 8 steps");
-    await expect(page.locator("#finishScore")).toHaveText("100");
+    await expect(page.locator("#finishMessage")).toContainText("60 of 60 trail stars");
   });
 });
-test("Time Trail: the twelve-move limit is exact and tiles disable", async ({ page }) => {
+test("Time Trail: exhausted moves allow retry without locking other levels",async({page})=>{
   await page.goto("/games/time-trail/index.html");
-  for (let move = 0; move < timeTrail.stepLimit; move++) {
-    await page.locator(`[data-tile="${move % 2 === 0 ? 15 : 20}"]`).click();
+  const level=timeTrailLevels[0];
+  for(let move=0;move<level.stepLimit;move++){
+    await page.locator(`[data-tile="${move%2===0?15:20}"]`).click();
   }
-  await expect(page.locator(".route-stats .stat-chip").first()).toContainText(/Steps left\s*0/);
-  await expect(page.locator("#feedback")).toContainText("12-move trail is finished");
+  await expect(page.locator(".route-stats")).toContainText("Steps left0");
   await expect(page.locator(".tile.route-reachable")).toHaveCount(0);
-  await expect(page.locator('[data-tile="15"]')).toBeDisabled();
-  await page.getByRole("button", { name: "Try a new route", exact: true }).click();
-  await expect(page.locator(".route-stats .stat-chip").first()).toContainText(/Steps left\s*12/);
+  await page.getByRole("button",{name:"Retry this trail"}).click();
+  await expect(page.locator(".route-stats")).toContainText(`Steps left${level.stepLimit}`);
   await expect(page.locator(".tile.route-reachable")).toHaveCount(2);
 });
 test("Garden Guardians: finish eight gardens, four ranks, and changing water goals", async ({ page }) => {

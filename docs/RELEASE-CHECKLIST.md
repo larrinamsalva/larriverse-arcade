@@ -78,12 +78,12 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Cipher Club — Use the toy A–H alphabet and a shared number key to encode or decode twenty messages that grow from three to five letters.
 - [ ] Trade Town — Fill three shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.
 - [ ] Critter Council — Complete twenty neighborhoods and eighty requests, verify all four advancement ranks, and check the central cards in light, dark, and high-contrast modes.
-- [ ] Pocket Planet — Complete all five budget missions using touch and keyboard, check needs-versus-extras and savings warnings, then replay until all twenty unique missions appear. Verify local completion and sound-off behavior.
+- [ ] Pocket Planet — Play ten projects focused on food, gardening, and building. Reject irrelevant supplies and incorrect step orders, check that no purchase or coins are requested, replay thirty unique projects, and verify themes, keyboard/touch, local completion, and sound-off.
 - [ ] Scam Sleuth — Complete a full Scam Sleuth round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Kindness Quest — Complete a full Kindness Quest round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Fact Finder — Complete a full Fact Finder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Repair Café — Complete a full Repair Café round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
-- [ ] Time Trail — Reach all three flags and the picnic in the eight-move route, test legal-neighbor highlights and the strict twelve-move limit, reset after losing, verify keyboard/touch and contrast modes, and confirm one saved completion with sound off.
+- [ ] Time Trail — Play twenty route maps across four ranks, check shortest paths, flag collection, spare move budgets, retry, next-level stars, theme contrast, keyboard/touch, saved completion and sound-off.
 - [ ] Garden Guardians — Complete all eight gardens, check crop quotas and scarce-water targets, visit all four ranks, test light/dark/high-contrast on phone, and verify stars, keyboard use, and local completion.
 - [ ] Energy Island — Complete eight islands and four ranks, verify shifting four-day forecasts, solar/wind/battery budgets, after-dark storage, clear-build, energy log, accessibility, and local completion.
 - [ ] Reuse Rally — Complete a full Reuse Rally round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
