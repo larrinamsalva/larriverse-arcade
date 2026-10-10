@@ -4,7 +4,7 @@
 
 **Source-of-truth check:** `npm run audit:worlds`. It reads the actual game data, inventories every cabinet in `games/catalog.json`, and prevents the 60-complete games from regressing. Its counts are **not guesses based on marketing text**.
 
-## Completed at 60 in this change
+## Worlds already at 60
 
 | World | Challenge type | Count |
 | --- | --- | ---: |
@@ -13,18 +13,16 @@
 | Weather Watchers | Four ranks of illustrated weather questions | **60** (25 original + 35 new) |
 | Garden Grow & Harvest | Four ranks of illustrated garden/food-care questions | **60** (24 original + 36 new) |
 
+Four new complete worlds: **Water Works, Harbor Helpers, Compass Cove, Cipher Club**.
+
 These existing games already had 60: **Pantry Picnic, Traffic Town, Street Safety Scout, Scam Sleuth, Kindness Quest, Fact Finder, Repair Café, Time Trail, Reuse Rally, Kids Sudoku.**
 
-**Main catalog after this PR: 20 of 35 cabinets have 60 distinct sequential puzzles or questions.** Four additional expedition worlds have expanded from 20 to 60. The table below is the remaining work queue; the four completed items above are retained for a transparent change record. **Word Search World** and **Crossword World** have merged with 60 levels apiece and are included in the 16 complete cabinets.
+**Main catalog after this PR: 20 of 35 cabinets have 60 distinct sequential puzzles or questions.** Four more expedition worlds have expanded from 20 to 60. The table below lists only worlds still below the goal. **Word Search World** and **Crossword World** have merged with 60 levels apiece and are included in the 16 complete cabinets.
 
 ## Remaining fixed-length worlds and accurate gap
 
 | World | Actual playable challenges | More required |
 | --- | ---: | ---: |
-| Water Works | **60** | 0 |
-| Harbor Helpers | **60** | 0 |
-| Compass Cove | **60** | 0 |
-| Cipher Club | **60** | 0 |
 | Trade Town | 8 | 52 |
 | Critter Council | 20 | 40 |
 | Pocket Planet | 30 | 30 |
