@@ -662,5 +662,26 @@
     "href": "games/garden-grow-harvest/index.html",
     "source": "Original LarriVerse garden-learning world, 2026",
     "integration": "arcade-sdk-v3"
+  },
+  {
+    "id": "kids-sudoku",
+    "title": "Kids Sudoku World",
+    "icon": "🧩",
+    "category": "Patterns & puzzles",
+    "topic": "Brain games",
+    "age": "6+",
+    "minutes": "12 min",
+    "art": 2,
+    "skill": "Logic, number patterns & reasoning",
+    "desc": "Solve sixty unique Sudoku puzzles in six chapters, growing from friendly 4×4 to 6×6 and classic 9×9.",
+    "mission": "Complete 60 uniquely solvable puzzles, using each number once per row, column and outlined box. Start with number friends, gain pencil notes and hints, and unlock harder boards across six chapters.",
+    "take": "Find the missing numbers by checking rows, columns and boxes. There is no timer; everyone can learn at their own pace.",
+    "available": true,
+    "featured": true,
+    "isNew": true,
+    "status": "Playable",
+    "href": "games/kids-sudoku/index.html",
+    "source": "Original LarriVerse Sudoku World, 2026",
+    "integration": "arcade-sdk-v3"
   }
 ]
