@@ -164,7 +164,7 @@
     {
       "id": "pantry-picnic",
       "title": "Pantry Picnic",
-      "manualFocus": "Complete eight rotating picnic challenges from a twenty-four-plan bank. Follow each request, use marked leftovers first, and confirm three sessions exhaust the bank before repeating.",
+      "manualFocus": "Complete ten challenges per round from a sixty-question pantry bank. Verify all sixty unique scenarios appear once across six rounds before repeating, check each theme and a valid solution, use marked leftovers, confirm no token costs, and test mobile, keyboard, sound-off and saved local completions.",
       "route": "games/pantry-picnic/index.html"
     },
     {

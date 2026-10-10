@@ -13,10 +13,13 @@ assert.equal(compassClues.length, 20);
 assert.equal(cipherLevels.length, 20);
 assert.equal(tradeLevels.length, 8);
 assert.equal(townLevels.length, 20);
-assert.equal(PANTRY_ROUND_SIZE, 8);
-assert.equal(pantryChallenges.length, 24);
+assert.equal(PANTRY_ROUND_SIZE, 10);
+assert.equal(pantryChallenges.length, 60);
 assert.equal(new Set(pantryChallenges.map(challenge => challenge.id)).size, pantryChallenges.length);
 assert.equal(new Set(pantryChallenges.map(challenge => challenge.name)).size, pantryChallenges.length);
+assert.equal(new Set(pantryChallenges.map(challenge => challenge.prompt)).size, pantryChallenges.length);
+assert.equal(pantryChallenges.filter(challenge => challenge.chapter).length, 36);
+assert.equal(new Set(pantryChallenges.map(challenge => challenge.chapter).filter(Boolean)).size, 6);
 assert.ok(pantryFoods.length >= 12);
 assert.equal(new Set(pantryFoods.map(food => food.id)).size, pantryFoods.length);
 assert.ok(pantryFoods.every(food => ["main", "fruit", "vegetable"].includes(food.group)));
@@ -78,6 +81,8 @@ const pantryUsage = new Set();
 for (const challenge of pantryChallenges) {
   assert.ok(challenge.prompt.length > 45);
   assert.ok(challenge.why.length > 45);
+  assert.ok(!Object.prototype.hasOwnProperty.call(challenge, "price"));
+  assert.ok(!Object.prototype.hasOwnProperty.call(challenge, "coins"));
   assert.ok(Object.keys(challenge.stock).length >= 5);
   for (const [id, count] of Object.entries(challenge.stock)) {
     assert.ok(foodIds.has(id));
@@ -108,6 +113,9 @@ for (const challenge of pantryChallenges) {
   assert.ok(solutions.length > 0, `${challenge.id} needs at least one valid picnic solution`);
 }
 assert.equal(pantryUsage.size, pantryFoods.length);
+const pantryCatalog=catalog.find(game=>game.id==="pantry-picnic");
+assert.match(pantryCatalog.desc,/sixty food-planning questions/i);
+assert.match(pantryCatalog.mission,/ten picnic boxes per round/i);
 const targets = compassClues.map(clue => compassTarget(landmarks[clue.landmark], clue));
 assert.equal(new Set(targets).size, compassClues.length);
 assert.ok(targets.every(target => target >= 0 && target < 36));

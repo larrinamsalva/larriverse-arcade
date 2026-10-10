@@ -1,8 +1,10 @@
+import { newPantryChallenges } from "./pantry-extra-challenges.js";
+
 export const expeditions = [
   { id: "bridge-buddies", title: "Bridge Buddies", icon: "🌉", topic: "Build & create", category: "Little engineers", age: "8+", minutes: "12 min", art: 0, mode: "bridge", skill: "Test, improve, try again", desc: "Build and test twenty bridges with unlimited free supports, improving their strength to safely carry each load.", mission: "Build four strong bridge spans with unlimited materials. Test each span\u0027s vehicle load, replace weak supports, and help twenty cargo trucks cross through four builder ranks.", take: "Choose the right support for the job. Test a small model, notice what happened, and change one thing at a time." },
   { id: "water-works", title: "Water Works", icon: "💧", topic: "Planet", category: "Flow & resources", age: "7+", minutes: "12 min", art: 1, mode: "pipes", skill: "See how a system connects", desc: "Turn the pipes through twenty advancing flow puzzles and bring water through the toy filter to town.", mission: "Rotate each pipe network from the reservoir to town. Pass through the toy filter while advancing from Flow Finder to Waterworks Master.", take: "Trace a problem from its starting point and check each connection. This toy filter does not make real water safe to drink." },
   { id: "harbor-helpers", title: "Harbor Helpers", icon: "⛵", topic: "Adventures", category: "Cooperative adventures", age: "8+", minutes: "12 min", art: 2, mode: "harbor", skill: "Plan deliveries together", desc: "Load your boat for twenty advancing island deliveries and bring each community exactly what it requested.", mission: "Read each island request, choose the matching crates, stay within the boat limit, and advance through twenty harbor routes.", take: "A useful delivery starts with listening. Plan loads and routes together so supplies reach the neighbors who asked for them." },
-  { id: "pantry-picnic", title: "Pantry Picnic", icon: "🥪", topic: "Everyday life", category: "Little life skills", age: "7+", minutes: "7 min", art: 3, mode: "pantry", skill: "Use what you already have", desc: "Solve eight colorful picnic challenges from a rotating bank of twenty-four pantry plans.", mission: "Pack eight pretend picnic boxes, each with one main and two produce portions. Follow each request, use marked leftovers first, and meet all twenty-four challenges before they repeat.", take: "Check what you already have before getting more. Planning portions can reduce waste; ask an adult about allergies, food preparation, and safe storage." },
+  { id: "pantry-picnic", title: "Pantry Picnic", icon: "🥪", topic: "Everyday life", category: "Little life skills", age: "7+", minutes: "10 min", art: 3, mode: "pantry", skill: "Use what you already have", desc: "Explore sixty food-planning questions in themed picnic adventures, ten per round.", mission: "Plan ten picnic boxes per round across sixty different food challenges. Follow each request, choose one main and two produce portions, use marked leftovers, and see every question before a repeat.", take: "Check what you already have before getting more. Planning portions can reduce waste; ask an adult about allergies, food preparation, and safe storage." },
   { id: "compass-cove", title: "Compass Cove", icon: "🧭", topic: "Adventures", category: "Map adventures", age: "7+", minutes: "12 min", art: 4, mode: "compass", skill: "Read landmarks and directions", desc: "Explore a tiny island through twenty advancing compass clues and hidden treasures.", mission: "Find twenty treasures by following clues from island landmarks. Advance from Shore Scout to Master Navigator while north stays up on the map.", take: "Start from a landmark you can identify. A map and a compass help you explain a route and check where a direction will take you." },
   { id: "cipher-club", title: "Cipher Club", icon: "🔎", topic: "Digital life", category: "Secret-code workshop", age: "8+", minutes: "12 min", art: 5, mode: "cipher", skill: "Make meaning with a shared key", desc: "Turn the code wheel and solve twenty messages that grow from three to five letters.", mission: "Use the toy A–H alphabet and a shared number key to encode or decode twenty clubhouse messages. Advance through four code ranks as the words grow longer.", take: "A shared rule can change how a message looks. This tiny code is easy to break and must never be used to protect passwords or real secrets." },
   { id: "trade-town", title: "Trade Town", icon: "🪙", topic: "Money", category: "Smart shopping", age: "8+", minutes: "7 min", art: 6, mode: "trade", skill: "Compare the whole deal", desc: "Visit the market for eight shopping challenges and compare bundles, prices, and extra fees.", mission: "Fill eight shopping requests within their pretend budgets. Compare bundle sizes, unit prices, and delivery fees. You can return items before checkout.", take: "The biggest pack is not always the best fit. Compare the whole cost, including fees, with how much you actually need." },
@@ -106,7 +108,7 @@ export const pantryFoods = [
   { id: "peas", name: "Snap peas", group: "vegetable", icon: "peas" },
 ];
 
-export const PANTRY_ROUND_SIZE = 8;
+export const PANTRY_ROUND_SIZE = 10;
 
 export const pantryChallenges = [
   {
@@ -277,6 +279,7 @@ export const pantryChallenges = [
     mustUse: { beans: 1, apple: 1, carrot: 1 }, produce: { fruit: 1, vegetable: 1 },
     why: "Every marked leftover fit the request exactly, so nothing else needed to be opened.",
   },
+  ...newPantryChallenges
 ];
 export const landmarks = [
   { id: 30, name: "Lighthouse", icon: "lighthouse" }, { id: 5, name: "Reading hut", icon: "hut" },
