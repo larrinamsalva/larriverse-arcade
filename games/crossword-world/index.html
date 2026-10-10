@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#366b9c">
+<meta name="description" content="Crossword World: 60 colorful clue-based crossword puzzles that grow harder, with hints, stars, and saved progress.">
+<title>Crossword World · LarriVerse Arcade</title>
+<link rel="stylesheet" href="game.css">
+<link rel="stylesheet" href="../../assets/emoji.css">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+<link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/crossword-world/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LarriVerse Arcade">
+<meta property="og:title" content="Crossword World · 60 Levels">
+<meta property="og:description" content="Sixty progressively harder crosswords with real Across and Down clues, free hints, and fun themes.">
+<meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/crossword-world/">
+<meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+<meta property="og:image:type" content="image/webp"><meta property="og:image:width" content="1600"><meta property="og:image:height" content="800">
+<meta property="og:image:alt" content="Colorful illustrated learning worlds in LarriVerse Arcade">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body data-classic="crossword-world">
+ <a class="skip-link" href="#crosswordGrid">Skip to crossword puzzle</a>
+ <header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+  <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+  <div class="lv-context"><strong>Crossword World</strong><small>Vocabulary, reading &amp; word reasoning</small></div>
+  <nav class="lv-tools" aria-label="Arcade tools">
+   <a class="lv-button" href="../../index.html">Back to Arcade</a>
+   <button class="lv-button" type="button" data-lv-comfort>Comfort &amp; accessibility</button>
+  </nav>
+  <span data-lv-profile>Progress stays in this browser.</span>
+ </header>
+ <main class="crossword-world">
+ <section class="hero">
+  <div>
+   <p class="eyebrow">🧠 60 puzzles · Six adventures · No timers</p>
+   <h1>Crossword <span>World!</span></h1>
+   <p>Read the clue, solve the word, and watch your answers cross! Start with friendly little words and work your way to championship brain-teasers.</p>
+   <div class="hero-tags"><span>🐝 Easy clues</span><span>🌦️ Real-life words</span><span>🤝 Kindness</span><span>🛠️ Building</span><span>🪙 Money skills</span><span>🌍 Exploring</span></div>
+  </div>
+  <div class="hero-picture" aria-hidden="true"><div class="puzzle-art"><span>W</span><span>O</span><span>R</span><span>D</span><span>★</span><span>C</span><span>R</span><span>O</span><span>S</span></div><span class="fox">🦊</span><span class="art-star">✦</span></div>
+ </section>
+ <section id="chapters" class="chapters" aria-label="Six crossword chapters"></section>
+ <div class="game-layout">
+ <section class="play-card">
+  <div class="game-head">
+   <div><p id="stage" class="eyebrow">LEVEL 1 OF 60</p><h2 id="puzzleTitle">Friendly Beginnings</h2><p id="difficulty">Starter crossword</p></div>
+   <label class="level-choice">Choose unlocked level
+    <select id="levelPicker" aria-label="Choose an unlocked crossword level"></select>
+   </label>
+  </div>
+  <div class="stats">
+   <div><small>Words solved</small><strong id="wordCount">0 / 4</strong></div>
+   <div><small>Level</small><strong id="levelCount">1 / 60</strong></div>
+   <div><small>Stars</small><strong id="starsCount">0 / 180</strong></div>
+   <div><small>Hints</small><strong id="hintsCount">0</strong></div>
+  </div>
+  <div id="progress" class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="60" aria-valuenow="0" aria-label="Crossword levels finished"><span id="progressFill"></span></div>
+  <p id="clueFocus" class="clue-focus" role="status" aria-live="polite">Choose a clue to begin!</p>
+  <div class="board-wrap"><div id="crosswordGrid" class="crossword-grid" role="group" aria-label="Crossword grid" tabindex="-1"></div></div>
+  <div id="keyboard" class="keyboard" role="group" aria-label="On-screen alphabet keyboard"></div>
+  <div class="actions">
+   <button type="button" id="erase">⌫ Erase</button>
+   <button type="button" id="checkWord">✓ Check word</button>
+   <button type="button" id="checkBoard">✓ Check board</button>
+   <button type="button" id="hint">💡 Free letter</button>
+   <button type="button" id="restart">↺ Restart</button>
+  </div>
+  <p class="feedback" id="feedback" role="status" aria-live="polite">Tap an Across or Down clue, then fill the highlighted squares.</p>
+  <section id="celebration" class="celebration" hidden aria-live="polite">
+   <div class="win-icons" aria-hidden="true">🎉 ⭐ 🏆</div><h3 id="winTitle">Puzzle solved!</h3><p id="winMessage"></p>
+   <button type="button" id="nextLevel" class="primary">Next level →</button>
+  </section>
+ </section>
+ <aside class="clues-card">
+  <div class="buddy"><span aria-hidden="true">🦊</span><div><strong>Your crossword buddy</strong><p id="buddy">Look at the clue, then choose where to write your answer!</p></div></div>
+  <div class="clue-head"><h2>Across →</h2><p>Words going left to right</p></div><div id="acrossClues" class="clue-list" role="group" aria-label="Across clues"></div>
+  <div class="clue-head"><h2>Down ↓</h2><p>Words going top to bottom</p></div><div id="downClues" class="clue-list" role="group" aria-label="Down clues"></div>
+  <div class="help"><h3>📚 How to play</h3><p>Tap a clue to highlight its squares. Type letters using the alphabet below or your keyboard. Tap an intersecting square again to switch between Across and Down.</p><p>Use a free letter hint if you get stuck. Green words are correct. Your progress stays on this device — no timers, ads or purchases.</p></div>
+ </aside>
+ </div>
+ </main>
+ <script src="../../assets/arcade-sdk.js"></script>
+ <script type="module" src="game.js"></script>
+ <script src="../../assets/cabinet-shell.js"></script>
+</body>
+</html>
