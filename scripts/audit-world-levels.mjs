@@ -13,6 +13,8 @@ import {gardenLevels,energyLevels} from "../assets/garden-energy-levels.js";
 import {messages,conversations,newsCards,repairs,sorting,robotLevels,weatherChallenges,gardenGrowthChallenges} from "../assets/skill-worlds.js";
 import {streetSafetyScenarios} from "../games/street-safety-scout/scenarios.js";
 import {SUDOKU_LEVELS} from "../games/kids-sudoku/puzzles.js";
+import {WORD_SEARCH_LEVELS} from "../games/word-search-world/puzzles.js";
+import {CROSSWORD_LEVELS} from "../games/crossword-world/puzzles.js";
 const catalog=JSON.parse(fs.readFileSync("games/catalog.json","utf8"));
 const gps=JSON.parse(fs.readFileSync("games/road-trip-quest-gps/world.json","utf8"));
 const chill=JSON.parse(fs.readFileSync("games/chill-brain-rewards/sessions.json","utf8"));
@@ -48,6 +50,8 @@ const sequential={
  "weather-watchers":weatherChallenges.length,
  "garden-grow-harvest":gardenGrowthChallenges.length,
  "kids-sudoku":SUDOKU_LEVELS.length,
+ "word-search-world":WORD_SEARCH_LEVELS.length,
+ "crossword-world":CROSSWORD_LEVELS.length,
 };
 // These cabinets are real and playable, but their mode is not one fixed
 // sequence of distinct puzzles. Report actual activities/missions separately.
@@ -73,11 +77,12 @@ const minimums={
  "bridge-buddies":60,"pantry-picnic":60,"traffic-town":60,"street-safety-scout":60,
  "scam-sleuth":60,"kindness-quest":60,"fact-finder":60,"repair-cafe":60,
  "time-trail":60,"reuse-rally":60,"kids-sudoku":60,
- "bubble-resonance-phi369":60,"weather-watchers":60,"garden-grow-harvest":60
+ "bubble-resonance-phi369":60,"weather-watchers":60,"garden-grow-harvest":60,
+ "word-search-world":60,"crossword-world":60
 };
 for(const [id,floor] of Object.entries(minimums))assert.equal(sequential[id],floor,`${id} must keep all sixty distinct playable challenges`);
 for(const [id,n] of ready)assert.ok(n>=60,id+" regressed");
-assert.equal(ready.length,14,"Four worlds gained sixty-stage coverage in this pass");
+assert.equal(ready.length,16,"Four enhanced worlds plus Word Search and Crossword have sixty stages");
 assert.ok(gps.questions&&Object.values(gps.questions).reduce((n,a)=>n+a.length,0)===gps.source.questionCount);
 for(const item of weatherChallenges.concat(gardenGrowthChallenges)){
  assert.ok(item.options[item.answer].label.trim().length>=2, "Short but clear weather labels such as Fog remain valid");
