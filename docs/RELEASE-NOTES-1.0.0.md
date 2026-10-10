@@ -176,3 +176,12 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 - **Crossword World** — A sixty-puzzle clue-solving adventure with genuine Across and Down intersections. Six progressive chapters introduce accessible numbered cells, on-screen alphabet, keyboard interaction, word and puzzle checks, free letter hints, earned stars and local progress. Human gallery/desktop/physical-phone and final release approval continue to be mandatory.
 
 - **60-level polish batch:** Bridge Buddies now has sixty progressively loaded construction challenges; Bubble Resonance Φ369 has sixty named stages with automatic transitions. Weather Watchers and Garden Grow & Harvest each contain sixty distinct picture questions. Garden tools now use a stronger raised-bed versus watering-can silhouette. QA and manual approval gates remain required.
+
+### Four new sixty-challenge expedition upgrades
+
+- **Water Works** — 60 distinct reservoir-to-town filter routes, progressing to longer pipe networks; 12 ranks and full flow/leak checks.
+- **Harbor Helpers** — 60 named island deliveries, with progressively more mixed cargo categories, guaranteed capacity-safe requests, and stories for the 40 new destinations.
+- **Compass Cove** — 60 unique landmark-and-step instructions on the original 36-tile map. Different routes may lead to the same map tile; each route is a different navigation exercise.
+- **Cipher Club** — 60 unique real A–H words, increasingly long messages and optional vocabulary hints; the simple cipher is not real security.
+
+The release still requires desktop/mobile Browser QA, manually reviewed gallery evidence, and final human approval.
