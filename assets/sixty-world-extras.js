@@ -1096,3 +1096,329 @@ export const sixtySortingExtras = [
     "Multilayer chip bags go in Toy Town's trash because its curbside system cannot separate the layers."
   ]
 ].map(([name,icon,art,bin,why])=>({name,icon,art,bin,why}));
+
+export const sixtyRepairExtras = [
+  [
+    "🪁",
+    "Kite string is tangled",
+    "Inspect where the kite string is knotted",
+    "Choose a safe, clear table with an adult",
+    "Untangle the string slowly without pulling hard",
+    "Test that the string unwinds freely"
+  ],
+  [
+    "🧢",
+    "Cap has a loose patch",
+    "Inspect the loose patch and care label",
+    "Choose a needle-safe fabric patch method with an adult",
+    "Secure the patch without covering the cap opening",
+    "Check that the patch stays on when the cap moves"
+  ],
+  [
+    "📚",
+    "Book's cover is lifting",
+    "Inspect the cover hinge and page edges",
+    "Choose a book-safe repair strip with an adult",
+    "Align and secure the lifted cover carefully",
+    "Open and close the book to check the hinge"
+  ],
+  [
+    "🧤",
+    "Winter glove has a loose cuff",
+    "Inspect the cuff seam and fabric condition",
+    "Choose a suitable fabric-safe fix with an adult",
+    "Reattach the loose cuff edge gently",
+    "Try the glove on and check cuff comfort"
+  ],
+  [
+    "🧸",
+    "Stuffed animal's ribbon slips",
+    "Inspect how the ribbon is attached",
+    "Choose a safe fastener with an adult",
+    "Reattach the ribbon without making a choking hazard",
+    "Tug gently and check the ribbon stays secure"
+  ],
+  [
+    "🧺",
+    "Basket handle is wobbling",
+    "Inspect the basket and handle connection",
+    "Choose a safe repair method with an adult",
+    "Secure the handle without sharp exposed edges",
+    "Lift a light item to check the handle"
+  ],
+  [
+    "🌱",
+    "Plant label fell over",
+    "Inspect the label and the soil around it",
+    "Choose a safe new plant-marker position",
+    "Set the label upright without harming roots",
+    "Check that its writing is visible and stable"
+  ],
+  [
+    "🎒",
+    "Backpack strap is twisted",
+    "Inspect how the shoulder strap threads through its buckle",
+    "Choose a clear space to work without wearing the bag",
+    "Unthread and straighten the strap carefully",
+    "Put on the bag and confirm it sits evenly"
+  ],
+  [
+    "🪣",
+    "Bucket sticker hides the label",
+    "Inspect which cleaning bucket label is covered",
+    "Choose a safe way to uncover the original label with an adult",
+    "Remove only the loose sticker without mixing products",
+    "Check that the bucket label is readable"
+  ],
+  [
+    "🪁",
+    "Paper airplane wing bends",
+    "Inspect the airplane fold for a crease",
+    "Choose a flat surface to refold the paper",
+    "Straighten the wing along the original fold",
+    "Test a gentle glide in a clear space"
+  ],
+  [
+    "📒",
+    "Binder ring catches paper",
+    "Inspect whether the ring closes without damage",
+    "Choose an adult-supervised paper organizer",
+    "Reposition the paper rather than forcing the ring",
+    "Check the pages turn without catching"
+  ],
+  [
+    "🧩",
+    "Puzzle-box lid is torn",
+    "Inspect the tear and corners of the box lid",
+    "Choose paper-safe repair tape with an adult",
+    "Align the torn cardboard edges and tape them",
+    "Open the box to check the lid still fits"
+  ],
+  [
+    "🖼️",
+    "Picture frame leans",
+    "Inspect the stand and surface for damage",
+    "Choose a stable spot and ask an adult about the frame",
+    "Adjust the stand without touching broken glass",
+    "Check that the frame stays upright safely"
+  ],
+  [
+    "🌿",
+    "Watering-can label fades",
+    "Inspect the label and identify the can's contents",
+    "Choose a waterproof marker or replacement label",
+    "Write a clear new label without hiding safety details",
+    "Check everyone can read the label easily"
+  ],
+  [
+    "🎨",
+    "Paintbrush bristles are bent",
+    "Inspect the brush and the paint still on it",
+    "Choose the right water-based cleanup method with an adult",
+    "Rinse and reshape the bristles gently",
+    "Let it dry and check the brush shape"
+  ],
+  [
+    "📦",
+    "Toy storage box loses its divider",
+    "Inspect the loose cardboard divider",
+    "Choose a safe paperboard connection",
+    "Refit the divider into its original slots",
+    "Check toys stay separated when the box moves"
+  ],
+  [
+    "🧶",
+    "Yarn ball keeps unraveling",
+    "Inspect the loose yarn end and tangled strands",
+    "Choose a clear table and a reusable yarn band",
+    "Wind the yarn loosely and tuck the end",
+    "Check the ball holds together without knots"
+  ],
+  [
+    "👟",
+    "Shoelace tip frays",
+    "Inspect whether the lace can still thread safely",
+    "Choose a replacement lace if the tip is badly damaged",
+    "Thread a sound lace through the shoe eyelets",
+    "Tie it and check the shoe stays secure"
+  ],
+  [
+    "🧽",
+    "Sponge holder keeps tipping",
+    "Inspect the holder's base and drain holes",
+    "Choose a level dry surface near the sink",
+    "Reposition the holder without blocking drainage",
+    "Check it stands steady and can dry"
+  ],
+  [
+    "📘",
+    "Bookmark ribbon comes loose",
+    "Inspect where the ribbon used to attach",
+    "Choose a book-safe attachment with an adult",
+    "Fix the ribbon without covering text",
+    "Turn pages and check it stays flat"
+  ],
+  [
+    "🧻",
+    "Paper roll holder slips",
+    "Inspect the cardboard craft holder and its slot",
+    "Choose a safe cardboard reinforcement",
+    "Fold and strengthen the loose slot",
+    "Check a paper roll turns without falling"
+  ],
+  [
+    "🐦",
+    "Birdhouse sign peels off",
+    "Inspect the sign's edge and weather damage",
+    "Choose outdoor-safe craft materials with an adult",
+    "Reattach only the sign on the unoccupied birdhouse",
+    "Check that no sharp edges or loose parts remain"
+  ],
+  [
+    "🪴",
+    "Seed tray label mixes up",
+    "Inspect each tray and its planting notes",
+    "Choose replacement labels and a permanent marker",
+    "Put correct names by the matching seed rows",
+    "Compare labels with the planting record"
+  ],
+  [
+    "🥣",
+    "Recipe card has a food stain",
+    "Inspect the card and check the writing is readable",
+    "Choose a dry protective sleeve or clean copy",
+    "Move the recipe to a clean readable card",
+    "Check that all measurements were copied correctly"
+  ],
+  [
+    "🌻",
+    "Garden trellis tag loosens",
+    "Inspect the plant tag and the support",
+    "Choose a soft plant-safe tie with an adult",
+    "Retie the label without squeezing the stem",
+    "Check the tag is secure as the plant moves"
+  ],
+  [
+    "🧵",
+    "Puppet costume seam opens",
+    "Inspect the seam and loose stitching",
+    "Choose a child-safe fabric repair with an adult",
+    "Secure the costume seam carefully",
+    "Move the puppet to check the repaired seam"
+  ],
+  [
+    "🎲",
+    "Board-game box corner splits",
+    "Inspect the cardboard corner and worn edges",
+    "Choose paper repair tape on a clean table",
+    "Align the corner and reinforce the seam",
+    "Close the box to confirm its shape"
+  ],
+  [
+    "🏖️",
+    "Sand-toy handle comes loose",
+    "Inspect the toy handle for cracks or sharp edges",
+    "Choose a safe replacement part or retire unsafe toys",
+    "Reconnect the handle only if all parts are sound",
+    "Lift the toy gently and check the grip"
+  ],
+  [
+    "🏀",
+    "Ball storage net tangles",
+    "Inspect the net for holes and tangles",
+    "Choose an open area to straighten the net",
+    "Untwist the loops without tightening knots",
+    "Place one ball inside and check the opening"
+  ],
+  [
+    "🍎",
+    "Reusable lunch bag seam opens",
+    "Inspect the bag seam and food-contact lining",
+    "Choose a food-safe replacement or adult-guided repair",
+    "Fix only the outer seam if the lining is intact",
+    "Check the bag closes and cleans properly"
+  ],
+  [
+    "🎀",
+    "Gift wrap ribbon snags",
+    "Inspect the ribbon for tangled sections",
+    "Choose a smooth spool or reuse loop",
+    "Untangle and rewind the ribbon gently",
+    "Pull a short piece to check it unwinds"
+  ],
+  [
+    "🪴",
+    "Plant pot saucer wobbles",
+    "Inspect the pot and saucer for cracks",
+    "Choose a flat surface and the correct saucer size",
+    "Set the pot squarely in a stable saucer",
+    "Check it stands safely and drains correctly"
+  ],
+  [
+    "🚂",
+    "Wooden train label falls",
+    "Inspect the toy label and painted surface",
+    "Choose a child-safe non-toxic label fix with an adult",
+    "Reattach the label without covering moving parts",
+    "Check the toy rolls and the label stays put"
+  ],
+  [
+    "🧁",
+    "Cupcake tray divider bends",
+    "Inspect the cardboard tray and loose divider",
+    "Choose clean food-safe replacement cardboard",
+    "Straighten or replace the bent divider",
+    "Check each cupcake space stays separate"
+  ],
+  [
+    "🔖",
+    "Library folder tab tears",
+    "Inspect the paper folder tab and writing",
+    "Choose paper-safe tape or a replacement label",
+    "Reinforce the tab and rewrite its name",
+    "Pull out the folder to check the tab is secure"
+  ],
+  [
+    "🐾",
+    "Pet-toy basket label fades",
+    "Inspect the old label and basket material",
+    "Choose a large, readable replacement tag",
+    "Attach the tag on the outside of the basket",
+    "Check the label reads clearly from a distance"
+  ],
+  [
+    "🎒",
+    "Pencil pouch zipper snags",
+    "Inspect the zipper for trapped fabric",
+    "Choose a well-lit table and ask an adult",
+    "Free the fabric gently without forcing teeth",
+    "Open and close the pouch to test it"
+  ],
+  [
+    "🛶",
+    "Model boat sail leans",
+    "Inspect the model mast and paper sail",
+    "Choose a lightweight safe craft brace",
+    "Straighten the sail without sharp tools",
+    "Set the model down and check it stands"
+  ],
+  [
+    "🌼",
+    "Flower press paper wrinkles",
+    "Inspect the craft press and wrinkled paper",
+    "Choose clean dry absorbent replacement sheets",
+    "Replace wrinkled sheets without crushing plants",
+    "Close the craft press and check alignment"
+  ],
+  [
+    "🪟",
+    "Window decoration loses suction",
+    "Inspect the clean dry suction cup and glass surface",
+    "Choose a safe window height with an adult",
+    "Clean and reseat the decoration without climbing",
+    "Check it stays attached when touched lightly"
+  ]
+].map(([icon,title,inspect,choose,fix,test])=>({
+  icon,title,steps:[inspect,choose,fix,test],
+  hint:"Inspect → choose → fix → test. For real tools or damaged items, ask a trusted adult first."
+}));
