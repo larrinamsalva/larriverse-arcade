@@ -10,7 +10,7 @@ Traffic Town adds a 7+ road-awareness world with 40 unique common U.S. traffic-s
 
 **Street Safety Scout is Game 30:** a visual 8+ companion with 36 unique scenarios covering signal lights, caution signs, emergency awareness, vehicle lights, and hidden roadway hazards. Each untimed route draws three stops from each zone and rotates unseen scenes before repeating them.
 
-**Weather Watchers and Garden Grow & Harvest are Games 31 and 33.** Weather Watchers teaches sky observation, common cloud clues, weather preparation, and simple forecast symbols through 25 illustrated challenges. Garden Grow & Harvest teaches bed building, seed and transplant care, crop support, harvesting, and food freshness through 24 illustrated challenges. Both use four visible advancement levels.
+**Weather Watchers and Garden Grow & Harvest are Games 31 and 33.** Weather Watchers teaches sky observation, common cloud clues, weather preparation, and simple forecast symbols through 60 illustrated challenges. Garden Grow & Harvest teaches bed building, seed and transplant care, crop support, harvesting, and food freshness through 60 illustrated challenges. Both use four visible learning ranks, fifteen distinct questions per rank.
 
 The modern expansion adds twelve adventures: **Pocket Planet, Scam Sleuth, Kindness Quest, Fact Finder, Repair Café, Time Trail, Garden Guardians, Energy Island, Reuse Rally, Robot Rover, Lemonade Lab, and Beat Builder**. These cover money choices, privacy, media literacy, listening and boundaries, repair and reuse, planning, resource care, coding, small business, and music. See [the full game guide](docs/MODERN-ARCADE.md) for mechanics, architecture, and artwork provenance.
 
@@ -225,3 +225,5 @@ The workflow in `.github/workflows/pages.yml` validates and builds an allowliste
 ## License
 
 MIT for repository code unless a file states otherwise. Third-party fonts, maps, libraries, and media remain subject to their own licenses.
+
+**60-challenge audit:** Run `npm run audit:worlds` to see verified counts for all arcade games. Some still need genuine new levels; see [the game-by-game audit](docs/WORLD-60-LEVEL-AUDIT.md). Do not count repeated free-play sessions as different challenges.
