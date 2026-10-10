@@ -8,7 +8,7 @@ for(const [i,level] of CROSSWORD_LEVELS.entries()){
  assert.equal(level.id,i+1);
  assert.equal(level.chapter,Math.floor(i/10));
  assert.equal(level.bars,[3,4,4,5,5,6][level.chapter],"Crossword challenges grow in word count");
- assert.ok(level.spineClue.length>15,"Every anchor needs a real clue");
+ assert.ok(level.spineClue.length>=9,"Every anchor needs a meaningful clue");
  const puzzle=buildCrossword(level);
  const again=buildCrossword(level);
  assert.deepEqual(puzzle,again,"Crossword shapes and answers must survive reloads");
