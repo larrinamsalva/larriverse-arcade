@@ -158,7 +158,7 @@ test('Family report: dark, light and high-contrast cards remain readable', async
       {theme, highContrast});
     await expect(page.locator('html')).toHaveClass(new RegExp(highContrast?'larriverse-high-contrast':`larriverse-${theme}`));
     const ratios = await page.evaluate(() => {
-      const rgb = css => (css.match(/[\\d.]+/g) || []).slice(0,3).map(Number);
+      const rgb = css => (css.match(/\d+(?:\.\d+)?/g) || []).slice(0,3).map(Number);
       const lum = components => components.map(n => {
         const s=n/255;
         return s<=0.04045?s/12.92:((s+0.055)/1.055)**2.4;
