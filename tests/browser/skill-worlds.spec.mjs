@@ -493,18 +493,20 @@ test("Garden Guardians: finish eight gardens, four ranks, and changing water goa
     await expect(page.locator("#finishMessage")).toContainText("24 of 24 garden stars");
   });
 });
-test("Weather Watchers: complete 25 illustrated challenges across four ranks", async ({
+test("Weather Watchers: complete 60 illustrated challenges across four ranks", async ({
   page,
 }) => {
-  expect(weatherChallenges).toHaveLength(25);
+  test.setTimeout(180000);
+  expect(weatherChallenges).toHaveLength(60);
   await round(page, "weather-watchers", () =>
     completePicturePath(page, weatherChallenges),
   );
 });
-test("Garden Grow & Harvest: complete 24 picture jobs from soil to storage", async ({
+test("Garden Grow & Harvest: complete 60 picture jobs from soil to storage", async ({
   page,
 }) => {
-  expect(gardenGrowthChallenges).toHaveLength(24);
+  test.setTimeout(180000);
+  expect(gardenGrowthChallenges).toHaveLength(60);
   await round(page, "garden-grow-harvest", () =>
     completePicturePath(page, gardenGrowthChallenges),
   );
