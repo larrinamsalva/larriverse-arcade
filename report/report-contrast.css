@@ -102,3 +102,22 @@ html.larriverse-high-contrast body :is(.shared-goal-card,.shared-goal-empty) {
 html.larriverse-high-contrast body :is(.shared-goal-card,.shared-goal-empty) :is(strong,p,small,span,a) {
   color:#fff!important;opacity:1!important;
 }
+
+/* Print uses black ink on white, even if the on-screen high-contrast theme
+   was enabled. This also preserves grayscale legibility for paper reports. */
+@media print {
+  html.larriverse-high-contrast body #reportMain,
+  html.larriverse-high-contrast body #reportMain :is(h1,h2,h3,p,small,strong,b,span,time,a),
+  html.larriverse-dark.larriverse-high-contrast body #reportMain :is(h1,h2,h3,p,small,strong,b,span,time,a) {
+    color: #111 !important;
+    text-shadow: none !important;
+  }
+  html.larriverse-high-contrast body #reportMain :is(.report-hero,.privacy-note,.report-section,
+    .boundary-card,.stat-grid article,.insight-panel,.insight-card,.empty-card,
+    .subject-card,.path-card,.cabinet-row,.activity-list li,.starter-list li,
+    .shared-goal-card,.shared-goal-empty) {
+    color: #111 !important;
+    background: #fff !important;
+    border-color: #777 !important;
+  }
+}
