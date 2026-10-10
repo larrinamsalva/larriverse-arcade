@@ -1761,7 +1761,7 @@ body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock) {
   box-shadow: inset 0 -5px 0 #8bbba2, 0 0 0 3px #d2f3b6, 0 3px 6px #1b604755;
 }
 body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock)::after {
-  content: "↗";
+  content: "✦";
   position: absolute;
   right: .16rem;
   bottom: .08rem;
