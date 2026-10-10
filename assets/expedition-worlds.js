@@ -1,3 +1,5 @@
+import { newPantryChallenges } from "./pantry-extra-challenges.js";
+
 export const expeditions = [
   { id: "bridge-buddies", title: "Bridge Buddies", icon: "🌉", topic: "Build & create", category: "Little engineers", age: "8+", minutes: "12 min", art: 0, mode: "bridge", skill: "Test, improve, try again", desc: "Build and test twenty bridges with unlimited free supports, improving their strength to safely carry each load.", mission: "Build four strong bridge spans with unlimited materials. Test each span\u0027s vehicle load, replace weak supports, and help twenty cargo trucks cross through four builder ranks.", take: "Choose the right support for the job. Test a small model, notice what happened, and change one thing at a time." },
   { id: "water-works", title: "Water Works", icon: "💧", topic: "Planet", category: "Flow & resources", age: "7+", minutes: "12 min", art: 1, mode: "pipes", skill: "See how a system connects", desc: "Turn the pipes through twenty advancing flow puzzles and bring water through the toy filter to town.", mission: "Rotate each pipe network from the reservoir to town. Pass through the toy filter while advancing from Flow Finder to Waterworks Master.", take: "Trace a problem from its starting point and check each connection. This toy filter does not make real water safe to drink." },
@@ -106,7 +108,7 @@ export const pantryFoods = [
   { id: "peas", name: "Snap peas", group: "vegetable", icon: "peas" },
 ];
 
-export const PANTRY_ROUND_SIZE = 8;
+export const PANTRY_ROUND_SIZE = 10;
 
 export const pantryChallenges = [
   {
@@ -276,7 +278,8 @@ export const pantryChallenges = [
     stock: { beans: 1, wrap: 1, apple: 1, orange: 1, carrot: 1, cucumber: 1 },
     mustUse: { beans: 1, apple: 1, carrot: 1 }, produce: { fruit: 1, vegetable: 1 },
     why: "Every marked leftover fit the request exactly, so nothing else needed to be opened.",
-  },
+  },,
+  ...newPantryChallenges
 ];
 export const landmarks = [
   { id: 30, name: "Lighthouse", icon: "lighthouse" }, { id: 5, name: "Reading hut", icon: "hut" },
