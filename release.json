@@ -152,13 +152,13 @@
     {
       "id": "water-works",
       "title": "Water Works",
-      "manualFocus": "Rotate the pipes through twenty advancing networks and pass through the toy filter from the reservoir to town.",
+      "manualFocus": "Complete all sixty unique pipe routes with the toy filter at position 13, including longer paths in levels 21–60, correct flow/leak feedback, save/resume, all twelve ranks, touch and keyboard, light/dark themes, and human phone/gallery approval.",
       "route": "games/water-works/index.html"
     },
     {
       "id": "harbor-helpers",
       "title": "Harbor Helpers",
-      "manualFocus": "Complete twenty advancing island deliveries and match every boat load exactly to the displayed community request.",
+      "manualFocus": "Complete all sixty named island requests with a capacity-safe boat, including two-, three- and four-category loads, rejected wrong orders, all twelve ranks, saved progress, touch and keyboard controls and human gallery approval.",
       "route": "games/harbor-helpers/index.html"
     },
     {
@@ -170,13 +170,13 @@
     {
       "id": "compass-cove",
       "title": "Compass Cove",
-      "manualFocus": "Find twenty treasures through four advancement ranks by following clues from island landmarks.",
+      "manualFocus": "Follow all sixty distinct landmark+direction routes across a 6×6 map. Destinations can repeat through different routes; check accurate movement, previously visited tiles, rank progress, keyboard/touch and human phone/gallery checks.",
       "route": "games/compass-cove/index.html"
     },
     {
       "id": "cipher-club",
       "title": "Cipher Club",
-      "manualFocus": "Use the toy A–H alphabet and a shared number key to complete twenty advancing messages from three to five letters.",
+      "manualFocus": "Encode and decode sixty unique A–H words of three to nine letters, verify meaningful vocabulary hints and nine-letter responsive answer slots, key turns, clear/submit feedback, all twelve ranks, keyboard/mobile, and manual QA.",
       "route": "games/cipher-club/index.html"
     },
     {

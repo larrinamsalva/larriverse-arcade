@@ -6,11 +6,11 @@ import { traceWater, checkPantryBox, compassTarget, encode, cheapestShop, townNe
 const catalog = JSON.parse(fs.readFileSync("games/catalog.json", "utf8"));
 assert.equal(expeditions.length, 8);
 assert.equal(bridgeLevels.length, 60);
-assert.equal(pipePaths.length, 20);
-assert.equal(harborLevels.length, 20);
+assert.equal(pipePaths.length, 60);
+assert.equal(harborLevels.length, 60);
 assert.deepEqual(directions, ["north", "east", "south", "west"]);
-assert.equal(compassClues.length, 20);
-assert.equal(cipherLevels.length, 20);
+assert.equal(compassClues.length, 60);
+assert.equal(cipherLevels.length, 60);
 assert.equal(tradeLevels.length, 8);
 assert.equal(townLevels.length, 20);
 assert.equal(PANTRY_ROUND_SIZE, 10);
@@ -32,6 +32,11 @@ assert.equal(new Set(bridgeLevels.map(level => level.loads.join(":"))).size, 60,
 assert.ok(bridgeLevels.slice(20,40).every(level=>level.loads.every(load=>load>=5)), "Reinforced stages increase support demands");
 assert.ok(bridgeLevels.slice(40).every(level=>level.loads.every(load=>load>=7)), "Summit stages train advanced support planning");
 assert.equal(new Set(harborLevels.map(level => level.name)).size, harborLevels.length);
+assert.equal(new Set(harborLevels.map(level=>cargo.map(item=>(level.needs[item.id]||0)).join(":"))).size, 60,
+  "Each island has a unique crate combination");
+assert.ok(harborLevels.slice(20).every(level=>Object.values(level.needs).reduce((a,b)=>a+b,0)===4));
+assert.ok(harborLevels.slice(50).every(level=>Object.keys(level.needs).length===4),
+  "Final island missions combine four supply categories");
 const cargoIds = new Set(cargo.map(item => item.id));
 const cargoUsage = new Set();
 for (const level of harborLevels) {
@@ -67,6 +72,9 @@ const bridgeGame = bridgeSource.slice(bridgeSource.indexOf("function bridge()"),
 assert.ok(!/Builder tokens|more tokens|Tokens return|cost > level\.budget|spent/.test(bridgeGame),
   "Bridge Buddies must not have hidden token limits");
 assert.match(bridgeGame, /Supports placed/);
+assert.equal(new Set(pipePaths.map(path=>path.join(","))).size, 60, "Each water challenge has a different pipe path");
+assert.ok(pipePaths.slice(20,40).every(path=>path.length>=11), "Mid chapters add bends");
+assert.ok(pipePaths.slice(40).every(path=>path.length>=15), "Summit chapters add many bends");
 for (const path of pipePaths) {
   assert.equal(path[0], 10); assert.equal(path.at(-1), 14); assert.ok(path.includes(12));
   assert.equal(new Set(path).size, path.length);
@@ -120,10 +128,18 @@ const pantryCatalog=catalog.find(game=>game.id==="pantry-picnic");
 assert.match(pantryCatalog.desc,/sixty food-planning questions/i);
 assert.match(pantryCatalog.mission,/ten picnic boxes per round/i);
 const targets = compassClues.map(clue => compassTarget(landmarks[clue.landmark], clue));
-assert.equal(new Set(targets).size, compassClues.length);
+assert.equal(new Set(targets.slice(0,20)).size, 20, "Original twenty distinct treasures remain unchanged");
+assert.equal(new Set(compassClues.map(c=>[c.landmark,c.east,c.south].join(":"))).size, 60, "All sixty routes use distinct landmark and step instructions");
+assert.ok(compassClues.slice(20).every(c=>Math.abs(c.east)+Math.abs(c.south)>=3), "Advanced routes have several steps");
 assert.ok(targets.every(target => target >= 0 && target < 36));
+assert.equal(new Set(cipherLevels.map(level=>level.word)).size, 60, "Every code challenge uses a different word");
+assert.ok(cipherLevels.slice(20,30).every(level=>level.word.length===4));
+assert.ok(cipherLevels.slice(30,40).every(level=>level.word.length===5));
+assert.ok(cipherLevels.slice(40,50).every(level=>level.word.length===6));
+assert.ok(cipherLevels.slice(50).every(level=>level.word.length>=6));
+assert.ok(cipherLevels.slice(20).every(level=>level.clue?.length>=10));
 for (const level of cipherLevels) {
-  assert.ok(/^[A-H]{3,5}$/.test(level.word), `${level.word} fits the toy alphabet and difficulty range`);
+  assert.ok(/^[A-H]{3,9}$/.test(level.word), `${level.word} fits the toy alphabet and advancing word lengths`);
   assert.equal(encode(encode(level.word,level.shift),-level.shift),level.word);
 }
 for (const level of tradeLevels) assert.ok(cheapestShop(level) <= level.budget);
