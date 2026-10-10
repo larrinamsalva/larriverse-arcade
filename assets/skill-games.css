@@ -1656,3 +1656,99 @@ html.larriverse-high-contrast .picture-choice.wrong { outline: 5px dashed #ffd36
   .learning-choice-art { width: 78px; height: 76px; }
   .scene-label { left: .45rem; bottom: .45rem; }
 }
+
+/* Garden and energy campaigns: dimensional, accessible rank-and-stage presentation. */
+body[data-world="garden-guardians"] .nature-banner,
+body[data-world="energy-island"] .nature-banner {
+  display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem;
+  margin: .8rem 0 1.1rem; border-radius: 18px;
+  background: linear-gradient(135deg, #e6f8e0, #cbece7 65%, #e6e6ff);
+  border: 2px solid #86b68d; color: #254b38; box-shadow: 0 5px 0 #b7d8b9;
+}
+body[data-world="garden-guardians"] .nature-banner > span,
+body[data-world="energy-island"] .nature-banner > span {
+  display: grid; place-items: center; flex: 0 0 4.75rem;
+  width: 4.75rem; height: 4.75rem; font-size: 2.8rem;
+  background: #fff5dc; border: 2px solid #c2a66d; border-radius: 15px;
+  box-shadow: inset 0 -6px 0 #ecddb6;
+}
+body[data-world="garden-guardians"] .nature-banner :is(h2, p, small),
+body[data-world="energy-island"] .nature-banner :is(h2, p, small) { color: inherit; margin: .15rem 0; }
+body[data-world="garden-guardians"] .nature-banner h2,
+body[data-world="energy-island"] .nature-banner h2 { font-size: 1.25rem; }
+body[data-world="garden-guardians"] .nature-banner small,
+body[data-world="energy-island"] .nature-banner small { display: block; font-weight: 750; }
+body[data-world="garden-guardians"] .nature-zone--orchard { background: linear-gradient(125deg,#d5f1d6,#dcf6f2 65%,#fff2d8); }
+body[data-world="garden-guardians"] .nature-zone--hill { background: linear-gradient(125deg,#e6f0c9,#bcece2 65%,#e9d7f9); }
+body[data-world="garden-guardians"] .nature-zone--sunset { background: linear-gradient(125deg,#fff1c4,#f5d6ba 65%,#e2d0f8); }
+body[data-world="energy-island"] .energy-zone--village { background: linear-gradient(125deg,#dbeaff,#dceef7 65%,#f2e7ff); border-color:#7a9ec3; }
+body[data-world="energy-island"] .energy-zone--forest { background: linear-gradient(125deg,#d6f6ee,#d8edce 65%,#e2e4ff); border-color:#619f8d; }
+body[data-world="energy-island"] .energy-zone--mountain { background: linear-gradient(125deg,#dbe4fc,#cfdeef 65%,#f0e0fe); border-color:#809fc1; }
+.nature-level-trail { margin-bottom: .7rem; }
+.nature-quotas { display: flex; flex-wrap: wrap; gap: .5rem; margin: .7rem 0; }
+.nature-quota {
+  font-size: .85rem; font-weight: 800; padding: .55rem .7rem;
+  border-radius: 11px; background: #f6f0e2; border: 2px solid #c6ad75;
+  color: #654322;
+}
+.nature-quota.complete { color: #14513c; background: #ddf8e9; border-color: #498e73; }
+body[data-world="garden-guardians"] .garden-grid {
+  background: linear-gradient(155deg, #bde6ac, #e3eec6);
+  border: 2px solid #70a86e; box-shadow: inset 0 4px 10px #2a5b3326;
+}
+body[data-world="garden-guardians"] .plot {
+  background: linear-gradient(145deg, #d9b188, #a46f4d 70%, #80523c);
+  border: 3px solid #885a3e; box-shadow: inset 0 -7px 0 #74452d, 0 4px 4px #4430183b;
+}
+body[data-world="garden-guardians"] .plot small { font-weight: 850; border: 1px solid #c99e66; }
+body[data-world="energy-island"] .forecast-current {
+  border-color: #6953ce; background: #e9e0ff; color: #302765;
+  box-shadow: inset 0 0 0 1px #a492e8;
+}
+body[data-world="energy-island"] .energy-scene {
+  border: 2px solid #78abb0;
+  background: linear-gradient(155deg, #a7d8fa, #def6df 65%, #c9e8c5);
+  color: #244a51; box-shadow: inset 0 -7px 0 #a0cd9d;
+  flex-wrap: wrap;
+}
+body[data-world="energy-island"] .energy-scene strong { color: inherit; font-size: .9rem; }
+html.larriverse-dark body[data-world="garden-guardians"] .nature-banner,
+html.larriverse-dark body[data-world="energy-island"] .nature-banner {
+  background: linear-gradient(125deg, #203a3b, #2b3e5d, #493758);
+  color: #fff; border-color: #8acbb0; box-shadow: 0 5px 0 #152528;
+}
+html.larriverse-dark body[data-world="garden-guardians"] .nature-banner > span,
+html.larriverse-dark body[data-world="energy-island"] .nature-banner > span {
+  background: #4d4260; border-color: #c0b0ef; box-shadow: inset 0 -6px 0 #302745;
+}
+html.larriverse-dark body[data-world="garden-guardians"] .nature-quota {
+  background: #3d344d; border-color: #ab91d7; color: #fff;
+}
+html.larriverse-dark body[data-world="garden-guardians"] .nature-quota.complete {
+  background: #1e503e; border-color: #8fdcba; color: #fff;
+}
+html.larriverse-dark body[data-world="garden-guardians"] .garden-grid { background: #264338; border-color: #79b49e; }
+html.larriverse-dark body[data-world="energy-island"] .weather-preview > div {
+  background: #28354e; color: #f8f8ff; border-color: #7288b3;
+}
+html.larriverse-dark body[data-world="energy-island"] .forecast-current {
+  background: #4a3d70; border-color: #cab9ff; color: #fff;
+}
+html.larriverse-dark body[data-world="energy-island"] .energy-scene {
+  background: linear-gradient(135deg,#1c3547,#253b35);
+  border-color: #8abec4; color: #fff; box-shadow: inset 0 -7px 0 #162b2a;
+}
+html.larriverse-high-contrast body[data-world="garden-guardians"] :is(.nature-banner,.nature-quota,.garden-grid,.plot),
+html.larriverse-high-contrast body[data-world="energy-island"] :is(.nature-banner,.weather-preview > div,.energy-scene) {
+  background: #111 !important; border: 2px solid #fff !important;
+  color: #fff !important; box-shadow: none !important;
+}
+html.larriverse-high-contrast body[data-world="garden-guardians"] .nature-banner :is(h2,p,small),
+html.larriverse-high-contrast body[data-world="energy-island"] .nature-banner :is(h2,p,small) { color: #fff !important; }
+@media(max-width: 580px) {
+  body[data-world="garden-guardians"] .nature-banner,
+  body[data-world="energy-island"] .nature-banner { padding: .8rem; align-items: flex-start; gap: .65rem; }
+  body[data-world="garden-guardians"] .nature-banner > span,
+  body[data-world="energy-island"] .nature-banner > span { flex-basis: 3.2rem; width:3.2rem; height:3.2rem; font-size:1.8rem; }
+  body[data-world="energy-island"] .weather-preview { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}

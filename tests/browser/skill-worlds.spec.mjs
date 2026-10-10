@@ -11,6 +11,7 @@ import {
   weatherChallenges,
   gardenGrowthChallenges,
 } from "../../assets/skill-worlds.js";
+import { gardenLevels, energyLevels } from "../../assets/garden-energy-levels.js";
 
 async function round(page, id, play) {
   const errors = [];
@@ -355,31 +356,43 @@ test("Time Trail: stop the route at exactly sixteen steps", async ({ page }) => 
     page.getByRole("button", { name: "Try a new route", exact: true }),
   ).toBeVisible();
 });
-test("Garden Guardians: share twelve drops and include pollinator flowers", async ({
-  page,
-}) => {
+test("Garden Guardians: finish eight gardens, four ranks, and changing water goals", async ({ page }) => {
+  test.setTimeout(120000);
+  expect(gardenLevels).toHaveLength(8);
   await round(page, "garden-guardians", async () => {
-    await page
-      .getByRole("button", { name: "Start growing", exact: true })
-      .click();
-    await expect(page.locator("#feedback")).toContainText("Plant all six");
-    for (let i = 0; i < 6; i++) {
-      await page
-        .locator(`[data-plant="${["carrot", "bean", "flower"][i % 3]}"]`)
-        .click();
-      await page.locator(`[data-plot="${i}"]`).click();
+    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(4);
+    for (const [levelIndex, level] of gardenLevels.entries()) {
+      await expect(page.locator("#stageLabel")).toContainText(`Garden level ${levelIndex + 1} of 8`);
+      await expect(page.locator(".nature-banner")).toContainText(level.name);
+      await expect(page.locator("#gameBoard")).toContainText(level.lesson);
+      await expect(page.locator(".stat-row")).toContainText(`Water drops${level.water}`);
+      if (levelIndex === 0) {
+        await page.getByRole("button", { name: "Start growing" }).click();
+        await expect(page.locator("#feedback")).toContainText("Plant all six");
+      }
+      let plot = 0;
+      for (const type of ["carrot", "bean", "flower"]) {
+        await page.locator(`[data-plant="${type}"]`).click();
+        for (let i = 0; i < level[type]; i++)
+          await page.locator(`[data-plot="${plot++}"]`).click();
+      }
+      await expect(page.locator(".nature-quota.complete")).toHaveCount(3);
+      await page.getByRole("button", { name: "Start growing" }).click();
+      for (let wateringDay = 0; wateringDay < 2; wateringDay++) {
+        for (let i = 0; i < level.target; i++)
+          await page.locator(`[data-plot="${i}"]`).click();
+        if (wateringDay === 0) {
+          await page.locator('[data-plot="0"]').click();
+          await expect(page.locator("#feedback")).toContainText("already watered");
+        }
+        await page.getByRole("button", { name: "Next day" }).click();
+      }
+      await expect(page.locator(".stat-row")).toContainText(`Ready plants${level.target}/${level.target}`);
+      await page.getByRole("button", { name: levelIndex === 7 ? "Visit my garden" : "Next garden" }).click();
+      if (levelIndex < 7)
+        await expect(page.locator(".stat-row")).toContainText(`Garden stars${(levelIndex + 1) * 3}/24`);
     }
-    await page
-      .getByRole("button", { name: "Start growing", exact: true })
-      .click();
-    for (let day = 0; day < 2; day++) {
-      for (let i = 0; i < 6; i++)
-        await page.locator(`[data-plot="${i}"]`).click();
-      await page.getByRole("button", { name: "Next day", exact: true }).click();
-    }
-    await page
-      .getByRole("button", { name: "Visit my garden", exact: true })
-      .click();
+    await expect(page.locator("#finishMessage")).toContainText("24 of 24 garden stars");
   });
 });
 test("Weather Watchers: complete 25 illustrated challenges across four ranks", async ({
@@ -398,26 +411,52 @@ test("Garden Grow & Harvest: complete 24 picture jobs from soil to storage", asy
     completePicturePath(page, gardenGrowthChallenges),
   );
 });
-test("Energy Island: store a surplus and power the island at night", async ({
-  page,
-}) => {
+function powerRecipe(level) {
+  // Find a valid allocation without hardcoding one magic solution per level.
+  for (let solar = 0; solar <= Math.floor(level.tokens / 2); solar++)
+    for (let wind = 0; wind <= Math.floor(level.tokens / 3); wind++)
+      for (let battery = 0; battery <= Math.floor(level.tokens / 2); battery++) {
+        if (solar + wind === 0 || 2 * solar + 3 * wind + 2 * battery > level.tokens) continue;
+        let stored = 0;
+        const works = level.weather.every((day) => {
+          const made = day.solar * solar + day.wind * wind;
+          const available = made + stored;
+          stored = Math.min(battery * 4, Math.max(0, available - level.demand));
+          return available >= level.demand;
+        });
+        if (works) return { solar, wind, battery };
+      }
+  throw new Error(`No feasible mix for ${level.id}`);
+}
+test("Energy Island: eight power grids adapt to weather and demand", async ({ page }) => {
+  test.setTimeout(120000);
+  expect(energyLevels).toHaveLength(8);
   await round(page, "energy-island", async () => {
-    for (const type of ["solar", "solar", "wind", "wind", "battery"])
-      await page.locator(`[data-build="${type}"]`).click();
-    await page
-      .getByRole("button", { name: "Test my power mix", exact: true })
-      .click();
-    for (const day of ["cloudy", "night", "breezy"])
-      await page
-        .getByRole("button", { name: `Run ${day} day`, exact: true })
-        .click();
-    await expect(page.locator(".ledger")).toContainText("Night");
-    await expect(
-      page.locator(".ledger td").filter({ hasText: "Glowing" }),
-    ).toHaveCount(4);
-    await page
-      .getByRole("button", { name: "See my island", exact: true })
-      .click();
+    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(4);
+    for (const [index, level] of energyLevels.entries()) {
+      await expect(page.locator("#stageLabel")).toContainText(`Energy level ${index + 1} of 8`);
+      await expect(page.locator(".nature-banner")).toContainText(level.name);
+      await expect(page.locator("#gameBoard")).toContainText(level.lesson);
+      await expect(page.locator(".forecast-current")).toHaveCount(1);
+      if (index === 0) {
+        await page.getByRole("button", { name: "Test my power mix" }).click();
+        await expect(page.locator("#feedback")).toContainText("Choose at least one energy source");
+      }
+      const mix = index === 0 ? { solar: 2, wind: 2, battery: 1 } : powerRecipe(level);
+      for (const type of ["solar", "wind", "battery"]) {
+        for (let i = 0; i < mix[type]; i++)
+          await page.locator(`[data-build="${type}"]`).click();
+      }
+      await page.getByRole("button", { name: "Test my power mix" }).click();
+      for (const day of level.weather.slice(1))
+        await page.getByRole("button", { name: `Run ${day.name.toLowerCase()} day` }).click();
+      await expect(page.locator(".ledger tbody tr")).toHaveCount(4);
+      await expect(page.locator(".ledger tbody tr").filter({ hasText: "Glowing" })).toHaveCount(4);
+      await page.getByRole("button", { name: index === 7 ? "See my island" : "Next island" }).click();
+      if (index < 7)
+        await expect(page.locator(".stat-row")).toContainText(`Island stars${(index + 1) * 3}/24`);
+    }
+    await expect(page.locator("#finishMessage")).toContainText("24 of 24 island stars");
   });
 });
 test("Robot Rover: debug a collision, show execution state, and solve twenty worlds at par", async ({
