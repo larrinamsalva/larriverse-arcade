@@ -253,11 +253,13 @@ function initialize() {
       state.position = 0;
       renderRepair();
       break;
-    case "route":
-      state.level = 0;
-      state.levelStars = Array(timeTrailLevels.length).fill(0);
+    case "route": {
+      const saved = readTrailSave();
+      state.level = saved.nextLevel;
+      state.levelStars = saved.stars;
       startTrailLevel();
       break;
+    }
     case "garden":
       state.level = 0;
       state.levelStars = Array(gardenLevels.length).fill(0);
@@ -622,6 +624,24 @@ function renderRepair() {
   hint = item.hint;
 }
 
+
+const TRAIL_SAVE_KEY = "larriverse.timeTrail.progress.v2";
+function readTrailSave() {
+  const fresh={nextLevel:0,stars:Array(timeTrailLevels.length).fill(0)};
+  try {
+    const saved=JSON.parse(localStorage.getItem(TRAIL_SAVE_KEY)||"null");
+    if(!saved||!Array.isArray(saved.stars)||saved.stars.length!==timeTrailLevels.length)return fresh;
+    return {
+      nextLevel:Number.isInteger(saved.nextLevel)&&saved.nextLevel>=0&&saved.nextLevel<timeTrailLevels.length?saved.nextLevel:0,
+      stars:saved.stars.map(n=>Number.isInteger(n)&&n>=0&&n<=3?n:0),
+    };
+  }catch {return fresh;}
+}
+function saveTrail(nextLevel=state.level) {
+  try {localStorage.setItem(TRAIL_SAVE_KEY,JSON.stringify({nextLevel,stars:state.levelStars}));}
+  catch {/* Game still works with storage disabled. */}
+}
+
 function trailNow() { return timeTrailLevels[state.level]; }
 function startTrailLevel() {
   const level=trailNow();
@@ -629,8 +649,8 @@ function startTrailLevel() {
   state.visited=new Set([level.start]); state.levelPassed=false;
   renderRoute();
 }
-function adjacent(a,b) {
-  return Math.abs(Math.floor(a/5)-Math.floor(b/5))+Math.abs(a%5-b%5)===1;
+function adjacent(a,b,width=5) {
+  return Math.abs(Math.floor(a/width)-Math.floor(b/width))+Math.abs(a%width-b%width)===1;
 }
 function renderRoute() {
   const level=trailNow();
@@ -641,22 +661,22 @@ function renderRoute() {
   board.innerHTML=`${levelTrail(timeTrailLevels,state.level)}
     <section class="route-level-hero route-zone--${esc(level.zone)}">
       <span aria-hidden="true">${esc(level.icon)}</span>
-      <div><h2>${esc(level.name)}</h2><p>${esc(level.lesson)}</p></div>
+      <div><h2>${esc(level.name)}</h2><p>${esc(level.lesson)}</p><small>Chapter ${level.chapter+1} of 6 · ${level.width} × ${level.width} map</small></div>
     </section>
-    <p class="route-instruction"><strong>${level.stepLimit} moves maximum</strong><span>Collect three flags and reach the picnic. Glowing tiles are one move away.</span></p>
+    <p class="route-instruction"><strong>${level.stepLimit} moves maximum</strong><span>Collect ${level.flags.length} flags and reach the picnic. Glowing tiles are one move away.</span></p>
     <div class="stat-row route-stats">
       ${chip("Map",`${state.level+1}/${timeTrailLevels.length}`)}
       ${chip("Steps left",level.stepLimit-state.moves)}
-      ${chip("Flags found",`${state.flags.size}/3`)}
+      ${chip("Flags found",`${state.flags.size}/${level.flags.length}`)}
       ${chip("Shortest route",`${level.bestMoves} moves`)}
       ${chip("Trail stars",`${stars}/${timeTrailLevels.length*3}`)}
     </div>
     <div class="route-legend"><span>🧑 You</span><span>🚩 Mission</span><span>🧺 Finish</span><span>✨ Glowing = next move</span></div>
-    <div class="tile-grid route-map" aria-label="Park route grid">${Array.from({length:25},(_,i)=>{
+    <div class="tile-grid route-map route-map--${level.width}" aria-label="Trail map, ${level.width} by ${level.width} squares">${Array.from({length:level.width*level.width},(_,i)=>{
       const rock=rocks.has(i),flag=level.flags.includes(i),finishTile=i===level.finish,player=i===state.player;
-      const reachable=moving&&!rock&&!player&&adjacent(state.player,i);
-      return `<button class="tile ${rock?"rock":""} ${player?"player":""} ${reachable?"route-reachable":""} ${flag?"flag":""} ${finishTile?"finish":""} ${state.visited.has(i)?"visited":""}" data-tile="${i}" aria-label="Row ${Math.floor(i/5)+1}, column ${i%5+1}, ${player?"your position":rock?"rock":flag?(state.flags.has(i)?"flag collected":"mission flag"):finishTile?"picnic finish":"path"}${reachable?", next possible move":""}" ${!moving||rock||player?"disabled":""}>${player?"🧑":rock?"🪨":flag?(state.flags.has(i)?"✓":"🚩"):finishTile?"🧺":"·"}</button>`;
-    }).join("")}</div>`;
+      const reachable=moving&&!rock&&!player&&adjacent(state.player,i,level.width);
+      return `<button class="tile ${rock?"rock":""} ${player?"player":""} ${reachable?"route-reachable":""} ${flag?"flag":""} ${finishTile?"finish":""} ${state.visited.has(i)?"visited":""}" data-tile="${i}" aria-label="Row ${Math.floor(i/level.width)+1}, column ${i%level.width+1}, ${player?"your position":rock?"rock":flag?(state.flags.has(i)?"flag collected":"mission flag"):finishTile?"picnic finish":"path"}${reachable?", next possible move":""}" ${!moving||rock||player?"disabled":""}>${player?"🧑":rock?"🪨":flag?(state.flags.has(i)?"✓":"🚩"):finishTile?"🧺":"·"}</button>`;
+    }).join("")}</div><p class="trail-local-note">🌱 Your completed maps and trail stars are saved only in this browser.</p>`;
   bind("[data-tile]",node=>moveRoute(Number(node.dataset.tile)));
   progress(state.level+(state.levelPassed?1:0),timeTrailLevels.length,
     `${state.level+(state.levelPassed?1:0)} of ${timeTrailLevels.length} trails explored`);
@@ -665,32 +685,35 @@ function renderRoute() {
     button(state.level===timeTrailLevels.length-1?"See all my trails":"Next trail",()=>{
       if(state.level===timeTrailLevels.length-1){
         const total=state.levelStars.reduce((sum,n)=>sum+n,0);
-        finish(`You explored all ${timeTrailLevels.length} trails and earned ${total} of ${timeTrailLevels.length*3} trail stars. You can plan a new path every time!`,
+        saveTrail(0);
+        finish(`You explored all ${timeTrailLevels.length} trails across six chapters and earned ${total} of ${timeTrailLevels.length*3} trail stars!`,
           Math.round(total/(timeTrailLevels.length*3)*100));
-      }else{state.level++;startTrailLevel();say("New trail unlocked! Check the flags and plan the next route.","good");}
+      }else{state.level++;saveTrail(state.level);startTrailLevel();say("New trail unlocked! Check the flags and plan the next route.","good");}
     });
   }else if(!moving)button("Retry this trail",()=>{startTrailLevel();say("Fresh map. Check the flags before you move.");});
-  hint=`The shortest route for ${level.name} uses ${level.bestMoves} moves. You have ${level.stepLimit} moves. Follow glowing neighbor tiles and collect each flag before reaching the picnic.`;
+  if(!state.levelPassed&&state.level>0)button("Replay from first map",()=>{state.level=0;saveTrail(0);startTrailLevel();say("Back to the first trail! Your earned stars stay saved.","good");},"secondary");
+  hint=`The ${level.width} by ${level.width} map has ${level.flags.length} flags. Its shortest route uses ${level.bestMoves} moves; you have ${level.stepLimit}. Follow glowing neighbor tiles, collect the flags, then reach the picnic.`;
 }
 function moveRoute(next) {
   const level=trailNow();
   if(finished||state.levelPassed||state.moves>=level.stepLimit)return;
-  if(next<0||next>=25||level.rocks.includes(next)||!adjacent(state.player,next)){
+  if(next<0||next>=level.width*level.width||level.rocks.includes(next)||!adjacent(state.player,next,level.width)){
     say("Choose a glowing nearby path tile, one move up, down, left, or right.","try");return;
   }
   state.player=next;state.moves++;state.visited.add(next);
   if(level.flags.includes(next))state.flags.add(next);
   tone();
   if(next===level.finish&&state.flags.size===level.flags.length){
-    state.levelStars[state.level]=state.moves<=level.bestMoves?3:state.moves<=level.bestMoves+2?2:1;
+    state.levelStars[state.level]=Math.max(state.levelStars[state.level],state.moves<=level.bestMoves?3:state.moves<=level.bestMoves+2?2:1);
     state.levelPassed=true;
+    saveTrail(state.level===timeTrailLevels.length-1?0:state.level+1);
     renderRoute();
-    say(`Excellent! All three flags collected in ${state.moves} moves. ${state.levelStars[state.level]} stars earned! Continue to the next trail.`,"good");
+    say(`Excellent! All ${level.flags.length} flags collected in ${state.moves} moves. ${state.levelStars[state.level]} stars earned! Continue to the next trail.`,"good");
     return;
   }
   renderRoute();
   if(state.moves>=level.stepLimit)say(`You've used all ${level.stepLimit} moves. Press Retry this trail and try another plan.`,"try");
-  else say(next===level.finish?"Collect all flags before stopping at the picnic.":`${level.stepLimit-state.moves} moves left. Look for your next flag.`);
+  else say(next===level.finish?`Collect all ${level.flags.length} flags before stopping at the picnic.`:`${level.stepLimit-state.moves} moves left. Look for your next flag.`);
 }
 
 const plants = {

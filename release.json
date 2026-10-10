@@ -237,7 +237,7 @@
       "id": "time-trail",
       "title": "Time Trail",
       "route": "games/time-trail/index.html",
-      "manualFocus": "Complete all twenty trails and four ranks, verify flags and different maps, glowing adjacent moves, retry after running out of steps, stars, sound-off, contrast, touch/keyboard, and saved completion."
+      "manualFocus": "Play 60 distinct route maps across six ranks: test 5×5 to 7×7 grids, increasingly long solutions and 3–5 flags, retries, next-level transitions, on-device checkpoint/reload, saved stars, theme contrast, touch/keyboard, sound-off, and completion. Keep human release approval."
     },
     {
       "id": "garden-guardians",

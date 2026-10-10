@@ -83,7 +83,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Kindness Quest — Complete a full Kindness Quest round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Fact Finder — Complete a full Fact Finder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Repair Café — Complete a full Repair Café round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
-- [ ] Time Trail — Play twenty route maps across four ranks, check shortest paths, flag collection, spare move budgets, retry, next-level stars, theme contrast, keyboard/touch, saved completion and sound-off.
+- [ ] Time Trail — Complete 60 progressively longer routes across six chapters; check 5×5, 6×6 and 7×7 maps, 3–5 collectible flags, reachable finish, limits, retries, on-device checkpoint/reload, saved best stars, theme contrast, touch/keyboard and sound-off. Keep manual approval.
 - [ ] Garden Guardians — Complete all eight gardens, check crop quotas and scarce-water targets, visit all four ranks, test light/dark/high-contrast on phone, and verify stars, keyboard use, and local completion.
 - [ ] Energy Island — Complete eight islands and four ranks, verify shifting four-day forecasts, solar/wind/battery budgets, after-dark storage, clear-build, energy log, accessibility, and local completion.
 - [ ] Reuse Rally — Complete a full Reuse Rally round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
