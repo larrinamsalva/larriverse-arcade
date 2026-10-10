@@ -362,18 +362,20 @@ test("Repair Café: draw eight unique repairs from a twenty-scenario bank", asyn
     expect(new Set(seen).size).toBe(8);
   });
 });
-test("Time Trail: explore twenty different solvable maps across four ranks",async({page})=>{
-  test.setTimeout(240000);
-  expect(timeTrailLevels).toHaveLength(20);
+test("Time Trail: complete sixty growing maps over six chapters",async({page})=>{
+  test.setTimeout(420000);
+  expect(timeTrailLevels).toHaveLength(60);
   await round(page,"time-trail",async()=>{
     await expect(page.locator(".route-level-hero")).toContainText(timeTrailLevels[0].name);
-    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(4);
+    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(6);
     await page.locator('[data-tile="4"]').click();
     await expect(page.locator("#feedback")).toContainText("glowing nearby");
     for(const [index,level] of timeTrailLevels.entries()){
       const path=shortestTrailPath(level);
-      await expect(page.locator("#stageLabel")).toContainText(`Map ${index+1} of 20`);
+      await expect(page.locator("#stageLabel")).toContainText(`Map ${index+1} of 60`);
       await expect(page.locator(".route-level-hero")).toContainText(level.name);
+      await expect(page.locator(".tile-grid .tile")).toHaveCount(level.width*level.width);
+      await expect(page.locator(".route-stats")).toContainText(`Flags found0/${level.flags.length}`);
       await expect(page.locator(".route-stats")).toContainText(`Shortest route${level.bestMoves} moves`);
       await expect(page.locator(".route-stats")).toContainText(`Steps left${level.stepLimit}`);
       for(const tile of path.slice(1)){
@@ -381,10 +383,10 @@ test("Time Trail: explore twenty different solvable maps across four ranks",asyn
         await page.locator(`[data-tile="${tile}"]`).click();
       }
       await expect(page.locator("#feedback")).toContainText("3 stars earned");
-      await page.getByRole("button",{name:index===19?"See all my trails":"Next trail"}).click();
-      if(index<19)await expect(page.locator(".route-stats")).toContainText(`Trail stars${(index+1)*3}/60`);
+      await page.getByRole("button",{name:index===59?"See all my trails":"Next trail"}).click();
+      if(index<59)await expect(page.locator(".route-stats")).toContainText(`Trail stars${(index+1)*3}/180`);
     }
-    await expect(page.locator("#finishMessage")).toContainText("60 of 60 trail stars");
+    await expect(page.locator("#finishMessage")).toContainText("180 of 180 trail stars");
   });
 });
 test("Time Trail: exhausted moves allow retry without locking other levels",async({page})=>{
@@ -398,6 +400,23 @@ test("Time Trail: exhausted moves allow retry without locking other levels",asyn
   await page.getByRole("button",{name:"Retry this trail"}).click();
   await expect(page.locator(".route-stats")).toContainText(`Steps left${level.stepLimit}`);
   await expect(page.locator(".tile.route-reachable")).toHaveCount(2);
+});
+
+test("Time Trail: checkpoint resumes after a page reload and can replay from map one",async({page})=>{
+  await page.goto("/games/time-trail/index.html");
+  const path=shortestTrailPath(timeTrailLevels[0]);
+  for(const tile of path.slice(1))await page.locator(`[data-tile="${tile}"]`).click();
+  await page.getByRole("button",{name:"Next trail"}).click();
+  await expect(page.locator("#stageLabel")).toContainText("Map 2 of 60");
+  await page.reload();
+  await expect(page.locator("#stageLabel")).toContainText("Map 2 of 60");
+  await expect(page.locator(".route-stats")).toContainText("Trail stars3/180");
+  await page.getByRole("button",{name:"Replay from first map"}).click();
+  await expect(page.locator("#stageLabel")).toContainText("Map 1 of 60");
+  await expect(page.locator(".route-stats")).toContainText("Trail stars3/180");
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.timeTrail.progress.v2")));
+  expect(saved.nextLevel).toBe(0);
+  expect(saved.stars[0]).toBe(3);
 });
 test("Garden Guardians: finish eight gardens, four ranks, and changing water goals", async ({ page }) => {
   test.setTimeout(120000);
