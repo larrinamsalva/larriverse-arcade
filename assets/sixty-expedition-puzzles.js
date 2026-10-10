@@ -685,4 +685,245 @@ export const extraCompassClues = [
     "south": 3
   }
 ];
-export const extraCipherLevels = [];
+export const extraCipherLevels = [
+  {
+    "word": "ACED",
+    "clue": "Got every answer right",
+    "shift": 1,
+    "encode": true
+  },
+  {
+    "word": "BEEF",
+    "clue": "Meat from cattle",
+    "shift": 4,
+    "encode": false
+  },
+  {
+    "word": "DEAF",
+    "clue": "Having little or no hearing",
+    "shift": 7,
+    "encode": true
+  },
+  {
+    "word": "DEAD",
+    "clue": "No longer living",
+    "shift": 3,
+    "encode": false
+  },
+  {
+    "word": "EDGE",
+    "clue": "Outside border of a shape",
+    "shift": 6,
+    "encode": true
+  },
+  {
+    "word": "EACH",
+    "clue": "Every single one",
+    "shift": 2,
+    "encode": false
+  },
+  {
+    "word": "DEED",
+    "clue": "A helpful action or written agreement",
+    "shift": 5,
+    "encode": true
+  },
+  {
+    "word": "ACHE",
+    "clue": "A dull feeling of pain",
+    "shift": 1,
+    "encode": false
+  },
+  {
+    "word": "HEED",
+    "clue": "Pay attention to advice",
+    "shift": 4,
+    "encode": true
+  },
+  {
+    "word": "CHEF",
+    "clue": "A person who prepares food",
+    "shift": 7,
+    "encode": false
+  },
+  {
+    "word": "ACHED",
+    "clue": "Felt a steady pain",
+    "shift": 4,
+    "encode": true
+  },
+  {
+    "word": "ADAGE",
+    "clue": "A short traditional saying",
+    "shift": 7,
+    "encode": false
+  },
+  {
+    "word": "ADDED",
+    "clue": "Put together to make more",
+    "shift": 3,
+    "encode": true
+  },
+  {
+    "word": "AHEAD",
+    "clue": "In front or in the future",
+    "shift": 6,
+    "encode": false
+  },
+  {
+    "word": "BEECH",
+    "clue": "A type of leafy tree",
+    "shift": 2,
+    "encode": true
+  },
+  {
+    "word": "CACHE",
+    "clue": "A hidden store of supplies",
+    "shift": 5,
+    "encode": false
+  },
+  {
+    "word": "CAGED",
+    "clue": "Kept within an enclosure",
+    "shift": 1,
+    "encode": true
+  },
+  {
+    "word": "CHAFE",
+    "clue": "Rub against and irritate",
+    "shift": 4,
+    "encode": false
+  },
+  {
+    "word": "CHAFF",
+    "clue": "The light husk of a grain seed",
+    "shift": 7,
+    "encode": true
+  },
+  {
+    "word": "DECAF",
+    "clue": "A drink with most caffeine removed",
+    "shift": 3,
+    "encode": false
+  },
+  {
+    "word": "ACCEDE",
+    "clue": "Agree to a request",
+    "shift": 7,
+    "encode": true
+  },
+  {
+    "word": "BAGGED",
+    "clue": "Put something into a bag",
+    "shift": 3,
+    "encode": false
+  },
+  {
+    "word": "BEADED",
+    "clue": "Decorated using small beads",
+    "shift": 6,
+    "encode": true
+  },
+  {
+    "word": "BEDDED",
+    "clue": "Set down into a soft layer",
+    "shift": 2,
+    "encode": false
+  },
+  {
+    "word": "BEEFED",
+    "clue": "Made stronger or more substantial",
+    "shift": 5,
+    "encode": true
+  },
+  {
+    "word": "BEGGED",
+    "clue": "Asked for something urgently",
+    "shift": 1,
+    "encode": false
+  },
+  {
+    "word": "HEADED",
+    "clue": "Went in a particular direction",
+    "shift": 4,
+    "encode": true
+  },
+  {
+    "word": "CACHED",
+    "clue": "Stored where it can be found quickly",
+    "shift": 7,
+    "encode": false
+  },
+  {
+    "word": "CHAFED",
+    "clue": "Became irritated by rubbing",
+    "shift": 3,
+    "encode": true
+  },
+  {
+    "word": "DECADE",
+    "clue": "A period of ten years",
+    "shift": 6,
+    "encode": false
+  },
+  {
+    "word": "ACCEDED",
+    "clue": "Agreed to a request",
+    "shift": 3,
+    "encode": true
+  },
+  {
+    "word": "BAGGAGE",
+    "clue": "Bags packed for traveling",
+    "shift": 6,
+    "encode": false
+  },
+  {
+    "word": "BEACHED",
+    "clue": "Came to rest on a shore",
+    "shift": 2,
+    "encode": true
+  },
+  {
+    "word": "CABBAGE",
+    "clue": "A leafy vegetable with a round head",
+    "shift": 5,
+    "encode": false
+  },
+  {
+    "word": "DEFACED",
+    "clue": "Marked or damaged the surface",
+    "shift": 1,
+    "encode": true
+  },
+  {
+    "word": "EGGHEAD",
+    "clue": "Informal term for a bookish person",
+    "shift": 4,
+    "encode": false
+  },
+  {
+    "word": "DEADHEAD",
+    "clue": "Remove spent flowers from a plant",
+    "shift": 7,
+    "encode": true
+  },
+  {
+    "word": "HEADACHE",
+    "clue": "Pain felt in the head",
+    "shift": 3,
+    "encode": false
+  },
+  {
+    "word": "BEACHHEAD",
+    "clue": "A starting point on a shore",
+    "shift": 6,
+    "encode": true
+  },
+  {
+    "word": "FACADE",
+    "clue": "The outer front of a building",
+    "shift": 2,
+    "encode": false
+  }
+];
