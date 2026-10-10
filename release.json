@@ -213,25 +213,25 @@
       "id": "scam-sleuth",
       "title": "Scam Sleuth",
       "route": "games/scam-sleuth/index.html",
-      "manualFocus": "Complete a full Scam Sleuth round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+      "manualFocus": "Complete ten unique questions in one round, then six rounds without repeated questions across a sixty-item bank for Scam Sleuth. Check correct-answer feedback, keyboard/touch access, contrast, no paid costs, saved completions, and replay. Manual release approval required."
     },
     {
       "id": "kindness-quest",
       "title": "Kindness Quest",
       "route": "games/kindness-quest/index.html",
-      "manualFocus": "Complete a full Kindness Quest round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+      "manualFocus": "Complete ten unique questions in one round, then six rounds without repeated questions across a sixty-item bank for Kindness Quest. Check correct-answer feedback, keyboard/touch access, contrast, no paid costs, saved completions, and replay. Manual release approval required."
     },
     {
       "id": "fact-finder",
       "title": "Fact Finder",
       "route": "games/fact-finder/index.html",
-      "manualFocus": "Complete a full Fact Finder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+      "manualFocus": "Complete ten unique questions in one round, then six rounds without repeated questions across a sixty-item bank for Fact Finder. Check correct-answer feedback, keyboard/touch access, contrast, no paid costs, saved completions, and replay. Manual release approval required."
     },
     {
       "id": "repair-cafe",
       "title": "Repair Café",
       "route": "games/repair-cafe/index.html",
-      "manualFocus": "Complete a full Repair Café round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+      "manualFocus": "Complete ten unique questions in one round, then six rounds without repeated questions across a sixty-item bank for Repair Café. Check correct-answer feedback, keyboard/touch access, contrast, no paid costs, saved completions, and replay. Manual release approval required."
     },
     {
       "id": "time-trail",
@@ -255,7 +255,7 @@
       "id": "reuse-rally",
       "title": "Reuse Rally",
       "route": "games/reuse-rally/index.html",
-      "manualFocus": "Complete a full Reuse Rally round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+      "manualFocus": "Complete ten unique questions in one round, then six rounds without repeated questions across a sixty-item bank for Reuse Rally. Check correct-answer feedback, keyboard/touch access, contrast, no paid costs, saved completions, and replay. Manual release approval required."
     },
     {
       "id": "robot-rover",

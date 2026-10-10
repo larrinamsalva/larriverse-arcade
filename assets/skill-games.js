@@ -236,19 +236,19 @@ function initialize() {
       startResourceProject();
       break;
     case "messages":
-      state.deck = challengeRound(messages, 6);
+      state.deck = challengeRound(messages, 10);
       renderCards("messages");
       break;
     case "conversation":
-      state.deck = challengeRound(conversations, 6);
+      state.deck = challengeRound(conversations, 10);
       renderCards("conversation");
       break;
     case "news":
-      state.deck = challengeRound(newsCards, 6);
+      state.deck = challengeRound(newsCards, 10);
       renderCards("news");
       break;
     case "repair":
-      state.deck = challengeRound(repairs, 8);
+      state.deck = challengeRound(repairs, 10);
       state.order = shuffle([0, 1, 2, 3]);
       state.position = 0;
       renderRepair();
@@ -271,7 +271,7 @@ function initialize() {
       startEnergyLevel();
       break;
     case "sorting":
-      state.deck = challengeRound(sorting, 6);
+      state.deck = challengeRound(sorting, 10);
       renderCards("sorting");
       break;
     case "traffic":

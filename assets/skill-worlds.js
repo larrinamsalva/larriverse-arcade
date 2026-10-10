@@ -1,5 +1,6 @@
 import { expeditions } from "./expedition-worlds.js";
 import { messageExtras, conversationExtras, newsExtras, sortingExtras, trafficQuestions } from "./expanded-scenarios.js";
+import { sixtyMessageExtras, sixtyConversationExtras, sixtyNewsExtras, sixtySortingExtras, sixtyRepairExtras } from "./sixty-world-extras.js";
 export { trafficQuestions };
 export const worlds = [
   ...expeditions,
@@ -47,7 +48,7 @@ export const worlds = [
     skill: "Spotting online tricks",
     desc: "Investigate sneaky messages and protect your digital clubhouse.",
     mission:
-      "Try six different clubhouse messages each round from a bank of twenty. Choose whether to read, check another way, or block and tell a trusted adult.",
+      "Try ten different clubhouse messages per round from sixty unique scenarios, with no repeats across six rounds. Choose whether to read, check another way, or block and tell a trusted adult.",
     take: "Slow down when a message asks for secrets, money, or a rushed decision. Check through a route you already trust.",
     mode: "messages",
   },
@@ -63,7 +64,7 @@ export const worlds = [
     skill: "Listening & boundaries",
     desc: "Help the treehouse crew listen, work together, and set kind boundaries.",
     mission:
-      "The treehouse crew needs your help. Try six different choices each round from a bank of twenty that make room for everyone, including you.",
+      "The treehouse crew needs your help. Explore sixty different kindness and boundary scenarios, ten per round, before any repeat.",
     take: "You can care about someone and still say no. Ask, listen, and make a plan together.",
     mode: "conversation",
   },
@@ -79,7 +80,7 @@ export const worlds = [
     skill: "Checking claims & sources",
     desc: "Run a tiny news desk. Sort evidence, opinions, ads, and unchecked claims.",
     mission:
-      "Try six different news-desk cards each round from a bank of twenty. Sort each into evidence, opinion, advertisement, or needs checking.",
+      "Try ten different news-desk cards per round from sixty unique source-checking situations. Sort each into evidence, opinion, advertisement, or needs checking.",
     take: "A popular claim is not automatically a fact. Look for a source, context, and something you can check.",
     mode: "news",
   },
@@ -93,9 +94,9 @@ export const worlds = [
     minutes: "3 min",
     art: 4,
     skill: "Repair before replacing",
-    desc: "Practice repair-and-care skills with a bank of twenty different challenges before replacing something.",
+    desc: "Practice repair-and-care skills with sixty different challenges before replacing something.",
     mission:
-      "Try eight repair situations per round from a bank of twenty. Put the steps in a sensible order: inspect first, choose a safe fix, make the small repair, then test it.",
+      "Try ten repair situations per round from sixty different hands-on challenges. Put the steps in a sensible order: inspect first, choose a safe fix, make the small repair, then test it.",
     take: "Looking closely can save time, materials, and money. Small repairs can give things a second life.",
     mode: "repair",
   },
@@ -159,7 +160,7 @@ export const worlds = [
     skill: "Reuse & thoughtful sorting",
     desc: "Clean up Toy Town. Reuse what you can and sort the rest.",
     mission:
-      "Sort six different objects each round from a bank of twenty: reuse, recycling, compost, or trash. Real local rules can differ.",
+      "Sort ten different objects per round from a sixty-item bank: reuse, recycling, compost, or trash. Real local rules can differ.",
     take: "Using something again can avoid waste. Check your local recycling and compost rules with an adult.",
     mode: "sorting",
   },
@@ -289,6 +290,7 @@ export const messages = [
     why: "You checked an account through your own trusted route. You can read the ordinary reminder.",
   },
   ...messageExtras,
+  ...sixtyMessageExtras,
 ];
 export const conversations = [
   {
@@ -352,6 +354,7 @@ export const conversations = [
     why: "You do not have to handle repeated hurtful behavior alone. Support the person and get help.",
   },
   ...conversationExtras,
+  ...sixtyConversationExtras,
 ];
 export const newsCards = [
   {
@@ -403,6 +406,7 @@ export const newsCards = [
     why: "Payment or gifts can make this sponsored content. Look for the sponsorship disclosure.",
   },
   ...newsExtras,
+  ...sixtyNewsExtras,
 ];
 export const repairs = [
   {
@@ -525,6 +529,7 @@ export const repairs = [
     steps: ["Open the journal and find where the ribbon was attached","Check that no pages are caught or torn","Reattach the ribbon gently with an adult-approved method","Close and reopen the journal to check the ribbon moves freely"],
     hint: "A small repair should not create a new problem, so always test how the item opens and closes afterward.",
   },
+  ...sixtyRepairExtras,
 ];
 
 export const sorting = [
@@ -599,6 +604,7 @@ export const sorting = [
     why: "Toy Town accepts clean paper in recycling. Local rules can differ.",
   },
   ...sortingExtras,
+  ...sixtySortingExtras,
 ];
 export const robotLevels = [
   {
