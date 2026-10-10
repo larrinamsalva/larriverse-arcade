@@ -85,7 +85,7 @@ export const townExtraLevels = neighborhoods.map((name,i)=>{
     if(partIndex===0)return exact;
     if(prior!=null&&close(at,prior))return {type:"adjacent",other};
     if(prior!=null&&Math.floor(at/3)===Math.floor(prior/3))return {type:"sameRow",other};
-    if(partIndex===3)return {type:"differentRow",other:"park"};
+    if(partIndex===3)return {type:"differentRow",other};
     return i%2?byColumn:byRow;
   };
   return {
