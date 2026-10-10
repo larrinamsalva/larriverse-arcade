@@ -13,9 +13,9 @@ import {
   weatherChallenges,
   gardenGrowthChallenges,
 } from "../assets/skill-worlds.js";
-import { budgetAdventures } from "../assets/budget-adventures.js";
+import { resourceAdventures } from "../assets/budget-adventures.js";
 import { gardenLevels, energyLevels } from "../assets/garden-energy-levels.js";
-import { timeTrail, shortestTrailPath } from "../assets/time-trail-level.js";
+import { timeTrailLevelsWithGoals as timeTrailLevels, shortestTrailPath } from "../assets/time-trail-level.js";
 import {
   iconSvg,
   weatherSceneSvg,
@@ -71,26 +71,27 @@ for (const item of sorting) {
   assert.match(item.art, /^[a-z][A-Za-z]+$/);
   assert.match(iconSvg(item.art), new RegExp(`object-model--${item.art}`));
 }
-// Pocket Planet has four rounds of five unique, solvable fictional budgets.
-assert.equal(budgetAdventures.length, 20);
-assert.equal(new Set(budgetAdventures.map((item) => item.id)).size, 20);
-for (const plan of budgetAdventures) {
-  assert.ok(plan.title.length >= 7 && plan.story.length >= 20 && plan.goal.length >= 8);
-  assert.ok(plan.coins > plan.save && plan.save > 0);
-  assert.equal(plan.items.length, 6);
-  assert.equal(plan.items.filter((item) => item.need).length, 3);
-  assert.equal(plan.items.filter((item) => !item.need).length, 3);
-  assert.equal(new Set(plan.items.map((item) => item.name)).size, 6);
-  assert.ok(plan.items.every((item) => item.name && item.icon && Number.isInteger(item.cost) && item.cost > 0));
-  const needs = plan.items.filter((item) => item.need).reduce((sum, item) => sum + item.cost, 0);
-  const left = plan.coins - needs;
-  assert.ok(left >= plan.save, `${plan.id}: three needs and savings are achievable`);
-  assert.ok(plan.items.some((item) => !item.need && item.cost <= left && left - item.cost < plan.save),
-    `${plan.id}: an affordable extra can jeopardize savings`);
+// Pocket Planet: 30 age-friendly hands-on projects instead of fictional coin prices.
+assert.equal(resourceAdventures.length,30);
+assert.equal(new Set(resourceAdventures.map(p=>p.id)).size,30);
+assert.deepEqual(["build","eat","grow"].map(kind=>resourceAdventures.filter(p=>p.kind===kind).length),[10,10,10]);
+for(const plan of resourceAdventures) {
+  assert.ok(plan.title.length>=7 && plan.story.length>=25 && plan.goal.length>=8,plan.id);
+  assert.equal(plan.items.length,6);
+  assert.equal(plan.items.filter(x=>x.need).length,3);
+  assert.equal(plan.items.filter(x=>!x.need).length,3);
+  assert.equal(new Set(plan.items.map(x=>x.name)).size,6);
+  assert.ok(plan.items.every(x=>x.icon && x.name && !("cost" in x) && !("coins" in x)),plan.id);
+  assert.equal(plan.steps.length,3);
+  assert.equal(new Set(plan.steps).size,3);
+  assert.ok(plan.steps.every(x=>x.length>=15),plan.id);
 }
-const budgetSource = fs.readFileSync("assets/skill-games.js", "utf8");
-assert.ok(budgetSource.includes("challengeRound(budgetAdventures, 5)"), "five unseen budget challenges per round");
-assert.match(catalog.find((item) => item.id === "pocket-planet").mission, /twenty unique budgets/);
+const resourceSource=fs.readFileSync("assets/skill-games.js","utf8");
+assert.ok(resourceSource.includes("challengeRound(resourceAdventures, 10)"));
+assert.ok(!resourceSource.includes('chip("Starting coins"'));
+assert.ok(!resourceSource.includes('data-buy='));
+assert.match(catalog.find(x=>x.id==="pocket-planet").mission,/thirty projects without coins or purchases/);
+assert.equal(catalog.find(x=>x.id==="pocket-planet").topic,"Planet");
 assert.equal(trafficQuestions.length, 60);
 assert.equal(new Set(trafficQuestions.map((item) => item.text)).size, trafficQuestions.length);
 for (const item of trafficQuestions) {
@@ -156,38 +157,38 @@ for (const id of ["garden-guardians","energy-island"]) {
   assert.match(world.mission, /eight .* levels/i, `${id} describes its new journey`);
   assert.equal(entry.mission, world.mission, `${id} game card matches the game itself`);
 }
-// Time Trail: kids should reach all flags and the picnic in eight moves,
-// with four spare moves rather than the old twelve-move detour and sixteen-move cap.
-assert.equal(timeTrail.width, 5);
-assert.equal(timeTrail.start, 20);
-assert.equal(timeTrail.finish, 4);
-assert.equal(timeTrail.stepLimit, 12);
-assert.equal(timeTrail.flags.length, 3);
-assert.equal(new Set(timeTrail.flags).size, 3);
-assert.equal(new Set(timeTrail.rocks).size, timeTrail.rocks.length);
-assert.ok([...timeTrail.flags, timeTrail.start, timeTrail.finish]
-  .every((tile) => !timeTrail.rocks.includes(tile)));
-assert.ok([...timeTrail.rocks, ...timeTrail.flags, timeTrail.start, timeTrail.finish]
-  .every((tile) => Number.isInteger(tile) && tile >= 0 && tile < 25));
-const shortestTimeTrail = shortestTrailPath(timeTrail);
-assert.deepEqual(shortestTimeTrail, [20, 15, 10, 5, 0, 1, 2, 3, 4]);
-assert.equal(shortestTimeTrail.length - 1, 8);
-assert.ok(shortestTimeTrail.length - 1 < timeTrail.stepLimit, "give players room for detours");
-assert.ok(timeTrail.flags.every((flag) => shortestTimeTrail.includes(flag)));
-for (let index = 1; index < shortestTimeTrail.length; index++) {
-  const a = shortestTimeTrail[index - 1], b = shortestTimeTrail[index];
-  assert.equal(Math.abs(Math.floor(a / 5) - Math.floor(b / 5)) +
-    Math.abs((a % 5) - (b % 5)), 1, "every move is to an adjacent tile");
+// Twenty different trail routes: a good path on every map with 4 spare moves.
+assert.equal(timeTrailLevels.length,20);
+assert.equal(new Set(timeTrailLevels.map(level=>level.id)).size,20);
+assert.equal(new Set(timeTrailLevels.map(level=>level.rank)).size,4);
+assert.deepEqual([...new Set(timeTrailLevels.map(level=>level.rank))].map(rank=>
+  timeTrailLevels.filter(level=>level.rank===rank).length),[5,5,5,5]);
+const layouts=new Set();
+for(const level of timeTrailLevels) {
+  assert.equal(level.width,5);
+  assert.equal(level.flags.length,3);
+  assert.equal(new Set(level.flags).size,3);
+  assert.equal(new Set(level.rocks).size,level.rocks.length);
+  assert.ok([...level.flags,level.start,level.finish].every(i=>!level.rocks.includes(i)),level.id);
+  assert.ok([...level.rocks,...level.flags,level.start,level.finish].every(i=>i>=0&&i<25),level.id);
+  const path=shortestTrailPath(level);
+  assert.ok(path && path.length>=7,level.id);
+  assert.equal(path[0],level.start);
+  assert.equal(path.at(-1),level.finish);
+  assert.ok(level.flags.every(flag=>path.includes(flag)),level.id);
+  assert.equal(level.bestMoves,path.length-1);
+  assert.equal(level.stepLimit,level.bestMoves+4);
+  assert.ok(level.bestMoves<=16,level.id);
+  for(let i=1;i<path.length;i++)
+    assert.equal(Math.abs(Math.floor(path[i]/5)-Math.floor(path[i-1]/5))+
+      Math.abs(path[i]%5-path[i-1]%5),1,level.id);
+  layouts.add(JSON.stringify([level.start,level.finish,level.flags,level.rocks]));
 }
-const trailWorld = worlds.find((world) => world.id === "time-trail");
-assert.match(trailWorld.mission, /8 moves/);
-assert.match(trailWorld.mission, /12 moves allowed/);
-assert.equal(catalog.find((world) => world.id === "time-trail").mission, trailWorld.mission);
-const trailGame = fs.readFileSync("assets/skill-games.js", "utf8");
-assert.ok(trailGame.includes("tile.route-reachable") || trailGame.includes("route-reachable"),
-  "Time Trail highlights legal adjacent moves");
-assert.ok(trailGame.includes("state.moves >= ROUTE_STEP_LIMIT"),
-  "Time Trail stops after its strict move limit");
+assert.equal(layouts.size,20,"Twenty distinct rotated route layouts");
+assert.deepEqual(shortestTrailPath(timeTrailLevels[0]),[20,15,10,5,0,1,2,3,4]);
+const trailWorld=worlds.find(x=>x.id==="time-trail");
+assert.match(trailWorld.mission,/twenty map levels/);
+assert.equal(catalog.find(x=>x.id==="time-trail").mission,trailWorld.mission);
 assert.equal(robotLevels.length, 20);
 assert.equal(new Set(robotLevels.map((level) => level.name)).size, robotLevels.length);
 assert.equal(
