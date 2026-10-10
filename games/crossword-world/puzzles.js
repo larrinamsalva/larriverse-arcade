@@ -14,12 +14,14 @@ function shuffled(items,rng){const a=[...items];for(let i=a.length-1;i>0;i--){co
 export function buildCrossword(level){
  if(!level?.spine||!Number.isInteger(level.id))throw Error("Invalid crossword level");
  const spine=level.spine,words=level.bank;
- const indices=Array.from({length:level.bars},(_,j)=>j*2);
- if(indices.some(index=>index>=spine.length))throw Error("Spine too short");
+ const patterns=[0,1].filter(start=>start+(level.bars-1)*2<spine.length)
+  .map(start=>Array.from({length:level.bars},(_,j)=>start+j*2));
+ if(!patterns.length)throw Error("Spine too short");
  let bars=null;
  // Select actual crossing answers. Every across clue joins the same down answer
  // on its shared letter; bars sit on alternating rows to avoid accidental joins.
  for(let attempt=0;attempt<140;attempt++){
+  const indices=patterns[attempt%patterns.length];
   const rng=seeded((level.id*91771+attempt*21413)>>>0);
   const used=new Set([spine]),chosen=[];let failed=false;
   for(const row of indices){
