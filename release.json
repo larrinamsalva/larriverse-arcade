@@ -146,7 +146,7 @@
     {
       "id": "bridge-buddies",
       "title": "Bridge Buddies",
-      "manualFocus": "Complete twenty advancing crossings, inspect the dimensional cargo vehicles, and confirm each bridge stays within its token budget.",
+      "manualFocus": "Play twenty crossings; build all four spans with unlimited materials (including four triangle braces), check loads and weak support feedback, swap and clear freely, use touch/keyboard, ensure saved completion and readable styles in light/dark/high-contrast modes.",
       "route": "games/bridge-buddies/index.html"
     },
     {
