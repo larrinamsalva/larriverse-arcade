@@ -46,10 +46,21 @@ for (const world of expeditions) {
   const html = fs.readFileSync(`games/${world.id}/index.html`, "utf8");
   assert.ok(html.includes(`data-world="${world.id}"`) && html.includes("expedition-games.css") && html.includes("arcade-expedition.css"));
 }
+// The lesson is structural load planning, not spending pretend money.
+assert.equal(bridgeParts.length, 3);
+assert.deepEqual(bridgeParts.map(part => part.capacity), [3,6,9]);
+assert.ok(bridgeParts.every(part => !("cost" in part)), "No bridge material has a token price");
 for (const level of bridgeLevels) {
-  const minimum = level.loads.reduce((sum, load) => sum + bridgeParts.find(part => part.capacity >= load).cost, 0);
-  assert.ok(minimum <= level.budget, "Every bridge has a solution within its budget");
+  assert.ok(!("budget" in level), `${level.name}: no token budget`);
+  assert.equal(level.loads.length, 4, `${level.name}: four spans`);
+  assert.ok(level.loads.every(load => Number.isInteger(load) && load > 0 &&
+    bridgeParts.some(part => part.capacity >= load)), `${level.name}: each span has a strong support`);
 }
+const bridgeSource = fs.readFileSync("assets/expedition-games.js","utf8");
+const bridgeGame = bridgeSource.slice(bridgeSource.indexOf("function bridge()"),bridgeSource.indexOf("function pipes()"));
+assert.ok(!/Builder tokens|more tokens|Tokens return|cost > level\.budget|spent/.test(bridgeGame),
+  "Bridge Buddies must not have hidden token limits");
+assert.match(bridgeGame, /Supports placed/);
 for (const path of pipePaths) {
   assert.equal(path[0], 10); assert.equal(path.at(-1), 14); assert.ok(path.includes(12));
   assert.equal(new Set(path).size, path.length);
