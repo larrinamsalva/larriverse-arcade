@@ -149,7 +149,7 @@ function completeLevel(){
   levelCleared=true;
   const completedStage=level,nextStage=BUBBLE_LEVELS[completedStage];
   $('#reset').textContent=`Continue to level ${completedStage+1}`;
-  announce(`LEVEL ${completedStage} CLEAR`,`${currentStage().name} complete · Next: ${nextStage.name}`,'#d4c44a',true);
+  announce(`LEVEL ${completedStage} CLEAR`,`${currentStage().name} complete · Next level starts automatically!`,'#d4c44a',true);
   setLevelAction(`Next level · ${nextStage.name}`);
   $('#bubbleStatus').textContent=`Level ${completedStage} clear! Level ${completedStage+1}, ${nextStage.name}, starts automatically soon. You can also choose Next level now.`;
   tone(720,'sine',.5,.12);
