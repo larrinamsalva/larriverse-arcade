@@ -157,37 +157,42 @@ for (const id of ["garden-guardians","energy-island"]) {
   assert.match(world.mission, /eight .* levels/i, `${id} describes its new journey`);
   assert.equal(entry.mission, world.mission, `${id} game card matches the game itself`);
 }
-// Twenty different trail routes: a good path on every map with 4 spare moves.
-assert.equal(timeTrailLevels.length,20);
-assert.equal(new Set(timeTrailLevels.map(level=>level.id)).size,20);
-assert.equal(new Set(timeTrailLevels.map(level=>level.rank)).size,4);
+// Sixty curated trail puzzles in six chapters; all flags and finishes are solvable.
+assert.equal(timeTrailLevels.length,60);
+assert.equal(new Set(timeTrailLevels.map(level=>level.id)).size,60);
+assert.equal(new Set(timeTrailLevels.map(level=>level.rank)).size,6);
 assert.deepEqual([...new Set(timeTrailLevels.map(level=>level.rank))].map(rank=>
-  timeTrailLevels.filter(level=>level.rank===rank).length),[5,5,5,5]);
+  timeTrailLevels.filter(level=>level.rank===rank).length),[10,10,10,10,10,10]);
 const layouts=new Set();
-for(const level of timeTrailLevels) {
-  assert.equal(level.width,5);
-  assert.equal(level.flags.length,3);
-  assert.equal(new Set(level.flags).size,3);
-  assert.equal(new Set(level.rocks).size,level.rocks.length);
+const rankMin=[8,8,11,16,18,23], rankMax=[14,14,17,23,26,35];
+for(const [index,level] of timeTrailLevels.entries()) {
+  const chapter=Math.floor(index/10);
+  const width=chapter<2?5:chapter<4?6:7;
+  const flags=chapter<3?3:chapter<5?4:5;
+  assert.equal(level.chapter,chapter,level.id);
+  assert.equal(level.width,width,level.id);
+  assert.equal(level.flags.length,flags,level.id);
+  assert.equal(new Set(level.flags).size,flags,level.id);
+  assert.equal(new Set(level.rocks).size,level.rocks.length,level.id);
   assert.ok([...level.flags,level.start,level.finish].every(i=>!level.rocks.includes(i)),level.id);
-  assert.ok([...level.rocks,...level.flags,level.start,level.finish].every(i=>i>=0&&i<25),level.id);
+  assert.ok([...level.rocks,...level.flags,level.start,level.finish].every(i=>i>=0&&i<width*width),level.id);
   const path=shortestTrailPath(level);
-  assert.ok(path && path.length>=7,level.id);
+  assert.ok(path&&path.length>=7,level.id);
   assert.equal(path[0],level.start);
   assert.equal(path.at(-1),level.finish);
   assert.ok(level.flags.every(flag=>path.includes(flag)),level.id);
   assert.equal(level.bestMoves,path.length-1);
-  assert.equal(level.stepLimit,level.bestMoves+4);
-  assert.ok(level.bestMoves<=16,level.id);
+  assert.ok(level.bestMoves>=rankMin[chapter]&&level.bestMoves<=rankMax[chapter],level.id);
+  assert.equal(level.stepLimit,level.bestMoves+(width===5?4:width===6?6:8));
   for(let i=1;i<path.length;i++)
-    assert.equal(Math.abs(Math.floor(path[i]/5)-Math.floor(path[i-1]/5))+
-      Math.abs(path[i]%5-path[i-1]%5),1,level.id);
-  layouts.add(JSON.stringify([level.start,level.finish,level.flags,level.rocks]));
+    assert.equal(Math.abs(Math.floor(path[i]/width)-Math.floor(path[i-1]/width))+
+      Math.abs(path[i]%width-path[i-1]%width),1,level.id);
+  layouts.add(JSON.stringify([width,level.start,level.finish,level.flags,level.rocks]));
 }
-assert.equal(layouts.size,20,"Twenty distinct rotated route layouts");
+assert.equal(layouts.size,60,"Every trail uses a unique arrangement");
 assert.deepEqual(shortestTrailPath(timeTrailLevels[0]),[20,15,10,5,0,1,2,3,4]);
 const trailWorld=worlds.find(x=>x.id==="time-trail");
-assert.match(trailWorld.mission,/twenty map levels/);
+assert.match(trailWorld.mission,/sixty map levels/i);
 assert.equal(catalog.find(x=>x.id==="time-trail").mission,trailWorld.mission);
 assert.equal(robotLevels.length, 20);
 assert.equal(new Set(robotLevels.map((level) => level.name)).size, robotLevels.length);
