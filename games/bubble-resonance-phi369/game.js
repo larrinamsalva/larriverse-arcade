@@ -1,7 +1,7 @@
 'use strict';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d');
 const W=1000,H=600,PHI=1.618,LAM=.618,R=28,WALL=18,COLS=16,ROWS=10,HEX=Math.sqrt(3)*R;
-const SHOT_SPEED=9,MIN_UPWARD_RATIO=.38,MAX_BOUNCES=6,MAX_TRAVEL=H*3,DROP_MS=360,POWER_INTERVAL=5;
+const SHOT_SPEED=9,MIN_UPWARD_RATIO=.38,MAX_BOUNCES=6,MAX_TRAVEL=H*3,DROP_MS=360,POWER_INTERVAL=5,LEVEL_CLEAR_PAUSE_MS=2200;
 const left=WALL,right=W-WALL,top=WALL,bottom=H-10,x0=left+R+2,y0=top+R+2;
 const GAME_ID='bubble-resonance-phi369';
 const CANVAS_THEMES={
@@ -43,7 +43,7 @@ const BUBBLE_LEVELS=[
 ].map(([name,rows,frequencies,dropAfter,tip],index)=>({id:index+1,name,rows,frequencies,dropAfter,tip}));
 const MAX_LEVEL=BUBBLE_LEVELS.length,currentStage=()=>BUBBLE_LEVELS[level-1]||BUBBLE_LEVELS.at(-1);
 let grid=[],score=0,combo=1,level=1,coherence=50,pattern=0,integration=50,cleared=0,misses=0;
-let current,next,shot=null,particles=[],powerEffects=[],gameOver=false,won=false,levelCleared=false,audioOn=false,audioCtx,awarded=false,mouse={x:W/2,y:100},messageTimer,dropAnimation=null,powerLoads=0,powerIndex=0;
+let current,next,shot=null,particles=[],powerEffects=[],gameOver=false,won=false,levelCleared=false,audioOn=false,audioCtx,awarded=false,mouse={x:W/2,y:100},messageTimer,levelAdvanceTimer=null,dropAnimation=null,powerLoads=0,powerIndex=0;
 const $=s=>document.querySelector(s),pos=(c,r)=>({x:x0+c*R*2+(r%2?R:0),y:y0+r*HEX});
 const rand=()=>Math.floor(Math.random()*currentStage().frequencies),distance=(a,b,c,d)=>Math.hypot(a-c,b-d);
 function canvasTheme(){return CANVAS_THEMES[document.documentElement.dataset.larriverseTheme==='light'?'light':'dark']}
@@ -138,15 +138,60 @@ function place(x,y){
 }
 function danger(){if(grid[ROWS-1].some(Boolean)){end('BOTTOM REACHED','The stack reached the launch zone. Your bubbles stay visible so you can see what happened.');return true}return false}
 function ceilingDrop(){if(gameOver||dropAnimation)return;const shifted=Array.from({length:ROWS},()=>Array(COLS).fill(null));for(let r=ROWS-1;r>=1;r--)for(let c=0;c<COLS;c++){const bubble=grid[r-1][c];if(bubble)shifted[r][c]={...bubble,...pos(c,r)}}for(let c=0;c<COLS;c++)shifted[0][c]={freq:rand(),gem:c%4===0&&Math.random()<.12,...pos(c,0)};grid=shifted;misses=0;dropAnimation={start:performance.now(),duration:DROP_MS};canvas.setAttribute('aria-busy','true');announce('CEILING DROP','Fresh bubbles are moving the field down one row','#d4c44a');hud()}
-function completeLevel(){shot=null;dropAnimation=null;canvas.setAttribute('aria-busy','false');if(level>=MAX_LEVEL){win();return}levelCleared=true;$('#reset').textContent=`Continue to level ${level+1}`;announce(`LEVEL ${level} CLEAR`,`${currentStage().name} complete · ${currentStage().tip}`,'#d4c44a',true);setLevelAction(`Next level · ${BUBBLE_LEVELS[level].name}`);tone(720,'sine',.5,.12);hud()}
-function advanceLevel(){if(!levelCleared||level>=MAX_LEVEL)return;level++;levelCleared=false;combo=1;misses=0;shot=null;dropAnimation=null;particles=[];powerEffects=[];current=null;next=null;setLevelAction();$('#message').classList.remove('show');$('#reset').textContent='↺ Start over';initGrid();nextBubble();hud();announce(`LEVEL ${level}`,`${currentStage().name} · ${currentStage().tip}`,'#d4c44a');canvas.focus()}
-function win(){gameOver=true;won=true;levelCleared=false;shot=null;dropAnimation=null;canvas.setAttribute('aria-busy','false');award();$('#reset').textContent='Play all 20 again';announce('ALL 20 LEVELS CLEARED','Every round bubble is clear — you win!','#d4c44a',true);setLevelAction('Play all 20 again');tone(880,'sine',.65,.14);hud()}
-function end(title='FIELD EXPLORED',sub=`score: ${score} · cleared: ${cleared} · try another round when ready`){gameOver=true;won=false;shot=null;canvas.setAttribute('aria-busy','false');award();$('#reset').textContent='Try another round';announce(title,sub,'#e26c6c',true);setLevelAction('Start a new game');tone(60,'sawtooth',1,.15);hud()}
+function cancelLevelAdvance(){
+  clearTimeout(levelAdvanceTimer);
+  levelAdvanceTimer=null;
+}
+function completeLevel(){
+  if(gameOver||levelCleared)return;
+  shot=null;dropAnimation=null;canvas.setAttribute('aria-busy','false');
+  if(level>=MAX_LEVEL){win();return}
+  levelCleared=true;
+  const completedStage=level,nextStage=BUBBLE_LEVELS[completedStage];
+  $('#reset').textContent=`Continue to level ${completedStage+1}`;
+  announce(`LEVEL ${completedStage} CLEAR`,`${currentStage().name} complete · Next: ${nextStage.name}`,'#d4c44a',true);
+  setLevelAction(`Next level · ${nextStage.name}`);
+  $('#bubbleStatus').textContent=`Level ${completedStage} clear! Level ${completedStage+1}, ${nextStage.name}, starts automatically soon. You can also choose Next level now.`;
+  tone(720,'sine',.5,.12);
+  hud();
+  cancelLevelAdvance();
+  levelAdvanceTimer=setTimeout(()=>{
+    levelAdvanceTimer=null;
+    if(levelCleared&&!gameOver&&level===completedStage)advanceLevel();
+  },LEVEL_CLEAR_PAUSE_MS);
+}
+function advanceLevel(){
+  cancelLevelAdvance();
+  if(!levelCleared||level>=MAX_LEVEL||gameOver)return;
+  level++;levelCleared=false;combo=1;misses=0;
+  shot=null;dropAnimation=null;particles=[];powerEffects=[];
+  current=null;next=null;setLevelAction();
+  $('#message').classList.remove('show');
+  $('#reset').textContent='↺ Start over';
+  initGrid();nextBubble();hud();
+  announce(`LEVEL ${level}`,`${currentStage().name} · ${currentStage().tip}`,'#d4c44a');
+  canvas.focus({preventScroll:true});
+}
+function win(){
+  cancelLevelAdvance();
+  gameOver=true;won=true;levelCleared=false;shot=null;dropAnimation=null;
+  canvas.setAttribute('aria-busy','false');award();
+  $('#reset').textContent='Play all 20 again';
+  announce('ALL 20 LEVELS CLEARED','Every round bubble is clear — you win!','#d4c44a',true);
+  setLevelAction('Play all 20 again');tone(880,'sine',.65,.14);hud();
+}
+function end(title='FIELD EXPLORED',sub=`score: ${score} · cleared: ${cleared} · try another round when ready`){
+  cancelLevelAdvance();
+  gameOver=true;won=false;shot=null;canvas.setAttribute('aria-busy','false');award();
+  $('#reset').textContent='Try another round';
+  announce(title,sub,'#e26c6c',true);
+  setLevelAction('Start a new game');tone(60,'sawtooth',1,.15);hud();
+}
 function shotDirection(tx,ty){const sx=W/2,sy=bottom-R-6,dx=tx-sx,dy=ty-sy;if(dy>=0)return null;const len=Math.hypot(dx,dy)||1;let ux=dx/len,uy=dy/len;if(-uy<MIN_UPWARD_RATIO){uy=-MIN_UPWARD_RATIO;ux=Math.sign(ux||1)*Math.sqrt(1-uy*uy)}return{x:ux,y:uy}}
 function fire(tx,ty){if(shot||gameOver||levelCleared||dropAnimation)return;const sx=W/2,sy=bottom-R-6,dir=shotDirection(tx,ty);if(!dir)return;shot={x:sx,y:sy,vx:dir.x*SHOT_SPEED,vy:dir.y*SHOT_SPEED,bounces:0,travel:0};canvas.setAttribute('aria-busy','true');tone(440,'sine',.1,.07)}
 function autoFire(){const a=-Math.PI/2+(Math.random()-.5)*Math.PI*.7;fire(W/2+Math.cos(a)*200,bottom-R-6+Math.sin(a)*200)}
 function settleShot(x,y){if(place(x,y)){shot=null;if(!dropAnimation)canvas.setAttribute('aria-busy','false');if(!gameOver&&!levelCleared)nextBubble();return true}shot=null;canvas.setAttribute('aria-busy','false');end();return true}
-function stepShot(){if(!shot)return;for(let i=0;i<6;i++){const dxStep=shot.vx/6,dyStep=shot.vy/6;shot.x+=dxStep;shot.y+=dyStep;shot.travel+=Math.hypot(dxStep,dyStep);if(shot.x<=left+R){shot.x=left+R;shot.vx=Math.abs(shot.vx);shot.bounces++;tone(200,'square',.04,.03)}if(shot.x>=right-R){shot.x=right-R;shot.vx=-Math.abs(shot.vx);shot.bounces++;tone(200,'square',.04,.03)}if(shot.bounces>MAX_BOUNCES||shot.travel>MAX_TRAVEL){settleShot(shot.x,shot.y);announce('SHOT SETTLED','Try a steeper angle for a cleaner bank shot','#5dcaa5');return}if(shot.y<=top+R){shot.y=top+R;settleShot(shot.x,shot.y);return}for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){const b=grid[r][c];if(b&&distance(shot.x,shot.y,b.x,b.y)<R*1.82){const dx=shot.x-b.x,dy=shot.y-b.y,d=Math.hypot(dx,dy)||1;settleShot(b.x+dx/d*R*1.82,b.y+dy/d*R*1.82);return}}}}
+function stepShot(){if(!shot)return;for(let i=0;i<6;i++){const dxStep=shot.vx/6,dyStep=shot.vy/6;shot.x+=dxStep;shot.y+=dyStep;shot.travel+=Math.hypot(dxStep,dyStep);if(shot.x<=left+R){shot.x=left+R;shot.vx=Math.abs(shot.vx);shot.bounces++;tone(200,'square',.04,.03)}if(shot.x>=right-R){shot.x=right-R;shot.vx=-Math.abs(shot.vx);shot.bounces++;tone(200,'square',.04,.03)}if(shot.bounces>MAX_BOUNCES||shot.travel>MAX_TRAVEL){settleShot(shot.x,shot.y);if(!gameOver&&!levelCleared)announce('SHOT SETTLED','Try a steeper angle for a cleaner bank shot','#5dcaa5');return}if(shot.y<=top+R){shot.y=top+R;settleShot(shot.x,shot.y);return}for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){const b=grid[r][c];if(b&&distance(shot.x,shot.y,b.x,b.y)<R*1.82){const dx=shot.x-b.x,dy=shot.y-b.y,d=Math.hypot(dx,dy)||1;settleShot(b.x+dx/d*R*1.82,b.y+dy/d*R*1.82);return}}}}
 function powerMark(x,y,r,power,freq){
   const spec=POWER_TYPES[power];
   ctx.save();
@@ -193,9 +238,9 @@ function drawPowerEffects(){
 }
 function drawShooter(x,y,palette){const dir=shotDirection(mouse.x,mouse.y)||{x:0,y:-1};ctx.save();ctx.shadowColor=palette.launcherGlow;ctx.shadowBlur=22;ctx.fillStyle=palette.launcherBase;ctx.strokeStyle=palette.launcherRim;ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(x,y+R*.9,R*2.35,R*.62,0,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.shadowBlur=0;ctx.lineCap='round';ctx.lineWidth=R*.42;ctx.strokeStyle=palette.launcherRail;ctx.beginPath();ctx.moveTo(x,y+R*.65);ctx.lineTo(x+dir.x*R*1.55,y+dir.y*R*1.55);ctx.stroke();ctx.lineWidth=3;ctx.strokeStyle=palette.launcherRim;ctx.stroke();ctx.beginPath();ctx.arc(x,y,R*1.18,0,Math.PI*2);ctx.strokeStyle=palette.launcherGlow;ctx.lineWidth=6;ctx.stroke();ctx.restore()}
 function aim(palette){if(shot||gameOver||levelCleared||dropAnimation)return;const sx=W/2,sy=bottom-R-6,dir=shotDirection(mouse.x,mouse.y);if(!dir)return;let x=sx,y=sy,vx=dir.x*3,vy=dir.y*3;ctx.save();ctx.setLineDash([4,8]);ctx.strokeStyle=palette.aim;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,y);for(let i=0;i<260;i++){x+=vx;y+=vy;if(x<=left+R){x=left+R;vx=Math.abs(vx)}if(x>=right-R){x=right-R;vx=-Math.abs(vx)}ctx.lineTo(x,y);if(y<=top+R||grid.some(row=>row.some(b=>b&&distance(x,y,b.x,b.y)<R*1.82)))break}ctx.stroke();ctx.restore()}
-function draw(now=performance.now()){const palette=canvasTheme();ctx.clearRect(0,0,W,H);ctx.fillStyle=palette.wall;ctx.fillRect(0,0,WALL,H);ctx.fillRect(W-WALL,0,WALL,H);ctx.fillRect(0,0,W,WALL);let dropOffset=0;if(dropAnimation){const t=Math.min(1,(now-dropAnimation.start)/dropAnimation.duration);const eased=1-Math.pow(1-t,3);dropOffset=-HEX*(1-eased);if(t>=1){dropAnimation=null;canvas.setAttribute('aria-busy','false');if(danger())hud()}}for(const row of grid)for(const b of row)if(b)bubble(b.x,b.y+dropOffset,R,b.freq,b.gem,1,b.power);drawPowerEffects();ctx.save();ctx.setLineDash([3,7]);ctx.strokeStyle=palette.danger;ctx.beginPath();const dangerY=Math.min(bottom-R*2.2,cellY(ROWS-1)+R+8);ctx.moveTo(left,dangerY);ctx.lineTo(right,dangerY);ctx.stroke();ctx.restore();const sx=W/2,sy=bottom-R-6;drawShooter(sx,sy,palette);aim(palette);if(!gameOver&&!levelCleared)bubble(sx,sy,R,current.freq,current.gem,1,current.power);stepShot();if(shot)bubble(shot.x,shot.y,R,current.freq,current.gem,1,current.power);if(next&&!gameOver&&!levelCleared)bubble(right-30,bottom-30,R*.7,next.freq,next.gem,.75,next.power);for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.08;p.life-=.022;if(p.life<=0){particles.splice(i,1);continue}ctx.globalAlpha=p.life;ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1}requestAnimationFrame(draw)}
+function draw(now=performance.now()){if(!gameOver&&!levelCleared&&!shot&&!dropAnimation&&boardEmpty())completeLevel();const palette=canvasTheme();ctx.clearRect(0,0,W,H);ctx.fillStyle=palette.wall;ctx.fillRect(0,0,WALL,H);ctx.fillRect(W-WALL,0,WALL,H);ctx.fillRect(0,0,W,WALL);let dropOffset=0;if(dropAnimation){const t=Math.min(1,(now-dropAnimation.start)/dropAnimation.duration);const eased=1-Math.pow(1-t,3);dropOffset=-HEX*(1-eased);if(t>=1){dropAnimation=null;canvas.setAttribute('aria-busy','false');if(danger())hud()}}for(const row of grid)for(const b of row)if(b)bubble(b.x,b.y+dropOffset,R,b.freq,b.gem,1,b.power);drawPowerEffects();ctx.save();ctx.setLineDash([3,7]);ctx.strokeStyle=palette.danger;ctx.beginPath();const dangerY=Math.min(bottom-R*2.2,cellY(ROWS-1)+R+8);ctx.moveTo(left,dangerY);ctx.lineTo(right,dangerY);ctx.stroke();ctx.restore();const sx=W/2,sy=bottom-R-6;drawShooter(sx,sy,palette);aim(palette);if(!gameOver&&!levelCleared)bubble(sx,sy,R,current.freq,current.gem,1,current.power);stepShot();if(shot)bubble(shot.x,shot.y,R,current.freq,current.gem,1,current.power);if(next&&!gameOver&&!levelCleared)bubble(right-30,bottom-30,R*.7,next.freq,next.gem,.75,next.power);for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.08;p.life-=.022;if(p.life<=0){particles.splice(i,1);continue}ctx.globalAlpha=p.life;ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1}requestAnimationFrame(draw)}
 function point(e){const rect=canvas.getBoundingClientRect(),t=e.touches?.[0]||e.changedTouches?.[0]||e;return{x:(t.clientX-rect.left)*W/rect.width,y:(t.clientY-rect.top)*H/rect.height}}
-function reset(){$('#reset').textContent='↺ Start over';canvas.setAttribute('aria-busy','false');gameOver=false;won=false;levelCleared=false;awarded=false;score=0;combo=1;level=1;coherence=50;pattern=0;integration=50;cleared=0;misses=0;powerLoads=0;powerIndex=0;current=null;next=null;shot=null;dropAnimation=null;particles=[];powerEffects=[];setLevelAction();$('#message').classList.remove('show');initGrid();nextBubble();hud();updateCoherence();refreshProfile()}
+function reset(){cancelLevelAdvance();$('#reset').textContent='↺ Start over';canvas.setAttribute('aria-busy','false');gameOver=false;won=false;levelCleared=false;awarded=false;score=0;combo=1;level=1;coherence=50;pattern=0;integration=50;cleared=0;misses=0;powerLoads=0;powerIndex=0;current=null;next=null;shot=null;dropAnimation=null;particles=[];powerEffects=[];setLevelAction();$('#message').classList.remove('show');initGrid();nextBubble();hud();updateCoherence();refreshProfile()}
 function primaryAction(x,y){if(gameOver)reset();else if(levelCleared)advanceLevel();else fire(x,y)}
 canvas.addEventListener('mousemove',e=>mouse=point(e));canvas.addEventListener('touchmove',e=>{e.preventDefault();mouse=point(e)},{passive:false});canvas.addEventListener('click',e=>{const p=point(e);primaryAction(p.x,p.y)});canvas.addEventListener('touchend',e=>{e.preventDefault();const p=point(e);primaryAction(p.x,p.y)},{passive:false});
 $('#reset').onclick=()=>levelCleared?advanceLevel():reset();$('#levelAction').onclick=()=>levelCleared?advanceLevel():gameOver?reset():null;$('#auto').onclick=autoFire;$('#sound').onclick=()=>{audioOn=!audioOn;$('#sound').textContent=audioOn?'♪ Sound ON':'♪ Sound OFF';$('#sound').classList.toggle('active',audioOn);$('#sound').setAttribute('aria-pressed',String(audioOn));if(audioOn)ac()};function aimBy(amount){mouse.x=Math.max(left+R,Math.min(right-R,mouse.x+amount));mouse.y=100;}
