@@ -125,6 +125,10 @@
       welcome: 'Real-life skills grow through practice. Choose a lesson that feels useful or interesting today.',
       hint: 'There is no need to rush. Think about how the choice could work in everyday life.'
     },
+    'crossword-world': {
+      welcome: 'Welcome to Crossword World! We will solve sixty word puzzles using short clues and real crossing letters, growing into harder challenges together.',
+      hint: 'Read an Across or Down clue, tap its number, and look at the crossing letters. You can always use a free letter hint if you need a boost.'
+    },
     'word-search-world': {
       welcome: 'Welcome to sixty Word Search adventures! Start with short hidden words, then grow into tricky diagonals and backwards words. You have all the time you need!',
       hint: 'Find the first letter of a listed word. Drag to its last letter, or tap the first and last squares. Use the free hint if you need a clue!'
