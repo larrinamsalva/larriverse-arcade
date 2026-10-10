@@ -29,9 +29,9 @@ export const worlds = [
     minutes: "4 min",
     art: 0,
     skill: "Planning a budget",
-    desc: "Pack for an island picnic. Save for a dream. Make every coin count.",
+    desc: "Explore five money-planning adventures per round from twenty different pretend budgets.",
     mission:
-      "You have 24 pretend coins. Buy your three picnic needs, then protect at least 6 coins for your telescope fund.",
+      "Solve five money missions per round. Pack three essential items, weigh optional extras, and save enough for a goal. Four rounds explore all twenty unique budgets.",
     take: "A plan helps you cover needs, leave room for fun, and save for something you care about.",
     mode: "budget",
   },

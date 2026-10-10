@@ -10,6 +10,7 @@ import {
   weatherChallenges,
   gardenGrowthChallenges,
 } from "./skill-worlds.js";
+import { budgetAdventures } from "./budget-adventures.js";
 import { createExpedition } from "./expedition-games.js";
 import { timeTrail, shortestTrailPath } from "./time-trail-level.js";
 import { gardenLevels, energyLevels } from "./garden-energy-levels.js";
@@ -230,6 +231,8 @@ function initialize() {
   refreshBest();
   switch (world.mode) {
     case "budget":
+      state.deck = challengeRound(budgetAdventures, 5);
+      state.passed = 0;
       state.selected = new Set();
       renderBudget();
       break;
@@ -315,72 +318,88 @@ function initialize() {
   }
 }
 
-const supplies = [
-  { name: "Drinking water", icon: "💧", cost: 4, need: true },
-  { name: "Picnic lunch", icon: "🥪", cost: 5, need: true },
-  { name: "Bus pass", icon: "🚌", cost: 3, need: true },
-  { name: "A little kite", icon: "🪁", cost: 5, need: false },
-  { name: "Island stickers", icon: "⭐", cost: 2, need: false },
-  { name: "Giant toy boat", icon: "⛵", cost: 9, need: false },
-];
 function budgetLeft() {
-  return (
-    24 -
-    [...state.selected].reduce(
-      (total, index) => total + supplies[index].cost,
-      0,
-    )
+  const plan = state.deck[state.step];
+  return plan.coins - [...state.selected].reduce(
+    (total, index) => total + plan.items[index].cost, 0,
   );
 }
+
 function renderBudget() {
-  stage("Island picnic planner");
+  const plan = state.deck[state.step];
   const left = budgetLeft();
-  const needs = [...state.selected].filter(
-    (index) => supplies[index].need,
-  ).length;
-  board.innerHTML = `<h2 class="board-title">Pack your picnic</h2><p class="board-note">Tap to buy. Tap a packed item to put it back. Save at least 6 coins.</p><div class="stat-row">${chip("Coins left", left)}${chip("Needs packed", `${needs}/3`)}${chip("Savings goal", "6 coins")}</div><div class="item-grid">${supplies.map((item, i) => `<button class="item-button ${state.selected.has(i) ? "selected" : ""}" data-buy="${i}" aria-pressed="${state.selected.has(i)}"><span class="item-icon">${item.icon}</span>${item.name}<small>${item.cost} coins · ${item.need ? "Picnic need" : "Extra fun"}${state.selected.has(i) ? " · Packed" : ""}</small></button>`).join("")}</div>`;
+  const needs = [...state.selected].filter((index) => plan.items[index].need).length;
+  stage(`Pocket Planet · Adventure ${state.step + 1}/${state.deck.length}`);
+  board.innerHTML = `
+    <div class="budget-hero">
+      <span class="budget-illustration" aria-hidden="true">${esc(plan.icon)}</span>
+      <div>
+        <p class="budget-kicker">Money mission ${state.step + 1} of ${state.deck.length}</p>
+        <h2 class="board-title">${esc(plan.title)}</h2>
+        <p>${esc(plan.story)}</p>
+        <p class="budget-goal">🌟 Saving for: <strong>${esc(plan.goal)}</strong></p>
+      </div>
+    </div>
+    <p class="board-note">Choose your three needs first. Extras are optional. Tap a packed item again to return it.</p>
+    <div class="stat-row" aria-live="polite">
+      ${chip("Starting coins", plan.coins)}
+      ${chip("Coins left", left)}
+      ${chip("Needs packed", `${needs}/3`)}
+      ${chip("Save at least", `${plan.save} coins`)}
+    </div>
+    <div class="item-grid">
+      ${plan.items.map((item, i) => `<button class="item-button ${state.selected.has(i) ? "selected" : ""}" data-buy="${i}" aria-pressed="${state.selected.has(i)}"><span class="item-icon" aria-hidden="true">${esc(item.icon)}</span>${esc(item.name)}<small>${item.cost} coins · ${item.need ? "Need" : "Extra fun"}${state.selected.has(i) ? " · Packed" : ""}</small></button>`).join("")}
+    </div>`;
   bind("[data-buy]", (node) => {
     const i = Number(node.dataset.buy);
     if (state.selected.has(i)) {
       state.selected.delete(i);
-      say("Item returned. Your coins are back in your plan.");
-    } else if (supplies[i].cost > budgetLeft()) {
-      say(
-        "That is more than you have left. Try returning another item.",
-        "try",
-      );
+      say("Returned! Those coins are back in your budget.");
+    } else if (plan.items[i].cost > budgetLeft()) {
+      say("Not enough coins left for that choice. Return something first.", "try");
       return;
     } else {
       state.selected.add(i);
       tone();
-      say(`${supplies[i].name} packed. Check your savings, too.`);
+      say(`${plan.items[i].name} packed! Check your savings goal, too.`);
     }
     renderBudget();
   });
-  progress(needs, 3, `${needs} of 3 picnic needs packed`);
-  updateScore(needs * 20 + (left >= 6 ? 40 : 0));
+  progress(state.passed, state.deck.length,
+    `${state.passed} of ${state.deck.length} budget missions completed`);
+  updateScore((state.passed / state.deck.length) * 100);
   button("Try my plan", () => {
     if (needs < 3) {
-      say(
-        "Your picnic still needs water, lunch, and a bus pass. Pack those first.",
-        "try",
-      );
+      say("Your plan still needs all three essential items. Find the cards marked Need.", "try");
       return;
     }
-    if (left < 6) {
-      say(
-        "Your telescope fund needs 6 coins. Return an extra and try again.",
-        "try",
-      );
+    if (left < plan.save) {
+      say(`Your ${plan.goal} savings goal needs ${plan.save} coins. Try returning an extra.`, "try");
       return;
     }
-    finish(
-      `You covered all three needs and saved ${left} coins. You chose what matters to you.`,
-      100,
-    );
+    state.passed += 1;
+    updateScore((state.passed / state.deck.length) * 100);
+    progress(state.passed, state.deck.length,
+      `${state.passed} of ${state.deck.length} budget missions completed`);
+    if (state.step === state.deck.length - 1) {
+      finish(`You made five smart plans, protected savings, and checked needs before extras. Your final plan saved ${left} coins!`, 100);
+      return;
+    }
+    say(`Great plan! You covered all three needs and saved ${left} coins.`, "good");
+    button("Next money mission", () => {
+      state.step += 1;
+      state.selected = new Set();
+      renderBudget();
+    });
+    // Lock purchases and the submit action while the next mission is waiting.
+    board.querySelectorAll("[data-buy]").forEach((item) => { item.disabled = true; });
+    actions.querySelectorAll("button").forEach((item) => {
+      if (item.textContent === "Try my plan") item.remove();
+    });
   });
-  hint =
-    "Water + lunch + bus pass cost 12 coins. The kite is fun, but you still need 6 coins left after any extras.";
+  const requiredCost = plan.items.filter((item) => item.need)
+    .reduce((sum, item) => sum + item.cost, 0);
+  hint = `The three needs cost ${requiredCost} coins together. Save ${plan.save} more for your ${plan.goal}. Extras can wait.`;
 }
 
 function renderCards(mode) {

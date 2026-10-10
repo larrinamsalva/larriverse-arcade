@@ -1657,137 +1657,67 @@ html.larriverse-high-contrast .picture-choice.wrong { outline: 5px dashed #ffd36
   .scene-label { left: .45rem; bottom: .45rem; }
 }
 
-/* Garden and energy campaigns: dimensional, accessible rank-and-stage presentation. */
-body[data-world="garden-guardians"] .nature-banner,
-body[data-world="energy-island"] .nature-banner {
-  display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem;
-  margin: .8rem 0 1.1rem; border-radius: 18px;
-  background: linear-gradient(135deg, #e6f8e0, #cbece7 65%, #e6e6ff);
-  border: 2px solid #86b68d; color: #254b38; box-shadow: 0 5px 0 #b7d8b9;
+/* Pocket Planet: a clear, colorful budget board with distinct day/night states. */
+body[data-world="pocket-planet"] .budget-hero {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 2px solid #7db4a0;
+  border-radius: 20px;
+  color: #20443d;
+  background: linear-gradient(115deg, #ddf7e9 0%, #e8f4ff 55%, #fbecff 100%);
+  box-shadow: 0 5px 0 #b8d9d1;
 }
-body[data-world="garden-guardians"] .nature-banner > span,
-body[data-world="energy-island"] .nature-banner > span {
-  display: grid; place-items: center; flex: 0 0 4.75rem;
-  width: 4.75rem; height: 4.75rem; font-size: 2.8rem;
-  background: #fff5dc; border: 2px solid #c2a66d; border-radius: 15px;
-  box-shadow: inset 0 -6px 0 #ecddb6;
+body[data-world="pocket-planet"] .budget-illustration {
+  display: grid;
+  flex: 0 0 5rem;
+  place-items: center;
+  min-height: 5rem;
+  font-size: 3rem;
+  border-radius: 18px;
+  background: #fff7d9;
+  border: 2px solid #c9ab61;
+  box-shadow: inset 0 -5px 0 #f5dfac;
 }
-body[data-world="garden-guardians"] .nature-banner :is(h2, p, small),
-body[data-world="energy-island"] .nature-banner :is(h2, p, small) { color: inherit; margin: .15rem 0; }
-body[data-world="garden-guardians"] .nature-banner h2,
-body[data-world="energy-island"] .nature-banner h2 { font-size: 1.25rem; }
-body[data-world="garden-guardians"] .nature-banner small,
-body[data-world="energy-island"] .nature-banner small { display: block; font-weight: 750; }
-body[data-world="garden-guardians"] .nature-zone--orchard { background: linear-gradient(125deg,#d5f1d6,#dcf6f2 65%,#fff2d8); }
-body[data-world="garden-guardians"] .nature-zone--hill { background: linear-gradient(125deg,#e6f0c9,#bcece2 65%,#e9d7f9); }
-body[data-world="garden-guardians"] .nature-zone--sunset { background: linear-gradient(125deg,#fff1c4,#f5d6ba 65%,#e2d0f8); }
-body[data-world="energy-island"] .energy-zone--village { background: linear-gradient(125deg,#dbeaff,#dceef7 65%,#f2e7ff); border-color:#7a9ec3; }
-body[data-world="energy-island"] .energy-zone--forest { background: linear-gradient(125deg,#d6f6ee,#d8edce 65%,#e2e4ff); border-color:#619f8d; }
-body[data-world="energy-island"] .energy-zone--mountain { background: linear-gradient(125deg,#dbe4fc,#cfdeef 65%,#f0e0fe); border-color:#809fc1; }
-.nature-level-trail { margin-bottom: .7rem; }
-.nature-quotas { display: flex; flex-wrap: wrap; gap: .5rem; margin: .7rem 0; }
-.nature-quota {
-  font-size: .85rem; font-weight: 800; padding: .55rem .7rem;
-  border-radius: 11px; background: #f6f0e2; border: 2px solid #c6ad75;
-  color: #654322;
+body[data-world="pocket-planet"] .budget-hero .board-title { margin: .1rem 0; color: inherit; }
+body[data-world="pocket-planet"] .budget-hero p { margin: .25rem 0; color: inherit; }
+body[data-world="pocket-planet"] .budget-kicker { font-size: .75rem; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; }
+body[data-world="pocket-planet"] .budget-goal { font-weight: 750; }
+body[data-world="pocket-planet"] .item-button {
+  box-shadow: inset 0 -5px 0 #e6eaf3, 0 3px 7px #1a30491a;
+  transition: transform .12s ease, border-color .12s ease;
 }
-.nature-quota.complete { color: #14513c; background: #ddf8e9; border-color: #498e73; }
-body[data-world="garden-guardians"] .garden-grid {
-  background: linear-gradient(155deg, #bde6ac, #e3eec6);
-  border: 2px solid #70a86e; box-shadow: inset 0 4px 10px #2a5b3326;
+body[data-world="pocket-planet"] .item-button:hover:not(:disabled) { transform: translateY(-2px); }
+body[data-world="pocket-planet"] .item-button.selected { box-shadow: inset 0 -5px 0 #b9e3ce; }
+html.larriverse-dark body[data-world="pocket-planet"] .budget-hero {
+  color: #f0fffc;
+  border-color: #65bca3;
+  background: linear-gradient(115deg, #20423d 0%, #283d62 60%, #3d2c56 100%);
+  box-shadow: 0 5px 0 #152522;
 }
-body[data-world="garden-guardians"] .plot {
-  background: linear-gradient(145deg, #d9b188, #a46f4d 70%, #80523c);
-  border: 3px solid #885a3e; box-shadow: inset 0 -7px 0 #74452d, 0 4px 4px #4430183b;
+html.larriverse-dark body[data-world="pocket-planet"] .budget-illustration {
+  background: #483f61; border-color: #b7a5e9; box-shadow: inset 0 -5px 0 #302746;
 }
-body[data-world="garden-guardians"] .plot small { font-weight: 850; border: 1px solid #c99e66; }
-body[data-world="energy-island"] .forecast-current {
-  border-color: #6953ce; background: #e9e0ff; color: #302765;
-  box-shadow: inset 0 0 0 1px #a492e8;
+html.larriverse-dark body[data-world="pocket-planet"] .item-button small,
+html.larriverse-dark body[data-world="pocket-planet"] .stat-chip b { color: #fff; }
+html.larriverse-dark body[data-world="pocket-planet"] .item-button.selected {
+  background: #225540; color: #fff; border-color: #8bdfad;
+  box-shadow: inset 0 -5px 0 #193e2c;
 }
-body[data-world="energy-island"] .energy-scene {
-  border: 2px solid #78abb0;
-  background: linear-gradient(155deg, #a7d8fa, #def6df 65%, #c9e8c5);
-  color: #244a51; box-shadow: inset 0 -7px 0 #a0cd9d;
-  flex-wrap: wrap;
+html.larriverse-high-contrast body[data-world="pocket-planet"] .budget-hero,
+html.larriverse-high-contrast body[data-world="pocket-planet"] .budget-illustration {
+  color: #fff !important; background: #111 !important; border: 2px solid #fff !important; box-shadow: none !important;
 }
-body[data-world="energy-island"] .energy-scene strong { color: inherit; font-size: .9rem; }
-html.larriverse-dark body[data-world="garden-guardians"] .nature-banner,
-html.larriverse-dark body[data-world="energy-island"] .nature-banner {
-  background: linear-gradient(125deg, #203a3b, #2b3e5d, #493758);
-  color: #fff; border-color: #8acbb0; box-shadow: 0 5px 0 #152528;
+html.larriverse-high-contrast body[data-world="pocket-planet"] .budget-hero :is(h2, p),
+html.larriverse-high-contrast body[data-world="pocket-planet"] .item-button small,
+html.larriverse-high-contrast body[data-world="pocket-planet"] .stat-chip b { color: #fff !important; }
+@media (max-width: 550px) {
+  body[data-world="pocket-planet"] .budget-hero { align-items: flex-start; gap: .7rem; padding: .85rem; }
+  body[data-world="pocket-planet"] .budget-illustration { flex-basis: 3.5rem; min-height: 3.5rem; font-size: 2rem; }
 }
-html.larriverse-dark body[data-world="garden-guardians"] .nature-banner > span,
-html.larriverse-dark body[data-world="energy-island"] .nature-banner > span {
-  background: #4d4260; border-color: #c0b0ef; box-shadow: inset 0 -6px 0 #302745;
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="pocket-planet"] .item-button { transition: none; }
 }
-html.larriverse-dark body[data-world="garden-guardians"] .nature-quota {
-  background: #3d344d; border-color: #ab91d7; color: #fff;
-}
-html.larriverse-dark body[data-world="garden-guardians"] .nature-quota.complete {
-  background: #1e503e; border-color: #8fdcba; color: #fff;
-}
-html.larriverse-dark body[data-world="garden-guardians"] .garden-grid { background: #264338; border-color: #79b49e; }
-html.larriverse-dark body[data-world="energy-island"] .weather-preview > div {
-  background: #28354e; color: #f8f8ff; border-color: #7288b3;
-}
-html.larriverse-dark body[data-world="energy-island"] .forecast-current {
-  background: #4a3d70; border-color: #cab9ff; color: #fff;
-}
-html.larriverse-dark body[data-world="energy-island"] .energy-scene {
-  background: linear-gradient(135deg,#1c3547,#253b35);
-  border-color: #8abec4; color: #fff; box-shadow: inset 0 -7px 0 #162b2a;
-}
-html.larriverse-high-contrast body[data-world="garden-guardians"] :is(.nature-banner,.nature-quota,.garden-grid,.plot),
-html.larriverse-high-contrast body[data-world="energy-island"] :is(.nature-banner,.weather-preview > div,.energy-scene) {
-  background: #111 !important; border: 2px solid #fff !important;
-  color: #fff !important; box-shadow: none !important;
-}
-html.larriverse-high-contrast body[data-world="garden-guardians"] .nature-banner :is(h2,p,small),
-html.larriverse-high-contrast body[data-world="energy-island"] .nature-banner :is(h2,p,small) { color: #fff !important; }
-@media(max-width: 580px) {
-  body[data-world="garden-guardians"] .nature-banner,
-  body[data-world="energy-island"] .nature-banner { padding: .8rem; align-items: flex-start; gap: .65rem; }
-  body[data-world="garden-guardians"] .nature-banner > span,
-  body[data-world="energy-island"] .nature-banner > span { flex-basis: 3.2rem; width:3.2rem; height:3.2rem; font-size:1.8rem; }
-  body[data-world="energy-island"] .weather-preview { grid-template-columns: repeat(2,minmax(0,1fr)); }
-}
-
-
-/* Time Trail: only walkable adjacent squares are highlighted as possible next moves. */
-body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock) {
-  outline: 3px solid #22795b;
-  outline-offset: -6px;
-  box-shadow: inset 0 -5px 0 #8bbba2, 0 0 0 3px #d2f3b6, 0 3px 6px #1b604755;
-}
-body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock)::after {
-  content: "✦";
-  position: absolute;
-  right: .16rem;
-  bottom: .08rem;
-  font-size: .72rem;
-  font-weight: 900;
-  color: #184c36;
-  text-shadow: 0 1px 0 #fff;
-}
-html.larriverse-dark body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock) {
-  outline-color: #b7f5ca;
-  box-shadow: inset 0 -5px 0 #285a40, 0 0 0 3px #43755b, 0 3px 6px #0009;
-}
-html.larriverse-dark body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock)::after {
-  color: #fff5be;
-  text-shadow: 0 1px 0 #000;
-}
-html.larriverse-high-contrast body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock) {
-  outline: 4px dashed #00ffff !important;
-  outline-offset: -7px;
-  box-shadow: none !important;
-}
-html.larriverse-high-contrast body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock)::after {
-  color: #00ffff !important;
-  text-shadow: none !important;
-}
-body[data-world="time-trail"] .tile.route-reachable:focus-visible {
-  outline: 4px solid #4e32d5;
-  outline-offset: 2px;
-}
+html.larriverse-reduced-motion body[data-world="pocket-planet"] .item-button { transition: none; }

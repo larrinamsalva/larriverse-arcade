@@ -11,7 +11,7 @@ import {
   weatherChallenges,
   gardenGrowthChallenges,
 } from "../../assets/skill-worlds.js";
-import { timeTrail, shortestTrailPath } from "../../assets/time-trail-level.js";
+import { budgetAdventures } from "../../assets/budget-adventures.js";
 import { gardenLevels, energyLevels } from "../../assets/garden-energy-levels.js";
 
 async function round(page, id, play) {
@@ -140,31 +140,64 @@ function shortestRobotProgram(level) {
   throw new Error(`No route found for ${level.name}`);
 }
 
-test("Pocket Planet: needs, savings, unaffordable purchase, and saved completion", async ({
-  page,
-}) => {
+test("Pocket Planet: five different budgets, needs, savings, and saved completion", async ({ page }) => {
   await round(page, "pocket-planet", async () => {
-    await page
-      .getByRole("button", { name: "Try my plan", exact: true })
-      .click();
-    await expect(page.locator("#feedback")).toContainText("still needs");
-    for (const item of [
-      "Drinking water",
-      "Picnic lunch",
-      "Bus pass",
-      "Giant toy boat",
-    ])
-      await page.getByRole("button", { name: new RegExp(item) }).click();
-    await page
-      .getByRole("button", { name: "Try my plan", exact: true })
-      .click();
-    await expect(page.locator("#feedback")).toContainText("telescope fund");
-    await page.getByRole("button", { name: /Giant toy boat/ }).click();
-    await page.getByRole("button", { name: /A little kite/ }).click();
-    await page
-      .getByRole("button", { name: "Try my plan", exact: true })
-      .click();
+    const seen = new Set();
+    for (let step = 0; step < 5; step++) {
+      const title = await page.locator(".budget-hero h2").innerText();
+      const plan = budgetAdventures.find((candidate) => candidate.title === title);
+      expect(plan, `known money mission: ${title}`).toBeTruthy();
+      expect(seen.has(plan.id), `${plan.id} has not repeated this round`).toBe(false);
+      seen.add(plan.id);
+      await expect(page.locator("#stageLabel")).toContainText(`Adventure ${step + 1}/5`);
+      await expect(page.locator(".budget-hero")).toContainText(plan.goal);
+      await expect(page.locator("[data-buy]")).toHaveCount(6);
+      await page.getByRole("button", { name: "Try my plan" }).click();
+      await expect(page.locator("#feedback")).toContainText("still needs");
+      for (let index = 0; index < 3; index++)
+        await page.locator(`[data-buy="${index}"]`).click();
+      const left = plan.coins - plan.items.filter((item) => item.need)
+        .reduce((sum, item) => sum + item.cost, 0);
+      const tempting = plan.items.findIndex(
+        (item) => !item.need && item.cost <= left && left - item.cost < plan.save,
+      );
+      expect(tempting, `${plan.id} has an extra that risks savings`).toBeGreaterThanOrEqual(3);
+      await page.locator(`[data-buy="${tempting}"]`).click();
+      await page.getByRole("button", { name: "Try my plan" }).click();
+      await expect(page.locator("#feedback")).toContainText("savings goal needs");
+      await page.locator(`[data-buy="${tempting}"]`).click();
+      await page.getByRole("button", { name: "Try my plan" }).click();
+      if (step < 4) {
+        await expect(page.locator("#feedback")).toContainText("Great plan");
+        await page.getByRole("button", { name: "Next money mission" }).click();
+      }
+    }
+    expect(seen.size).toBe(5);
   });
+});
+
+test("Pocket Planet: four replays reveal all twenty missions without repeats", async ({ page }) => {
+  test.setTimeout(90000);
+  await page.goto("/games/pocket-planet/index.html");
+  const seen = new Set();
+  for (let round = 0; round < 4; round++) {
+    for (let stage = 0; stage < 5; stage++) {
+      const title = await page.locator(".budget-hero h2").innerText();
+      const plan = budgetAdventures.find((item) => item.title === title);
+      expect(plan).toBeTruthy();
+      expect(seen.has(plan.id), `${plan.id} should not repeat in four rounds`).toBe(false);
+      seen.add(plan.id);
+      for (let i = 0; i < 3; i++)
+        await page.locator(`[data-buy="${i}"]`).click();
+      await page.getByRole("button", { name: "Try my plan" }).click();
+      if (stage < 4)
+        await page.getByRole("button", { name: "Next money mission" }).click();
+    }
+    await expect(page.locator("#finishDialog")).toBeVisible();
+    await page.locator("#closeFinish").click();
+    if (round < 3) await page.locator("#restartButton").click();
+  }
+  expect(seen.size).toBe(20);
 });
 test("Scam Sleuth: complete shuffled messages and explanatory feedback", async ({
   page,
