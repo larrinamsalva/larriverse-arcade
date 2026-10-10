@@ -52,7 +52,7 @@ async function round(page, id, play) {
   await expect(page.locator("#bestScore")).not.toHaveText("—");
   expect(errors).toEqual([]);
 }
-async function chooseDeck(page, deck, labels, roundSize = 6) {
+async function chooseDeck(page, deck, labels, roundSize = 10) {
   for (let i = 0; i < roundSize; i++) {
     const text = await page.locator(".message-card").innerText();
     const item = deck.find((item) => text.includes(item.text || item.name));
@@ -215,6 +215,42 @@ test("Scam Sleuth: complete shuffled messages and explanatory feedback", async (
     ]),
   );
 });
+test("Core life-skill worlds: five unique question banks contain sixty scenarios",()=>{
+  expect(messages).toHaveLength(60);
+  expect(conversations).toHaveLength(60);
+  expect(newsCards).toHaveLength(60);
+  expect(repairs).toHaveLength(60);
+  expect(sorting).toHaveLength(60);
+  expect(new Set(messages.map(item=>item.text)).size).toBe(60);
+  expect(new Set(conversations.map(item=>item.text)).size).toBe(60);
+  expect(new Set(newsCards.map(item=>item.text)).size).toBe(60);
+  expect(new Set(repairs.map(item=>item.title)).size).toBe(60);
+  expect(new Set(sorting.map(item=>item.name)).size).toBe(60);
+});
+test("Scam Sleuth: six rounds rotate through all sixty unique scenarios",async({page})=>{
+  test.setTimeout(180_000);
+  await page.goto("/games/scam-sleuth/index.html");
+  const seen = new Set();
+  for(let roundIndex=0;roundIndex<6;roundIndex++){
+    for(let i=0;i<10;i++){
+      const scenario=await page.locator(".message-card p").innerText();
+      const item=messages.find(entry=>entry.text===scenario);
+      expect(item).toBeTruthy();
+      expect(seen.has(scenario)).toBe(false);
+      seen.add(scenario);
+      await page.getByRole("button",{
+        name:["Read it","Check another way","Block & tell an adult"][item.answer],exact:true
+      }).click();
+      await expect(page.locator("#feedback")).toHaveClass(/good/);
+      await page.getByRole("button",{
+        name:i===9?"See what I learned":"Next discovery",exact:true
+      }).click();
+    }
+    await expect(page.locator("#finishDialog")).toBeVisible();
+    if(roundIndex<5)await page.getByRole("button",{name:"Try another round",exact:true}).click();
+  }
+  expect(seen.size).toBe(60);
+});
 test("Scam Sleuth: center evidence stays readable in light, dark, and high contrast", async ({
   page,
 }) => {
@@ -278,7 +314,7 @@ test("Reuse Rally: sort objects with the displayed town rules", async ({
   page,
 }) => {
   await round(page, "reuse-rally", async () => {
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 10; i++) {
       const art = page.locator(".reuse-item-art");
       await expect(art).toBeVisible();
       await expect(art.locator(".object-model")).toHaveCount(1);
@@ -295,7 +331,7 @@ test("Reuse Rally: sort objects with the displayed town rules", async ({
       }).click();
       await expect(page.locator("#feedback")).toHaveClass(/good/);
       await page.getByRole("button", {
-        name: i === 5 ? "See what I learned" : "Next discovery",
+        name: i === 9 ? "See what I learned" : "Next discovery",
         exact: true,
       }).click();
     }
@@ -329,13 +365,13 @@ test("Traffic Town: six consecutive rounds rotate through sixty unseen signs", a
   }
   expect(new Set(allSeen).size).toBe(trafficQuestions.length);
 });
-test("Repair Café: draw eight unique repairs from a twenty-scenario bank", async ({
+test("Repair Café: draw ten unique repairs from a sixty-scenario bank", async ({
   page,
 }) => {
   await round(page, "repair-cafe", async () => {
-    expect(repairs.length).toBeGreaterThanOrEqual(20);
+    expect(repairs.length).toBe(60);
     const seen = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 10; i++) {
       const title = await page.locator(".message-card .board-title").innerText();
       const repair = repairs.find((item) => item.title === title);
       expect(repair).toBeTruthy();
@@ -354,12 +390,12 @@ test("Repair Café: draw eight unique repairs from a twenty-scenario bank", asyn
 
       await page
         .getByRole("button", {
-          name: i === 7 ? "See my repairs" : "Next repair",
+          name: i === 9 ? "See my repairs" : "Next repair",
           exact: true,
         })
         .click();
     }
-    expect(new Set(seen).size).toBe(8);
+    expect(new Set(seen).size).toBe(10);
   });
 });
 test("Time Trail: complete sixty growing maps over six chapters",async({page})=>{
