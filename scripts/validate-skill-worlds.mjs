@@ -14,6 +14,7 @@ import {
   gardenGrowthChallenges,
 } from "../assets/skill-worlds.js";
 import { gardenLevels, energyLevels } from "../assets/garden-energy-levels.js";
+import { timeTrail, shortestTrailPath } from "../assets/time-trail-level.js";
 import {
   iconSvg,
   weatherSceneSvg,
@@ -134,6 +135,38 @@ for (const id of ["garden-guardians","energy-island"]) {
   assert.match(world.mission, /eight .* levels/i, `${id} describes its new journey`);
   assert.equal(entry.mission, world.mission, `${id} game card matches the game itself`);
 }
+// Time Trail: kids should reach all flags and the picnic in eight moves,
+// with four spare moves rather than the old twelve-move detour and sixteen-move cap.
+assert.equal(timeTrail.width, 5);
+assert.equal(timeTrail.start, 20);
+assert.equal(timeTrail.finish, 4);
+assert.equal(timeTrail.stepLimit, 12);
+assert.equal(timeTrail.flags.length, 3);
+assert.equal(new Set(timeTrail.flags).size, 3);
+assert.equal(new Set(timeTrail.rocks).size, timeTrail.rocks.length);
+assert.ok([...timeTrail.flags, timeTrail.start, timeTrail.finish]
+  .every((tile) => !timeTrail.rocks.includes(tile)));
+assert.ok([...timeTrail.rocks, ...timeTrail.flags, timeTrail.start, timeTrail.finish]
+  .every((tile) => Number.isInteger(tile) && tile >= 0 && tile < 25));
+const shortestTimeTrail = shortestTrailPath(timeTrail);
+assert.deepEqual(shortestTimeTrail, [20, 15, 10, 5, 0, 1, 2, 3, 4]);
+assert.equal(shortestTimeTrail.length - 1, 8);
+assert.ok(shortestTimeTrail.length - 1 < timeTrail.stepLimit, "give players room for detours");
+assert.ok(timeTrail.flags.every((flag) => shortestTimeTrail.includes(flag)));
+for (let index = 1; index < shortestTimeTrail.length; index++) {
+  const a = shortestTimeTrail[index - 1], b = shortestTimeTrail[index];
+  assert.equal(Math.abs(Math.floor(a / 5) - Math.floor(b / 5)) +
+    Math.abs((a % 5) - (b % 5)), 1, "every move is to an adjacent tile");
+}
+const trailWorld = worlds.find((world) => world.id === "time-trail");
+assert.match(trailWorld.mission, /8 moves/);
+assert.match(trailWorld.mission, /12 moves allowed/);
+assert.equal(catalog.find((world) => world.id === "time-trail").mission, trailWorld.mission);
+const trailGame = fs.readFileSync("assets/skill-games.js", "utf8");
+assert.ok(trailGame.includes("tile.route-reachable") || trailGame.includes("route-reachable"),
+  "Time Trail highlights legal adjacent moves");
+assert.ok(trailGame.includes("state.moves >= ROUTE_STEP_LIMIT"),
+  "Time Trail stops after its strict move limit");
 assert.equal(robotLevels.length, 20);
 assert.equal(new Set(robotLevels.map((level) => level.name)).size, robotLevels.length);
 assert.equal(
@@ -236,6 +269,7 @@ for (const [name, deck, expected, sceneArt, choiceArt] of [
 }
 for (const file of [
   "assets/garden-energy-levels.js",
+  "assets/time-trail-level.js",
   "assets/expanded-scenarios.js",
   "assets/skill-worlds.js",
   "assets/skill-games.js",
@@ -243,5 +277,5 @@ for (const file of [
 ])
   execFileSync(process.execPath, ["--check", file]);
 console.log(
-  `Skill worlds validated: ${worlds.length} unique modes, eight-level garden and energy campaigns, complete 25-question weather and 24-question garden paths, replay banks, Traffic Town road-sign practice, repair sequences, and twenty shortest-path-verified rover grids.`,
+  `Skill worlds validated: ${worlds.length} unique modes, eight-level garden and energy campaigns, complete 25-question weather and 24-question garden paths, replay banks, Traffic Town road-sign practice, repair sequences, and twenty shortest-path-verified rover grids, and an eight-move Time Trail with a twelve-move limit.`,
 );
