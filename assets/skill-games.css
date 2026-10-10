@@ -1791,3 +1791,24 @@ html.larriverse-high-contrast body[data-world="pocket-planet"] :is(.planet-workb
   body[data-world="time-trail"] .route-level-hero > span {flex-basis:3.3rem;width:3.3rem;height:3.3rem;font-size:2rem}
   body[data-world="pocket-planet"] .planet-workbench span {min-width:85px;flex:1}
 }
+
+/* Energy Island's battery label must never inherit white ink over a pale scene.
+   Use genuinely dark surfaces in night mode, preserving the dark-mode contrast sweep. */
+html.larriverse-dark body[data-world="energy-island"] .energy-scene {
+  background: #203d43;
+  background-image: linear-gradient(140deg,#203d43,#2d365d);
+  color: #f5fff9;
+  border: 2px solid #83c6a9;
+}
+html.larriverse-dark body[data-world="energy-island"] .energy-scene :is(strong,b,small,p) {
+  color: #f5fff9;
+}
+html.larriverse-high-contrast body[data-world="energy-island"] .energy-scene {
+  background: #111 !important;
+  background-image: none !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+html.larriverse-high-contrast body[data-world="energy-island"] .energy-scene :is(strong,b,small,p) {
+  color: #fff !important;
+}
