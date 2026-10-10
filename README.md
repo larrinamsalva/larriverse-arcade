@@ -229,3 +229,5 @@ MIT for repository code unless a file states otherwise. Third-party fonts, maps,
 **Crossword World** is a full 60-level clue-based puzzle game with increasingly tricky real Across/Down crossings, accessible letter entry, free hints, and saved progress.
 
 **60-challenge audit:** Run `npm run audit:worlds` to see verified counts for every arcade game. Some still need genuine new levels; see [the game-by-game audit](docs/WORLD-60-LEVEL-AUDIT.md). Do not count repeated free-play sessions as different challenges.
+
+Four additional expedition worlds now provide **sixty playable challenges each**: Water Works, Harbor Helpers, Compass Cove and Cipher Club. Together with the other 60-level worlds, **20 of 35 mainline games** have fully authored sequential progressions. The remaining worlds are tracked in [our honest audit](docs/WORLD-60-LEVEL-AUDIT.md).
