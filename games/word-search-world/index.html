@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="theme-color" content="#356e8d">
+ <meta name="description" content="Word Search World: 60 progressively harder puzzles on gardens, weather, kindness, tools, money and exploring. Free and kid-friendly!">
+ <title>Word Search World · LarriVerse Arcade</title>
+ <link rel="stylesheet" href="game.css">
+ <link rel="stylesheet" href="../../assets/emoji.css">
+ <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+ <link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+ <link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/word-search-world/">
+ <meta property="og:type" content="website">
+ <meta property="og:site_name" content="LarriVerse Arcade">
+ <meta property="og:title" content="Word Search World · 60 Levels">
+ <meta property="og:description" content="Find hidden words through 60 colorful puzzles and six growing skill chapters.">
+ <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/word-search-world/">
+ <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+ <meta property="og:image:type" content="image/webp"><meta property="og:image:width" content="1600"><meta property="og:image:height" content="800">
+ <meta property="og:image:alt" content="Illustrated LarriVerse worlds for playful learning">
+ <meta name="twitter:card" content="summary_large_image">
+</head>
+<body data-classic="word-search-world">
+ <a class="skip-link" href="#wordGrid">Skip to word search</a>
+ <header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+  <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+  <div class="lv-context"><strong>Word Search World</strong><small>Vocabulary, focus &amp; reading</small></div>
+  <nav class="lv-tools" aria-label="Arcade tools">
+   <a class="lv-button" href="../../index.html">Back to Arcade</a>
+   <button class="lv-button" type="button" data-lv-comfort>Comfort &amp; accessibility</button>
+  </nav>
+  <span data-lv-profile>Progress stays in this browser.</span>
+ </header>
+ <main class="word-world">
+  <section class="word-hero">
+   <div class="hero-copy">
+    <p class="eyebrow">🔍 New adventure · 60 levels · 6 chapters</p>
+    <h1>Word Search <span>World!</span></h1>
+    <p>Hunt for hidden words, learn something new, and unlock larger and trickier puzzles. Start with simple rows and columns — then discover diagonals and backwards words!</p>
+    <div class="hero-pills"><span>🌱 Nature</span><span>🌦️ Weather</span><span>🤝 Kindness</span><span>🛠️ Building</span><span>🪙 Money</span><span>🌍 Exploring</span></div>
+   </div>
+   <div class="hero-scene" aria-hidden="true">
+    <div class="magnifier"><div class="magnifier-glass"><b>W</b><b>O</b><b>R</b><b>D</b></div><span class="magnifier-handle"></span></div>
+    <span class="float-star first">✦</span><span class="float-star second">✧</span><span class="hero-friend">🦊</span>
+   </div>
+  </section>
+  <section class="chapters" id="chapterTrack" aria-label="Six word-search chapters"></section>
+  <section class="game-layout">
+   <div class="board-card">
+    <div class="board-head">
+     <div><p id="levelLabel" class="eyebrow">Level 1 of 60</p><h2 id="levelTitle">Garden Detectives</h2><p id="directionsText">Find words across or down.</p></div>
+     <label class="level-picker">Unlocked levels<select id="levelPicker" aria-label="Choose an unlocked word search level"></select></label>
+    </div>
+    <div class="stat-row"><div><small>Found</small><strong id="foundCount">0 / 4</strong></div><div><small>Level</small><strong id="levelCount">1 / 60</strong></div><div><small>Stars</small><strong id="starCount">0 / 180</strong></div><div><small>Hints</small><strong id="hintCount">0</strong></div></div>
+    <div class="progress" id="levelProgress" role="progressbar" aria-label="World completion" aria-valuemin="0" aria-valuemax="60" aria-valuenow="0"><span id="progressBar"></span></div>
+    <div class="word-grid-container"><div id="wordGrid" role="group" aria-label="Word search letter grid" tabindex="-1"></div></div>
+    <p class="selection-preview" id="selectionPreview" aria-live="off">Tap the first and last letter, or drag across a word!</p>
+    <div class="controls">
+     <button type="button" id="hintButton">💡 Free hint</button>
+     <button type="button" id="clearSelection">↶ Clear selection</button>
+     <button type="button" id="restartLevel">↻ Restart puzzle</button>
+    </div>
+    <p id="gameFeedback" class="feedback" role="status" aria-live="polite">Find your first word — you've got this!</p>
+    <section id="celebration" class="celebration" hidden>
+     <div class="award-art" aria-hidden="true">🎉 ⭐ 🏆</div><h3 id="winTitle">Level cleared!</h3><p id="winMessage"></p>
+     <button type="button" id="nextLevel" class="primary">Next level →</button>
+    </section>
+   </div>
+   <aside class="side-card" aria-label="Word lists and hints">
+    <div class="buddy"><span aria-hidden="true">🦊</span><div><strong>Your word-finding buddy!</strong><p id="buddySpeech">Look across the rows to get started!</p></div></div>
+    <h2>🔎 Words to find</h2><p id="wordHelp">Look for these hidden words:</p>
+    <ul id="wordList" class="word-list" aria-label="Words to find"></ul>
+    <section class="learning-card"><h3>💡 Did you know?</h3><p id="funFact">Every seed has a story.</p></section>
+    <div class="how-to"><h3>How to play</h3>
+     <p>Drag your finger or mouse in a straight line from the first to the last letter. You can also <strong>tap two letter squares</strong> or use arrow keys and Enter/Space to choose the first and last squares.</p>
+     <p>Colored letters show the words you've already found. A hint points to one hidden word's first letter. No timer or purchases!</p>
+    </div>
+   </aside>
+  </section>
+ </main>
+ <script src="../../assets/arcade-sdk.js"></script>
+ <script type="module" src="game.js"></script>
+ <script src="../../assets/cabinet-shell.js"></script>
+</body>
+</html>
