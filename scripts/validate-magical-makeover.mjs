@@ -72,7 +72,7 @@ check(game.includes('musicStudioSvg()'), 'Beat Builder renders the illustrated s
 check(game.includes('iconSvg("robot", "rover-token")'), 'Robot Rover uses a detailed mechanical rover instead of an emoji');
 check(bubbleGame.includes('CANVAS_THEMES') && bubbleGame.includes('drawShooter'), 'Bubble Resonance has a theme-aware illustrated launcher');
 check(bubbleGame.includes('canvas.dataset.colorMode'), 'Bubble Resonance exposes the resolved canvas color mode for QA');
-check(bubbleGame.includes('const BUBBLE_LEVELS=[') && bubbleGame.includes("['Phi Finale',6,6,4"), 'Bubble Resonance has twenty-stage progression through Phi Finale');
+check(bubbleGame.includes('const BUBBLE_LEVELS=[') && bubbleGame.includes("['Grand Resonance Finale',6,6,3"), 'Bubble Resonance has sixty stages ending at Grand Resonance Finale');
 check(bubbleGame.includes('function bubble(') && bubbleGame.includes('ctx.arc(x,y,r*.94') && !bubbleGame.includes('function hex('), 'Bubble Resonance uses circular bubble artwork instead of hexagons');
 check(bubbleGame.includes("row:{name:'Row Wave'") && bubbleGame.includes("burst:{name:'Star Burst'") && bubbleGame.includes("sweep:{name:'Color Sweep'"), 'Bubble Resonance includes row, neighbor-burst, and matching-number power bubbles');
 check(bubbleGame.includes('POWER_INTERVAL=5') && bubbleGame.includes('function activatePower('), 'Bubble Resonance delivers and activates special bubbles on a predictable cadence');
