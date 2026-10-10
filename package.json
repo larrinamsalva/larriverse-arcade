@@ -2,7 +2,7 @@
   "name": "larriverse-arcade",
   "version": "1.0.0",
   "private": true,
-  "description": "33 free life-skill games for kids and teens. Local progress, optional discovery, accessible play, and no ads or purchases.",
+  "description": "34 free life-skill games for kids and teens. Local progress, optional discovery, accessible play, and no ads or purchases.",
   "type": "module",
   "scripts": {
     "validate": "node scripts/validate.mjs && node scripts/validate-brain-sweat-expanded.mjs && node scripts/validate-kidscoin-family.mjs && node scripts/validate-road-trip-gps.mjs && node scripts/validate-arcade-polish.mjs && node scripts/validate-release-candidate.mjs && node scripts/validate-browser-qa.mjs && node scripts/validate-release-evidence.mjs && node scripts/validate-guided-device-qa.mjs && node scripts/validate-deployment-rehearsal.mjs && node scripts/validate-release-room.mjs && node scripts/validate-learning-question-bank.mjs && node scripts/validate-adaptive-learning-paths.mjs && node scripts/validate-adaptive-engine-pools.mjs && node scripts/validate-progress-passport.mjs && node scripts/validate-family-learning-report.mjs && node scripts/validate-learning-goals.mjs && node scripts/validate-learning-day.mjs && node scripts/validate-skill-worlds.mjs && node scripts/validate-expeditions.mjs && node scripts/audit-world-levels.mjs && node scripts/validate-street-safety-scout.mjs && node scripts/validate-kids-sudoku.mjs && node scripts/validate-v1-polish.mjs && node scripts/validate-magical-makeover.mjs",
