@@ -110,6 +110,9 @@ html.larriverse-dark .puzzle-feedback{background:#30415d;color:#e9f5ff}
 html.larriverse-dark .puzzle-feedback.error{background:#672c42;color:#ffe2e8}
 html.larriverse-dark .puzzle-feedback.success{background:#1d5748;color:#d4ffec}
 html.larriverse-dark #buddyMessage{background:#453968;color:#fbf4ff;border-color:#7e6eb3}
+html.larriverse-dark .guide-sample b{color:#f3eaff;background:#30365b}
+html.larriverse-dark .guide-sample b:nth-child(2){color:#d4ffec;background:#214c4d}
+html.larriverse-dark .guide-sample b:nth-child(3){color:#ffdbe3;background:#653140}
 html.larriverse-dark .mini-rule{border-color:#4d5677}
 html.larriverse-dark .mini-rule span{background:#285c50;color:#ecfff5}
 html.larriverse-dark .celebration{background:linear-gradient(130deg,#4f4133,#244743,#423a69)}
