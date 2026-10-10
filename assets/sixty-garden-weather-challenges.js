@@ -111,7 +111,7 @@ export const weatherExtendedChallenges = [
       }
     ],
     "answer": 0,
-    "why": "A clear dark sky can reveal stars."
+    "why": "A clear dark sky can reveal stars because fewer clouds block our view of the night sky."
   },
   {
     "id": "weather-extended-5",
@@ -167,7 +167,7 @@ export const weatherExtendedChallenges = [
       }
     ],
     "answer": 2,
-    "why": "Wind is air in motion."
+    "why": "Wind is air in motion, and a flag can show its direction and approximate strength."
   },
   {
     "id": "weather-extended-7",
