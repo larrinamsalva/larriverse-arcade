@@ -33,6 +33,7 @@ for (const item of streetSafetyScenarios) {
 }
 
 assert.equal(catalog.filter(item => item.id === 'street-safety-scout').length, 1, 'catalog includes Game 30 once');
+assert.match(catalog.find(item => item.id === "street-safety-scout").mission, /sixty distinct scenarios/, "catalog mission agrees with the 60-scenario game");
 assert.equal(release.cabinets.filter(item => item.id === 'street-safety-scout').length, 1, 'release manifest includes Game 30 once');
 assert.equal(release.cabinetCount, catalog.length, 'release and catalog counts agree');
 assert.ok(html.includes('Game 30') && html.includes('60-scenario bank'), 'page explains the Game 30 mission');
