@@ -1165,6 +1165,47 @@ body[data-world] .world-banner{border-color:color-mix(in srgb,var(--world-accent
 body[data-world] .age-pill,body[data-world] .score-pill{background:var(--world-soft);color:color-mix(in srgb,var(--world-accent) 80%,#222)}
 body[data-world] .primary{background:color-mix(in srgb,var(--world-accent) 68%,#17233a);box-shadow:0 4px 0 color-mix(in srgb,var(--world-accent) 55%,#111);color:#fff}
 
+/* Time Trail: keep every instruction and board state clear against the trail. */
+body[data-world="time-trail"] .mission-card{border:2px solid #80a99a;background:#fff;color:#18372f;box-shadow:0 6px 0 #70948855}
+body[data-world="time-trail"] .mission-card :is(h2,p:not(.eyebrow)){color:#29483f}
+body[data-world="time-trail"] .play-card{border:2px solid #78a797;background:linear-gradient(155deg,#fff,#edf8f3);color:#173a32;box-shadow:0 8px 0 #638f8055,0 16px 30px #355f5024}
+body[data-world="time-trail"] .play-top{color:#214f43;border-bottom-color:#b4d3c8}
+.route-instruction{display:flex;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;margin:0 0 1rem;padding:.8rem 1rem;border:2px solid #c09b3f;border-radius:14px;background:#fff2bd;color:#3f310f;text-align:center;line-height:1.45}
+.route-instruction strong{color:#2e5e50}.route-instruction span{font-weight:700}
+body[data-world="time-trail"] .route-stats{justify-content:center}
+body[data-world="time-trail"] .stat-chip{border:2px solid #78a594;background:#e4f4ed;color:#203e36;box-shadow:0 3px 0 #5f897b44}
+body[data-world="time-trail"] .stat-chip b{color:#285f51}
+body[data-world="time-trail"] .route-legend{flex-wrap:wrap;font-weight:850;color:#263f39}
+body[data-world="time-trail"] .route-legend span{padding:.38rem .62rem;border:1px solid #9bbcaf;border-radius:9px;background:#fff;color:#263f39}
+body[data-world="time-trail"] .tile{border-color:#7da18a;background:linear-gradient(145deg,#f7fff8,#cfe8d3);color:#173b31;box-shadow:inset 0 -5px 0 #b4d2b9,0 3px 4px #355f5030;font-weight:900}
+body[data-world="time-trail"] .tile.visited{border-color:#4e9077;background:linear-gradient(145deg,#ddf8eb,#a9ddc7);box-shadow:inset 0 -5px 0 #86c7ad,0 3px 4px #355f5030}
+body[data-world="time-trail"] .tile.rock{border-color:#768594;background:linear-gradient(145deg,#e4e9ee,#b5bec8);color:#24394d;box-shadow:inset 0 -5px 0 #9da8b4,0 3px 4px #33435635}
+body[data-world="time-trail"] .tile.flag{border-color:#b48726;background:linear-gradient(145deg,#fff8c9,#f6dc75);color:#483704;box-shadow:inset 0 -5px 0 #ddbd4f,0 3px 4px #6e571f35}
+body[data-world="time-trail"] .tile.finish{border-color:#a86a31;background:linear-gradient(145deg,#fff2d5,#e7b877);color:#4d3017;box-shadow:inset 0 -5px 0 #cc955b,0 3px 4px #70451f35}
+body[data-world="time-trail"] .tile.player{border-color:#5c46a9;background:linear-gradient(145deg,#eee9ff,#c9b9f5);color:#332468;box-shadow:inset 0 -5px 0 #a998dc,0 0 0 3px #8069ca55,0 3px 4px #33246835}
+body[data-world="time-trail"] .feedback{border:2px solid #8ba8bf;background:#eaf3fb;color:#203c55;font-weight:700}
+
+html.larriverse-dark body[data-world="time-trail"] .mission-card{border-color:#6aa994;background:#1c3337;color:#f5fffb;box-shadow:0 6px 0 #0b191c}
+html.larriverse-dark body[data-world="time-trail"] .mission-card :is(h2,p:not(.eyebrow)){color:#f2fff9}
+html.larriverse-dark body[data-world="time-trail"] .play-card{border-color:#67aa95;background:linear-gradient(155deg,#182f35,#1c2740);color:#f5fffb;box-shadow:0 8px 0 #0b181d,0 16px 30px #050a1066}
+html.larriverse-dark body[data-world="time-trail"] .play-top{color:#f4fff9;border-bottom-color:#557e77}
+html.larriverse-dark body[data-world="time-trail"] .route-instruction{border-color:#d6b75b;background:#443b24;color:#fff6d7}
+html.larriverse-dark body[data-world="time-trail"] .route-instruction strong{color:#bff6df}
+html.larriverse-dark body[data-world="time-trail"] .stat-chip{border-color:#6aa994;background:#1f4039;color:#f4fff9;box-shadow:0 3px 0 #091815}
+html.larriverse-dark body[data-world="time-trail"] .stat-chip b{color:#fff}
+html.larriverse-dark body[data-world="time-trail"] .route-legend span{border-color:#72a99a;background:#193b37;color:#f5fffb}
+html.larriverse-dark body[data-world="time-trail"] .tile{border-color:#6fa287;background:linear-gradient(145deg,#315a47,#234536);color:#f5fff9;box-shadow:inset 0 -5px 0 #183428,0 3px 4px #050b0866}
+html.larriverse-dark body[data-world="time-trail"] .tile.visited{border-color:#78b89f;background:linear-gradient(145deg,#2d6553,#224a3e)}
+html.larriverse-dark body[data-world="time-trail"] .tile.rock{border-color:#8a98a6;background:linear-gradient(145deg,#515d69,#37424e);color:#fff;box-shadow:inset 0 -5px 0 #28313a,0 3px 4px #05080b77}
+html.larriverse-dark body[data-world="time-trail"] .tile.flag{border-color:#f0ca62;background:linear-gradient(145deg,#6b5b24,#514317);color:#fff7d0;box-shadow:inset 0 -5px 0 #362b0d,0 3px 4px #08060177}
+html.larriverse-dark body[data-world="time-trail"] .tile.finish{border-color:#e0a368;background:linear-gradient(145deg,#694726,#4d321b);color:#fff1df;box-shadow:inset 0 -5px 0 #321f10,0 3px 4px #08040177}
+html.larriverse-dark body[data-world="time-trail"] .tile.player{border-color:#b4a1ff;background:linear-gradient(145deg,#65559b,#493d78);color:#fff;box-shadow:inset 0 -5px 0 #332957,0 0 0 3px #b4a1ff55,0 3px 4px #09061077}
+html.larriverse-dark body[data-world="time-trail"] .feedback{border-color:#7598b5;background:#1d3850;color:#f4f9ff}
+
+html.larriverse-high-contrast body[data-world="time-trail"] :is(.play-card,.mission-card,.route-instruction,.stat-chip,.route-legend span,.tile,.feedback){border-color:#fff!important;background:#111!important;color:#fff!important;box-shadow:none!important}
+html.larriverse-high-contrast body[data-world="time-trail"] :is(.route-instruction strong,.stat-chip b,.mission-card h2,.mission-card p){color:#fff!important}
+html.larriverse-high-contrast body[data-world="time-trail"] :is(.tile.flag,.tile.finish,.tile.player){background:#fff!important;color:#000!important}
+
 .traffic-message{display:grid;grid-template-columns:145px minmax(0,1fr);align-items:center;gap:1.2rem;text-align:left;padding:1rem 1.4rem;border:2px solid #78a7c8;background:linear-gradient(135deg,#e1f4ff,#e9e3fa);color:#1f354b;box-shadow:0 6px 0 #5f8fae55}
 .traffic-sign-art{display:block;width:135px;height:150px;margin:auto;filter:drop-shadow(0 11px 5px #20394855)}
 .traffic-sign-art .sign-depth{filter:brightness(.38) saturate(.7)}.traffic-sign-art .sign-face{filter:drop-shadow(0 2px 1px #fff8)}

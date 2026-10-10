@@ -20,8 +20,8 @@ This branch upgrades the original 30 cabinets and adds two complete picture-lear
 - **Lemonade Lab:** a full wooden stand with separate boards, grain, fasteners, striped canopy, lemons, cups, customer, plants, and changing sunny, rainy, festival, and quiet-day scenes. Bloom wears a Lemon Lab apron.
 - **Beat Builder:** illustrated studio, speakers, animated equalizer, stage lighting, custom track symbols, dimensional rhythm pads, playhead glow, and dancing Bloom.
 - **Robot Rover:** a paneled rover with antenna, face display, body lights, arms, wheels, and fasteners; faceted rock obstacles; glowing goal stars; and clear trail markers.
-- **Traffic Town:** all 40 rendered traffic signs have distinct identifying symbols, shapes, and colors, including dimensional cow, deer, tractor, truck, turn-only, dead-end, clearance, and work-zone signs.
-- **Street Safety Scout:** 36 distinct code-native scenes combine dimensional signals, reflective sign faces, school buses, emergency vehicles, car lights, roadside workers, farm equipment, animals, road surfaces, water, fog, crosswalks, and cast shadows with accessible image labels.
+- **Traffic Town:** all 60 rendered traffic signs have distinct identifying symbols, shapes, and colors, including dimensional regulatory, animal, farm, route, service, narrow-road, clearance, and work-zone signs.
+- **Street Safety Scout:** 60 distinct code-native scenes combine dimensional signals, reflective sign faces, school buses, emergency vehicles, car lights, roadside workers, farm equipment, animals, road surfaces, water, fog, crosswalks, and cast shadows with accessible image labels.
 - **Pantry Picnic:** thirteen detailed vector foods, including rice, wraps, pasta, fruit, and vegetables, plus a layered wicker basket, cloth texture, and dimensional food cards.
 
 ### Every other cabinet
@@ -41,7 +41,7 @@ This branch upgrades the original 30 cabinets and adds two complete picture-lear
 
 ## Verification
 
-- `npm run validate` includes a dedicated magical-makeover contract in addition to the existing validators, including a distinct-art check across all 40 Traffic Town signs.
+- `npm run validate` includes a dedicated magical-makeover contract in addition to the existing validators, including a distinct-art check across all 60 Traffic Town signs.
 - Browser QA covers theme persistence, device-theme response, Bloom hints, hide/restore, overflow, all cabinet routes, mobile/desktop layouts, accessibility settings, saves, and gameplay flows.
 - The existing GitHub Actions browser gate produces genuine desktop/mobile screenshots and the offline review gallery. The release approval gate is unchanged.
 

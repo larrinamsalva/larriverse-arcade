@@ -68,7 +68,7 @@ for (const item of sorting) {
   assert.match(item.art, /^[a-z][A-Za-z]+$/);
   assert.match(iconSvg(item.art), new RegExp(`object-model--${item.art}`));
 }
-assert.equal(trafficQuestions.length, 40);
+assert.equal(trafficQuestions.length, 60);
 assert.equal(new Set(trafficQuestions.map((item) => item.text)).size, trafficQuestions.length);
 for (const item of trafficQuestions) {
   assert.equal(item.options.length, 3);

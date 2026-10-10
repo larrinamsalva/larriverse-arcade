@@ -155,7 +155,7 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 
 ### Street Safety Scout
 
-- **Street Safety Scout** — Identify signals, caution and emergency signs, vehicle lights, and street hazards through fifteen-stop routes drawn from a 36-scenario bank.
+- **Street Safety Scout** — Identify signals, caution and emergency signs, vehicle lights, and street hazards through fifteen-stop routes drawn from a balanced 60-scenario bank.
 - **Weather Watchers** — Read sun, stars, cloud forms, rain, snow, fog, wind, safety choices, and simple forecast panels through 25 picture challenges and four ranks.
 - **Garden Grow & Harvest** — Build a bed, plant seeds and seedlings, care for crops, harvest produce, and keep it fresh through 24 picture challenges and four ranks.
 - Every route includes three scenes from each of four safety zones, with no timer and a teaching explanation after every choice.

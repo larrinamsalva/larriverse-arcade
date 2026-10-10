@@ -342,6 +342,7 @@ test('Bubble Resonance advances through twenty round-bubble levels before declar
   const box = await game.boundingBox();
   for(let level=1;level<=20;level++) {
     await expect(page.locator('#level')).toHaveText(`${level} / 20`);
+    const scoreAtStart = await page.locator('#score').innerText();
     await game.click({ position: { x: box.width * .5, y: box.height * .35 } });
     await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
     await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false', { timeout: 5000 });
@@ -349,13 +350,21 @@ test('Bubble Resonance advances through twenty round-bubble levels before declar
       await expect(page.locator('#limit')).toHaveText('NEXT');
       await expect(page.locator('#message')).toContainText(`LEVEL ${level} CLEAR`);
       await expect(page.locator('#reset')).toHaveText(`Continue to level ${level+1}`);
-      await page.locator('#reset').click();
+      await expect(page.locator('#levelAction')).toBeVisible();
+      await expect(page.locator('#levelAction')).toContainText('Next level');
+      const clearedScore = await page.locator('#score').innerText();
+      expect(Number(clearedScore.replaceAll(',', ''))).toBeGreaterThanOrEqual(Number(scoreAtStart.replaceAll(',', '')));
+      await page.locator('#levelAction').click();
+      await expect(page.locator('#level')).toHaveText(`${level+1} / 20`);
+      await expect(page.locator('#score')).toHaveText(clearedScore);
     }
   }
   await expect(page.locator('#limit')).toHaveText('WIN');
   await expect(page.locator('#message')).toContainText('ALL 20 LEVELS CLEARED');
   await expect(page.locator('#message')).toContainText('round bubble');
   await expect(page.locator('#reset')).toHaveText('Play all 20 again');
+  await expect(page.locator('#levelAction')).toBeVisible();
+  await expect(page.locator('#levelAction')).toHaveText('Play all 20 again');
   await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false');
 
   const result = await page.evaluate(() => window.LarriVerseArcade.summary().games['bubble-resonance-phi369']);
