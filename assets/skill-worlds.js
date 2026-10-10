@@ -1,5 +1,6 @@
 import { expeditions } from "./expedition-worlds.js";
 import { messageExtras, conversationExtras, newsExtras, sortingExtras, trafficQuestions } from "./expanded-scenarios.js";
+import { sixtyMessageExtras, sixtyConversationExtras, sixtyNewsExtras, sixtySortingExtras, sixtyRepairExtras } from "./sixty-world-extras.js";
 export { trafficQuestions };
 export const worlds = [
   ...expeditions,
@@ -288,7 +289,8 @@ export const messages = [
     answer: 0,
     why: "You checked an account through your own trusted route. You can read the ordinary reminder.",
   },
-  ...messageExtras,
+  ...messageExtras
+  ...sixtyMessageExtras,
 ];
 export const conversations = [
   {
@@ -351,7 +353,8 @@ export const conversations = [
     answer: 1,
     why: "You do not have to handle repeated hurtful behavior alone. Support the person and get help.",
   },
-  ...conversationExtras,
+  ...conversationExtras
+  ...sixtyConversationExtras,
 ];
 export const newsCards = [
   {
@@ -402,7 +405,8 @@ export const newsCards = [
     answer: 2,
     why: "Payment or gifts can make this sponsored content. Look for the sponsorship disclosure.",
   },
-  ...newsExtras,
+  ...newsExtras
+  ...sixtyNewsExtras,
 ];
 export const repairs = [
   {
@@ -524,7 +528,8 @@ export const repairs = [
     title: "A journal bookmark ribbon is loose",
     steps: ["Open the journal and find where the ribbon was attached","Check that no pages are caught or torn","Reattach the ribbon gently with an adult-approved method","Close and reopen the journal to check the ribbon moves freely"],
     hint: "A small repair should not create a new problem, so always test how the item opens and closes afterward.",
-  },
+  }
+  ...sixtyRepairExtras,
 ];
 
 export const sorting = [
@@ -598,7 +603,8 @@ export const sorting = [
     bin: 1,
     why: "Toy Town accepts clean paper in recycling. Local rules can differ.",
   },
-  ...sortingExtras,
+  ...sortingExtras
+  ...sixtySortingExtras,
 ];
 export const robotLevels = [
   {
