@@ -297,7 +297,7 @@
       "id": "bubble-resonance-phi369",
       "title": "Bubble Resonance Φ369",
       "route": "games/bubble-resonance-phi369/index.html",
-      "manualFocus": "Clear all twenty named stages, confirm every game piece is a glossy round bubble with a numbered cue, verify controls at desktop and mobile widths, and keep sound optional and the creative-theme medical boundary visible."
+      "manualFocus": "Clear all twenty named stages and specifically verify an empty Level 10 board automatically advances to Level 11 with a visible fallback button. Test special bubble clears, immediate manual Next without skipping another level, timer cancellation on reset, and the final win. Check glossy numbered bubbles, light/dark contrast, mobile/keyboard, optional audio and creative-theme medical boundary. Keep human release approval."
     },
     {
       "id": "chill-brain-rewards",
