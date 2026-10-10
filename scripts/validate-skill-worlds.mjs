@@ -14,6 +14,7 @@ import {
   gardenGrowthChallenges,
 } from "../assets/skill-worlds.js";
 import { budgetAdventures } from "../assets/budget-adventures.js";
+import { gardenLevels, energyLevels } from "../assets/garden-energy-levels.js";
 import {
   iconSvg,
   weatherSceneSvg,
