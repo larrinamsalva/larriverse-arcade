@@ -125,6 +125,10 @@
       welcome: 'Real-life skills grow through practice. Choose a lesson that feels useful or interesting today.',
       hint: 'There is no need to rush. Think about how the choice could work in everyday life.'
     },
+    'word-search-world': {
+      welcome: 'Welcome to sixty Word Search adventures! Start with short hidden words, then grow into tricky diagonals and backwards words. You have all the time you need!',
+      hint: 'Find the first letter of a listed word. Drag to its last letter, or tap the first and last squares. Use the free hint if you need a clue!'
+    },
     'kids-sudoku': {
       welcome: 'Welcome to Kids Sudoku World! We will grow from small four-number patterns to classic Sudoku across sixty levels. No rush, just curiosity!',
       hint: 'Each row, each column, and each outlined little box needs every number just once. Check what is already there, and use the free hint when you want a clue.'
