@@ -15,7 +15,7 @@
 
 These existing games already had 60: **Pantry Picnic, Traffic Town, Street Safety Scout, Scam Sleuth, Kindness Quest, Fact Finder, Repair Café, Time Trail, Reuse Rally, Kids Sudoku.**
 
-**Main catalog after this PR: 14 of 33 cabinets have 60 distinct sequential puzzles or questions.** Word Search and Crossword have independent, **unmerged** PRs (#58 and #59) with 60 each, and are **not** counted here.
+**Main catalog after this PR: 16 of 35 cabinets have 60 distinct sequential puzzles or questions.** **Word Search World** and **Crossword World** have merged with 60 levels apiece and are included in the 16 complete cabinets.
 
 ## Remaining fixed-length worlds and accurate gap
 
@@ -59,7 +59,7 @@ Those games must get genuinely new, **solvable** routes, transactions, layouts, 
 
 ## Suggested rollout
 
-1. First merge/revalidate **Word Search PR #58**, then rebase and validate **Crossword PR #59**. Do not assume a PR is ready just because its unit validation passes.
+1. **Completed:** Word Search PR #58 and Crossword PR #59 merged after successful validation and browser QA. Keep the same check requirements for PR #60.
 2. **Infrastructure expedition pack**: Water Works, Harbor Helpers, Compass Cove, Cipher Club.
 3. **Builder/economy pack**: Trade Town, Critter Council, Pocket Planet, Garden Guardians, Energy Island, Robot Rover.
 4. **Creative/adventure pack**: Lemonade Lab, Beat Builder, Creature Catcher, Road Trip and family/Brain Sweat mini-worlds. Design sixty actual tasks per mode rather than relabeling existing play.
