@@ -65,6 +65,7 @@ html.larriverse-dark .level-picker select{background:#263e58;color:#f4f9ff;borde
 html.larriverse-dark #wordGrid{border-color:#8cb5d5;background:#263950}
 html.larriverse-dark .letter{background:#263950;color:#f9fdff;border-color:#5b7694}
 html.larriverse-dark .letter[class*="found"]{color:#fff}
+html.larriverse-dark .selection-preview{color:#c6eaff}
 html.larriverse-dark .controls button{background:#304967;color:#f1faff;border-color:#668dad}
 html.larriverse-dark .feedback{background:#2d5067;color:#f0fbff}
 html.larriverse-dark .feedback.good{background:#205941;color:#ebfff3}
