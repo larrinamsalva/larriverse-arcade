@@ -172,32 +172,43 @@ function pointerIndex(event){
  return row>=0&&col>=0&&row<n&&col<n?row*n+col:-1;
 }
 const board=$("wordGrid");
+// Track drag gestures at window level so pointer-up is never missed if
+// capture changes or the finger crosses an element boundary.
 board.addEventListener("pointerdown",event=>{
  if(celebrating||event.button!==0)return;
  const start=pointerIndex(event);if(start<0)return;
  event.preventDefault();
  drag={start,last:start,moved:false,pointerId:event.pointerId};
- board.setPointerCapture?.(event.pointerId);
  setPreview(start,start);
 });
-board.addEventListener("pointermove",event=>{
+window.addEventListener("pointermove",event=>{
  if(!drag||drag.pointerId!==event.pointerId)return;
- const next=pointerIndex(event);if(next<0)return;
+ const next=pointerIndex(event);
+ if(next<0)return;
  if(next!==drag.start)drag.moved=true;
  if(next!==drag.last){drag.last=next;setPreview(drag.start,next)}
 });
-board.addEventListener("pointerup",event=>{
+window.addEventListener("pointerup",event=>{
  if(!drag||drag.pointerId!==event.pointerId)return;
- const state=drag;drag=null;
- const end=pointerIndex(event);
- if(state.moved){
-  pending=-1;
-  const cells=lineCells(state.start,end<0?state.last:end,puzzle.size);
-  if(cells.length)acceptSelection(cells);else feedback("Follow a straight line from first to last letter.","try");
+ const state=drag;
+ const hit=pointerIndex(event);
+ const end=hit>=0?hit:state.last;
+ // A short drag may deliver only down and up, without any move events.
+ // Compare endpoints instead of relying solely on "moved".
+ if(end!==state.start||state.moved){
+  drag=null;pending=-1;
+  const selected=lineCells(state.start,end,puzzle.size);
+  if(selected.length>1)acceptSelection(selected);
+  else feedback("Follow a straight row, column or diagonal.","try");
   clearSelection();
- }else tapCell(state.start);
+ }else{
+  drag=null;
+  tapCell(state.start);
+ }
 });
-board.addEventListener("pointercancel",()=>clearSelection());
+window.addEventListener("pointercancel",event=>{
+ if(drag&&drag.pointerId===event.pointerId)clearSelection();
+});
 board.addEventListener("keydown",event=>{
  const focus=event.target.closest?.("[data-cell]");if(!focus)return;
  const i=Number(focus.dataset.cell),n=puzzle.size;
