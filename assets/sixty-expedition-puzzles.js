@@ -482,5 +482,207 @@ export const extraHarborLevels = [
     }
   }
 ];
-export const extraCompassClues = [];
+// Every route uses a different landmark + movement combination. A 36-tile map legitimately has revisited destinations.
+export const extraCompassClues = [
+  {
+    "landmark": 0,
+    "east": 2,
+    "south": -3
+  },
+  {
+    "landmark": 1,
+    "east": -1,
+    "south": 5
+  },
+  {
+    "landmark": 2,
+    "east": 3,
+    "south": 2
+  },
+  {
+    "landmark": 3,
+    "east": -1,
+    "south": -4
+  },
+  {
+    "landmark": 4,
+    "east": 3,
+    "south": -2
+  },
+  {
+    "landmark": 0,
+    "east": 2,
+    "south": -4
+  },
+  {
+    "landmark": 1,
+    "east": -5,
+    "south": 1
+  },
+  {
+    "landmark": 2,
+    "east": 2,
+    "south": -3
+  },
+  {
+    "landmark": 3,
+    "east": 1,
+    "south": -4
+  },
+  {
+    "landmark": 4,
+    "east": -2,
+    "south": 2
+  },
+  {
+    "landmark": 0,
+    "east": 4,
+    "south": -2
+  },
+  {
+    "landmark": 1,
+    "east": -2,
+    "south": 4
+  },
+  {
+    "landmark": 2,
+    "east": 2,
+    "south": 1
+  },
+  {
+    "landmark": 3,
+    "east": 2,
+    "south": -4
+  },
+  {
+    "landmark": 4,
+    "east": -1,
+    "south": 3
+  },
+  {
+    "landmark": 0,
+    "east": 1,
+    "south": -4
+  },
+  {
+    "landmark": 1,
+    "east": -5,
+    "south": 3
+  },
+  {
+    "landmark": 2,
+    "east": 4,
+    "south": 1
+  },
+  {
+    "landmark": 3,
+    "east": -2,
+    "south": -3
+  },
+  {
+    "landmark": 4,
+    "east": 3,
+    "south": 2
+  },
+  {
+    "landmark": 0,
+    "east": 5,
+    "south": -2
+  },
+  {
+    "landmark": 1,
+    "east": -2,
+    "south": 5
+  },
+  {
+    "landmark": 2,
+    "east": 5,
+    "south": 2
+  },
+  {
+    "landmark": 3,
+    "east": 3,
+    "south": -4
+  },
+  {
+    "landmark": 4,
+    "east": -2,
+    "south": 3
+  },
+  {
+    "landmark": 0,
+    "east": 2,
+    "south": -5
+  },
+  {
+    "landmark": 1,
+    "east": -5,
+    "south": 2
+  },
+  {
+    "landmark": 2,
+    "east": 4,
+    "south": -3
+  },
+  {
+    "landmark": 3,
+    "east": 3,
+    "south": -3
+  },
+  {
+    "landmark": 4,
+    "east": 2,
+    "south": 3
+  },
+  {
+    "landmark": 0,
+    "east": 4,
+    "south": -4
+  },
+  {
+    "landmark": 1,
+    "east": -3,
+    "south": 4
+  },
+  {
+    "landmark": 2,
+    "east": 3,
+    "south": -3
+  },
+  {
+    "landmark": 3,
+    "east": 1,
+    "south": -3
+  },
+  {
+    "landmark": 4,
+    "east": -2,
+    "south": -2
+  },
+  {
+    "landmark": 0,
+    "east": 3,
+    "south": -3
+  },
+  {
+    "landmark": 1,
+    "east": -4,
+    "south": 2
+  },
+  {
+    "landmark": 2,
+    "east": 5,
+    "south": -1
+  },
+  {
+    "landmark": 3,
+    "east": 2,
+    "south": -2
+  },
+  {
+    "landmark": 4,
+    "east": 1,
+    "south": 3
+  }
+];
 export const extraCipherLevels = [];
