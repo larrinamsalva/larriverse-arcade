@@ -156,8 +156,8 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 ### Street Safety Scout
 
 - **Street Safety Scout** — Identify signals, caution and emergency signs, vehicle lights, and street hazards through fifteen-stop routes drawn from a balanced 60-scenario bank.
-- **Weather Watchers** — Read sun, stars, cloud forms, rain, snow, fog, wind, safety choices, and simple forecast panels through 25 picture challenges and four ranks.
-- **Garden Grow & Harvest** — Build a bed, plant seeds and seedlings, care for crops, harvest produce, and keep it fresh through 24 picture challenges and four ranks.
+- **Weather Watchers** — Read sun, stars, cloud forms, rain, snow, fog, wind, safety choices, and simple forecast panels through 60 unique picture challenges and four ranks.
+- **Garden Grow & Harvest** — Build a bed, plant seeds and seedlings, care for crops, harvest produce, and keep it fresh through 60 unique picture challenges and four ranks.
 - Every route includes three scenes from each of four safety zones, with no timer and a teaching explanation after every choice.
 - Consecutive routes rotate through unseen scenarios while enough remain in each category.
 - Detailed code-native SVG scenes use light position, sign shape, color, depth, reflections, and contextual roadway clues instead of emoji-only questions.
@@ -166,3 +166,5 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 ### Kids Sudoku World
 
 - **Kids Sudoku World** — a fully playable 60-puzzle, six-chapter new cabinet with 4×4, 6×6 and 9×9 Sudoku, validated unique solutions, free hints, pencil notes, keyboard/touch play, number/picture helpers, saved checkpoints and star progress. The game requires manual phone, desktop and screenshot approval like every other cabinet.
+
+- **60-level polish batch:** Bridge Buddies now has sixty progressively loaded construction challenges; Bubble Resonance Φ369 has sixty named stages with automatic transitions. Weather Watchers and Garden Grow & Harvest each contain sixty distinct picture questions. Garden tools now use a stronger raised-bed versus watering-can silhouette. QA and manual approval gates remain required.
