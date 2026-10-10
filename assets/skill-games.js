@@ -255,7 +255,7 @@ function initialize() {
       state.player = timeTrail.start;
       state.moves = 0;
       state.flags = new Set();
-      state.visited = new Set([20]);
+      state.visited = new Set([timeTrail.start]);
       renderRoute();
       break;
     case "garden":
@@ -631,7 +631,7 @@ function adjacent(a, b) {
 }
 function renderRoute() {
   stage("Three flags. One shorter trail.");
-  board.innerHTML = `<p class="route-instruction"><strong>${ROUTE_STEP_LIMIT} moves maximum</strong><span>Collect three flags, then reach the picnic. Glowing tiles are one move away.</span></p><div class="stat-row route-stats">${chip("Steps left", ROUTE_STEP_LIMIT - state.moves)}${chip("Flags found", `${state.flags.size}/3`)}${chip("Shortest route", `${ROUTE_BEST_STEPS} moves`)}</div><div class="route-legend"><span>🧑 You</span><span>🚩 Mission</span><span>🧺 Finish</span></div><div class="tile-grid" aria-label="Park route grid">${Array.from(
+  board.innerHTML = `<p class="route-instruction"><strong>${ROUTE_STEP_LIMIT} moves maximum</strong><span>Collect three flags, then reach the picnic. Glowing tiles are one move away.</span></p><div class="stat-row route-stats">${chip("Steps left", ROUTE_STEP_LIMIT - state.moves)}${chip("Flags found", `${state.flags.size}/3`)}${chip("Shortest route", `${ROUTE_BEST_STEPS} moves`)}</div><div class="route-legend"><span>🧑 You</span><span>🚩 Mission</span><span>🧺 Finish</span><span>✨ Glowing = next move</span></div><div class="tile-grid" aria-label="Park route grid">${Array.from(
     { length: 25 },
     (_, i) => {
       const rock = routeRocks.has(i),
@@ -643,7 +643,7 @@ function renderRoute() {
     },
   ).join("")}</div>`;
   bind("[data-tile]", (node) => moveRoute(Number(node.dataset.tile)));
-  progress(state.flags.size, 3, `${state.flags.size} of 3 flags found`);
+  progress(state.flags.size, routeFlags.length, `${state.flags.size} of ${routeFlags.length} flags found`);
   updateScore(state.flags.size * 25);
   hint =
     "The first flag is one tile above you. Follow the left edge, collect the next flag, then turn right across the top toward the picnic. You can finish in eight moves!";
