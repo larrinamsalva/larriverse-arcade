@@ -180,7 +180,7 @@ test("Pocket Planet: ten building, food and garden projects without coins",async
       if(i<9)await page.getByRole("button",{name:"Next project"}).click();
     }
     expect(seen.size).toBe(10);
-    await expect(page.locator("#finishMessage")).toContainText("ten");
+    await expect(page.locator("#finishMessage")).toContainText("10 hands-on projects");
   });
 });
 test("Pocket Planet: three replays show all thirty projects once",async({page})=>{
