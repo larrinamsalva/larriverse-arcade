@@ -127,20 +127,25 @@ function pantrySolution(challenge) {
   search(0, 3, {});
   return solutions[0];
 }
-test("Pantry Picnic: eight-question rounds exhaust all twenty-four challenges before repeating",async({page})=>{
+test("Pantry Picnic: six ten-question rounds reveal all sixty without repeats",async({page})=>{
+  test.setTimeout(240_000);
+  expect(pantryChallenges).toHaveLength(60);
+  expect(PANTRY_ROUND_SIZE).toBe(10);
   const errors=[]; page.on("pageerror",error=>errors.push(error.message));
   const challengeById=new Map(pantryChallenges.map(challenge=>[challenge.id,challenge]));
   await page.goto("/games/pantry-picnic/index.html");
   await expect(page.locator(".world-scene svg")).toBeVisible();
   await expect(page.locator("#soundToggle")).toHaveAttribute("aria-pressed","false");
   const allSeen=[];
-  for(let round=0;round<3;round++) {
+  for(let round=0;round<6;round++) {
     const roundSeen=[];
     for(let index=0;index<PANTRY_ROUND_SIZE;index++) {
       const card=page.locator("[data-pantry-challenge]");
       const id=await card.getAttribute("data-pantry-challenge");
       expect(challengeById.has(id)).toBe(true);
       roundSeen.push(id); allSeen.push(id);
+      await expect(card).toContainText("60 different challenges");
+      await expect(page.locator("#stageLabel")).toContainText(`${index+1} of ${PANTRY_ROUND_SIZE}`);
       if(round===0&&index===0) {
         await action(page,"Check this picnic");
         await expect(page.locator("#feedback")).toContainText("exactly three portions");
@@ -154,11 +159,12 @@ test("Pantry Picnic: eight-question rounds exhaust all twenty-four challenges be
     }
     expect(new Set(roundSeen).size).toBe(PANTRY_ROUND_SIZE);
     await expect(page.locator("#finishDialog")).toBeVisible();
-    if(round<2) await page.locator("#playAgain").click();
+    if(round<5) await page.locator("#playAgain").click();
   }
+  expect(allSeen).toHaveLength(60);
   expect(new Set(allSeen).size).toBe(pantryChallenges.length);
   const saved=await page.evaluate(()=>window.LarriVerseArcade.summary().games["pantry-picnic"]);
-  expect(saved.completions).toBe(3); expect(saved.metrics.practiceRuns).toBe(3);
+  expect(saved.completions).toBe(6); expect(saved.metrics.practiceRuns).toBe(6);
   await page.locator("#closeFinish").click();
   const size=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:document.documentElement.clientWidth}));
   expect(size.scroll).toBeLessThanOrEqual(size.width+4);
