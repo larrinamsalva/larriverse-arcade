@@ -65,12 +65,12 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] KidsCoin Family App — open a twenty-question lesson bank without a PIN, finish one three-question round, assign a chore, approve its KC, and restore the save.
 - [ ] Brain Sweat Expanded — complete one reviewed activity and confirm queued tiers remain locked.
 - [ ] Brain Sweat Life Skills — complete one reviewed lesson and confirm world progress persists.
-- [ ] Bubble Resonance Φ369 — clear levels 10 and 11 with ordinary and special bubbles and verify empty fields progress automatically, including a clear 10→11 transition, without being trapped by a shot message; confirm manual Next level advances once, final level 20 shows a win, and reset cancels timers. Keep glossy numbered bubbles, sound opt-in, accessibility, and the creative-theme medical boundary visible.
+- [ ] Bubble Resonance Φ369 — clear levels 10, 20, 40 and 60 with ordinary and special bubbles and verify empty fields progress automatically, including a clear 10→11 transition, without being trapped by a shot message; confirm manual Next level advances once, final level 60 shows a win, and reset cancels timers. Keep glossy numbered bubbles, sound opt-in, accessibility, and the creative-theme medical boundary visible.
 - [ ] Chill Brain Rewards — finish and leave-gently paths both save correctly.
 - [ ] Creature Catcher — change the learning path, finish a round, reload, and confirm the path, recent memory, and field guide persist.
 - [ ] Road Trip Quest — change the learning path, win one city battle, reload, and confirm path and route progress persist.
 - [ ] Road Trip Quest GPS — complete one Demo Mode encounter and verify Live Movement remains opt-in.
-- [ ] Bridge Buddies — Finish twenty bridge challenges with free unlimited planks, beams and triangle braces. Verify that four strongest braces can cross without any token restrictions, and confirm weak supports can be replaced or cleared at no cost. Test keyboard/touch, light/dark themes, and saved completion.
+- [ ] Bridge Buddies — Finish sixty bridge challenges with free unlimited planks, beams and triangle braces. Verify that four strongest braces can cross without any token restrictions, and confirm weak supports can be replaced or cleared at no cost. Test keyboard/touch, light/dark themes, and saved completion.
 - [ ] Water Works — Rotate the pipes through all twenty advancing networks, passing through the toy filter from the left reservoir to the right-side town.
 - [ ] Harbor Helpers — Complete twenty advancing island deliveries, matching each load exactly to its request and respecting the displayed boat capacity.
 - [ ] Pantry Picnic — Finish ten scenarios per round from 60 different picnic requests across six themes. Confirm six rounds show every question once before repeating, all 60 are solvable, leftover constraints are honored, and touchscreen/keyboard, light/dark/high-contrast, sound-off and local completion work.
@@ -202,8 +202,8 @@ The collection includes 33 playable games: eight original cabinets, sixteen prac
 
 - **Traffic Town** — Read traffic signs & choose safe actions. Complete a round, inspect explanations, replay for a fresh set, and check one saved completion with sound off.
 - **Street Safety Scout** — Identify signs, signals, vehicle lights, roadside warnings, and hazards. Complete a fifteen-stop route, inspect explanations, replay for unseen scenes, and check one saved completion with sound off.
-- **Weather Watchers** — Read sky clues and simple forecasts. Complete all 25 picture challenges across four advancement levels and check one saved completion with sound off.
-- **Garden Grow & Harvest** — Build, plant, care, harvest, and store. Complete all 24 picture challenges across four advancement levels and check one saved completion with sound off.
+- **Weather Watchers** — Read sky clues and simple forecasts. Complete all 60 picture challenges across four ranked chapters and check one saved completion with sound off.
+- **Garden Grow & Harvest** — Build, plant, care, harvest, and store. Complete all 60 picture challenges across four advancement levels and check one saved completion with sound off.
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Kindness Quest** — Listening & boundaries. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
