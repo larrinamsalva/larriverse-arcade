@@ -64,9 +64,17 @@ test("Word Search: tap, keyboard, free hint, word colors and saved progress",asy
 test("Word Search: finger-style pointer drag selects a hidden word",async({page})=>{
  await page.goto("/games/word-search-world/");
  const place=createWordSearch(WORD_SEARCH_LEVELS[0]).placements[0];
+ // Low rows of the letter grid may start below the mobile/desktop viewport.
+ // Unlike a real finger, page.mouse.move does not scroll a page into view.
+ // Bring the ENTIRE word board into view before measuring drag coordinates.
+ await page.locator("#wordGrid").scrollIntoViewIfNeeded();
  const first=await page.locator('[data-cell="'+place.cells[0]+'"]').boundingBox();
  const last=await page.locator('[data-cell="'+place.cells.at(-1)+'"]').boundingBox();
  const x1=first.x+first.width/2,y1=first.y+first.height/2,x2=last.x+last.width/2,y2=last.y+last.height/2;
+ const viewport=page.viewportSize();
+ expect(first&&last&&viewport).toBeTruthy();
+ for(const y of [y1,y2])expect(y,"Drag endpoint should be visible in the browser viewport").toBeGreaterThanOrEqual(0);
+ for(const y of [y1,y2])expect(y,"Drag endpoint should be visible in the browser viewport").toBeLessThan(viewport.height);
  await page.mouse.move(x1,y1);
  await page.mouse.down();
  await page.mouse.move(x2,y2,{steps:8});
