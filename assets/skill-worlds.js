@@ -1,6 +1,7 @@
 import { expeditions } from "./expedition-worlds.js";
 import { messageExtras, conversationExtras, newsExtras, sortingExtras, trafficQuestions } from "./expanded-scenarios.js";
 import { sixtyMessageExtras, sixtyConversationExtras, sixtyNewsExtras, sixtySortingExtras, sixtyRepairExtras } from "./sixty-world-extras.js";
+import { weatherExtendedChallenges, gardenExtendedChallenges } from "./sixty-garden-weather-challenges.js";
 export { trafficQuestions };
 export const worlds = [
   ...expeditions,
@@ -1205,6 +1206,7 @@ export const weatherChallenges = [
     answer: 0,
     why: "The mild, partly cloudy day is the best starting plan. A trusted adult should still check the latest forecast and alerts.",
   },
+  ...weatherExtendedChallenges,
 ];
 
 export const gardenGrowthChallenges = [
@@ -1568,4 +1570,5 @@ export const gardenGrowthChallenges = [
     answer: 0,
     why: "Refrigerate cut tomatoes promptly in a clean covered container. Whole uncut tomatoes are often stored differently, so ask an adult.",
   },
+  ...gardenExtendedChallenges,
 ];
