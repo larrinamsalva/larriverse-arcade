@@ -637,9 +637,9 @@ function renderRoute() {
       const rock = routeRocks.has(i),
         flag = routeFlags.includes(i),
         finishTile = i === timeTrail.finish,
-        reachable = !rock && adjacent(state.player, i) && i !== state.player,
+        reachable = state.moves < ROUTE_STEP_LIMIT && !rock && adjacent(state.player, i) && i !== state.player,
         player = i === state.player;
-      return `<button class="tile ${rock ? "rock" : ""} ${player ? "player" : ""} ${reachable ? "route-reachable" : ""} ${flag ? "flag" : ""} ${finishTile ? "finish" : ""} ${state.visited.has(i) ? "visited" : ""}" data-tile="${i}" aria-label="Row ${Math.floor(i / 5) + 1}, column ${(i % 5) + 1}, ${player ? "your position" : rock ? "rock" : flag ? (state.flags.has(i) ? "flag collected" : "mission flag") : finishTile ? "picnic finish" : "path"}${reachable ? ", next possible move" : ""}" ${rock || player ? "disabled" : ""}>${player ? "🧑" : rock ? "🪨" : flag ? (state.flags.has(i) ? "✓" : "🚩") : finishTile ? "🧺" : "·"}</button>`;
+      return `<button class="tile ${rock ? "rock" : ""} ${player ? "player" : ""} ${reachable ? "route-reachable" : ""} ${flag ? "flag" : ""} ${finishTile ? "finish" : ""} ${state.visited.has(i) ? "visited" : ""}" data-tile="${i}" aria-label="Row ${Math.floor(i / 5) + 1}, column ${(i % 5) + 1}, ${player ? "your position" : rock ? "rock" : flag ? (state.flags.has(i) ? "flag collected" : "mission flag") : finishTile ? "picnic finish" : "path"}${reachable ? ", next possible move" : ""}" ${rock || player || state.moves >= ROUTE_STEP_LIMIT ? "disabled" : ""}>${player ? "🧑" : rock ? "🪨" : flag ? (state.flags.has(i) ? "✓" : "🚩") : finishTile ? "🧺" : "·"}</button>`;
     },
   ).join("")}</div>`;
   bind("[data-tile]", (node) => moveRoute(Number(node.dataset.tile)));
