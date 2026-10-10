@@ -18,7 +18,8 @@ export function createExpedition(world, a) {
     harbor: ["Dock Helper","Route Planner","Harbor Captain","Community Admiral","Supply Scout","Island Planner","Resource Organizer","Cargo Navigator","Delivery Leader","Harbor Coordinator","Community Captain","Master Harbor Helper"],
     compass: ["Shore Scout","Trail Finder","Cove Navigator","Master Navigator","Map Pathfinder","Direction Decoder","Landmark Tracker","Route Explorer","Island Cartographer","Wayfinding Expert","Map Strategist","Compass Champion"],
     cipher: ["Code Rookie","Pattern Solver","Cipher Detective","Code Master","Letter Explorer","Shift Specialist","Symbol Strategist","Word Decoder","Code Researcher","Pattern Architect","Message Mentor","Cipher Champion"],
-    town: ["Kind Listener", "Neighborhood Helper", "Access Planner", "Council Champion"],
+    town: ["Kind Listener", "Neighborhood Helper", "Access Planner", "Council Champion", "Park Pathfinder", "Neighbor Advocate", "Inclusive Designer", "Access Engineer", "Community Planner", "Shared Space Leader", "Council Mentor", "Neighborhood Champion"],
+    trade: ["Careful Shopper", "Market Helper", "Price Detective", "Budget Builder", "Bundle Checker", "Fee Finder", "Unit Price Pro", "Smart Saver", "Whole Cost Planner", "Deal Detective", "Community Buyer", "Market Master"],
   };
   const rankName = () => (rankNames[world.mode] || ["Explorer"])[Math.min((rankNames[world.mode] || ["Explorer"]).length - 1, Math.floor(s.level / 5))];
   const advancement = count => {
@@ -187,7 +188,7 @@ export function createExpedition(world, a) {
   function trade() {
     const level = tradeLevels[s.level], quantity = s.cart.reduce((sum,count,index) => sum + count * level.deals[index].quantity, 0), cost = s.cart.reduce((sum,count,index) => sum + count * (level.deals[index].price + level.deals[index].fee), 0);
     a.stage(`${level.name} · ${s.level + 1} of ${tradeLevels.length}`); a.progress(s.level, tradeLevels.length);
-    a.board.innerHTML = `<div class="expedition-stats">${a.chip("Need", level.need)}${a.chip("Budget", level.budget)}${a.chip("In basket", quantity)}${a.chip("Whole cost", cost)}</div><p class="board-intro">Compare the price for each item, then choose enough for the request. Every bundle's fee is included.</p><div class="market-stalls">${level.deals.map((deal,index) => `<article class="market-stall">${iconSvg(level.icon)}<h3>${deal.name}</h3><p>${deal.quantity} items · ${deal.price} coins${deal.fee ? ` + ${deal.fee} fee` : " · no fee"}</p><strong>${deal.price + deal.fee} coins total</strong><small>${((deal.price+deal.fee)/deal.quantity).toFixed(2)} per item, with fee</small><div class="stepper"><button type="button" data-shop="${index},-1" data-focus="shop-${index}-minus" aria-label="Return ${deal.name}" ${!s.cart[index] || s.passed ? "disabled" : ""}>−</button><b>${s.cart[index]}</b><button type="button" data-shop="${index},1" data-focus="shop-${index}-plus" aria-label="Add ${deal.name}" ${s.cart[index] >= 12 || s.passed ? "disabled" : ""}>+</button></div></article>`).join("")}</div>`;
+    a.board.innerHTML = `${advancement(tradeLevels.length)}<div class="expedition-stats">${a.chip("Need", level.need)}${a.chip("Budget", level.budget)}${a.chip("In basket", quantity)}${a.chip("Whole cost", cost)}</div><p class="board-intro">${a.esc(level.tip || "Compare the price for each item, then choose enough for the request. Every bundle’s fee is included.")}</p><div class="market-stalls">${level.deals.map((deal,index) => `<article class="market-stall">${iconSvg(level.icon)}<h3>${deal.name}</h3><p>${deal.quantity} items · ${deal.price} coins${deal.fee ? ` + ${deal.fee} fee` : " · no fee"}</p><strong>${deal.price + deal.fee} coins total</strong><small>${((deal.price+deal.fee)/deal.quantity).toFixed(2)} per item, with fee</small><div class="stepper"><button type="button" data-shop="${index},-1" data-focus="shop-${index}-minus" aria-label="Return ${deal.name}" ${!s.cart[index] || s.passed ? "disabled" : ""}>−</button><b>${s.cart[index]}</b><button type="button" data-shop="${index},1" data-focus="shop-${index}-plus" aria-label="Add ${deal.name}" ${s.cart[index] >= 12 || s.passed ? "disabled" : ""}>+</button></div></article>`).join("")}</div>`;
     a.bind("[data-shop]", node => { const [index,delta] = node.dataset.shop.split(",").map(Number); s.cart[index] = Math.max(0,Math.min(12,s.cart[index]+delta)); render(); });
     if (s.passed) nextLevel(tradeLevels.length, `You compared ${tradeLevels.length} shopping challenges, including delivery fees. Check how much you need before choosing a bigger pack.`);
     else a.button("Check out", () => {
@@ -212,7 +213,7 @@ export function createExpedition(world, a) {
       if (cost > level.budget) { a.say("That plan needs more tokens. Clear a plot or move a building.", "try"); return; }
       s.plots = next; render();
     });
-    if (s.passed) nextLevel(townLevels.length, "You completed twenty neighborhoods and listened to eighty different requests. Thoughtful design makes more room for everyone.");
+    if (s.passed) nextLevel(townLevels.length, "You completed sixty neighborhoods and listened to 240 different requests. Thoughtful design makes more room for everyone.");
     else a.button("Invite the neighbors", () => {
       if (!needs.every(Boolean)) { a.say("Some neighbors still need a change. Read each request and move one building at a time.", "try"); return; }
       s.passed = true; s.quality.push(100); render(); a.say(level.celebration, "good"); a.tone(1);
