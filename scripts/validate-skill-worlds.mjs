@@ -13,6 +13,7 @@ import {
   weatherChallenges,
   gardenGrowthChallenges,
 } from "../assets/skill-worlds.js";
+import { budgetAdventures } from "../assets/budget-adventures.js";
 import {
   iconSvg,
   weatherSceneSvg,
@@ -68,6 +69,26 @@ for (const item of sorting) {
   assert.match(item.art, /^[a-z][A-Za-z]+$/);
   assert.match(iconSvg(item.art), new RegExp(`object-model--${item.art}`));
 }
+// Pocket Planet has four rounds of five unique, solvable fictional budgets.
+assert.equal(budgetAdventures.length, 20);
+assert.equal(new Set(budgetAdventures.map((item) => item.id)).size, 20);
+for (const plan of budgetAdventures) {
+  assert.ok(plan.title.length >= 8 && plan.story.length >= 20 && plan.goal.length >= 8);
+  assert.ok(plan.coins > plan.save && plan.save > 0);
+  assert.equal(plan.items.length, 6);
+  assert.equal(plan.items.filter((item) => item.need).length, 3);
+  assert.equal(plan.items.filter((item) => !item.need).length, 3);
+  assert.equal(new Set(plan.items.map((item) => item.name)).size, 6);
+  assert.ok(plan.items.every((item) => item.name && item.icon && Number.isInteger(item.cost) && item.cost > 0));
+  const needs = plan.items.filter((item) => item.need).reduce((sum, item) => sum + item.cost, 0);
+  const left = plan.coins - needs;
+  assert.ok(left >= plan.save, `${plan.id}: three needs and savings are achievable`);
+  assert.ok(plan.items.some((item) => !item.need && item.cost <= left && left - item.cost < plan.save),
+    `${plan.id}: an affordable extra can jeopardize savings`);
+}
+const budgetSource = fs.readFileSync("assets/skill-games.js", "utf8");
+assert.ok(budgetSource.includes("challengeRound(budgetAdventures, 5)"), "five unseen budget challenges per round");
+assert.match(catalog.find((item) => item.id === "pocket-planet").mission, /twenty unique budgets/);
 assert.equal(trafficQuestions.length, 60);
 assert.equal(new Set(trafficQuestions.map((item) => item.text)).size, trafficQuestions.length);
 for (const item of trafficQuestions) {
@@ -182,6 +203,7 @@ for (const [name, deck, expected, sceneArt, choiceArt] of [
   }
 }
 for (const file of [
+  "assets/budget-adventures.js",
   "assets/expanded-scenarios.js",
   "assets/skill-worlds.js",
   "assets/skill-games.js",
@@ -189,5 +211,5 @@ for (const file of [
 ])
   execFileSync(process.execPath, ["--check", file]);
 console.log(
-  `Skill worlds validated: ${worlds.length} unique modes, complete 25-question weather and 24-question garden paths, replay banks, Traffic Town road-sign practice, repair sequences, and twenty shortest-path-verified rover grids.`,
+  `Skill worlds validated: ${worlds.length} unique modes, complete 25-question weather and 24-question garden paths, twenty solvable budgeting missions, replay banks, Traffic Town road-sign practice, repair sequences, and twenty shortest-path-verified rover grids.`,
 );
