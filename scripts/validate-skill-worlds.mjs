@@ -102,6 +102,58 @@ for (const item of repairs) {
   assert.equal(item.steps.length, 4);
   assert.equal(new Set(item.steps).size, 4);
 }
+// Both classic resource worlds now contain four ranks and eight independent stages.
+for (const [name, levels] of [["Garden Guardians", gardenLevels], ["Energy Island", energyLevels]]) {
+  assert.equal(levels.length, 8, `${name} has eight playable levels`);
+  assert.equal(new Set(levels.map((level) => level.id)).size, levels.length, `${name} ids are unique`);
+  assert.equal(new Set(levels.map((level) => level.rank)).size, 4, `${name} has four advancement ranks`);
+  assert.deepEqual([...new Set(levels.map((level) => level.rank))].map((rank) =>
+    levels.filter((level) => level.rank === rank).length), [2,2,2,2],
+    `${name} has two levels in every rank`);
+  for (const level of levels) {
+    assert.ok(level.name.length >= 8 && level.lesson.length > 45, `${name} provides meaningful level guidance`);
+    assert.match(level.zone, /^[a-z]+$/);
+  }
+}
+for (const level of gardenLevels) {
+  assert.equal(level.carrot + level.bean + level.flower, 6, `${level.id} fills six plots`);
+  assert.ok(["carrot","bean","flower"].every((type) => level[type] > 0), `${level.id} includes all crops`);
+  assert.ok(level.target >= 5 && level.target <= 6, `${level.id} requires a sensible harvest`);
+  assert.ok(level.water >= level.target * 2, `${level.id} has enough water for its target`);
+  assert.ok(level.water <= 12, `${level.id} still teaches conservation`);
+}
+const sourceCost = { solar:2, wind:3, battery:2 };
+function feasibleEnergyBuild(level) {
+  for (let solar = 0; solar <= Math.floor(level.tokens / sourceCost.solar); solar++)
+    for (let wind = 0; wind <= Math.floor(level.tokens / sourceCost.wind); wind++)
+      for (let battery = 0; battery <= Math.floor(level.tokens / sourceCost.battery); battery++) {
+        if (solar + wind === 0 || solar * 2 + wind * 3 + battery * 2 > level.tokens) continue;
+        let stored = 0;
+        let supplied = true;
+        for (const day of level.weather) {
+          const available = day.solar * solar + day.wind * wind + stored;
+          supplied &&= available >= level.demand;
+          stored = Math.min(battery * 4, Math.max(0, available - level.demand));
+        }
+        if (supplied) return true;
+      }
+  return false;
+}
+for (const level of energyLevels) {
+  assert.equal(level.weather.length, 4, `${level.id} has four weather steps`);
+  assert.ok(level.weather.some((day) => day.name === "Night"), `${level.id} includes darkness`);
+  assert.ok(level.demand >= 6 && level.demand <= 8);
+  assert.ok(level.tokens >= 12 && level.tokens <= 18);
+  assert.ok(level.weather.every((day) =>
+    day.icon && day.name && Number.isInteger(day.solar) && Number.isInteger(day.wind)));
+  assert.ok(feasibleEnergyBuild(level), `${level.id} has a valid, affordable power mix`);
+}
+for (const id of ["garden-guardians","energy-island"]) {
+  const world = worlds.find((item) => item.id === id);
+  const entry = catalog.find((item) => item.id === id);
+  assert.match(world.mission, /eight .* levels/i, `${id} describes its new journey`);
+  assert.equal(entry.mission, world.mission, `${id} game card matches the game itself`);
+}
 assert.equal(robotLevels.length, 20);
 assert.equal(new Set(robotLevels.map((level) => level.name)).size, robotLevels.length);
 assert.equal(

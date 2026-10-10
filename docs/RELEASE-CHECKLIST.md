@@ -84,8 +84,8 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Fact Finder — Complete a full Fact Finder round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Repair Café — Complete a full Repair Café round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Time Trail — Complete a full Time Trail round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
-- [ ] Garden Guardians — Complete a full Garden Guardians round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
-- [ ] Energy Island — Complete a full Energy Island round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
+- [ ] Garden Guardians — Complete all eight gardens, check crop quotas and scarce-water targets, visit all four ranks, test light/dark/high-contrast on phone, and verify stars, keyboard use, and local completion.
+- [ ] Energy Island — Complete eight islands and four ranks, verify shifting four-day forecasts, solar/wind/battery budgets, after-dark storage, clear-build, energy log, accessibility, and local completion.
 - [ ] Reuse Rally — Complete a full Reuse Rally round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Robot Rover — Complete a full Robot Rover round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.
 - [ ] Lemonade Lab — Complete a full Lemonade Lab round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior.

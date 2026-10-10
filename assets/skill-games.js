@@ -12,6 +12,7 @@ import {
 } from "./skill-worlds.js";
 import { budgetAdventures } from "./budget-adventures.js";
 import { createExpedition } from "./expedition-games.js";
+import { gardenLevels, energyLevels } from "./garden-energy-levels.js";
 import {
   mountScene,
   iconSvg,
@@ -260,23 +261,14 @@ function initialize() {
       renderRoute();
       break;
     case "garden":
-      state.plots = Array.from({ length: 6 }, () => ({
-        plant: null,
-        growth: 0,
-      }));
-      state.tool = "carrot";
-      state.water = 12;
-      state.day = 0;
-      state.watered = new Set();
-      renderGarden();
+      state.level = 0;
+      state.levelStars = Array(gardenLevels.length).fill(0);
+      startGardenLevel();
       break;
     case "energy":
-      state.build = { solar: 0, wind: 0, battery: 0 };
-      state.day = 0;
-      state.stored = 0;
-      state.ledger = [];
-      state.started = false;
-      renderEnergy();
+      state.level = 0;
+      state.levelStars = Array(energyLevels.length).fill(0);
+      startEnergyLevel();
       break;
     case "sorting":
       state.deck = challengeRound(sorting, 6);
@@ -715,175 +707,185 @@ const plants = {
   bean: { icon: "🫘", name: "Bean" },
   flower: { icon: "🌼", name: "Flower" },
 };
+function levelTrail(levels, current) {
+  const ranks = [...new Set(levels.map((level) => level.rank))];
+  const active = ranks.indexOf(levels[current].rank);
+  return `<div class="level-trail nature-level-trail" aria-label="Adventure ranks">
+    ${ranks.map((rank, i) => `<span class="level-node ${i < active ? "complete" : i === active ? "active" : ""}"><b>${i < active ? "✓" : i + 1}</b><small>${esc(rank)}</small></span>`).join("")}
+  </div>`;
+}
+function stageStars(levels) {
+  return state.levelStars.reduce((sum, value) => sum + value, 0);
+}
+function startGardenLevel() {
+  const level = gardenLevels[state.level];
+  state.plots = Array.from({ length: 6 }, () => ({ plant: null, growth: 0 }));
+  state.tool = "carrot";
+  state.water = level.water;
+  state.day = 0;
+  state.watered = new Set();
+  renderGarden();
+}
+function gardenQuota(level) {
+  return ["carrot", "bean", "flower"].map((type) => {
+    const placed = state.plots.filter((p) => p.plant === type).length;
+    return `<span class="nature-quota ${placed === level[type] ? "complete" : ""}">${plants[type].icon} ${plants[type].name}: ${placed}/${level[type]}</span>`;
+  }).join("");
+}
 function renderGarden() {
-  stage(
-    `Garden care · ${state.day === 0 ? "Planting day" : `Day ${state.day} of 3`}`,
-  );
-  board.innerHTML = `<div class="stat-row">${chip("Water drops", state.water)}${chip("Ready plants", state.plots.filter((p) => p.growth >= 2).length)}${chip("Plant types", new Set(state.plots.map((p) => p.plant).filter(Boolean)).size)}</div><p class="board-note">${state.day === 0 ? "Choose a plant, then tap a plot. Mix all three types." : "Tap a plant to water it once today. Each plant needs two watered days to grow."}</p>${
-    state.day === 0
-      ? `<div class="plant-picker">${Object.entries(plants)
-          .map(
-            ([id, plant]) =>
-              `<button data-plant="${id}" class="${state.tool === id ? "selected" : ""}" aria-pressed="${state.tool === id}">${plant.icon} ${plant.name}</button>`,
-          )
-          .join("")}</div>`
-      : ""
-  }<div class="garden-grid">${state.plots.map((plot, i) => `<button class="plot ${state.watered.has(i) ? "selected" : ""}" data-plot="${i}" aria-label="Plot ${i + 1}, ${plot.plant ? plants[plot.plant].name : "empty"}, growth ${plot.growth} of 2">${plot.plant ? (plot.growth >= 2 ? plants[plot.plant].icon : "🌱") : "+"}<small>${plot.plant ? `${plants[plot.plant].name} · ${plot.growth}/2` : "Tap to plant"}</small></button>`).join("")}</div>`;
-  bind("[data-plant]", (node) => {
-    state.tool = node.dataset.plant;
-    renderGarden();
-  });
+  const level = gardenLevels[state.level];
+  const grown = state.plots.filter((p) => p.growth >= 2).length;
+  const mixed = ["carrot", "bean", "flower"].every((type) => state.plots.filter((p) => p.plant === type).length === level[type]);
+  const levelDone = state.day === 3;
+  stage(`Garden level ${state.level + 1} of ${gardenLevels.length} · ${level.rank} · ${state.day === 0 ? "Planting" : "Day " + state.day + "/3"}`);
+  board.innerHTML = `${levelTrail(gardenLevels, state.level)}
+    <section class="nature-banner nature-zone--${level.zone}" aria-label="${esc(level.name)} garden challenge">
+      <span aria-hidden="true">🌻</span>
+      <div><h2>${esc(level.name)}</h2><p>${esc(level.lesson)}</p><small>Grow at least ${level.target} of 6 plants and try to match the planting plan.</small></div>
+    </section>
+    <div class="stat-row">${chip("Level", `${state.level + 1}/${gardenLevels.length}`)}
+      ${chip("Water drops", state.water)}${chip("Ready plants", `${grown}/${level.target}`)}
+      ${chip("Garden stars", `${stageStars(gardenLevels)}/${gardenLevels.length * 3}`)}</div>
+    <div class="nature-quotas" aria-label="Planting plan">${gardenQuota(level)}</div>
+    <p class="board-note">${state.day === 0 ? "Choose a crop, then plant all six plots to match the plan." : "Water each growing plot at most once per day. Two watered days grow a plant. You can leave a plot unwatered to save drops."}</p>
+    ${state.day === 0 ? `<div class="plant-picker">${Object.entries(plants).map(([id, plant]) =>
+      `<button data-plant="${id}" class="${state.tool === id ? "selected" : ""}" aria-pressed="${state.tool === id}">${plant.icon} ${plant.name}</button>`).join("")}</div>` : ""}
+    <div class="garden-grid">${state.plots.map((plot, i) =>
+      `<button class="plot ${state.watered.has(i) ? "selected" : ""}" data-plot="${i}" aria-label="Plot ${i + 1}, ${plot.plant ? plants[plot.plant].name : "empty"}, growth ${plot.growth} of 2" ${levelDone ? "disabled" : ""}>
+        ${plot.plant ? (plot.growth >= 2 ? plants[plot.plant].icon : plot.growth === 1 ? "🌿" : "🌱") : "+"}
+        <small>${plot.plant ? `${plants[plot.plant].name} · ${plot.growth}/2` : "Tap to plant"}</small>
+      </button>`).join("")}</div>`;
+  bind("[data-plant]", (node) => { state.tool = node.dataset.plant; renderGarden(); });
   bind("[data-plot]", (node) => {
-    const i = Number(node.dataset.plot),
-      plot = state.plots[i];
+    const i = Number(node.dataset.plot), plot = state.plots[i];
     if (state.day === 0) {
       plot.plant = state.tool;
-      say(`${plants[state.tool].name} planted. Try different kinds, too.`);
+      say(`${plants[state.tool].name} planted. Check the planting plan above.`);
     } else {
-      if (state.watered.has(i)) {
-        say("This plot already had water today. Try another plot.");
-        return;
-      }
-      if (plot.growth >= 2) {
-        say("That plant is ready. Save water for one that still needs it.");
-        return;
-      }
-      if (state.water <= 0) {
-        say(
-          "You used your water budget. Finish the day and see your garden.",
-          "try",
-        );
-        return;
-      }
-      plot.growth++;
-      state.water--;
-      state.watered.add(i);
-      tone();
-      say("One water drop used. Your plant is growing.", "good");
+      if (state.watered.has(i)) { say("You already watered this plot today. Try a different one."); return; }
+      if (plot.growth >= 2) { say("That plant is already grown. Save your water."); return; }
+      if (state.water <= 0) { say("Out of drops! Move to the next day to check your harvest.", "try"); return; }
+      plot.growth++; state.water--; state.watered.add(i); tone();
+      say("Water saved in the soil. Look how your plant grows!", "good");
     }
     renderGarden();
   });
-  progress(state.day, 3, `${state.day} of 3 growing days`);
-  button(
-    state.day === 0
-      ? "Start growing"
-      : state.day === 3
-        ? "Visit my garden"
-        : "Next day",
-    () => {
-      if (state.plots.some((p) => !p.plant)) {
-        say("Plant all six plots before starting your growing days.", "try");
-        return;
-      }
-      if (state.day === 3) {
-        const grown = state.plots.filter((p) => p.growth >= 2).length,
-          types = new Set(state.plots.map((p) => p.plant)).size;
-        finish(
-          `${grown} of 6 plants grew. Your garden has ${types} plant types. Flowers help make room for pollinators in our pretend garden.`,
-          grown * 12 + types * 9,
-        );
-        return;
-      }
-      state.day++;
-      state.watered.clear();
-      renderGarden();
-      say(`Day ${state.day}: choose which plants need your water.`);
-    },
-  );
-  updateScore(
-    state.plots.filter((p) => p.growth >= 2).length * 12 +
-      new Set(state.plots.map((p) => p.plant).filter(Boolean)).size * 9,
-  );
-  hint =
-    "Six plants need two watered days each: 12 drops total. Plant a mix, then water every plot on two different days.";
+  progress(state.level, gardenLevels.length, `${state.level} of ${gardenLevels.length} garden levels explored`);
+  updateScore(Math.round((stageStars(gardenLevels) / (gardenLevels.length * 3)) * 100));
+  button(state.day === 0 ? "Start growing" : !levelDone ? "Next day" :
+    state.level === gardenLevels.length - 1 ? "Visit my garden" : "Next garden", () => {
+    if (state.day === 0 && state.plots.some((p) => !p.plant)) {
+      say("Plant all six plots before growing.", "try"); return;
+    }
+    if (state.day < 3) {
+      state.day++; state.watered.clear(); renderGarden();
+      say(`Day ${state.day}: check each plant and decide how to use your water.`);
+      return;
+    }
+    state.levelStars[state.level] = grown >= level.target && mixed ? 3 : grown >= level.target ? 2 : 1;
+    if (state.level === gardenLevels.length - 1) {
+      finish(`You explored all ${gardenLevels.length} garden levels and earned ${stageStars(gardenLevels)} of ${gardenLevels.length * 3} garden stars. Thoughtful planting helps all kinds of life.`,
+        Math.round(stageStars(gardenLevels) / (gardenLevels.length * 3) * 100));
+      return;
+    }
+    state.level++;
+    startGardenLevel();
+    say(`${grown} plants grew! ${mixed ? "Your planting mix matched the plan." : "Next time, match the planting counts."} Welcome to a new garden!`, "good");
+  });
+  hint = `Plant ${level.carrot} carrots, ${level.bean} beans, and ${level.flower} flowers. ${level.target} fully grown plants need ${level.target * 2} drops used over different days. You have ${level.water}.`;
 }
 
-const weather = [
-  { name: "Sunny", icon: "☀️", solar: 3, wind: 1 },
-  { name: "Cloudy", icon: "☁️", solar: 1, wind: 2 },
-  { name: "Night", icon: "🌙", solar: 0, wind: 2 },
-  { name: "Breezy", icon: "🌬️", solar: 2, wind: 2 },
-];
 const buildCosts = { solar: 2, wind: 3, battery: 2 };
+function startEnergyLevel() {
+  state.build = { solar: 0, wind: 0, battery: 0 };
+  state.day = 0;
+  state.stored = 0;
+  state.ledger = [];
+  state.successDays = 0;
+  state.started = false;
+  renderEnergy();
+}
 function builderLeft() {
-  return (
-    12 -
-    Object.entries(state.build).reduce(
-      (sum, [type, count]) => sum + count * buildCosts[type],
-      0,
-    )
+  const level = energyLevels[state.level];
+  return level.tokens - Object.entries(state.build).reduce(
+    (sum, [type, count]) => sum + count * buildCosts[type], 0,
   );
 }
 function renderEnergy() {
-  stage("Keep the island glowing");
-  board.innerHTML = `<p class="board-note">Every day needs 6 energy units. A battery holds 4. Toy model: weather and costs are simplified.</p><div class="weather-preview">${weather.map((day, i) => `<div><strong>${day.icon}</strong>${day.name}<br>Solar ${day.solar} · Wind ${day.wind}${state.day > i ? " · Done" : ""}</div>`).join("")}</div><div class="stat-row">${chip("Builder tokens", builderLeft())}${chip("Stored energy", `${state.stored}/${state.build.battery * 4}`)}${chip("Days supplied", `${state.correct}/4`)}</div><div class="item-grid">${["solar", "wind", "battery"].map((type, i) => `<button class="item-button" data-build="${type}" ${state.started ? "disabled" : ""}><span class="item-icon">${["☀️", "🌬️", "🔋"][i]}</span>${["Solar panel", "Wind turbine", "Battery"][i]}<small>${buildCosts[type]} tokens · Built ${state.build[type]}</small></button>`).join("")}</div><div class="energy-scene" aria-label="Island energy mix"><span>🏡</span><span>${"☀️".repeat(state.build.solar) || "▫️"}</span><span>${"🌬️".repeat(state.build.wind) || "▫️"}</span><span>🔋 ${state.stored}</span></div>${state.ledger.length ? `<table class="ledger"><caption>Your energy log</caption><thead><tr><th>Day</th><th>Made</th><th>Stored after</th><th>Lights</th></tr></thead><tbody>${state.ledger.map((entry) => `<tr><td>${entry.name}</td><td>${entry.made}</td><td>${entry.stored}</td><td>${entry.ok ? "Glowing" : "Needs more"}</td></tr>`).join("")}</tbody></table>` : ""}`;
+  const level = energyLevels[state.level];
+  stage(`Energy level ${state.level + 1} of ${energyLevels.length} · ${level.rank} · ${level.name}`);
+  board.innerHTML = `${levelTrail(energyLevels, state.level)}
+    <section class="nature-banner energy-zone--${level.zone}" aria-label="${esc(level.name)} power mission">
+      <span aria-hidden="true">🏝️</span>
+      <div><h2>${esc(level.name)}</h2><p>${esc(level.lesson)}</p>
+      <small>Keep the lights on for four days. Each day needs ${level.demand} energy units. Each battery holds 4.</small></div>
+    </section>
+    <p class="board-note">Toy energy system: real electrical systems and weather are more complicated. Build before testing, then watch the forecast.</p>
+    <div class="weather-preview">${level.weather.map((day, i) =>
+      `<div class="${state.day === i && state.day < 4 ? "forecast-current" : ""}">
+      <strong>${day.icon}</strong>${esc(day.name)}<br>Solar ${day.solar} · Wind ${day.wind}${state.day > i ? " · Done" : ""}</div>`).join("")}</div>
+    <div class="stat-row">${chip("Level", `${state.level + 1}/${energyLevels.length}`)}
+      ${chip("Builder tokens", builderLeft())}
+      ${chip("Stored energy", `${state.stored}/${state.build.battery * 4}`)}
+      ${chip("Days supplied", `${state.successDays}/4`)}
+      ${chip("Island stars", `${stageStars(energyLevels)}/${energyLevels.length * 3}`)}</div>
+    <div class="item-grid">${["solar","wind","battery"].map((type, i) =>
+      `<button class="item-button" data-build="${type}" ${state.started ? "disabled" : ""}>
+        <span class="item-icon" aria-hidden="true">${["☀️", "🌬️", "🔋"][i]}</span>
+        ${["Solar panel", "Wind turbine", "Battery"][i]}
+        <small>${buildCosts[type]} tokens · Built ${state.build[type]}</small></button>`).join("")}</div>
+    <div class="energy-scene" aria-label="Island energy equipment">
+      <span aria-hidden="true">🏡</span><span aria-hidden="true">${"☀️".repeat(state.build.solar) || "▫️"}</span>
+      <span aria-hidden="true">${"🌬️".repeat(state.build.wind) || "▫️"}</span>
+      <span aria-hidden="true">🔋</span><strong>${state.stored} stored</strong></div>
+    ${state.ledger.length ? `<table class="ledger"><caption>Your energy log</caption><thead><tr><th>Day</th><th>Made</th><th>Stored after</th><th>Lights</th></tr></thead><tbody>${state.ledger.map((entry) =>
+      `<tr><td>${esc(entry.name)}</td><td>${entry.made}</td><td>${entry.stored}</td><td>${entry.ok ? "Glowing" : "Needs more"}</td></tr>`).join("")}</tbody></table>` : ""}`;
   bind("[data-build]", (node) => {
     const type = node.dataset.build;
     if (builderLeft() < buildCosts[type]) {
-      say(
-        "You need more builder tokens. Clear the build to try a different mix.",
-        "try",
-      );
+      say("Not enough builder tokens. Clear your build and test a different mix.", "try"); return;
+    }
+    state.build[type]++; tone(); renderEnergy();
+    say("Look at all four forecast days. A good plan keeps working after dark.");
+  });
+  progress(state.level, energyLevels.length, `${state.level} of ${energyLevels.length} energy levels explored`);
+  updateScore(Math.round(stageStars(energyLevels) / (energyLevels.length * 3) * 100));
+  button(state.day === 4 ? (state.level === energyLevels.length - 1 ? "See my island" : "Next island") :
+    state.started ? `Run ${level.weather[state.day].name.toLowerCase()} day` : "Test my power mix", () => {
+    if (state.day === 4) {
+      state.levelStars[state.level] = state.successDays === 4 ? 3 : state.successDays >= 3 ? 2 : 1;
+      if (state.level === energyLevels.length - 1) {
+        finish(`You designed power systems for ${energyLevels.length} islands and earned ${stageStars(energyLevels)} of ${energyLevels.length * 3} island stars. Watch how changing weather affects storage.`,
+          Math.round(stageStars(energyLevels) / (energyLevels.length * 3) * 100));
+        return;
+      }
+      const supplied = state.successDays;
+      state.level++;
+      startEnergyLevel();
+      say(`You powered ${supplied} of 4 days. Now try the next island's new weather!`, "good");
       return;
     }
-    state.build[type]++;
-    tone();
+    if (!state.build.solar && !state.build.wind) {
+      say("Choose at least one energy source before starting.", "try"); return;
+    }
+    state.started = true;
+    const day = level.weather[state.day];
+    const made = day.solar * state.build.solar + day.wind * state.build.wind;
+    const available = made + state.stored;
+    const ok = available >= level.demand;
+    state.stored = Math.min(state.build.battery * 4, Math.max(0, available - level.demand));
+    if (ok) state.successDays++;
+    state.ledger.push({ name: day.name, made, stored: state.stored, ok });
+    state.day++;
     renderEnergy();
-    say("Look at the weather. Your mix needs to work at night, too.");
+    say(ok ? `${day.name}: the lights stayed on! ${state.stored} units are saved.` :
+      `${day.name}: you were ${level.demand - available} units short. Plan for low production and dark days next time.`, ok ? "good" : "try");
   });
-  progress(state.day, 4);
-  updateScore(state.correct * 25);
-  button(
-    state.day === 4
-      ? "See my island"
-      : state.started
-        ? `Run ${weather[state.day].name.toLowerCase()} day`
-        : "Test my power mix",
-    () => {
-      if (state.day === 4) {
-        finish(
-          `Your mix supplied all 6 units on ${state.correct} of 4 days. Check the log to see when storage helped.`,
-          state.correct * 25,
-        );
-        return;
-      }
-      if (!state.build.solar && !state.build.wind) {
-        say("Build at least one energy source before testing.", "try");
-        return;
-      }
-      state.started = true;
-      const day = weather[state.day],
-        made = day.solar * state.build.solar + day.wind * state.build.wind;
-      const available = made + state.stored,
-        ok = available >= 6;
-      state.stored = Math.min(
-        state.build.battery * 4,
-        Math.max(0, available - 6),
-      );
-      if (ok) state.correct++;
-      state.ledger.push({ name: day.name, made, stored: state.stored, ok });
-      state.day++;
-      renderEnergy();
-      say(
-        ok
-          ? `${day.name}: the lights stayed on. ${state.stored} units are stored for later.`
-          : `${day.name}: you were ${6 - available} units short. Try a mix with surplus and storage next round.`,
-        ok ? "good" : "try",
-      );
-    },
-  );
-  if (!state.started)
-    button(
-      "Clear build",
-      () => {
-        state.build = { solar: 0, wind: 0, battery: 0 };
-        renderEnergy();
-        say("A fresh plan. Look at all four days before building.");
-      },
-      "secondary",
-    );
-  hint =
-    "Try 2 solar panels, 2 wind turbines, and 1 battery. A sunny-day surplus can help your island get through the night.";
+  if (!state.started) button("Clear build", () => {
+    state.build = { solar: 0, wind: 0, battery: 0 };
+    renderEnergy(); say("Fresh build! Check the forecast before placing panels.");
+  }, "secondary");
+  hint = `You have ${level.tokens} builder tokens and each day needs ${level.demand} units. Sunny and cloudy skies give different solar output; wind can work at night. A battery saves up to 4 spare units.`;
 }
 
 function roverStarTotal() {

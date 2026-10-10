@@ -243,13 +243,13 @@
       "id": "garden-guardians",
       "title": "Garden Guardians",
       "route": "games/garden-guardians/index.html",
-      "manualFocus": "Complete a full Garden Guardians round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+      "manualFocus": "Complete eight garden levels and four ranks. Check the planting quotas, crop variety, different water budgets, stars, next-garden progression, keyboard/touch access, and saved completion."
     },
     {
       "id": "energy-island",
       "title": "Energy Island",
       "route": "games/energy-island/index.html",
-      "manualFocus": "Complete a full Energy Island round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+      "manualFocus": "Complete eight island levels and four ranks, review the four-day forecasts, energy logs and storage, next-island progression, failed-day recovery, keyboard/touch access, and saved completion."
     },
     {
       "id": "reuse-rally",
