@@ -62,8 +62,18 @@ const ENTRIES = `1000320120344310|1423324121344312
 087256000000000000000001265000374100000100050021600300068530400035017020710060000|187256934652943718349781265596374182473128659821695347268539471935417826714862593
 600008000024016000000023050900052060070000000250600080562007403400060018001900020|615798342324516879897423651948352167176849235253671984562187493439265718781934526`.trim().split("\n").map(line=>line.split("|"));
 const CHAPTER_NAMES=["Little Patterns","Brave Beginners","Growing Grids","Clever Connections","Sudoku Explorers","Puzzle Champions"];
-export const SUDOKU_LEVELS=Object.freeze(ENTRIES.map(([puzzle,solution],i)=>{
+const SEEN_SOLUTIONS=new Set();
+export const SUDOKU_LEVELS=Object.freeze(ENTRIES.map(([rawPuzzle,rawSolution],i)=>{
  const n=i<20?4:i<40?6:9;
+ let puzzle=rawPuzzle,solution=rawSolution,rotations=0;
+ // A few transformed boards shared completed grids; rotate their digit labels
+ // so children meet sixty distinct layouts, not duplicated finished patterns.
+ while(SEEN_SOLUTIONS.has(solution)&&rotations<n){
+   const rotate=str=>[...str].map(ch=>ch==="0"?"0":String(Number(ch)%n+1)).join("");
+   puzzle=rotate(puzzle);solution=rotate(solution);rotations++;
+ }
+ if(SEEN_SOLUTIONS.has(solution))throw new Error("Duplicated Sudoku solution "+(i+1));
+ SEEN_SOLUTIONS.add(solution);
  const chapter=Math.floor(i/10);
  return Object.freeze({id:i+1,size:n,boxRows:n===6?2:n===4?2:3,boxCols:n===6?3:n===4?2:3,
    chapter,chapterName:CHAPTER_NAMES[chapter],puzzle,solution,
