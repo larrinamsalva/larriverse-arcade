@@ -65,7 +65,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] KidsCoin Family App — open a twenty-question lesson bank without a PIN, finish one three-question round, assign a chore, approve its KC, and restore the save.
 - [ ] Brain Sweat Expanded — complete one reviewed activity and confirm queued tiers remain locked.
 - [ ] Brain Sweat Life Skills — complete one reviewed lesson and confirm world progress persists.
-- [ ] Bubble Resonance Φ369 — clear all twenty stages, confirm the numbered pieces look like glossy round bubbles, and keep sound optional and the medical boundary visible.
+- [ ] Bubble Resonance Φ369 — clear levels 10 and 11 with ordinary and special bubbles and verify empty fields progress automatically, including a clear 10→11 transition, without being trapped by a shot message; confirm manual Next level advances once, final level 20 shows a win, and reset cancels timers. Keep glossy numbered bubbles, sound opt-in, accessibility, and the creative-theme medical boundary visible.
 - [ ] Chill Brain Rewards — finish and leave-gently paths both save correctly.
 - [ ] Creature Catcher — change the learning path, finish a round, reload, and confirm the path, recent memory, and field guide persist.
 - [ ] Road Trip Quest — change the learning path, win one city battle, reload, and confirm path and route progress persist.
