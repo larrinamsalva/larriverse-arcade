@@ -23,7 +23,7 @@ async function adventure(page,id,play) {
 const action = (page,name) => page.getByRole("button",{name,exact:true}).click();
 async function next(page,last) { await action(page,last ? "Celebrate my discoveries" : "Next challenge"); }
 
-test("Bridge Buddies: keyboard building, weak supports, twenty budgeted crossings and saved completion",async({page})=>{
+test("Bridge Buddies: keyboard building, weak supports, twenty unlimited crossings and saved completion",async({page})=>{
   await adventure(page,"bridge-buddies",async()=>{
     const toolDrawings=await page.locator(".bridge-tool-art").evaluateAll(nodes=>nodes.map(node=>node.innerHTML));
     expect(toolDrawings).toHaveLength(bridgeParts.length);
@@ -50,6 +50,30 @@ test("Bridge Buddies: keyboard building, weak supports, twenty budgeted crossing
     }
   });
 });
+test("Bridge Buddies: four strongest braces fit even without builder tokens", async ({page})=>{
+  await page.goto("/games/bridge-buddies/index.html");
+  await expect(page.locator("#gameBoard")).toContainText("All materials are free and unlimited");
+  await expect(page.locator("#gameBoard")).not.toContainText(/Builder tokens|tokens return|costs? \d+ tokens/i);
+  await expect(page.locator(".build-tool").first()).toContainText("Holds load");
+  await page.locator('[data-tool="triangle"]').click();
+  for(let i=0;i<4;i++)await page.locator(`[data-span="${i}"]`).click();
+  await expect(page.locator(".bridge-span.triangle")).toHaveCount(4);
+  await expect(page.locator(".expedition-stats")).toContainText("Supports placed4/4");
+  await page.getByRole("button",{name:"Test the crossing"}).click();
+  await expect(page.locator("#feedback")).toHaveClass(/good/);
+  await page.getByRole("button",{name:"Next challenge"}).click();
+  await expect(page.locator(".expedition-stats")).toContainText("Supports placed0/4");
+  await page.locator('[data-tool="triangle"]').click();
+  await page.locator('[data-span="0"]').click();
+  await page.locator('[data-tool="erase"]').click();
+  await page.locator('[data-span="0"]').click();
+  await expect(page.locator(".expedition-stats")).toContainText("Supports placed0/4");
+  await page.locator('[data-tool="triangle"]').click();
+  for(let i=0;i<4;i++)await page.locator(`[data-span="${i}"]`).click();
+  await page.getByRole("button",{name:"Test the crossing"}).click();
+  await expect(page.locator("#feedback")).toHaveClass(/good/);
+});
+
 test("Water Works: leak feedback, clockwise rotations, filter and twenty connected networks",async({page})=>{
   test.setTimeout(60_000);
   await adventure(page,"water-works",async()=>{
