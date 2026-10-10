@@ -13,6 +13,7 @@ import {
 } from "../../assets/skill-worlds.js";
 import { resourceAdventures } from "../../assets/budget-adventures.js";
 import { gardenLevels, energyLevels } from "../../assets/garden-energy-levels.js";
+import { timeTrailLevelsWithGoals as timeTrailLevels, shortestTrailPath } from "../../assets/time-trail-level.js";
 
 async function round(page, id, play) {
   const errors = [];
