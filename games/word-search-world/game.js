@@ -159,8 +159,16 @@ function tapCell(index){
  acceptSelection(cells);clearSelection();
 }
 function pointerIndex(event){
- const board=$("wordGrid"),r=board.getBoundingClientRect(),n=puzzle.size;
- const col=Math.floor((event.clientX-r.left)/r.width*n),row=Math.floor((event.clientY-r.top)/r.height*n);
+ const board=$("wordGrid"),n=puzzle.size;
+ // Pointer capture retargets events to the board while dragging, but
+ // elementFromPoint still identifies the exact square under the finger.
+ const hit=document.elementFromPoint(event.clientX,event.clientY)?.closest?.("[data-cell]");
+ if(hit&&board.contains(hit))return Number(hit.dataset.cell);
+ const rect=board.getBoundingClientRect(),style=getComputedStyle(board);
+ const left=parseFloat(style.borderLeftWidth)||0,top=parseFloat(style.borderTopWidth)||0;
+ const right=parseFloat(style.borderRightWidth)||0,bottom=parseFloat(style.borderBottomWidth)||0;
+ const x=event.clientX-rect.left-left,y=event.clientY-rect.top-top;
+ const col=Math.floor(x/(rect.width-left-right)*n),row=Math.floor(y/(rect.height-top-bottom)*n);
  return row>=0&&col>=0&&row<n&&col<n?row*n+col:-1;
 }
 const board=$("wordGrid");
