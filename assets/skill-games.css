@@ -1752,3 +1752,42 @@ html.larriverse-high-contrast body[data-world="energy-island"] .nature-banner :i
   body[data-world="energy-island"] .nature-banner > span { flex-basis: 3.2rem; width:3.2rem; height:3.2rem; font-size:1.8rem; }
   body[data-world="energy-island"] .weather-preview { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
+
+
+/* Time Trail: only walkable adjacent squares are highlighted as possible next moves. */
+body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock) {
+  outline: 3px solid #22795b;
+  outline-offset: -6px;
+  box-shadow: inset 0 -5px 0 #8bbba2, 0 0 0 3px #d2f3b6, 0 3px 6px #1b604755;
+}
+body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock)::after {
+  content: "↗";
+  position: absolute;
+  right: .16rem;
+  bottom: .08rem;
+  font-size: .72rem;
+  font-weight: 900;
+  color: #184c36;
+  text-shadow: 0 1px 0 #fff;
+}
+html.larriverse-dark body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock) {
+  outline-color: #b7f5ca;
+  box-shadow: inset 0 -5px 0 #285a40, 0 0 0 3px #43755b, 0 3px 6px #0009;
+}
+html.larriverse-dark body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock)::after {
+  color: #fff5be;
+  text-shadow: 0 1px 0 #000;
+}
+html.larriverse-high-contrast body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock) {
+  outline: 4px dashed #00ffff !important;
+  outline-offset: -7px;
+  box-shadow: none !important;
+}
+html.larriverse-high-contrast body[data-world="time-trail"] .tile.route-reachable:not(.player):not(.rock)::after {
+  color: #00ffff !important;
+  text-shadow: none !important;
+}
+body[data-world="time-trail"] .tile.route-reachable:focus-visible {
+  outline: 4px solid #4e32d5;
+  outline-offset: 2px;
+}
