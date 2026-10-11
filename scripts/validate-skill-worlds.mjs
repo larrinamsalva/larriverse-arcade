@@ -14,6 +14,7 @@ import {
   gardenGrowthChallenges,
 } from "../assets/skill-worlds.js";
 import { resourceAdventures } from "../assets/budget-adventures.js";
+import { marketMissions, beatMissions, marketStockChoices, bestMarketPlan, calculateMarketDay, rhythmMatches } from "../assets/creative-missions.js";
 import { gardenLevels, energyLevels } from "../assets/garden-energy-levels.js";
 import { timeTrailLevelsWithGoals as timeTrailLevels, shortestTrailPath } from "../assets/time-trail-level.js";
 import {
@@ -71,6 +72,47 @@ for (const item of sorting) {
   assert.match(item.art, /^[a-z][A-Za-z]+$/);
   assert.match(iconSvg(item.art), new RegExp(`object-model--${item.art}`));
 }
+
+assert.equal(marketMissions.length,60,"Lemonade Lab has sixty actual market contracts");
+assert.equal(beatMissions.length,60,"Beat Builder has sixty real, different compositions");
+assert.equal(new Set(marketMissions.map(m=>m.id)).size,60);
+assert.equal(new Set(beatMissions.map(m=>m.id)).size,60);
+assert.equal(new Set(marketMissions.map(m=>[m.base,m.sensitivity,m.supplyCost,m.startCash,m.goal].join(":"))).size,60,
+  "Market missions must not repeat the same business conditions");
+assert.equal(new Set(beatMissions.map(m=>m.rows.map(row=>row.join(",")).join("|"))).size,60,
+  "Each rhythm mission needs a different exact musical pattern");
+assert.deepEqual(beatMissions[0].rows,[[0,4,8,12],[4,12],[0,2,4,6,8,10,12,14]]);
+for(const mission of marketMissions){
+  assert.ok(mission.name.length>8&&mission.hint.length>35);
+  assert.ok(mission.base>=5&&mission.sensitivity>=1&&mission.startCash>=12&&mission.supplyCost>=1);
+  const best=bestMarketPlan(mission);
+  assert.ok(best,"Each market must permit a stock/price choice");
+  assert.ok(best.profit>=mission.goal,mission.id+" needs a genuinely achievable profit goal");
+  assert.ok(best.stock*mission.supplyCost<=mission.startCash);
+  assert.ok(marketStockChoices.includes(best.stock)&&best.price>=1&&best.price<=5);
+  assert.equal(best.profit,calculateMarketDay(mission,best.stock,best.price).profit);
+}
+for(const mission of beatMissions){
+  assert.equal(mission.rows.length,3,mission.id);
+  assert.ok(mission.rows.every(row=>row.length>=1&&new Set(row).size===row.length&&row.every(n=>Number.isInteger(n)&&n>=0&&n<16)));
+  const solution=mission.rows.map(row=>Array.from({length:16},(_,col)=>row.includes(col)));
+  assert.deepEqual(rhythmMatches(solution,mission),[true,true,true],mission.id);
+  const wrong=solution.map(row=>[...row]);wrong[0][0]=!wrong[0][0];
+  assert.deepEqual(rhythmMatches(wrong,mission),[false,true,true]);
+}
+const creativeGameSource=fs.readFileSync("assets/skill-games.js","utf8");
+assert.ok(creativeGameSource.includes('button("Explore 60 market missions"'));
+assert.ok(creativeGameSource.includes('button("Explore 60 beat missions"'));
+assert.ok(creativeGameSource.includes("Return to four-day lab"));
+assert.ok(creativeGameSource.includes("Return to freestyle"));
+assert.ok(creativeGameSource.includes("larriverse.creative."),"Optional mission completion persists locally");
+for(const id of ["lemonade-lab","beat-builder"]){
+  const world=worlds.find(w=>w.id===id);
+  const entry=catalog.find(x=>x.id===id);
+  assert.equal(world.mission,entry.mission);
+  assert.match(world.mission,/sixty/i);
+}
+
 // Pocket Planet: sixty unique offline projects without artificial currencies.
 assert.equal(resourceAdventures.length,60);
 assert.equal(new Set(resourceAdventures.map(p=>p.title)).size,60,"Unique practical project titles");
@@ -322,6 +364,7 @@ for (const [name, deck, expected, sceneArt, choiceArt] of [
   }
 }
 for (const file of [
+  "assets/creative-missions.js",
   "assets/remaining-fixed-worlds.js",
   "assets/garden-energy-levels.js",
   "assets/budget-adventures.js",
