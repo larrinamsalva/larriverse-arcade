@@ -9,6 +9,7 @@ import {
 import {trafficQuestions} from "../assets/expanded-scenarios.js";
 import {resourceAdventures} from "../assets/budget-adventures.js";
 import {marketMissions,beatMissions,bestMarketPlan} from "../assets/creative-missions.js";
+import {creatureMissions,roadMissions} from "../assets/classic-adventure-missions.js";
 import {timeTrailLevelsWithGoals} from "../assets/time-trail-level.js";
 import {gardenLevels,energyLevels} from "../assets/garden-energy-levels.js";
 import {messages,conversations,newsCards,repairs,sorting,robotLevels,weatherChallenges,gardenGrowthChallenges} from "../assets/skill-worlds.js";
@@ -63,8 +64,8 @@ const otherModes={
  "brain-sweat-expanded":{kind:"reviewed activities across subworlds",count:brain.integration.playableActivityCount},
  "brain-sweat-life-skills":{kind:"questions across lessons and subworlds",count:life.source.readableQuestionCount},
  "chill-brain-rewards":{kind:"guided calm sessions",count:chill.missions.length},
- "creature-catcher":{kind:"open-ended creature collecting",count:null},
- "road-trip-quest":{kind:"open-ended adventure",count:null},
+ "creature-catcher":{kind:"classic creature collection + optional distinct wildlife missions",count:creatureMissions.length},
+ "road-trip-quest":{kind:"eight-city adventure + optional distinct travel missions",count:roadMissions.length},
  "road-trip-quest-gps":{kind:"XP milestone levels (not separate puzzles)",count:gps.levelThresholds.length}
 };
 const ids=catalog.map(x=>x.id);
@@ -77,7 +78,11 @@ assert.equal(new Set(beatMissions.map(x=>x.rows.map(row=>row.join(",")).join("|"
  "Sixty optional beats must be actually different patterns");
 assert.ok(marketMissions.every(x=>bestMarketPlan(x)?.profit>=x.goal),
  "All market contracts must have affordable winning setups");
-const optionalMissionPaths={ "lemonade-lab":marketMissions.length,"beat-builder":beatMissions.length };
+const optionalMissionPaths={ "lemonade-lab":marketMissions.length,"beat-builder":beatMissions.length,"creature-catcher":creatureMissions.length,"road-trip-quest":roadMissions.length };
+for (const [id,deck] of [["creature-catcher",creatureMissions],["road-trip-quest",roadMissions]]) {
+ assert.equal(deck.length,60,`${id} offers sixty optional real missions`);
+ assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} missions are not repeats`);
+}
 const counts=Object.entries(sequential);
 const ready=counts.filter(([id,n])=>n>=60);
 const notReady=counts.filter(([id,n])=>n<60);
