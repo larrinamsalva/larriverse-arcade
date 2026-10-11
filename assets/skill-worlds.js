@@ -34,7 +34,7 @@ export const worlds = [
     skill: "Choose supplies & make things",
     desc: "Grow gardens, build useful creations and prepare foods in sixty real-world-inspired practice projects.",
     mission:
-      "Complete ten supply-and-making projects per round. Choose three useful materials or foods, then put three steps in the correct order. Six rounds cover all sixty projects without coins or purchases.",
+      "Complete all sixty projects across six connected chapters. Pick three useful supplies, then arrange three real-life-inspired making steps. Each finished project saves in this browser, without coins or purchases.",
     take: "Choose useful supplies, prepare safely with an adult when needed, and learn the order of steps for growing, building and cooking.",
     mode: "budget",
   },
