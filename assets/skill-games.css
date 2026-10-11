@@ -1861,3 +1861,30 @@ html.larriverse-high-contrast body[data-world="time-trail"] .trail-local-note {c
     font-size:1rem;min-height:32px;border-radius:7px
   }
 }
+
+/* Optional sixty-mission pathways: accessible in light, dark and high contrast. */
+.creative-mission-card {
+  border: 2px solid var(--line, #c9d6e5);
+  border-radius: 18px;
+  padding: clamp(.8rem,2vw,1.15rem);
+  margin: .75rem 0 1rem;
+  background: var(--surface, #fff);
+  color: var(--ink, inherit);
+  min-width: 0;
+}
+.creative-mission-card h2 {font-size:clamp(1.15rem,2.3vw,1.6rem);margin:.25rem 0 .5rem;line-height:1.2;}
+.creative-mission-card .eyebrow {font-weight:850;letter-spacing:.03em;margin:0;}
+.creative-mission-card .stat-row {display:flex;flex-wrap:wrap;gap:.55rem;margin:.8rem 0;}
+.creative-mission-card .field-grid {margin-top:.9rem;}
+.creative-mission-card .track-label {margin-top:.85rem;overflow-wrap:anywhere;}
+.creative-mission-card .beat-grid {min-width:0;}
+.creative-mission-card .beat-cell {min-width:0;min-height:40px;}
+.creative-result {border:2px solid #688b78;background:#edf8ef;color:#234c36;padding:.85rem;border-radius:12px;margin-top:1rem;}
+.creative-result p {font-size:.92rem;margin:.45rem 0 0;}
+@media(max-width:540px) {
+  .creative-mission-card .field-grid {grid-template-columns:minmax(0,1fr);}
+  .creative-mission-card .beat-grid {gap:.12rem;}
+  .creative-mission-card .beat-cell {font-size:.56rem;min-height:36px;}
+}
+.larriverse-dark .creative-result {background:#17392e;color:#e3fff0;border-color:#66bc93;}
+.larriverse-high-contrast .creative-result {border-width:3px;}
