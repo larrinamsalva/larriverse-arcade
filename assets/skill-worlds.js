@@ -18,7 +18,7 @@ export const worlds = [
     artSet: "traffic",
     skill: "Read traffic signs & choose safe actions",
     desc: "Cruise through a friendly practice town and learn sixty common road signs through dimensional sign models.",
-    mission: "Practice ten different traffic-sign challenges each round from a sixty-sign bank. Six rounds rotate without repeats while you name the sign, notice its shape or color, and choose the safest meaning or action.",
+    mission: "Travel through 60 different sign challenges in six connected chapters. Recognize the shape, color, and safest meaning, with progress saved after each sign.",
     take: "Traffic Town teaches common U.S. sign patterns for early road awareness. Real driving requires the official rules where you live, adult supervision, and age-appropriate licensing.",
     mode: "traffic",
   },
@@ -50,7 +50,7 @@ export const worlds = [
     skill: "Spotting online tricks",
     desc: "Investigate sneaky messages and protect your digital clubhouse.",
     mission:
-      "Try ten different clubhouse messages per round from sixty unique scenarios, with no repeats across six rounds. Choose whether to read, check another way, or block and tell a trusted adult.",
+      "Explore all 60 original different suspicious messages in six connected chapters. Spot urgency, secrecy, or pressure; save progress after every message.",
     take: "Slow down when a message asks for secrets, money, or a rushed decision. Check through a route you already trust.",
     mode: "messages",
   },
@@ -66,7 +66,7 @@ export const worlds = [
     skill: "Listening & boundaries",
     desc: "Help the treehouse crew listen, work together, and set kind boundaries.",
     mission:
-      "The treehouse crew needs your help. Explore sixty different kindness and boundary scenarios, ten per round, before any repeat.",
+      "Help the treehouse crew through 60 different listening, boundaries, teamwork, and kindness decisions in six connected chapters, with saved progress.",
     take: "You can care about someone and still say no. Ask, listen, and make a plan together.",
     mode: "conversation",
   },
@@ -82,7 +82,7 @@ export const worlds = [
     skill: "Checking claims & sources",
     desc: "Run a tiny news desk. Sort evidence, opinions, ads, and unchecked claims.",
     mission:
-      "Try ten different news-desk cards per round from sixty unique source-checking situations. Sort each into evidence, opinion, advertisement, or needs checking.",
+      "Finish 60 source-checking news desk cards across six saved chapters, distinguishing evidence, opinions, advertising and unchecked claims.",
     take: "A popular claim is not automatically a fact. Look for a source, context, and something you can check.",
     mode: "news",
   },
@@ -98,7 +98,7 @@ export const worlds = [
     skill: "Repair before replacing",
     desc: "Practice repair-and-care skills with sixty different challenges before replacing something.",
     mission:
-      "Try ten repair situations per round from sixty different hands-on challenges. Put the steps in a sensible order: inspect first, choose a safe fix, make the small repair, then test it.",
+      "Repair 60 different objects in six connected chapters. Practice checking, planning, fixing and testing each object in the correct order. Your work saves.",
     take: "Looking closely can save time, materials, and money. Small repairs can give things a second life.",
     mode: "repair",
   },
@@ -162,7 +162,7 @@ export const worlds = [
     skill: "Reuse & thoughtful sorting",
     desc: "Clean up Toy Town. Reuse what you can and sort the rest.",
     mission:
-      "Sort ten different objects per round from a sixty-item bank: reuse, recycling, compost, or trash. Real local rules can differ.",
+      "Sort all 60 different objects in six saved Toy Town cleanup chapters: reuse, recycling, compost or trash. Local rules vary.",
     take: "Using something again can avoid waste. Check your local recycling and compost rules with an adult.",
     mode: "sorting",
   },
@@ -192,9 +192,9 @@ export const worlds = [
     minutes: "4 min",
     art: 10,
     skill: "Costs, demand & small business",
-    desc: "Run the original four-day stand or complete 60 market missions about costs, demand and profit.",
+    desc: "Start a 60-mission lemonade business journey, or return to the classic four-day free-play stand.",
     mission:
-      "Run the four-day free-play stand, or select sixty different market missions with rising costs and achievable profit goals. All coins are pretend.",
+      "Start with 60 progressively varied market contracts about supply costs, demand, prices and profits. The four-day stand remains available as free play.",
     take: "Revenue is the money that comes in. Profit is what remains after costs. Leftovers and demand matter, too.",
     mode: "market",
   },
@@ -208,9 +208,9 @@ export const worlds = [
     minutes: "4 min",
     art: 11,
     skill: "Rhythm, patterns & creativity",
-    desc: "Freestyle with your own music or master sixty different beat-making missions.",
+    desc: "Master 60 rhythm-building missions or switch into freestyle studio at any time.",
     mission:
-      "Use the 16-step rhythm grid in freestyle, or complete sixty different kick, clap, and hi-hat patterns. Sound stays optional.",
+      "Begin a saved 60-mission rhythm campaign with different kick, clap and hi-hat patterns. Freestyle is still available and sound remains optional.",
     take: "A repeating pattern creates rhythm. Small changes can make a familiar pattern feel new.",
     mode: "music",
   },
