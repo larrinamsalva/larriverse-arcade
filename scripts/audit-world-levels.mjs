@@ -8,6 +8,7 @@ import {
 } from "../assets/expedition-worlds.js";
 import {trafficQuestions} from "../assets/expanded-scenarios.js";
 import {resourceAdventures} from "../assets/budget-adventures.js";
+import {marketMissions,beatMissions,bestMarketPlan} from "../assets/creative-missions.js";
 import {timeTrailLevelsWithGoals} from "../assets/time-trail-level.js";
 import {gardenLevels,energyLevels} from "../assets/garden-energy-levels.js";
 import {messages,conversations,newsCards,repairs,sorting,robotLevels,weatherChallenges,gardenGrowthChallenges} from "../assets/skill-worlds.js";
@@ -56,8 +57,8 @@ const sequential={
 // These cabinets are real and playable, but their mode is not one fixed
 // sequence of distinct puzzles. Report actual activities/missions separately.
 const otherModes={
- "lemonade-lab":{kind:"repeatable business simulation",count:null},
- "beat-builder":{kind:"open-ended music studio",count:null},
+ "lemonade-lab":{kind:"four-day business simulation + optional distinct market missions",count:marketMissions.length},
+ "beat-builder":{kind:"freestyle music studio + optional distinct rhythm missions",count:beatMissions.length},
  "kidscoin-family":{kind:"family goals and multiple learning activities",count:null},
  "brain-sweat-expanded":{kind:"reviewed activities across subworlds",count:brain.integration.playableActivityCount},
  "brain-sweat-life-skills":{kind:"questions across lessons and subworlds",count:life.source.readableQuestionCount},
@@ -70,6 +71,13 @@ const ids=catalog.map(x=>x.id);
 assert.equal(new Set(ids).size,ids.length,"No duplicate game ids");
 assert.deepEqual([...new Set([...Object.keys(sequential),...Object.keys(otherModes)])].sort(),[...ids].sort(),
  "Audit must cover every playable cabinet, including newly added worlds");
+assert.equal(marketMissions.length,60);
+assert.equal(beatMissions.length,60);
+assert.equal(new Set(beatMissions.map(x=>x.rows.map(row=>row.join(",")).join("|"))).size,60,
+ "Sixty optional beats must be actually different patterns");
+assert.ok(marketMissions.every(x=>bestMarketPlan(x)?.profit>=x.goal),
+ "All market contracts must have affordable winning setups");
+const optionalMissionPaths={ "lemonade-lab":marketMissions.length,"beat-builder":beatMissions.length };
 const counts=Object.entries(sequential);
 const ready=counts.filter(([id,n])=>n>=60);
 const notReady=counts.filter(([id,n])=>n<60);
@@ -92,7 +100,7 @@ for(const id of ["weather-watchers","garden-grow-harvest","bridge-buddies","bubb
  const game=catalog.find(g=>g.id===id);
  assert.ok(game&&/sixty|60/i.test(game.mission||game.desc),"Updated game has truthful sixty-challenge metadata");
 }
-const report={cabinetCount:ids.length,complete:ready.length,belowTarget:notReady.map(([id,count])=>({id,count,remaining:60-count})),otherModes,
+const report={cabinetCount:ids.length,complete:ready.length,optionalMissionPaths,worldsWithSixtyMissions:ready.length+Object.keys(optionalMissionPaths).length,belowTarget:notReady.map(([id,count])=>({id,count,remaining:60-count})),otherModes,
  all:ids.map(id=>({id,count:sequential[id]??otherModes[id]?.count??null,kind:id in sequential?"fixed sequence":otherModes[id]?.kind,
- status:id in sequential?(sequential[id]>=60?"60-ready":"under-60"):"needs bespoke level design"}))};
+ status:id in sequential?(sequential[id]>=60?"60-ready":"under-60"):id in optionalMissionPaths?"60-optional-missions":"needs bespoke level design"}))};
 console.log(JSON.stringify(report,null,2));

@@ -46,6 +46,18 @@ These existing games already had 60: **Pantry Picnic, Traffic Town, Street Safet
 
 Those games must get genuinely new, **solvable** routes, transactions, layouts, requests, or projects. Avoid repeated text with a new level number. Each new engine needs a test that actually finishes representative levels, catches dead ends and validates no repeats.
 
+
+## Creative worlds: optional sixty-mission ladders
+
+The two original creative modes remain available. The new curricula count **real objectives**, not sixty renamed repeats:
+
+| World | Optional distinct missions | Original mode retained |
+| --- | ---: | --- |
+| Lemonade Lab | **60** affordable market-profit challenges, changing demand, price sensitivity, supply cost and budget | Four-day lemonade-stand simulation |
+| Beat Builder | **60** different exact kick, clap and hi-hat patterns on a 16-step grid | Freestyle rhythm composer and optional audio |
+
+The progress for each optional path is saved locally. Completing a single mission does not award the complete-world celebration; all sixty are required. The final target is **26 fixed-sequence curricula + 2 optional sixty-mission paths**; the other seven creative/adventure/family cabinets still need bespoke content.
+
 ## Games without one 60-step curriculum today
 
 | Cabinet | What it actually offers | Next design step |

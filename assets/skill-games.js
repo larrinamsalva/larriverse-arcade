@@ -1,3 +1,4 @@
+import { marketMissions, marketStockChoices, calculateMarketDay, beatMissions, rhythmMatches } from "./creative-missions.js";
 import {
   worlds,
   messages,
@@ -290,6 +291,7 @@ function initialize() {
       renderRobot();
       break;
     case "market":
+      state.marketMode="free";
       state.cash = 14;
       state.day = 0;
       state.ledger = [];
@@ -298,6 +300,7 @@ function initialize() {
       renderMarket();
       break;
     case "music":
+      state.musicMode="free";
       state.tracks = Array.from({ length: 3 }, () => Array(16).fill(false));
       state.bpm = 100;
       renderMusic();
@@ -1077,6 +1080,140 @@ async function runRobot() {
   );
 }
 
+function creativeProgress(kind){
+  try {
+    const raw=JSON.parse(localStorage.getItem("larriverse.creative."+kind+".v1")||"{}");
+    if(Number.isInteger(raw.nextLevel)&&raw.nextLevel>=0&&raw.nextLevel<60)return raw.nextLevel;
+  }catch{}
+  return 0;
+}
+
+function saveCreativeProgress(kind,nextLevel){
+  try{localStorage.setItem("larriverse.creative."+kind+".v1",JSON.stringify({nextLevel:Math.min(60,nextLevel)}));}
+  catch{say("This browser could not save your mission progress; you can still keep playing.","try");}
+}
+
+function beginMarketJourney(){
+  state.marketMode="missions";state.mission=creativeProgress("market");
+  state.missionPassed=false;state.lastMarketResult=null;
+  state.stock=6;state.price=3;renderMarketMission();
+}
+
+function renderMarketMission(){
+  const m=marketMissions[state.mission],done=state.missionPassed;
+  const completion=state.mission+(done?1:0);
+  stage(`Lemonade Lab · Mission ${state.mission+1} of 60 · ${m.chapter}`);
+  board.innerHTML=`<article class="creative-mission-card" data-market-mission="${m.id}">
+    <p class="eyebrow">🍋 Market mission ${state.mission+1}/60 · ${esc(m.chapter)}</p>
+    <h2>${esc(m.name)}</h2><p>At 2 coins per cup, about <strong>${m.base} customers</strong> might visit. Charging more may reduce demand.</p>
+    <div class="stat-row">${chip("Supply cost",`${m.supplyCost} coin${m.supplyCost===1?"":"s"}/cup`)}
+      ${chip("Available budget",`${m.startCash} coins`)}${chip("Profit goal",`${m.goal}+ coins`)}
+      ${chip("Completed",`${completion}/60`)}</div>
+    <p class="board-note">${esc(m.hint)}</p>
+    <div class="field-grid">
+      <label>Cups to make<select id="stockInput" ${done?"disabled":""}>${marketStockChoices.map(n=>`<option value="${n}" ${state.stock===n?"selected":""}>${n} cups · ${n*m.supplyCost} coins</option>`).join("")}</select></label>
+      <label>Price per cup<select id="priceInput" ${done?"disabled":""}>${[1,2,3,4,5].map(n=>`<option value="${n}" ${state.price===n?"selected":""}>${n} coin${n===1?"":"s"}</option>`).join("")}</select></label>
+    </div>
+    ${state.lastMarketResult?`<div class="creative-result"><strong>${state.lastMarketResult.profit>=m.goal?"Goal reached!":"Try a different plan"}</strong>
+      <p>Customers: ${state.lastMarketResult.demand} · Sold: ${state.lastMarketResult.sold} · Left over: ${state.lastMarketResult.leftovers}</p>
+      <p>Revenue ${state.lastMarketResult.revenue} − cost ${state.lastMarketResult.cost} = <strong>${state.lastMarketResult.profit} coins profit</strong></p></div>`:""}
+    </article>`;
+  const stockNode=board.querySelector("#stockInput"),priceNode=board.querySelector("#priceInput");
+  stockNode?.addEventListener("change",e=>{state.stock=Number(e.target.value);});
+  priceNode?.addEventListener("change",e=>{state.price=Number(e.target.value);});
+  progress(completion,60,`${completion} of 60 market missions completed`);
+  updateScore(Math.round(completion/60*100));
+  if(done){
+    button(state.mission===59?"Celebrate market mastery":"Next market mission",()=>{
+      if(state.mission===59){finish("You completed all 60 market missions, comparing demand, supplies, prices and profit.",100);return;}
+      state.mission++;state.missionPassed=false;state.lastMarketResult=null;state.stock=6;state.price=3;
+      renderMarketMission();say("New market, new customers! Check your budget and plan.","good");
+    });
+  }else{
+    button("Run my mission stand",()=>{
+      if(state.stock*m.supplyCost>m.startCash){
+        say("Your supplies cost more than your available budget. Choose fewer cups.","try");return;
+      }
+      const result=calculateMarketDay(m,state.stock,state.price);
+      state.lastMarketResult=result;
+      if(result.profit>=m.goal){
+        state.missionPassed=true;
+        saveCreativeProgress("market",state.mission+1);
+        renderMarketMission();say(`Great planning! You reached the ${m.goal}-coin profit goal.`, "good");tone();
+      }else{renderMarketMission();say(`Your ${result.profit}-coin profit is below the ${m.goal}-coin goal. Compare price and leftovers, then try again.`,"try");}
+    });
+  }
+  button("Return to four-day lab",()=>{
+    state.marketMode="free";state.cash=14;state.day=0;state.ledger=[];state.stock=6;state.price=3;
+    renderMarket();say("Back in the original four-day stand!");
+  },"secondary");
+  hint=m.hint;
+}
+
+function beginBeatJourney(){
+  stopMusic();state.musicMode="missions";state.mission=creativeProgress("beat");
+  state.missionPassed=false;state.tracks=Array.from({length:3},()=>Array(16).fill(false));
+  state.bpm=beatMissions[state.mission].bpm;renderBeatMission();
+}
+
+function renderBeatMission(){
+  const m=beatMissions[state.mission],done=state.missionPassed,completion=state.mission+(done?1:0);
+  stage(`Beat Builder · Mission ${state.mission+1} of 60 · ${m.chapter}`);
+  board.innerHTML=`<section class="creative-mission-card" data-beat-mission="${m.id}">
+    <p class="eyebrow">🎵 Rhythm mission ${state.mission+1}/60 · ${esc(m.chapter)}</p>
+    <h2>${esc(m.name)}</h2><p>${esc(m.explanation)}</p>
+    <div class="stat-row">${chip("Tempo",`${m.bpm} BPM`)}${chip("Completed",`${completion}/60`)}</div>
+    <p class="board-note">Light up the numbered steps below for each instrument. Leave all unlisted steps off. Sound is optional.</p>
+    ${musicStudioSvg()}
+    <div class="beat-numbers">${Array.from({length:16},(_,i)=>`<span>${i%4===0?i/4+1:"·"}</span>`).join("")}</div>
+    ${state.tracks.map((track,row)=>`<div class="track-label">${trackNames[row]} · Steps: ${m.rows[row].map(n=>n+1).join(", ")}</div>
+      <div class="beat-grid">${track.map((on,col)=>`<button type="button" class="beat-cell ${on?"active":""}" data-beat="${row},${col}" aria-label="${trackNames[row]}, step ${col+1}" aria-pressed="${on}" ${done?"disabled":""}>${col+1}</button>`).join("")}</div>`).join("")}
+    </section>`;
+  bind("[data-beat]",node=>{
+    const [row,col]=node.dataset.beat.split(",").map(Number);
+    state.tracks[row][col]=!state.tracks[row][col];
+    node.classList.toggle("active",state.tracks[row][col]);
+    node.setAttribute("aria-pressed",String(state.tracks[row][col]));
+    if(state.tracks[row][col])tone(row);
+  });
+  progress(completion,60,`${completion} of 60 rhythm missions completed`);
+  updateScore(Math.round(completion/60*100));
+  if(done){
+    button(state.mission===59?"Celebrate my rhythm journey":"Next beat mission",()=>{
+      stopMusic();
+      if(state.mission===59){finish("You completed 60 different rhythms, counting beats and learning to hear the spaces.",100);return;}
+      state.mission++;state.missionPassed=false;
+      state.tracks=Array.from({length:3},()=>Array(16).fill(false));
+      state.bpm=beatMissions[state.mission].bpm;
+      renderBeatMission();say("New rhythm unlocked. Read all three instrument patterns.","good");
+    });
+  }else{
+    button("Check mission beat",()=>{
+      const matched=rhythmMatches(state.tracks,m);
+      if(matched.every(Boolean)){
+        stopMusic();state.missionPassed=true;saveCreativeProgress("beat",state.mission+1);
+        renderBeatMission();say("Perfect pattern! Every note and rest matches.","good");
+      }else{
+        say(`${matched.filter(Boolean).length} of 3 rows match. Recheck ${trackNames.filter((_,i)=>!matched[i]).join(" and ")}. Extra notes need switching off too.`,"try");
+      }
+    });
+    button(running?"Pause beat":"Play beat",()=>{
+      if(running)stopMusic();else startMusic();
+      renderBeatMission();
+    },"secondary");
+    button("Clear this pattern",()=>{
+      stopMusic();state.tracks=Array.from({length:3},()=>Array(16).fill(false));
+      renderBeatMission();say("Blank grid ready for your next try.");
+    },"secondary");
+  }
+  button("Return to freestyle",()=>{
+    stopMusic();state.musicMode="free";state.tracks=Array.from({length:3},()=>Array(16).fill(false));
+    state.bpm=100;renderMusic();say("Your freestyle studio is ready!");
+  },"secondary");
+  hint=m.explanation;
+  paintMusic();
+}
+
 const marketWeather = [
   { name: "Sunny park day", icon: "☀️", base: 10 },
   { name: "Rainy afternoon", icon: "🌧️", base: 5 },
@@ -1084,6 +1221,7 @@ const marketWeather = [
   { name: "Quiet neighborhood day", icon: "🏡", base: 8 },
 ];
 function renderMarket() {
+  if(state.marketMode==="missions"){renderMarketMission();return;}
   const forecast = marketWeather[Math.min(state.day, 3)];
   stage(`Lemonade stand · Day ${Math.min(state.day + 1, 4)} of 4`);
   board.innerHTML = `<div class="stat-row">${chip("Coins in till", state.cash)}${chip("Supply cost", "1 coin/cup")}${chip("Days tried", `${state.day}/4`)}</div><div class="stand-scene">${lemonadeStandSvg(forecast.name)}<div class="weather-caption"><b>${esc(forecast.name)}</b><span>${forecast.base} customers at a 2-coin price</span></div></div><p class="board-note">A higher price brings fewer buyers in this toy town. Unsold cups are not carried to tomorrow. Watch costs and sales.</p><div class="field-grid"><label>Cups to make<select id="stockInput">${[2, 4, 6, 8, 10, 12].map((n) => `<option value="${n}" ${state.stock === n ? "selected" : ""}>${n} cups · ${n} coins</option>`).join("")}</select></label><label>Price per cup<select id="priceInput">${[1, 2, 3, 4, 5].map((n) => `<option value="${n}" ${state.price === n ? "selected" : ""}>${n} coin${n === 1 ? "" : "s"}</option>`).join("")}</select></label></div>${state.ledger.length ? `<table class="ledger"><caption>Your business ledger</caption><thead><tr><th>Day</th><th>Made / sold</th><th>Costs</th><th>Revenue</th><th>Profit</th></tr></thead><tbody>${state.ledger.map((entry, i) => `<tr><td>${i + 1}</td><td>${entry.stock} / ${entry.sold}</td><td>${entry.stock}</td><td>${entry.revenue}</td><td>${entry.profit}</td></tr>`).join("")}</tbody></table>` : ""}`;
@@ -1129,12 +1267,14 @@ function renderMarket() {
       profit >= 0 ? "good" : "try",
     );
   });
+  button("Explore 60 market missions",beginMarketJourney,"secondary");
   hint =
     "At a 3-coin price, expect 2 fewer customers than the 2-coin forecast. Match your batch to likely demand. Profit = revenue − supplies.";
 }
 
 const trackNames = ["Kick", "Clap", "Hi-hat"];
 function renderMusic() {
+  if(state.musicMode==="missions"){renderBeatMission();return;}
   stage("Your little rhythm studio");
   board.innerHTML = `${musicStudioSvg()}<p class="board-note">Tap glowing pads to make a pattern. Four steps make one beat. Play is visual even with sound off.</p><div class="beat-numbers">${Array.from({ length: 16 }, (_, i) => `<span>${i % 4 === 0 ? i / 4 + 1 : "·"}</span>`).join("")}</div>${state.tracks.map((track, row) => `<div class="track-label"><span class="track-symbol track-symbol-${row}" aria-hidden="true"></span>${trackNames[row]}</div><div class="beat-grid">${track.map((on, col) => `<button class="beat-cell ${on ? "active" : ""}" data-beat="${row},${col}" aria-pressed="${on}" aria-label="${trackNames[row]}, step ${col + 1}">${col + 1}</button>`).join("")}</div>`).join("")}<div class="pattern-goals"><span>Kick: steps 1, 5, 9, 13</span><span>Clap: steps 5, 13</span><span>Hi-hat: odd steps</span></div><label class="board-note">Tempo <select id="tempoInput">${[80, 100, 120, 140].map((n) => `<option value="${n}" ${n === state.bpm ? "selected" : ""}>${n} BPM</option>`).join("")}</select></label>`;
   bind("[data-beat]", (node) => {
@@ -1201,6 +1341,7 @@ function renderMusic() {
   );
   hint =
     "For the rhythm challenge, switch on only the listed steps for each track. Beat 1 starts at step 1. Every fourth step begins the next beat.";
+  button("Explore 60 beat missions",beginBeatJourney,"secondary");
   paintMusic();
 }
 function paintMusic() {
