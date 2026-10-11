@@ -58,7 +58,7 @@ for(let flowers=1;flowers<=4;flowers++)
 export const gardenExtraLevels=Array.from({length:52},(_,i)=>{
  const mix=gardenPlans[i%gardenPlans.length];
  const level=i+9,zone=["meadow","orchard","hill","sunset"][Math.floor(i/13)];
- const later=i>=42,target=later?6:5,water=later?12:i>=21?10:11;
+ const later=i>=36,target=later?6:5,water=later?12:i>=18?10:11;
  const name=gardenPlaces[i%gardenPlaces.length]+" "+gardenKinds[Math.floor(i/gardenPlaces.length)];
  return {id:"garden-"+String(level).padStart(2,"0"),name,rank:[
    "Sprout Starter","Soil Scout","Pollinator Partner","Garden Steward",
