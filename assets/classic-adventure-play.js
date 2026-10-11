@@ -1,11 +1,16 @@
 import { creatureMissions, roadMissions } from "./classic-adventure-missions.js";
+import { gpsMissions, chillMissions } from "./gps-chill-missions.js";
 
 function bootAdventureMissions(){
- // Extra story-mode learning for two classic games. Original action gameplay remains intact.
+ // Optional offline learning for four arcade games. All original action/simulation modes remain intact.
  const trigger=document.querySelector("[data-adventure-mission]");
  if(!trigger)return;
  const kind=trigger.dataset.adventureMission;
- const deck=kind==="creature-catcher"?creatureMissions:kind==="road-trip-quest"?roadMissions:null;
+ const decks={"creature-catcher":creatureMissions,"road-trip-quest":roadMissions,
+  "road-trip-quest-gps":gpsMissions,"chill-brain-rewards":chillMissions};
+ const labels={"creature-catcher":"🦋 Wildlife Explorer","road-trip-quest":"🗺️ Road Trip Navigator",
+  "road-trip-quest-gps":"🧭 Demo Map Detective","chill-brain-rewards":"🌿 Gentle Focus Garden"};
+ const deck=decks[kind];
  if(!deck)return;
  const key="larriverse.classicMissions."+kind+".v1";
  const dialog=document.createElement("dialog");
@@ -16,7 +21,7 @@ function bootAdventureMissions(){
    <div class="lv-adventure-shell">
      <header class="lv-adventure-header">
        <div><p class="lv-adventure-kicker">LarriVerse · Offline mission journey</p>
-         <h2 id="adventureMissionTitle">${kind==="creature-catcher"?"🦋 Wildlife Explorer":"🗺️ Road Trip Navigator"}</h2></div>
+         <h2 id="adventureMissionTitle">${labels[kind]}</h2></div>
        <button type="button" id="adventureClose" class="lv-adventure-close" aria-label="Close missions">✕</button>
      </header>
      <div class="lv-adventure-progress"><div class="lv-adventure-bar" id="adventureBar"></div></div>
@@ -50,7 +55,7 @@ function bootAdventureMissions(){
      const done=document.createElement("div");
      done.className="lv-adventure-success";
      done.innerHTML=`<h3>🏆 All 60 adventures complete!</h3>
-       <p>You practiced sixty different ${kind==="creature-catcher"?"wildlife science and conservation":"map reading, packing, weather, passenger safety and respectful travel"} decisions.</p>`;
+       <p>You practiced sixty different ${kind==="creature-catcher"?"wildlife science and conservation":kind==="road-trip-quest"?"map reading, packing, weather, passenger safety and respectful travel":kind==="road-trip-quest-gps"?"offline demo-map symbols, route safety and location privacy":"gentle observation, focus, comfort and kindness"} decisions. Original game progress stays safe.</p>`;
      content.append(done);
      content.append(button("Replay the sixty missions",()=>{
        if(!window.confirm("Restart only this optional sixty-mission journey? Your original game progress stays safe."))return;
@@ -89,7 +94,8 @@ function bootAdventureMissions(){
        }else{
          wrongCount++;
          feedback.className="lv-adventure-feedback retry";
-         feedback.textContent=wrongCount===1?"Good try. Think about what keeps people and wildlife safe. Choose again.":m.why+" Try again.";
+         feedback.textContent=kind==="chill-brain-rewards"?"A different choice might fit this gentle example. You can skip this exercise or try another option.":
+           wrongCount===1?"Good try. Read the clues and choose again.":m.why+" Try again.";
        }
      },"lv-adventure-choice");
      control.dataset.choice=String(n);
