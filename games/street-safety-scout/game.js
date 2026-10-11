@@ -1,8 +1,31 @@
 import { streetSafetyCategories, streetSafetyScenarios } from './scenarios.js';
 
 const GAME_ID = 'street-safety-scout';
-const ROUND_SIZE = 15;
+const ROUND_SIZE = 60;
 const ROTATION_KEY = 'larriverse.streetSafetyScout.rotation.v1';
+const CAMPAIGN_KEY = 'larriverse.streetSafetyScout.longRoute.v1';
+function readJourney(){
+ try{
+  const raw=JSON.parse(localStorage.getItem(CAMPAIGN_KEY)||"null");
+  if(raw&&Array.isArray(raw.ids)&&raw.ids.length===ROUND_SIZE&&
+     new Set(raw.ids).size===ROUND_SIZE&&Number.isInteger(raw.next)&&raw.next>=0&&raw.next<=60&&
+     Number.isInteger(raw.correct)&&raw.correct>=0&&raw.correct<=raw.next&&
+     Number.isInteger(raw.streak)&&raw.streak>=0&&raw.streak<=raw.correct){
+    const byId=new Map(streetSafetyScenarios.map(item=>[item.id,item]));
+    const deck=raw.ids.map(id=>byId.get(id));
+    if(deck.every(Boolean))return {...raw,deck};
+  }
+ }catch{}
+ return null;
+}
+function writeJourney(next){
+ try{
+  localStorage.setItem(CAMPAIGN_KEY,JSON.stringify({
+    ids:round.map(item=>item.id),next,correct,streak
+  }));
+ }catch{ $('#feedback').textContent="This browser cannot save progress, but you can keep practicing."; }
+}
+function resetJourney(){try{localStorage.removeItem(CAMPAIGN_KEY)}catch{}}
 const sdk = window.LarriVerseArcade;
 const $ = selector => document.querySelector(selector);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, character => ({
@@ -44,7 +67,7 @@ function buildRound() {
     let seen = Array.isArray(rotation[category]) ? [...new Set(rotation[category].filter(id => validIds.has(id)))] : [];
     let unseen = shuffle(pool.filter(item => !seen.includes(item.id)));
     const selected = [];
-    while (selected.length < 3) {
+    while (selected.length < 12) {
       if (!unseen.length) {
         seen = [];
         const selectedIds = new Set(selected.map(item => item.id));
@@ -326,7 +349,7 @@ function safetyVisual(item) {
 function setProgress(done = step) {
   const clamped = Math.max(0, Math.min(ROUND_SIZE, done));
   $('#progressNumber').textContent = `${clamped} / ${ROUND_SIZE}`;
-  $('#progressText').textContent = clamped === 0 ? 'Ready to scout' : clamped === ROUND_SIZE ? 'Route explored' : `${ROUND_SIZE - clamped} safety stops left`;
+  $('#progressText').textContent = clamped === 0 ? 'Ready to scout' : clamped === ROUND_SIZE ? 'All four routes explored' : `Route ${Math.min(4,Math.floor(clamped/15)+1)} of 4 · ${ROUND_SIZE - clamped} stops left`;
   $('#progressFill').style.width = `${(clamped / ROUND_SIZE) * 100}%`;
   $('.progress-track').setAttribute('aria-valuenow', String(clamped));
 }
@@ -379,14 +402,14 @@ function renderChallenge() {
   $('#challengePanel').dataset.scenarioId = item.id;
   $('#categoryChip').textContent = item.category;
   $('#categoryChip').dataset.category = item.category;
-  $('#stopCount').textContent = `Stop ${step + 1} of ${ROUND_SIZE}`;
+  $('#stopCount').textContent = `Route ${Math.floor(step / 15)+1}/4 · Stop ${step + 1} of ${ROUND_SIZE}`;
   $('#scenarioVisual').innerHTML = safetyVisual(item);
   $('#challengeTitle').textContent = item.title;
   $('#challengePrompt').textContent = item.prompt;
   $('#feedback').className = 'feedback';
   $('#feedback').textContent = '';
   $('#nextButton').hidden = true;
-  $('#nextButton').textContent = step === ROUND_SIZE - 1 ? 'See my safety badge' : 'Next safety stop';
+  $('#nextButton').textContent = step === ROUND_SIZE - 1 ? 'See my safety badge' : step%15===14 ? `Enter route ${Math.floor(step/15)+2} of 4` : 'Next safety stop';
 
   const choices = shuffle(item.options.map((label, originalIndex) => ({ label, originalIndex })));
   $('#answerGrid').innerHTML = choices.map(choice => `<button type="button" class="answer-button" data-answer="${choice.originalIndex}">${esc(choice.label)}</button>`).join('');
@@ -442,16 +465,23 @@ function finishRound() {
     reward = 'This round is complete, but your browser could not save it.';
   }
   $('#rewardMessage').textContent = reward;
+  writeJourney(ROUND_SIZE);
   $('#resultDialog').showModal();
   bloom('celebrate', `Route complete! You spotted ${correct} of ${ROUND_SIZE} safety clues.`);
 }
 
 function startRound() {
-  round = buildRound();
-  step = 0;
-  correct = 0;
-  streak = 0;
-  answered = false;
+  const saved=readJourney();
+  if(saved&&saved.next===ROUND_SIZE){
+    resetJourney();
+  }
+  const resume=readJourney();
+  round=resume?.deck||buildRound();
+  step=resume?.next||0;
+  correct=resume?.correct||0;
+  streak=resume?.streak||0;
+  answered=false;
+  writeJourney(step);
   if ($('#resultDialog').open) $('#resultDialog').close();
   $('#startPanel').hidden = true;
   $('#challengePanel').hidden = false;
@@ -461,13 +491,20 @@ function startRound() {
 }
 
 $('#startButton').addEventListener('click', startRound);
-$('#restartButton').addEventListener('click', startRound);
-$('#playAgainButton').addEventListener('click', startRound);
+$('#restartButton').addEventListener('click',()=>{
+ if(!window.confirm("Start all four safety routes over from Stop 1?"))return;
+ resetJourney();startRound();
+});
+$('#playAgainButton').addEventListener('click',()=>{resetJourney();startRound();});
 $('#nextButton').addEventListener('click', () => {
   if (!answered) return;
   step += 1;
+  writeJourney(step);
   if (step >= ROUND_SIZE) finishRound();
-  else renderChallenge();
+  else {
+    renderChallenge();
+    if(step%15===0)bloom('cheer',`Route ${step/15+1} of 4 unlocked! Keep spotting those road clues.`);
+  }
 });
 $('#hintButton').addEventListener('click', () => {
   const message = round.length && round[step] ? round[step].hint : 'Use color, shape, light position, and what is happening around the clue.';
