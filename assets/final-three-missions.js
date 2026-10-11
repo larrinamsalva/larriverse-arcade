@@ -1,6 +1,5 @@
-// Reviewed source-derived optional learning missions for the final three arcade cabinets.
-// No queued medical, legal, electrical or safety material is promoted to playable content.
-// Question provenance is retained in sourceId. Never award parent-controlled Family KC here.
+// 180 unique missions derived from existing reviewed lessons. Correct answers retain source provenance.
+// No new bank access, adult bypass, source curriculum unlocking, or financial purchases.
 export const familyMissions = [
   {
     "id": "family-01",
@@ -350,7 +349,7 @@ export const familyMissions = [
       "21 KC",
       "24 KC"
     ],
-    "answer": 2,
+    "answer": 0,
     "why": "Eighteen plus nine equals 27.",
     "guide": "Family KC is pretend. Chore approval and reward redemption still belong to the parent-controlled family game."
   },
@@ -366,7 +365,7 @@ export const familyMissions = [
       "12 KC",
       "15 KC"
     ],
-    "answer": 1,
+    "answer": 2,
     "why": "Thirty-six minus twenty-four equals 12.",
     "guide": "Family KC is pretend. Chore approval and reward redemption still belong to the parent-controlled family game."
   },
@@ -382,7 +381,7 @@ export const familyMissions = [
       "24 KC",
       "27 KC"
     ],
-    "answer": 0,
+    "answer": 2,
     "why": "Twenty-one plus three equals 24.",
     "guide": "Family KC is pretend. Chore approval and reward redemption still belong to the parent-controlled family game."
   },
@@ -398,7 +397,7 @@ export const familyMissions = [
       "27 KC",
       "9 KC"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "Fifty-four minus thirty-six equals 18.",
     "guide": "Family KC is pretend. Chore approval and reward redemption still belong to the parent-controlled family game."
   },
@@ -526,7 +525,7 @@ export const familyMissions = [
       "27 KC",
       "39 KC"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "Thirty minus nine equals 21.",
     "guide": "Family KC is pretend. Chore approval and reward redemption still belong to the parent-controlled family game."
   },
@@ -734,7 +733,7 @@ export const familyMissions = [
       "82 KC",
       "90 KC"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "Twenty-seven plus forty-five equals 72.",
     "guide": "Family KC is pretend. Chore approval and reward redemption still belong to the parent-controlled family game."
   },
@@ -766,7 +765,7 @@ export const familyMissions = [
       "26 KC",
       "36 KC"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "Eighty-one minus forty-five equals 36 KC.",
     "guide": "Family KC is pretend. Chore approval and reward redemption still belong to the parent-controlled family game."
   },
@@ -1877,7 +1876,7 @@ export const lifeMissions = [
       "Fist",
       "Claw grip"
     ],
-    "answer": 1,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Kitchen basics & knife safety\" lesson: Claw grip.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-01"
@@ -1893,7 +1892,7 @@ export const lifeMissions = [
       "Wet",
       "Plastic"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Kitchen basics & knife safety\" lesson: Sharp — dull knives slip and cause more cuts.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-02"
@@ -1909,7 +1908,7 @@ export const lifeMissions = [
       "Use your foot",
       "Catch it fast"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Kitchen basics & knife safety\" lesson: Step back and let it fall.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-03"
@@ -1925,7 +1924,7 @@ export const lifeMissions = [
       "Plate",
       "Towel"
     ],
-    "answer": 2,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Kitchen basics & knife safety\" lesson: Stable cutting board.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-04"
@@ -1941,7 +1940,7 @@ export const lifeMissions = [
       "Wash your hands and the vegetables",
       "Preheat the oven"
     ],
-    "answer": 1,
+    "answer": 2,
     "why": "This answer is from the reviewed \"Kitchen basics & knife safety\" lesson: Wash your hands and the vegetables.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-05"
@@ -1957,7 +1956,7 @@ export const lifeMissions = [
       "200°F",
       "300°F"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Heat, cooking methods & fire safety\" lesson: 145°F to 165°F depending on the food.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-06"
@@ -1973,7 +1972,7 @@ export const lifeMissions = [
       "Run outside",
       "Pour water on it"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Heat, cooking methods & fire safety\" lesson: Slide a lid over the pan to smother it.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-07"
@@ -1989,7 +1988,7 @@ export const lifeMissions = [
       "Cooking slowly in liquid",
       "Cooking quickly in a small amount of fat over high heat"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Heat, cooking methods & fire safety\" lesson: Cooking quickly in a small amount of fat over high heat.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-08"
@@ -2005,7 +2004,7 @@ export const lifeMissions = [
       "Fry in deep oil",
       "Brown food then cook slowly in liquid with a lid"
     ],
-    "answer": 1,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Heat, cooking methods & fire safety\" lesson: Brown food then cook slowly in liquid with a lid.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-09"
@@ -2021,7 +2020,7 @@ export const lifeMissions = [
       "Above 165°F",
       "Between 0°F and 32°F"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Heat, cooking methods & fire safety\" lesson: Between 40°F and 140°F.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-10"
@@ -2037,7 +2036,7 @@ export const lifeMissions = [
       "Preserve it safely for long-term storage",
       "Make it look nicer"
     ],
-    "answer": 0,
+    "answer": 2,
     "why": "This answer is from the reviewed \"Food preservation & storage\" lesson: Preserve it safely for long-term storage.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-11"
@@ -2053,7 +2052,7 @@ export const lifeMissions = [
       "The jars rust",
       "The jars break"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Food preservation & storage\" lesson: Clostridium botulinum bacteria can grow in improperly sealed jars.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-12"
@@ -2069,7 +2068,7 @@ export const lifeMissions = [
       "Adding salt",
       "Removing moisture that bacteria need to grow"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Food preservation & storage\" lesson: Removing moisture that bacteria need to grow.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-13"
@@ -2085,7 +2084,7 @@ export const lifeMissions = [
       "Canned goods before opening",
       "Dairy, meat, cooked leftovers"
     ],
-    "answer": 1,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Food preservation & storage\" lesson: Dairy, meat, cooked leftovers.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-14"
@@ -2101,7 +2100,7 @@ export const lifeMissions = [
       "Heaviest items go first",
       "Tallest containers go first"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Food preservation & storage\" lesson: Oldest food goes to the front and gets used first.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-15"
@@ -2117,7 +2116,7 @@ export const lifeMissions = [
       "Randomly",
       "Alphabetically"
     ],
-    "answer": 3,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Real nutrition & reading food labels\" lesson: By quantity from most to least.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-16"
@@ -2133,7 +2132,7 @@ export const lifeMissions = [
       "Olive oil",
       "Coconut oil"
     ],
-    "answer": 2,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Real nutrition & reading food labels\" lesson: Trans fat (partially hydrogenated oils).",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-17"
@@ -2149,7 +2148,7 @@ export const lifeMissions = [
       "The fiber and nutrient-rich bran and germ",
       "The gluten"
     ],
-    "answer": 1,
+    "answer": 2,
     "why": "This answer is from the reviewed \"Real nutrition & reading food labels\" lesson: The fiber and nutrient-rich bran and germ.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-18"
@@ -2165,7 +2164,7 @@ export const lifeMissions = [
       "Makes your hair grow",
       "Has no known function"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Real nutrition & reading food labels\" lesson: Controls over 300 enzyme reactions including muscle and nerve function.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-19"
@@ -2181,7 +2180,7 @@ export const lifeMissions = [
       "It has no added sugar",
       "No chemicals were used"
     ],
-    "answer": 3,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Real nutrition & reading food labels\" lesson: Almost nothing — it is not regulated.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-20"
@@ -2197,7 +2196,7 @@ export const lifeMissions = [
       "Measure with two tools",
       "Always use a ruler twice"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Basic construction & repairs\" lesson: Verify your measurements carefully before making any irreversible cut.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-21"
@@ -2213,7 +2212,7 @@ export const lifeMissions = [
       "Use a bigger nail",
       "Pre-drill a pilot hole first"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Basic construction & repairs\" lesson: Pre-drill a pilot hole first.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-22"
@@ -2229,7 +2228,7 @@ export const lifeMissions = [
       "Securing heavy items into walls where there is no stud behind the drywall",
       "Filling holes"
     ],
-    "answer": 1,
+    "answer": 2,
     "why": "This answer is from the reviewed \"Basic construction & repairs\" lesson: Securing heavy items into walls where there is no stud behind the drywall.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-23"
@@ -2245,7 +2244,7 @@ export const lifeMissions = [
       "Structural support",
       "Stopping insects only"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Basic construction & repairs\" lesson: Preventing air leaks, water infiltration, and improving energy efficiency.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-24"
@@ -2261,7 +2260,7 @@ export const lifeMissions = [
       "Are always marked on blueprints",
       "Can be removed freely"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Basic construction & repairs\" lesson: Support the weight of the structure above and must never be removed without engineering review.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-25"
@@ -2277,7 +2276,7 @@ export const lifeMissions = [
       "Spend 50% on fun",
       "50% needs, 30% wants, 20% savings and debt payoff"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Household management & budgeting\" lesson: 50% needs, 30% wants, 20% savings and debt payoff.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-26"
@@ -2293,7 +2292,7 @@ export const lifeMissions = [
       "A harmless foam",
       "Toxic chloramine gas — never mix these"
     ],
-    "answer": 1,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Household management & budgeting\" lesson: Toxic chloramine gas — never mix these.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-27"
@@ -2309,7 +2308,7 @@ export const lifeMissions = [
       "One month only",
       "Whatever you can spare"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Household management & budgeting\" lesson: 3 to 6 months of essential living expenses.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-28"
@@ -2325,7 +2324,7 @@ export const lifeMissions = [
       "Replacing all parts yearly",
       "Washing it weekly"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Household management & budgeting\" lesson: Regular oil changes, tire pressure checks, and fluid level monitoring.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-29"
@@ -2341,7 +2340,7 @@ export const lifeMissions = [
       "Food lasts longer frozen",
       "It reduces food waste, impulse purchases, and eating out costs"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Household management & budgeting\" lesson: It reduces food waste, impulse purchases, and eating out costs.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-30"
@@ -2357,7 +2356,7 @@ export const lifeMissions = [
       "Looking due east",
       "Finding the Big Dipper and following its outer edge stars up to Polaris"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Navigation without technology\" lesson: Finding the Big Dipper and following its outer edge stars up to Polaris.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-31"
@@ -2373,7 +2372,7 @@ export const lifeMissions = [
       "South",
       "East"
     ],
-    "answer": 1,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Navigation without technology\" lesson: East.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-32"
@@ -2389,7 +2388,7 @@ export const lifeMissions = [
       "The nearest city",
       "Due south"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Navigation without technology\" lesson: Magnetic north — slightly different from true north.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-33"
@@ -2405,7 +2404,7 @@ export const lifeMissions = [
       "Climb the nearest tree",
       "Run to find help"
     ],
-    "answer": 3,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Navigation without technology\" lesson: STOP — Stay calm, Think, Observe, Plan.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-34"
@@ -2421,7 +2420,7 @@ export const lifeMissions = [
       "Flat land",
       "Steep terrain"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Navigation without technology\" lesson: Steep terrain.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-35"
@@ -2437,7 +2436,7 @@ export const lifeMissions = [
       "Sandy or muddy ground near water sources",
       "Dense forest floors"
     ],
-    "answer": 1,
+    "answer": 2,
     "why": "This answer is from the reviewed \"Animal tracking & nature awareness\" lesson: Sandy or muddy ground near water sources.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-36"
@@ -2453,7 +2452,7 @@ export const lifeMissions = [
       "Finding a comfortable rock",
       "Meditation only"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Animal tracking & nature awareness\" lesson: Sitting in the same outdoor spot daily to observe wildlife patterns and seasonal changes.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-37"
@@ -2469,7 +2468,7 @@ export const lifeMissions = [
       "Clouds only form before rain",
       "Clouds are always the same"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Animal tracking & nature awareness\" lesson: Different cloud formations indicate different atmospheric conditions and approaching weather.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-38"
@@ -2485,7 +2484,7 @@ export const lifeMissions = [
       "Calm weather ahead",
       "Snow only"
     ],
-    "answer": 2,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Animal tracking & nature awareness\" lesson: Severe thunderstorms and lightning — seek shelter immediately.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-39"
@@ -2501,7 +2500,7 @@ export const lifeMissions = [
       "Dawn and dusk — when most animals are most active",
       "Late night only"
     ],
-    "answer": 1,
+    "answer": 2,
     "why": "This answer is from the reviewed \"Animal tracking & nature awareness\" lesson: Dawn and dusk — when most animals are most active.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-40"
@@ -2517,7 +2516,7 @@ export const lifeMissions = [
       "The brain can form new connections and change throughout life based on experience",
       "Only children can learn"
     ],
-    "answer": 1,
+    "answer": 2,
     "why": "This answer is from the reviewed \"How your brain actually works\" lesson: The brain can form new connections and change throughout life based on experience.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-41"
@@ -2533,7 +2532,7 @@ export const lifeMissions = [
       "You read about it",
       "You want it badly enough"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"How your brain actually works\" lesson: A neural pathway is reinforced repeatedly until it becomes automatic.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-42"
@@ -2549,7 +2548,7 @@ export const lifeMissions = [
       "You feel fear",
       "You feel sad"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"How your brain actually works\" lesson: You experience or anticipate something rewarding — driving motivation and habit formation.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-43"
@@ -2565,7 +2564,7 @@ export const lifeMissions = [
       "You dream about what you learned",
       "The brain consolidates memories and clears waste products during sleep"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "This answer is from the reviewed \"How your brain actually works\" lesson: The brain consolidates memories and clears waste products during sleep.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-44"
@@ -2581,7 +2580,7 @@ export const lifeMissions = [
       "Studying in shorter sessions spaced over time leads to much stronger memory",
       "Reading once is enough"
     ],
-    "answer": 1,
+    "answer": 2,
     "why": "This answer is from the reviewed \"How your brain actually works\" lesson: Studying in shorter sessions spaced over time leads to much stronger memory.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-45"
@@ -2597,7 +2596,7 @@ export const lifeMissions = [
       "Suppress all feelings",
       "Only feel positive emotions"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Emotional intelligence & regulation\" lesson: Recognize, understand, manage your own emotions and understand others'.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-46"
@@ -2613,7 +2612,7 @@ export const lifeMissions = [
       "Watch TV",
       "Yell and vent it out"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Emotional intelligence & regulation\" lesson: Slow deep breathing — it activates the parasympathetic nervous system.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-47"
@@ -2629,7 +2628,7 @@ export const lifeMissions = [
       "There is no difference",
       "Reacting is immediate and automatic; responding is thoughtful and chosen"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Emotional intelligence & regulation\" lesson: Reacting is immediate and automatic; responding is thoughtful and chosen.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-48"
@@ -2645,7 +2644,7 @@ export const lifeMissions = [
       "Dismissing or invalidating real emotions by forcing positivity",
       "Feeling too positive"
     ],
-    "answer": 1,
+    "answer": 2,
     "why": "This answer is from the reviewed \"Emotional intelligence & regulation\" lesson: Dismissing or invalidating real emotions by forcing positivity.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-49"
@@ -2661,7 +2660,7 @@ export const lifeMissions = [
       "Avoiding all conflict",
       "Letting the other person always win"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Emotional intelligence & regulation\" lesson: Using \"I\" statements, listening to understand not just to reply, and finding mutual solutions.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-50"
@@ -2677,7 +2676,7 @@ export const lifeMissions = [
       "A type of lie",
       "A mathematical mistake"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Critical thinking & media literacy\" lesson: An error in reasoning that makes an argument invalid even if it sounds convincing.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-51"
@@ -2693,7 +2692,7 @@ export const lifeMissions = [
       "A law",
       "An idea with facts"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Critical thinking & media literacy\" lesson: The person making an argument instead of addressing the argument itself.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-52"
@@ -2709,7 +2708,7 @@ export const lifeMissions = [
       "Confirming facts carefully",
       "Seeking only information that confirms what you already believe while ignoring contradictions"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Critical thinking & media literacy\" lesson: Seeking only information that confirms what you already believe while ignoring contradictions.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-53"
@@ -2725,7 +2724,7 @@ export const lifeMissions = [
       "Original documents, studies, eyewitness accounts, or raw data",
       "Second-hand reports"
     ],
-    "answer": 1,
+    "answer": 2,
     "why": "This answer is from the reviewed \"Critical thinking & media literacy\" lesson: Original documents, studies, eyewitness accounts, or raw data.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-54"
@@ -2741,7 +2740,7 @@ export const lifeMissions = [
       "Is it popular?",
       "Is it recent?"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Critical thinking & media literacy\" lesson: Who wrote it, who funded it, and what is their incentive?.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-55"
@@ -2757,7 +2756,7 @@ export const lifeMissions = [
       "Motivation is more powerful",
       "They are the same thing"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Purpose, discipline & sovereign living\" lesson: Motivation fluctuates; discipline is the consistent action you take regardless of how you feel.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-56"
@@ -2773,7 +2772,7 @@ export const lifeMissions = [
       "Never having fun",
       "Resisting a smaller reward now for a larger reward later — a key predictor of success"
     ],
-    "answer": 2,
+    "answer": 3,
     "why": "This answer is from the reviewed \"Purpose, discipline & sovereign living\" lesson: Resisting a smaller reward now for a larger reward later — a key predictor of success.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-57"
@@ -2789,7 +2788,7 @@ export const lifeMissions = [
       "You are only seeing their highlights, not their full reality — and your path is unique",
       "Competition is wrong"
     ],
-    "answer": 1,
+    "answer": 2,
     "why": "This answer is from the reviewed \"Purpose, discipline & sovereign living\" lesson: You are only seeing their highlights, not their full reality — and your path is unique.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-58"
@@ -2805,7 +2804,7 @@ export const lifeMissions = [
       "Only money compounds",
       "One great effort is enough"
     ],
-    "answer": 0,
+    "answer": 1,
     "why": "This answer is from the reviewed \"Purpose, discipline & sovereign living\" lesson: Small consistent actions compounding over time produce extraordinary results.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-59"
@@ -2821,7 +2820,7 @@ export const lifeMissions = [
       "Emotions are weaknesses",
       "Feel nothing"
     ],
-    "answer": 3,
+    "answer": 0,
     "why": "This answer is from the reviewed \"Purpose, discipline & sovereign living\" lesson: You cannot always control what happens, but you can always control how you respond.",
     "guide": "Review-queued legal, medical and high-risk lessons remain locked in the original game.",
     "id": "life-60"
