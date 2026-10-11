@@ -58,7 +58,14 @@ for(let flowers=1;flowers<=4;flowers++)
 export const gardenExtraLevels=Array.from({length:52},(_,i)=>{
  const mix=gardenPlans[i%gardenPlans.length];
  const level=i+9,zone=["meadow","orchard","hill","sunset"][Math.floor(i/13)];
- const later=i>=36,target=later?6:5,water=later?12:i>=18?10:11;
+ const later=i>=36;
+ let target=later?6:5,water=later?12:i>=18?10:11;
+ // Preserve all eight published planting/water combinations as distinct levels.
+ const oldPlans=new Set(["2:2:2:6:12","3:2:1:6:12","1:2:3:5:11","1:4:1:5:10",
+   "3:1:2:5:11","1:1:4:6:12","2:3:1:5:10","2:1:3:6:12"]);
+ if(oldPlans.has([mix.carrot,mix.bean,mix.flower,target,water].join(":"))){
+   target=5;water=12; // advanced flexible-resources variant, not an old puzzle
+ }
  const name=gardenPlaces[i%gardenPlaces.length]+" "+gardenKinds[Math.floor(i/gardenPlaces.length)];
  return {id:"garden-"+String(level).padStart(2,"0"),name,rank:[
    "Compost Keeper","Water Saver","Flower Friend","Season Planner",
