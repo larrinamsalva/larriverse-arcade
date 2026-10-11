@@ -69,6 +69,14 @@ Two more classic games now have **optional**, fully standalone sixty-mission lea
 
 **After this optional quest pack:** 26 fixed sixty-level worlds plus 4 optional sixty-mission worlds = **30 of 35** with distinct sixty-step learning paths. Five remaining family and learning hubs need separate curriculum design.
 
+## GPS demo and Chill Brain: two more optional 60-mission journeys
+
+- **Road Trip Quest GPS:** 60 wholly offline map-symbol, public route, safety, location privacy and leave-no-trace choices. The existing location-free demo **and separately opt-in live movement mode** remain unchanged. No GPS is necessary or requested in these missions. This is never navigation or emergency guidance; no gameplay while driving.
+- **Chill Brain Rewards:** 60 short, untimed observation, comfortable breathing choices, gentle focus, comfort and kindness puzzles across twelve illustrated story themes. No forced breath holds, countdowns, medical claims, public accounts, or enforced streaks. Existing calm sessions, profile onboarding, optional sound and parent comfort controls remain.
+- Both paths reuse the accessible offline quiz UI, with free hints, local progress and return-to-original-game controls.
+
+**After these two paths merge:** 26 fixed-length 60-challenge cabinets + 6 optional 60-mission cabinets = **32 of 35**. The three family/Brain Sweat hubs still require their own curricula.
+
 ## Games without one 60-step curriculum today
 
 | Cabinet | What it actually offers | Next design step |
