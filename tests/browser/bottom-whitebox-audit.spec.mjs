@@ -23,7 +23,7 @@ test('inspect bottom-of-page empty panels in every reported world',async({page},
       const info=el=>{
         const r=el.getBoundingClientRect(),css=getComputedStyle(el);
         return {node:el.tagName.toLowerCase()+(el.id?'#'+el.id:'')+
-          (typeof el.className==='string'?'.'+el.className.trim().split(/\\s+/).slice(0,2).join('.'):''),
+          (typeof el.className==='string'?'.'+el.className.trim().split(/\s+/).slice(0,2).join('.'):''),
           y:Math.round(r.top+scrollY),bottom:Math.round(r.bottom+scrollY),
           height:Math.round(r.height),width:Math.round(r.width),
           background:css.backgroundColor,text:el.textContent.trim().slice(0,110)};
@@ -31,7 +31,7 @@ test('inspect bottom-of-page empty panels in every reported world',async({page},
       const blank=[...document.querySelectorAll('body *')].filter(visible)
         .filter(el=>{
           const cs=getComputedStyle(el);
-          const bg=cs.backgroundColor.match(/[\\d.]+/g)?.slice(0,3).map(Number)||[];
+          const bg=cs.backgroundColor.match(/\d+(?:\.\d+)?/g)?.slice(0,3).map(Number)||[];
           const nearWhite=bg.length===3&&bg.every(n=>n>235);
           const text=el.textContent.trim();
           return nearWhite&&text.length===0&&!el.querySelector('img,svg,canvas,video,button,a,input,select');
