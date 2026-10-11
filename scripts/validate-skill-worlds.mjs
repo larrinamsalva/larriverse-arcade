@@ -150,8 +150,8 @@ for (const item of repairs) {
   assert.equal(item.steps.length, 4);
   assert.equal(new Set(item.steps).size, 4);
 }
-// For all five expanded lesson banks, six ten-question rounds cover sixty items
-// exactly without replacing the familiar first twenty prompts.
+// For all five expanded lesson banks, the primary game now offers one saved
+// six-chapter journey of sixty distinct activities, not six disconnected rounds.
 for(const [name,mode,length] of [
   ["Scam Sleuth","messages",messages.length],
   ["Kindness Quest","conversation",conversations.length],
@@ -161,13 +161,15 @@ for(const [name,mode,length] of [
 ]){
   assert.equal(length,60,`${name}: exactly sixty playable scenarios`);
   const world=worlds.find(entry=>entry.mode===mode);
-  assert.ok(world?.mission.includes("sixty"),`${name}: truthful world description`);
+  assert.match(world?.mission||"",/\b(sixty|60)\b/i,`${name}: explicitly states the full sixty-question journey`);
   const catalogWorld=catalog.find(entry=>entry.id===world.id);
   assert.equal(catalogWorld?.mission,world.mission,`${name}: catalog matches world`);
 }
 const quizEngine = fs.readFileSync("assets/skill-games.js","utf8");
-for(const deck of ["messages","conversations","newsCards","repairs","sorting"])
-  assert.ok(quizEngine.includes(`challengeRound(${deck}, 10)`),`${deck} delivers ten distinct questions per round`);
+for(const [deck,mode] of [["messages","messages"],["conversations","conversation"],["newsCards","news"],["repairs","repair"],["sorting","sorting"],["trafficQuestions","traffic"]])
+  assert.ok(quizEngine.includes(`startCampaign(${deck},"${mode}")`),`${deck} must launch a full saved sixty-question main campaign`);
+assert.ok(quizEngine.includes("writeCampaign(state.step,state.correct)"),"Each answered card has saved progression");
+assert.ok(quizEngine.includes("writeCampaign(state.step,state.step)"),"Each completed repair has saved progression");
 // Both classic resource worlds now contain four ranks and eight independent stages.
 for (const [name, levels] of [["Garden Guardians", gardenLevels], ["Energy Island", energyLevels]]) {
   assert.equal(levels.length, 60, `${name} has sixty playable levels`);
