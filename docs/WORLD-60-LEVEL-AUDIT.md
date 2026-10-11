@@ -77,6 +77,18 @@ Two more classic games now have **optional**, fully standalone sixty-mission lea
 
 **After these two paths merge:** 26 fixed-length 60-challenge cabinets + 6 optional 60-mission cabinets = **32 of 35**. The three family/Brain Sweat hubs still require their own curricula.
 
+## Final three reviewed source-backed curricula (completion milestone)
+
+| World | Playable optional missions | Original mode retained |
+| --- | ---: | --- |
+| KidsCoin Family | **60** unique questions selected from the 120 existing open family-finance questions across six topics | Original 120 questions, assigned chores, parent approvals, family rewards and device-local Family KC |
+| Brain Sweat Expanded | **60** distinct problems derived from reviewed existing ledger transactions, customer-service choices, garden tool challenges, kitchen choices, community tasks and coding puzzles | All 69 original reviewed interactive activities; other expert-review-queued tiers remain locked |
+| Brain Sweat Life Skills | **60** distinct source-reviewed questions, one per existing approved question across twelve lessons | Original learning-world screens, saved lesson mastery and review-queued health, legal, electrical, foraging and other high-stakes chapters still locked |
+
+These are **optional** step-by-step question/choice pathways. The three originals remain independently playable and their rewards do not change. These missions do not award family currency, permit parent bypass, or unlock unreviewed material.
+
+**When this PR passes full validation and merges, LarriVerse reaches the honest milestone: all 35 catalog games offer an actual sixty-challenge path (26 fixed-sequence worlds and 9 opt-in mission trails).** Each trail has different situations, reliable local progress, clear feedback, retry, optional hint and completion. This does not claim that each of the six Brain Sweat internal subworlds separately has sixty puzzles, or that free-play sessions themselves are sixty levels.
+
 ## Games without one 60-step curriculum today
 
 | Cabinet | What it actually offers | Next design step |
