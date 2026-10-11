@@ -11,6 +11,7 @@ import {resourceAdventures} from "../assets/budget-adventures.js";
 import {marketMissions,beatMissions,bestMarketPlan} from "../assets/creative-missions.js";
 import {creatureMissions,roadMissions} from "../assets/classic-adventure-missions.js";
 import {gpsMissions,chillMissions} from "../assets/gps-chill-missions.js";
+import {familyMissions,sweatMissions,lifeMissions} from "../assets/final-three-missions.js";
 import {timeTrailLevelsWithGoals} from "../assets/time-trail-level.js";
 import {gardenLevels,energyLevels} from "../assets/garden-energy-levels.js";
 import {messages,conversations,newsCards,repairs,sorting,robotLevels,weatherChallenges,gardenGrowthChallenges} from "../assets/skill-worlds.js";
@@ -61,9 +62,9 @@ const sequential={
 const otherModes={
  "lemonade-lab":{kind:"four-day business simulation + optional distinct market missions",count:marketMissions.length},
  "beat-builder":{kind:"freestyle music studio + optional distinct rhythm missions",count:beatMissions.length},
- "kidscoin-family":{kind:"family goals and multiple learning activities",count:null},
- "brain-sweat-expanded":{kind:"reviewed activities across subworlds",count:brain.integration.playableActivityCount},
- "brain-sweat-life-skills":{kind:"questions across lessons and subworlds",count:life.source.readableQuestionCount},
+ "kidscoin-family":{kind:"parent-managed chores and rewards + optional 60 approved family-finance lessons",count:familyMissions.length},
+ "brain-sweat-expanded":{kind:"69 original reviewed skill activities + optional 60-source activity learning path",count:sweatMissions.length},
+ "brain-sweat-life-skills":{kind:"60 reviewed original questions in twelve unlocked lessons + optional 60-question progression",count:lifeMissions.length},
  "chill-brain-rewards":{kind:"guided calm sessions plus sixty optional untimed focus choices",count:chillMissions.length},
  "creature-catcher":{kind:"classic creature collection + optional distinct wildlife missions",count:creatureMissions.length},
  "road-trip-quest":{kind:"eight-city adventure + optional distinct travel missions",count:roadMissions.length},
@@ -79,7 +80,7 @@ assert.equal(new Set(beatMissions.map(x=>x.rows.map(row=>row.join(",")).join("|"
  "Sixty optional beats must be actually different patterns");
 assert.ok(marketMissions.every(x=>bestMarketPlan(x)?.profit>=x.goal),
  "All market contracts must have affordable winning setups");
-const optionalMissionPaths={ "lemonade-lab":marketMissions.length,"beat-builder":beatMissions.length,"creature-catcher":creatureMissions.length,"road-trip-quest":roadMissions.length,"road-trip-quest-gps":gpsMissions.length,"chill-brain-rewards":chillMissions.length };
+const optionalMissionPaths={ "lemonade-lab":marketMissions.length,"beat-builder":beatMissions.length,"creature-catcher":creatureMissions.length,"road-trip-quest":roadMissions.length,"road-trip-quest-gps":gpsMissions.length,"chill-brain-rewards":chillMissions.length,"kidscoin-family":familyMissions.length,"brain-sweat-expanded":sweatMissions.length,"brain-sweat-life-skills":lifeMissions.length };
 for (const [id,deck] of [["creature-catcher",creatureMissions],["road-trip-quest",roadMissions]]) {
  assert.equal(deck.length,60,`${id} offers sixty optional real missions`);
  assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} missions are not repeats`);
@@ -88,6 +89,11 @@ for(const [id,deck] of [["road-trip-quest-gps",gpsMissions],["chill-brain-reward
  assert.equal(deck.length,60,`${id} has 60 distinct objectives`);
  assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} may not repeat questions`);
  assert.ok(deck.every(x=>x.why.includes(x.options[x.answer])),`${id} correct choices are explained`);
+}
+for(const [id,deck] of [["kidscoin-family",familyMissions],["brain-sweat-expanded",sweatMissions],["brain-sweat-life-skills",lifeMissions]]){
+ assert.equal(deck.length,60,`${id} has sixty reviewed optional missions`);
+ assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} must not recycle questions`);
+ assert.ok(deck.every(m=>m.options[m.answer]!==undefined),`${id} has answer keys`);
 }
 const counts=Object.entries(sequential);
 const ready=counts.filter(([id,n])=>n>=60);
@@ -111,6 +117,7 @@ for(const id of ["weather-watchers","garden-grow-harvest","bridge-buddies","bubb
  const game=catalog.find(g=>g.id===id);
  assert.ok(game&&/sixty|60/i.test(game.mission||game.desc),"Updated game has truthful sixty-challenge metadata");
 }
+assert.equal(ready.length+Object.keys(optionalMissionPaths).length,35,"Every cabinet has a real sixty-step path; no fake levels");
 const report={cabinetCount:ids.length,complete:ready.length,optionalMissionPaths,worldsWithSixtyMissions:ready.length+Object.keys(optionalMissionPaths).length,belowTarget:notReady.map(([id,count])=>({id,count,remaining:60-count})),otherModes,
  all:ids.map(id=>({id,count:sequential[id]??otherModes[id]?.count??null,kind:id in sequential?"fixed sequence":otherModes[id]?.kind,
  status:id in sequential?(sequential[id]>=60?"60-ready":"under-60"):id in optionalMissionPaths?"60-optional-missions":"needs bespoke level design"}))};
