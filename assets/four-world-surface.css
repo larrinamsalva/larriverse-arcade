@@ -1,0 +1,157 @@
+/* Four-world visual repair: turn apparently empty, plain-white play surfaces
+   into recognizable learning spaces. Loaded after arcade-accessibility.css
+   only for the four specifically reported cabinets. Does not hide gameplay. */
+
+/* Shared: the three large framing panels are never bare white rectangles. */
+body[data-world="traffic-town"] .world-banner,
+body[data-world="traffic-town"] .mission-card {
+  background: linear-gradient(160deg,#e9f6fa 0%,#deeff1 100%);
+  border-color:#97bdc8;
+}
+body[data-world="traffic-town"] .play-card {
+  background: radial-gradient(circle at 94% 3%,#fff2be 0 45px,transparent 46px),
+    linear-gradient(162deg,#e3f3f8 0%,#d8eaf0 52%,#e2f3ea 100%);
+  border:2px solid #7daebc;
+  color:#193b50;
+}
+body[data-world="traffic-town"] .choice-button:not(.correct):not(.wrong) {
+  background:linear-gradient(145deg,#d7eef4,#c6e3ea);
+  border-color:#719caa;
+  color:#203c4d;
+}
+body[data-world="traffic-town"] #feedback {
+  background:#cee6f0;
+  color:#1c4057;
+}
+
+body[data-world="pocket-planet"] .world-banner,
+body[data-world="pocket-planet"] .mission-card {
+  background:linear-gradient(155deg,#f7f2d7,#e7f2df);
+  border-color:#bacb91;
+}
+body[data-world="pocket-planet"] .play-card {
+  background:radial-gradient(circle at 92% 0%,#fff1a5 0 40px,transparent 41px),
+    linear-gradient(155deg,#e4f4df,#f5efd0 65%,#e1edd9);
+  border:2px solid #9ebd83;
+  color:#2d483a;
+}
+body[data-world="pocket-planet"] .item-button:not(.selected) {
+  background:linear-gradient(150deg,#e7f5df,#f7eac4);
+  border-color:#a5bf8b;
+  color:#263e31;
+  box-shadow:inset 0 -5px 0 #cfe1b8,0 3px 7px #263e3124;
+}
+body[data-world="pocket-planet"] .item-button small { color:#3c5945; }
+body[data-world="pocket-planet"] #feedback {background:#dbeed5;color:#284d37;}
+
+body[data-world="critter-council"] .world-banner,
+body[data-world="critter-council"] .mission-card {
+  background:linear-gradient(155deg,#e9f3de,#d9eee6);
+  border-color:#90b8a0;
+}
+body[data-world="critter-council"] .play-card {
+  background:linear-gradient(155deg,#d8eee1,#d7eae2 62%,#d1e9e6);
+  border:2px solid #6e9c93;
+  color:#203b39;
+}
+body[data-world="critter-council"] .town-tool-shelf .build-tool:not(.selected) {
+  background:linear-gradient(155deg,#d3eadc,#e4edc4);
+  border-color:#7ba78b;
+  color:#213e35;
+}
+body[data-world="critter-council"] .town-plot.empty {
+  background:linear-gradient(155deg,#cce2b7,#c2dca8);
+  border-color:#789b76;
+  color:#204a35;
+}
+body[data-world="critter-council"] #feedback {background:#c5e5d7;color:#23463e;}
+
+body[data-world="cipher-club"] .world-banner,
+body[data-world="cipher-club"] .mission-card {
+  background:linear-gradient(155deg,#efe7fa,#dfd7f0);
+  border-color:#b9a6d8;
+}
+body[data-world="cipher-club"] .play-card {
+  background:radial-gradient(circle at 93% 0%,#e6d1ff 0 48px,transparent 49px),
+    linear-gradient(155deg,#e4dcf5,#d5daf2 70%,#d4e7e9);
+  border:2px solid #a395d0;
+  color:#2e3259;
+}
+body[data-world="cipher-club"] .cipher-answer span {
+  background:linear-gradient(155deg,#e3d1f4,#d0c9ee);
+  border-color:#8873b3;
+  color:#32274d;
+}
+body[data-world="cipher-club"] .letter-keys button {
+  background:linear-gradient(155deg,#c5ebe0,#addbd4);
+  border-color:#6daaa1;
+  color:#22463f;
+}
+body[data-world="cipher-club"] #feedback {background:#d2daf3;color:#273657;}
+
+/* Readable night palette; no day-colored rectangles left behind. */
+html.larriverse-dark body[data-world="traffic-town"] :is(.world-banner,.mission-card,.play-card){
+  background:linear-gradient(160deg,#20384b,#223b3a);
+  color:#effaff;
+  border-color:#6dacc2;
+}
+html.larriverse-dark body[data-world="traffic-town"] .choice-button:not(.correct):not(.wrong){
+  background:linear-gradient(150deg,#284b57,#293f57);
+  color:#f2faff;border-color:#76a7b7;
+}
+html.larriverse-dark body[data-world="traffic-town"] #feedback{background:#284553;color:#effaff;}
+
+html.larriverse-dark body[data-world="pocket-planet"] :is(.world-banner,.mission-card,.play-card){
+  background:linear-gradient(160deg,#253c38,#293c42);
+  color:#f1fff2;border-color:#83b798;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .item-button:not(.selected){
+  background:linear-gradient(150deg,#29483b,#3d443a);
+  border-color:#90be9b;color:#f4fff2;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .item-button small{color:#e1f8e2;}
+html.larriverse-dark body[data-world="pocket-planet"] #feedback{background:#264537;color:#ebffe6;}
+
+html.larriverse-dark body[data-world="critter-council"] :is(.world-banner,.mission-card,.play-card){
+  background:linear-gradient(160deg,#233f39,#243c45);
+  color:#f2fff8;border-color:#75a898;
+}
+html.larriverse-dark body[data-world="critter-council"] .town-tool-shelf .build-tool:not(.selected),
+html.larriverse-dark body[data-world="critter-council"] .town-plot.empty{
+  background:linear-gradient(150deg,#304e42,#293d41);
+  color:#edfff4;border-color:#7ab098;
+}
+html.larriverse-dark body[data-world="critter-council"] #feedback{background:#25483f;color:#e6fff5;}
+
+html.larriverse-dark body[data-world="cipher-club"] :is(.world-banner,.mission-card,.play-card){
+  background:linear-gradient(155deg,#2e2b4e,#252e4a);
+  color:#f5f1ff;border-color:#9986ca;
+}
+html.larriverse-dark body[data-world="cipher-club"] .cipher-answer span{
+  background:linear-gradient(155deg,#4b386b,#353354);
+  color:#f6efff;border-color:#ac92df;
+}
+html.larriverse-dark body[data-world="cipher-club"] .letter-keys button{
+  background:linear-gradient(150deg,#26524e,#273f4c);
+  color:#eafff6;border-color:#7dc6b9;
+}
+html.larriverse-dark body[data-world="cipher-club"] #feedback{background:#313e60;color:#f2f4ff;}
+
+/* High contrast stays high contrast and does not rely on a background picture. */
+html.larriverse-high-contrast body[data-world="traffic-town"] :is(.world-banner,.mission-card,.play-card,.choice-button,#feedback),
+html.larriverse-high-contrast body[data-world="pocket-planet"] :is(.world-banner,.mission-card,.play-card,.item-button,#feedback),
+html.larriverse-high-contrast body[data-world="critter-council"] :is(.world-banner,.mission-card,.play-card,.town-plot,.build-tool,#feedback),
+html.larriverse-high-contrast body[data-world="cipher-club"] :is(.world-banner,.mission-card,.play-card,.cipher-answer span,.letter-keys button,#feedback) {
+  background:#000!important;color:#fff!important;border-color:#fff!important;
+  box-shadow:none!important;
+}
+
+/* WCAG AA: the shared purple eyebrow was too pale on the new pastel
+   header/mission backgrounds (Cipher Club 3.89:1; Critter Council 4.46:1).
+   Darken only these daytime captions, keeping night/HC colors intact. */
+html.larriverse-light body[data-world="cipher-club"] :is(.world-banner,.mission-card) .eyebrow {
+  color:#49305d;
+}
+html.larriverse-light body[data-world="critter-council"] :is(.world-banner,.mission-card) .eyebrow {
+  color:#304a38;
+}
