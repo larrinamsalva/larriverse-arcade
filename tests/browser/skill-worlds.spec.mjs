@@ -12,6 +12,7 @@ import {
   gardenGrowthChallenges,
 } from "../../assets/skill-worlds.js";
 import { resourceAdventures } from "../../assets/budget-adventures.js";
+import { marketMissions, beatMissions, bestMarketPlan } from "../../assets/creative-missions.js";
 import { gardenLevels, energyLevels } from "../../assets/garden-energy-levels.js";
 import { timeTrailLevelsWithGoals as timeTrailLevels, shortestTrailPath } from "../../assets/time-trail-level.js";
 
@@ -691,6 +692,71 @@ test("Beat Builder: compose, play silently, pause on hide, and save a pattern", 
       .getByRole("button", { name: "Check my rhythm", exact: true })
       .click();
   });
+});
+
+test("Lemonade Lab: keep four-day free play and finish all sixty market missions", async function marketE2E({page}){
+  test.setTimeout(420000);
+  expect(marketMissions).toHaveLength(60);
+  expect(new Set(marketMissions.map(m=>m.name)).size).toBe(60);
+  await round(page,"lemonade-lab",async()=>{
+    await expect(page.getByRole("button",{name:"Open for the day"})).toBeVisible();
+    await page.getByRole("button",{name:"Explore 60 market missions"}).click();
+    for(let i=0;i<marketMissions.length;i++){
+      const mission=marketMissions[i],best=bestMarketPlan(mission);
+      expect(best).toBeTruthy();
+      await expect(page.locator("[data-market-mission]")).toHaveAttribute("data-market-mission",mission.id);
+      await page.locator("#stockInput").selectOption(String(best.stock));
+      await page.locator("#priceInput").selectOption(String(best.price));
+      await page.getByRole("button",{name:"Run my mission stand"}).click();
+      await expect(page.locator(".creative-result")).toContainText("Goal reached!");
+      await expect(page.locator("#feedback")).toHaveClass(/good/);
+      const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.creative.market.v1")||"{}").nextLevel);
+      expect(saved).toBe(i+1);
+      await page.getByRole("button",{name:i===59?"Celebrate market mastery":"Next market mission"}).click();
+    }
+    await expect(page.locator("#finishMessage")).toContainText("all 60 market missions");
+  });
+});
+
+test("Beat Builder: keep freestyle and complete sixty unique patterns", async function beatE2E({page}){
+  test.setTimeout(420000);
+  expect(beatMissions).toHaveLength(60);
+  expect(new Set(beatMissions.map(m=>m.rows.map(row=>row.join(",")).join("|"))).size).toBe(60);
+  await round(page,"beat-builder",async()=>{
+    await expect(page.getByRole("button",{name:"Save my freestyle"})).toBeVisible();
+    await page.getByRole("button",{name:"Explore 60 beat missions"}).click();
+    for(let i=0;i<beatMissions.length;i++){
+      const mission=beatMissions[i];
+      await expect(page.locator("[data-beat-mission]")).toHaveAttribute("data-beat-mission",mission.id);
+      await page.evaluate(rows=>{
+        for(const [row,steps] of rows.entries())for(const col of steps){
+          document.querySelector(`[data-beat="${row},${col}"]`).click();
+        }
+      },mission.rows);
+      await page.getByRole("button",{name:"Check mission beat"}).click();
+      await expect(page.locator("#feedback")).toHaveClass(/good/);
+      const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.creative.beat.v1")||"{}").nextLevel);
+      expect(saved).toBe(i+1);
+      await page.getByRole("button",{name:i===59?"Celebrate my rhythm journey":"Next beat mission"}).click();
+    }
+    await expect(page.locator("#finishMessage")).toContainText("60 different rhythms");
+  });
+});
+
+test("Creative missions resume locally after reload", async function creativeResumeE2E({page}){
+  await page.goto("/games/lemonade-lab/index.html");
+  await page.getByRole("button",{name:"Explore 60 market missions"}).click();
+  const best=bestMarketPlan(marketMissions[0]);
+  await page.locator("#stockInput").selectOption(String(best.stock));
+  await page.locator("#priceInput").selectOption(String(best.price));
+  await page.getByRole("button",{name:"Run my mission stand"}).click();
+  await expect(page.locator("#feedback")).toHaveClass(/good/);
+  await page.reload();
+  await expect(page.getByRole("button",{name:"Open for the day"})).toBeVisible();
+  await page.getByRole("button",{name:"Explore 60 market missions"}).click();
+  await expect(page.locator("[data-market-mission]")).toHaveAttribute("data-market-mission","market-02");
+  await page.getByRole("button",{name:"Return to four-day lab"}).click();
+  await expect(page.getByRole("button",{name:"Open for the day"})).toBeVisible();
 });
 
 test("New worlds retain readable controls at 200% font size with shared contrast", async ({
