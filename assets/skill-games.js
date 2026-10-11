@@ -76,6 +76,56 @@ function rankedDeck(pool) {
     rotated.filter((item) => item.rank === rank),
   );
 }
+// Long campaigns use every authored puzzle in the main game, not ten-question rounds.
+const campaignModes = new Set(["messages","conversation","news","repair","sorting","traffic"]);
+const CAMPAIGN_VERSION = "v1";
+const campaignKey = () => "larriverse.mainCampaign."+world.id+"."+CAMPAIGN_VERSION;
+function loadCampaign(count) {
+  try {
+    const raw=JSON.parse(localStorage.getItem(campaignKey())||"null");
+    if(raw&&Number.isInteger(raw.next)&&raw.next>=0&&raw.next<=count&&
+      Number.isInteger(raw.correct)&&raw.correct>=0&&raw.correct<=raw.next)
+      return {next:raw.next,correct:raw.correct};
+  }catch {}
+  return {next:0,correct:0};
+}
+function writeCampaign(next,correct) {
+  try {localStorage.setItem(campaignKey(),JSON.stringify({next,correct}));}
+  catch {say("This browser cannot save this mission yet. You can still continue.","try");}
+}
+function campaignTrail(step,total) {
+  const chapters=total/10;
+  if(!Number.isInteger(chapters))return "";
+  return '<div class="level-trail" aria-label="Six adventure chapters">'+
+    Array.from({length:chapters},(_,i)=>{
+      const marker=(i+1)*10,done=step>=marker,active=step>=i*10&&step<marker;
+      return '<span class="level-node '+(done?'complete':active?'active':'')+'"><b>'+
+        (done?'✓':i+1)+'</b><small>Chapter '+(i+1)+'</small></span>';
+    }).join("")+"</div>";
+}
+function endCampaignScreen() {
+  stage("🏆 All 60 challenges explored");
+  board.innerHTML='<div class="message-card"><div class="message-copy"><h2 class="board-title">You explored every challenge!</h2><p>Sixty different activities are complete in this world. Replay them whenever you want; the original arcade best score remains saved.</p></div></div>'+campaignTrail(60,60);
+  progress(60,60,"60 of 60 completed · Six chapters finished");
+  updateScore(Math.round(state.correct/60*100));
+  button("Replay all 60 adventures",()=>{
+    writeCampaign(0,0);
+    initialize();
+  });
+}
+function startCampaign(pool,mode) {
+  const saved=loadCampaign(pool.length);
+  state.deck=[...pool];
+  state.step=saved.next;
+  state.correct=saved.correct;
+  if(state.step===state.deck.length)endCampaignScreen();
+  else if(mode==="repair"){
+    state.order=shuffle([0,1,2,3]);
+    state.position=0;
+    renderRepair();
+  }else renderCards(mode);
+}
+
 const chip = (label, value) =>
   `<span class="stat-chip">${esc(label)}<b>${esc(value)}</b></span>`;
 let state = {};
@@ -183,7 +233,8 @@ function finish(message, finalScore = score) {
   finished = true;
   updateScore(finalScore);
   stopMusic();
-  progress(1, 1, "Adventure explored");
+  if(campaignModes.has(world.mode)) progress(state.deck.length,state.deck.length,`All ${state.deck.length} challenges explored`);
+  else progress(1, 1, "Adventure explored");
   $("finishMessage").textContent = message;
   $("finishScore").textContent = score;
   $("finishTitle").textContent =
@@ -237,22 +288,16 @@ function initialize() {
       startResourceProject();
       break;
     case "messages":
-      state.deck = challengeRound(messages, 10);
-      renderCards("messages");
+      startCampaign(messages,"messages");
       break;
     case "conversation":
-      state.deck = challengeRound(conversations, 10);
-      renderCards("conversation");
+      startCampaign(conversations,"conversation");
       break;
     case "news":
-      state.deck = challengeRound(newsCards, 10);
-      renderCards("news");
+      startCampaign(newsCards,"news");
       break;
     case "repair":
-      state.deck = challengeRound(repairs, 10);
-      state.order = shuffle([0, 1, 2, 3]);
-      state.position = 0;
-      renderRepair();
+      startCampaign(repairs,"repair");
       break;
     case "route": {
       const saved = readTrailSave();
@@ -272,12 +317,10 @@ function initialize() {
       startEnergyLevel();
       break;
     case "sorting":
-      state.deck = challengeRound(sorting, 10);
-      renderCards("sorting");
+      startCampaign(sorting,"sorting");
       break;
     case "traffic":
-      state.deck = challengeRound(trafficQuestions, 10);
-      renderCards("traffic");
+      startCampaign(trafficQuestions,"traffic");
       break;
     case "robot":
       state.level = 0;
@@ -291,19 +334,12 @@ function initialize() {
       renderRobot();
       break;
     case "market":
-      state.marketMode="free";
-      state.cash = 14;
-      state.day = 0;
-      state.ledger = [];
-      state.stock = 6;
-      state.price = 3;
-      renderMarket();
+      state.marketMode="missions";
+      beginMarketJourney();
       break;
     case "music":
-      state.musicMode="free";
-      state.tracks = Array.from({ length: 3 }, () => Array(16).fill(false));
-      state.bpm = 100;
-      renderMusic();
+      state.musicMode="missions";
+      beginBeatJourney();
       break;
     case "weather-reading":
       state.deck = rankedDeck(weatherChallenges);
@@ -397,7 +433,7 @@ function renderCards(mode) {
     item = deck[state.step];
   state.answered = false;
   stage(
-    `${mode === "sorting" ? "Toy Town cleanup" : mode === "news" ? "Tiny news desk" : mode === "conversation" ? "Treehouse crew" : mode === "traffic" ? "Traffic Town road school" : "Clubhouse inbox"} · ${state.step + 1}/${deck.length}`,
+    `${mode === "sorting" ? "Toy Town cleanup" : mode === "news" ? "Tiny news desk" : mode === "conversation" ? "Treehouse crew" : mode === "traffic" ? "Traffic Town road school" : "Clubhouse inbox"} · Chapter ${Math.floor(state.step/10)+1}/6 · Challenge ${state.step + 1}/${deck.length}`,
   );
   const labels =
     mode === "messages"
@@ -426,7 +462,7 @@ function renderCards(mode) {
     : mode === "sorting"
       ? iconSvg(item.art, "message-icon reuse-item-art")
     : `<span class="message-icon" aria-hidden="true">${item.icon}</span>`;
-  board.innerHTML = `<div class="message-card ${mode === "traffic" ? "traffic-message" : ""}">${messageArt}<div class="message-copy"><h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""}">${display.map((choice) => `<button class="choice-button" data-answer="${choice.index}">${esc(choice.label)}</button>`).join("")}</div>${mode === "sorting" ? '<p class="board-note" style="margin-top:1rem">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
+  board.innerHTML = `${campaignTrail(state.step,deck.length)}<div class="message-card ${mode === "traffic" ? "traffic-message" : ""}">${messageArt}<div class="message-copy"><h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""}">${display.map((choice) => `<button class="choice-button" data-answer="${choice.index}">${esc(choice.label)}</button>`).join("")}</div>${mode === "sorting" ? '<p class="board-note" style="margin-top:1rem">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
   progress(state.step, deck.length);
   bind("[data-answer]", (node) => {
     if (state.answered) return;
@@ -453,12 +489,14 @@ function renderCards(mode) {
       () => {
         state.step++;
         if (state.step === deck.length) {
+          writeCampaign(state.step,state.correct);
           finish(
             `You explored ${deck.length} situations and found ${state.correct} strong first choices. Each explanation is a new tool for next time.`,
           );
         } else {
+          writeCampaign(state.step,state.correct);
           renderCards(mode);
-          say("Look closely, then choose what you think.");
+          say(state.step%10===0?`Chapter ${state.step/10+1} unlocked! Ten new challenges ahead.`:"Look closely, then choose what you think.");
         }
       },
     );
@@ -585,8 +623,8 @@ function renderLearningPath(mode) {
 
 function renderRepair() {
   const item = state.deck[state.step];
-  stage(`Repair ${state.step + 1} of ${state.deck.length}`);
-  board.innerHTML = `<div class="message-card"><span class="message-icon">${item.icon}</span><h2 class="board-title">${esc(item.title)}</h2><p>Choose the next step. Done steps stay at the top.</p></div><div class="repair-list" style="margin-top:1rem">${Array.from({ length: state.position }, (_, i) => `<div class="repair-step done">✓ ${i + 1}. ${esc(item.steps[i])}</div>`).join("")}${state.order
+  stage(`Repair Café · Chapter ${Math.floor(state.step/10)+1}/6 · Repair ${state.step + 1} of ${state.deck.length}`);
+  board.innerHTML = `${campaignTrail(state.step,state.deck.length)}<div class="message-card"><span class="message-icon">${item.icon}</span><h2 class="board-title">${esc(item.title)}</h2><p>Choose the next step. Done steps stay at the top.</p></div><div class="repair-list" style="margin-top:1rem">${Array.from({ length: state.position }, (_, i) => `<div class="repair-step done">✓ ${i + 1}. ${esc(item.steps[i])}</div>`).join("")}${state.order
     .filter((i) => i >= state.position)
     .map(
       (i) =>
@@ -613,11 +651,13 @@ function renderRepair() {
     button(state.step === state.deck.length - 1 ? "See my repairs" : "Next repair", () => {
       state.step++;
       if (state.step === state.deck.length) {
+        writeCampaign(state.step,state.deck.length);
         finish(
-          `You inspected, chose safe materials, repaired, and tested ${state.deck.length} different objects from a twenty-scenario repair bank. Each one got another chance.`,
+          `You inspected, chose safe materials, repaired, and tested ${state.deck.length} different objects across six chapters. Each one got another chance.`,
           100,
         );
       } else {
+        writeCampaign(state.step,state.step);
         state.position = 0;
         state.order = shuffle([0, 1, 2, 3]);
         renderRepair();
@@ -1366,7 +1406,13 @@ function startMusic() {
   );
 }
 
-$("restartButton").addEventListener("click", initialize);
+$("restartButton").addEventListener("click",()=>{
+  if(campaignModes.has(world.mode)){
+    if(!window.confirm("Replay all 60 challenges in this world from the beginning?"))return;
+    writeCampaign(0,0);
+  }
+  initialize();
+});
 $("hintButton").addEventListener("click", () => {
   $("hintText").textContent = hint;
   $("hintText").hidden = !$("hintText").hidden;
