@@ -25,16 +25,24 @@ These existing games already had 60: **Pantry Picnic, Traffic Town, Street Safet
 - **Critter Council**: 20 original + 40 new 2×3 neighborhood layouts with four achievable neighbor requests apiece, totaling 240 requests. Preserve earlier saved progress.
 - **22 of 35** fixed-sequence cabinets now offer 60 levels once this stacked change is merged on top of the preceding expedition pack.
 
+## The final fixed-length worlds (stacked after #62)
+
+- Pocket Planet: thirty additional individual grow/build/eat projects, sixty unique in six rounds.
+- Garden Guardians: fifty-two new plant and water quota plans, original eight retained.
+- Energy Island: fifty-two distinct four-day weather forecasts with affordable four-day power solutions.
+- Robot Rover: forty new deterministic five-by-five obstacle layouts with verified shortest programs, original twenty retained.
+- **All 26 fixed-length cabinets** now have sixty individual challenges if this PR merges after #62. Nine free-form cabinets require separate mission design, not fake level counters.
+
 ## Remaining fixed-length worlds and accurate gap
 
 | World | Actual playable challenges | More required |
 | --- | ---: | ---: |
 | Trade Town | **60** | **0** |
 | Critter Council | **60** | **0** |
-| Pocket Planet | 30 | 30 |
-| Garden Guardians | 8 | 52 |
-| Energy Island | 8 | 52 |
-| Robot Rover | 20 | 40 |
+| Pocket Planet | **60** | **0** |
+| Garden Guardians | **60** | **0** |
+| Energy Island | **60** | **0** |
+| Robot Rover | **60** | **0** |
 
 Those games must get genuinely new, **solvable** routes, transactions, layouts, requests, or projects. Avoid repeated text with a new level number. Each new engine needs a test that actually finishes representative levels, catches dead ends and validates no repeats.
 
