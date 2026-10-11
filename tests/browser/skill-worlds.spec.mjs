@@ -34,6 +34,7 @@ async function round(page, id, play) {
   expect(saved.completions).toBe(1);
   expect(saved.metrics.practiceRuns).toBe(1);
   await page.locator("#closeFinish").click();
+  if(["scam-sleuth","kindness-quest","fact-finder","reuse-rally","traffic-town","repair-cafe"].includes(id)) page.once("dialog", dialog=>dialog.accept());
   await page.locator("#restartButton").click();
   await expect(page.locator("#finishDialog")).not.toBeVisible();
   expect(
@@ -53,7 +54,7 @@ async function round(page, id, play) {
   await expect(page.locator("#bestScore")).not.toHaveText("—");
   expect(errors).toEqual([]);
 }
-async function chooseDeck(page, deck, labels, roundSize = 10) {
+async function chooseDeck(page, deck, labels, roundSize = 60) {
   for (let i = 0; i < roundSize; i++) {
     const text = await page.locator(".message-card").innerText();
     const item = deck.find((item) => text.includes(item.text || item.name));
@@ -205,9 +206,10 @@ test("Pocket Planet: six replay rounds reveal all sixty projects",async({page})=
   }
   expect(seen.size).toBe(60);
 });
-test("Scam Sleuth: complete shuffled messages and explanatory feedback", async ({
+test("Scam Sleuth: complete shuffled messages and explanatory feedback · full 60-challenge journey", async ({
   page,
 }) => {
+  test.setTimeout(420000);
   await round(page, "scam-sleuth", () =>
     chooseDeck(page, messages, [
       "Read it",
@@ -228,29 +230,19 @@ test("Core life-skill worlds: five unique question banks contain sixty scenarios
   expect(new Set(repairs.map(item=>item.title)).size).toBe(60);
   expect(new Set(sorting.map(item=>item.name)).size).toBe(60);
 });
-test("Scam Sleuth: six rounds rotate through all sixty unique scenarios",async({page})=>{
-  test.setTimeout(180_000);
+test("Scam Sleuth: ten cleared tasks resume from eleven after reload",async({page})=>{
   await page.goto("/games/scam-sleuth/index.html");
-  const seen = new Set();
-  for(let roundIndex=0;roundIndex<6;roundIndex++){
-    for(let i=0;i<10;i++){
-      const scenario=await page.locator(".message-card p").innerText();
-      const item=messages.find(entry=>entry.text===scenario);
-      expect(item).toBeTruthy();
-      expect(seen.has(scenario)).toBe(false);
-      seen.add(scenario);
-      await page.getByRole("button",{
-        name:["Read it","Check another way","Block & tell an adult"][item.answer],exact:true
-      }).click();
-      await expect(page.locator("#feedback")).toHaveClass(/good/);
-      await page.getByRole("button",{
-        name:i===9?"See what I learned":"Next discovery",exact:true
-      }).click();
-    }
-    await expect(page.locator("#finishDialog")).toBeVisible();
-    if(roundIndex<5)await page.getByRole("button",{name:"Try another round",exact:true}).click();
+  for(let i=0;i<10;i++){
+    const prompt=await page.locator(".message-card p").innerText();
+    const item=messages.find(m=>m.text===prompt);
+    expect(item).toBeTruthy();
+    await page.getByRole("button",{name:["Read it","Check another way","Block & tell an adult"][item.answer]}).click();
+    await page.getByRole("button",{name:"Next discovery"}).click();
   }
-  expect(seen.size).toBe(60);
+  expect(await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.mainCampaign.scam-sleuth.v1")).next)).toBe(10);
+  await page.reload();
+  await expect(page.locator("#stageLabel")).toContainText("Chapter 2/6");
+  await expect(page.locator("#stageLabel")).toContainText("11/60");
 });
 test("Scam Sleuth: center evidence stays readable in light, dark, and high contrast", async ({
   page,
@@ -296,12 +288,14 @@ test("Scam Sleuth: center evidence stays readable in light, dark, and high contr
   await expect(page.locator(".message-card")).toHaveCSS("background-color", "rgb(17, 17, 17)");
   await expect(page.locator(".message-card p")).toHaveCSS("color", "rgb(255, 255, 255)");
 });
-test("Kindness Quest: listen, set boundaries, and repair", async ({ page }) => {
+test("Kindness Quest: listen, set boundaries, and repair · full 60-challenge journey", async ({ page }) => {
+  test.setTimeout(420000);
   await round(page, "kindness-quest", () => chooseDeck(page, conversations));
 });
-test("Fact Finder: inspect sources, opinions, advertising, and claims", async ({
+test("Fact Finder: inspect sources, opinions, advertising, and claims · full 60-challenge journey", async ({
   page,
 }) => {
+  test.setTimeout(420000);
   await round(page, "fact-finder", () =>
     chooseDeck(page, newsCards, [
       "Evidence",
@@ -311,11 +305,12 @@ test("Fact Finder: inspect sources, opinions, advertising, and claims", async ({
     ]),
   );
 });
-test("Reuse Rally: sort objects with the displayed town rules", async ({
+test("Reuse Rally: sort all sixty objects through six chapters", async ({
   page,
 }) => {
+  test.setTimeout(420000);
   await round(page, "reuse-rally", async () => {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 60; i++) {
       const art = page.locator(".reuse-item-art");
       await expect(art).toBeVisible();
       await expect(art.locator(".object-model")).toHaveCount(1);
@@ -332,47 +327,36 @@ test("Reuse Rally: sort objects with the displayed town rules", async ({
       }).click();
       await expect(page.locator("#feedback")).toHaveClass(/good/);
       await page.getByRole("button", {
-        name: i === 9 ? "See what I learned" : "Next discovery",
+        name: i === 59 ? "See what I learned" : "Next discovery",
         exact: true,
       }).click();
     }
   });
 });
-test("Traffic Town: identify ten different signs and safe road meanings", async ({ page }) => {
-  await round(page, "traffic-town", () => chooseDeck(page, trafficQuestions, null, 10));
+test("Traffic Town: complete sixty different signs and six chapters", async ({ page }) => {
+  test.setTimeout(420000);
+  await round(page, "traffic-town", () => chooseDeck(page, trafficQuestions, null, 60));
 });
-test("Traffic Town: six consecutive rounds rotate through sixty unseen signs", async ({ page }) => {
+test("Traffic Town: ten cleared signs resume at eleven after reload",async({page})=>{
   await page.goto("/games/traffic-town/index.html");
-  const playTrafficRound = async () => {
-    const seen = [];
-    for (let i = 0; i < 10; i++) {
-      const text = await page.locator(".message-card p").innerText();
-      expect(seen).not.toContain(text);
-      seen.push(text);
-      const item = trafficQuestions.find((question) => question.text === text);
-      expect(item).toBeTruthy();
-      await page.getByRole("button", { name: item.options[item.answer], exact: true }).click();
-      await page.getByRole("button", { name: i === 9 ? "See what I learned" : "Next discovery", exact: true }).click();
-    }
-    return seen;
-  };
-  const allSeen = [];
-  for (let roundIndex = 0; roundIndex < 6; roundIndex += 1) {
-    const roundSeen = await playTrafficRound();
-    expect(roundSeen.filter((text) => allSeen.includes(text))).toEqual([]);
-    allSeen.push(...roundSeen);
-    await expect(page.locator("#finishDialog")).toBeVisible();
-    if (roundIndex < 5) await page.getByRole("button", { name: "Try another round", exact: true }).click();
+  for(let i=0;i<10;i++){
+    const prompt=await page.locator(".message-card p").innerText();
+    const item=trafficQuestions.find(m=>m.text===prompt);
+    expect(item).toBeTruthy();
+    await page.getByRole("button",{name:item.options[item.answer]}).click();
+    await page.getByRole("button",{name:"Next discovery"}).click();
   }
-  expect(new Set(allSeen).size).toBe(trafficQuestions.length);
+  await page.reload();
+  await expect(page.locator("#stageLabel")).toContainText("11/60");
 });
-test("Repair Café: draw ten unique repairs from a sixty-scenario bank", async ({
+test("Repair Café: complete all sixty unique step-by-step repairs", async ({
   page,
 }) => {
+  test.setTimeout(420000);
   await round(page, "repair-cafe", async () => {
     expect(repairs.length).toBe(60);
     const seen = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 60; i++) {
       const title = await page.locator(".message-card .board-title").innerText();
       const repair = repairs.find((item) => item.title === title);
       expect(repair).toBeTruthy();
@@ -391,12 +375,12 @@ test("Repair Café: draw ten unique repairs from a sixty-scenario bank", async (
 
       await page
         .getByRole("button", {
-          name: i === 9 ? "See my repairs" : "Next repair",
+          name: i === 59 ? "See my repairs" : "Next repair",
           exact: true,
         })
         .click();
     }
-    expect(new Set(seen).size).toBe(10);
+    expect(new Set(seen).size).toBe(60);
   });
 });
 test("Time Trail: complete sixty growing maps over six chapters",async({page})=>{
@@ -642,6 +626,7 @@ test("Lemonade Lab: four forecasts and a ledger balancing revenue minus cost", a
   page,
 }) => {
   await round(page, "lemonade-lab", async () => {
+    await page.getByRole("button",{name:"Return to four-day lab"}).click();
     for (const stock of [8, 2, 12, 6]) {
       await page.locator("#stockInput").selectOption(String(stock));
       await page.locator("#priceInput").selectOption("3");
@@ -660,6 +645,7 @@ test("Beat Builder: compose, play silently, pause on hide, and save a pattern", 
   page,
 }) => {
   await round(page, "beat-builder", async () => {
+    await page.getByRole("button",{name:"Return to freestyle"}).click();
     const pattern = [
       [0, 4, 8, 12],
       [4, 12],
@@ -699,8 +685,7 @@ test("Lemonade Lab: keep four-day free play and finish all sixty market missions
   expect(marketMissions).toHaveLength(60);
   expect(new Set(marketMissions.map(m=>m.name)).size).toBe(60);
   await round(page,"lemonade-lab",async()=>{
-    await expect(page.getByRole("button",{name:"Open for the day"})).toBeVisible();
-    await page.getByRole("button",{name:"Explore 60 market missions"}).click();
+    await expect(page.locator("[data-market-mission]")).toBeVisible();
     for(let i=0;i<marketMissions.length;i++){
       const mission=marketMissions[i],best=bestMarketPlan(mission);
       expect(best).toBeTruthy();
@@ -723,8 +708,7 @@ test("Beat Builder: keep freestyle and complete sixty unique patterns", async fu
   expect(beatMissions).toHaveLength(60);
   expect(new Set(beatMissions.map(m=>m.rows.map(row=>row.join(",")).join("|"))).size).toBe(60);
   await round(page,"beat-builder",async()=>{
-    await expect(page.getByRole("button",{name:"Save my freestyle"})).toBeVisible();
-    await page.getByRole("button",{name:"Explore 60 beat missions"}).click();
+    await expect(page.locator("[data-beat-mission]")).toBeVisible();
     for(let i=0;i<beatMissions.length;i++){
       const mission=beatMissions[i];
       await expect(page.locator("[data-beat-mission]")).toHaveAttribute("data-beat-mission",mission.id);
@@ -745,15 +729,12 @@ test("Beat Builder: keep freestyle and complete sixty unique patterns", async fu
 
 test("Creative missions resume locally after reload", async function creativeResumeE2E({page}){
   await page.goto("/games/lemonade-lab/index.html");
-  await page.getByRole("button",{name:"Explore 60 market missions"}).click();
   const best=bestMarketPlan(marketMissions[0]);
   await page.locator("#stockInput").selectOption(String(best.stock));
   await page.locator("#priceInput").selectOption(String(best.price));
   await page.getByRole("button",{name:"Run my mission stand"}).click();
   await expect(page.locator("#feedback")).toHaveClass(/good/);
   await page.reload();
-  await expect(page.getByRole("button",{name:"Open for the day"})).toBeVisible();
-  await page.getByRole("button",{name:"Explore 60 market missions"}).click();
   await expect(page.locator("[data-market-mission]")).toHaveAttribute("data-market-mission","market-02");
   await page.getByRole("button",{name:"Return to four-day lab"}).click();
   await expect(page.getByRole("button",{name:"Open for the day"})).toBeVisible();
