@@ -1953,3 +1953,24 @@ html.larriverse-high-contrast body[data-world="lemonade-lab"] .field-grid select
   background: #000000 !important;
   color: #ffffff !important;
 }
+
+
+/* Beat Builder's mission card must not keep its white light-mode background
+   while --ink becomes white in dark mode.  Fix the painted surface itself:
+   the existing real contrast sweep checks these exact rendered text nodes. */
+html.larriverse-dark body[data-world="beat-builder"] .creative-mission-card {
+  background-color: #202b40;
+  color: #f7f9ff;
+  border-color: #bba9ee;
+}
+html.larriverse-dark body[data-world="beat-builder"] .creative-mission-card :is(h2,p,.eyebrow,.track-label) {
+  color: #f7f9ff;
+}
+html.larriverse-high-contrast body[data-world="beat-builder"] .creative-mission-card {
+  background: #000 !important;
+  color: #fff !important;
+  border: 3px solid #fff !important;
+}
+html.larriverse-high-contrast body[data-world="beat-builder"] .creative-mission-card :is(h2,p,.eyebrow,.track-label) {
+  color: #fff !important;
+}
