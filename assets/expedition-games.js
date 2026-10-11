@@ -205,6 +205,11 @@ export function createExpedition(world, a) {
     a.stage(`${level.name} · ${s.level + 1} of ${tradeLevels.length}`); a.progress(s.level, tradeLevels.length);
     a.board.innerHTML = `${advancement(tradeLevels.length)}<p class="board-note">Market district ${Math.floor(s.level/10)+1} of 6 · Each district includes ten different requests. The next shop saves your progress on this device.</p><div class="expedition-stats">${a.chip("Need", level.need)}${a.chip("Budget", level.budget)}${a.chip("In basket", quantity)}${a.chip("Whole cost", cost)}</div><p class="board-intro">${a.esc(level.tip || "Compare the price for each item, then choose enough for the request. Every bundle’s fee is included.")}</p><div class="market-stalls">${level.deals.map((deal,index) => `<article class="market-stall">${iconSvg(level.icon)}<h3>${deal.name}</h3><p>${deal.quantity} items · ${deal.price} coins${deal.fee ? ` + ${deal.fee} fee` : " · no fee"}</p><strong>${deal.price + deal.fee} coins total</strong><small>${((deal.price+deal.fee)/deal.quantity).toFixed(2)} per item, with fee</small><div class="stepper"><button type="button" data-shop="${index},-1" data-focus="shop-${index}-minus" aria-label="Return ${deal.name}" ${!s.cart[index] || s.passed ? "disabled" : ""}>−</button><b>${s.cart[index]}</b><button type="button" data-shop="${index},1" data-focus="shop-${index}-plus" aria-label="Add ${deal.name}" ${s.cart[index] >= 12 || s.passed ? "disabled" : ""}>+</button></div></article>`).join("")}</div>`;
     a.bind("[data-shop]", node => { const [index,delta] = node.dataset.shop.split(",").map(Number); s.cart[index] = Math.max(0,Math.min(12,s.cart[index]+delta)); render(); });
+    a.button("Restart all market districts",()=>{
+      if(!window.confirm("Restart all 60 Trade Town challenges from the first market?"))return;
+      try{localStorage.removeItem(TRADE_SAVE_KEY)}catch{}
+      start();
+    },"secondary");
     if (s.passed) nextLevel(tradeLevels.length, `You compared ${tradeLevels.length} shopping challenges, including delivery fees. Check how much you need before choosing a bigger pack.`);
     else a.button("Check out", () => {
       if (quantity < level.need) { a.say(`You need ${level.need} items. Add enough to cover the request.`, "try"); return; }
@@ -250,13 +255,7 @@ export function createExpedition(world, a) {
       return;
     }
     resetLevel();render();
-    if(world.mode==="trade"){
-      a.button("Restart six market districts",()=>{
-        if(!window.confirm("Restart all 60 Trade Town challenges from the first market?"))return;
-        try{localStorage.removeItem(TRADE_SAVE_KEY)}catch{}
-        start();
-      },"secondary");
-    }
+
   }
   return { start };
 }
