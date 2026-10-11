@@ -288,7 +288,9 @@ select:focus-visible,
 }
 .play-card {
   padding: 1.3rem;
-  min-height: 450px;
+  /* Fit the current challenge instead of displaying an unoccupied white
+     450px rectangle below short games and on saved completion screens. */
+  min-height: 0;
   min-width: 0;
 }
 .play-top {
@@ -336,6 +338,14 @@ select:focus-visible,
   background: #fff3d4;
   color: #74511e;
 }
+/* Empty result/action placeholders must not look like extra blank cards.
+   Their original layout returns automatically as soon as content is set. */
+.play-card #feedback:empty,
+.play-card #gameActions:empty,
+.play-card #gameBoard:empty {
+  display: none;
+}
+
 .game-footer {
   text-align: center;
   font-size: 0.78rem;
