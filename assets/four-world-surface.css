@@ -145,3 +145,13 @@ html.larriverse-high-contrast body[data-world="cipher-club"] :is(.world-banner,.
   background:#000!important;color:#fff!important;border-color:#fff!important;
   box-shadow:none!important;
 }
+
+/* WCAG AA: the shared purple eyebrow was too pale on the new pastel
+   header/mission backgrounds (Cipher Club 3.89:1; Critter Council 4.46:1).
+   Darken only these daytime captions, keeping night/HC colors intact. */
+html.larriverse-light body[data-world="cipher-club"] :is(.world-banner,.mission-card) .eyebrow {
+  color:#49305d;
+}
+html.larriverse-light body[data-world="critter-council"] :is(.world-banner,.mission-card) .eyebrow {
+  color:#304a38;
+}
