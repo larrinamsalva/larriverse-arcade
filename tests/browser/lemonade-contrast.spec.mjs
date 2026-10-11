@@ -54,3 +54,33 @@ test("Lemonade Lab market text and native dropdown choices stay readable in thre
  await page.getByRole("button",{name:"Run my mission stand"}).click();
  await expect(page.locator("#feedback")).not.toBeEmpty();
 });
+
+test("Beat Builder rhythm mission copy stays legible in dark and high-contrast themes",async({page})=>{
+  await page.goto("/games/beat-builder/index.html");
+  await expect(page.locator("[data-beat-mission]")).toBeVisible();
+  for(const mode of ["light","dark","high-contrast"]){
+    await page.evaluate(m=>window.LarriVerseArcade.setSettings({
+      theme:m==="high-contrast"?"dark":m,
+      highContrast:m==="high-contrast",
+      reducedMotion:true
+    }),mode);
+    const readings=await page.evaluate(()=>{
+      const rgb=val=>(val.match(/[\\d.]+/g)||[]).slice(0,3).map(Number);
+      const lum=val=>rgb(val).map(n=>{
+        const c=n/255;return c<=0.04045?c/12.92:((c+0.055)/1.055)**2.4;
+      }).reduce((a,n,i)=>a+n*[.2126,.7152,.0722][i],0);
+      const contrast=(a,b)=>{
+        const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);
+      };
+      const card=document.querySelector(".creative-mission-card");
+      const background=getComputedStyle(card).backgroundColor;
+      return ["h2","p.eyebrow","p:not(.eyebrow)",".track-label"].map(selector=>{
+        const element=card.querySelector(selector);
+        const styles=getComputedStyle(element);
+        return {selector,ratio:contrast(styles.color,background),foreground:styles.color,background};
+      });
+    });
+    for(const value of readings)
+      expect(value.ratio,`${mode} ${value.selector} ${JSON.stringify(value)}`).toBeGreaterThanOrEqual(4.5);
+  }
+});
