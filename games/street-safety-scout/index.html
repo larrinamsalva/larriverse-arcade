@@ -82,11 +82,11 @@
       <aside class="mission-panel" aria-labelledby="missionHeading">
         <div class="scout-badge" aria-hidden="true">🦺</div>
         <p class="eyebrow">Your mission</p>
-        <h2 id="missionHeading">Clear 15 safety stops</h2>
-        <p>Each round mixes signals, caution signs, emergency clues, vehicle hazards, and roadside caution from a 60-scenario bank. Four full routes rotate before any safety zone repeats.</p>
+        <h2 id="missionHeading">Explore four routes · 60 safety stops</h2>
+        <p>Four connected routes teach 60 different signal, hazard, caution and emergency-awareness clues. Progress saves between visits; you can stop after any scene.</p>
         <div class="progress-wrap">
-          <div class="progress-label"><span id="progressText">Ready to scout</span><b id="progressNumber">0 / 15</b></div>
-          <div class="progress-track" role="progressbar" aria-label="Round progress" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0"><span id="progressFill"></span></div>
+          <div class="progress-label"><span id="progressText">Ready to scout</span><b id="progressNumber">0 / 60</b></div>
+          <div class="progress-track" role="progressbar" aria-label="Four-route progress" aria-valuemin="0" aria-valuemax="60" aria-valuenow="0"><span id="progressFill"></span></div>
         </div>
         <dl class="round-stats">
           <div><dt>Score</dt><dd id="scoreValue">0</dd></div>
@@ -95,7 +95,7 @@
         </dl>
         <button type="button" class="secondary" id="hintButton">Bloom’s clue</button>
         <button type="button" class="secondary" id="soundButton" aria-pressed="false">Sound off</button>
-        <button type="button" class="text-button" id="restartButton">Start a new route</button>
+        <button type="button" class="text-button" id="restartButton">Restart 60 stops</button>
         <p class="safety-note"><b>Practice only:</b> signs and laws can vary. Kids should explore with an adult. Never use this game while driving or during a real emergency.</p>
       </aside>
 
@@ -113,13 +113,13 @@
             <article><span>◇</span><b>Street hazards</b><small>Vehicle lights, hidden people, fog</small></article>
             <article><span>🛣️</span><b>Roadside caution</b><small>Shoulders, workers, tractors, animals</small></article>
           </div>
-          <button type="button" class="primary start-button" id="startButton">Start safety route</button>
+          <button type="button" class="primary start-button" id="startButton">Start or resume 60-stop journey</button>
         </div>
 
         <div id="challengePanel" class="challenge-panel" hidden>
           <div class="challenge-top">
             <span class="category-chip" id="categoryChip">Signal lights</span>
-            <span class="stop-count" id="stopCount">Stop 1 of 15</span>
+            <span class="stop-count" id="stopCount">Route 1/4 · Stop 1 of 60</span>
           </div>
           <figure class="scenario-visual" id="scenarioVisual"></figure>
           <div class="question-copy">
@@ -148,7 +148,7 @@
       <div class="result-score"><strong id="resultScore">0</strong><span>practice score</span></div>
       <p class="reward-message" id="rewardMessage"></p>
       <div class="result-actions">
-        <button type="button" class="primary" id="playAgainButton">Scout another route</button>
+        <button type="button" class="primary" id="playAgainButton">Replay all 60 stops</button>
         <a class="secondary" href="../../index.html">Back to Arcade</a>
       </div>
     </div>

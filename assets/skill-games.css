@@ -1888,3 +1888,89 @@ html.larriverse-high-contrast body[data-world="time-trail"] .trail-local-note {c
 }
 .larriverse-dark .creative-result {background:#17392e;color:#e3fff0;border-color:#66bc93;}
 .larriverse-high-contrast .creative-result {border-width:3px;}
+
+
+/* Lemonade Lab readability: labels, drop-down selected values AND expanded options.
+   Dark/contrast themes must never pair inherited white text with a white paper card.
+   Explicit color schemes also keep native OS option menus legible on Windows/mobile. */
+body[data-world="lemonade-lab"] .creative-mission-card {
+  background-color: #fffdf4;
+  color: #25344b;
+  border-color: #b78028;
+}
+body[data-world="lemonade-lab"] .creative-mission-card :is(h2,p,.eyebrow,.field-grid label,.board-note) {
+  color: #25344b;
+}
+body[data-world="lemonade-lab"] .creative-mission-card .field-grid select,
+body[data-world="lemonade-lab"] .field-grid select {
+  color-scheme: light;
+  background-color: #ffffff;
+  color: #172c43;
+  -webkit-text-fill-color: #172c43;
+  border: 2px solid #62768c;
+  font-weight: 800;
+  opacity: 1;
+}
+body[data-world="lemonade-lab"] .field-grid select option {
+  background-color: #ffffff;
+  color: #172c43;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .creative-mission-card {
+  background: #202b40;
+  color: #f7f9ff;
+  border-color: #e9ba6c;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .creative-mission-card :is(h2,p,.eyebrow,.field-grid label,.board-note) {
+  color: #f7f9ff;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .field-grid select {
+  color-scheme: dark;
+  background: #17253a;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  border-color: #b0cce9;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .field-grid select option {
+  background: #17253a;
+  color: #ffffff;
+}
+html.larriverse-high-contrast body[data-world="lemonade-lab"] .creative-mission-card {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 3px solid #ffffff !important;
+}
+html.larriverse-high-contrast body[data-world="lemonade-lab"] .creative-mission-card :is(h2,p,.eyebrow,.field-grid label,.board-note) {
+  color: #ffffff !important;
+}
+html.larriverse-high-contrast body[data-world="lemonade-lab"] .field-grid select {
+  color-scheme: dark;
+  background: #000000 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 3px solid #ffffff !important;
+}
+html.larriverse-high-contrast body[data-world="lemonade-lab"] .field-grid select option {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+
+/* Beat Builder's mission card must not keep its white light-mode background
+   while --ink becomes white in dark mode.  Fix the painted surface itself:
+   the existing real contrast sweep checks these exact rendered text nodes. */
+html.larriverse-dark body[data-world="beat-builder"] .creative-mission-card {
+  background-color: #202b40;
+  color: #f7f9ff;
+  border-color: #bba9ee;
+}
+html.larriverse-dark body[data-world="beat-builder"] .creative-mission-card :is(h2,p,.eyebrow,.track-label) {
+  color: #f7f9ff;
+}
+html.larriverse-high-contrast body[data-world="beat-builder"] .creative-mission-card {
+  background: #000 !important;
+  color: #fff !important;
+  border: 3px solid #fff !important;
+}
+html.larriverse-high-contrast body[data-world="beat-builder"] .creative-mission-card :is(h2,p,.eyebrow,.track-label) {
+  color: #fff !important;
+}

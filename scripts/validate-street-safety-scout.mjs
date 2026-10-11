@@ -36,10 +36,10 @@ assert.equal(catalog.filter(item => item.id === 'street-safety-scout').length, 1
 assert.match(catalog.find(item => item.id === "street-safety-scout").mission, /sixty distinct scenarios/, "catalog mission agrees with the 60-scenario game");
 assert.equal(release.cabinets.filter(item => item.id === 'street-safety-scout').length, 1, 'release manifest includes Game 30 once');
 assert.equal(release.cabinetCount, catalog.length, 'release and catalog counts agree');
-assert.ok(html.includes('Game 30') && html.includes('60-scenario bank'), 'page explains the Game 30 mission');
+assert.ok(html.includes('Game 30') && html.includes('60 safety stops') && html.includes('Four connected routes'), 'page explains the full four-route 60-stop mission');
 assert.ok(html.includes('Practice only:') && html.includes('Never use this game while driving'), 'page keeps its real-world safety boundary');
-assert.ok(game.includes('ROUND_SIZE = 15') && game.includes('selected.length < 3'), 'rounds draw three scenes from each category');
-assert.ok(game.includes('sessionStorage') && game.includes('ROTATION_KEY'), 'session replay rotates unseen scenarios');
+assert.ok(game.includes('ROUND_SIZE = 60') && game.includes('selected.length < 12'), 'main campaign draws all twelve distinct scenes per safety category');
+assert.ok(game.includes('larriverse.streetSafetyScout.longRoute.v1') && game.includes('writeJourney(step)'), 'all sixty missions are saved locally after each stop');
 assert.ok(game.includes("sdk.award(GAME_ID") && game.includes('larriverse:bloom-message'), 'completion saves locally and reaches Bloom');
 assert.ok(game.includes('role="img"') && game.includes('aria-label='), 'generated scenes retain accessible image semantics');
 assert.ok(css.includes('html.larriverse-dark') && css.includes('html.larriverse-high-contrast'), 'shared theme and contrast modes are styled');

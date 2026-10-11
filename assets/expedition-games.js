@@ -9,6 +9,20 @@ import {
 
 export function createExpedition(world, a) {
   let s;
+  const TRADE_SAVE_KEY="larriverse.tradeTown.roadmap.v1";
+  function tradeProgress(){
+    try{
+      const saved=JSON.parse(localStorage.getItem(TRADE_SAVE_KEY)||"null");
+      if(saved&&Number.isInteger(saved.next)&&saved.next>=0&&saved.next<=tradeLevels.length&&
+        Array.isArray(saved.quality)&&saved.quality.length===saved.next&&
+        saved.quality.every(n=>Number.isFinite(n)&&n>=0&&n<=100))return saved;
+    }catch{}
+    return {next:0,quality:[]};
+  }
+  function saveTrade(next){
+    try{localStorage.setItem(TRADE_SAVE_KEY,JSON.stringify({next,quality:s.quality}));}
+    catch{a.say("This browser could not save this town's progress, but you can continue.","try");}
+  }
   const total = object => Object.values(object).reduce((sum, value) => sum + value, 0);
   const part = id => bridgeParts.find(item => item.id === id);
   const tool = (item, selected, disabled = false) => `<button type="button" class="build-tool ${selected === item.id ? "selected" : ""}" data-tool="${item.id}" data-focus="tool-${item.id}" aria-pressed="${selected === item.id}" ${disabled ? "disabled" : ""}>${item.capacity ? `<svg class="bridge-tool-art" viewBox="0 0 140 96" aria-hidden="true">${bridgePartDrawing(item.id)}</svg>` : iconSvg(item.icon || "wood")}<b>${a.esc(item.name)}</b><small>${item.capacity ? `Holds load ${item.capacity}` : "Choose and place"}</small></button>`;
@@ -53,9 +67,10 @@ export function createExpedition(world, a) {
   function nextLevel(count, message) {
     a.button(s.level === count - 1 ? "Celebrate my discoveries" : "Next challenge", () => {
       if (s.level === count - 1) {
+        if(world.mode==="trade")saveTrade(count);
         const score = s.quality.length ? s.quality.reduce((sum, value) => sum + value, 0) / s.quality.length : 100;
         a.finish(message, score);
-      } else { s.level++; resetLevel(); render(); a.say("A new challenge! Try your plan and see what happens."); }
+      } else { s.level++; if(world.mode==="trade")saveTrade(s.level); resetLevel(); render(); a.say("A new challenge! Try your plan and see what happens."); }
     });
   }
   function toolBindings() {
@@ -188,8 +203,13 @@ export function createExpedition(world, a) {
   function trade() {
     const level = tradeLevels[s.level], quantity = s.cart.reduce((sum,count,index) => sum + count * level.deals[index].quantity, 0), cost = s.cart.reduce((sum,count,index) => sum + count * (level.deals[index].price + level.deals[index].fee), 0);
     a.stage(`${level.name} · ${s.level + 1} of ${tradeLevels.length}`); a.progress(s.level, tradeLevels.length);
-    a.board.innerHTML = `${advancement(tradeLevels.length)}<div class="expedition-stats">${a.chip("Need", level.need)}${a.chip("Budget", level.budget)}${a.chip("In basket", quantity)}${a.chip("Whole cost", cost)}</div><p class="board-intro">${a.esc(level.tip || "Compare the price for each item, then choose enough for the request. Every bundle’s fee is included.")}</p><div class="market-stalls">${level.deals.map((deal,index) => `<article class="market-stall">${iconSvg(level.icon)}<h3>${deal.name}</h3><p>${deal.quantity} items · ${deal.price} coins${deal.fee ? ` + ${deal.fee} fee` : " · no fee"}</p><strong>${deal.price + deal.fee} coins total</strong><small>${((deal.price+deal.fee)/deal.quantity).toFixed(2)} per item, with fee</small><div class="stepper"><button type="button" data-shop="${index},-1" data-focus="shop-${index}-minus" aria-label="Return ${deal.name}" ${!s.cart[index] || s.passed ? "disabled" : ""}>−</button><b>${s.cart[index]}</b><button type="button" data-shop="${index},1" data-focus="shop-${index}-plus" aria-label="Add ${deal.name}" ${s.cart[index] >= 12 || s.passed ? "disabled" : ""}>+</button></div></article>`).join("")}</div>`;
+    a.board.innerHTML = `${advancement(tradeLevels.length)}<p class="board-note">Market district ${Math.floor(s.level/10)+1} of 6 · Each district includes ten different requests. The next shop saves your progress on this device.</p><div class="expedition-stats">${a.chip("Need", level.need)}${a.chip("Budget", level.budget)}${a.chip("In basket", quantity)}${a.chip("Whole cost", cost)}</div><p class="board-intro">${a.esc(level.tip || "Compare the price for each item, then choose enough for the request. Every bundle’s fee is included.")}</p><div class="market-stalls">${level.deals.map((deal,index) => `<article class="market-stall">${iconSvg(level.icon)}<h3>${deal.name}</h3><p>${deal.quantity} items · ${deal.price} coins${deal.fee ? ` + ${deal.fee} fee` : " · no fee"}</p><strong>${deal.price + deal.fee} coins total</strong><small>${((deal.price+deal.fee)/deal.quantity).toFixed(2)} per item, with fee</small><div class="stepper"><button type="button" data-shop="${index},-1" data-focus="shop-${index}-minus" aria-label="Return ${deal.name}" ${!s.cart[index] || s.passed ? "disabled" : ""}>−</button><b>${s.cart[index]}</b><button type="button" data-shop="${index},1" data-focus="shop-${index}-plus" aria-label="Add ${deal.name}" ${s.cart[index] >= 12 || s.passed ? "disabled" : ""}>+</button></div></article>`).join("")}</div>`;
     a.bind("[data-shop]", node => { const [index,delta] = node.dataset.shop.split(",").map(Number); s.cart[index] = Math.max(0,Math.min(12,s.cart[index]+delta)); render(); });
+    a.button("Restart all market districts",()=>{
+      if(!window.confirm("Restart all 60 Trade Town challenges from the first market?"))return;
+      try{localStorage.removeItem(TRADE_SAVE_KEY)}catch{}
+      start();
+    },"secondary");
     if (s.passed) nextLevel(tradeLevels.length, `You compared ${tradeLevels.length} shopping challenges, including delivery fees. Check how much you need before choosing a bigger pack.`);
     else a.button("Check out", () => {
       if (quantity < level.need) { a.say(`You need ${level.need} items. Add enough to cover the request.`, "try"); return; }
@@ -221,8 +241,21 @@ export function createExpedition(world, a) {
   }
   const painters = { bridge, pipes, harbor, pantry, compass, cipher, trade, town };
   function start() {
-    s = { level: 0, quality: [], found: [], tool: "park", plots: Array(6).fill(null), load: {}, box: {}, pantryDeck: world.mode === "pantry" ? a.challengeRound(pantryChallenges, PANTRY_ROUND_SIZE) : [] };
-    resetLevel(); render();
+    const prior=world.mode==="trade"?tradeProgress():{next:0,quality:[]};
+    s = { level: prior.next, quality: prior.quality, found: [], tool: "park", plots: Array(6).fill(null), load: {}, box: {}, pantryDeck: world.mode === "pantry" ? a.challengeRound(pantryChallenges, PANTRY_ROUND_SIZE) : [] };
+    if(world.mode==="trade"&&s.level===tradeLevels.length){
+      a.stage("Trade Town · Six districts completed");
+      a.board.innerHTML='<div class="message-card"><div class="message-copy"><h2 class="board-title">🏆 All 60 markets explored!</h2><p>You completed six different market districts. Play again to revisit every real shopping decision.</p></div></div>';
+      a.progress(60,60,"60 of 60 shopping challenges");
+      a.score(Math.round(s.quality.reduce((total,n)=>total+n,0)/60));
+      a.button("Replay all 60 markets",()=>{
+        try{localStorage.removeItem(TRADE_SAVE_KEY)}catch{}
+        start();
+      });
+      return;
+    }
+    resetLevel();render();
+
   }
   return { start };
 }
