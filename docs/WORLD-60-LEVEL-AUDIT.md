@@ -58,6 +58,17 @@ The two original creative modes remain available. The new curricula count **real
 
 The progress for each optional path is saved locally. Completing a single mission does not award the complete-world celebration; all sixty are required. The final target is **26 fixed-sequence curricula + 2 optional sixty-mission paths**; the other seven creative/adventure/family cabinets still need bespoke content.
 
+## Wildlife and travel story missions
+
+Two more classic games now have **optional**, fully standalone sixty-mission learning paths, with the original action play intact:
+
+- **Creature Catcher:** 60 unique wildlife questions across habitat, food webs, signs, adaptations, and respectful wildlife care. The original timed collecting and question-pool game is preserved.
+- **Road Trip Quest:** 60 route-reading, packing, weather, passenger safety and community-etiquette missions across twelve different trip settings. The original eight-city adventure and boss system is preserved.
+- Each mission has a verifiable correct choice, two relevant distractors, explanation and free hint. Wrong answers cannot unlock the next chapter. Device-local saves and replay are opt-in.
+- Children are never encouraged to operate a vehicle while playing; there is no location permission or network tracking.
+
+**After this optional quest pack:** 26 fixed sixty-level worlds plus 4 optional sixty-mission worlds = **30 of 35** with distinct sixty-step learning paths. Five remaining family and learning hubs need separate curriculum design.
+
 ## Games without one 60-step curriculum today
 
 | Cabinet | What it actually offers | Next design step |
