@@ -61,10 +61,9 @@ export const gardenExtraLevels=Array.from({length:52},(_,i)=>{
  const later=i>=36,target=later?6:5,water=later?12:i>=18?10:11;
  const name=gardenPlaces[i%gardenPlaces.length]+" "+gardenKinds[Math.floor(i/gardenPlaces.length)];
  return {id:"garden-"+String(level).padStart(2,"0"),name,rank:[
-   "Sprout Starter","Soil Scout","Pollinator Partner","Garden Steward",
    "Compost Keeper","Water Saver","Flower Friend","Season Planner",
    "Habitat Helper","Harvest Guardian","Eco Designer","Garden Champion",
- ][Math.floor((level-1)/5)],zone,water,target,...mix,
+ ][Math.floor(i/7)],zone,water,target,...mix,
  lesson:"Design the "+name+" garden with "+mix.carrot+" carrots, "+mix.bean+" beans and "+mix.flower+" flowers. Carefully plan "+water+" water drops across different growing days so at least "+target+" plants thrive."};
 });
 
@@ -79,16 +78,15 @@ const energyKinds=["Isle","Harbor","Village","Haven"];
 const weatherKeys=["sunny","cloudy","breezy","night"];
 export const energyExtraLevels=Array.from({length:52},(_,i)=>{
  const id=i+9, zone=["coast","village","forest","mountain"][Math.floor(i/13)];
- const demand=6+Math.floor(i/18),tokens=Math.max(12,Math.ceil(demand/2)*3)+i%4;
+ const demand=6+Math.floor(i/18),tokens=(demand===6?12:demand===7?14:16)+i%3;
  const code=(i*37+71)%256;
  const patterns=Array.from({length:4},(_,day)=>weatherKeys[(Math.floor(code/4**day))%4]);
  if(i>=30)patterns[3]="night";
  const name=energyPlaces[i%13]+" "+energyKinds[Math.floor(i/13)];
  return {id:"power-"+String(id).padStart(2,"0"),name,rank:[
-  "Power Beginner","Weather Watcher","Storage Planner","Island Engineer",
   "Solar Student","Wind Mapper","Forecast Reader","Battery Planner",
   "Microgrid Builder","Night Shift Planner","Resilience Designer","Power Guardian",
- ][Math.floor((id-1)/5)],zone,tokens,demand,
+ ][Math.floor(i/7)],zone,tokens,demand,
  weather:patterns.map(x=>({...forecasts[x]})),
  lesson:"Plan energy for "+name+" over "+patterns.map(x=>forecasts[x].name.toLowerCase()).join(", ")+
  ". Supply "+demand+" units on each day using at most "+tokens+" builder tokens. Decide which sources can help after dark."};
