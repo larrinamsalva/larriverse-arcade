@@ -49,10 +49,13 @@ test('all shared LarriVerse worlds avoid empty bottom game panels, on desktop an
   let covered=0;
   for(const game of catalog){
     await page.goto('/'+game.href,{waitUntil:'load'});
+    // Custom standalone and classic cabinets do not use the shared skill-game
+    // #gameBoard structure.  Only apply this template-specific audit to pages
+    // that actually contain that complete shared-game structure.
     const playArea=page.locator('#playArea.play-card');
-    if(!(await playArea.count()))continue;
+    if(!(await playArea.count()) || !(await playArea.locator('#gameBoard').count()))continue;
     covered++;
-    await expect(page.locator('#gameBoard')).not.toBeEmpty();
+    await expect(playArea.locator('#gameBoard')).not.toBeEmpty();
     for(const theme of ['light','dark']){
       await page.evaluate(theme=>window.LarriVerseArcade.setSettings({
         theme,highContrast:false,reducedMotion:true
