@@ -1,5 +1,5 @@
 import {test,expect} from '@playwright/test';
-import {mkdirSync} from 'node:fs';
+import {mkdirSync,readFileSync} from 'node:fs';
 
 // Full-page white-box investigation: previous gallery captures showed only the first viewport.
 // This keeps the evidence in the existing Browser QA screenshots artifact.
@@ -41,4 +41,50 @@ test('inspect bottom-of-page empty panels in every reported world',async({page},
     });
     console.log('BOTTOM-AUDIT '+world+' '+JSON.stringify(result));
   }
+});
+
+test('all shared LarriVerse worlds avoid empty bottom game panels, on desktop and mobile',async({page})=>{
+  test.setTimeout(180000);
+  const catalog=JSON.parse(readFileSync('games/catalog.json','utf8'));
+  let covered=0;
+  for(const game of catalog){
+    await page.goto('/'+game.href,{waitUntil:'load'});
+    const playArea=page.locator('#playArea.play-card');
+    if(!(await playArea.count()))continue;
+    covered++;
+    await expect(page.locator('#gameBoard')).not.toBeEmpty();
+    for(const theme of ['light','dark']){
+      await page.evaluate(theme=>window.LarriVerseArcade.setSettings({
+        theme,highContrast:false,reducedMotion:true
+      }),theme);
+      const layout=await page.evaluate(()=>{
+        const card=document.querySelector('#playArea.play-card');
+        const rect=card.getBoundingClientRect();
+        const visible=node=>{
+          const css=getComputedStyle(node),box=node.getBoundingClientRect();
+          return css.display!=='none'&&css.visibility!=='hidden'&&box.height>0;
+        };
+        const bottoms=[...card.children].filter(visible).map(node=>node.getBoundingClientRect().bottom);
+        const empties=['#gameBoard','#feedback','#gameActions'].flatMap(selector=>{
+          const node=card.querySelector(selector);
+          if(node?.textContent.trim()===''&&node&&!node.querySelector('button,img,canvas,svg,select,input')){
+            return [selector+': '+getComputedStyle(node).display];
+          }
+          return [];
+        });
+        return {
+          gap:rect.bottom-Math.max(...bottoms),
+          height:rect.height,
+          empties,
+          background:getComputedStyle(card).backgroundColor,
+          footerText:document.querySelector('.game-footer')?.textContent.trim().length||0
+        };
+      });
+      expect(layout.gap,`${game.id} (${theme}) has ${layout.gap}px of blank painted space below its last child: ${JSON.stringify(layout)}`).toBeLessThan(95);
+      for(const e of layout.empties)
+        expect(e,`${game.id} (${theme}) still has an empty painted placeholder`).toContain('none');
+      expect(layout.footerText,`${game.id} footer must not disappear`).toBeGreaterThan(20);
+    }
+  }
+  expect(covered,'All shared-template game worlds must be audited').toBeGreaterThanOrEqual(22);
 });
