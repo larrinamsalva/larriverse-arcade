@@ -1,6 +1,7 @@
+import { gardenExtraLevels, energyExtraLevels } from "./remaining-fixed-worlds.js";
 // Offline-only progression for the original Garden Guardians and Energy Island worlds.
 // These are simplified, fictional practice missions; no actual planting or electrical advice.
-export const gardenLevels = [
+const originalGardenLevels = [
   { id:"meadow-seeds", name:"Meadow Seeds", rank:"Sprout Starter", zone:"meadow", water:12, target:6, carrot:2, bean:2, flower:2, lesson:"Plant two of each kind so your first patch supports food crops and pollinators." },
   { id:"veggie-patch", name:"Veggie Patch", rank:"Sprout Starter", zone:"meadow", water:12, target:6, carrot:3, bean:2, flower:1, lesson:"Plan room for more carrots while keeping one flower for visiting pollinators." },
   { id:"flower-lane", name:"Flower Lane", rank:"Soil Scout", zone:"orchard", water:11, target:5, carrot:1, bean:2, flower:3, lesson:"Not every plot can fully grow with eleven drops. Decide where your limited water helps." },
@@ -10,6 +11,8 @@ export const gardenLevels = [
   { id:"dry-season", name:"Dry Season", rank:"Garden Steward", zone:"sunset", water:10, target:5, carrot:2, bean:3, flower:1, lesson:"Conserve water: two well-spaced waterings grow a crop; a third adds nothing." },
   { id:"grand-garden", name:"Grand Garden", rank:"Garden Steward", zone:"sunset", water:12, target:6, carrot:2, bean:1, flower:3, lesson:"Use what you learned: three plant kinds, six planned plots, and careful watering." },
 ];
+
+export const gardenLevels = [...originalGardenLevels, ...gardenExtraLevels];
 
 const conditions = {
   sunny: { name:"Sunny", icon:"☀️", solar:3, wind:1 },
@@ -27,6 +30,6 @@ const energyData = [
   ["mountain-storm","Mountain Storm","Island Engineer","mountain",18,8,["breezy","cloudy","night","night"],"Two dark evenings in a row make unreliable surplus tricky."],
   ["northern-glow","Northern Glow","Island Engineer","mountain",18,8,["sunny","cloudy","night","breezy"],"Build a dependable blend that lights homes through every forecast."],
 ];
-export const energyLevels = energyData.map(([id,name,rank,zone,tokens,demand,sky,lesson])=>({
+export const energyLevels = [...energyData.map(([id,name,rank,zone,tokens,demand,sky,lesson])=>({
   id,name,rank,zone,tokens,demand,weather:sky.map(key=>({...conditions[key]})),lesson,
-}));
+})), ...energyExtraLevels];
