@@ -10,6 +10,7 @@ import {
 export function createExpedition(world, a) {
   let s;
   const TRADE_SAVE_KEY="larriverse.tradeTown.roadmap.v1";
+  const PANTRY_SAVE_KEY="larriverse.pantryPicnic.sixty.v1";
   function tradeProgress(){
     try{
       const saved=JSON.parse(localStorage.getItem(TRADE_SAVE_KEY)||"null");
@@ -22,6 +23,19 @@ export function createExpedition(world, a) {
   function saveTrade(next){
     try{localStorage.setItem(TRADE_SAVE_KEY,JSON.stringify({next,quality:s.quality}));}
     catch{a.say("This browser could not save this town's progress, but you can continue.","try");}
+  }
+  function pantryProgress() {
+    try {
+      const saved=JSON.parse(localStorage.getItem(PANTRY_SAVE_KEY)||"null");
+      if(saved && Number.isInteger(saved.next) && saved.next>=0 &&
+         saved.next<=pantryChallenges.length && typeof saved.rewarded==="boolean")
+        return saved;
+    } catch {}
+    return {next:0,rewarded:false};
+  }
+  function savePantry(next,rewarded=false) {
+    try { localStorage.setItem(PANTRY_SAVE_KEY,JSON.stringify({next,rewarded})); }
+    catch { a.say("This browser could not save your picnic checkpoint, but you can keep playing.","try"); }
   }
   const total = object => Object.values(object).reduce((sum, value) => sum + value, 0);
   const part = id => bridgeParts.find(item => item.id === id);
@@ -72,6 +86,22 @@ export function createExpedition(world, a) {
         a.finish(message, score);
       } else { s.level++; if(world.mode==="trade")saveTrade(s.level); resetLevel(); render(); a.say("A new challenge! Try your plan and see what happens."); }
     });
+  }
+  function pantryCompleteScreen(rewarded) {
+    const count=pantryChallenges.length;
+    a.stage("🏆 Pantry Picnic · All 60 picnics packed");
+    a.board.innerHTML=`<section class="adventure-advancement" aria-label="All sixty picnics complete"><span>Pantry Champion</span><b>60 of 60 picnics</b><div class="adventure-rank-track" role="progressbar" aria-label="Pantry Picnic completion" aria-valuemin="0" aria-valuemax="60" aria-valuenow="60"><i style="width:100%"></i></div></section><article class="pantry-challenge"><p class="eyebrow">Six chapters explored</p><h2>🥪 Your whole picnic journey is complete!</h2><p>All sixty different food-planning challenges are packed. You can replay them whenever you choose.</p></article>`;
+    a.progress(count,count,"60 of 60 picnics complete · Progress saved");
+    a.score(100);
+    if(!rewarded) a.button("Celebrate my discoveries",()=> {
+      savePantry(count,true);
+      a.finish("You planned all 60 different picnics and practiced using leftovers, choosing produce, and packing sensible pretend portions.",100);
+    });
+    a.button("Replay all 60 picnics",()=>{
+      if(!window.confirm("Replay all 60 picnic challenges from the beginning? This replaces your saved Pantry Picnic checkpoint."))return;
+      try {localStorage.removeItem(PANTRY_SAVE_KEY);} catch {}
+      start();
+    },"secondary");
   }
   function toolBindings() {
     a.bind("[data-tool]", node => { s.tool = node.dataset.tool; render(); });
@@ -131,10 +161,11 @@ export function createExpedition(world, a) {
     const produceRule = challenge.produce
       ? `${challenge.produce.fruit} fruit · ${challenge.produce.vegetable} vegetable`
       : "2 fruits or vegetables";
-    a.stage(`${challenge.name} · ${s.level + 1} of ${PANTRY_ROUND_SIZE}`);
-    a.progress(s.level + (s.passed ? 1 : 0), PANTRY_ROUND_SIZE, `${s.level + (s.passed ? 1 : 0)} of ${PANTRY_ROUND_SIZE} picnic challenges solved`);
-    a.score((s.level + (s.passed ? 1 : 0)) / PANTRY_ROUND_SIZE * 100);
-    a.board.innerHTML = `<article class="pantry-challenge" data-pantry-challenge="${challenge.id}"><p class="eyebrow">${a.esc(challenge.chapter || "Pantry classics")} · ${pantryChallenges.length} different challenges</p><h2>${a.esc(challenge.name)}</h2><p>${a.esc(challenge.prompt)}</p><div class="pantry-rules" aria-label="Picnic request"><span>1 main</span><span>${produceRule}</span>${challenge.differentProduce ? "<span>2 different produce choices</span>" : ""}<span>Use marked leftovers first</span></div></article><div class="picnic-basket">${[0,1,2].map(index => packedItems[index] ? `<button type="button" class="picnic-slot filled" data-unpack="${packedItems[index].id}" data-focus="packed-${index}" ${s.passed ? "disabled" : ""} aria-label="Remove ${a.esc(packedItems[index].name)} from the picnic box">${iconSvg(packedItems[index].icon)}<b>${a.esc(packedItems[index].name)}</b><small>Tap to put back</small></button>` : `<div class="picnic-slot"><span>${index === 0 ? "A main" : "Fruit or vegetable"}</span></div>`).join("")}</div><div class="cargo-shelf">${availableFoods.map(item => {
+    const count=pantryChallenges.length, chapter=Math.floor(s.level/PANTRY_ROUND_SIZE)+1;
+    a.stage(`${challenge.name} · Picnic ${s.level+1} of ${count} · Chapter ${chapter}/6`);
+    a.progress(s.level + (s.passed ? 1 : 0), count, `${s.level + (s.passed ? 1 : 0)} of ${count} picnics packed · Chapter ${chapter} of 6`);
+    a.score((s.level + (s.passed ? 1 : 0)) / count * 100);
+    a.board.innerHTML = `${advancement(count)}<p class="board-note">🥪 Chapter ${chapter} of 6 · Ten different picnics per chapter · Your next challenge saves automatically.</p><article class="pantry-challenge" data-pantry-challenge="${challenge.id}"><p class="eyebrow">${a.esc(challenge.chapter || "Pantry classics")} · ${pantryChallenges.length} different challenges</p><h2>${a.esc(challenge.name)}</h2><p>${a.esc(challenge.prompt)}</p><div class="pantry-rules" aria-label="Picnic request"><span>1 main</span><span>${produceRule}</span>${challenge.differentProduce ? "<span>2 different produce choices</span>" : ""}<span>Use marked leftovers first</span></div></article><div class="picnic-basket">${[0,1,2].map(index => packedItems[index] ? `<button type="button" class="picnic-slot filled" data-unpack="${packedItems[index].id}" data-focus="packed-${index}" ${s.passed ? "disabled" : ""} aria-label="Remove ${a.esc(packedItems[index].name)} from the picnic box">${iconSvg(packedItems[index].icon)}<b>${a.esc(packedItems[index].name)}</b><small>Tap to put back</small></button>` : `<div class="picnic-slot"><span>${index === 0 ? "A main" : "Fruit or vegetable"}</span></div>`).join("")}</div><div class="cargo-shelf">${availableFoods.map(item => {
       const remaining = challenge.stock[item.id] - (s.box[item.id] || 0);
       const required = challenge.mustUse?.[item.id] || 0;
       return `<button type="button" class="supply-card" data-food="${item.id}" data-focus="food-${item.id}" ${remaining <= 0 || s.passed ? "disabled" : ""}>${iconSvg(item.icon)}<b>${a.esc(item.name)}</b><small>${remaining} available · ${groupLabel(item)}</small>${required ? `<span class="leftover-tag">Use first${required > 1 ? ` · ${required}` : ""}</span>` : ""}</button>`;
@@ -153,13 +184,26 @@ export function createExpedition(world, a) {
       render();
     });
     if (s.passed) {
-      nextLevel(PANTRY_ROUND_SIZE, `You solved ${PANTRY_ROUND_SIZE} picnic challenges from a sixty-question pantry. The next round rotates in new requests before any repeat.`);
+      a.button(s.level===pantryChallenges.length-1 ? "Celebrate my discoveries" : "Next picnic",()=>{
+        if(s.level===pantryChallenges.length-1){
+          savePantry(pantryChallenges.length,true);
+          a.finish("You completed all 60 different picnics, from leftovers and fruit choices to balanced pretend portions.",100);
+        } else {
+          s.level++;
+          resetLevel();
+          render();
+          a.say(s.level%PANTRY_ROUND_SIZE===0
+            ? `Chapter ${Math.floor(s.level/PANTRY_ROUND_SIZE)+1} unlocked! Ten fresh picnic challenges ahead.`
+            : "Next picnic ready! Check the ingredients and choose your three portions.");
+        }
+      });
     } else {
       a.button("Check this picnic", () => {
         const result = checkPantryBox(challenge, s.box, pantryFoods);
         if (!result.ok) { a.say(result.reason, "try"); return; }
         s.passed = true;
         s.quality.push(100);
+        savePantry(s.level+1,false);
         render();
         a.say(result.reason, "good");
         a.tone(1);
@@ -242,7 +286,16 @@ export function createExpedition(world, a) {
   const painters = { bridge, pipes, harbor, pantry, compass, cipher, trade, town };
   function start() {
     const prior=world.mode==="trade"?tradeProgress():{next:0,quality:[]};
-    s = { level: prior.next, quality: prior.quality, found: [], tool: "park", plots: Array(6).fill(null), load: {}, box: {}, pantryDeck: world.mode === "pantry" ? a.challengeRound(pantryChallenges, PANTRY_ROUND_SIZE) : [] };
+    s = { level: prior.next, quality: prior.quality, found: [], tool: "park", plots: Array(6).fill(null), load: {}, box: {}, pantryDeck: world.mode === "pantry" ? pantryChallenges : [] };
+    if(world.mode==="pantry") {
+      const saved=pantryProgress();
+      s.level=saved.next;
+      s.quality=Array(saved.next).fill(100);
+      if(saved.next===pantryChallenges.length){
+        pantryCompleteScreen(saved.rewarded);
+        return;
+      }
+    }
     if(world.mode==="trade"&&s.level===tradeLevels.length){
       a.stage("Trade Town · Six districts completed");
       a.board.innerHTML='<div class="message-card"><div class="message-copy"><h2 class="board-title">🏆 All 60 markets explored!</h2><p>You completed six different market districts. Play again to revisit every real shopping decision.</p></div></div>';
