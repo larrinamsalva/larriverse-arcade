@@ -11,8 +11,8 @@ assert.equal(harborLevels.length, 60);
 assert.deepEqual(directions, ["north", "east", "south", "west"]);
 assert.equal(compassClues.length, 60);
 assert.equal(cipherLevels.length, 60);
-assert.equal(tradeLevels.length, 8);
-assert.equal(townLevels.length, 20);
+assert.equal(tradeLevels.length, 60);
+assert.equal(townLevels.length, 60);
 assert.equal(PANTRY_ROUND_SIZE, 10);
 assert.equal(pantryChallenges.length, 60);
 assert.equal(new Set(pantryChallenges.map(challenge => challenge.id)).size, pantryChallenges.length);
@@ -142,14 +142,22 @@ for (const level of cipherLevels) {
   assert.ok(/^[A-H]{3,9}$/.test(level.word), `${level.word} fits the toy alphabet and advancing word lengths`);
   assert.equal(encode(encode(level.word,level.shift),-level.shift),level.word);
 }
-for (const level of tradeLevels) assert.ok(cheapestShop(level) <= level.budget);
+assert.equal(new Set(tradeLevels.map(x => [x.name,x.need,x.budget,...x.deals.flatMap(d=>[d.quantity,d.price,d.fee])].join(":"))).size, 60, "All market prices, amounts and missions must be genuinely distinct");
+assert.ok(tradeLevels.slice(8,20).every(level=>level.deals.every(deal=>deal.fee===0)), "Early new shoppers learn bundle sizes without delivery fees");
+assert.ok(tradeLevels.slice(35).some(level=>level.deals.some(deal=>deal.fee>=2)), "Advanced markets introduce extra fees");
+for (const level of tradeLevels) {
+  assert.ok(Number.isInteger(level.need) && level.need > 0 && Number.isInteger(level.budget), "Market needs and budgets are whole numbers");
+  assert.equal(level.deals.length,3);
+  assert.ok(level.deals.every(d=>d.quantity>0 && d.price>0 && d.fee>=0 && Number.isInteger(d.fee)), "Prices and quantities stay valid");
+  assert.ok(cheapestShop(level) <= level.budget, level.name+" must be affordable with a real cart");
+}
 assert.deepEqual(townNeeds(["park","bench","ramp","hut",null,null]), [true,true,true,true]);
 assert.deepEqual(townNeeds([null,null,null,"park","bench","hut"]), [false,true,false,true]);
 assert.equal(new Set(townLevels.map(level => level.id)).size, townLevels.length);
 assert.equal(new Set(townLevels.map(level => level.name)).size, townLevels.length);
 assert.ok(new Set(townLevels.flatMap(level => level.requests.map(request => request.text))).size >= 40);
-assert.equal(new Set(townLevels.flatMap(level => level.requests.map(request => `${request.neighbor}: ${request.text}`))).size, 80);
-assert.equal(new Set(townLevels.flatMap(level => level.requests.map(request => request.neighbor))).size, 80);
+assert.equal(new Set(townLevels.flatMap(level => level.requests.map(request => `${request.neighbor}: ${request.text}`))).size, 240);
+assert.equal(new Set(townLevels.flatMap(level => level.requests.map(request => request.neighbor))).size, 240);
 const townPartIds = townParts.map(part => part.id), townRules = new Set(["plot","row","column","adjacent","sameRow","differentRow"]);
 for (const level of townLevels) {
   assert.equal(level.requests.length, 4, `${level.name} has four neighbor requests`);
@@ -166,4 +174,4 @@ for (const level of townLevels) {
 }
 for (const path of ["assets/expedition-worlds.js","assets/expedition-logic.js","assets/expedition-games.js","assets/arcade-scenes.js","tests/browser/expeditions.spec.mjs"]) execFileSync(process.execPath,["--check",path]);
 for (const path of ["assets/expedition-atlas.webp","assets/worlds-atlas-v2.webp"]) assert.ok(fs.statSync(path).size < 1_000_000);
-console.log("Eight expeditions validated: six twenty-level adventures, twenty-four rotating Pantry Picnic challenges, eighty solvable town requests, distinct treasures, cipher keys and shopping comparisons.");
+console.log("Eight expeditions validated: sixty-level adventure curriculum, sixty shopping missions, 240 solvable neighbor requests, distinct treasures, cipher keys and shopping comparisons.");

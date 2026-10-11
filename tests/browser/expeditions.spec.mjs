@@ -202,7 +202,8 @@ test("Cipher Club: sixty unique A–H words grow from three to nine letters",asy
     }
   });
 });
-test("Trade Town: budgets, returns, fees and eight best whole-cost comparisons",async({page})=>{
+test("Trade Town: budgets, returns, fees and sixty unique whole-cost comparisons",async({page})=>{
+  test.setTimeout(300000);
   await adventure(page,"trade-town",async()=>{
     const cheapestBasket=level=>{
       let best=null;
@@ -241,11 +242,12 @@ function townSolution(level) {
   }
   return null;
 }
-test("Critter Council: eighty requests guide twenty levels of inclusive town planning",async({page})=>{
+test("Critter Council: 240 requests guide sixty solvable neighborhoods",async({page})=>{
+  test.setTimeout(300000);
   await adventure(page,"critter-council",async()=>{
     for(const [id,index]of [["park",3],["hut",0],["ramp",1],["bench",5]]) { await page.locator(`[data-tool="${id}"]`).click(); await page.locator(`[data-plot="${index}"]`).click(); }
     await action(page,"Invite the neighbors"); await expect(page.locator("#feedback")).toHaveClass(/try/);
-    const ranks=["Kind Listener","Neighborhood Helper","Access Planner","Council Champion"];
+    const ranks=["Kind Listener","Neighborhood Helper","Access Planner","Council Champion","Park Pathfinder","Neighbor Advocate","Inclusive Designer","Access Engineer","Community Planner","Shared Space Leader","Council Mentor","Neighborhood Champion"];
     for(let round=0;round<townLevels.length;round++) {
       const solution=townSolution(townLevels[round]);
       expect(solution).toBeTruthy();
@@ -256,7 +258,7 @@ test("Critter Council: eighty requests guide twenty levels of inclusive town pla
       await action(page,"Invite the neighbors"); await expect(page.locator("#feedback")).toHaveClass(/good/);
       await next(page,round===townLevels.length-1);
     }
-    await expect(page.locator("#finishMessage")).toContainText("twenty neighborhoods");
+    await expect(page.locator("#finishMessage")).toContainText("sixty neighborhoods");
   });
 });
 test("Critter Council center cards stay readable in light and high-contrast modes",async({page})=>{
