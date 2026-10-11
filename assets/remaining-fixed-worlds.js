@@ -81,7 +81,7 @@ export const energyExtraLevels=Array.from({length:52},(_,i)=>{
  const demand=6+Math.floor(i/18),tokens=(demand===6?12:demand===7?14:16)+i%3;
  const code=(i*37+71)%256;
  const patterns=Array.from({length:4},(_,day)=>weatherKeys[(Math.floor(code/4**day))%4]);
- if(i>=30)patterns[3]="night";
+ patterns[3]="night";
  const name=energyPlaces[i%13]+" "+energyKinds[Math.floor(i/13)];
  return {id:"power-"+String(id).padStart(2,"0"),name,rank:[
   "Solar Student","Wind Mapper","Forecast Reader","Battery Planner",
