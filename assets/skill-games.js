@@ -140,7 +140,7 @@ let hint = world.take;
 
 $("skillLabel").textContent = world.skill;
 $("worldDescription").textContent = world.desc;
-$("worldMeta").textContent = `Ages ${world.age} · ${campaignModes.has(world.mode)||["market","music","trade"].includes(world.mode)?"60 levels · save and resume":`about ${world.minutes}`}`;
+$("worldMeta").textContent = `Ages ${world.age} · ${campaignModes.has(world.mode)||["market","music","trade","pantry"].includes(world.mode)?"60 levels · save and resume":`about ${world.minutes}`}`;
 $("missionIcon").textContent = world.icon;
 if (world.mode === "bridge") $("missionIcon").innerHTML = iconSvg("wood");
 $("missionTitle").textContent = world.skill;

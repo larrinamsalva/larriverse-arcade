@@ -1,3 +1,13 @@
+## Pantry Picnic: one sixty-picnic journey instead of six short rounds
+
+The Pantry Picnic **bank** already contained sixty tested, individually solvable challenges, but its main game exposed them as ten-question rounds with a reward every ten. This update makes all sixty a **single continuous curriculum**:
+
+- Six consecutive chapters of ten, an honest **Picnic N of 60** counter and an advancement bar; all sixty existing named questions used exactly once.
+- Every correct three-portion box writes a device-local checkpoint; reopening resumes at the **next unsolved picnic**, even without pressing the Next button before closing the tab. Mistakes don't advance.
+- One final SDK reward is offered only after all sixty have been solved. Reloading the completed campaign never grants the reward again.
+- Replay needs explicit confirmation before the checkpoint is cleared; the existing no-purchases, allergy-preparation caution and in-game help remain.
+- Desktop and mobile browser QA must finish the full path, test save/reload, ensure one reward and guard the replay confirmation. Do not bypass the manual release gate.
+
 ## Pocket Planet: completed main-game path (following the ten-world pass)
 
 The same short-round issue also affected **Pocket Planet**. Although it had sixty distinct hands-on projects, its main gameplay previously stopped after ten and required six separate restarts to discover the rest. Pocket Planet now launches its full **sixty-project path** directly:

@@ -129,48 +129,70 @@ function pantrySolution(challenge) {
   search(0, 3, {});
   return solutions[0];
 }
-test("Pantry Picnic: six ten-question rounds reveal all sixty without repeats",async({page})=>{
+test("Pantry Picnic: sixty continuous, unique picnics with saved checkpoints and one reward",async({page})=>{
   test.setTimeout(240_000);
   expect(pantryChallenges).toHaveLength(60);
   expect(PANTRY_ROUND_SIZE).toBe(10);
-  const errors=[]; page.on("pageerror",error=>errors.push(error.message));
-  const challengeById=new Map(pantryChallenges.map(challenge=>[challenge.id,challenge]));
+  const errors=[];page.on("pageerror",error=>errors.push(error.message));
   await page.goto("/games/pantry-picnic/index.html");
   await expect(page.locator(".world-scene svg")).toBeVisible();
   await expect(page.locator("#soundToggle")).toHaveAttribute("aria-pressed","false");
-  const allSeen=[];
-  for(let round=0;round<6;round++) {
-    const roundSeen=[];
-    for(let index=0;index<PANTRY_ROUND_SIZE;index++) {
-      const card=page.locator("[data-pantry-challenge]");
-      const id=await card.getAttribute("data-pantry-challenge");
-      expect(challengeById.has(id)).toBe(true);
-      roundSeen.push(id); allSeen.push(id);
-      await expect(card).toContainText("60 different challenges");
-      await expect(page.locator("#stageLabel")).toContainText(`${index+1} of ${PANTRY_ROUND_SIZE}`);
-      if(round===0&&index===0) {
-        await action(page,"Check this picnic");
-        await expect(page.locator("#feedback")).toContainText("exactly three portions");
-      }
-      const solution=pantrySolution(challengeById.get(id));
-      expect(solution).toBeTruthy();
-      for(const [food,count] of Object.entries(solution)) for(let portion=0;portion<count;portion++) await page.locator(`[data-food="${food}"]`).click();
+
+  const visited=[];
+  for(let index=0;index<pantryChallenges.length;index++){
+    const challenge=pantryChallenges[index];
+    const card=page.locator("[data-pantry-challenge]");
+    const id=await card.getAttribute("data-pantry-challenge");
+    expect(id).toBe(challenge.id);
+    visited.push(id);
+    await expect(page.locator("#stageLabel")).toContainText(`Picnic ${index+1} of 60`);
+    await expect(page.locator("#stageLabel")).toContainText(`Chapter ${Math.floor(index/10)+1}/6`);
+    await expect(page.locator(".adventure-advancement")).toContainText(`Level ${index+1} of 60`);
+    if(index===0){
       await action(page,"Check this picnic");
-      await expect(page.locator("#feedback")).toHaveClass(/good/);
-      await action(page,index===PANTRY_ROUND_SIZE-1?"Celebrate my discoveries":"Next challenge");
+      await expect(page.locator("#feedback")).toContainText("exactly three portions");
     }
-    expect(new Set(roundSeen).size).toBe(PANTRY_ROUND_SIZE);
-    await expect(page.locator("#finishDialog")).toBeVisible();
-    if(round<5) await page.locator("#playAgain").click();
+    const solution=pantrySolution(challenge);
+    expect(solution).toBeTruthy();
+    for(const [food,count] of Object.entries(solution))
+      for(let n=0;n<count;n++)await page.locator(`[data-food="${food}"]`).click();
+    await action(page,"Check this picnic");
+    await expect(page.locator("#feedback")).toHaveClass(/good/);
+    const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.pantryPicnic.sixty.v1")));
+    expect(saved.next).toBe(index+1);
+    expect(saved.rewarded).toBe(false);
+    // Reload immediately after completing a challenge, BEFORE pressing Next.
+    // The completed picnic should never have to be solved again.
+    if(index===23){
+      await page.reload();
+      await expect(page.locator("#stageLabel")).toContainText("Picnic 25 of 60");
+      continue;
+    }
+    await action(page,index===59?"Celebrate my discoveries":"Next picnic");
+    if(index===9)await expect(page.locator("#stageLabel")).toContainText("Chapter 2/6");
   }
-  expect(allSeen).toHaveLength(60);
-  expect(new Set(allSeen).size).toBe(pantryChallenges.length);
-  const saved=await page.evaluate(()=>window.LarriVerseArcade.summary().games["pantry-picnic"]);
-  expect(saved.completions).toBe(6); expect(saved.metrics.practiceRuns).toBe(6);
+  expect(new Set(visited).size).toBe(60);
+  await expect(page.locator("#finishDialog")).toBeVisible();
+  const reward=await page.evaluate(()=>window.LarriVerseArcade.summary().games["pantry-picnic"]);
+  expect(reward.completions).toBe(1);
+  expect(reward.metrics.practiceRuns).toBe(1);
+  const checkpoint=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.pantryPicnic.sixty.v1")));
+  expect(checkpoint).toEqual({next:60,rewarded:true});
+
   await page.locator("#closeFinish").click();
-  const size=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:document.documentElement.clientWidth}));
-  expect(size.scroll).toBeLessThanOrEqual(size.width+4);
-  await page.reload(); await expect(page.locator("#bestScore")).not.toHaveText("—");
+  await page.reload();
+  await expect(page.locator("#gameBoard")).toContainText("Your whole picnic journey is complete!");
+  await expect(page.getByRole("button",{name:"Celebrate my discoveries"})).toHaveCount(0);
+  await expect(page.getByRole("button",{name:"Replay all 60 picnics"})).toBeVisible();
+  // A replay requires explicit confirmation and must not erase progress casually.
+  page.once("dialog",dialog=>dialog.dismiss());
+  await action(page,"Replay all 60 picnics");
+  await expect(page.locator("#gameBoard")).toContainText("Your whole picnic journey is complete!");
+  page.once("dialog",dialog=>dialog.accept());
+  await action(page,"Replay all 60 picnics");
+  await expect(page.locator("#stageLabel")).toContainText("Picnic 1 of 60");
+  const after=await page.evaluate(()=>window.LarriVerseArcade.summary().games["pantry-picnic"]);
+  expect(after.completions).toBe(1);
   expect(errors).toEqual([]);
 });
 test("Compass Cove: sixty unique landmark routes and checked map positions",async({page})=>{

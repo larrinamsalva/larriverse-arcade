@@ -125,8 +125,9 @@ for (const challenge of pantryChallenges) {
 }
 assert.equal(pantryUsage.size, pantryFoods.length);
 const pantryCatalog=catalog.find(game=>game.id==="pantry-picnic");
-assert.match(pantryCatalog.desc,/sixty food-planning questions/i);
-assert.match(pantryCatalog.mission,/ten picnic boxes per round/i);
+assert.match(pantryCatalog.desc,/sixty distinct picnics/i);
+assert.match(pantryCatalog.mission,/sixty different picnic boxes in six connected chapters/i);
+assert.match(bridgeSource, /pantryPicnic.sixty.v1|pantryCompleteScreen/);
 const targets = compassClues.map(clue => compassTarget(landmarks[clue.landmark], clue));
 assert.equal(new Set(targets.slice(0,20)).size, 20, "Original twenty distinct treasures remain unchanged");
 assert.equal(new Set(compassClues.map(c=>[c.landmark,c.east,c.south].join(":"))).size, 60, "All sixty routes use distinct landmark and step instructions");
