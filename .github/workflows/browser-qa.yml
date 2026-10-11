@@ -14,7 +14,7 @@ concurrency:
 jobs:
   chromium:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     env:
       CI: true
     steps:

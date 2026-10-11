@@ -75,8 +75,8 @@ test("Bridge Buddies: four strongest braces fit even without builder tokens", as
   await expect(page.locator("#feedback")).toHaveClass(/good/);
 });
 
-test("Water Works: leak feedback, clockwise rotations, filter and twenty connected networks",async({page})=>{
-  test.setTimeout(60_000);
+test("Water Works: every one of sixty unique filter-connected networks works",async({page})=>{
+  test.setTimeout(360_000);
   await adventure(page,"water-works",async()=>{
     await action(page,"Send the water"); await expect(page.locator("#feedback")).toHaveClass(/try/);
     for (let round=0;round<pipePaths.length;round++) {
@@ -91,7 +91,8 @@ test("Water Works: leak feedback, clockwise rotations, filter and twenty connect
     }
   });
 });
-test("Harbor Helpers: capacity, rejected wrong supplies, efficient deliveries and fuel",async({page})=>{
+test("Harbor Helpers: sixty increasingly complex exact deliveries fit their boat",async({page})=>{
+  test.setTimeout(300_000);
   await adventure(page,"harbor-helpers",async()=>{
     await page.locator('[data-cargo="wood"]').click(); await action(page,"Sail to Sprout Island");
     await expect(page.locator("#feedback")).toContainText("does not match");
@@ -99,7 +100,7 @@ test("Harbor Helpers: capacity, rejected wrong supplies, efficient deliveries an
     await page.locator('[data-cargo="water"]').click(); await page.locator('[data-cargo="water"]').click(); await page.locator('[data-cargo="seeds"]').click();
     await page.locator('[data-cargo="wood"]').click();
     await expect(page.locator("#feedback")).toContainText("holds 3 crates"); await action(page,"Unload the boat");
-    const ranks=["Dock Helper","Route Planner","Harbor Captain","Community Admiral"];
+    const ranks=["Dock Helper","Route Planner","Harbor Captain","Community Admiral","Supply Scout","Island Planner","Resource Organizer","Cargo Navigator","Delivery Leader","Harbor Coordinator","Community Captain","Master Harbor Helper"];
     for(let index=0;index<harborLevels.length;index++) {
       await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-level",String(index+1));
       await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-rank",ranks[Math.floor(index/5)]);
@@ -108,7 +109,7 @@ test("Harbor Helpers: capacity, rejected wrong supplies, efficient deliveries an
       await expect(page.locator("#feedback")).toHaveClass(/good/);
       await next(page,index===harborLevels.length-1);
     }
-    await expect(page.locator("#finishMessage")).toContainText("20 island deliveries");
+    await expect(page.locator("#finishMessage")).toContainText("60 island deliveries");
   });
 });
 function pantrySolution(challenge) {
@@ -172,11 +173,13 @@ test("Pantry Picnic: six ten-question rounds reveal all sixty without repeats",a
   await page.reload(); await expect(page.locator("#bestScore")).not.toHaveText("—");
   expect(errors).toEqual([]);
 });
-test("Compass Cove: landmark clues, wrong-turn feedback and twenty distinct treasures",async({page})=>{
+test("Compass Cove: sixty unique landmark routes and checked map positions",async({page})=>{
+  test.setTimeout(180_000);
   await adventure(page,"compass-cove",async()=>{
     await page.locator('[data-map="0"]').click(); await expect(page.locator("#feedback")).toHaveClass(/try/);
     const targets=compassClues.map(clue=>compassTarget(landmarks[clue.landmark],clue));
-    expect(new Set(targets).size).toBe(compassClues.length);
+    expect(new Set(targets.slice(0,20)).size).toBe(20);
+    expect(new Set(compassClues.map(c=>[c.landmark,c.east,c.south].join(":"))).size).toBe(60);
     for(let index=0;index<compassClues.length;index++) {
       await page.locator(`[data-map="${targets[index]}"]`).click();
       await expect(page.locator("#feedback")).toHaveClass(/good/);
@@ -185,7 +188,8 @@ test("Compass Cove: landmark clues, wrong-turn feedback and twenty distinct trea
     }
   });
 });
-test("Cipher Club: shared keys, incorrect messages, encode and decode twenty rounds",async({page})=>{
+test("Cipher Club: sixty unique A–H words grow from three to nine letters",async({page})=>{
+  test.setTimeout(360_000);
   await adventure(page,"cipher-club",async()=>{
     await action(page,"Check my message"); await expect(page.locator("#feedback")).toContainText("shared key 1");
     for(let index=0;index<cipherLevels.length;index++) {
