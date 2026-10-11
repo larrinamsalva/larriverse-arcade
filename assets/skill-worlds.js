@@ -192,9 +192,9 @@ export const worlds = [
     minutes: "4 min",
     art: 10,
     skill: "Costs, demand & small business",
-    desc: "Run a tiny stand. Try a price, watch the weather, and learn from your ledger.",
+    desc: "Run the original four-day stand or complete 60 market missions about costs, demand and profit.",
     mission:
-      "Run your stand for four days. Choose how many cups to make and a price. Supplies cost 1 coin per cup.",
+      "Run the four-day free-play stand, or select sixty different market missions with rising costs and achievable profit goals. All coins are pretend.",
     take: "Revenue is the money that comes in. Profit is what remains after costs. Leftovers and demand matter, too.",
     mode: "market",
   },
@@ -208,9 +208,9 @@ export const worlds = [
     minutes: "4 min",
     art: 11,
     skill: "Rhythm, patterns & creativity",
-    desc: "Make a beat, try a rhythm challenge, and invent your own sound.",
+    desc: "Freestyle with your own music or master sixty different beat-making missions.",
     mission:
-      "Use the 16-step beat grid. Make a steady kick, an offbeat clap, and a repeating hi-hat. Sound is optional.",
+      "Use the 16-step rhythm grid in freestyle, or complete sixty different kick, clap, and hi-hat patterns. Sound stays optional.",
     take: "A repeating pattern creates rhythm. Small changes can make a familiar pattern feel new.",
     mode: "music",
   },
