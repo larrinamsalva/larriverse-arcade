@@ -29,6 +29,7 @@ function subject(kind) {
   if (/cut-tomato/.test(kind)) return 'cutTomato';
   if (/tomato-flower/.test(kind)) return 'tomatoFlower';
   if (/ripe-tomato|hot-tomato|buried-tomato|moldy-fruit/.test(kind)) return 'tomato';
+  if (/tomato-transplant|pull-stem|dry-roots|carrot-row/.test(kind)) return 'sprout';
   if (/carrot|tiny-carrots/.test(kind)) return 'carrot';
   if (/lettuce/.test(kind)) return 'lettuce';
   if (/berries|berry/.test(kind)) return 'berries';
@@ -59,6 +60,9 @@ function subject(kind) {
 }
 
 function details(kind, fallback) {
+  if (/sunny-bed/.test(kind)) return at('sun', 78, 3, .3, fallback) + '<path d="M94 47v22" stroke="#6ab8d8" stroke-width="3" stroke-dasharray="3 4"/>';
+  if (/shade-bed/.test(kind)) return at('tree', 65, 4, .42, fallback) + '<ellipse cx="56" cy="80" rx="39" ry="12" fill="#345f43" opacity=".25"/>';
+  if (/garden-path/.test(kind)) return '<path d="M11 93 42 79l46 13-30 9Z" fill="#d0b390" stroke="#926e4a" stroke-width="2"/><path d="m35 88 42 8" stroke="#fff0cf" stroke-width="3"/>';
   if (/spacing/.test(kind)) return at('sprout', 3, 60, .31, fallback) + at('sprout', 46, 60, .31, fallback) + at('sprout', 82, 60, .31, fallback);
   if (/seed-pile/.test(kind)) return at('seed', 13, 57, .36, fallback) + at('seed', 57, 57, .36, fallback);
   if (/seed-depth|deep-seed/.test(kind)) return '<path d="M17 83h87" stroke="#785038" stroke-width="7"/><path d="M29 83v-22m64 22V47" stroke="#f4d99f" stroke-width="2" stroke-dasharray="3 4"/>';
@@ -122,8 +126,8 @@ export function renderGardenScene(kind, fallback) {
     ${at(name, 320, 57, 1.42, fallback)}
     ${/watering|root-watering|water/.test(kind) ? '<g fill="#63c7e2" stroke="#398aaa" stroke-width="2"><path d="M507 110q-8 11-8 18a8 8 0 0 0 16 0q0-7-8-18Z"/><path d="M530 124q-6 9-6 14a7 7 0 0 0 14 0q0-5-8-14Z"/></g>' : ''}
     ${/tomato-flower/.test(kind) ? at('tomatoFlower', 539, 106, .91, fallback) : ''}
-    ${/berry-storage/.test(kind) ? at('berries', 482, 138, .56, fallback) : ''}
-    ${/cut-tomato/.test(kind) ? at('cutTomato', 486, 145, .59, fallback) : ''}
+    ${/berry-storage/.test(kind) ? at('berries', 482, 138, .56, fallback) + at('refrigerator', 574, 91, .95, fallback) : ''}
+    ${/cut-tomato/.test(kind) ? at('cutTomato', 486, 145, .59, fallback) + at('refrigerator', 574, 91, .95, fallback) : ''}
     <g fill="#fff3ba" stroke="#e4bd62" stroke-width="2"><circle cx="61" cy="220" r="6"/><circle cx="712" cy="206" r="5"/></g>
   </svg>`;
 }
