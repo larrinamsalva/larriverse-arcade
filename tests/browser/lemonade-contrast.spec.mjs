@@ -65,22 +65,28 @@ test("Beat Builder rhythm mission copy stays legible in dark and high-contrast t
       reducedMotion:true
     }),mode);
     const readings=await page.evaluate(()=>{
-      const rgb=val=>(val.match(/[\\d.]+/g)||[]).slice(0,3).map(Number);
+      const rgb=val=>(val.match(/\d+(?:\.\d+)?/g)||[]).slice(0,3).map(Number);
       const lum=val=>rgb(val).map(n=>{
         const c=n/255;return c<=0.04045?c/12.92:((c+0.055)/1.055)**2.4;
       }).reduce((a,n,i)=>a+n*[.2126,.7152,.0722][i],0);
       const contrast=(a,b)=>{
         const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);
       };
+      const mathSelfCheck={
+        pureWhiteVsBlack:contrast("rgb(255,255,255)","rgb(0,0,0)"),
+        identicalWhite:contrast("rgb(255,255,255)","rgb(255,255,255)")
+      };
       const card=document.querySelector(".creative-mission-card");
       const background=getComputedStyle(card).backgroundColor;
-      return ["h2","p.eyebrow","p:not(.eyebrow)",".track-label"].map(selector=>{
+      return {mathSelfCheck,entries:["h2","p.eyebrow","p:not(.eyebrow)",".track-label"].map(selector=>{
         const element=card.querySelector(selector);
         const styles=getComputedStyle(element);
         return {selector,ratio:contrast(styles.color,background),foreground:styles.color,background};
-      });
+      })};
     });
-    for(const value of readings)
+    expect(readings.mathSelfCheck.pureWhiteVsBlack).toBeCloseTo(21,2);
+    expect(readings.mathSelfCheck.identicalWhite).toBeCloseTo(1,4);
+    for(const value of readings.entries)
       expect(value.ratio,`${mode} ${value.selector} ${JSON.stringify(value)}`).toBeGreaterThanOrEqual(4.5);
   }
 });

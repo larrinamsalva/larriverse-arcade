@@ -77,7 +77,7 @@ function rankedDeck(pool) {
   );
 }
 // Long campaigns use every authored puzzle in the main game, not ten-question rounds.
-const campaignModes = new Set(["messages","conversation","news","repair","sorting","traffic"]);
+const campaignModes = new Set(["messages","conversation","news","repair","sorting","traffic","budget"]);
 const CAMPAIGN_VERSION = "v1";
 const campaignKey = () => "larriverse.mainCampaign."+world.id+"."+CAMPAIGN_VERSION;
 function loadCampaign(count) {
@@ -282,11 +282,18 @@ function initialize() {
   progress(0, 1, "Ready to explore");
   refreshBest();
   switch (world.mode) {
-    case "budget":
-      state.deck = challengeRound(resourceAdventures, 10);
-      state.passed = 0;
-      startResourceProject();
+    case "budget": {
+      // Pocket Planet's full sixty-project journey is now the primary game.
+      // Keep a deterministic deck so a locally saved chapter resumes exactly.
+      const saved=loadCampaign(resourceAdventures.length);
+      state.deck=[...resourceAdventures];
+      state.step=saved.next;
+      state.passed=saved.next;
+      state.correct=saved.correct;
+      if(state.step===state.deck.length)endCampaignScreen();
+      else startResourceProject();
       break;
+    }
     case "messages":
       startCampaign(messages,"messages");
       break;
@@ -366,7 +373,7 @@ function startResourceProject() {
 function renderBudget() {
   const plan=state.deck[state.step];
   const chosen=[...state.selected].filter(i=>plan.items[i].need).length;
-  stage(`Pocket Planet · Project ${state.step+1}/${state.deck.length}`);
+  stage(`Pocket Planet · Chapter ${Math.floor(state.step/10)+1}/6 · Project ${state.step+1}/${state.deck.length}`);
   const banner=`
     <div class="budget-hero">
       <span class="budget-illustration" aria-hidden="true">${esc(plan.icon)}</span>
@@ -383,7 +390,7 @@ function renderBudget() {
       ${chip("Making steps",`${state.makeStep}/3`)}
     </div>`;
   if(state.phase==="gather"){
-    board.innerHTML=banner+`<p class="board-note">Choose THREE useful things to ${esc(plan.kind)}. Some objects do not belong in this project. Tap again to remove one.</p>
+    board.innerHTML=campaignTrail(state.passed,state.deck.length)+banner+`<p class="board-note">Choose THREE useful things to ${esc(plan.kind)}. Some objects do not belong in this project. Tap again to remove one.</p>
       <div class="item-grid">${plan.items.map((item,i)=>`<button class="item-button ${state.selected.has(i)?"selected":""}" data-supply="${i}" aria-pressed="${state.selected.has(i)}"><span class="item-icon" aria-hidden="true">${esc(item.icon)}</span>${esc(item.name)}<small>${state.selected.has(i)?"✓ In your kit":"Tap to choose"}</small></button>`).join("")}</div>`;
     bind("[data-supply]",node=>{
       const i=Number(node.dataset.supply);
@@ -398,7 +405,7 @@ function renderBudget() {
       state.phase="make";tone();renderBudget();say("Great supplies! Now put the steps in the right order.","good");
     });
   }else if(state.phase==="make"){
-    board.innerHTML=banner+`<p class="board-note">You have the right supplies. What should happen next? Choose the steps in a sensible order.</p>
+    board.innerHTML=campaignTrail(state.passed,state.deck.length)+banner+`<p class="board-note">You have the right supplies. What should happen next? Choose the steps in a sensible order.</p>
       <div class="planet-workbench" aria-label="Project workbench">
         ${plan.items.filter(item=>item.need).map(item=>`<span>${esc(item.icon)} ${esc(item.name)}</span>`).join("")}
       </div>
@@ -410,6 +417,8 @@ function renderBudget() {
       state.makeStep++;tone();
       if(state.makeStep===3){
         state.passed++;
+        state.correct=state.passed;
+        writeCampaign(state.passed,state.correct);
         if(state.step===state.deck.length-1){
           finish(`You finished ${state.deck.length} hands-on projects! You learned to choose supplies and plan how to grow, build, and prepare food.`,100);
           return;
@@ -418,8 +427,12 @@ function renderBudget() {
       }else{renderBudget();say("Good work! What comes next?","good");}
     });
   }else{
-    board.innerHTML=banner+`<div class="planet-project-complete" role="status"><strong>🌟 ${esc(plan.goal)} completed!</strong><p>You chose useful supplies and followed all three steps.</p></div>`;
-    button("Next project",()=>{state.step++;startResourceProject();});
+    board.innerHTML=campaignTrail(state.passed,state.deck.length)+banner+`<div class="planet-project-complete" role="status"><strong>🌟 ${esc(plan.goal)} completed!</strong><p>You chose useful supplies and followed all three steps.</p></div>`;
+    button("Next project",()=>{
+      state.step++;
+      startResourceProject();
+      if(state.step%10===0)say(`Chapter ${state.step/10+1} unlocked! Explore ten fresh projects.`,"good");
+    });
   }
   progress(state.passed,state.deck.length,`${state.passed} of ${state.deck.length} projects completed`);
   updateScore(Math.round(state.passed/state.deck.length*100));

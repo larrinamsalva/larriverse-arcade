@@ -130,10 +130,13 @@ for(const plan of resourceAdventures) {
   assert.ok(plan.steps.every(x=>x.length>=15),plan.id);
 }
 const resourceSource=fs.readFileSync("assets/skill-games.js","utf8");
-assert.ok(resourceSource.includes("challengeRound(resourceAdventures, 10)"));
+assert.ok(resourceSource.includes("state.deck=[...resourceAdventures]"),"Pocket Planet must use its real sixty-project main deck");
+assert.ok(resourceSource.includes("writeCampaign(state.passed,state.correct)"),"Every completed project must save a checkpoint");
+assert.ok(resourceSource.includes('campaignModes = new Set(["messages","conversation","news","repair","sorting","traffic","budget"])'),"Pocket Planet must use six-chapter advancement and replay");
 assert.ok(!resourceSource.includes('chip("Starting coins"'));
 assert.ok(!resourceSource.includes('data-buy='));
-assert.match(catalog.find(x=>x.id==="pocket-planet").mission,/sixty projects without coins or purchases/);
+assert.match(catalog.find(x=>x.id==="pocket-planet").mission,/sixty projects across six connected chapters/i);
+assert.equal(catalog.find(x=>x.id==="pocket-planet").mission,worlds.find(x=>x.id==="pocket-planet").mission);
 assert.equal(catalog.find(x=>x.id==="pocket-planet").topic,"Planet");
 assert.equal(trafficQuestions.length, 60);
 assert.equal(new Set(trafficQuestions.map((item) => item.text)).size, trafficQuestions.length);

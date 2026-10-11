@@ -34,7 +34,7 @@ async function round(page, id, play) {
   expect(saved.completions).toBe(1);
   expect(saved.metrics.practiceRuns).toBe(1);
   await page.locator("#closeFinish").click();
-  if(["scam-sleuth","kindness-quest","fact-finder","reuse-rally","traffic-town","repair-cafe"].includes(id)) page.once("dialog", dialog=>dialog.accept());
+  if(["scam-sleuth","kindness-quest","fact-finder","reuse-rally","traffic-town","repair-cafe","pocket-planet"].includes(id)) page.once("dialog", dialog=>dialog.accept());
   await page.locator("#restartButton").click();
   await expect(page.locator("#finishDialog")).not.toBeVisible();
   expect(
@@ -165,47 +165,64 @@ async function completePlanetProject(page,plan,testMistakes=false) {
     if(i<2)await expect(page.locator(".planet-step-status")).toContainText(`Step ${i+2} of 3`);
   }
 }
-test("Pocket Planet: ten building, food and garden projects without coins",async({page})=>{
-  test.setTimeout(180000);
+test("Pocket Planet: all sixty original grow, build, eat projects form one six-chapter adventure",async({page})=>{
+  test.setTimeout(420000);
   expect(resourceAdventures).toHaveLength(60);
+  expect(new Set(resourceAdventures.map(p=>p.id)).size).toBe(60);
   await round(page,"pocket-planet",async()=>{
     const seen=new Set();
-    for(let i=0;i<10;i++){
+    await expect(page.locator(".level-trail .level-node")).toHaveCount(6);
+    for(let i=0;i<60;i++){
       const title=await page.locator(".budget-hero h2").innerText();
       const plan=resourceAdventures.find(p=>p.title===title);
       expect(plan).toBeTruthy();
-      expect(seen.has(plan.id)).toBe(false);
+      expect(seen.has(plan.id),`No duplicated project: ${title}`).toBe(false);
       seen.add(plan.id);
-      await expect(page.locator("#stageLabel")).toContainText(`Project ${i+1}/10`);
+      await expect(page.locator("#stageLabel")).toContainText(`Chapter ${Math.floor(i/10)+1}/6`);
+      await expect(page.locator("#stageLabel")).toContainText(`Project ${i+1}/60`);
       await expect(page.locator("[data-supply]")).toHaveCount(6);
       await expect(page.locator("#gameBoard")).not.toContainText(/coins left|starting coins|price per/);
       await completePlanetProject(page,plan,i===0);
-      if(i<9)await page.getByRole("button",{name:"Next project"}).click();
+      const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.mainCampaign.pocket-planet.v1")));
+      expect(saved).toEqual({next:i+1,correct:i+1});
+      if(i<59)await page.getByRole("button",{name:"Next project"}).click();
     }
-    expect(seen.size).toBe(10);
-    await expect(page.locator("#finishMessage")).toContainText("10 hands-on projects");
+    expect(seen.size).toBe(60);
+    await expect(page.locator("#finishMessage")).toContainText("60 hands-on projects");
   });
+  await expect(page.locator("#stageLabel")).toContainText("Project 1/60");
 });
-test("Pocket Planet: six replay rounds reveal all sixty projects",async({page})=>{
-  test.setTimeout(420000);
+
+test("Pocket Planet: ten finished projects unlock chapter two and survive reload mid-project",async({page})=>{
+  test.setTimeout(180000);
   await page.goto("/games/pocket-planet/index.html");
-  const seen=new Set();
-  for(let round=0;round<6;round++){
-    for(let i=0;i<10;i++){
-      const title=await page.locator(".budget-hero h2").innerText();
-      const plan=resourceAdventures.find(p=>p.title===title);
-      expect(plan).toBeTruthy();
-      expect(seen.has(plan.id)).toBe(false);
-      seen.add(plan.id);
-      await completePlanetProject(page,plan);
-      if(i<9)await page.getByRole("button",{name:"Next project"}).click();
-    }
-    await expect(page.locator("#finishDialog")).toBeVisible();
-    await page.locator("#closeFinish").click();
-    if(round<5)await page.locator("#restartButton").click();
+  for(let i=0;i<10;i++){
+    const title=await page.locator(".budget-hero h2").innerText();
+    const plan=resourceAdventures.find(p=>p.title===title);
+    expect(plan).toBeTruthy();
+    await completePlanetProject(page,plan);
+    if(i<9)await page.getByRole("button",{name:"Next project"}).click();
   }
-  expect(seen.size).toBe(60);
+  const checkpoint=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.mainCampaign.pocket-planet.v1")));
+  expect(checkpoint).toEqual({next:10,correct:10});
+  await page.reload();
+  await expect(page.locator("#stageLabel")).toContainText("Chapter 2/6");
+  await expect(page.locator("#stageLabel")).toContainText("Project 11/60");
+  await expect(page.locator(".level-node.complete")).toHaveCount(1);
+  await expect(page.locator(".level-node.active")).toHaveCount(1);
+  const eleventh=await page.locator(".budget-hero h2").innerText();
+  await page.locator('[data-supply="0"]').click();
+  await page.reload();
+  await expect(page.locator(".budget-hero h2")).toHaveText(eleventh);
+  const plan=resourceAdventures.find(p=>p.title===eleventh);
+  await completePlanetProject(page,plan);
+  expect(await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.mainCampaign.pocket-planet.v1")).next)).toBe(11);
+  await page.reload();
+  await expect(page.locator("#stageLabel")).toContainText("Project 12/60");
+  const size=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:document.documentElement.clientWidth}));
+  expect(size.scroll).toBeLessThanOrEqual(size.width+4);
 });
+
 test("Scam Sleuth: complete shuffled messages and explanatory feedback · full 60-challenge journey", async ({
   page,
 }) => {

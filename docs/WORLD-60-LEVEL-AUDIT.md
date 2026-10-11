@@ -1,3 +1,15 @@
+## Pocket Planet: completed main-game path (following the ten-world pass)
+
+The same short-round issue also affected **Pocket Planet**. Although it had sixty distinct hands-on projects, its main gameplay previously stopped after ten and required six separate restarts to discover the rest. Pocket Planet now launches its full **sixty-project path** directly:
+
+- Six visible consecutive chapters with ten different original gardening, building or food-preparation projects in each, using all sixty authored projects exactly once.
+- Each activity requires choosing the three useful supplies from six pictures and then putting the three meaningful making steps in the right order. Incorrect supplies or steps do not advance.
+- Each completed project writes a **device-local checkpoint**; reopening the game resumes at the next project. If the browser closes mid-project, that unfinished project must be retried rather than counted.
+- Chapter transitions happen at projects 11, 21, 31, 41 and 51. The original age-safe instructions and no-currency/no-purchases behavior remain intact.
+- The finishing reward is awarded only after actual project 60, not at every ten-project chapter. Replay is voluntary and requires a confirmation before erasing local chapter position.
+
+The campaign is practical toy-world learning, not certification or permission to use adult-only equipment. No location, real money, health details or family records are requested or uploaded.
+
 ## Long-main-campaign correction for ten worlds
 
 A 60-question **bank** is not the same as a 60-question **play session**. Player feedback exposed this important distinction. This main-campaign pass fixes the short gameplay directly, rather than calling six separate ten-question restarts a sixty-level world.
