@@ -1,3 +1,24 @@
+## Long-main-campaign correction for ten worlds
+
+A 60-question **bank** is not the same as a 60-question **play session**. Player feedback exposed this important distinction. This main-campaign pass fixes the short gameplay directly, rather than calling six separate ten-question restarts a sixty-level world.
+
+| World | Actual main-game experience after this pass |
+| --- | --- |
+| Traffic Town | Six sequential ten-sign chapters (60 distinct signs); saved after each completed sign |
+| Scam Sleuth | Six sequential ten-message chapters (60 distinct scam messages); saved after each completed message |
+| Kindness Quest | Six ten-choice chapters (60 distinct kindness / boundary situations); saved |
+| Fact Finder | Six ten-claim chapters (60 distinct verification situations); saved |
+| Repair Café | Six ten-object chapters; 60 different repairs with four correctly ordered actions each, saved |
+| Reuse Rally | Six ten-object chapters (60 different visible toy objects); saved |
+| Street Safety Scout | One uninterrupted four-route, 60-stop journey; route transitions every 15, saved by stop |
+| Lemonade Lab | 60 different solvable market contracts launch by default; original four-day stand available from the mission screen |
+| Beat Builder | 60 different solvable rhythm patterns launch by default; freestyle studio remains available |
+| Trade Town | 60 original unique budget comparisons, now grouped into six named saved market districts with resume and replay |
+
+All progress stays local. Original SDK rewards remain once at completing the journey; restarting does not grant fictional KC for milestones. For these ten games the visible main journey now includes every scenario or rhythm challenge, without needing to find a hidden second mode or repeatedly choose "Try another round."
+
+**Gameplay length** is not a medical or academic measurement, and progress is not proof of real-world competency. Street Safety is not driver instruction; emergency, tool-repair and online-scam activities remain age-appropriate fictional practice. Browser QA must verify full sixty-step completion, saving, replay, accessibility and phone touch.
+
 # LarriVerse: honest 60-challenge world audit
 
 **Goal:** Every level-based world should offer **60 distinct, finishable challenges**, with levels that become more interesting and harder over time. For free-form studios and family-learning hubs, first design an equivalent 60-mission progression — do not count repeating the same sandbox as 60 different levels.
