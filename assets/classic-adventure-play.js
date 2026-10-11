@@ -1,5 +1,6 @@
 import { creatureMissions, roadMissions } from "./classic-adventure-missions.js";
 import { gpsMissions, chillMissions } from "./gps-chill-missions.js";
+import { familyMissions, sweatMissions, lifeMissions } from "./final-three-missions.js";
 
 function bootAdventureMissions(){
  // Optional offline learning for four arcade games. All original action/simulation modes remain intact.
@@ -7,9 +8,12 @@ function bootAdventureMissions(){
  if(!trigger)return;
  const kind=trigger.dataset.adventureMission;
  const decks={"creature-catcher":creatureMissions,"road-trip-quest":roadMissions,
-  "road-trip-quest-gps":gpsMissions,"chill-brain-rewards":chillMissions};
+  "road-trip-quest-gps":gpsMissions,"chill-brain-rewards":chillMissions,
+  "kidscoin-family":familyMissions,"brain-sweat-expanded":sweatMissions,"brain-sweat-life-skills":lifeMissions};
  const labels={"creature-catcher":"🦋 Wildlife Explorer","road-trip-quest":"🗺️ Road Trip Navigator",
-  "road-trip-quest-gps":"🧭 Demo Map Detective","chill-brain-rewards":"🌿 Gentle Focus Garden"};
+  "road-trip-quest-gps":"🧭 Demo Map Detective","chill-brain-rewards":"🌿 Gentle Focus Garden",
+  "kidscoin-family":"🪙 Family Money Missions","brain-sweat-expanded":"🧠 Workshop Learning Trail",
+  "brain-sweat-life-skills":"📚 Life Skills Challenge Path"};
  const deck=decks[kind];
  if(!deck)return;
  const key="larriverse.classicMissions."+kind+".v1";
@@ -55,7 +59,7 @@ function bootAdventureMissions(){
      const done=document.createElement("div");
      done.className="lv-adventure-success";
      done.innerHTML=`<h3>🏆 All 60 adventures complete!</h3>
-       <p>You practiced sixty different ${kind==="creature-catcher"?"wildlife science and conservation":kind==="road-trip-quest"?"map reading, packing, weather, passenger safety and respectful travel":kind==="road-trip-quest-gps"?"offline demo-map symbols, route safety and location privacy":"gentle observation, focus, comfort and kindness"} decisions. Original game progress stays safe.</p>`;
+       <p>You practiced sixty different ${kind==="creature-catcher"?"wildlife science and conservation":kind==="road-trip-quest"?"map reading, packing, weather, passenger safety and respectful travel":kind==="road-trip-quest-gps"?"offline demo-map symbols, route safety and location privacy":kind==="chill-brain-rewards"?"gentle observation, focus, comfort and kindness":kind==="kidscoin-family"?"family budgeting and pretend-currency choices":kind==="brain-sweat-expanded"?"reviewed workshop and problem-solving scenarios":"reviewed practical life-skills questions"} decisions. Original game progress stays safe.</p>`;
      content.append(done);
      content.append(button("Replay the sixty missions",()=>{
        if(!window.confirm("Restart only this optional sixty-mission journey? Your original game progress stays safe."))return;
@@ -72,6 +76,7 @@ function bootAdventureMissions(){
      <p class="lv-adventure-chapter">${escapeHtml(m.chapter)}</p>
      <h3>${escapeHtml(m.title)}</h3>
      <p class="lv-adventure-prompt" id="adventurePrompt">${escapeHtml(m.prompt)}</p>
+     ${m.guide?`<p class="lv-adventure-kicker">${escapeHtml(m.guide)}</p>`:""}
      <div class="lv-adventure-options" id="adventureOptions"></div>
      <p class="lv-adventure-feedback" id="adventureFeedback" aria-live="polite"></p>
      <div class="lv-adventure-actions" id="adventureActions"></div>`;
