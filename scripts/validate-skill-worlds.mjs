@@ -322,6 +322,8 @@ for (const [name, deck, expected, sceneArt, choiceArt] of [
   }
 }
 for (const file of [
+  "assets/remaining-fixed-worlds.js",
+  "assets/garden-energy-levels.js",
   "assets/budget-adventures.js",
   "assets/expanded-scenarios.js",
   "assets/skill-worlds.js",
