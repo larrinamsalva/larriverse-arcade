@@ -165,7 +165,7 @@ async function completePlanetProject(page,plan,testMistakes=false) {
 }
 test("Pocket Planet: ten building, food and garden projects without coins",async({page})=>{
   test.setTimeout(180000);
-  expect(resourceAdventures).toHaveLength(30);
+  expect(resourceAdventures).toHaveLength(60);
   await round(page,"pocket-planet",async()=>{
     const seen=new Set();
     for(let i=0;i<10;i++){
@@ -184,11 +184,11 @@ test("Pocket Planet: ten building, food and garden projects without coins",async
     await expect(page.locator("#finishMessage")).toContainText("10 hands-on projects");
   });
 });
-test("Pocket Planet: three replays show all thirty projects once",async({page})=>{
-  test.setTimeout(240000);
+test("Pocket Planet: six replay rounds reveal all sixty projects",async({page})=>{
+  test.setTimeout(420000);
   await page.goto("/games/pocket-planet/index.html");
   const seen=new Set();
-  for(let round=0;round<3;round++){
+  for(let round=0;round<6;round++){
     for(let i=0;i<10;i++){
       const title=await page.locator(".budget-hero h2").innerText();
       const plan=resourceAdventures.find(p=>p.title===title);
@@ -200,9 +200,9 @@ test("Pocket Planet: three replays show all thirty projects once",async({page})=
     }
     await expect(page.locator("#finishDialog")).toBeVisible();
     await page.locator("#closeFinish").click();
-    if(round<2)await page.locator("#restartButton").click();
+    if(round<5)await page.locator("#restartButton").click();
   }
-  expect(seen.size).toBe(30);
+  expect(seen.size).toBe(60);
 });
 test("Scam Sleuth: complete shuffled messages and explanatory feedback", async ({
   page,
@@ -454,13 +454,13 @@ test("Time Trail: checkpoint resumes after a page reload and can replay from map
   expect(saved.nextLevel).toBe(0);
   expect(saved.stars[0]).toBe(3);
 });
-test("Garden Guardians: finish eight gardens, four ranks, and changing water goals", async ({ page }) => {
-  test.setTimeout(120000);
-  expect(gardenLevels).toHaveLength(8);
+test("Garden Guardians: sixty gardens with sustainable water planning", async ({ page }) => {
+  test.setTimeout(420000);
+  expect(gardenLevels).toHaveLength(60);
   await round(page, "garden-guardians", async () => {
-    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(4);
+    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(12);
     for (const [levelIndex, level] of gardenLevels.entries()) {
-      await expect(page.locator("#stageLabel")).toContainText(`Garden level ${levelIndex + 1} of 8`);
+      await expect(page.locator("#stageLabel")).toContainText(`Garden level ${levelIndex + 1} of 60`);
       await expect(page.locator(".nature-banner")).toContainText(level.name);
       await expect(page.locator("#gameBoard")).toContainText(level.lesson);
       await expect(page.locator(".stat-row")).toContainText(`Water drops${level.water}`);
@@ -486,11 +486,11 @@ test("Garden Guardians: finish eight gardens, four ranks, and changing water goa
         await page.getByRole("button", { name: "Next day" }).click();
       }
       await expect(page.locator(".stat-row")).toContainText(`Ready plants${level.target}/${level.target}`);
-      await page.getByRole("button", { name: levelIndex === 7 ? "Visit my garden" : "Next garden" }).click();
-      if (levelIndex < 7)
-        await expect(page.locator(".stat-row")).toContainText(`Garden stars${(levelIndex + 1) * 3}/24`);
+      await page.getByRole("button", { name: levelIndex === 59 ? "Visit my garden" : "Next garden" }).click();
+      if (levelIndex < 59)
+        await expect(page.locator(".stat-row")).toContainText(`Garden stars${(levelIndex + 1) * 3}/180`);
     }
-    await expect(page.locator("#finishMessage")).toContainText("24 of 24 garden stars");
+    await expect(page.locator("#finishMessage")).toContainText("180 of 180 garden stars");
   });
 });
 test("Weather Watchers: complete 60 illustrated challenges across four ranks", async ({
@@ -528,13 +528,13 @@ function powerRecipe(level) {
       }
   throw new Error(`No feasible mix for ${level.id}`);
 }
-test("Energy Island: eight power grids adapt to weather and demand", async ({ page }) => {
-  test.setTimeout(120000);
-  expect(energyLevels).toHaveLength(8);
+test("Energy Island: sixty solvable power grids respond to four-day forecasts", async ({ page }) => {
+  test.setTimeout(420000);
+  expect(energyLevels).toHaveLength(60);
   await round(page, "energy-island", async () => {
-    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(4);
+    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(12);
     for (const [index, level] of energyLevels.entries()) {
-      await expect(page.locator("#stageLabel")).toContainText(`Energy level ${index + 1} of 8`);
+      await expect(page.locator("#stageLabel")).toContainText(`Energy level ${index + 1} of 60`);
       await expect(page.locator(".nature-banner")).toContainText(level.name);
       await expect(page.locator("#gameBoard")).toContainText(level.lesson);
       await expect(page.locator(".forecast-current")).toHaveCount(1);
@@ -552,20 +552,21 @@ test("Energy Island: eight power grids adapt to weather and demand", async ({ pa
         await page.getByRole("button", { name: `Run ${day.name.toLowerCase()} day` }).click();
       await expect(page.locator(".ledger tbody tr")).toHaveCount(4);
       await expect(page.locator(".ledger tbody tr").filter({ hasText: "Glowing" })).toHaveCount(4);
-      await page.getByRole("button", { name: index === 7 ? "See my island" : "Next island" }).click();
-      if (index < 7)
-        await expect(page.locator(".stat-row")).toContainText(`Island stars${(index + 1) * 3}/24`);
+      await page.getByRole("button", { name: index === 59 ? "See my island" : "Next island" }).click();
+      if (index < 59)
+        await expect(page.locator(".stat-row")).toContainText(`Island stars${(index + 1) * 3}/180`);
     }
-    await expect(page.locator("#finishMessage")).toContainText("24 of 24 island stars");
+    await expect(page.locator("#finishMessage")).toContainText("180 of 180 island stars");
   });
 });
-test("Robot Rover: debug a collision, show execution state, and solve twenty worlds at par", async ({
+test("Robot Rover: debug a collision and solve sixty original mazes at par", async ({
   page,
 }) => {
+  test.setTimeout(420000);
   await round(page, "robot-rover", async () => {
-    expect(robotLevels).toHaveLength(20);
-    await expect(page.locator("#stageLabel")).toContainText("Robot world 1 of 20");
-    await expect(page.locator(".rover-level-trail .level-node")).toHaveCount(4);
+    expect(robotLevels).toHaveLength(60);
+    await expect(page.locator("#stageLabel")).toContainText("Robot world 1 of 60");
+    await expect(page.locator(".rover-level-trail .level-node")).toHaveCount(12);
     await expect(page.locator(".rover-level-trail .level-node.active")).toContainText(
       "Rover Rookie",
     );
@@ -619,9 +620,9 @@ test("Robot Rover: debug a collision, show execution state, and solve twenty wor
 
       if (i < programs.length - 1) {
         await expect(page.locator("#stageLabel")).toContainText(
-          `Robot world ${i + 2} of 20`,
+          `Robot world ${i + 2} of 60`,
         );
-        if ([4, 9, 14].includes(i)) {
+        if ([4, 9, 14, 19, 24, 29, 34, 39, 44, 49, 54].includes(i)) {
           await expect(page.locator("#feedback")).toContainText("unlocked");
           await expect(
             page.locator(".rover-level-trail .level-node.active"),
@@ -631,9 +632,9 @@ test("Robot Rover: debug a collision, show execution state, and solve twenty wor
     }
 
     await expect(page.locator("#finishMessage")).toContainText(
-      "60 of 60 efficiency stars",
+      "180 of 180 efficiency stars",
     );
-    await expect(page.locator("#finishMessage")).toContainText("across 4 ranks");
+    await expect(page.locator("#finishMessage")).toContainText("across 12 ranks");
   });
 });
 test("Lemonade Lab: four forecasts and a ledger balancing revenue minus cost", async ({

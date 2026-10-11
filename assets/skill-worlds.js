@@ -1,3 +1,4 @@
+import { roverExtraLevels } from "./remaining-fixed-worlds.js";
 import { expeditions } from "./expedition-worlds.js";
 import { messageExtras, conversationExtras, newsExtras, sortingExtras, trafficQuestions } from "./expanded-scenarios.js";
 import { sixtyMessageExtras, sixtyConversationExtras, sixtyNewsExtras, sixtySortingExtras, sixtyRepairExtras } from "./sixty-world-extras.js";
@@ -31,9 +32,9 @@ export const worlds = [
     minutes: "15 min",
     art: 0,
     skill: "Choose supplies & make things",
-    desc: "Grow gardens, build useful creations and prepare foods in thirty real-world-inspired practice projects.",
+    desc: "Grow gardens, build useful creations and prepare foods in sixty real-world-inspired practice projects.",
     mission:
-      "Complete ten supply-and-making projects per round. Choose three useful materials or foods, then put three steps in the correct order. Three rounds cover all thirty projects without coins or purchases.",
+      "Complete ten supply-and-making projects per round. Choose three useful materials or foods, then put three steps in the correct order. Six rounds cover all sixty projects without coins or purchases.",
     take: "Choose useful supplies, prepare safely with an adult when needed, and learn the order of steps for growing, building and cooking.",
     mode: "budget",
   },
@@ -127,9 +128,9 @@ export const worlds = [
     minutes: "4 min",
     art: 6,
     skill: "Resource care & diversity",
-    desc: "Grow eight different gardens, balance crops and pollinator flowers, and protect your water supply.",
+    desc: "Grow sixty different gardens, balance crops and pollinator flowers, and protect your water supply.",
     mission:
-      "Advance through eight garden levels and four ranks. Match each planting plan, water wisely across three days, and earn up to three stars per garden.",
+      "Advance through sixty garden levels and twelve ranks. Match each planting plan, water wisely across three days, and earn up to three stars per garden.",
     take: "Different plants support different needs. Sharing limited water takes planning.",
     mode: "garden",
   },
@@ -143,9 +144,9 @@ export const worlds = [
     minutes: "4 min",
     art: 7,
     skill: "Energy storage & systems",
-    desc: "Power eight different islands through changing forecasts, higher demand, and long nights.",
+    desc: "Power sixty different islands through changing forecasts, higher demand, and long nights.",
     mission:
-      "Advance through eight energy-island levels and four ranks. Use limited builder tokens, read four-day forecasts, balance solar, wind, and batteries, and earn stars for reliable power.",
+      "Advance through sixty energy-island levels and twelve ranks. Use limited builder tokens, read four-day forecasts, balance solar, wind, and batteries, and earn stars for reliable power.",
     take: "Sources change with conditions. Storing a surplus can help when production drops.",
     mode: "energy",
   },
@@ -175,7 +176,7 @@ export const worlds = [
     minutes: "15 min",
     art: 9,
     skill: "Sequencing & debugging",
-    desc: "Code a little rover through twenty progressive star-filled worlds and four explorer ranks.",
+    desc: "Code a little rover through sixty progressive star-filled worlds and twelve explorer ranks.",
     mission:
       "Build a command list with forward, turn left, and turn right. Watch Rover's facing direction, test your path, and improve it for efficiency stars.",
     take: "Debugging means noticing what happened and improving one part of your plan. Mistakes are clues.",
@@ -607,7 +608,7 @@ export const sorting = [
   ...sortingExtras,
   ...sixtySortingExtras,
 ];
-export const robotLevels = [
+const originalRobotLevels = [
   {
     name: "First Steps",
     rank: "Rover Rookie",
@@ -829,6 +830,7 @@ export const robotLevels = [
     hint: "Use short turns to reach the right edge, travel down and around the lower rocks, then climb and turn west for the final star.",
   },
 ];
+export const robotLevels = [...originalRobotLevels, ...roverExtraLevels];
 
 export const weatherChallenges = [
   {
