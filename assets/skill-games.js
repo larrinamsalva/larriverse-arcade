@@ -634,10 +634,40 @@ function renderLearningPath(mode) {
     : "Follow the garden's order: prepare soil, read the packet, plant gently, check before watering, observe before treating, then harvest and store cleanly.";
 }
 
+
+function repairVisual(item) {
+  const title = item.title.toLowerCase();
+  const match = [
+    ["book","book"],["notebook","book"],["journal","book"],["paperback","book"],
+    ["box","cardboardBox"],["folder","paper"],["cardboard","cardboardBox"],["ruler","wood"],
+    ["wagon","metal"],["wheel","metal"],["hinge","metal"],["zipper","metal"],
+    ["basket","basket"],["pencil","pencil"],["paintbrush","paintBrush"],["brush","paintBrush"],
+    ["chair","wood"],["cap","shirt"],["cloth","shirt"],["pouch","shirt"],["costume","shirt"],
+    ["kite","paper"],["teddy","shirt"],["mask","paper"],["bottle","bottle"],["jar","jar"],
+    ["can","can"],["mug","brokenMug"],["mirror","brokenMirror"]
+  ].find(([word]) => title.includes(word));
+  const art = match ? match[1] : "wood";
+  const material =
+    ["book","paper","cardboardBox","pencil"].includes(art) ? "Paper & cardboard" :
+    ["metal","can"].includes(art) ? "Metal hardware" :
+    ["shirt"].includes(art) ? "Fabric & stitching" :
+    ["basket","wood","paintBrush"].includes(art) ? "Wood & fiber" :
+    ["bottle","jar","brokenMug","brokenMirror"].includes(art) ? "Glass / hard surface" :
+    "Mixed materials";
+  return `<div class="repair-object-scene">
+    <div class="repair-workbench" aria-hidden="true">
+      <span class="repair-peg repair-peg-a"></span><span class="repair-peg repair-peg-b"></span><span class="repair-peg repair-peg-c"></span>
+      <span class="repair-tool repair-tool-hammer">🔨</span><span class="repair-tool repair-tool-tape">🧰</span>
+    </div>
+    <div class="repair-object-model">${iconSvg(art, "repair-object-art")}</div>
+    <span class="repair-material-tag">${esc(material)}</span>
+  </div>`;
+}
+
 function renderRepair() {
   const item = state.deck[state.step];
   stage(`Repair Café · Chapter ${Math.floor(state.step/10)+1}/6 · Repair ${state.step + 1} of ${state.deck.length}`);
-  board.innerHTML = `${campaignTrail(state.step,state.deck.length)}<div class="message-card"><span class="message-icon">${item.icon}</span><h2 class="board-title">${esc(item.title)}</h2><p>Choose the next step. Done steps stay at the top.</p></div><div class="repair-list" style="margin-top:1rem">${Array.from({ length: state.position }, (_, i) => `<div class="repair-step done">✓ ${i + 1}. ${esc(item.steps[i])}</div>`).join("")}${state.order
+  board.innerHTML = `${campaignTrail(state.step,state.deck.length)}<div class="message-card repair-card">${repairVisual(item)}<div class="repair-copy"><p class="eyebrow">Inspect · choose · repair · test</p><h2 class="board-title">${esc(item.title)}</h2><p>Choose the next repair step. Finished steps stay on the workbench so you can see the order.</p></div></div><div class="repair-list" style="margin-top:1rem">${Array.from({ length: state.position }, (_, i) => `<div class="repair-step done">✓ ${i + 1}. ${esc(item.steps[i])}</div>`).join("")}${state.order
     .filter((i) => i >= state.position)
     .map(
       (i) =>
