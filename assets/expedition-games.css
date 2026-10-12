@@ -1281,3 +1281,219 @@ html.larriverse-dark body[data-world="compass-cove"] .compass-map-legend span{
     padding:10px;
   }
 }
+
+
+/* Cipher Club: tactile decoder lab, dimensional tiles, and clearer code feedback. */
+body[data-world="cipher-club"] .play-card{
+  background:
+    linear-gradient(180deg,#fcfbff,#f1eef8 72%,#e5e0f0);
+  border:2px solid #8f7db4;
+  box-shadow:0 8px 0 #6d5b9138,0 18px 34px #41355520;
+}
+body[data-world="cipher-club"] .cipher-workshop--3d{
+  position:relative;
+  overflow:hidden;
+  border:2px solid #8e7caf;
+  background:
+    radial-gradient(circle at 12% 18%,#ffffff 0 4px,transparent 5px),
+    radial-gradient(circle at 88% 24%,#ffffff 0 3px,transparent 4px),
+    linear-gradient(145deg,#fbf8ff,#e4dcf2);
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -8px 0 #75658f22,
+    0 7px 0 #796a9338,
+    0 13px 20px #4d425d1c;
+}
+body[data-world="cipher-club"] .cipher-dial--3d{
+  position:relative;
+  min-height:210px;
+  justify-content:center;
+  border:2px solid #7e6c9f;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 50%,#f8f0cf 0 20%,#dbc28a 21% 39%,#a77d4e 40% 57%,#71533f 58% 63%,#4b3b4d 64% 100%);
+  box-shadow:
+    inset 0 4px 0 #fff6d0,
+    inset 0 -10px 0 #513c2f66,
+    0 8px 0 #5d4d6140,
+    0 15px 22px #382f4023;
+}
+body[data-world="cipher-club"] .cipher-dial--3d::before{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border:2px dashed #efe0b0;
+  border-radius:50%;
+  opacity:.7;
+  pointer-events:none;
+}
+body[data-world="cipher-club"] .cipher-dial--3d .object-icon{
+  width:72px;
+  height:72px;
+  filter:drop-shadow(0 7px 4px #3b2b2235);
+  z-index:1;
+}
+body[data-world="cipher-club"] .cipher-dial--3d :is(b,span,.stepper){
+  position:relative;
+  z-index:1;
+}
+body[data-world="cipher-club"] .cipher-dial--3d b{
+  padding:.28rem .55rem;
+  border-radius:999px;
+  background:#fff6dbdf;
+  color:#47364d;
+  border:1px solid #b99b67;
+}
+body[data-world="cipher-club"] .cipher-dial--3d>span{
+  color:#513f58;
+  font-weight:850;
+}
+body[data-world="cipher-club"] .cipher-dial--3d .stepper button{
+  border:2px solid #6d5b86;
+  background:linear-gradient(#f3ecff,#cfc0eb);
+  color:#49395d;
+  box-shadow:0 4px 0 #74628955;
+}
+body[data-world="cipher-club"] .cipher-message--panel{
+  align-self:stretch;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:18px;
+  border:2px solid #9380b5;
+  border-radius:18px;
+  background:linear-gradient(160deg,#fff,#f0eafa);
+  box-shadow:inset 0 2px 0 #fff,0 5px 0 #7c6b9730;
+}
+body[data-world="cipher-club"] .cipher-message--panel strong{
+  padding:10px 12px;
+  border-radius:14px;
+  background:#2e2942;
+  color:#f7f2ff;
+  text-shadow:0 0 7px #a990ff;
+  box-shadow:inset 0 -4px 0 #181522,0 4px 0 #74628b36;
+}
+body[data-world="cipher-club"] .cipher-key--tiles{
+  gap:8px;
+  margin:20px 0;
+}
+body[data-world="cipher-club"] .cipher-key--tiles span{
+  min-height:88px;
+  border:2px solid #b99e68;
+  background:linear-gradient(160deg,#fff8d9,#efd99d);
+  color:#493a55;
+  box-shadow:
+    inset 0 2px 0 #fff9e4,
+    inset 0 -5px 0 #9774422b,
+    0 4px 0 #8d73452f;
+}
+body[data-world="cipher-club"] .cipher-key--tiles span b{
+  font-size:1rem;
+}
+body[data-world="cipher-club"] .cipher-key--tiles span i{
+  font-size:.85rem;
+  color:#745f8c;
+}
+body[data-world="cipher-club"] .cipher-answer--slots{
+  gap:12px;
+  margin:20px 0 22px;
+}
+body[data-world="cipher-club"] .cipher-answer--slots span{
+  width:64px;
+  height:68px;
+  border:2px solid #7f6aa6;
+  background:linear-gradient(180deg,#f7f3ff,#ddd3ef);
+  color:#443653;
+  box-shadow:
+    inset 0 3px 0 #fff,
+    inset 0 -6px 0 #77639724,
+    0 5px 0 #6f5e8737,
+    0 10px 14px #3e344a18;
+}
+body[data-world="cipher-club"] .cipher-letter-keys{
+  gap:9px;
+}
+body[data-world="cipher-club"] .cipher-letter-keys button{
+  min-height:54px;
+  border:2px solid #6f9e98;
+  background:linear-gradient(180deg,#eefbf8,#c7e8e1);
+  color:#244b47;
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -5px 0 #5d8a8424,
+    0 4px 0 #5f8d8640;
+  transition:transform .12s ease,box-shadow .12s ease;
+}
+body[data-world="cipher-club"] .cipher-letter-keys button:hover:not(:disabled){
+  transform:translateY(-2px);
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -5px 0 #5d8a8424,
+    0 7px 0 #5f8d8640,
+    0 11px 14px #36544f1a;
+}
+body[data-world="cipher-club"] .small-note{
+  padding:10px 12px;
+  border:1px solid #a99abb;
+  border-radius:12px;
+  background:#f8f6fc;
+  color:#514761;
+}
+
+/* Cipher Club dark-mode contrast and lab materials. */
+html.larriverse-dark body[data-world="cipher-club"] .play-card{
+  background-color:#231e3a;
+  background-image:linear-gradient(180deg,#2b2545,#211c37 72%,#1a172d);
+  color:#f6f3ff;
+  border-color:#746789;
+}
+html.larriverse-dark body[data-world="cipher-club"] .cipher-workshop--3d{
+  background:linear-gradient(145deg,#332d4b,#27223d);
+  border-color:#786b8c;
+}
+html.larriverse-dark body[data-world="cipher-club"] .cipher-dial--3d{
+  background:
+    radial-gradient(circle at 50% 50%,#6a5b54 0 20%,#574944 21% 39%,#463a3c 40% 57%,#342d39 58% 63%,#27233a 64% 100%);
+  border-color:#8c7897;
+}
+html.larriverse-dark body[data-world="cipher-club"] .cipher-dial--3d b{
+  background:#2a2436de;
+  color:#fff1d2;
+  border-color:#9d835f;
+}
+html.larriverse-dark body[data-world="cipher-club"] .cipher-dial--3d>span{
+  color:#efe6f4;
+}
+html.larriverse-dark body[data-world="cipher-club"] .cipher-message--panel{
+  background:linear-gradient(160deg,#302a46,#27223a);
+  color:#f6f3ff;
+  border-color:#776a8c;
+}
+html.larriverse-dark body[data-world="cipher-club"] .cipher-key--tiles span,
+html.larriverse-dark body[data-world="cipher-club"] .cipher-answer--slots span,
+html.larriverse-dark body[data-world="cipher-club"] .cipher-letter-keys button{
+  background:linear-gradient(180deg,#342e50,#292440);
+  color:#f7f4ff;
+  border-color:#6f6489;
+}
+html.larriverse-dark body[data-world="cipher-club"] .cipher-key--tiles span i{
+  color:#d9cdef;
+}
+html.larriverse-dark body[data-world="cipher-club"] .small-note{
+  background:#29243b;
+  color:#eee9f5;
+  border-color:#716682;
+}
+@media(max-width:600px){
+  body[data-world="cipher-club"] .cipher-dial--3d{
+    width:min(260px,100%);
+    min-height:190px;
+  }
+  body[data-world="cipher-club"] .cipher-key--tiles{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+  body[data-world="cipher-club"] .cipher-answer--slots span{
+    width:52px;
+    height:58px;
+  }
+}
