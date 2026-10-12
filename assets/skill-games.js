@@ -473,9 +473,18 @@ function renderCards(mode) {
   const messageArt = mode === "traffic"
     ? trafficSignSvg(item.title)
     : mode === "sorting"
-      ? iconSvg(item.art, "message-icon reuse-item-art")
+      ? `<div class="reuse-object-stage">
+          <div class="reuse-sorting-station" aria-hidden="true">
+            <span class="reuse-bin reuse-bin-reuse">REUSE</span>
+            <span class="reuse-bin reuse-bin-recycle">RECYCLE</span>
+            <span class="reuse-bin reuse-bin-compost">COMPOST</span>
+            <span class="reuse-bin reuse-bin-trash">TRASH</span>
+          </div>
+          <div class="reuse-object-model">${iconSvg(item.art, "message-icon reuse-item-art")}</div>
+          <span class="reuse-material-chip">${esc(item.name)}</span>
+        </div>`
     : `<span class="message-icon" aria-hidden="true">${item.icon}</span>`;
-  board.innerHTML = `${campaignTrail(state.step,deck.length)}<div class="message-card ${mode === "traffic" ? "traffic-message" : ""}">${messageArt}<div class="message-copy"><h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""}">${display.map((choice) => `<button class="choice-button" data-answer="${choice.index}">${esc(choice.label)}</button>`).join("")}</div>${mode === "sorting" ? '<p class="board-note" style="margin-top:1rem">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
+  board.innerHTML = `${campaignTrail(state.step,deck.length)}<div class="message-card ${mode === "traffic" ? "traffic-message" : mode === "sorting" ? "reuse-message" : ""}">${messageArt}<div class="message-copy"><h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""}">${display.map((choice) => `<button class="choice-button" data-answer="${choice.index}">${esc(choice.label)}</button>`).join("")}</div>${mode === "sorting" ? '<p class="board-note reuse-rule-card">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
   progress(state.step, deck.length);
   bind("[data-answer]", (node) => {
     if (state.answered) return;
