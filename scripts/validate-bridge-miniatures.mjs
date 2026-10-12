@@ -11,6 +11,7 @@ const drawings = bridgeParts.map(part => bridgeMiniaturePart(part.id));
 assert.equal(new Set(drawings).size, 3, "Supports must each have a distinct miniature");
 for (const [index, drawing] of drawings.entries()) {
   assert.match(drawing, /class="bridge-wood-deck"/, "Support should have planked deck");
+  assert.match(drawing, /class="wood-grain"/, "Every support needs actual timber grain artwork");
   assert.match(drawing, /wood|bridge-part/, "Support should show timber structure");
   assert.ok((drawing.match(/<path /g) || []).length > 10, "Support needs dimensional geometry");
   assert.equal((drawing.match(/<g\b/g) || []).length,
