@@ -1082,3 +1082,202 @@ html.larriverse-dark body[data-world="harbor-helpers"] .harbor-cargo-card small{
     height:72px;
   }
 }
+
+
+/* Compass Cove: dimensional map tiles, compass rose, landmarks, and treasure cues. */
+body[data-world="compass-cove"] .play-card{
+  background:linear-gradient(180deg,#fffdf7,#eef5ee 72%,#e3ece3);
+  border:2px solid #789383;
+  box-shadow:0 8px 0 #5b74643d,0 18px 34px #31443920;
+}
+body[data-world="compass-cove"] .compass-clue-card{
+  position:relative;
+  overflow:hidden;
+  border:2px solid #8c7ab2;
+  background:linear-gradient(145deg,#fbf8ff,#e9e1f7);
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -6px 0 #79699a20,
+    0 6px 0 #75668d36,
+    0 12px 18px #463e5818;
+}
+body[data-world="compass-cove"] .compass-rose--3d{
+  min-width:92px;
+  padding:12px 14px;
+  border:2px solid #7f6a9d;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 38% 34%,#fff8df 0 24%,#f0d99f 25% 43%,#c69b5e 44% 61%,#9b7146 62% 100%);
+  color:#493a57;
+  text-shadow:0 1px 0 #fff9e8;
+  box-shadow:
+    inset 0 3px 0 #fff7d7,
+    inset 0 -7px 0 #72523455,
+    0 5px 0 #6e573f45,
+    0 10px 16px #47392520;
+}
+body[data-world="compass-cove"] .compass-grid--island{
+  position:relative;
+  max-width:560px;
+  gap:7px;
+  padding:14px;
+  border:3px solid #789a7f;
+  background:
+    radial-gradient(circle at 18% 20%,#edf1cf 0 12%,transparent 13%),
+    radial-gradient(circle at 78% 72%,#d8edc1 0 10%,transparent 11%),
+    linear-gradient(145deg,#bfd9b5,#92b99d 58%,#7da98e);
+  box-shadow:
+    inset 0 5px 12px #ffffff5f,
+    inset 0 -12px 20px #4266512d,
+    0 8px 0 #5d7c6738,
+    0 16px 28px #31473722;
+}
+body[data-world="compass-cove"] .compass-grid--island::before{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border-radius:18px;
+  pointer-events:none;
+  background:
+    linear-gradient(110deg,transparent 0 45%,#6e9eb64a 46% 54%,transparent 55% 100%),
+    radial-gradient(circle at 84% 18%,#6eaeb944 0 10%,transparent 11%);
+}
+body[data-world="compass-cove"] .compass-map-tile{
+  position:relative;
+  z-index:1;
+  border:2px solid #93ae88;
+  background:linear-gradient(145deg,#f2f0cf,#dbe7bd);
+  box-shadow:
+    inset 0 2px 0 #fffde2,
+    inset 0 -5px 0 #71856528,
+    0 4px 0 #70806b35;
+  transition:transform .14s ease,box-shadow .14s ease;
+}
+body[data-world="compass-cove"] .compass-map-tile:hover:not(:disabled){
+  transform:translateY(-2px);
+  box-shadow:
+    inset 0 2px 0 #fffde2,
+    inset 0 -5px 0 #71856528,
+    0 7px 0 #70806b38,
+    0 11px 14px #4c5b4720;
+}
+body[data-world="compass-cove"] .compass-map-tile.landmark{
+  background:linear-gradient(145deg,#fff7dc,#ead9a9);
+  border-color:#b3925d;
+}
+body[data-world="compass-cove"] .compass-map-tile.landmark .object-icon{
+  width:82%;
+  filter:
+    drop-shadow(0 5px 2px #3f342634)
+    drop-shadow(0 10px 5px #3f34261c);
+}
+body[data-world="compass-cove"] .compass-map-tile.found{
+  background:radial-gradient(circle at 50% 45%,#fff8c4 0 26%,#f4d46e 27% 68%,#c89938 69% 100%);
+  border-color:#9c712b;
+  box-shadow:
+    inset 0 2px 0 #fff8d5,
+    0 0 0 3px #f8d66f,
+    0 0 18px #e8bf4f66,
+    0 5px 0 #8f6a2d40;
+}
+body[data-world="compass-cove"] .treasure-marker{
+  width:28px;
+  height:28px;
+  top:3px;
+  right:3px;
+  filter:drop-shadow(0 4px 2px #5d472a38);
+}
+body[data-world="compass-cove"] .map-dot{
+  width:10px;
+  height:10px;
+  background:#7fa271;
+  box-shadow:inset 0 2px 0 #cfe1c7,0 2px 0 #617b58;
+}
+body[data-world="compass-cove"] .map-tile small{
+  bottom:4px;
+  right:5px;
+  min-width:18px;
+  padding:1px 4px;
+  border-radius:999px;
+  background:#ffffffd9;
+  color:#394b43;
+  border:1px solid #9aab9f;
+  text-align:center;
+}
+body[data-world="compass-cove"] .compass-map-legend{
+  margin-top:18px;
+  padding:10px 12px;
+  border:1px solid #9caf9c;
+  border-radius:14px;
+  background:linear-gradient(#fff,#eef5ee);
+  box-shadow:0 4px 0 #7b8e7f28;
+}
+body[data-world="compass-cove"] .compass-map-legend span{
+  padding:5px 8px;
+  border-radius:999px;
+  background:#f8fbf6;
+  border:1px solid #bccbbc;
+  color:#35493b;
+}
+body[data-world="compass-cove"] .compass-map-legend .object-icon{
+  filter:drop-shadow(0 3px 2px #3142352b);
+}
+
+/* Compass Cove dark-mode contrast and material treatment. */
+html.larriverse-dark body[data-world="compass-cove"] .play-card{
+  background-color:#231e3a;
+  background-image:linear-gradient(180deg,#2b2545,#211c37 72%,#1a172d);
+  color:#f6f3ff;
+  border-color:#687a70;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-clue-card{
+  background:linear-gradient(145deg,#302a47,#27223d);
+  color:#f6f3ff;
+  border-color:#75678b;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-rose--3d{
+  background:radial-gradient(circle at 38% 34%,#5a4a62 0 24%,#4a3e54 25% 43%,#3c3348 44% 61%,#30293c 62% 100%);
+  color:#fff3d8;
+  border-color:#8d789c;
+  text-shadow:none;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-grid--island{
+  background:
+    radial-gradient(circle at 18% 20%,#31463a 0 12%,transparent 13%),
+    radial-gradient(circle at 78% 72%,#2b4034 0 10%,transparent 11%),
+    linear-gradient(145deg,#2b4035,#20352b 58%,#1b2d25);
+  border-color:#587063;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-map-tile{
+  background:linear-gradient(145deg,#2d3440,#252d36);
+  color:#f7f4ff;
+  border-color:#66766d;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-map-tile.landmark{
+  background:linear-gradient(145deg,#443a42,#342f39);
+  border-color:#8d7358;
+}
+html.larriverse-dark body[data-world="compass-cove"] .map-tile small{
+  background:#18231dea;
+  color:#f0f7f2;
+  border-color:#6e7f75;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-map-legend{
+  background:#26312b;
+  border-color:#607267;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-map-legend span{
+  background:#1d2722;
+  color:#eef7f0;
+  border-color:#64776b;
+}
+@media(max-width:600px){
+  body[data-world="compass-cove"] .compass-grid--island{
+    gap:5px;
+    padding:8px;
+  }
+  body[data-world="compass-cove"] .compass-rose--3d{
+    min-width:80px;
+    padding:10px;
+  }
+}
