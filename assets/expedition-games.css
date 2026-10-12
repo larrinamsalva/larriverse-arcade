@@ -326,3 +326,203 @@ html.larriverse-high-contrast body[data-world="bridge-buddies"] .bridge-tool-she
     transition: none;
   }
 }
+
+
+/* Pantry Picnic: realistic picnic basket, food materials, and stronger dimensional depth. */
+body[data-world="pantry-picnic"] .play-card{
+  background:linear-gradient(180deg,#fffdf8,#f8f1e7 72%,#efe2d2);
+  border:2px solid #c39b6e;
+  box-shadow:0 8px 0 #9c74493a,0 18px 34px #5b422821;
+}
+body[data-world="pantry-picnic"] .pantry-challenge{
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(145deg,#fffdf7,#fff1d8);
+  border-color:#d2ab7c;
+  box-shadow:inset 0 2px 0 #fff,0 7px 18px #6b4c2b1d;
+}
+body[data-world="pantry-picnic"] .pantry-challenge::after{
+  content:"";
+  position:absolute;
+  right:-26px;bottom:-24px;
+  width:120px;height:82px;
+  border-radius:55% 45% 48% 52%;
+  background:radial-gradient(circle at 40% 38%,#f6d36c 0 8px,#e5b84e 9px 18px,#c88a36 19px 21px,transparent 22px),
+             radial-gradient(circle at 68% 65%,#83b869 0 9px,#5f8f4f 10px 19px,transparent 20px);
+  opacity:.28;
+  transform:rotate(-8deg);
+  pointer-events:none;
+}
+body[data-world="pantry-picnic"] .pantry-rules span{
+  background:linear-gradient(#fff,#f8ead3);
+  border-color:#d5b383;
+  box-shadow:0 2px 0 #b88e5f24;
+}
+body[data-world="pantry-picnic"] .picnic-basket{
+  position:relative;
+  overflow:visible;
+  padding:26px 22px 24px;
+  background:
+    repeating-linear-gradient(90deg,#c88950 0 9px,#d99d63 9px 18px,#b97744 18px 27px),
+    linear-gradient(#e5b57d,#bd7e4d);
+  border:8px solid #8d5d39;
+  border-radius:28px;
+  box-shadow:
+    inset 0 0 0 4px #efc999,
+    inset 0 -12px 18px #6c45252b,
+    0 10px 18px #4f392329;
+}
+body[data-world="pantry-picnic"] .picnic-basket::before{
+  content:"";
+  position:absolute;
+  left:18%;right:18%;top:-28px;
+  height:54px;
+  border:9px solid #8d5d39;
+  border-bottom:0;
+  border-radius:36px 36px 0 0;
+  box-shadow:inset 0 0 0 3px #e8b77f;
+  pointer-events:none;
+}
+body[data-world="pantry-picnic"] .picnic-basket::after{
+  content:"";
+  position:absolute;
+  left:18px;right:18px;bottom:14px;
+  height:8px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#fff2c8aa,#8b5a3655,#fff2c8aa);
+  opacity:.55;
+  pointer-events:none;
+}
+body[data-world="pantry-picnic"] .pantry-picnic-slot{
+  position:relative;
+  z-index:1;
+  min-height:150px;
+  overflow:hidden;
+  background:linear-gradient(145deg,#fffdf8,#f5ead8);
+  border:2px solid #d6b994;
+  box-shadow:inset 0 2px 0 #fff,0 5px 0 #80593730,0 10px 16px #69472416;
+}
+body[data-world="pantry-picnic"] .pantry-picnic-slot.filled::before{
+  content:"";
+  position:absolute;
+  inset:auto 14px 10px;
+  height:11px;
+  border-radius:50%;
+  background:#5a432a1f;
+  filter:blur(2px);
+}
+body[data-world="pantry-picnic"] .pantry-picnic-slot--empty{
+  background:
+    linear-gradient(145deg,#fffaf2,#efe1cc),
+    repeating-linear-gradient(45deg,transparent 0 8px,#d9c3a52e 8px 10px);
+  color:#6c523d;
+  border-style:dashed;
+}
+body[data-world="pantry-picnic"] .pantry-picnic-slot .object-icon{
+  width:88px;
+  height:88px;
+  overflow:visible;
+  filter:drop-shadow(0 8px 5px #60492f33);
+}
+body[data-world="pantry-picnic"] .pantry-picnic-slot .object-depth{
+  opacity:.45;
+  filter:brightness(.5) saturate(.8);
+}
+body[data-world="pantry-picnic"] .cargo-shelf{
+  gap:12px;
+  align-items:stretch;
+}
+body[data-world="pantry-picnic"] .pantry-food-card{
+  min-height:190px;
+  background:linear-gradient(160deg,#fffdfa,#f8eddf);
+  border-color:#cfb08a;
+  box-shadow:inset 0 2px 0 #fff,0 5px 0 #a27b5330,0 10px 16px #59432c16;
+}
+body[data-world="pantry-picnic"] .pantry-food-card .object-icon{
+  width:92px;
+  height:92px;
+  overflow:visible;
+  filter:drop-shadow(0 8px 5px #5c432b2d);
+  transition:transform .16s ease;
+}
+body[data-world="pantry-picnic"] .pantry-food-card:hover:not(:disabled) .object-icon{
+  transform:translateY(-3px) scale(1.03);
+}
+body[data-world="pantry-picnic"] .pantry-food-card .object-depth{
+  opacity:.42;
+  filter:brightness(.5) saturate(.82);
+}
+body[data-world="pantry-picnic"] .pantry-food-card .object-material-highlight{
+  opacity:.72;
+}
+body[data-world="pantry-picnic"] .leftover-tag{
+  border:1px solid #73935f;
+  background:linear-gradient(#eef9e7,#d8ebcb);
+  color:#36532f;
+  box-shadow:0 2px 0 #6e8d5b2a;
+}
+body[data-world="pantry-picnic"] .pantry-food-card--bread .object-icon,
+body[data-world="pantry-picnic"] .pantry-food-card--wrap .object-icon{
+  filter:drop-shadow(0 8px 5px #7753333a) saturate(1.04);
+}
+body[data-world="pantry-picnic"] .pantry-food-card--rice .object-icon,
+body[data-world="pantry-picnic"] .pantry-food-card--pasta .object-icon{
+  filter:drop-shadow(0 8px 5px #72512f2d) brightness(1.02);
+}
+body[data-world="pantry-picnic"] .pantry-food-card--apple .object-icon,
+body[data-world="pantry-picnic"] .pantry-food-card--orange .object-icon,
+body[data-world="pantry-picnic"] .pantry-food-card--berries .object-icon,
+body[data-world="pantry-picnic"] .pantry-food-card--grapes .object-icon{
+  filter:drop-shadow(0 8px 5px #59382936) saturate(1.12);
+}
+body[data-world="pantry-picnic"] .pantry-food-card--carrot .object-icon,
+body[data-world="pantry-picnic"] .pantry-food-card--cucumber .object-icon,
+body[data-world="pantry-picnic"] .pantry-food-card--peas .object-icon{
+  filter:drop-shadow(0 8px 5px #39552d36) saturate(1.1);
+}
+html.larriverse-dark body[data-world="pantry-picnic"] .play-card{
+  background-color:#231e3a;
+  background-image:linear-gradient(180deg,#2b2545,#211c37 72%,#1a172d);
+  color:#f6f3ff;
+  border-color:#8a6f58;
+}
+html.larriverse-dark body[data-world="pantry-picnic"] .pantry-challenge{
+  background-color:#302947;
+  background-image:linear-gradient(145deg,#342c4a,#3b3148);
+  color:#f8f3ff;
+  border-color:#8c7393;
+}
+html.larriverse-dark body[data-world="pantry-picnic"] .pantry-rules span{
+  background:#211d35;
+  color:#fff3d8;
+  border-color:#8c759a;
+}
+html.larriverse-dark body[data-world="pantry-picnic"] .pantry-picnic-slot,
+html.larriverse-dark body[data-world="pantry-picnic"] .pantry-food-card{
+  background-color:#2d2846;
+  background-image:linear-gradient(160deg,#342e4f,#292440);
+  color:#f7f4ff;
+  border-color:#6f648c;
+}
+html.larriverse-dark body[data-world="pantry-picnic"] .pantry-picnic-slot--empty{
+  color:#ddd5eb;
+  border-color:#776c93;
+}
+html.larriverse-dark body[data-world="pantry-picnic"] .leftover-tag{
+  background:#243a2a;
+  color:#dcf6d5;
+  border-color:#6b9a72;
+}
+@media(max-width:700px){
+  body[data-world="pantry-picnic"] .picnic-basket{
+    grid-template-columns:1fr;
+    padding:24px 14px 18px;
+  }
+  body[data-world="pantry-picnic"] .pantry-picnic-slot{
+    min-height:128px;
+  }
+  body[data-world="pantry-picnic"] .pantry-food-card{
+    min-height:170px;
+  }
+}
