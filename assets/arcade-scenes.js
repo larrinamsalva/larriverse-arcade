@@ -1,4 +1,5 @@
 import { renderGardenChoice, renderGardenScene } from "./garden-artwork.js";
+import { bridgeMiniaturePart } from "./bridge-miniatures.js";
 
 const drawings = {
   drop: '<path d="M50 8C38 31 20 48 20 65a30 30 0 0 0 60 0C80 48 62 31 50 8Z" fill="#49bddd" stroke="#278da9" stroke-width="3"/><path d="M34 59q-4 17 13 22" fill="none" stroke="#d7f7ff" stroke-width="7" stroke-linecap="round"/>',
@@ -145,11 +146,8 @@ export function placeSvg(type, className = 'place-art') {
 }
 
 export function bridgePartDrawing(id) {
-  const deck = '<g class="bridge-part-deck"><path d="M7 11h119l9 7H17Z" fill="#efbc7d" stroke="#6f4026" stroke-width="2.5" stroke-linejoin="round"/><path d="M17 18h118l-4 13H14Z" fill="#bd733e" stroke="#6f4026" stroke-width="2.5" stroke-linejoin="round"/><path class="wood-grain" d="M17 15q24-6 45 0t61-1M23 24q24 5 44 0t55 1" fill="none" stroke="#f7d29a" stroke-width="2.5" stroke-linecap="round"/><path d="M14 31h117" stroke="#64371f" stroke-width="3"/><g fill="#4d5962" stroke="#d5dfe3"><circle cx="24" cy="23" r="3.5"/><circle cx="122" cy="23" r="3.5"/></g></g>';
-  if (id === 'plank') return `${deck}<g class="bridge-part-plank"><path d="M17 42h108l7 6-7 16H17L9 58Z" fill="#dfa064" stroke="#754528" stroke-width="3" stroke-linejoin="round"/><path d="M17 42h108l7 6H24Z" fill="#f3c185"/><path d="M24 48h108l-7 16H17Z" fill="#c77b45"/><path class="wood-grain" d="M28 52q18-6 38 0t48-1M26 58q26 5 46 0t41 1" fill="none" stroke="#efb77b" stroke-width="2.5" stroke-linecap="round"/><path d="m22 65-8 17m112-17 7 17" stroke="#754528" stroke-width="8" stroke-linecap="round"/><path d="m22 65-5 12m109-12 4 12" stroke="#e1a66c" stroke-width="2" stroke-linecap="round"/><g fill="#4f5a62" stroke="#dbe2e4"><circle cx="29" cy="55" r="4"/><circle cx="116" cy="55" r="4"/></g></g>`;
-  if (id === 'beam') return `${deck}<g class="bridge-part-beam"><path d="M13 35h19v48H13Z" fill="#a95f33" stroke="#67391f" stroke-width="3"/><path d="M32 35 38 40v43h-6Z" fill="#754126"/><path d="M108 35h19v48h-19Z" fill="#a95f33" stroke="#67391f" stroke-width="3"/><path d="m127 35 6 6v42h-6Z" fill="#754126"/><path d="M18 49h103l8 7-8 19H18L10 68Z" fill="#d88d50" stroke="#6f4026" stroke-width="3" stroke-linejoin="round"/><path d="M18 49h103l8 7H27Z" fill="#f1bc7c"/><path d="M27 56h102l-8 19H18Z" fill="#b96d3d"/><path class="wood-grain" d="M31 61q24-7 45 0t40-1" fill="none" stroke="#efb77c" stroke-width="3" stroke-linecap="round"/><path d="M18 39v37m95-37v37" stroke="#e7aa70" stroke-width="3"/><g fill="#4d5962" stroke="#d8e0e3"><circle cx="21" cy="59" r="4.5"/><circle cx="117" cy="59" r="4.5"/></g></g>`;
-  if (id === 'triangle') return `${deck}<g class="bridge-part-truss" stroke-linejoin="round"><path d="M10 82 69 34l61 48h-18L69 54 29 82Z" fill="#c87840" stroke="#65381f" stroke-width="4"/><path d="M29 82 69 45l43 37M69 45v37" fill="none" stroke="#efb675" stroke-width="7"/><path d="M29 82 69 45l43 37M69 45v37" fill="none" stroke="#7b4729" stroke-width="2"/><path d="M10 80h120l-5 12H15Z" fill="#a85d32" stroke="#65381f" stroke-width="3"/><path d="M16 80h112" stroke="#e9aa69" stroke-width="4"/><g fill="#505b64" stroke="#dce4e6" stroke-width="1.5"><circle cx="19" cy="82" r="5"/><circle cx="69" cy="45" r="5"/><circle cx="120" cy="82" r="5"/><circle cx="69" cy="82" r="5"/></g></g>`;
-  return '<g class="bridge-part-empty"><path d="M16 46h108" stroke="#699b9d" stroke-width="4" stroke-dasharray="9 7"/><path d="M18 71h104" stroke="#a7d1ce" stroke-width="4"/><path d="m18 71-8 14m112-14 8 14" stroke="#739a8e" stroke-width="5"/><circle cx="18" cy="71" r="5" fill="#627f78"/><circle cx="122" cy="71" r="5" fill="#627f78"/></g>';
+  // Garden, weather and the other expeditions retain their shared icons.
+  return bridgeMiniaturePart(id);
 }
 
 function bridgeCargoDrawing(kind) {

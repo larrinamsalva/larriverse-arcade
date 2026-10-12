@@ -10,6 +10,7 @@ const sdk = read('assets/arcade-sdk.js');
 const shell = read('assets/cabinet-shell.js');
 const accessibility = read('assets/arcade-accessibility.css');
 const scenes = read('assets/arcade-scenes.js');
+const bridgeMiniatures = read('assets/bridge-miniatures.js');
 const game = read('assets/skill-games.js');
 const expedition = read('assets/expedition-games.js');
 const expeditionCss = read('assets/expedition-games.css');
@@ -58,7 +59,7 @@ for (const object of ['tree', 'boat', 'car', 'truck', 'airplane', 'trafficLight'
 }
 check(scenes.includes('object-ground-shadow') && scenes.includes('object-model--'), 'shared object drawings include cast shadows and model-specific groups');
 for (const detail of ['wood-grain', 'bridge-structure', 'bridge-abutment', 'bridge-river', 'bridge-tool-art', 'bridge-piers', 'bridge-load-plaque', 'bridge-vehicle--']) {
-  check(scenes.includes(detail) || expedition.includes(detail) || expeditionCss.includes(detail), `Bridge Buddies retains ${detail} detail`);
+  check(scenes.includes(detail) || bridgeMiniatures.includes(detail) || expedition.includes(detail) || expeditionCss.includes(detail), `Bridge Buddies retains ${detail} detail`);
 }
 check(game.includes('trafficSignSvg(item.title)'), 'Traffic Town renders recognizable sign artwork');
 const renderedSigns = trafficQuestions.map(question => trafficSignSvg(question.title));
