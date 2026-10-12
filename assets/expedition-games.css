@@ -1345,8 +1345,13 @@ body[data-world="cipher-club"] .cipher-dial--3d b{
   border:1px solid #b99b67;
 }
 body[data-world="cipher-club"] .cipher-dial--3d>span{
-  color:#513f58;
+  color:#35263d;
   font-weight:850;
+  padding:.3rem .58rem;
+  border:1px solid #8f744f;
+  border-radius:999px;
+  background:#fff7df;
+  box-shadow:0 2px 0 #6f563733;
 }
 body[data-world="cipher-club"] .cipher-dial--3d .stepper button{
   border:2px solid #6d5b86;
@@ -1462,7 +1467,10 @@ html.larriverse-dark body[data-world="cipher-club"] .cipher-dial--3d b{
   border-color:#9d835f;
 }
 html.larriverse-dark body[data-world="cipher-club"] .cipher-dial--3d>span{
-  color:#efe6f4;
+  color:#fff3dc;
+  background:#272032;
+  border-color:#9f845f;
+  box-shadow:0 2px 0 #121019;
 }
 html.larriverse-dark body[data-world="cipher-club"] .cipher-message--panel{
   background:linear-gradient(160deg,#302a46,#27223a);
