@@ -526,3 +526,207 @@ html.larriverse-dark body[data-world="pantry-picnic"] .leftover-tag{
     min-height:170px;
   }
 }
+
+
+/* Bridge Buddies: realistic timber, hardware, terrain, and stronger 3-D depth. */
+body[data-world="bridge-buddies"] .play-card{
+  background:
+    linear-gradient(180deg,#fffdf7 0%,#f5efe3 72%,#e9dfcf 100%);
+  border:2px solid #a87b55;
+  box-shadow:0 8px 0 #77533344,0 20px 36px #4d35241f;
+}
+body[data-world="bridge-buddies"] .bridge-tool-shelf{
+  align-items:stretch;
+  gap:14px;
+}
+body[data-world="bridge-buddies"] .bridge-tool-shelf .build-tool{
+  position:relative;
+  overflow:hidden;
+  min-height:162px;
+  border:2px solid #af845f;
+  background:
+    linear-gradient(155deg,#fffdf8 0%,#f1dfc7 100%);
+  color:#3e3026;
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -7px 0 #8d613725,
+    0 6px 0 #815b3d35,
+    0 12px 18px #51382317;
+}
+body[data-world="bridge-buddies"] .bridge-tool-shelf .build-tool[aria-pressed="true"]{
+  border-color:#6d4a31;
+  background:linear-gradient(155deg,#fff8e9,#eac79f);
+  box-shadow:
+    inset 0 0 0 3px #f7dfb6,
+    inset 0 -8px 0 #7c4f2a2b,
+    0 6px 0 #67462f55,
+    0 12px 18px #51382320;
+  transform:translateY(-1px);
+}
+body[data-world="bridge-buddies"] .bridge-tool-art{
+  width:100%;
+  max-width:150px;
+  height:82px;
+  overflow:visible;
+  filter:
+    drop-shadow(0 4px 2px #3c281b42)
+    drop-shadow(0 10px 7px #3c281b22);
+}
+body[data-world="bridge-buddies"] .bridge-tool-art .bridge-wood-deck,
+body[data-world="bridge-buddies"] .bridge-tool-art [class^="bridge-part-"]{
+  filter:saturate(1.08) contrast(1.03);
+}
+body[data-world="bridge-buddies"] .bridge-tool-art .wood-grain{
+  opacity:.88;
+}
+body[data-world="bridge-buddies"] .bridge-landscape{
+  position:relative;
+  overflow:hidden;
+  border:3px solid #70817c;
+  box-shadow:
+    inset 0 5px 14px #ffffff4c,
+    inset 0 -14px 24px #234b5940,
+    0 10px 0 #596c6540,
+    0 18px 30px #33433d22;
+}
+body[data-world="bridge-buddies"] .bridge-backdrop{
+  filter:saturate(1.08) contrast(1.03);
+}
+body[data-world="bridge-buddies"] .bridge-river{
+  filter:drop-shadow(0 -3px 5px #0e637c25);
+}
+body[data-world="bridge-buddies"] .bridge-river i{
+  box-shadow:0 2px 3px #ffffff5e;
+}
+body[data-world="bridge-buddies"] .bridge-abutment{
+  border-color:#6d6f68;
+  background:
+    linear-gradient(145deg,#b3aea0 0 18%,#8f8d87 19% 52%,#696c6c 53% 100%);
+  box-shadow:
+    inset 5px 5px 0 #d4d0c4,
+    inset -5px -6px 0 #505455,
+    0 7px 8px #2633353d;
+}
+body[data-world="bridge-buddies"] .bridge-piers i{
+  border-color:#5e625f;
+  background:
+    linear-gradient(90deg,#777b76 0 16%,#b7b3a8 17% 45%,#888985 46% 74%,#5e625f 75% 100%);
+  box-shadow:
+    inset 3px 0 0 #d4d0c5,
+    inset -4px 0 0 #4e5351,
+    0 5px 6px #26333535;
+}
+body[data-world="bridge-buddies"] .bridge-span{
+  min-height:170px;
+  border:2px solid #9a7b5e;
+  background:
+    linear-gradient(180deg,#fffdf8 0 56%,#efe5d6 57% 100%);
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -8px 0 #9a765029,
+    0 6px 0 #72563d36,
+    0 12px 18px #42312616;
+}
+body[data-world="bridge-buddies"] .bridge-span:not(.empty){
+  border-color:#8c603f;
+  background:
+    linear-gradient(180deg,#fffaf0 0 48%,#ecd5b7 49% 100%);
+}
+body[data-world="bridge-buddies"] .bridge-span .bridge-structure{
+  width:100%;
+  max-width:170px;
+  height:100px;
+  overflow:visible;
+  filter:
+    drop-shadow(0 5px 2px #3d281b42)
+    drop-shadow(0 13px 8px #3d281b26);
+}
+body[data-world="bridge-buddies"] .bridge-span.plank .bridge-structure{
+  filter:drop-shadow(0 5px 2px #4b302046) drop-shadow(0 13px 8px #4b302024) saturate(1.08);
+}
+body[data-world="bridge-buddies"] .bridge-span.beam .bridge-structure{
+  filter:drop-shadow(0 6px 2px #43291b4b) drop-shadow(0 14px 8px #43291b2b) saturate(1.09) contrast(1.03);
+}
+body[data-world="bridge-buddies"] .bridge-span.triangle .bridge-structure{
+  filter:drop-shadow(0 7px 2px #40281b50) drop-shadow(0 15px 8px #40281b2d) saturate(1.1) contrast(1.04);
+}
+body[data-world="bridge-buddies"] .bridge-span.weak{
+  border-color:#b75845;
+  background:linear-gradient(180deg,#fff7f1,#f2d6ca);
+  box-shadow:
+    inset 0 0 0 3px #ffd8cc,
+    0 6px 0 #9b49383d,
+    0 12px 18px #6134261e;
+}
+body[data-world="bridge-buddies"] .load-label{
+  border:1px solid #806047;
+  background:linear-gradient(#fff3cf,#e8c996);
+  color:#513921;
+  box-shadow:0 3px 0 #72513938,0 6px 8px #3e2c201b;
+}
+body[data-world="bridge-buddies"] .bridge-load-plaque{
+  background:
+    linear-gradient(180deg,#b97847 0%,#8d552f 100%);
+  border:2px solid #6b3f27;
+  box-shadow:
+    inset 0 2px 0 #eeb681,
+    inset 0 -4px 0 #653b24,
+    0 6px 0 #49301f,
+    0 10px 14px #2f221948;
+}
+body[data-world="bridge-buddies"] .bridge-cart{
+  filter:
+    drop-shadow(0 5px 2px #26302e45)
+    drop-shadow(0 11px 7px #26302e24);
+}
+body[data-world="bridge-buddies"] .bridge-tree,
+body[data-world="bridge-buddies"] .bridge-landmark{
+  filter:drop-shadow(0 7px 4px #243a2b35);
+}
+body[data-world="bridge-buddies"] .bridge-flowers{
+  filter:drop-shadow(0 2px 1px #2d482d30);
+}
+
+/* Keep the timber makeover fully readable in night mode. */
+html.larriverse-dark body[data-world="bridge-buddies"] .play-card{
+  background-color:#231e3a;
+  background-image:linear-gradient(180deg,#2c2645,#211c37 72%,#1a172d);
+  color:#f6f3ff;
+  border-color:#806b59;
+}
+html.larriverse-dark body[data-world="bridge-buddies"] .bridge-tool-shelf .build-tool,
+html.larriverse-dark body[data-world="bridge-buddies"] .bridge-span{
+  background-color:#2d2846;
+  background-image:linear-gradient(180deg,#342e50,#292440);
+  color:#f8f6ff;
+  border-color:#776889;
+  box-shadow:inset 0 2px 0 #ffffff12,0 5px 0 #171326,0 10px 17px #09071155;
+}
+html.larriverse-dark body[data-world="bridge-buddies"] .bridge-tool-shelf .build-tool[aria-pressed="true"]{
+  background:linear-gradient(180deg,#493b55,#352b48);
+  border-color:#c99b70;
+  box-shadow:inset 0 0 0 2px #dcb58d55,0 5px 0 #171326;
+}
+html.larriverse-dark body[data-world="bridge-buddies"] .bridge-span:not(.empty){
+  background:linear-gradient(180deg,#3c314a,#30273f);
+  border-color:#9a755d;
+}
+html.larriverse-dark body[data-world="bridge-buddies"] .bridge-span :is(b,small){
+  color:#f8f6ff;
+}
+html.larriverse-dark body[data-world="bridge-buddies"] .load-label{
+  background:#4b3d52;
+  color:#fff0d2;
+  border-color:#947a8e;
+}
+@media(max-width:700px){
+  body[data-world="bridge-buddies"] .bridge-tool-shelf .build-tool{
+    min-height:145px;
+  }
+  body[data-world="bridge-buddies"] .bridge-span{
+    min-height:155px;
+  }
+  body[data-world="bridge-buddies"] .bridge-span .bridge-structure{
+    height:92px;
+  }
+}
