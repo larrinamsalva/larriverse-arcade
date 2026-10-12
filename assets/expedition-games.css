@@ -730,3 +730,210 @@ html.larriverse-dark body[data-world="bridge-buddies"] .load-label{
     height:92px;
   }
 }
+
+
+/* Water Works: dimensional pipes, joints, filter, terrain, and clearer flow/leaks. */
+body[data-world="water-works"] .play-card{
+  background:linear-gradient(180deg,#fbffff,#edf7f8 72%,#deecef);
+  border:2px solid #78a7ae;
+  box-shadow:0 8px 0 #577f8640,0 18px 34px #35545a20;
+}
+body[data-world="water-works"] .pipe-labels{
+  padding:10px 12px;
+  border:1px solid #9fc6cb;
+  border-radius:14px;
+  background:linear-gradient(180deg,#ffffff,#eaf7f8);
+  box-shadow:0 4px 0 #7299a12a;
+}
+body[data-world="water-works"] .pipe-labels span{
+  color:#274852;
+}
+body[data-world="water-works"] .pipe-grid{
+  position:relative;
+  max-width:540px;
+  gap:9px;
+  padding:16px;
+  border:3px solid #799c91;
+  background:
+    linear-gradient(180deg,#d9eadc,#bfd5c5 72%,#a8c0ad);
+  box-shadow:
+    inset 0 6px 12px #ffffff66,
+    inset 0 -10px 16px #48685c2d,
+    0 8px 0 #6a887b38,
+    0 16px 26px #334c4222;
+}
+body[data-world="water-works"] .pipe-grid::before{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border-radius:16px;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 22%,#78948255 0 2px,transparent 3px),
+    radial-gradient(circle at 72% 62%,#7894824a 0 2px,transparent 3px),
+    radial-gradient(circle at 44% 84%,#78948245 0 2px,transparent 3px);
+}
+body[data-world="water-works"] .pipe-tile,
+body[data-world="water-works"] .pipe-ground{
+  border:2px solid #9db2ad;
+  border-radius:15px;
+  background:linear-gradient(145deg,#f6fbf9,#dfeae6);
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -5px 0 #718a8330,
+    0 4px 0 #819b9233;
+}
+body[data-world="water-works"] .pipe-tile{
+  overflow:hidden;
+}
+body[data-world="water-works"] .pipe-tile svg{
+  overflow:visible;
+  filter:drop-shadow(0 5px 3px #30464d33);
+}
+body[data-world="water-works"] .pipe-shadow{
+  stroke:#496773;
+  opacity:.46;
+}
+body[data-world="water-works"] .pipe-shell{
+  stroke:#8eb7c2;
+}
+body[data-world="water-works"] .pipe-highlight{
+  stroke:#e8f7fa;
+  opacity:.72;
+}
+body[data-world="water-works"] .pipe-joint{
+  fill:#83aeb8;
+  stroke:#496a74;
+  filter:drop-shadow(0 2px 1px #2d434944);
+}
+body[data-world="water-works"] .pipe-flow{
+  stroke:#dffbff;
+  opacity:.82;
+}
+body[data-world="water-works"] .pipe-tile.filter{
+  background:
+    radial-gradient(circle at 50% 45%,#f2edff 0 28%,#e6dcf7 29% 54%,#d4c5ed 55% 100%);
+  border-color:#8d78aa;
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -6px 0 #79629325,
+    0 4px 0 #76628c33;
+}
+body[data-world="water-works"] .pipe-filter-ring{
+  fill:#cbb8ea;
+  stroke:#6e5c8f;
+  filter:drop-shadow(0 4px 2px #4d3f6633);
+}
+body[data-world="water-works"] .pipe-tile.flowing{
+  box-shadow:
+    inset 0 0 0 2px #b9f4fb,
+    0 0 0 3px #2e9eb4,
+    0 0 18px #52c8d866,
+    0 5px 0 #467e8740;
+}
+body[data-world="water-works"] .pipe-tile.flowing .pipe-flow{
+  stroke:#30bdd3;
+  stroke-width:9;
+  opacity:1;
+  stroke-dasharray:7 4;
+  filter:drop-shadow(0 0 3px #9df5ff);
+}
+body[data-world="water-works"] .pipe-tile.leak{
+  outline:0;
+  border-color:#b45246;
+  box-shadow:
+    inset 0 0 0 3px #ffd4cc,
+    0 0 0 3px #ca6657,
+    0 6px 14px #7d3b3030;
+}
+body[data-world="water-works"] .pipe-tile.leak::after{
+  content:"LEAK";
+  position:absolute;
+  left:50%;
+  bottom:5px;
+  transform:translateX(-50%);
+  padding:2px 5px;
+  border-radius:999px;
+  background:#8e3f36;
+  color:#fff;
+  font-size:.48rem;
+  font-weight:950;
+  letter-spacing:.07em;
+  box-shadow:0 2px 0 #5e2b25;
+}
+body[data-world="water-works"] .pipe-ground{
+  background:
+    radial-gradient(circle at 30% 26%,#e8f0d9 0 5px,transparent 6px),
+    linear-gradient(145deg,#cadebf,#aec8ad);
+  border-color:#91aa8f;
+}
+body[data-world="water-works"] .pipe-ground .object-icon{
+  filter:drop-shadow(0 5px 3px #36503b33);
+}
+body[data-world="water-works"] .tile-number{
+  right:6px;
+  bottom:5px;
+  min-width:20px;
+  padding:2px 4px;
+  border-radius:999px;
+  background:#ffffffd9;
+  color:#324f58;
+  border:1px solid #9ab6bd;
+  text-align:center;
+  box-shadow:0 1px 0 #6c8d9430;
+}
+body[data-world="water-works"] .small-note{
+  margin-top:18px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:#f4fbfb;
+  border:1px solid #a9c9cd;
+  color:#36565d;
+}
+
+/* Water Works night-mode contrast and material treatment. */
+html.larriverse-dark body[data-world="water-works"] .play-card{
+  background-color:#231e3a;
+  background-image:linear-gradient(180deg,#292543,#1f1c35 72%,#19172c);
+  color:#f6f3ff;
+  border-color:#67838a;
+}
+html.larriverse-dark body[data-world="water-works"] .pipe-labels{
+  background:#2a3042;
+  border-color:#66868e;
+}
+html.larriverse-dark body[data-world="water-works"] .pipe-labels span{
+  color:#eefcff;
+}
+html.larriverse-dark body[data-world="water-works"] .pipe-grid{
+  background:linear-gradient(180deg,#31433f,#263834 72%,#21312e);
+  border-color:#607b71;
+}
+html.larriverse-dark body[data-world="water-works"] .pipe-tile,
+html.larriverse-dark body[data-world="water-works"] .pipe-ground{
+  background:linear-gradient(145deg,#2f3548,#262c3c);
+  border-color:#647782;
+}
+html.larriverse-dark body[data-world="water-works"] .pipe-tile.filter{
+  background:radial-gradient(circle at 50% 45%,#443957 0 28%,#352d48 29% 58%,#2b263d 59% 100%);
+  border-color:#7c6990;
+}
+html.larriverse-dark body[data-world="water-works"] .tile-number{
+  background:#18242aea;
+  color:#effcff;
+  border-color:#6d8b92;
+}
+html.larriverse-dark body[data-world="water-works"] .small-note{
+  background:#26343a;
+  color:#e8f7f8;
+  border-color:#658087;
+}
+@media(max-width:600px){
+  body[data-world="water-works"] .pipe-grid{
+    gap:6px;
+    padding:10px;
+  }
+  body[data-world="water-works"] .pipe-labels{
+    padding:8px 10px;
+  }
+}
