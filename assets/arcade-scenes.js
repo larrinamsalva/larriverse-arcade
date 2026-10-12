@@ -1,3 +1,5 @@
+import { renderGardenChoice, renderGardenScene } from "./garden-artwork.js";
+
 const drawings = {
   drop: '<path d="M50 8C38 31 20 48 20 65a30 30 0 0 0 60 0C80 48 62 31 50 8Z" fill="#49bddd" stroke="#278da9" stroke-width="3"/><path d="M34 59q-4 17 13 22" fill="none" stroke="#d7f7ff" stroke-width="7" stroke-linecap="round"/>',
   seed: '<path d="M50 88V45" stroke="#337852" stroke-width="8" stroke-linecap="round"/><path d="M48 52C12 56 12 20 18 19c33-2 40 17 30 33M52 41C80 46 93 19 87 13c-25-4-40 9-35 28" fill="#80cb76" stroke="#4d9d68" stroke-width="3"/><path d="M50 72q-15-12-25-2M50 61q14-11 26-3" fill="none" stroke="#337852" stroke-width="4"/>',
@@ -310,39 +312,12 @@ const gardenIconName = kind => {
 };
 
 export function gardenChoiceSvg(kind) {
-  const icon = gardenIconName(kind);
-  const warning = /shade-bed|walkway-bed|paint-brush|fork|puddle-bed|concrete|plastic|salt|roof-bed|hidden|shelf-seed|deep-seed|seed-pile|empty-row|move-carrot|pull-stem|dry-roots|box|hard-spray|dry-bed|guess-water|clock|wet-label|sidewalk-water|taste-plant|pull-all|buried-plant|tight-wire|covered-plant|unknown-spray|trash-garden|moldy|tiny-carrots|rotten|uproot|step-plant|dirty-bucket|hot-berries|hot-tomato|buried-tomato/.test(kind);
-  const ripeFruit = /ripe-tomato/.test(kind) ? `<g transform="translate(65 46) scale(.42)">${iconDrawing('tomato')}</g>` : '';
-  return `<svg class="learning-choice-art garden-choice-art" viewBox="0 0 120 108" aria-hidden="true" focusable="false">
-    <defs><linearGradient id="garden-card-${svgText(kind)}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eef9df"/><stop offset="1" stop-color="#d6edc7"/></linearGradient></defs>
-    <rect x="5" y="5" width="110" height="98" rx="20" fill="url(#garden-card-${svgText(kind)})" stroke="#698b55" stroke-width="3"/>
-    <g transform="translate(13 7) scale(.92)">${iconDrawing(icon)}</g>${ripeFruit}
-    ${warning ? '<g transform="translate(94 20)"><circle r="14" fill="#fff0c7" stroke="#a95a2f" stroke-width="3"/><path d="m-6-6 12 12m0-12L-6 6" stroke="#913b2b" stroke-width="4" stroke-linecap="round"/></g>' : ''}
-  </svg>`;
+  // Individual garden materials are intentionally isolated from shared arcade objects.
+  return renderGardenChoice(kind, iconDrawing);
 }
 
 export function gardenLessonSvg(kind) {
-  const icon = gardenIconName(kind);
-  const storage = /basket|berry|cut-tomato|ripe-tomato|carrot-harvest|lettuce-harvest/.test(kind);
-  const lessonIcon = storage
-    ? /berry/.test(kind) ? 'berries'
-      : /carrot/.test(kind) ? 'carrot'
-        : /lettuce/.test(kind) ? 'lettuce'
-          : /basket/.test(kind) ? 'basket'
-            : 'tomato'
-    : icon;
-  const watering = /watering|water|soil-test/.test(kind);
-  return `<svg class="learning-scene-art garden-learning-art" viewBox="0 0 760 245" role="img" aria-label="Illustrated garden lesson about ${svgText(kind.replaceAll('-', ' '))}">
-    <defs><linearGradient id="garden-sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#91dbea"/><stop offset="1" stop-color="#e8f6d7"/></linearGradient><linearGradient id="garden-soil" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8b5b3e"/><stop offset="1" stop-color="#5d3c2d"/></linearGradient></defs>
-    <rect width="760" height="245" rx="22" fill="url(#garden-sky)"/>
-    <g transform="translate(648 10) scale(.66)">${iconDrawing('sun')}</g>
-    <path d="M0 164q155-38 315 2t445-8v87H0Z" fill="#70bd6c"/>
-    <g opacity=".62" stroke="#fff1c5" stroke-width="5"><path d="M20 133h720M54 99v93m83-93v93m83-93v93m83-93v93m83-93v93m83-93v93m83-93v93m83-93v93"/></g>
-    ${storage ? '<g transform="translate(104 95) scale(1.2)">' + iconDrawing('basket') + '</g><g transform="translate(525 73) scale(1.28)">' + iconDrawing('refrigerator') + '</g><path d="M225 197h305" stroke="#7d5036" stroke-width="19"/><path d="M240 187h275" stroke="#d49a5c" stroke-width="11"/>' : '<g transform="translate(105 126) scale(1.45)">' + iconDrawing('gardenBed') + '</g><g transform="translate(517 113) scale(.92)">' + iconDrawing('tomatoPlant') + '</g>'}
-    <g transform="translate(306 72) scale(1.28)">${iconDrawing(lessonIcon)}</g>
-    ${watering ? '<g fill="#79cde3" stroke="#368cab" stroke-width="2"><path d="M474 114q-10 15-10 23 0 9 10 9t10-9q0-8-10-23Z"/><path d="M500 130q-8 12-8 19 0 8 8 8t8-8q0-7-8-19Z"/></g>' : ''}
-    <g fill="#f5cb58" stroke="#9d7a2e" stroke-width="2"><circle cx="53" cy="204" r="7"/><circle cx="689" cy="192" r="6"/></g>
-  </svg>`;
+  return renderGardenScene(kind, iconDrawing);
 }
 
 export function trafficSignSvg(title) {

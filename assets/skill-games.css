@@ -1984,3 +1984,70 @@ html.larriverse-high-contrast body[data-world="beat-builder"] .creative-mission-
 html.larriverse-high-contrast body[data-world="beat-builder"] .creative-mission-card :is(h2,p,.eyebrow,.track-label) {
   color: #fff !important;
 }
+
+
+/* Garden Grow & Harvest: tactile miniature surfaces, scoped to this world only. */
+body[data-world="garden-grow-harvest"] .learning-scene {
+  border-color: #5f8554;
+  background: #a3d7ae;
+  box-shadow: 0 6px 0 #55774865, 0 14px 24px #2c593222;
+}
+body[data-world="garden-grow-harvest"] .garden-learning-art {
+  aspect-ratio: 760 / 245;
+  width: 100%;
+  height: auto;
+  object-fit: fill;
+  filter: saturate(1.06);
+}
+body[data-world="garden-grow-harvest"] .picture-choice {
+  position: relative;
+  min-width: 0;
+  border-color: #7b9568;
+  background: linear-gradient(153deg, #fffdf4 0%, #e6f3d4 100%);
+  box-shadow: 0 5px 0 #68845755, 0 8px 14px #48623d16;
+  overflow-wrap: anywhere;
+}
+body[data-world="garden-grow-harvest"] .garden-choice-art {
+  max-width: 100%;
+  overflow: hidden;
+  filter: drop-shadow(0 4px 3px #3c523a33);
+}
+body[data-world="garden-grow-harvest"] .picture-choice:focus-visible {
+  outline: 3px solid #5141ae;
+  outline-offset: 3px;
+}
+html.larriverse-dark body[data-world="garden-grow-harvest"] .picture-choice {
+  background: linear-gradient(150deg, #263c34, #354c38);
+  border-color: #a2c78b;
+  color: #f5ffe9;
+}
+html.larriverse-dark body[data-world="garden-grow-harvest"] .learning-scene {
+  border-color: #95bd7c;
+}
+html.larriverse-high-contrast body[data-world="garden-grow-harvest"] .picture-choice,
+html.larriverse-high-contrast body[data-world="garden-grow-harvest"] .learning-scene {
+  border: 3px solid currentColor;
+  box-shadow: none;
+}
+html.larriverse-high-contrast body[data-world="garden-grow-harvest"] .picture-choice {
+  background: #000;
+  color: #fff;
+}
+html.larriverse-high-contrast body[data-world="garden-grow-harvest"] .picture-choice.correct {
+  outline: 4px solid #77ffba;
+}
+html.larriverse-high-contrast body[data-world="garden-grow-harvest"] .picture-choice.wrong {
+  outline: 4px dashed #ffca65;
+}
+@media (max-width: 430px) {
+  body[data-world="garden-grow-harvest"] .picture-choice {
+    grid-template-columns: minmax(76px, 94px) minmax(0, 1fr);
+    min-height: 112px;
+  }
+  body[data-world="garden-grow-harvest"] .garden-choice-art { width: 88px; height: 86px; }
+  body[data-world="garden-grow-harvest"] .garden-learning-art { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="garden-grow-harvest"] .garden-choice-art,
+  body[data-world="garden-grow-harvest"] .garden-learning-art { animation: none; transition: none; }
+}
