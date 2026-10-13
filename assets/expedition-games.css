@@ -1505,3 +1505,176 @@ html.larriverse-dark body[data-world="cipher-club"] .small-note{
     height:58px;
   }
 }
+
+
+/* Trade Town: dimensional market stalls, products, pricing, and basket controls. */
+body[data-world="trade-town"] .play-card{
+  background:linear-gradient(180deg,#fffdf8,#f6f0e3 72%,#eee4d2);
+  border:2px solid #9c7f55;
+  box-shadow:0 8px 0 #7b634138,0 18px 34px #4b3a2820;
+}
+body[data-world="trade-town"] .board-note{
+  border:1px solid #c8ab76;
+  background:linear-gradient(180deg,#fff8df,#f2dfb6);
+  color:#4a3924;
+  box-shadow:0 3px 0 #a98a5b2e;
+}
+body[data-world="trade-town"] .expedition-stats .stat-chip{
+  border:1px solid #baa06f;
+  background:linear-gradient(180deg,#fffdf5,#f1e6cf);
+  color:#433827;
+  box-shadow:0 3px 0 #9d82552a;
+}
+body[data-world="trade-town"] .board-intro{
+  padding:12px 14px;
+  border:1px solid #c5b08a;
+  border-radius:14px;
+  background:#fffaf0;
+  color:#514533;
+}
+body[data-world="trade-town"] .trade-market-stalls{
+  gap:16px;
+  align-items:stretch;
+}
+body[data-world="trade-town"] .trade-market-stall{
+  position:relative;
+  overflow:hidden;
+  min-height:330px;
+  padding:26px 15px 18px;
+  border:2px solid #a98a5c;
+  background:
+    linear-gradient(180deg,#fffaf0 0 19%,#f6e4bd 19% 22%,#fffdf7 22% 100%);
+  box-shadow:
+    inset 0 3px 0 #fff,
+    inset 0 -7px 0 #8c6d4220,
+    0 7px 0 #886b4638,
+    0 14px 22px #5a432b1b;
+}
+body[data-world="trade-town"] .trade-market-stall::before{
+  content:"";
+  position:absolute;
+  left:10px;
+  right:10px;
+  top:12px;
+  height:20px;
+  border-radius:8px 8px 4px 4px;
+  background:repeating-linear-gradient(90deg,#d95f52 0 18px,#fff0d3 18px 36px);
+  border:1px solid #9e6649;
+  box-shadow:0 3px 0 #8d6b4d36;
+}
+body[data-world="trade-town"] .trade-market-stall--2::before{
+  background:repeating-linear-gradient(90deg,#5b9db0 0 18px,#edf7f3 18px 36px);
+}
+body[data-world="trade-town"] .trade-market-stall--3::before{
+  background:repeating-linear-gradient(90deg,#7fa25d 0 18px,#f3efc9 18px 36px);
+}
+body[data-world="trade-town"] .trade-market-stall .object-icon{
+  width:92px;
+  height:92px;
+  margin-top:14px;
+  overflow:visible;
+  filter:
+    drop-shadow(0 7px 3px #4e3d2b35)
+    drop-shadow(0 13px 7px #4e3d2b20)
+    saturate(1.08);
+}
+body[data-world="trade-town"] .trade-market-stall h3{
+  color:#3e3427;
+  font-size:1.05rem;
+}
+body[data-world="trade-town"] .trade-market-stall p{
+  color:#594d3b;
+}
+body[data-world="trade-town"] .trade-market-stall strong{
+  display:inline-block;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid #bf9d5e;
+  background:linear-gradient(180deg,#fff4bf,#e8c86f);
+  color:#49391e;
+  box-shadow:inset 0 2px 0 #fff8dc,0 3px 0 #a9833e38;
+}
+body[data-world="trade-town"] .trade-market-stall small{
+  color:#5f5648;
+}
+body[data-world="trade-town"] .trade-quantity-stepper{
+  width:100%;
+  margin-top:auto;
+  padding:10px;
+  border:1px solid #b9a27c;
+  border-radius:14px;
+  background:linear-gradient(180deg,#f7f0df,#e7d8bb);
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #9c83582d;
+}
+body[data-world="trade-town"] .trade-quantity-stepper button{
+  width:48px;
+  min-height:48px;
+  border:2px solid #90764d;
+  background:linear-gradient(180deg,#fffdf7,#dfcda7);
+  color:#493a27;
+  box-shadow:0 4px 0 #7d634139;
+}
+body[data-world="trade-town"] .trade-quantity-stepper b{
+  min-width:38px;
+  padding:7px 10px;
+  border-radius:10px;
+  background:#fffaf0;
+  color:#3f3425;
+  border:1px solid #bea779;
+}
+html.larriverse-dark body[data-world="trade-town"] .play-card{
+  background-color:#231e3a;
+  background-image:linear-gradient(180deg,#2b2545,#211c37 72%,#1a172d);
+  color:#f6f3ff;
+  border-color:#7f6c57;
+}
+html.larriverse-dark body[data-world="trade-town"] .board-note,
+html.larriverse-dark body[data-world="trade-town"] .board-intro,
+html.larriverse-dark body[data-world="trade-town"] .expedition-stats .stat-chip{
+  background:#2d2937;
+  color:#f3eee3;
+  border-color:#766a5b;
+}
+html.larriverse-dark body[data-world="trade-town"] .trade-market-stall{
+  background:
+    linear-gradient(180deg,#3a3133 0 19%,#5a4634 19% 22%,#2c2932 22% 100%);
+  border-color:#7d6a57;
+  color:#f7f4ff;
+}
+html.larriverse-dark body[data-world="trade-town"] .trade-market-stall h3,
+html.larriverse-dark body[data-world="trade-town"] .trade-market-stall p,
+html.larriverse-dark body[data-world="trade-town"] .trade-market-stall small{
+  color:#eee7dc;
+}
+html.larriverse-dark body[data-world="trade-town"] .trade-market-stall strong{
+  background:linear-gradient(180deg,#5c4e31,#44391f);
+  color:#fff1bd;
+  border-color:#9f8552;
+}
+html.larriverse-dark body[data-world="trade-town"] .trade-quantity-stepper{
+  background:#312d36;
+  border-color:#76695d;
+}
+html.larriverse-dark body[data-world="trade-town"] .trade-quantity-stepper button{
+  background:linear-gradient(180deg,#3e3742,#2f2a34);
+  color:#f7f1e8;
+  border-color:#80705b;
+}
+html.larriverse-dark body[data-world="trade-town"] .trade-quantity-stepper b{
+  background:#201d26;
+  color:#fff6e8;
+  border-color:#74695d;
+}
+@media(max-width:600px){
+  body[data-world="trade-town"] .trade-market-stalls{
+    grid-template-columns:1fr;
+  }
+  body[data-world="trade-town"] .trade-market-stall{
+    min-height:0;
+    padding:24px 14px 16px;
+  }
+  body[data-world="trade-town"] .trade-market-stall .object-icon{
+    width:80px;
+    height:80px;
+  }
+}
