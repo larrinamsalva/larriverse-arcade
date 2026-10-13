@@ -2350,3 +2350,37 @@ html.larriverse-dark body[data-world="reuse-rally"] .reuse-material-chip{
   .reuse-object-model{width:126px}
   body[data-world="reuse-rally"] .news-bins{grid-template-columns:1fr 1fr}
 }
+
+
+/* Weather Watchers: let the play panel collapse without leaving the game. */
+body[data-world="weather-watchers"] .play-top-tools {
+  display:flex;
+  align-items:center;
+  gap:.55rem;
+}
+body[data-world="weather-watchers"] .weather-panel-toggle {
+  min-height:36px;
+  padding:.42rem .7rem;
+  font-size:.76rem;
+}
+body[data-world="weather-watchers"] .weather-panel-body[hidden] {
+  display:none !important;
+}
+body[data-world="weather-watchers"].weather-panel-collapsed .play-card {
+  min-height:0;
+  padding-bottom:.75rem;
+}
+body[data-world="weather-watchers"].weather-panel-collapsed .play-top {
+  margin-bottom:0;
+  padding-bottom:0;
+  border-bottom:0;
+}
+@media(max-width:700px){
+  body[data-world="weather-watchers"] .play-top {
+    align-items:flex-start;
+  }
+  body[data-world="weather-watchers"] .play-top-tools {
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+}
