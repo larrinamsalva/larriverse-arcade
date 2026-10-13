@@ -33,6 +33,20 @@ const board = $("gameBoard");
 const actions = $("gameActions");
 const feedback = $("feedback");
 const finishDialog = $("finishDialog");
+const weatherPanelToggle = $("weatherPanelToggle");
+const weatherPanelBody = $("weatherPanelBody");
+if (weatherPanelToggle && weatherPanelBody) {
+  const setWeatherPanelExpanded = (expanded) => {
+    weatherPanelBody.hidden = !expanded;
+    weatherPanelToggle.setAttribute("aria-expanded", String(expanded));
+    weatherPanelToggle.textContent = expanded ? "Minimize" : "Open weather";
+    document.body.classList.toggle("weather-panel-collapsed", !expanded);
+  };
+  weatherPanelToggle.addEventListener("click", () => {
+    setWeatherPanelExpanded(weatherPanelToggle.getAttribute("aria-expanded") !== "true");
+  });
+  window.addEventListener("pageshow", () => setWeatherPanelExpanded(true));
+}
 const esc = (value) =>
   String(value).replace(
     /[&<>"']/g,

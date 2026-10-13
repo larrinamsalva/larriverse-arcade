@@ -59,10 +59,11 @@
         <p class="local-note">Your best score and completed games save in this browser.</p>
       </aside>
       <section class="play-card" id="playArea" tabindex="-1" aria-label="Weather Watchers play area">
-        <div class="play-top"><span id="stageLabel">Let's explore</span><span class="score-pill">⭐ <b id="runScore">0</b></span></div>
+        <div class="play-top"><span id="stageLabel">Let's explore</span><div class="play-top-tools"><button id="weatherPanelToggle" class="secondary weather-panel-toggle" type="button" aria-expanded="true" aria-controls="weatherPanelBody">Minimize</button><span class="score-pill">⭐ <b id="runScore">0</b></span></div></div><div id="weatherPanelBody" class="weather-panel-body">
         <div id="gameBoard"></div>
         <output id="feedback" class="feedback" aria-live="polite"></output>
         <div id="gameActions" class="game-actions"></div>
+        </div>
       </section>
     </section>
     <p class="game-footer">Free play · No ads or purchases · Game coins are pretend · <a href="../../index.html">Choose another adventure</a></p>
