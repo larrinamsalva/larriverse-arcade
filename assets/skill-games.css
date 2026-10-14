@@ -2625,3 +2625,306 @@ html.larriverse-dark body[data-world="traffic-town"] .choice-button.wrong{
     padding:.8rem;
   }
 }
+
+
+/* Pocket Planet: tactile supply kits, dimensional project cards, and a clearer workbench. */
+body[data-world="pocket-planet"] .play-card{
+  border:2px solid #9a7c42;
+  background:
+    radial-gradient(circle at 12% 10%,#fff7c9 0 2px,transparent 3px),
+    linear-gradient(180deg,#fffdf7,#f6efdd 72%,#ece1c7);
+  box-shadow:0 8px 0 #80653138,0 18px 34px #4d3b2520;
+}
+body[data-world="pocket-planet"] .pocket-project-hero{
+  position:relative;
+  overflow:hidden;
+  min-height:150px;
+  border:2px solid #aa8b51;
+  background:
+    linear-gradient(145deg,#fff9df,#f0deb0);
+  box-shadow:
+    inset 0 3px 0 #fffdf2,
+    inset 0 -8px 0 #8e6f3820,
+    0 6px 0 #84683c38,
+    0 13px 22px #4f3e2819;
+}
+body[data-world="pocket-planet"] .pocket-project-hero::after{
+  content:"";
+  position:absolute;
+  right:-24px;
+  bottom:-32px;
+  width:150px;
+  height:92px;
+  border-radius:50%;
+  background:radial-gradient(ellipse,#d2b36d 0 45%,#b58c48 46% 58%,transparent 59%);
+  opacity:.24;
+  pointer-events:none;
+}
+body[data-world="pocket-planet"] .pocket-project-hero--grow{
+  border-color:#71905d;
+  background:linear-gradient(145deg,#f6ffe9,#dcebbf);
+}
+body[data-world="pocket-planet"] .pocket-project-hero--build{
+  border-color:#8c785b;
+  background:linear-gradient(145deg,#fff8e6,#e7d2ad);
+}
+body[data-world="pocket-planet"] .pocket-project-hero--eat{
+  border-color:#aa765b;
+  background:linear-gradient(145deg,#fff4e7,#f4d3b9);
+}
+body[data-world="pocket-planet"] .pocket-project-icon{
+  position:relative;
+  z-index:1;
+  flex:0 0 96px;
+  min-height:96px;
+  border:2px solid #a98a50;
+  background:
+    radial-gradient(circle at 35% 28%,#fff,#fff5c5 40%,#e3c56f 75%);
+  box-shadow:
+    inset 0 3px 0 #fff,
+    inset 0 -7px 0 #9f79382e,
+    0 7px 0 #755b3337,
+    0 13px 18px #3e30201c;
+  font-size:3.6rem;
+  transform:rotate(-2deg);
+}
+body[data-world="pocket-planet"] .budget-kicker,
+body[data-world="pocket-planet"] .budget-goal{
+  position:relative;
+  z-index:1;
+}
+body[data-world="pocket-planet"] .pocket-supply-grid{
+  gap:12px;
+}
+body[data-world="pocket-planet"] .pocket-supply-card{
+  min-height:178px;
+  padding:14px 10px 12px;
+  border:2px solid #9d8c6d;
+  background:
+    linear-gradient(160deg,#fffef9,#eee5d4);
+  color:#3e3a31;
+  box-shadow:
+    inset 0 3px 0 #fff,
+    inset 0 -7px 0 #84725420,
+    0 5px 0 #7d6b4e38,
+    0 10px 16px #4a3c2d17;
+  transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease;
+}
+body[data-world="pocket-planet"] .pocket-supply-card:hover{
+  transform:translateY(-2px);
+  border-color:#7561a6;
+  box-shadow:
+    inset 0 3px 0 #fff,
+    inset 0 -7px 0 #84725420,
+    0 8px 0 #7d6b4e38,
+    0 13px 18px #4a3c2d1c;
+}
+body[data-world="pocket-planet"] .pocket-supply-card.selected{
+  border-color:#4f8266;
+  background:linear-gradient(160deg,#f2fff4,#d7ecd9);
+  color:#24452f;
+  box-shadow:
+    inset 0 3px 0 #fff,
+    inset 0 -7px 0 #5c8b6428,
+    0 6px 0 #55785d42,
+    0 11px 17px #34503b1d;
+}
+body[data-world="pocket-planet"] .pocket-supply-icon{
+  display:grid;
+  place-items:center;
+  width:82px;
+  height:82px;
+  margin:0 auto 8px;
+  border:2px solid #b19a71;
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 35% 28%,#fff 0 18%,#f7edd8 52%,#dec9a4 100%);
+  box-shadow:
+    inset 0 3px 0 #fff,
+    inset 0 -6px 0 #8f765025,
+    0 6px 0 #80684530;
+  font-size:2.8rem;
+  filter:drop-shadow(0 4px 2px #3e32242c);
+}
+body[data-world="pocket-planet"] .pocket-supply-name{
+  display:block;
+  min-height:2.5em;
+  line-height:1.25;
+  color:inherit;
+}
+body[data-world="pocket-planet"] .pocket-supply-card small{
+  display:block;
+  margin-top:6px;
+  color:#5c564b;
+}
+body[data-world="pocket-planet"] .pocket-supply-card.selected small{
+  color:#315e40;
+}
+body[data-world="pocket-planet"] .pocket-workbench{
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  padding:26px 16px 18px;
+  border:3px solid #8f633b;
+  border-radius:20px;
+  background:
+    repeating-linear-gradient(0deg,#bd8654 0 18px,#b37949 18px 36px);
+  box-shadow:
+    inset 0 5px 0 #deb080,
+    inset 0 -10px 0 #79502e35,
+    0 7px 0 #684a303d,
+    0 14px 22px #3c2a1d1c;
+}
+body[data-world="pocket-planet"] .pocket-workbench::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:11px;
+  height:3px;
+  background:linear-gradient(90deg,transparent,#6e4728 18%,#efd0a5 48%,#6e4728 82%,transparent);
+  opacity:.7;
+}
+body[data-world="pocket-planet"] .pocket-workbench-item{
+  position:relative;
+  z-index:1;
+  display:grid;
+  justify-items:center;
+  gap:7px;
+  min-width:0;
+  padding:12px 8px;
+  border:2px solid #a98b62;
+  border-radius:15px;
+  background:linear-gradient(160deg,#fffaf0,#ead9bd);
+  color:#3f372c;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #785f4333;
+}
+body[data-world="pocket-planet"] .pocket-workbench-item i{
+  display:grid;
+  place-items:center;
+  width:58px;
+  height:58px;
+  border-radius:16px;
+  background:#fff8e7;
+  border:1px solid #c3aa82;
+  font-style:normal;
+  font-size:2rem;
+  box-shadow:inset 0 -4px 0 #d4bd9825;
+}
+body[data-world="pocket-planet"] .pocket-workbench-item b{
+  font-size:.8rem;
+  text-align:center;
+}
+body[data-world="pocket-planet"] .pocket-step-status{
+  display:inline-block;
+  margin:14px 0 10px;
+  padding:7px 11px;
+  border:1px solid #937b51;
+  border-radius:999px;
+  background:#fff4cf;
+  color:#4a3a1c;
+  font-weight:900;
+  box-shadow:0 3px 0 #836b4233;
+}
+body[data-world="pocket-planet"] .pocket-step-choices .choice-button{
+  min-height:78px;
+  border:2px solid #9a896d;
+  background:linear-gradient(160deg,#fffef9,#eee4d2);
+  color:#3c3931;
+  box-shadow:inset 0 2px 0 #fff,0 5px 0 #75674e38;
+}
+body[data-world="pocket-planet"] .pocket-step-choices .choice-button.correct{
+  border-color:#4f8165;
+  background:linear-gradient(160deg,#ecf9ed,#cfe7d2);
+  color:#254a31;
+}
+body[data-world="pocket-planet"] .pocket-project-complete{
+  padding:22px;
+  border:2px solid #63835e;
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 90% 20%,#fff1a5 0 4px,transparent 5px),
+    linear-gradient(145deg,#f3ffe9,#dcecc8);
+  color:#2c4a31;
+  box-shadow:inset 0 3px 0 #fff,0 6px 0 #5870513b;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .play-card{
+  background:
+    radial-gradient(circle at 12% 10%,#74652d 0 1px,transparent 3px),
+    linear-gradient(180deg,#2c283a,#22202f 72%,#1a1927);
+  border-color:#776746;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-project-hero{
+  background:linear-gradient(145deg,#3b352c,#302d29);
+  color:#f7f1e5;
+  border-color:#7d6e54;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-project-icon{
+  background:radial-gradient(circle at 35% 28%,#6b6045,#50472f 70%);
+  border-color:#8f7950;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-supply-card{
+  background:linear-gradient(160deg,#34313a,#292731);
+  color:#f5f2eb;
+  border-color:#71695d;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-supply-card.selected{
+  background:linear-gradient(160deg,#274235,#20362c);
+  color:#f0fff4;
+  border-color:#64876c;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-supply-icon{
+  background:linear-gradient(160deg,#46414a,#36323b);
+  border-color:#766d60;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-supply-card small,
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-supply-card.selected small{
+  color:#eee9df;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-workbench{
+  background:repeating-linear-gradient(0deg,#5b422d 0 18px,#4d3827 18px 36px);
+  border-color:#74583e;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-workbench-item,
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-step-choices .choice-button{
+  background:linear-gradient(160deg,#35323a,#29272f);
+  color:#f5f1e9;
+  border-color:#71695d;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-workbench-item i{
+  background:#28252c;
+  border-color:#6e655a;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-step-status{
+  background:#423b2d;
+  color:#fff2c9;
+  border-color:#827152;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-step-choices .choice-button.correct{
+  background:linear-gradient(160deg,#284536,#20372c);
+  color:#f0fff4;
+  border-color:#64876c;
+}
+html.larriverse-dark body[data-world="pocket-planet"] .pocket-project-complete{
+  background:linear-gradient(145deg,#294033,#22342b);
+  color:#f0fff4;
+  border-color:#66816b;
+}
+@media(max-width:700px){
+  body[data-world="pocket-planet"] .pocket-project-hero{
+    align-items:flex-start;
+  }
+  body[data-world="pocket-planet"] .pocket-project-icon{
+    flex-basis:76px;
+    min-height:76px;
+    font-size:2.8rem;
+  }
+  body[data-world="pocket-planet"] .pocket-workbench{
+    grid-template-columns:1fr;
+  }
+  body[data-world="pocket-planet"] .pocket-supply-card{
+    min-height:150px;
+  }
+}
