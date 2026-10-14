@@ -3213,3 +3213,329 @@ html.larriverse-high-contrast body[data-world="scam-sleuth"] :is(
     grid-template-columns:1fr;
   }
 }
+
+
+/* Kindness Quest: cozy dimensional treehouse scenes and tactile response cards. */
+body[data-world="kindness-quest"] .play-card{
+  border:2px solid #b16c8c;
+  background:
+    radial-gradient(circle at 12% 10%,#fff 0 2px,transparent 3px),
+    linear-gradient(180deg,#fff8fb,#fbeaf1 72%,#f5dde8);
+  box-shadow:0 8px 0 #a05d7b38,0 18px 34px #66354d20;
+}
+body[data-world="kindness-quest"] .kindness-message{
+  display:grid;
+  grid-template-columns:minmax(190px,250px) minmax(0,1fr);
+  align-items:stretch;
+  gap:1.2rem;
+  padding:1.1rem;
+  border:2px solid #b97696;
+  background:linear-gradient(145deg,#fff2f7,#f5e6f0);
+  color:#4a2c3b;
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -7px 0 #9a5a771c,
+    0 7px 0 #9a5f7b38,
+    0 14px 22px #5c35481a;
+}
+body[data-world="kindness-quest"] .kindness-treehouse-scene{
+  position:relative;
+  overflow:hidden;
+  min-height:220px;
+  border:2px solid #7b8d66;
+  border-radius:20px;
+  background:
+    linear-gradient(180deg,#bfe8f3 0 52%,#a9d493 52% 100%);
+  box-shadow:
+    inset 0 3px 0 #eefcff,
+    inset 0 -10px 0 #536b4930,
+    0 6px 0 #6778583d;
+}
+body[data-world="kindness-quest"] .kindness-treehouse-scene::before{
+  content:"";
+  position:absolute;
+  left:52%;
+  top:34px;
+  bottom:-20px;
+  width:42px;
+  transform:translateX(-50%);
+  border-radius:22px;
+  background:
+    repeating-linear-gradient(90deg,#9f6d43 0 8px,#8c5d39 8px 16px);
+  box-shadow:inset 8px 0 0 #bc895d66,inset -7px 0 0 #6d432a55;
+}
+body[data-world="kindness-quest"] .kindness-tree-canopy{
+  position:absolute;
+  left:16px;
+  right:16px;
+  top:8px;
+  height:82px;
+  pointer-events:none;
+}
+body[data-world="kindness-quest"] .kindness-tree-canopy i{
+  position:absolute;
+  width:92px;
+  height:72px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#bfe99d,#65a95f 70%);
+  box-shadow:inset 0 -8px 0 #4f8a4a20,0 5px 0 #476f4430;
+}
+body[data-world="kindness-quest"] .kindness-tree-canopy i:nth-child(1){left:4%;top:7px}
+body[data-world="kindness-quest"] .kindness-tree-canopy i:nth-child(2){left:35%;top:0;width:104px}
+body[data-world="kindness-quest"] .kindness-tree-canopy i:nth-child(3){right:2%;top:12px}
+body[data-world="kindness-quest"] .kindness-treehouse{
+  position:absolute;
+  left:50%;
+  top:66px;
+  width:118px;
+  height:88px;
+  transform:translateX(-50%);
+  border:3px solid #7d5638;
+  border-radius:12px 12px 8px 8px;
+  background:
+    repeating-linear-gradient(0deg,#dca972 0 12px,#cc955d 12px 24px);
+  box-shadow:
+    inset 0 4px 0 #efc799,
+    inset 0 -8px 0 #79502e30,
+    0 8px 0 #5f402a3f,
+    0 13px 16px #3a281d22;
+}
+body[data-world="kindness-quest"] .kindness-treehouse::before{
+  content:"";
+  position:absolute;
+  left:-18px;
+  right:-18px;
+  top:-28px;
+  height:36px;
+  clip-path:polygon(50% 0,100% 100%,0 100%);
+  background:linear-gradient(160deg,#8d5d52,#6f463d);
+  border-bottom:3px solid #5d3b34;
+}
+body[data-world="kindness-quest"] .kindness-window{
+  position:absolute;
+  left:15px;
+  top:24px;
+  width:28px;
+  height:28px;
+  border:3px solid #6f513d;
+  border-radius:5px;
+  background:linear-gradient(145deg,#dff6ff,#8fcfe7);
+  box-shadow:inset 0 0 0 2px #ffffff88;
+}
+body[data-world="kindness-quest"] .kindness-door{
+  position:absolute;
+  right:16px;
+  bottom:0;
+  width:28px;
+  height:49px;
+  border:3px solid #69482f;
+  border-bottom:0;
+  border-radius:7px 7px 0 0;
+  background:linear-gradient(90deg,#9d6b43,#805333);
+}
+body[data-world="kindness-quest"] .kindness-railing{
+  position:absolute;
+  left:-25px;
+  right:-25px;
+  bottom:-15px;
+  height:15px;
+  border-top:4px solid #8a5a37;
+  border-bottom:4px solid #8a5a37;
+  background:repeating-linear-gradient(90deg,transparent 0 13px,#8a5a37 13px 17px);
+}
+body[data-world="kindness-quest"] .kindness-character{
+  position:absolute;
+  z-index:3;
+  left:18px;
+  bottom:20px;
+  display:grid;
+  place-items:center;
+  width:70px;
+  height:70px;
+  border:2px solid #8f6e79;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 28%,#fff,#ffeaf1 68%);
+  box-shadow:
+    inset 0 3px 0 #fff,
+    0 5px 0 #83616d3b,
+    0 10px 14px #4b344024;
+  font-size:2.8rem;
+}
+body[data-world="kindness-quest"] .kindness-path{
+  position:absolute;
+  left:18%;
+  right:-8%;
+  bottom:-14px;
+  height:55px;
+  transform:rotate(-5deg);
+  border-radius:50%;
+  background:linear-gradient(180deg,#e6d1aa,#c3a878);
+  border-top:2px solid #ad9166;
+  opacity:.95;
+}
+body[data-world="kindness-quest"] .kindness-message .message-copy{
+  align-self:center;
+  min-width:0;
+  padding:1rem 1.05rem;
+  border:1px solid #d3a7ba;
+  border-radius:16px;
+  background:linear-gradient(160deg,#fff,#fff5f9);
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #aa768e27;
+}
+body[data-world="kindness-quest"] .kindness-scene-label{
+  display:inline-block;
+  margin-bottom:.35rem;
+  color:#9c5275;
+}
+body[data-world="kindness-quest"] .kindness-message .board-title{
+  color:#572b40;
+}
+body[data-world="kindness-quest"] .kindness-message p{
+  color:#583d4a;
+}
+body[data-world="kindness-quest"] .kindness-choice-grid{
+  gap:.8rem;
+  margin-top:1rem;
+}
+body[data-world="kindness-quest"] .kindness-choice{
+  position:relative;
+  display:grid;
+  grid-template-columns:38px minmax(0,1fr);
+  align-items:center;
+  gap:.75rem;
+  min-height:82px;
+  padding:.85rem 1rem;
+  border:2px solid #c58aa4;
+  background:linear-gradient(160deg,#fff,#faedf4);
+  color:#4b3040;
+  text-align:left;
+  font-weight:850;
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -5px 0 #a66b8720,
+    0 5px 0 #a96e8938;
+  transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease;
+}
+body[data-world="kindness-quest"] .kindness-choice:hover:not(:disabled){
+  transform:translateY(-2px);
+  border-color:#9b5d7a;
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -5px 0 #a66b8720,
+    0 8px 0 #a96e8938,
+    0 12px 16px #603a4d18;
+}
+body[data-world="kindness-quest"] .kindness-choice-marker{
+  display:grid;
+  place-items:center;
+  width:36px;
+  height:36px;
+  border:2px solid #b66c90;
+  border-radius:50%;
+  background:#fff5fa;
+  color:#b24e7d;
+  font-size:1rem;
+  box-shadow:inset 0 2px 0 #fff,0 2px 0 #8f56702b;
+}
+body[data-world="kindness-quest"] .kindness-choice.correct{
+  border-color:#5d906b;
+  background:linear-gradient(160deg,#effbef,#d7edd9);
+  color:#24482e;
+}
+body[data-world="kindness-quest"] .kindness-choice.wrong{
+  border-color:#b07a49;
+  background:linear-gradient(160deg,#fff7e6,#f0ddb8);
+  color:#5b4328;
+}
+body[data-world="kindness-quest"] .kindness-choice.correct .kindness-choice-marker{
+  border-color:#5e936d;
+  background:#e7f7e9;
+  color:#38704b;
+}
+html.larriverse-dark body[data-world="kindness-quest"] .play-card{
+  background:linear-gradient(180deg,#2a2233,#241d2c 72%,#1b1722);
+  border-color:#76536a;
+}
+html.larriverse-dark body[data-world="kindness-quest"] .kindness-message{
+  background:linear-gradient(145deg,#392b38,#302733);
+  color:#f8f3f7;
+  border-color:#77576a;
+}
+html.larriverse-dark body[data-world="kindness-quest"] .kindness-treehouse-scene{
+  background:linear-gradient(180deg,#243850 0 52%,#304a31 52% 100%);
+  border-color:#617058;
+}
+html.larriverse-dark body[data-world="kindness-quest"] .kindness-message .message-copy{
+  background:linear-gradient(160deg,#3a2f39,#302630);
+  border-color:#765d6a;
+}
+html.larriverse-dark body[data-world="kindness-quest"] .kindness-scene-label,
+html.larriverse-dark body[data-world="kindness-quest"] .kindness-message .board-title,
+html.larriverse-dark body[data-world="kindness-quest"] .kindness-message p{
+  color:#fff3f8;
+}
+html.larriverse-dark body[data-world="kindness-quest"] .kindness-choice{
+  border-color:#73596a;
+  background:linear-gradient(160deg,#3a3038,#302831);
+  color:#f8f3f6;
+}
+html.larriverse-dark body[data-world="kindness-quest"] .kindness-choice-marker{
+  border-color:#8c687c;
+  background:#2c252d;
+  color:#f3b7d1;
+}
+html.larriverse-dark body[data-world="kindness-quest"] .kindness-choice.correct{
+  border-color:#65866b;
+  background:linear-gradient(160deg,#294233,#22372c);
+  color:#effcf2;
+}
+html.larriverse-dark body[data-world="kindness-quest"] .kindness-choice.wrong{
+  border-color:#9a7652;
+  background:linear-gradient(160deg,#493a2d,#3b3027);
+  color:#fff5e8;
+}
+html.larriverse-high-contrast body[data-world="kindness-quest"] :is(
+  .kindness-message,
+  .kindness-treehouse-scene,
+  .kindness-message .message-copy,
+  .kindness-choice
+){
+  border-color:#fff !important;
+  background:#111 !important;
+  color:#fff !important;
+  box-shadow:none !important;
+}
+html.larriverse-high-contrast body[data-world="kindness-quest"] :is(
+  .kindness-scene-label,
+  .kindness-message .board-title,
+  .kindness-message p
+){
+  color:#fff !important;
+}
+@media(max-width:900px){
+  body[data-world="kindness-quest"] .kindness-message{
+    grid-template-columns:1fr;
+    min-width:0;
+  }
+  body[data-world="kindness-quest"] .kindness-message .message-copy,
+  body[data-world="kindness-quest"] .kindness-choice{
+    min-width:0;
+    overflow-wrap:anywhere;
+  }
+  body[data-world="kindness-quest"] .kindness-treehouse-scene{
+    max-width:100%;
+  }
+}
+@media(max-width:760px){
+  body[data-world="kindness-quest"] .kindness-message{
+    grid-template-columns:1fr;
+  }
+  body[data-world="kindness-quest"] .kindness-treehouse-scene{
+    min-height:190px;
+  }
+  body[data-world="kindness-quest"] .kindness-character{
+    width:60px;
+    height:60px;
+    font-size:2.35rem;
+  }
+}
