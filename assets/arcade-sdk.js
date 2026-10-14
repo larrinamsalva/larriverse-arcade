@@ -46,7 +46,7 @@
       hint: 'First cover the number of items needed. Then compare the total cost, including every fee.'
     },
     'critter-council': {
-      welcome: 'Twenty woodland neighborhoods are ready for thoughtful plans. Let’s listen to every neighbor and welcome everyone.',
+      welcome: 'Sixty woodland neighborhoods are ready for thoughtful plans. Let’s listen to every neighbor and welcome everyone.',
       hint: 'Read all four requests on each level, then notice exact plots, rows, columns, and which spaces need to be beside each other.'
     },
     'traffic-town': {

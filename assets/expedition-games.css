@@ -1678,3 +1678,329 @@ html.larriverse-dark body[data-world="trade-town"] .trade-quantity-stepper b{
     height:80px;
   }
 }
+
+
+/* Critter Council: dimensional woodland neighborhood, buildings, paths, and request cards. */
+body[data-world="critter-council"] .play-card{
+  background:
+    linear-gradient(180deg,#fbfff8,#eef6e7 72%,#e3edda);
+  border:2px solid #78906c;
+  box-shadow:0 8px 0 #5f765438,0 18px 34px #34452f20;
+}
+body[data-world="critter-council"] .critter-challenge-card{
+  border:2px solid #9b835f;
+  background:
+    linear-gradient(145deg,#fffdf4,#eee3c9);
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -6px 0 #856b4320,
+    0 6px 0 #7c67493a,
+    0 12px 20px #4e402d18;
+}
+body[data-world="critter-council"] .critter-challenge-card h2{
+  color:#3e4f35;
+}
+body[data-world="critter-council"] .critter-neighbor-requests{
+  gap:10px;
+}
+body[data-world="critter-council"] .critter-request{
+  position:relative;
+  min-height:86px;
+  padding:13px 14px 13px 46px;
+  border:2px solid #a9967a;
+  background:linear-gradient(145deg,#fffdf8,#f1eadb);
+  color:#3f493a;
+  box-shadow:
+    inset 0 2px 0 #fff,
+    0 4px 0 #85765f2e;
+}
+body[data-world="critter-council"] .critter-request>span{
+  position:absolute;
+  left:13px;
+  top:14px;
+  display:grid;
+  place-items:center;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  border:2px solid #8f806a;
+  background:#fffaf0;
+  color:#63563f;
+  font-weight:900;
+}
+body[data-world="critter-council"] .critter-request b{
+  display:block;
+  margin-bottom:3px;
+  color:#34452f;
+}
+body[data-world="critter-council"] .critter-request small{
+  color:#555e50;
+}
+body[data-world="critter-council"] .critter-request.met{
+  border-color:#5c8a68;
+  background:linear-gradient(145deg,#edf8e9,#d5ebd4);
+  color:#294a31;
+}
+body[data-world="critter-council"] .critter-request.met>span{
+  border-color:#4d805d;
+  background:#4f8a61;
+  color:#fff;
+}
+body[data-world="critter-council"] .critter-tool-shelf{
+  gap:10px;
+  padding:12px;
+  border:2px solid #9a876a;
+  border-radius:18px;
+  background:
+    repeating-linear-gradient(90deg,#d5b07c 0 18px,#c89c68 18px 36px);
+  box-shadow:
+    inset 0 4px 0 #ead0a6,
+    inset 0 -8px 0 #8d653d2d,
+    0 6px 0 #755b4033;
+}
+body[data-world="critter-council"] .critter-tool-shelf .build-tool{
+  min-height:132px;
+  border:2px solid #a58c69;
+  background:linear-gradient(160deg,#fffaf0,#efe2c8);
+  color:#3d4938;
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -5px 0 #8c6d4622,
+    0 4px 0 #7d654637;
+}
+body[data-world="critter-council"] .critter-tool-shelf .build-tool.selected{
+  border-color:#6252a3;
+  background:linear-gradient(160deg,#f4efff,#ded3f4);
+  box-shadow:
+    inset 0 2px 0 #fff,
+    0 0 0 3px #d8cef2,
+    0 5px 0 #6b5a923d;
+}
+body[data-world="critter-council"] .critter-tool-shelf .build-tool .object-icon{
+  width:66px;
+  height:66px;
+  overflow:visible;
+  filter:
+    drop-shadow(0 6px 3px #3b392d38)
+    drop-shadow(0 11px 6px #3b392d1f);
+}
+body[data-world="critter-council"] .critter-tool-shelf [data-tool="park"] .object-icon{
+  filter:drop-shadow(0 7px 3px #3450333a) saturate(1.12);
+}
+body[data-world="critter-council"] .critter-tool-shelf [data-tool="hut"] .object-icon{
+  filter:drop-shadow(0 7px 3px #59452f3d) saturate(1.07);
+}
+body[data-world="critter-council"] .critter-tool-shelf [data-tool="ramp"] .object-icon{
+  filter:drop-shadow(0 7px 3px #3d4b5238) contrast(1.04);
+}
+body[data-world="critter-council"] .critter-town-map{
+  position:relative;
+  overflow:hidden;
+  padding:18px 54px 20px 16px;
+  border:3px solid #6f9275;
+  background:
+    linear-gradient(90deg,transparent 0 86%,#63b4c4 86% 100%),
+    radial-gradient(circle at 18% 22%,#f1e09a 0 2%,transparent 2.4%),
+    radial-gradient(circle at 62% 74%,#e9d789 0 2%,transparent 2.4%),
+    linear-gradient(180deg,#b9dba3,#92c088);
+  box-shadow:
+    inset 0 5px 12px #ffffff58,
+    inset 0 -12px 20px #36573c30,
+    0 8px 0 #58755e38,
+    0 16px 28px #2f443322;
+}
+body[data-world="critter-council"] .critter-town-map::before{
+  content:"";
+  position:absolute;
+  left:5%;
+  right:17%;
+  top:49%;
+  height:20px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#ead9ab,#c9ad79);
+  border:1px solid #ad8d60;
+  box-shadow:inset 0 2px 0 #f8e9c3;
+  pointer-events:none;
+}
+body[data-world="critter-council"] .critter-town-map::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:7%;
+  width:12px;
+  background:
+    repeating-linear-gradient(180deg,#c5f3f2 0 14px,transparent 14px 30px);
+  opacity:.72;
+  pointer-events:none;
+}
+body[data-world="critter-council"] .town-shade,
+body[data-world="critter-council"] .town-quiet{
+  position:relative;
+  z-index:2;
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:999px;
+  border:1px solid #718467;
+  background:#f7f4dfe6;
+  color:#31462f;
+  box-shadow:0 2px 0 #5f744f2c;
+}
+body[data-world="critter-council"] .town-plots{
+  position:relative;
+  z-index:2;
+  gap:12px;
+  padding:10px 0;
+}
+body[data-world="critter-council"] .critter-town-plot{
+  min-height:158px;
+  border:2px solid #927c5d;
+  background:
+    linear-gradient(160deg,#fff8df,#e9d7aa);
+  color:#374330;
+  box-shadow:
+    inset 0 3px 0 #fff6dd,
+    inset 0 -7px 0 #8369442a,
+    0 6px 0 #735b3e3e,
+    0 11px 17px #3546321d;
+  transition:transform .14s ease,box-shadow .14s ease;
+}
+body[data-world="critter-council"] .critter-town-plot:hover:not(:disabled){
+  transform:translateY(-2px);
+  box-shadow:
+    inset 0 3px 0 #fff6dd,
+    inset 0 -7px 0 #8369442a,
+    0 8px 0 #735b3e3e,
+    0 14px 20px #35463222;
+}
+body[data-world="critter-council"] .critter-town-plot.empty{
+  background:
+    radial-gradient(circle at 24% 28%,#8dbd74 0 3px,transparent 4px),
+    radial-gradient(circle at 74% 68%,#81b36a 0 3px,transparent 4px),
+    linear-gradient(160deg,#d8e8b8,#b9d494);
+  border-color:#75916b;
+}
+body[data-world="critter-council"] .critter-town-plot.park{
+  background:linear-gradient(160deg,#e8f4c8,#b7d98e);
+  border-color:#638657;
+}
+body[data-world="critter-council"] .critter-town-plot.hut{
+  background:linear-gradient(160deg,#f4dfbd,#d8b47e);
+  border-color:#9d774d;
+}
+body[data-world="critter-council"] .critter-town-plot.ramp{
+  background:linear-gradient(160deg,#e3edf0,#b9ccd1);
+  border-color:#718a91;
+}
+body[data-world="critter-council"] .critter-town-plot.bench{
+  background:linear-gradient(160deg,#f1e1c7,#d2b083);
+  border-color:#92704e;
+}
+body[data-world="critter-council"] .critter-town-plot .object-icon{
+  width:76px;
+  height:76px;
+  overflow:visible;
+  filter:
+    drop-shadow(0 7px 3px #3c382c3a)
+    drop-shadow(0 12px 6px #3c382c20);
+}
+body[data-world="critter-council"] .critter-town-plot b{
+  color:#35402f;
+}
+body[data-world="critter-council"] .critter-town-plot small{
+  padding:3px 6px;
+  border-radius:999px;
+  background:#fffaf0d9;
+  color:#4c5748;
+  border:1px solid #aa9a7c;
+}
+html.larriverse-dark body[data-world="critter-council"] .play-card{
+  background-color:#211f35;
+  background-image:linear-gradient(180deg,#292740,#201e33 72%,#19172b);
+  color:#f5f4fb;
+  border-color:#657264;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-challenge-card{
+  background:linear-gradient(145deg,#342f3c,#292735);
+  color:#f5f0e7;
+  border-color:#796c5c;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-challenge-card h2{
+  color:#fff1d4;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-request{
+  background:linear-gradient(145deg,#302e38,#282631);
+  color:#f2efe8;
+  border-color:#70695e;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-request b,
+html.larriverse-dark body[data-world="critter-council"] .critter-request small{
+  color:#f2efe8;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-request.met{
+  background:linear-gradient(145deg,#264132,#20372b);
+  color:#eefbf1;
+  border-color:#5d8768;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-tool-shelf{
+  background:repeating-linear-gradient(90deg,#57412d 0 18px,#493724 18px 36px);
+  border-color:#796044;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-tool-shelf .build-tool{
+  background:linear-gradient(160deg,#35313e,#292632);
+  color:#f6f1e8;
+  border-color:#756956;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-tool-shelf .build-tool.selected{
+  background:linear-gradient(160deg,#40375a,#302a45);
+  border-color:#9b86cc;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-town-map{
+  background:
+    linear-gradient(90deg,transparent 0 86%,#28596c 86% 100%),
+    radial-gradient(circle at 18% 22%,#665d3e 0 2%,transparent 2.4%),
+    radial-gradient(circle at 62% 74%,#5c5639 0 2%,transparent 2.4%),
+    linear-gradient(180deg,#304d38,#253e30);
+  border-color:#586e5d;
+}
+html.larriverse-dark body[data-world="critter-council"] .town-shade,
+html.larriverse-dark body[data-world="critter-council"] .town-quiet{
+  background:#242b25e8;
+  color:#f2f6ee;
+  border-color:#68766b;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-town-plot{
+  background:linear-gradient(160deg,#39343a,#2d2a31);
+  color:#f7f4ed;
+  border-color:#746958;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-town-plot.empty{
+  background:linear-gradient(160deg,#314638,#27392e);
+  border-color:#5e7765;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-town-plot b,
+html.larriverse-dark body[data-world="critter-council"] .critter-town-plot small{
+  color:#f5f2e9;
+}
+html.larriverse-dark body[data-world="critter-council"] .critter-town-plot small{
+  background:#1f2421df;
+  border-color:#6e746a;
+}
+@media(max-width:600px){
+  body[data-world="critter-council"] .critter-town-map{
+    padding:14px 34px 16px 10px;
+  }
+  body[data-world="critter-council"] .town-plots{
+    gap:7px;
+  }
+  body[data-world="critter-council"] .critter-town-plot{
+    min-height:138px;
+  }
+  body[data-world="critter-council"] .critter-town-plot .object-icon{
+    width:58px;
+    height:58px;
+  }
+  body[data-world="critter-council"] .critter-request{
+    min-height:0;
+  }
+}
