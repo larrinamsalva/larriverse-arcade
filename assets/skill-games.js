@@ -389,8 +389,8 @@ function renderBudget() {
   const chosen=[...state.selected].filter(i=>plan.items[i].need).length;
   stage(`Pocket Planet · Chapter ${Math.floor(state.step/10)+1}/6 · Project ${state.step+1}/${state.deck.length}`);
   const banner=`
-    <div class="budget-hero">
-      <span class="budget-illustration" aria-hidden="true">${esc(plan.icon)}</span>
+    <div class="budget-hero pocket-project-hero pocket-project-hero--${esc(plan.kind)}">
+      <span class="budget-illustration pocket-project-icon" aria-hidden="true">${esc(plan.icon)}</span>
       <div>
         <p class="budget-kicker">${esc(plan.kind)} project ${state.step+1} of ${state.deck.length}</p>
         <h2 class="board-title">${esc(plan.title)}</h2>
@@ -405,7 +405,7 @@ function renderBudget() {
     </div>`;
   if(state.phase==="gather"){
     board.innerHTML=campaignTrail(state.passed,state.deck.length)+banner+`<p class="board-note">Choose THREE useful things to ${esc(plan.kind)}. Some objects do not belong in this project. Tap again to remove one.</p>
-      <div class="item-grid">${plan.items.map((item,i)=>`<button class="item-button ${state.selected.has(i)?"selected":""}" data-supply="${i}" aria-pressed="${state.selected.has(i)}"><span class="item-icon" aria-hidden="true">${esc(item.icon)}</span>${esc(item.name)}<small>${state.selected.has(i)?"✓ In your kit":"Tap to choose"}</small></button>`).join("")}</div>`;
+      <div class="item-grid pocket-supply-grid">${plan.items.map((item,i)=>`<button class="item-button pocket-supply-card ${item.need?"useful":"decoy"} ${state.selected.has(i)?"selected":""}" data-supply="${i}" aria-pressed="${state.selected.has(i)}"><span class="item-icon pocket-supply-icon" aria-hidden="true">${esc(item.icon)}</span><b class="pocket-supply-name">${esc(item.name)}</b><small>${state.selected.has(i)?"✓ In your kit":"Tap to choose"}</small></button>`).join("")}</div>`;
     bind("[data-supply]",node=>{
       const i=Number(node.dataset.supply);
       if(state.selected.has(i))state.selected.delete(i);
@@ -420,11 +420,11 @@ function renderBudget() {
     });
   }else if(state.phase==="make"){
     board.innerHTML=campaignTrail(state.passed,state.deck.length)+banner+`<p class="board-note">You have the right supplies. What should happen next? Choose the steps in a sensible order.</p>
-      <div class="planet-workbench" aria-label="Project workbench">
-        ${plan.items.filter(item=>item.need).map(item=>`<span>${esc(item.icon)} ${esc(item.name)}</span>`).join("")}
+      <div class="planet-workbench pocket-workbench" aria-label="Project workbench">
+        ${plan.items.filter(item=>item.need).map(item=>`<span class="pocket-workbench-item"><i aria-hidden="true">${esc(item.icon)}</i><b>${esc(item.name)}</b></span>`).join("")}
       </div>
-      <div class="planet-step-status">Step ${state.makeStep+1} of 3</div>
-      <div class="choice-grid planet-step-choices">${state.stepOrder.map(i=>`<button class="choice-button ${i<state.makeStep?"correct":""}" data-make-step="${i}" ${i<state.makeStep?"disabled":""}>${i<state.makeStep?"✓ ":""}${esc(plan.steps[i])}</button>`).join("")}</div>`;
+      <div class="planet-step-status pocket-step-status">Step ${state.makeStep+1} of 3</div>
+      <div class="choice-grid planet-step-choices pocket-step-choices">${state.stepOrder.map(i=>`<button class="choice-button ${i<state.makeStep?"correct":""}" data-make-step="${i}" ${i<state.makeStep?"disabled":""}>${i<state.makeStep?"✓ ":""}${esc(plan.steps[i])}</button>`).join("")}</div>`;
     bind("[data-make-step]",node=>{
       const i=Number(node.dataset.makeStep);
       if(i!==state.makeStep){say("Think about what should happen first. Try another step.","try");return;}
@@ -441,7 +441,7 @@ function renderBudget() {
       }else{renderBudget();say("Good work! What comes next?","good");}
     });
   }else{
-    board.innerHTML=campaignTrail(state.passed,state.deck.length)+banner+`<div class="planet-project-complete" role="status"><strong>🌟 ${esc(plan.goal)} completed!</strong><p>You chose useful supplies and followed all three steps.</p></div>`;
+    board.innerHTML=campaignTrail(state.passed,state.deck.length)+banner+`<div class="planet-project-complete pocket-project-complete" role="status"><strong>🌟 ${esc(plan.goal)} completed!</strong><p>You chose useful supplies and followed all three steps.</p></div>`;
     button("Next project",()=>{
       state.step++;
       startResourceProject();
