@@ -3191,7 +3191,7 @@ html.larriverse-high-contrast body[data-world="scam-sleuth"] :is(
   .scam-safety-strip span
 ){
   border-color:#fff !important;
-  background:#000 !important;
+  background:#111 !important;
   color:#fff !important;
   box-shadow:none !important;
 }
