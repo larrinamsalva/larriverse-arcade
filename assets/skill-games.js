@@ -505,8 +505,19 @@ function renderCards(mode) {
             </div>
             <div class="scam-case-badge">CASE ${String(state.step + 1).padStart(2,"0")}</div>
           </div>`
-        : `<span class="message-icon" aria-hidden="true">${item.icon}</span>`;
-  board.innerHTML = `${campaignTrail(state.step,deck.length)}<div class="message-card ${mode === "traffic" ? "traffic-message" : mode === "sorting" ? "reuse-message" : mode === "messages" ? "scam-message" : ""}">${messageArt}<div class="message-copy">${mode === "messages" ? '<span class="eyebrow scam-case-label">Incoming case file</span>' : ""}<h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""} ${mode === "messages" ? "scam-action-grid" : ""}">${display.map((choice) => `<button class="choice-button ${mode === "messages" ? `scam-action scam-action--${choice.index}` : ""}" data-answer="${choice.index}">${mode === "messages" ? `<span class="scam-action-icon" aria-hidden="true">${choice.index === 0 ? "✓" : choice.index === 1 ? "?" : "!"}</span>` : ""}${esc(choice.label)}</button>`).join("")}</div>${mode === "messages" ? '<div class="scam-safety-strip" aria-label="Scam Sleuth action guide"><span class="safe"><i aria-hidden="true"></i>Read only when it checks out</span><span class="check"><i aria-hidden="true"></i>Verify surprising messages</span><span class="stop"><i aria-hidden="true"></i>Stop when secrets or pressure appear</span></div>' : mode === "sorting" ? '<p class="board-note reuse-rule-card">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
+        : mode === "conversation"
+          ? `<div class="kindness-treehouse-scene" aria-hidden="true">
+              <div class="kindness-tree-canopy"><i></i><i></i><i></i></div>
+              <div class="kindness-treehouse">
+                <span class="kindness-window"></span>
+                <span class="kindness-door"></span>
+                <span class="kindness-railing"></span>
+              </div>
+              <div class="kindness-character">${item.icon}</div>
+              <div class="kindness-path"></div>
+            </div>`
+          : `<span class="message-icon" aria-hidden="true">${item.icon}</span>`;
+  board.innerHTML = `${campaignTrail(state.step,deck.length)}<div class="message-card ${mode === "traffic" ? "traffic-message" : mode === "sorting" ? "reuse-message" : mode === "messages" ? "scam-message" : mode === "conversation" ? "kindness-message" : ""}">${messageArt}<div class="message-copy">${mode === "messages" ? '<span class="eyebrow scam-case-label">Incoming case file</span>' : mode === "conversation" ? '<span class="eyebrow kindness-scene-label">Treehouse moment</span>' : ""}<h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""} ${mode === "messages" ? "scam-action-grid" : mode === "conversation" ? "kindness-choice-grid" : ""}">${display.map((choice) => `<button class="choice-button ${mode === "messages" ? `scam-action scam-action--${choice.index}` : mode === "conversation" ? "kindness-choice" : ""}" data-answer="${choice.index}">${mode === "messages" ? `<span class="scam-action-icon" aria-hidden="true">${choice.index === 0 ? "✓" : choice.index === 1 ? "?" : "!"}</span>` : mode === "conversation" ? '<span class="kindness-choice-marker" aria-hidden="true">♥</span>' : ""}${esc(choice.label)}</button>`).join("")}</div>${mode === "messages" ? '<div class="scam-safety-strip" aria-label="Scam Sleuth action guide"><span class="safe"><i aria-hidden="true"></i>Read only when it checks out</span><span class="check"><i aria-hidden="true"></i>Verify surprising messages</span><span class="stop"><i aria-hidden="true"></i>Stop when secrets or pressure appear</span></div>' : mode === "sorting" ? '<p class="board-note reuse-rule-card">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
   progress(state.step, deck.length);
   bind("[data-answer]", (node) => {
     if (state.answered) return;
