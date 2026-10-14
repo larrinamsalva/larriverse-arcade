@@ -497,8 +497,16 @@ function renderCards(mode) {
           <div class="reuse-object-model">${iconSvg(item.art, "message-icon reuse-item-art")}</div>
           <span class="reuse-material-chip">${esc(item.name)}</span>
         </div>`
-    : `<span class="message-icon" aria-hidden="true">${item.icon}</span>`;
-  board.innerHTML = `${campaignTrail(state.step,deck.length)}<div class="message-card ${mode === "traffic" ? "traffic-message" : mode === "sorting" ? "reuse-message" : ""}">${messageArt}<div class="message-copy"><h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""}">${display.map((choice) => `<button class="choice-button" data-answer="${choice.index}">${esc(choice.label)}</button>`).join("")}</div>${mode === "sorting" ? '<p class="board-note reuse-rule-card">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
+      : mode === "messages"
+        ? `<div class="scam-case-visual" aria-hidden="true">
+            <div class="scam-monitor">
+              <span class="scam-monitor-icon">${item.icon}</span>
+              <span class="scam-signal-dots"><i></i><i></i><i></i></span>
+            </div>
+            <div class="scam-case-badge">CASE ${String(state.step + 1).padStart(2,"0")}</div>
+          </div>`
+        : `<span class="message-icon" aria-hidden="true">${item.icon}</span>`;
+  board.innerHTML = `${campaignTrail(state.step,deck.length)}<div class="message-card ${mode === "traffic" ? "traffic-message" : mode === "sorting" ? "reuse-message" : mode === "messages" ? "scam-message" : ""}">${messageArt}<div class="message-copy">${mode === "messages" ? '<p class="eyebrow scam-case-label">Incoming case file</p>' : ""}<h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""} ${mode === "messages" ? "scam-action-grid" : ""}">${display.map((choice) => `<button class="choice-button ${mode === "messages" ? `scam-action scam-action--${choice.index}` : ""}" data-answer="${choice.index}">${mode === "messages" ? `<span class="scam-action-icon" aria-hidden="true">${choice.index === 0 ? "✓" : choice.index === 1 ? "?" : "!"}</span>` : ""}${esc(choice.label)}</button>`).join("")}</div>${mode === "messages" ? '<div class="scam-safety-strip" aria-label="Scam Sleuth action guide"><span class="safe"><i aria-hidden="true"></i>Read only when it checks out</span><span class="check"><i aria-hidden="true"></i>Verify surprising messages</span><span class="stop"><i aria-hidden="true"></i>Stop when secrets or pressure appear</span></div>' : mode === "sorting" ? '<p class="board-note reuse-rule-card">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
   progress(state.step, deck.length);
   bind("[data-answer]", (node) => {
     if (state.answered) return;
