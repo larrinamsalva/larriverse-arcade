@@ -3512,6 +3512,20 @@ html.larriverse-high-contrast body[data-world="kindness-quest"] :is(
 ){
   color:#fff !important;
 }
+@media(max-width:900px){
+  body[data-world="kindness-quest"] .kindness-message{
+    grid-template-columns:1fr;
+    min-width:0;
+  }
+  body[data-world="kindness-quest"] .kindness-message .message-copy,
+  body[data-world="kindness-quest"] .kindness-choice{
+    min-width:0;
+    overflow-wrap:anywhere;
+  }
+  body[data-world="kindness-quest"] .kindness-treehouse-scene{
+    max-width:100%;
+  }
+}
 @media(max-width:760px){
   body[data-world="kindness-quest"] .kindness-message{
     grid-template-columns:1fr;
