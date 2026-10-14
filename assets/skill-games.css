@@ -2928,3 +2928,288 @@ html.larriverse-dark body[data-world="pocket-planet"] .pocket-project-complete{
     min-height:150px;
   }
 }
+
+
+/* Scam Sleuth: dimensional detective desk, case files, and clear action cues. */
+body[data-world="scam-sleuth"] .play-card{
+  border:2px solid #58678f;
+  background:
+    linear-gradient(180deg,#f8f9ff,#eceffc 72%,#e3e7f5);
+  box-shadow:0 8px 0 #46547a38,0 18px 34px #2d355220;
+}
+body[data-world="scam-sleuth"] .scam-message{
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:minmax(170px,220px) minmax(0,1fr);
+  align-items:stretch;
+  gap:1.2rem;
+  padding:1.1rem;
+  border:2px solid #5f6f98;
+  background:
+    linear-gradient(145deg,#edf1ff,#e9e4f7);
+  color:#24304f;
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -7px 0 #42517c1d,
+    0 7px 0 #46577f3d,
+    0 14px 22px #26334f1a;
+}
+body[data-world="scam-sleuth"] .scam-case-visual{
+  position:relative;
+  display:grid;
+  place-items:center;
+  min-height:210px;
+  padding:16px 12px 44px;
+  border:2px solid #4f5d7d;
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 50% 15%,#2e3f68 0 12%,transparent 13%),
+    linear-gradient(180deg,#263553,#1c273f);
+  box-shadow:
+    inset 0 3px 0 #7d8aaa55,
+    inset 0 -10px 0 #10182755,
+    0 6px 0 #35425e42;
+}
+body[data-world="scam-sleuth"] .scam-case-visual::before{
+  content:"";
+  position:absolute;
+  inset:12px 12px 54px;
+  border-radius:14px;
+  border:1px solid #6f7ea4;
+  background:
+    linear-gradient(90deg,transparent 0 48%,#40527844 48% 52%,transparent 52%),
+    linear-gradient(transparent 0 48%,#40527844 48% 52%,transparent 52%);
+  pointer-events:none;
+}
+body[data-world="scam-sleuth"] .scam-monitor{
+  position:relative;
+  z-index:1;
+  display:grid;
+  place-items:center;
+  width:122px;
+  min-height:118px;
+  border:3px solid #8894b5;
+  border-radius:16px;
+  background:
+    radial-gradient(circle at 50% 44%,#33496a,#172237 70%);
+  box-shadow:
+    inset 0 0 0 5px #0f1827,
+    inset 0 0 22px #82a9dc22,
+    0 8px 0 #111a2a66;
+}
+body[data-world="scam-sleuth"] .scam-monitor-icon{
+  font-size:3.4rem;
+  filter:drop-shadow(0 4px 3px #0007);
+}
+body[data-world="scam-sleuth"] .scam-signal-dots{
+  position:absolute;
+  display:flex;
+  gap:8px;
+  left:50%;
+  bottom:10px;
+  transform:translateX(-50%);
+}
+body[data-world="scam-sleuth"] .scam-signal-dots i{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  box-shadow:0 0 8px currentColor;
+}
+body[data-world="scam-sleuth"] .scam-signal-dots i:nth-child(1){background:#67c985;color:#67c985}
+body[data-world="scam-sleuth"] .scam-signal-dots i:nth-child(2){background:#f1c85c;color:#f1c85c}
+body[data-world="scam-sleuth"] .scam-signal-dots i:nth-child(3){background:#df6c68;color:#df6c68}
+body[data-world="scam-sleuth"] .scam-case-badge{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:10px;
+  padding:7px 9px;
+  border:1px solid #8792b0;
+  border-radius:10px;
+  background:#111b2f;
+  color:#e9edff;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.13em;
+  text-align:center;
+  box-shadow:inset 0 1px 0 #ffffff22;
+}
+body[data-world="scam-sleuth"] .scam-message .message-copy{
+  align-self:center;
+  min-width:0;
+  padding:1rem 1.05rem;
+  border:1px solid #a8b1cb;
+  border-radius:16px;
+  background:
+    linear-gradient(160deg,#fff,#f3f5fb);
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #6a76932b;
+}
+body[data-world="scam-sleuth"] .scam-case-label{
+  margin-bottom:.35rem;
+  color:#525f8c;
+}
+body[data-world="scam-sleuth"] .scam-message .board-title{
+  color:#202c4a;
+}
+body[data-world="scam-sleuth"] .scam-message p{
+  color:#36415e;
+}
+body[data-world="scam-sleuth"] .scam-action-grid{
+  gap:.8rem;
+  margin-top:1rem;
+}
+body[data-world="scam-sleuth"] .scam-action{
+  position:relative;
+  display:grid;
+  grid-template-columns:38px minmax(0,1fr);
+  align-items:center;
+  gap:.7rem;
+  min-height:78px;
+  padding:.8rem 1rem;
+  border-width:2px;
+  text-align:left;
+  font-weight:900;
+  box-shadow:
+    inset 0 2px 0 #fff,
+    inset 0 -5px 0 #40506c18,
+    0 5px 0 #53627d3b;
+}
+body[data-world="scam-sleuth"] .scam-action-icon{
+  display:grid;
+  place-items:center;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:2px solid currentColor;
+  font-size:1rem;
+  font-weight:950;
+  background:#fff9;
+}
+body[data-world="scam-sleuth"] .scam-action--0{
+  border-color:#5f8b70;
+  background:linear-gradient(160deg,#f1fbf4,#dcefe2);
+  color:#24462f;
+}
+body[data-world="scam-sleuth"] .scam-action--1{
+  border-color:#aa853d;
+  background:linear-gradient(160deg,#fff9df,#f2e2af);
+  color:#5b4518;
+}
+body[data-world="scam-sleuth"] .scam-action--2{
+  border-color:#9a5a58;
+  background:linear-gradient(160deg,#fff0ef,#efd1cf);
+  color:#5f2928;
+}
+body[data-world="scam-sleuth"] .scam-action:hover:not(:disabled){
+  transform:translateY(-2px);
+}
+body[data-world="scam-sleuth"] .scam-action.correct{
+  outline:4px solid #4b9b68;
+  outline-offset:2px;
+}
+body[data-world="scam-sleuth"] .scam-action.wrong{
+  outline:4px dashed #b96a40;
+  outline-offset:2px;
+}
+body[data-world="scam-sleuth"] .scam-safety-strip{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin-top:1rem;
+}
+body[data-world="scam-sleuth"] .scam-safety-strip span{
+  display:flex;
+  align-items:center;
+  gap:.55rem;
+  min-width:0;
+  padding:.65rem .75rem;
+  border:1px solid #8f98ad;
+  border-radius:12px;
+  background:#f5f6fb;
+  color:#36415b;
+  font-size:.76rem;
+  font-weight:800;
+  line-height:1.35;
+}
+body[data-world="scam-sleuth"] .scam-safety-strip i{
+  flex:none;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  box-shadow:0 0 0 3px #ffffffaa;
+}
+body[data-world="scam-sleuth"] .scam-safety-strip .safe i{background:#5aa878}
+body[data-world="scam-sleuth"] .scam-safety-strip .check i{background:#d8ad43}
+body[data-world="scam-sleuth"] .scam-safety-strip .stop i{background:#c9635f}
+html.larriverse-dark body[data-world="scam-sleuth"] .play-card{
+  background:linear-gradient(180deg,#232a40,#1c2235 72%,#171c2d);
+  border-color:#56617c;
+}
+html.larriverse-dark body[data-world="scam-sleuth"] .scam-message{
+  background:linear-gradient(145deg,#2c344b,#2b293d);
+  border-color:#5d6985;
+  color:#f5f4fb;
+}
+html.larriverse-dark body[data-world="scam-sleuth"] .scam-message .message-copy{
+  background:linear-gradient(160deg,#30384b,#252d3e);
+  border-color:#626d86;
+}
+html.larriverse-dark body[data-world="scam-sleuth"] .scam-case-label,
+html.larriverse-dark body[data-world="scam-sleuth"] .scam-message .board-title,
+html.larriverse-dark body[data-world="scam-sleuth"] .scam-message p{
+  color:#f3f4fb;
+}
+html.larriverse-dark body[data-world="scam-sleuth"] .scam-action--0{
+  border-color:#668b73;
+  background:linear-gradient(160deg,#294336,#21362d);
+  color:#f0fff4;
+}
+html.larriverse-dark body[data-world="scam-sleuth"] .scam-action--1{
+  border-color:#9d8650;
+  background:linear-gradient(160deg,#4a412d,#3a3426);
+  color:#fff6d9;
+}
+html.larriverse-dark body[data-world="scam-sleuth"] .scam-action--2{
+  border-color:#91605e;
+  background:linear-gradient(160deg,#4b3134,#3b292c);
+  color:#fff1f1;
+}
+html.larriverse-dark body[data-world="scam-sleuth"] .scam-action-icon{
+  background:#1c2331;
+}
+html.larriverse-dark body[data-world="scam-sleuth"] .scam-safety-strip span{
+  border-color:#626c80;
+  background:#252d3d;
+  color:#f0f2f8;
+}
+html.larriverse-high-contrast body[data-world="scam-sleuth"] :is(
+  .scam-message,
+  .scam-case-visual,
+  .scam-message .message-copy,
+  .scam-action,
+  .scam-safety-strip span
+){
+  border-color:#fff !important;
+  background:#000 !important;
+  color:#fff !important;
+  box-shadow:none !important;
+}
+html.larriverse-high-contrast body[data-world="scam-sleuth"] :is(
+  .scam-case-label,
+  .scam-message .board-title,
+  .scam-message p
+){
+  color:#fff !important;
+}
+@media(max-width:760px){
+  body[data-world="scam-sleuth"] .scam-message{
+    grid-template-columns:1fr;
+  }
+  body[data-world="scam-sleuth"] .scam-case-visual{
+    min-height:180px;
+  }
+  body[data-world="scam-sleuth"] .scam-safety-strip{
+    grid-template-columns:1fr;
+  }
+}
