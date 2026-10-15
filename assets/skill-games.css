@@ -3783,3 +3783,256 @@ html.larriverse-high-contrast body[data-world="fact-finder"] :is(
   body[data-world="fact-finder"] .fact-source-guide{grid-template-columns:1fr}
   body[data-world="fact-finder"] .fact-newsroom-scene{min-height:190px}
 }
+
+
+/* Time Trail: dimensional adventure-map polish with terrain-specific depth. */
+body[data-world="time-trail"] .route-level-hero{
+  position:relative;
+  overflow:hidden;
+  border:2px solid #6f9a8b;
+  box-shadow:inset 0 3px 0 #ffffffaa,0 7px 0 #55776d36,0 14px 24px #35524820;
+}
+body[data-world="time-trail"] .route-level-hero::after{
+  content:"";
+  position:absolute;
+  right:-28px;
+  bottom:-40px;
+  width:170px;
+  height:110px;
+  border-radius:50%;
+  background:radial-gradient(ellipse,#d9c58b 0 44%,#9f8556 45% 56%,transparent 57%);
+  opacity:.2;
+  pointer-events:none;
+}
+body[data-world="time-trail"] .route-level-hero>span{
+  position:relative;
+  z-index:1;
+  display:grid;
+  place-items:center;
+  width:82px;
+  height:82px;
+  flex:none;
+  border:2px solid #7f9279;
+  border-radius:22px;
+  background:radial-gradient(circle at 35% 28%,#fff,#e7f4df 55%,#b8d2ac);
+  box-shadow:inset 0 3px 0 #fff,inset 0 -6px 0 #6b8b6126,0 6px 0 #5e765736;
+  font-size:2.8rem;
+}
+body[data-world="time-trail"] .route-instruction{
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #9d7d3430;
+}
+body[data-world="time-trail"] .route-map{
+  position:relative;
+  isolation:isolate;
+  width:min(560px,100%);
+  padding:16px;
+  gap:8px;
+  border:3px solid #6f806f;
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 16% 18%,#f8ffd8 0 2px,transparent 3px),
+    linear-gradient(145deg,#dcead0,#b8d19f);
+  box-shadow:
+    inset 0 5px 0 #ffffff80,
+    inset 0 -12px 0 #5b76542c,
+    0 8px 0 #536a4d3d,
+    0 16px 26px #2d43291c;
+}
+body[data-world="time-trail"] .route-map::before{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border-radius:18px;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(35deg,transparent 0 26px,#ffffff16 26px 28px);
+  z-index:-1;
+}
+body[data-world="time-trail"] .route-map-zone--river,
+body[data-world="time-trail"] .route-map-zone--creek,
+body[data-world="time-trail"] .route-map-zone--valley{
+  background:
+    radial-gradient(circle at 15% 20%,#f6ffd9 0 2px,transparent 3px),
+    linear-gradient(135deg,#9ed0b7 0 44%,#75b5c7 45% 55%,#afd69f 56% 100%);
+  border-color:#5b8b8c;
+}
+body[data-world="time-trail"] .route-map-zone--pines,
+body[data-world="time-trail"] .route-map-zone--forest{
+  background:
+    radial-gradient(circle at 20% 16%,#d7f6b8 0 3px,transparent 4px),
+    linear-gradient(145deg,#8fbd7e,#5e8b64 58%,#456d55);
+  border-color:#58725b;
+}
+body[data-world="time-trail"] .route-map-zone--ridge,
+body[data-world="time-trail"] .route-map-zone--mountain{
+  background:
+    radial-gradient(circle at 72% 18%,#fff4bf 0 3px,transparent 4px),
+    linear-gradient(145deg,#d9c69b,#a88f69 58%,#7c6c58);
+  border-color:#786b5b;
+}
+body[data-world="time-trail"] .route-map-zone--cloud{
+  background:
+    radial-gradient(circle at 20% 25%,#fff 0 14px,transparent 15px),
+    radial-gradient(circle at 55% 18%,#f5fbff 0 18px,transparent 19px),
+    linear-gradient(145deg,#c7e8f5,#9fc7df);
+  border-color:#7198ae;
+}
+body[data-world="time-trail"] .route-map-zone--summit{
+  background:
+    radial-gradient(circle at 12% 18%,#fff5b5 0 2px,transparent 3px),
+    radial-gradient(circle at 82% 24%,#fff 0 1px,transparent 2px),
+    linear-gradient(145deg,#8998c9,#6e6ba1 58%,#4d506f);
+  border-color:#646a91;
+}
+body[data-world="time-trail"] .route-map .tile{
+  min-width:0;
+  border-width:2px;
+  background:linear-gradient(145deg,#f8fff3,#d6e8c8);
+  box-shadow:inset 0 3px 0 #ffffffcc,inset 0 -6px 0 #6a885f22,0 4px 0 #6171582f;
+  transition:transform .12s ease,box-shadow .12s ease,filter .12s ease;
+}
+body[data-world="time-trail"] .route-map .tile:hover:not(:disabled){
+  transform:translateY(-2px);
+}
+body[data-world="time-trail"] .route-map .tile.route-reachable{
+  border-color:#9b7bc8;
+  background:linear-gradient(145deg,#f6edff,#d8c8f0);
+  box-shadow:inset 0 3px 0 #fff,0 0 0 3px #b797dc55,0 5px 0 #7e68a43d;
+}
+body[data-world="time-trail"] .route-map .tile.visited:not(.player):not(.rock):not(.flag):not(.finish){
+  background:linear-gradient(145deg,#e3f7ec,#b7ddc9);
+  border-color:#6aa786;
+  box-shadow:inset 0 3px 0 #f7fff9,inset 0 -5px 0 #4c8b6b25,0 4px 0 #4f7a6230;
+}
+body[data-world="time-trail"] .route-map .tile.rock{
+  background:
+    radial-gradient(circle at 32% 26%,#e5e8ea 0 13%,transparent 14%),
+    linear-gradient(145deg,#c3c9cc,#879197 68%);
+  border-color:#6f7b82;
+  color:#25343d;
+  box-shadow:inset 0 3px 0 #f2f4f5,inset 0 -7px 0 #555f6538,0 5px 0 #505b6138;
+}
+body[data-world="time-trail"] .route-map .tile.flag{
+  background:linear-gradient(145deg,#fff7c2,#edcf65);
+  border-color:#b69026;
+  box-shadow:inset 0 3px 0 #fff9d8,inset 0 -6px 0 #a3761730,0 5px 0 #896f2f38;
+}
+body[data-world="time-trail"] .route-map .tile.finish{
+  background:linear-gradient(145deg,#ffe7c1,#d9a55f);
+  border-color:#a76a33;
+  box-shadow:inset 0 3px 0 #fff0d5,inset 0 -6px 0 #8b562b30,0 5px 0 #76503238;
+}
+body[data-world="time-trail"] .route-map .tile.player{
+  border-color:#6950b8;
+  background:linear-gradient(145deg,#efe9ff,#c6b7ef);
+  box-shadow:inset 0 3px 0 #fff,0 0 0 4px #8f77d455,0 6px 0 #5744913d,0 10px 18px #36295f24;
+  transform:translateY(-2px) scale(1.03);
+}
+body[data-world="time-trail"] .route-legend{
+  flex-wrap:wrap;
+  gap:.55rem;
+}
+body[data-world="time-trail"] .route-legend span{
+  padding:.45rem .7rem;
+  border:1px solid #9db4a8;
+  border-radius:999px;
+  background:#f6fbf7;
+  box-shadow:0 3px 0 #6c87772b;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-level-hero{
+  background:linear-gradient(145deg,#233d39,#243044);
+  border-color:#5e8178;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-level-hero>span{
+  background:radial-gradient(circle at 35% 28%,#4a5e52,#2f4337);
+  border-color:#698073;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map{
+  background:linear-gradient(145deg,#2e4a3a,#23372e);
+  border-color:#536f5d;
+  box-shadow:inset 0 5px 0 #ffffff12,inset 0 -12px 0 #0f1b1438,0 8px 0 #111d173d;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map-zone--cloud{
+  background:linear-gradient(145deg,#314960,#273a51);
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map-zone--mountain,
+html.larriverse-dark body[data-world="time-trail"] .route-map-zone--ridge{
+  background:linear-gradient(145deg,#554a3a,#40392f);
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map-zone--summit{
+  background:linear-gradient(145deg,#39405f,#2b304c);
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map .tile{
+  background:linear-gradient(145deg,#345743,#294535);
+  border-color:#66816f;
+  color:#f5fff9;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map .tile.route-reachable{
+  background:linear-gradient(145deg,#514675,#403760);
+  border-color:#a08bd1;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map .tile.visited:not(.player):not(.rock):not(.flag):not(.finish){
+  background:linear-gradient(145deg,#2f6652,#285345);
+  border-color:#70a990;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map .tile.rock{
+  background:linear-gradient(145deg,#667078,#465058);
+  border-color:#859199;
+  color:#fff;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map .tile.flag{
+  background:linear-gradient(145deg,#6f5c22,#504116);
+  border-color:#d3b34f;
+  color:#fff7d5;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map .tile.finish{
+  background:linear-gradient(145deg,#6b4829,#50351e);
+  border-color:#d99b60;
+  color:#fff1df;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map .tile.player{
+  background:linear-gradient(145deg,#66579a,#4b4078);
+  border-color:#ae9aed;
+  color:#fff;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-legend span{
+  background:#1f3a33;
+  border-color:#668678;
+  color:#f5fff9;
+}
+html.larriverse-high-contrast body[data-world="time-trail"] :is(
+  .route-level-hero,.route-map,.route-map .tile,.route-legend span
+){
+  background:#111!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="time-trail"] .route-map .tile:is(.player,.flag,.finish){
+  background:#fff!important;
+  color:#000!important;
+}
+@media(max-width:900px){
+  body[data-world="time-trail"] .route-map{
+    width:min(100%,520px);
+    padding:12px;
+    gap:6px;
+  }
+}
+@media(max-width:620px){
+  body[data-world="time-trail"] .route-map{
+    padding:8px;
+    gap:4px;
+    border-radius:18px;
+  }
+  body[data-world="time-trail"] .route-map .tile{
+    min-height:42px;
+    font-size:1.15rem;
+    border-radius:9px;
+  }
+  body[data-world="time-trail"] .route-level-hero>span{
+    width:66px;
+    height:66px;
+    font-size:2.25rem;
+  }
+}
