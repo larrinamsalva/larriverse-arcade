@@ -809,7 +809,7 @@ function renderRoute() {
       ${chip("Trail stars",`${stars}/${timeTrailLevels.length*3}`)}
     </div>
     <div class="route-legend"><span>🧑 You</span><span>🚩 Mission</span><span>🧺 Finish</span><span>✨ Glowing = next move</span></div>
-    <div class="tile-grid route-map route-map--${level.width}" aria-label="Trail map, ${level.width} by ${level.width} squares">${Array.from({length:level.width*level.width},(_,i)=>{
+    <div class="tile-grid route-map route-map--${level.width} route-map-zone--${esc(level.zone)}" aria-label="Trail map, ${level.width} by ${level.width} squares">${Array.from({length:level.width*level.width},(_,i)=>{
       const rock=rocks.has(i),flag=level.flags.includes(i),finishTile=i===level.finish,player=i===state.player;
       const reachable=moving&&!rock&&!player&&adjacent(state.player,i,level.width);
       return `<button class="tile ${rock?"rock":""} ${player?"player":""} ${reachable?"route-reachable":""} ${flag?"flag":""} ${finishTile?"finish":""} ${state.visited.has(i)?"visited":""}" data-tile="${i}" aria-label="Row ${Math.floor(i/level.width)+1}, column ${i%level.width+1}, ${player?"your position":rock?"rock":flag?(state.flags.has(i)?"flag collected":"mission flag"):finishTile?"picnic finish":"path"}${reachable?", next possible move":""}" ${!moving||rock||player?"disabled":""}>${player?"🧑":rock?"🪨":flag?(state.flags.has(i)?"✓":"🚩"):finishTile?"🧺":"·"}</button>`;
