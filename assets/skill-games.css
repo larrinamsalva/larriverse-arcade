@@ -3539,3 +3539,247 @@ html.larriverse-high-contrast body[data-world="kindness-quest"] :is(
     font-size:2.35rem;
   }
 }
+
+
+/* Fact Finder: dimensional newsroom desk, source lights, and clear category cards. */
+body[data-world="fact-finder"] .play-card{
+  border:2px solid #667493;
+  background:linear-gradient(180deg,#f7f9fd,#edf1f8 72%,#e3e8f1);
+  box-shadow:0 8px 0 #56627d38,0 18px 34px #2e374b20;
+}
+body[data-world="fact-finder"] .fact-message{
+  display:grid;
+  grid-template-columns:minmax(190px,250px) minmax(0,1fr);
+  align-items:stretch;
+  gap:1.2rem;
+  padding:1.1rem;
+  border:2px solid #70809f;
+  background:linear-gradient(145deg,#eef2f9,#e7ebf4);
+  color:#28344c;
+  box-shadow:inset 0 2px 0 #fff,inset 0 -7px 0 #56627b1c,0 7px 0 #5c68833a,0 14px 22px #2d354719;
+}
+body[data-world="fact-finder"] .fact-newsroom-scene{
+  position:relative;
+  overflow:hidden;
+  min-height:220px;
+  border:2px solid #6e778d;
+  border-radius:20px;
+  background:
+    linear-gradient(180deg,#b9d6e7 0 47%,#8ca0b0 47% 51%,#6d523c 51% 100%);
+  box-shadow:inset 0 3px 0 #eef9ff,inset 0 -10px 0 #3e2e2030,0 6px 0 #5c64753d;
+}
+body[data-world="fact-finder"] .fact-newsroom-scene::before{
+  content:"";
+  position:absolute;
+  left:16px;
+  right:16px;
+  top:18px;
+  height:58px;
+  border:2px solid #75859a;
+  border-radius:10px;
+  background:
+    linear-gradient(90deg,#d8e9f2 0 48%,#6d7e91 48% 52%,#d8e9f2 52%),
+    linear-gradient(#d8e9f2 0 48%,#6d7e91 48% 52%,#d8e9f2 52%);
+  box-shadow:inset 0 0 0 4px #ffffff55;
+}
+body[data-world="fact-finder"] .fact-desk{
+  position:absolute;
+  left:14px;
+  right:14px;
+  bottom:24px;
+  height:105px;
+  border:3px solid #6d4c33;
+  border-radius:14px;
+  background:linear-gradient(180deg,#bf895f,#966541);
+  box-shadow:inset 0 4px 0 #e0b18a,inset 0 -8px 0 #6b452d30,0 7px 0 #50362244;
+}
+body[data-world="fact-finder"] .fact-monitor{
+  position:absolute;
+  left:18px;
+  top:-36px;
+  display:grid;
+  place-items:center;
+  width:86px;
+  height:78px;
+  border:3px solid #46546a;
+  border-radius:12px;
+  background:radial-gradient(circle at 45% 35%,#506787,#1e293a 72%);
+  box-shadow:inset 0 0 0 5px #111925,0 6px 0 #352f2c44;
+  font-size:2.8rem;
+}
+body[data-world="fact-finder"] .fact-notepad{
+  position:absolute;
+  right:28px;
+  top:17px;
+  width:68px;
+  height:52px;
+  border:2px solid #9d8b63;
+  border-radius:6px;
+  background:repeating-linear-gradient(180deg,#fffceb 0 9px,#c9d9e7 9px 10px);
+  box-shadow:0 4px 0 #6b574034;
+  transform:rotate(3deg);
+}
+body[data-world="fact-finder"] .fact-magnifier{
+  position:absolute;
+  right:84px;
+  top:32px;
+  width:28px;
+  height:28px;
+  border:5px solid #4b5565;
+  border-radius:50%;
+  box-shadow:0 3px 0 #3d302633;
+}
+body[data-world="fact-finder"] .fact-magnifier::after{
+  content:"";
+  position:absolute;
+  width:30px;
+  height:6px;
+  right:-24px;
+  bottom:-12px;
+  transform:rotate(45deg);
+  border-radius:999px;
+  background:#4b5565;
+}
+body[data-world="fact-finder"] .fact-source-lights{
+  position:absolute;
+  display:flex;
+  gap:10px;
+  left:16px;
+  top:88px;
+}
+body[data-world="fact-finder"] .fact-source-lights i{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  box-shadow:0 0 8px currentColor;
+}
+body[data-world="fact-finder"] .fact-source-lights i:nth-child(1){background:#5ca878;color:#5ca878}
+body[data-world="fact-finder"] .fact-source-lights i:nth-child(2){background:#6e91c2;color:#6e91c2}
+body[data-world="fact-finder"] .fact-source-lights i:nth-child(3){background:#c9974b;color:#c9974b}
+body[data-world="fact-finder"] .fact-source-lights i:nth-child(4){background:#b76565;color:#b76565}
+body[data-world="fact-finder"] .fact-message .message-copy{
+  align-self:center;
+  min-width:0;
+  padding:1rem 1.05rem;
+  border:1px solid #aeb8ca;
+  border-radius:16px;
+  background:linear-gradient(160deg,#fff,#f4f6fa);
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #6d78902a;
+}
+body[data-world="fact-finder"] .fact-desk-label{display:inline-block;margin-bottom:.35rem;color:#59698d}
+body[data-world="fact-finder"] .fact-message .board-title{color:#27354f}
+body[data-world="fact-finder"] .fact-message p{color:#3b465c}
+body[data-world="fact-finder"] .fact-choice-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:.8rem;
+  margin-top:1rem;
+}
+body[data-world="fact-finder"] .fact-choice{
+  display:grid;
+  grid-template-columns:40px minmax(0,1fr);
+  align-items:center;
+  gap:.75rem;
+  min-height:84px;
+  padding:.85rem 1rem;
+  border:2px solid #8793aa;
+  background:linear-gradient(160deg,#fff,#eef1f6);
+  color:#2f394e;
+  text-align:left;
+  font-weight:850;
+  box-shadow:inset 0 2px 0 #fff,inset 0 -5px 0 #63708a18,0 5px 0 #66738d38;
+}
+body[data-world="fact-finder"] .fact-choice-marker{
+  display:grid;
+  place-items:center;
+  width:36px;
+  height:36px;
+  border:2px solid currentColor;
+  border-radius:10px;
+  background:#fff9;
+  font-size:.85rem;
+  font-weight:950;
+}
+body[data-world="fact-finder"] .fact-choice--0{border-color:#6b9479;color:#31503a}
+body[data-world="fact-finder"] .fact-choice--1{border-color:#7086ad;color:#33466a}
+body[data-world="fact-finder"] .fact-choice--2{border-color:#a9874b;color:#5e481e}
+body[data-world="fact-finder"] .fact-choice--3{border-color:#a96969;color:#5d3030}
+body[data-world="fact-finder"] .fact-choice.correct{outline:4px solid #4b9365;outline-offset:2px}
+body[data-world="fact-finder"] .fact-choice.wrong{outline:4px dashed #b06b43;outline-offset:2px}
+body[data-world="fact-finder"] .fact-source-guide{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  margin-top:1rem;
+}
+body[data-world="fact-finder"] .fact-source-guide span{
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.65rem .7rem;
+  border:1px solid #a1aabd;
+  border-radius:12px;
+  background:#f5f7fb;
+  color:#374157;
+  font-size:.75rem;
+  font-weight:800;
+  line-height:1.35;
+}
+body[data-world="fact-finder"] .fact-source-guide i{
+  flex:none;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+}
+body[data-world="fact-finder"] .fact-source-guide .evidence{background:#5ca878}
+body[data-world="fact-finder"] .fact-source-guide .opinion{background:#6e91c2}
+body[data-world="fact-finder"] .fact-source-guide .ad{background:#c9974b}
+body[data-world="fact-finder"] .fact-source-guide .check{background:#b76565}
+html.larriverse-dark body[data-world="fact-finder"] .play-card{
+  background:linear-gradient(180deg,#252b3b,#1e2432 72%,#181e2b);
+  border-color:#56637a;
+}
+html.larriverse-dark body[data-world="fact-finder"] .fact-message{
+  background:linear-gradient(145deg,#303747,#292f3d);
+  border-color:#5d687c;
+  color:#f4f6fb;
+}
+html.larriverse-dark body[data-world="fact-finder"] .fact-message .message-copy{
+  background:linear-gradient(160deg,#333a49,#2a303d);
+  border-color:#626c7f;
+}
+html.larriverse-dark body[data-world="fact-finder"] .fact-desk-label,
+html.larriverse-dark body[data-world="fact-finder"] .fact-message .board-title,
+html.larriverse-dark body[data-world="fact-finder"] .fact-message p{color:#f4f6fb}
+html.larriverse-dark body[data-world="fact-finder"] .fact-choice{
+  background:linear-gradient(160deg,#353b48,#2b313d);
+  color:#f5f7fb;
+  border-color:#677286;
+}
+html.larriverse-dark body[data-world="fact-finder"] .fact-choice-marker{background:#242a35}
+html.larriverse-dark body[data-world="fact-finder"] .fact-source-guide span{
+  background:#272d39;
+  color:#eef1f7;
+  border-color:#5e687a;
+}
+html.larriverse-high-contrast body[data-world="fact-finder"] :is(
+  .fact-message,.fact-newsroom-scene,.fact-message .message-copy,.fact-choice,.fact-source-guide span
+){
+  border-color:#fff!important;
+  background:#111!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="fact-finder"] :is(
+  .fact-desk-label,.fact-message .board-title,.fact-message p
+){color:#fff!important}
+@media(max-width:900px){
+  body[data-world="fact-finder"] .fact-message{grid-template-columns:1fr;min-width:0}
+  body[data-world="fact-finder"] .fact-message .message-copy,
+  body[data-world="fact-finder"] .fact-choice{min-width:0;overflow-wrap:anywhere}
+  body[data-world="fact-finder"] .fact-source-guide{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  body[data-world="fact-finder"] .fact-choice-grid{grid-template-columns:1fr}
+  body[data-world="fact-finder"] .fact-source-guide{grid-template-columns:1fr}
+  body[data-world="fact-finder"] .fact-newsroom-scene{min-height:190px}
+}
