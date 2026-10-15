@@ -4036,3 +4036,253 @@ html.larriverse-high-contrast body[data-world="time-trail"] .route-map .tile:is(
     font-size:2.25rem;
   }
 }
+
+
+/* Garden Guardians: richer soil, raised-bed depth, and clearer plant growth states. */
+body[data-world="garden-guardians"] .play-card{
+  border:2px solid #6f8f62;
+  background:linear-gradient(180deg,#fbfff7,#edf5e7 72%,#e3efdc);
+  box-shadow:0 8px 0 #5d7b5238,0 18px 34px #31472a20;
+}
+body[data-world="garden-guardians"] .nature-banner{
+  border:2px solid #7fa16f;
+  box-shadow:inset 0 3px 0 #fff,0 7px 0 #66875b35,0 14px 22px #3f59371c;
+}
+body[data-world="garden-guardians"] .nature-banner>span{
+  display:grid;
+  place-items:center;
+  width:76px;
+  height:76px;
+  flex:none;
+  border:2px solid #8c9f78;
+  border-radius:20px;
+  background:radial-gradient(circle at 35% 28%,#fffbdc,#d9efad 58%,#9ec378);
+  box-shadow:inset 0 3px 0 #fff,0 5px 0 #6c855a35;
+  font-size:2.7rem;
+}
+body[data-world="garden-guardians"] .garden-plant-picker{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:.75rem;
+}
+body[data-world="garden-guardians"] .garden-plant-choice{
+  display:grid;
+  grid-template-columns:44px minmax(0,1fr);
+  align-items:center;
+  gap:.6rem;
+  min-width:0;
+  min-height:72px;
+  padding:.7rem .8rem;
+  border:2px solid #94a68a;
+  border-radius:14px;
+  background:linear-gradient(160deg,#fff,#eff6eb);
+  color:#314a2e;
+  font-weight:850;
+  box-shadow:inset 0 2px 0 #fff,inset 0 -5px 0 #5b744d1d,0 5px 0 #60785232;
+}
+body[data-world="garden-guardians"] .garden-plant-choice.selected{
+  border-color:#4f8b4d;
+  background:linear-gradient(160deg,#eefbe9,#d3eccd);
+  box-shadow:inset 0 2px 0 #fff,0 0 0 3px #6fa06b35,0 6px 0 #4d6c4630;
+}
+body[data-world="garden-guardians"] .garden-plant-icon{
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#fff8dc;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #7c6b3d22;
+  font-size:1.7rem;
+}
+body[data-world="garden-guardians"] .garden-grid{
+  position:relative;
+  isolation:isolate;
+  gap:.8rem;
+  padding:1rem;
+  border:3px solid #8a6544;
+  border-radius:20px;
+  background:
+    repeating-linear-gradient(90deg,#986a42 0 16px,#835936 16px 32px);
+  box-shadow:inset 0 4px 0 #c89a6b,inset 0 -9px 0 #5e3f273d,0 8px 0 #5f49362f,0 15px 24px #3829191c;
+}
+body[data-world="garden-guardians"] .garden-grid::before{
+  content:"";
+  position:absolute;
+  inset:12px;
+  z-index:-1;
+  border-radius:14px;
+  background:
+    radial-gradient(circle at 15% 20%,#8e6545 0 2px,transparent 3px),
+    radial-gradient(circle at 65% 70%,#6e4b34 0 2px,transparent 3px),
+    linear-gradient(145deg,#6f4c35,#4f3426);
+  box-shadow:inset 0 6px 18px #2e1d1560;
+}
+body[data-world="garden-guardians"] .garden-grid--meadow::after,
+body[data-world="garden-guardians"] .garden-grid--orchard::after,
+body[data-world="garden-guardians"] .garden-grid--hill::after,
+body[data-world="garden-guardians"] .garden-grid--sunset::after{
+  content:"";
+  position:absolute;
+  left:10px;
+  right:10px;
+  top:-12px;
+  height:8px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#80ae63,#a7cc7b,#6e9b55);
+  box-shadow:0 2px 0 #577b46;
+}
+body[data-world="garden-guardians"] .garden-grid--orchard::after{
+  background:linear-gradient(90deg,#6f9557,#b7c96f,#789b53);
+}
+body[data-world="garden-guardians"] .garden-grid--hill::after{
+  background:linear-gradient(90deg,#87985c,#b79b5d,#7d7f50);
+}
+body[data-world="garden-guardians"] .garden-grid--sunset::after{
+  background:linear-gradient(90deg,#9f8057,#d29b63,#7b6b4d);
+}
+body[data-world="garden-guardians"] .garden-plot{
+  min-width:0;
+  min-height:118px;
+  padding:.7rem .55rem;
+  border:2px solid #8d6548;
+  background:
+    radial-gradient(circle at 30% 24%,#8c6044 0 3px,transparent 4px),
+    radial-gradient(circle at 72% 68%,#5f3f2e 0 2px,transparent 3px),
+    linear-gradient(145deg,#7f573e,#5b3b2c);
+  color:#fff;
+  box-shadow:inset 0 4px 0 #b07f5d55,inset 0 -8px 0 #2f1e1738,0 5px 0 #49322645;
+  transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease;
+}
+body[data-world="garden-guardians"] .garden-plot:hover:not(:disabled){
+  transform:translateY(-2px);
+}
+body[data-world="garden-guardians"] .garden-plot.selected{
+  border-color:#64a8c5;
+  box-shadow:inset 0 4px 0 #b07f5d55,0 0 0 4px #86cce955,0 6px 0 #49322645;
+}
+body[data-world="garden-guardians"] .garden-growth-art{
+  display:grid;
+  place-items:center;
+  width:58px;
+  height:58px;
+  margin:0 auto .45rem;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 28%,#f8ffd8,#d6e8b4 62%,#9dbb7c);
+  box-shadow:inset 0 3px 0 #fff,0 4px 0 #4d5d3b35,0 8px 12px #2c351f24;
+  font-size:2rem;
+}
+body[data-world="garden-guardians"] .garden-growth-0 .garden-growth-art{
+  background:radial-gradient(circle at 35% 28%,#efe0b5,#c3ad76 62%,#8e774e);
+}
+body[data-world="garden-guardians"] .garden-growth-1 .garden-growth-art{
+  background:radial-gradient(circle at 35% 28%,#eaffd8,#b7df9f 62%,#76aa69);
+}
+body[data-world="garden-guardians"] .garden-growth-2 .garden-growth-art{
+  transform:scale(1.06);
+}
+body[data-world="garden-guardians"] .garden-plot small{
+  display:block;
+  max-width:100%;
+  padding:.28rem .35rem;
+  margin:.2rem .1rem 0;
+  border:1px solid #d7c292;
+  border-radius:8px;
+  background:#fff9df;
+  color:#5a452f;
+  font-size:.72rem;
+  line-height:1.2;
+  box-shadow:inset 0 1px 0 #fff;
+}
+body[data-world="garden-guardians"] .nature-quotas{
+  gap:.55rem;
+}
+body[data-world="garden-guardians"] .nature-quota{
+  border:1px solid #9aac88;
+  background:#f6fbf2;
+  box-shadow:0 3px 0 #6c835b27;
+}
+body[data-world="garden-guardians"] .nature-quota.complete{
+  border-color:#5b9860;
+  background:#e2f4de;
+}
+html.larriverse-dark body[data-world="garden-guardians"] .play-card{
+  background:linear-gradient(180deg,#243126,#1e2a21 72%,#18201a);
+  border-color:#566d50;
+}
+html.larriverse-dark body[data-world="garden-guardians"] .garden-plant-choice{
+  border-color:#5d7058;
+  background:linear-gradient(160deg,#303c31,#273229);
+  color:#f4fbf2;
+}
+html.larriverse-dark body[data-world="garden-guardians"] .garden-plant-choice.selected{
+  border-color:#73a56f;
+  background:linear-gradient(160deg,#334b34,#29412b);
+}
+html.larriverse-dark body[data-world="garden-guardians"] .garden-plant-icon{
+  background:#3a4430;
+}
+html.larriverse-dark body[data-world="garden-guardians"] .garden-grid{
+  background:repeating-linear-gradient(90deg,#68492f 0 16px,#563a28 16px 32px);
+  border-color:#76543a;
+}
+html.larriverse-dark body[data-world="garden-guardians"] .garden-grid::before{
+  background:
+    radial-gradient(circle at 20% 24%,#70513b 0 2px,transparent 3px),
+    linear-gradient(145deg,#533a2b,#35231b);
+}
+html.larriverse-dark body[data-world="garden-guardians"] .garden-plot{
+  border-color:#765743;
+  background:linear-gradient(145deg,#5a4031,#3f2b22);
+  color:#fff;
+}
+html.larriverse-dark body[data-world="garden-guardians"] .garden-growth-art{
+  background:radial-gradient(circle at 35% 28%,#dcebc0,#8bab72 65%,#617a52);
+}
+html.larriverse-dark body[data-world="garden-guardians"] .garden-plot small{
+  border-color:#75684b;
+  background:#342e24;
+  color:#fff7e7;
+}
+html.larriverse-dark body[data-world="garden-guardians"] .nature-quota{
+  border-color:#5d7058;
+  background:#283528;
+  color:#f1f8ee;
+}
+html.larriverse-high-contrast body[data-world="garden-guardians"] :is(
+  .nature-banner,.garden-plant-choice,.garden-grid,.garden-plot,.garden-plot small,.nature-quota
+){
+  background:#111!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="garden-guardians"] .garden-growth-art{
+  background:#fff!important;
+  color:#000!important;
+  box-shadow:none!important;
+}
+@media(max-width:900px){
+  body[data-world="garden-guardians"] .garden-plant-picker{
+    grid-template-columns:1fr;
+  }
+  body[data-world="garden-guardians"] .garden-plant-choice{
+    min-width:0;
+    overflow-wrap:anywhere;
+  }
+}
+@media(max-width:620px){
+  body[data-world="garden-guardians"] .garden-grid{
+    gap:.45rem;
+    padding:.65rem;
+  }
+  body[data-world="garden-guardians"] .garden-plot{
+    min-height:98px;
+    padding:.5rem .35rem;
+  }
+  body[data-world="garden-guardians"] .garden-growth-art{
+    width:48px;
+    height:48px;
+    font-size:1.7rem;
+  }
+}
