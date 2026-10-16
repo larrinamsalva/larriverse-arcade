@@ -4808,3 +4808,196 @@ html.larriverse-high-contrast body[data-world="lemonade-lab"] .ledger :is(captio
     align-items:flex-start;
   }
 }
+
+
+/* Beat Builder: dimensional studio console, clearer instrument lanes, and stronger beat feedback. */
+body[data-world="beat-builder"] .play-card{
+  border:2px solid #6f5ab8;
+  background:linear-gradient(180deg,#fbf9ff,#f0ebfb 72%,#e7def8);
+  box-shadow:0 8px 0 #55488c38,0 18px 34px #2e274d20;
+}
+body[data-world="beat-builder"] .beat-mission-card{
+  background-color:#faf8ff;
+  background-image:linear-gradient(180deg,#fdfbff,#f1ecfb);
+  border-color:#8a75c4;
+  box-shadow:inset 0 3px 0 #fff,0 7px 0 #6d5aa233,0 14px 24px #352d551a;
+}
+body[data-world="beat-builder"] .music-studio-art{
+  border:3px solid #594788;
+  border-radius:24px;
+  background:#211a39;
+  box-shadow:inset 0 3px 0 #ffffff1a,0 9px 0 #352b5f,0 17px 30px #241c4530;
+}
+body[data-world="beat-builder"] .beat-numbers{
+  margin-top:.65rem;
+  padding:.35rem .45rem;
+  border:1px solid #c9bee5;
+  border-radius:10px;
+  background:#f5f1fc;
+  color:#5a4c7f;
+}
+body[data-world="beat-builder"] .beat-track-label{
+  display:flex;
+  align-items:center;
+  gap:.55rem;
+  min-width:0;
+  margin:.95rem 0 .4rem;
+  padding:.55rem .7rem;
+  border:2px solid #c2b5e1;
+  border-radius:12px;
+  background:linear-gradient(160deg,#fbf9ff,#eee8f9);
+  color:#493d6b;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #6b5e8b22;
+}
+body[data-world="beat-builder"] .beat-track-label>span:last-child{
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+body[data-world="beat-builder"] .beat-track-label--0{border-left:6px solid #7d5fc9}
+body[data-world="beat-builder"] .beat-track-label--1{border-left:6px solid #c75c8d}
+body[data-world="beat-builder"] .beat-track-label--2{border-left:6px solid #3a9b89}
+body[data-world="beat-builder"] .track-symbol{
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #4f416a2e;
+}
+body[data-world="beat-builder"] .beat-grid{
+  position:relative;
+  min-width:0;
+  padding:.55rem;
+  gap:.3rem;
+  border:2px solid #9d90bc;
+  border-radius:14px;
+  background:linear-gradient(180deg,#403655,#312a43);
+  box-shadow:inset 0 4px 0 #ffffff10,inset 0 -8px 0 #18142138,0 5px 0 #4e426738;
+}
+body[data-world="beat-builder"] .beat-grid--0{border-color:#7961b3}
+body[data-world="beat-builder"] .beat-grid--1{border-color:#a2607f}
+body[data-world="beat-builder"] .beat-grid--2{border-color:#4d8f83}
+body[data-world="beat-builder"] .beat-cell{
+  min-width:0;
+  min-height:42px;
+  border:2px solid #766b91;
+  border-radius:8px;
+  background:linear-gradient(145deg,#f9f8fc,#d8d3e3);
+  color:#3e3558;
+  box-shadow:inset 0 3px 0 #fff,inset 0 -6px 0 #aaa2ba,0 3px 0 #26203566;
+  transition:transform .12s ease,box-shadow .12s ease,filter .12s ease;
+}
+body[data-world="beat-builder"] .beat-cell:hover:not(:disabled){
+  transform:translateY(-2px);
+}
+body[data-world="beat-builder"] .beat-cell:nth-child(4n + 1){
+  border-left-width:3px;
+  border-left-color:#e2c15e;
+}
+body[data-world="beat-builder"] .beat-cell.active{
+  border-color:#cdbaff;
+  background:linear-gradient(145deg,#bca6fb,#7355cf);
+  color:#fff;
+  box-shadow:inset 0 3px 0 #e8dcff,inset 0 -6px 0 #4d349e,0 0 0 3px #9e7fe955,0 4px 0 #3b2b723d,0 0 18px #8f70e88a;
+}
+body[data-world="beat-builder"] .beat-cell--1.active{
+  border-color:#ffc3dc;
+  background:linear-gradient(145deg,#e99abd,#a64f78);
+  box-shadow:inset 0 3px 0 #ffe0ec,inset 0 -6px 0 #7d3559,0 0 0 3px #d66e9e55,0 4px 0 #672c4a3d,0 0 18px #d56b9b80;
+}
+body[data-world="beat-builder"] .beat-cell--2.active{
+  border-color:#a9f0df;
+  background:linear-gradient(145deg,#70d8c2,#2e8f7c);
+  box-shadow:inset 0 3px 0 #d9fff6,inset 0 -6px 0 #20695b,0 0 0 3px #55b9a555,0 4px 0 #1b594e3d,0 0 18px #55bba780;
+}
+body[data-world="beat-builder"] .beat-cell.playing{
+  transform:translateY(-4px) scale(1.03);
+  border-color:#f0c43f;
+  box-shadow:inset 0 3px 0 #fff3a5,inset 0 -5px 0 #a16f12,0 0 0 4px #ffd95f,0 0 24px #ffd95faa;
+}
+body[data-world="beat-builder"] .pattern-goals span{
+  border:1px solid #b9acd7;
+  background:#f3eefc;
+  color:#4b3f69;
+  box-shadow:0 3px 0 #66577d22;
+}
+html.larriverse-dark body[data-world="beat-builder"] .play-card{
+  background:linear-gradient(180deg,#262238,#201c30 72%,#191625);
+  border-color:#675a8a;
+}
+html.larriverse-dark body[data-world="beat-builder"] .beat-mission-card{
+  background-color:#202b40;
+  background-image:linear-gradient(180deg,#262c42,#20273a);
+  border-color:#8073a9;
+}
+html.larriverse-dark body[data-world="beat-builder"] .beat-track-label{
+  background:linear-gradient(160deg,#332e47,#29243a);
+  border-color:#655a82;
+  color:#f3effd;
+}
+html.larriverse-dark body[data-world="beat-builder"] .beat-numbers{
+  background:#282338;
+  border-color:#5c5178;
+  color:#e8e1f8;
+}
+html.larriverse-dark body[data-world="beat-builder"] .beat-grid{
+  background:linear-gradient(180deg,#30293f,#211c2d);
+  border-color:#5f5573;
+}
+html.larriverse-dark body[data-world="beat-builder"] .beat-cell{
+  border-color:#5c536d;
+  background:linear-gradient(145deg,#3d374d,#2a2538);
+  color:#efeafa;
+  box-shadow:inset 0 3px 0 #ffffff12,inset 0 -6px 0 #17131f,0 3px 0 #0c0a1166;
+}
+html.larriverse-dark body[data-world="beat-builder"] .beat-cell.active{
+  background:linear-gradient(145deg,#a58ce9,#6749be);
+  border-color:#cdbfff;
+  color:#fff;
+}
+html.larriverse-dark body[data-world="beat-builder"] .beat-cell--1.active{
+  background:linear-gradient(145deg,#d581a6,#914264);
+  border-color:#ffc0d9;
+}
+html.larriverse-dark body[data-world="beat-builder"] .beat-cell--2.active{
+  background:linear-gradient(145deg,#5ec8b3,#267866);
+  border-color:#a7f0dd;
+}
+html.larriverse-dark body[data-world="beat-builder"] .pattern-goals span{
+  background:#2b2539;
+  border-color:#5e5376;
+  color:#f2edf9;
+}
+html.larriverse-high-contrast body[data-world="beat-builder"] :is(
+  .beat-mission-card,.music-studio-art,.beat-track-label,.beat-numbers,.beat-grid,.beat-cell,.pattern-goals span
+){
+  background:#111!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="beat-builder"] .beat-cell.active,
+html.larriverse-high-contrast body[data-world="beat-builder"] .beat-cell.playing{
+  background:#fff!important;
+  color:#000!important;
+  outline:3px solid #fff!important;
+}
+@media(max-width:900px){
+  body[data-world="beat-builder"] .beat-grid{
+    gap:.2rem;
+    padding:.45rem;
+  }
+  body[data-world="beat-builder"] .beat-cell{
+    min-height:38px;
+    font-size:.6rem;
+  }
+}
+@media(max-width:620px){
+  body[data-world="beat-builder"] .beat-grid{
+    gap:.12rem;
+    padding:.35rem;
+  }
+  body[data-world="beat-builder"] .beat-cell{
+    min-height:34px;
+    border-radius:6px;
+    font-size:.55rem;
+  }
+  body[data-world="beat-builder"] .beat-track-label{
+    align-items:flex-start;
+  }
+}

@@ -1293,15 +1293,15 @@ function beginBeatJourney(){
 function renderBeatMission(){
   const m=beatMissions[state.mission],done=state.missionPassed,completion=state.mission+(done?1:0);
   stage(`Beat Builder · Mission ${state.mission+1} of 60 · ${m.chapter}`);
-  board.innerHTML=`<section class="creative-mission-card" data-beat-mission="${m.id}">
+  board.innerHTML=`<section class="creative-mission-card beat-mission-card" data-beat-mission="${m.id}">
     <p class="eyebrow">🎵 Rhythm mission ${state.mission+1}/60 · ${esc(m.chapter)}</p>
     <h2>${esc(m.name)}</h2><p>${esc(m.explanation)}</p>
     <div class="stat-row">${chip("Tempo",`${m.bpm} BPM`)}${chip("Completed",`${completion}/60`)}</div>
     <p class="board-note">Light up the numbered steps below for each instrument. Leave all unlisted steps off. Sound is optional.</p>
     ${musicStudioSvg()}
     <div class="beat-numbers">${Array.from({length:16},(_,i)=>`<span>${i%4===0?i/4+1:"·"}</span>`).join("")}</div>
-    ${state.tracks.map((track,row)=>`<div class="track-label">${trackNames[row]} · Steps: ${m.rows[row].map(n=>n+1).join(", ")}</div>
-      <div class="beat-grid">${track.map((on,col)=>`<button type="button" class="beat-cell ${on?"active":""}" data-beat="${row},${col}" aria-label="${trackNames[row]}, step ${col+1}" aria-pressed="${on}" ${done?"disabled":""}>${col+1}</button>`).join("")}</div>`).join("")}
+    ${state.tracks.map((track,row)=>`<div class="track-label beat-track-label beat-track-label--${row}"><span class="track-symbol track-symbol-${row}" aria-hidden="true"></span><span>${trackNames[row]} · Steps: ${m.rows[row].map(n=>n+1).join(", ")}</span></div>
+      <div class="beat-grid beat-grid--${row}">${track.map((on,col)=>`<button type="button" class="beat-cell beat-cell--${row} ${on?"active":""}" data-beat="${row},${col}" aria-label="${trackNames[row]}, step ${col+1}" aria-pressed="${on}" ${done?"disabled":""}>${col+1}</button>`).join("")}</div>`).join("")}
     </section>`;
   bind("[data-beat]",node=>{
     const [row,col]=node.dataset.beat.split(",").map(Number);
