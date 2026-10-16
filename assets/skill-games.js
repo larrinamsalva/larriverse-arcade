@@ -1237,18 +1237,18 @@ function renderMarketMission(){
   const m=marketMissions[state.mission],done=state.missionPassed;
   const completion=state.mission+(done?1:0);
   stage(`Lemonade Lab · Mission ${state.mission+1} of 60 · ${m.chapter}`);
-  board.innerHTML=`<article class="creative-mission-card" data-market-mission="${m.id}">
+  board.innerHTML=`<article class="creative-mission-card lemonade-mission-card" data-market-mission="${m.id}"><div class="lemonade-market-scene" aria-hidden="true"><div class="lemonade-canopy"></div><div class="lemonade-counter"><span class="lemonade-pitcher">🍋</span><span class="lemonade-cups">🥤🥤</span><span class="lemonade-cashbox">🪙</span></div><div class="lemonade-customer-row">🧒 🧑 🧒</div></div>
     <p class="eyebrow">🍋 Market mission ${state.mission+1}/60 · ${esc(m.chapter)}</p>
     <h2>${esc(m.name)}</h2><p>At 2 coins per cup, about <strong>${m.base} customers</strong> might visit. Charging more may reduce demand.</p>
     <div class="stat-row">${chip("Supply cost",`${m.supplyCost} coin${m.supplyCost===1?"":"s"}/cup`)}
       ${chip("Available budget",`${m.startCash} coins`)}${chip("Profit goal",`${m.goal}+ coins`)}
       ${chip("Completed",`${completion}/60`)}</div>
     <p class="board-note">${esc(m.hint)}</p>
-    <div class="field-grid">
+    <div class="field-grid lemonade-field-grid">
       <label>Cups to make<select id="stockInput" ${done?"disabled":""}>${marketStockChoices.map(n=>`<option value="${n}" ${state.stock===n?"selected":""}>${n} cups · ${n*m.supplyCost} coins</option>`).join("")}</select></label>
       <label>Price per cup<select id="priceInput" ${done?"disabled":""}>${[1,2,3,4,5].map(n=>`<option value="${n}" ${state.price===n?"selected":""}>${n} coin${n===1?"":"s"}</option>`).join("")}</select></label>
     </div>
-    ${state.lastMarketResult?`<div class="creative-result"><strong>${state.lastMarketResult.profit>=m.goal?"Goal reached!":"Try a different plan"}</strong>
+    ${state.lastMarketResult?`<div class="creative-result lemonade-result"><strong>${state.lastMarketResult.profit>=m.goal?"Goal reached!":"Try a different plan"}</strong>
       <p>Customers: ${state.lastMarketResult.demand} · Sold: ${state.lastMarketResult.sold} · Left over: ${state.lastMarketResult.leftovers}</p>
       <p>Revenue ${state.lastMarketResult.revenue} − cost ${state.lastMarketResult.cost} = <strong>${state.lastMarketResult.profit} coins profit</strong></p></div>`:""}
     </article>`;
