@@ -5182,3 +5182,181 @@ html.larriverse-high-contrast body[data-world="pantry-picnic"] .adventure-advanc
     height:54px;
   }
 }
+
+
+/* Robot Rover: dimensional terrain, rover tiles, and programming console. */
+body[data-world="robot-rover"] .play-card{
+  border:2px solid #7a84b8;
+  background:linear-gradient(180deg,#fbfcff,#eef1fb 72%,#e7eafb);
+  box-shadow:0 8px 0 #4a568c33,0 18px 34px #2930521f;
+}
+body[data-world="robot-rover"] .rover-level-trail .level-node{
+  border-color:#aeb8d5;
+  background:linear-gradient(145deg,#fbfcff,#e8ecf8);
+  color:#3a466d;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #6f78962b;
+}
+body[data-world="robot-rover"] .rover-level-trail .level-node.active{
+  border-color:#6559b5;
+  background:linear-gradient(145deg,#f0ecff,#d9d1f6);
+  color:#3d3279;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #6b5fa04a;
+}
+body[data-world="robot-rover"] .rover-level-trail .level-node.complete{
+  border-color:#4f8e78;
+  background:linear-gradient(145deg,#ebfaf4,#d4eee4);
+  color:#285c4e;
+}
+body[data-world="robot-rover"] .rover-lesson{
+  border:2px solid #94aec8;
+  background:linear-gradient(145deg,#f7fbff,#e4f1fb);
+  color:#263d58;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #6484a32c;
+}
+body[data-world="robot-rover"] .rover-grid{
+  position:relative;
+  overflow:hidden;
+  padding:.9rem;
+  border:3px solid #596a94;
+  box-shadow:inset 0 5px 0 #ffffff73,inset 0 -9px 0 #31405f33,0 9px 0 #33415d4d,0 18px 30px #28344b26;
+}
+body[data-world="robot-rover"] .rover-grid::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(120deg,#ffffff22,transparent 35% 68%,#10152813);
+}
+body[data-world="robot-rover"] .tile.rover{
+  z-index:1;
+  border:2px solid #a8b4cc;
+  border-radius:13px;
+  background:linear-gradient(145deg,#ffffff,#dbe2f0);
+  box-shadow:inset 0 4px 0 #fff,inset 0 -7px 0 #b9c3d7,0 4px 5px #2937523d;
+}
+body[data-world="robot-rover"] .tile.rover.rock{
+  border-color:#7f8b98;
+  background:linear-gradient(145deg,#dfe6eb,#9eabb5);
+  box-shadow:inset 0 4px 0 #f6f9fb,inset 0 -8px 0 #75818d,0 5px 6px #26313d45;
+}
+body[data-world="robot-rover"] .tile.rover.player{
+  border-color:#6652bd;
+  background:linear-gradient(145deg,#f1edff,#b9a8ef);
+  box-shadow:inset 0 4px 0 #fff,inset 0 -8px 0 #8876c8,0 0 0 3px #7965d455,0 7px 10px #34265f59;
+}
+body[data-world="robot-rover"] .tile.rover.goal:not(.player){
+  border-color:#c89c25;
+  background:radial-gradient(circle at 38% 28%,#fff 0 10%,#fff4a7 34%,#f3c944 72%);
+  box-shadow:inset 0 4px 0 #fffbd8,inset 0 -7px 0 #c29827,0 0 0 3px #f4d15b55,0 0 20px #ffd95c99;
+}
+body[data-world="robot-rover"] .rover-token{width:78%;height:78%;filter:drop-shadow(0 8px 3px #1f2a486e)}
+body[data-world="robot-rover"] .rover-rock{width:82%;height:82%;filter:drop-shadow(0 8px 3px #26323f5e)}
+body[data-world="robot-rover"] .rover-goal{width:70%;height:70%;filter:drop-shadow(0 0 10px #ffdc53)}
+body[data-world="robot-rover"] .rover-efficiency{
+  border:2px solid #b3a7d7;
+  background:linear-gradient(145deg,#fbf9ff,#ece7f8);
+  color:#493e70;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #75679b2e;
+}
+body[data-world="robot-rover"] .rover-efficiency strong{color:#352b68}
+body[data-world="robot-rover"] .command-bar{
+  padding:.8rem;
+  border:2px solid #98a3c5;
+  border-radius:16px;
+  background:linear-gradient(180deg,#eef1fa,#dfe5f2);
+  box-shadow:inset 0 3px 0 #fff,0 5px 0 #5d67872e;
+}
+body[data-world="robot-rover"] .command-bar button{
+  min-width:116px;
+  border:2px solid #8e99ba;
+  background:linear-gradient(145deg,#fff,#e2e7f2);
+  color:#344469;
+  box-shadow:inset 0 3px 0 #fff,0 4px 0 #66708d40;
+  font-weight:850;
+}
+body[data-world="robot-rover"] .command-bar button:hover:not(:disabled){transform:translateY(-2px)}
+body[data-world="robot-rover"] .command-list{
+  min-height:68px;
+  border:2px solid #8b7fba;
+  background:linear-gradient(180deg,#ebe8f7,#ddd8ef);
+  box-shadow:inset 0 3px 0 #ffffff9e,0 5px 0 #675b8d33;
+}
+body[data-world="robot-rover"] .command-list button{
+  border:2px solid #a99dcb;
+  border-radius:9px;
+  background:linear-gradient(145deg,#fff,#e9e4f5);
+  color:#4b3b84;
+  box-shadow:inset 0 3px 0 #fff,0 3px 0 #7164933d;
+}
+body[data-world="robot-rover"] .command-list button.active-command{
+  border-color:#bd941f;
+  background:linear-gradient(145deg,#fff6c8,#e6c758);
+  color:#453600;
+  box-shadow:inset 0 3px 0 #fff8d9,0 0 0 3px #f1d56e80,0 4px 0 #9b7b1f40;
+}
+body[data-world="robot-rover"] .stat-chip{
+  border:1px solid #9aa6c7;
+  background:linear-gradient(145deg,#fbfcff,#e8ecf7);
+  color:#36456b;
+  box-shadow:0 3px 0 #6d78952e;
+}
+body[data-world="robot-rover"] .stat-chip b{color:#2d3760}
+html.larriverse-dark body[data-world="robot-rover"] .play-card{
+  border-color:#666e9a;
+  background:linear-gradient(180deg,#24263b,#1d2234 72%,#191d2d);
+}
+html.larriverse-dark body[data-world="robot-rover"] .rover-level-trail .level-node{
+  border-color:#59617e;
+  background:linear-gradient(145deg,#303449,#252a3c);
+  color:#f0f2ff;
+}
+html.larriverse-dark body[data-world="robot-rover"] .rover-level-trail .level-node.active{
+  border-color:#8d7ee0;background:linear-gradient(145deg,#413b64,#302c4c);color:#fff
+}
+html.larriverse-dark body[data-world="robot-rover"] .rover-level-trail .level-node.complete{
+  border-color:#5f9f87;background:linear-gradient(145deg,#244b40,#203a33);color:#effff8
+}
+html.larriverse-dark body[data-world="robot-rover"] .rover-lesson{
+  border-color:#56728f;background:linear-gradient(145deg,#25384d,#202c3d);color:#f2f7ff
+}
+html.larriverse-dark body[data-world="robot-rover"] .rover-efficiency{
+  border-color:#655a88;background:linear-gradient(145deg,#302c45,#28243a);color:#f2eeff
+}
+html.larriverse-dark body[data-world="robot-rover"] .rover-efficiency strong{color:#fff}
+html.larriverse-dark body[data-world="robot-rover"] .command-bar{
+  border-color:#59627f;background:linear-gradient(180deg,#2c3145,#222738);box-shadow:inset 0 3px 0 #ffffff0c,0 5px 0 #0d101a66
+}
+html.larriverse-dark body[data-world="robot-rover"] .command-bar button{
+  border-color:#68718f;background:linear-gradient(145deg,#373d52,#292f42);color:#f3f5ff;box-shadow:inset 0 3px 0 #ffffff0c,0 4px 0 #0d111c66
+}
+html.larriverse-dark body[data-world="robot-rover"] .command-list{
+  border-color:#635982;background:linear-gradient(180deg,#302b43,#252137);box-shadow:inset 0 3px 0 #ffffff0c,0 5px 0 #0c091466
+}
+html.larriverse-dark body[data-world="robot-rover"] .command-list button{
+  border-color:#655a86;background:linear-gradient(145deg,#39334e,#2b263c);color:#f4efff;box-shadow:inset 0 3px 0 #ffffff0c,0 3px 0 #0a071166
+}
+html.larriverse-dark body[data-world="robot-rover"] .command-list button small{color:#d7cdf5}
+html.larriverse-dark body[data-world="robot-rover"] .command-list button.active-command{
+  border-color:#e0bd55;background:linear-gradient(145deg,#6d5b24,#4b3e18);color:#fff6cb
+}
+html.larriverse-dark body[data-world="robot-rover"] .stat-chip{
+  border-color:#5c6482;background:linear-gradient(145deg,#30354a,#262b3d);color:#f1f3ff
+}
+html.larriverse-dark body[data-world="robot-rover"] .stat-chip b{color:#fff}
+html.larriverse-high-contrast body[data-world="robot-rover"] :is(
+  .play-card,.level-node,.rover-lesson,.rover-grid,.tile.rover,.rover-efficiency,
+  .command-bar,.command-bar button,.command-list,.command-list button,.stat-chip
+){
+  background:#111!important;color:#fff!important;border-color:#fff!important;box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="robot-rover"] :is(
+  .level-node b,.level-node small,.rover-efficiency strong,.command-list button small,.stat-chip b
+){color:#fff!important}
+html.larriverse-high-contrast body[data-world="robot-rover"] :is(
+  .tile.rover.player,.tile.rover.goal:not(.player),.command-list button.active-command
+){background:#fff!important;color:#000!important}
+@media(max-width:620px){
+  body[data-world="robot-rover"] .rover-grid{padding:.55rem}
+  body[data-world="robot-rover"] .command-bar button{min-width:98px}
+  body[data-world="robot-rover"] .command-list{padding:.6rem}
+}
