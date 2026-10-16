@@ -5360,3 +5360,149 @@ html.larriverse-high-contrast body[data-world="robot-rover"] :is(
   body[data-world="robot-rover"] .command-bar button{min-width:98px}
   body[data-world="robot-rover"] .command-list{padding:.6rem}
 }
+
+
+/* Weather Watchers: dimensional sky lab and stronger picture-reading surfaces. */
+body[data-world="weather-watchers"] .play-card{
+  border:2px solid #6f98ad;
+  background:linear-gradient(180deg,#fbfeff,#e8f4f8 72%,#e0eef4);
+  box-shadow:0 8px 0 #52768b35,0 18px 34px #2d4a5c22;
+}
+body[data-world="weather-watchers"] .level-trail .level-node{
+  border-color:#9cb8c8;
+  background:linear-gradient(145deg,#fbfeff,#e8f3f7);
+  color:#27485b;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #5d80932c;
+}
+body[data-world="weather-watchers"] .level-trail .level-node.active{
+  border-color:#4b7ca0;
+  background:linear-gradient(145deg,#eefaff,#cfe9f4);
+  color:#173d57;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #49728a42;
+}
+body[data-world="weather-watchers"] .level-trail .level-node.complete{
+  border-color:#4d8b72;
+  background:linear-gradient(145deg,#effbf6,#d7eee4);
+  color:#255844;
+}
+body[data-world="weather-watchers"] .learning-scene{
+  position:relative;
+  overflow:hidden;
+  border:3px solid #638ba2;
+  border-radius:22px;
+  background:linear-gradient(180deg,#dff5ff,#cbe7ee);
+  box-shadow:inset 0 4px 0 #ffffff99,inset 0 -8px 0 #456b7f2b,0 8px 0 #456d8245,0 17px 28px #2f516526;
+}
+body[data-world="weather-watchers"] .learning-scene::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(120deg,#ffffff2c,transparent 32% 70%,#0d314418);
+}
+body[data-world="weather-watchers"] .weather-learning-art{
+  position:relative;
+  z-index:1;
+  filter:drop-shadow(0 8px 6px #27475b2b) saturate(1.04);
+}
+body[data-world="weather-watchers"] .scene-label{
+  z-index:2;
+  border:2px solid #557a90;
+  background:#173a4fe8;
+  color:#fff;
+  box-shadow:0 4px 0 #18324666;
+}
+body[data-world="weather-watchers"] .clue-row span{
+  border:2px solid #8eafc0;
+  background:linear-gradient(145deg,#f9fdff,#e4f1f6);
+  color:#25475c;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #5f7f8f2d;
+}
+body[data-world="weather-watchers"] .learning-question{
+  border:2px solid #7fa4b7;
+  background:linear-gradient(145deg,#ffffff,#eaf4f8);
+  color:#203e52;
+  box-shadow:inset 0 3px 0 #fff,0 6px 0 #52778b35,0 14px 24px #2d4a5c1c;
+}
+body[data-world="weather-watchers"] .learning-question :is(.eyebrow,.board-title,.learning-prompt){
+  color:#203f54;
+}
+body[data-world="weather-watchers"] .picture-choice{
+  border:2px solid #7897aa;
+  background:linear-gradient(145deg,#ffffff,#e4edf3);
+  color:#183b51;
+  box-shadow:inset 0 3px 0 #fff,inset 0 -7px 0 #c4d2dc,0 5px 0 #516f8045,0 10px 17px #27475a1c;
+  transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease;
+}
+body[data-world="weather-watchers"] .picture-choice:hover:not(:disabled){
+  transform:translateY(-3px);
+  border-color:#456f91;
+  box-shadow:inset 0 3px 0 #fff,inset 0 -7px 0 #c4d2dc,0 7px 0 #45647a4f,0 14px 20px #27475a22;
+}
+body[data-world="weather-watchers"] .learning-choice-art{
+  filter:drop-shadow(0 8px 5px #253f512f) saturate(1.05);
+  transform:scale(1.04);
+}
+body[data-world="weather-watchers"] .picture-choice.correct{
+  border-color:#347853;
+  background:linear-gradient(145deg,#f2fff6,#ccebd8);
+  color:#174a31;
+  box-shadow:inset 0 3px 0 #fff,inset 0 -7px 0 #a8d8ba,0 5px 0 #34785345;
+}
+body[data-world="weather-watchers"] .picture-choice.wrong{
+  border-color:#9c5d3d;
+  background:linear-gradient(145deg,#fffaf0,#efd8bd);
+  color:#65361f;
+  box-shadow:inset 0 3px 0 #fff,inset 0 -7px 0 #d4b99c,0 5px 0 #89503242;
+}
+html.larriverse-dark body[data-world="weather-watchers"] .play-card{
+  border-color:#59758a;
+  background:linear-gradient(180deg,#1b2d42,#20283e 72%,#1a2234);
+}
+html.larriverse-dark body[data-world="weather-watchers"] .level-trail .level-node{
+  border-color:#586d7d;background:linear-gradient(145deg,#2b3a49,#24313f);color:#f2f8fb
+}
+html.larriverse-dark body[data-world="weather-watchers"] .level-trail .level-node.active{
+  border-color:#78a9c3;background:linear-gradient(145deg,#294a5c,#253c4d);color:#fff
+}
+html.larriverse-dark body[data-world="weather-watchers"] .level-trail .level-node.complete{
+  border-color:#69a58a;background:linear-gradient(145deg,#23493b,#203b32);color:#f2fff8
+}
+html.larriverse-dark body[data-world="weather-watchers"] .learning-scene{
+  border-color:#56768b;background:linear-gradient(180deg,#25394e,#202f41);box-shadow:inset 0 4px 0 #ffffff14,inset 0 -8px 0 #0d17204d,0 8px 0 #0b121b66
+}
+html.larriverse-dark body[data-world="weather-watchers"] .clue-row span{
+  border-color:#5a7588;background:linear-gradient(145deg,#2b3d4d,#243341);color:#f1f8fc
+}
+html.larriverse-dark body[data-world="weather-watchers"] .learning-question{
+  border-color:#5e788a;background:linear-gradient(145deg,#2b3b4c,#233140);color:#fff;box-shadow:0 6px 0 #0d172066
+}
+html.larriverse-dark body[data-world="weather-watchers"] .learning-question :is(.eyebrow,.board-title,.learning-prompt){color:#f7fbfd}
+html.larriverse-dark body[data-world="weather-watchers"] .picture-choice{
+  border-color:#637d8d;background:linear-gradient(145deg,#344757,#283845);color:#f7fbfd;box-shadow:inset 0 3px 0 #ffffff0d,inset 0 -7px 0 #18252f,0 5px 0 #0c141b66
+}
+html.larriverse-dark body[data-world="weather-watchers"] .picture-choice.correct{
+  border-color:#73b68f;background:linear-gradient(145deg,#28523d,#1e3f31);color:#f3fff7
+}
+html.larriverse-dark body[data-world="weather-watchers"] .picture-choice.wrong{
+  border-color:#cf8c61;background:linear-gradient(145deg,#5b4030,#403027);color:#fff8ef
+}
+html.larriverse-high-contrast body[data-world="weather-watchers"] :is(
+  .play-card,.level-node,.learning-scene,.scene-label,.clue-row span,.learning-question,.picture-choice
+){
+  background:#111!important;color:#fff!important;border-color:#fff!important;box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="weather-watchers"] .learning-question :is(.eyebrow,.board-title,.learning-prompt),
+html.larriverse-high-contrast body[data-world="weather-watchers"] .level-node :is(b,small){
+  color:#fff!important;
+}
+html.larriverse-high-contrast body[data-world="weather-watchers"] .picture-choice.correct{
+  outline:5px solid #7cff9b!important;
+}
+html.larriverse-high-contrast body[data-world="weather-watchers"] .picture-choice.wrong{
+  outline:5px dashed #ffd36a!important;
+}
+@media(max-width:760px){
+  body[data-world="weather-watchers"] .learning-scene{border-radius:17px}
+  body[data-world="weather-watchers"] .picture-choice{min-height:118px}
+}
