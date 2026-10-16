@@ -972,23 +972,23 @@ function renderEnergy() {
       <small>Keep the lights on for four days. Each day needs ${level.demand} energy units. Each battery holds 4.</small></div>
     </section>
     <p class="board-note">Toy energy system: real electrical systems and weather are more complicated. Build before testing, then watch the forecast.</p>
-    <div class="weather-preview">${level.weather.map((day, i) =>
-      `<div class="${state.day === i && state.day < 4 ? "forecast-current" : ""}">
+    <div class="weather-preview energy-weather-preview">${level.weather.map((day, i) =>
+      `<div class="energy-weather-card energy-weather-card--${esc(day.name.toLowerCase())} ${state.day === i && state.day < 4 ? "forecast-current" : ""}">
       <strong>${day.icon}</strong>${esc(day.name)}<br>Solar ${day.solar} · Wind ${day.wind}${state.day > i ? " · Done" : ""}</div>`).join("")}</div>
     <div class="stat-row">${chip("Level", `${state.level + 1}/${energyLevels.length}`)}
       ${chip("Builder tokens", builderLeft())}
       ${chip("Stored energy", `${state.stored}/${state.build.battery * 4}`)}
       ${chip("Days supplied", `${state.successDays}/4`)}
       ${chip("Island stars", `${stageStars(energyLevels)}/${energyLevels.length * 3}`)}</div>
-    <div class="item-grid">${["solar","wind","battery"].map((type, i) =>
-      `<button class="item-button" data-build="${type}" ${state.started ? "disabled" : ""}>
+    <div class="item-grid energy-build-grid">${["solar","wind","battery"].map((type, i) =>
+      `<button class="item-button energy-build-card energy-build-card--${type}" data-build="${type}" ${state.started ? "disabled" : ""}>
         <span class="item-icon" aria-hidden="true">${["☀️", "🌬️", "🔋"][i]}</span>
         ${["Solar panel", "Wind turbine", "Battery"][i]}
         <small>${buildCosts[type]} tokens · Built ${state.build[type]}</small></button>`).join("")}</div>
-    <div class="energy-scene" aria-label="Island energy equipment">
-      <span aria-hidden="true">🏡</span><span aria-hidden="true">${"☀️".repeat(state.build.solar) || "▫️"}</span>
-      <span aria-hidden="true">${"🌬️".repeat(state.build.wind) || "▫️"}</span>
-      <span aria-hidden="true">🔋</span><strong>${state.stored} stored</strong></div>
+    <div class="energy-scene energy-island-scene energy-zone-scene--${esc(level.zone)}" aria-label="Island energy equipment">
+      <span class="energy-home" aria-hidden="true">🏡</span><span class="energy-solar-bank" aria-hidden="true">${"☀️".repeat(state.build.solar) || "▫️"}</span>
+      <span class="energy-wind-bank" aria-hidden="true">${"🌬️".repeat(state.build.wind) || "▫️"}</span>
+      <span class="energy-battery-icon" aria-hidden="true">🔋</span><strong class="energy-storage-readout">${state.stored} stored</strong></div>
     ${state.ledger.length ? `<table class="ledger"><caption>Your energy log</caption><thead><tr><th>Day</th><th>Made</th><th>Stored after</th><th>Lights</th></tr></thead><tbody>${state.ledger.map((entry) =>
       `<tr><td>${esc(entry.name)}</td><td>${entry.made}</td><td>${entry.stored}</td><td>${entry.ok ? "Glowing" : "Needs more"}</td></tr>`).join("")}</tbody></table>` : ""}`;
   bind("[data-build]", (node) => {
