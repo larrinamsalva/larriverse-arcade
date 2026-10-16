@@ -5107,6 +5107,12 @@ body[data-world="pantry-picnic"] .adventure-advancement{
   background:linear-gradient(180deg,#fffaf0,#f7e3c5);
   color:#543822;
 }
+body[data-world="pantry-picnic"] .adventure-advancement span{
+  color:#6a3e1f;
+}
+body[data-world="pantry-picnic"] .adventure-advancement b{
+  color:#3f2a1b;
+}
 body[data-world="pantry-picnic"] .adventure-rank-track{
   background:#ead1aa;
 }
@@ -5143,6 +5149,12 @@ html.larriverse-dark body[data-world="pantry-picnic"] .adventure-advancement{
   border-color:#715940;
   color:#f5eadb;
 }
+html.larriverse-dark body[data-world="pantry-picnic"] .adventure-advancement span{
+  color:#ffe3a1;
+}
+html.larriverse-dark body[data-world="pantry-picnic"] .adventure-advancement b{
+  color:#fff;
+}
 html.larriverse-high-contrast body[data-world="pantry-picnic"] :is(
   .pantry-challenge,.pantry-rules span,.picnic-basket,.pantry-picnic-slot,.pantry-food-card,.leftover-tag,.adventure-advancement
 ){
@@ -5153,6 +5165,9 @@ html.larriverse-high-contrast body[data-world="pantry-picnic"] :is(
 }
 html.larriverse-high-contrast body[data-world="pantry-picnic"] .adventure-rank-track i{
   background:#fff!important;
+}
+html.larriverse-high-contrast body[data-world="pantry-picnic"] .adventure-advancement :is(span,b){
+  color:#fff!important;
 }
 @media(max-width:620px){
   body[data-world="pantry-picnic"] .picnic-basket{
