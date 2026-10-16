@@ -4286,3 +4286,298 @@ html.larriverse-high-contrast body[data-world="garden-guardians"] .garden-growth
     font-size:1.7rem;
   }
 }
+
+
+/* Energy Island: dimensional island systems, weather cards, and storage feedback. */
+body[data-world="energy-island"] .play-card{
+  border:2px solid #a98038;
+  background:linear-gradient(180deg,#fffdf5,#f7f0db 72%,#eee1bc);
+  box-shadow:0 8px 0 #8b692f38,0 18px 34px #5a441e20;
+}
+body[data-world="energy-island"] .nature-banner{
+  border:2px solid #a68342;
+  box-shadow:inset 0 3px 0 #fff,0 7px 0 #80622635,0 14px 22px #5b43191c;
+}
+body[data-world="energy-island"] .nature-banner>span{
+  display:grid;
+  place-items:center;
+  width:78px;
+  height:78px;
+  flex:none;
+  border:2px solid #9d824d;
+  border-radius:22px;
+  background:radial-gradient(circle at 35% 28%,#fff8d0,#f4cf6e 58%,#c69b3a);
+  box-shadow:inset 0 3px 0 #fff,0 5px 0 #7b612c35;
+  font-size:2.8rem;
+}
+body[data-world="energy-island"] .energy-weather-preview{
+  gap:.7rem;
+}
+body[data-world="energy-island"] .energy-weather-card{
+  position:relative;
+  overflow:hidden;
+  min-width:0;
+  min-height:118px;
+  padding:.8rem .7rem;
+  border:2px solid #9aa7b7;
+  border-radius:15px;
+  background:linear-gradient(160deg,#f9fbfe,#e7edf5);
+  color:#35445d;
+  box-shadow:inset 0 2px 0 #fff,inset 0 -5px 0 #64738b18,0 5px 0 #6b75872e;
+  font-weight:800;
+}
+body[data-world="energy-island"] .energy-weather-card strong{
+  display:block;
+  margin-bottom:.25rem;
+  font-size:2rem;
+}
+body[data-world="energy-island"] .energy-weather-card--sunny{
+  background:linear-gradient(160deg,#fff8c9,#f5d96f);
+  border-color:#c9a844;
+  color:#5e4916;
+}
+body[data-world="energy-island"] .energy-weather-card--cloudy{
+  background:linear-gradient(160deg,#f1f4f7,#cfd7df);
+  border-color:#97a3b0;
+  color:#3c4856;
+}
+body[data-world="energy-island"] .energy-weather-card--breezy{
+  background:linear-gradient(160deg,#e9f8ff,#bfe3ef);
+  border-color:#83b8c7;
+  color:#2d5865;
+}
+body[data-world="energy-island"] .energy-weather-card--night{
+  background:
+    radial-gradient(circle at 78% 22%,#fff6c9 0 7px,transparent 8px),
+    linear-gradient(160deg,#384c72,#202d4b);
+  border-color:#617397;
+  color:#f6f8ff;
+}
+body[data-world="energy-island"] .energy-weather-card.forecast-current{
+  outline:4px solid #7d59c3;
+  outline-offset:2px;
+  transform:translateY(-2px);
+  box-shadow:inset 0 2px 0 #fff8,0 0 0 4px #9e7ddd26,0 7px 0 #5a477d30;
+}
+body[data-world="energy-island"] .energy-build-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:.8rem;
+}
+body[data-world="energy-island"] .energy-build-card{
+  min-width:0;
+  min-height:135px;
+  border:2px solid #9ca6b3;
+  background:linear-gradient(160deg,#fff,#eef2f6);
+  color:#314052;
+  box-shadow:inset 0 2px 0 #fff,inset 0 -7px 0 #6875871a,0 6px 0 #69738638;
+}
+body[data-world="energy-island"] .energy-build-card .item-icon{
+  display:grid;
+  place-items:center;
+  width:64px;
+  height:64px;
+  margin:0 auto .45rem;
+  border-radius:18px;
+  background:linear-gradient(145deg,#f4f7fb,#d7dfe8);
+  box-shadow:inset 0 3px 0 #fff,0 4px 0 #68748531;
+  font-size:2.2rem;
+}
+body[data-world="energy-island"] .energy-build-card--solar{
+  border-color:#b69435;
+  background:linear-gradient(160deg,#fff9d2,#f2dea0);
+  color:#5a471d;
+}
+body[data-world="energy-island"] .energy-build-card--solar .item-icon{
+  background:linear-gradient(145deg,#fff8bd,#ebc84d);
+}
+body[data-world="energy-island"] .energy-build-card--wind{
+  border-color:#6fa1b8;
+  background:linear-gradient(160deg,#f1fbff,#d6edf5);
+  color:#2f5361;
+}
+body[data-world="energy-island"] .energy-build-card--wind .item-icon{
+  background:linear-gradient(145deg,#effbff,#b9dce9);
+}
+body[data-world="energy-island"] .energy-build-card--battery{
+  border-color:#7e7f95;
+  background:linear-gradient(160deg,#f4f4f8,#dedee7);
+  color:#3e4051;
+}
+body[data-world="energy-island"] .energy-build-card--battery .item-icon{
+  background:linear-gradient(145deg,#f8f8fb,#cfd1dc);
+}
+body[data-world="energy-island"] .energy-island-scene{
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  align-items:end;
+  min-height:190px;
+  padding:1rem;
+  border:3px solid #7f8d6c;
+  border-radius:24px;
+  background:
+    radial-gradient(ellipse at 50% 115%,#d3b565 0 34%,#739f63 35% 53%,transparent 54%),
+    linear-gradient(180deg,#b9e5f5 0 58%,#5f9bb6 59% 68%,#397d8f 69%);
+  box-shadow:inset 0 4px 0 #fff9,inset 0 -12px 0 #22586730,0 8px 0 #5b76533b,0 16px 26px #354a2d1d;
+}
+body[data-world="energy-island"] .energy-island-scene::before{
+  content:"";
+  position:absolute;
+  left:10%;
+  right:10%;
+  bottom:14px;
+  height:56px;
+  border-radius:50%;
+  background:linear-gradient(180deg,#93b96f,#668b53);
+  box-shadow:inset 0 5px 0 #b8d49255;
+}
+body[data-world="energy-island"] .energy-island-scene>*{
+  position:relative;
+  z-index:1;
+}
+body[data-world="energy-island"] .energy-island-scene span{
+  display:grid;
+  place-items:center;
+  min-height:82px;
+  font-size:2.3rem;
+}
+body[data-world="energy-island"] .energy-home{
+  filter:drop-shadow(0 6px 3px #31412c55);
+}
+body[data-world="energy-island"] .energy-solar-bank{
+  color:#e7b72f;
+  text-shadow:0 3px 0 #6a572446;
+}
+body[data-world="energy-island"] .energy-wind-bank{
+  color:#dff7ff;
+  text-shadow:0 3px 0 #3d667443;
+}
+body[data-world="energy-island"] .energy-battery-icon{
+  filter:drop-shadow(0 5px 3px #38384e55);
+}
+body[data-world="energy-island"] .energy-storage-readout{
+  align-self:center;
+  justify-self:center;
+  padding:.55rem .7rem;
+  border:2px solid #6f7d8d;
+  border-radius:12px;
+  background:linear-gradient(160deg,#1f2c3d,#35475e);
+  color:#dfffc7;
+  box-shadow:inset 0 2px 0 #ffffff1f,0 4px 0 #26334340;
+  font-size:.85rem;
+  white-space:nowrap;
+}
+body[data-world="energy-island"] .energy-zone-scene--forest{
+  background:
+    radial-gradient(ellipse at 50% 115%,#c8ae60 0 34%,#5d8755 35% 53%,transparent 54%),
+    linear-gradient(180deg,#aacfe0 0 58%,#648b7a 59% 68%,#42685f 69%);
+}
+body[data-world="energy-island"] .energy-zone-scene--mountain{
+  background:
+    radial-gradient(ellipse at 50% 115%,#c7a968 0 31%,#7e8566 32% 51%,transparent 52%),
+    linear-gradient(180deg,#b8cad9 0 55%,#7b8c9a 56% 68%,#596b73 69%);
+}
+body[data-world="energy-island"] .energy-zone-scene--village{
+  background:
+    radial-gradient(ellipse at 50% 115%,#d7b66a 0 34%,#799960 35% 53%,transparent 54%),
+    linear-gradient(180deg,#c2e6f2 0 58%,#6ba2b4 59% 68%,#4a8493 69%);
+}
+body[data-world="energy-island"] .ledger{
+  overflow:hidden;
+  border:1px solid #b2aa92;
+  border-radius:12px;
+  background:#fffdf5;
+}
+body[data-world="energy-island"] .ledger caption{
+  color:#59471e;
+}
+body[data-world="energy-island"] .ledger th{
+  color:#54441f;
+  background:#f6eccf;
+}
+body[data-world="energy-island"] .ledger td{
+  color:#3d4652;
+}
+html.larriverse-dark body[data-world="energy-island"] .play-card{
+  background:linear-gradient(180deg,#2c2a20,#242219 72%,#1c1a14);
+  border-color:#78653b;
+}
+html.larriverse-dark body[data-world="energy-island"] .energy-weather-card{
+  background:linear-gradient(160deg,#353b44,#2a3038);
+  color:#f6f7fa;
+  border-color:#68717e;
+}
+html.larriverse-dark body[data-world="energy-island"] .energy-weather-card--night{
+  background:linear-gradient(160deg,#26324b,#1e283e);
+}
+html.larriverse-dark body[data-world="energy-island"] .energy-build-card{
+  background:linear-gradient(160deg,#37362f,#2e2c27);
+  color:#fbf8ee;
+  border-color:#6e685a;
+}
+html.larriverse-dark body[data-world="energy-island"] .energy-build-card .item-icon{
+  background:linear-gradient(145deg,#46453e,#33322d);
+}
+html.larriverse-dark body[data-world="energy-island"] .energy-island-scene{
+  background:
+    radial-gradient(ellipse at 50% 115%,#786943 0 34%,#435e3d 35% 53%,transparent 54%),
+    linear-gradient(180deg,#34495c 0 58%,#345c68 59% 68%,#284955 69%);
+  border-color:#596650;
+}
+html.larriverse-dark body[data-world="energy-island"] .ledger{
+  background:#24241f;
+  border-color:#5c594e;
+}
+html.larriverse-dark body[data-world="energy-island"] .ledger caption,
+html.larriverse-dark body[data-world="energy-island"] .ledger th,
+html.larriverse-dark body[data-world="energy-island"] .ledger td{
+  color:#f4f1e8;
+}
+html.larriverse-dark body[data-world="energy-island"] .ledger th{
+  background:#302e26;
+}
+html.larriverse-high-contrast body[data-world="energy-island"] :is(
+  .nature-banner,.energy-weather-card,.energy-build-card,.energy-island-scene,.ledger
+){
+  background:#111!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="energy-island"] :is(
+  .energy-build-card .item-icon,.energy-storage-readout
+){
+  background:#fff!important;
+  color:#000!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="energy-island"] .ledger :is(caption,th,td){
+  background:#111!important;
+  color:#fff!important;
+}
+@media(max-width:900px){
+  body[data-world="energy-island"] .energy-build-grid{
+    grid-template-columns:1fr;
+  }
+  body[data-world="energy-island"] .energy-weather-preview{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  body[data-world="energy-island"] .energy-build-card{
+    min-width:0;
+    overflow-wrap:anywhere;
+  }
+}
+@media(max-width:620px){
+  body[data-world="energy-island"] .energy-weather-preview{
+    grid-template-columns:1fr;
+  }
+  body[data-world="energy-island"] .energy-island-scene{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    min-height:230px;
+  }
+  body[data-world="energy-island"] .energy-storage-readout{
+    white-space:normal;
+  }
+}
