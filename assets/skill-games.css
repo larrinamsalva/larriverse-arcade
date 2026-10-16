@@ -4609,7 +4609,8 @@ body[data-world="lemonade-lab"] .lemonade-mission-card{
   position:relative;
   overflow:hidden;
   padding-top:1rem;
-  background:linear-gradient(180deg,#fffdf5,#fff5d9);
+  background-color:#fffdf5;
+  background-image:linear-gradient(180deg,#fffdf5,#fff5d9);
   border-color:#b78028;
   box-shadow:inset 0 3px 0 #fff,0 7px 0 #9b722e33,0 14px 24px #5d431d1a;
 }
@@ -4738,7 +4739,8 @@ html.larriverse-dark body[data-world="lemonade-lab"] .play-card{
   border-color:#8a7040;
 }
 html.larriverse-dark body[data-world="lemonade-lab"] .lemonade-mission-card{
-  background:linear-gradient(180deg,#2a2d38,#222632);
+  background-color:#222632;
+  background-image:linear-gradient(180deg,#2a2d38,#222632);
   border-color:#d6aa55;
 }
 html.larriverse-dark body[data-world="lemonade-lab"] .lemonade-market-scene{
