@@ -899,11 +899,11 @@ function renderGarden() {
       ${chip("Garden stars", `${stageStars(gardenLevels)}/${gardenLevels.length * 3}`)}</div>
     <div class="nature-quotas" aria-label="Planting plan">${gardenQuota(level)}</div>
     <p class="board-note">${state.day === 0 ? "Choose a crop, then plant all six plots to match the plan." : "Water each growing plot at most once per day. Two watered days grow a plant. You can leave a plot unwatered to save drops."}</p>
-    ${state.day === 0 ? `<div class="plant-picker">${Object.entries(plants).map(([id, plant]) =>
-      `<button data-plant="${id}" class="${state.tool === id ? "selected" : ""}" aria-pressed="${state.tool === id}">${plant.icon} ${plant.name}</button>`).join("")}</div>` : ""}
-    <div class="garden-grid">${state.plots.map((plot, i) =>
-      `<button class="plot ${state.watered.has(i) ? "selected" : ""}" data-plot="${i}" aria-label="Plot ${i + 1}, ${plot.plant ? plants[plot.plant].name : "empty"}, growth ${plot.growth} of 2" ${levelDone ? "disabled" : ""}>
-        ${plot.plant ? (plot.growth >= 2 ? plants[plot.plant].icon : plot.growth === 1 ? "🌿" : "🌱") : "+"}
+    ${state.day === 0 ? `<div class="plant-picker garden-plant-picker">${Object.entries(plants).map(([id, plant]) =>
+      `<button data-plant="${id}" class="garden-plant-choice garden-plant-choice--${id} ${state.tool === id ? "selected" : ""}" aria-pressed="${state.tool === id}"><span class="garden-plant-icon" aria-hidden="true">${plant.icon}</span><span>${plant.name}</span></button>`).join("")}</div>` : ""}
+    <div class="garden-grid garden-grid--${esc(level.zone)}">${state.plots.map((plot, i) =>
+      `<button class="plot garden-plot ${plot.plant ? `garden-plot--${plot.plant}` : "garden-plot--empty"} garden-growth-${plot.growth} ${state.watered.has(i) ? "selected" : ""}" data-plot="${i}" aria-label="Plot ${i + 1}, ${plot.plant ? plants[plot.plant].name : "empty"}, growth ${plot.growth} of 2" ${levelDone ? "disabled" : ""}>
+        <span class="garden-growth-art" aria-hidden="true">${plot.plant ? (plot.growth >= 2 ? plants[plot.plant].icon : plot.growth === 1 ? "🌿" : "🌱") : "+"}</span>
         <small>${plot.plant ? `${plants[plot.plant].name} · ${plot.growth}/2` : "Tap to plant"}</small>
       </button>`).join("")}</div>`;
   bind("[data-plant]", (node) => { state.tool = node.dataset.plant; renderGarden(); });
