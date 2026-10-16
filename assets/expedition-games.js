@@ -49,6 +49,7 @@ export function createExpedition(world, a) {
     cipher: ["Code Rookie","Pattern Solver","Cipher Detective","Code Master","Letter Explorer","Shift Specialist","Symbol Strategist","Word Decoder","Code Researcher","Pattern Architect","Message Mentor","Cipher Champion"],
     town: ["Kind Listener", "Neighborhood Helper", "Access Planner", "Council Champion", "Park Pathfinder", "Neighbor Advocate", "Inclusive Designer", "Access Engineer", "Community Planner", "Shared Space Leader", "Council Mentor", "Neighborhood Champion"],
     trade: ["Careful Shopper", "Market Helper", "Price Detective", "Budget Builder", "Bundle Checker", "Fee Finder", "Unit Price Pro", "Smart Saver", "Whole Cost Planner", "Deal Detective", "Community Buyer", "Market Master"],
+    pantry: ["Picnic Helper","Snack Sorter","Produce Picker","Leftover Saver","Lunch Planner","Pantry Scout","Balanced Packer","Food Waste Fighter","Picnic Planner","Pantry Pro","Lunch Leader","Pantry Champion"],
   };
   const rankName = () => (rankNames[world.mode] || ["Explorer"])[Math.min((rankNames[world.mode] || ["Explorer"]).length - 1, Math.floor(s.level / 5))];
   const advancement = count => {
