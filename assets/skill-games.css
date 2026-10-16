@@ -4597,3 +4597,214 @@ html.larriverse-high-contrast body[data-world="energy-island"] .ledger :is(capti
     white-space:normal;
   }
 }
+
+
+/* Lemonade Lab: dimensional market stand, stronger pricing controls, and readable profit feedback. */
+body[data-world="lemonade-lab"] .play-card{
+  border:2px solid #c08a2f;
+  background:linear-gradient(180deg,#fffdf4,#fff5d7 70%,#f4e2ad);
+  box-shadow:0 8px 0 #9c732e38,0 18px 34px #61471920;
+}
+body[data-world="lemonade-lab"] .lemonade-mission-card{
+  position:relative;
+  overflow:hidden;
+  padding-top:1rem;
+  background-color:#fffdf5;
+  background-image:linear-gradient(180deg,#fffdf5,#fff5d9);
+  border-color:#b78028;
+  box-shadow:inset 0 3px 0 #fff,0 7px 0 #9b722e33,0 14px 24px #5d431d1a;
+}
+body[data-world="lemonade-lab"] .lemonade-market-scene{
+  position:relative;
+  min-height:190px;
+  margin:0 0 1rem;
+  overflow:hidden;
+  border:2px solid #b8822e;
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 78% 20%,#fff3a8 0 22px,transparent 23px),
+    linear-gradient(180deg,#bce7f5 0 58%,#9dcd7f 59% 100%);
+  box-shadow:inset 0 4px 0 #ffffffaa,inset 0 -9px 0 #6e8b4a20,0 6px 0 #8d6b3330;
+}
+body[data-world="lemonade-lab"] .lemonade-canopy{
+  position:absolute;
+  left:14%;
+  right:14%;
+  top:16px;
+  height:42px;
+  border:3px solid #a56c1f;
+  border-radius:12px 12px 6px 6px;
+  background:repeating-linear-gradient(90deg,#ffd95f 0 32px,#fff6c8 32px 64px);
+  box-shadow:inset 0 3px 0 #fff6,0 5px 0 #8e5d1c38;
+}
+body[data-world="lemonade-lab"] .lemonade-canopy::before,
+body[data-world="lemonade-lab"] .lemonade-canopy::after{
+  content:"";
+  position:absolute;
+  top:38px;
+  width:7px;
+  height:72px;
+  border-radius:6px;
+  background:linear-gradient(#a96f2d,#7d4f20);
+}
+body[data-world="lemonade-lab"] .lemonade-canopy::before{left:14px}
+body[data-world="lemonade-lab"] .lemonade-canopy::after{right:14px}
+body[data-world="lemonade-lab"] .lemonade-counter{
+  position:absolute;
+  left:18%;
+  right:18%;
+  bottom:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1rem;
+  min-height:64px;
+  padding:.55rem .8rem;
+  border:3px solid #98662a;
+  border-radius:10px;
+  background:linear-gradient(180deg,#c98942,#9c632c);
+  box-shadow:inset 0 4px 0 #e7b16d,inset 0 -7px 0 #6e431d2e,0 6px 0 #65431f38;
+}
+body[data-world="lemonade-lab"] .lemonade-counter span{
+  display:grid;
+  place-items:center;
+  min-width:48px;
+  min-height:48px;
+  border-radius:12px;
+  background:#fff7d4cc;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #62431f26;
+  font-size:1.7rem;
+}
+body[data-world="lemonade-lab"] .lemonade-customer-row{
+  position:absolute;
+  right:18px;
+  bottom:10px;
+  font-size:1.35rem;
+  letter-spacing:.08em;
+  filter:drop-shadow(0 4px 2px #39522f38);
+}
+body[data-world="lemonade-lab"] .lemonade-field-grid{
+  gap:.9rem;
+  margin-top:1rem;
+}
+body[data-world="lemonade-lab"] .lemonade-field-grid label{
+  padding:.75rem;
+  border:2px solid #d2b16c;
+  border-radius:14px;
+  background:linear-gradient(160deg,#fffdf6,#fff0be);
+  color:#423114;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #9a753430;
+}
+body[data-world="lemonade-lab"] .lemonade-field-grid select{
+  margin-top:.25rem;
+  border-color:#7d6f58;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #7f6d5630;
+}
+body[data-world="lemonade-lab"] .lemonade-result{
+  border:2px solid #7ca06d;
+  background:linear-gradient(160deg,#f4fbec,#dff1d4);
+  color:#294520;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #6e8a6330;
+}
+body[data-world="lemonade-lab"] .stand-scene{
+  border:2px solid #b98933;
+  border-radius:20px;
+  background:linear-gradient(180deg,#dff5fb,#d9efca);
+  box-shadow:inset 0 3px 0 #fff,0 8px 0 #9c793740,0 16px 24px #5d48201d;
+}
+body[data-world="lemonade-lab"] .weather-caption{
+  border:2px solid #c7a652;
+  background:#fff8dff0;
+  color:#533e1e;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #8b6a3030;
+}
+body[data-world="lemonade-lab"] .ledger{
+  overflow:hidden;
+  border:1px solid #cdb678;
+  border-radius:12px;
+  background:#fffdf6;
+}
+body[data-world="lemonade-lab"] .ledger caption{
+  color:#5a451a;
+}
+body[data-world="lemonade-lab"] .ledger th{
+  background:#fff0bd;
+  color:#4e3b18;
+}
+body[data-world="lemonade-lab"] .ledger td{
+  color:#334052;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .play-card{
+  background:linear-gradient(180deg,#2d2a1f,#262218 72%,#1c1a13);
+  border-color:#8a7040;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .lemonade-mission-card{
+  background-color:#222632;
+  background-image:linear-gradient(180deg,#2a2d38,#222632);
+  border-color:#d6aa55;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .lemonade-market-scene{
+  background:linear-gradient(180deg,#314c63 0 58%,#536a45 59% 100%);
+  border-color:#9a7b43;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .lemonade-field-grid label{
+  background:linear-gradient(160deg,#3a3529,#2e2a22);
+  border-color:#7d704f;
+  color:#fff6db;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .lemonade-result{
+  background:linear-gradient(160deg,#21392a,#1a3022);
+  border-color:#6fa37a;
+  color:#eaffee;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .stand-scene{
+  background:linear-gradient(180deg,#2f4659,#38503d);
+  border-color:#8a7040;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .ledger{
+  background:#25231d;
+  border-color:#5f5949;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .ledger caption,
+html.larriverse-dark body[data-world="lemonade-lab"] .ledger th,
+html.larriverse-dark body[data-world="lemonade-lab"] .ledger td{
+  color:#f5f1e8;
+}
+html.larriverse-dark body[data-world="lemonade-lab"] .ledger th{
+  background:#302d24;
+}
+html.larriverse-high-contrast body[data-world="lemonade-lab"] :is(
+  .lemonade-mission-card,.lemonade-market-scene,.lemonade-field-grid label,.lemonade-result,.stand-scene,.weather-caption,.ledger
+){
+  background:#111!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="lemonade-lab"] .ledger :is(caption,th,td){
+  background:#111!important;
+  color:#fff!important;
+}
+@media(max-width:900px){
+  body[data-world="lemonade-lab"] .lemonade-field-grid{
+    grid-template-columns:1fr;
+  }
+}
+@media(max-width:620px){
+  body[data-world="lemonade-lab"] .lemonade-market-scene{
+    min-height:170px;
+  }
+  body[data-world="lemonade-lab"] .lemonade-counter{
+    left:10%;
+    right:10%;
+  }
+  body[data-world="lemonade-lab"] .lemonade-customer-row{
+    font-size:1.1rem;
+  }
+  body[data-world="lemonade-lab"] .weather-caption{
+    position:static;
+    margin:.65rem;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
