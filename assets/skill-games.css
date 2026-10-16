@@ -4406,6 +4406,19 @@ body[data-world="energy-island"] .energy-build-card--battery{
 body[data-world="energy-island"] .energy-build-card--battery .item-icon{
   background:linear-gradient(145deg,#f8f8fb,#cfd1dc);
 }
+body[data-world="energy-island"] .energy-build-card small{
+  color:#334052;
+  font-weight:800;
+}
+body[data-world="energy-island"] .energy-build-card--solar small{
+  color:#4d3c12;
+}
+body[data-world="energy-island"] .energy-build-card--wind small{
+  color:#244753;
+}
+body[data-world="energy-island"] .energy-build-card--battery small{
+  color:#353747;
+}
 body[data-world="energy-island"] .energy-island-scene{
   position:relative;
   overflow:hidden;
@@ -4518,6 +4531,9 @@ html.larriverse-dark body[data-world="energy-island"] .energy-build-card{
 }
 html.larriverse-dark body[data-world="energy-island"] .energy-build-card .item-icon{
   background:linear-gradient(145deg,#46453e,#33322d);
+}
+html.larriverse-dark body[data-world="energy-island"] .energy-build-card small{
+  color:#f4f1e8;
 }
 html.larriverse-dark body[data-world="energy-island"] .energy-island-scene{
   background:
