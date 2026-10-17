@@ -52,3 +52,200 @@ dialog{border:0;padding:0;background:transparent;color:#fff;max-width:calc(100vw
 #toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:rgba(0,0,0,.88);border:1px solid var(--line);border-radius:18px;padding:10px 18px;font-weight:800;z-index:80;transition:.25s}#toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:700px){.mode-grid,.privacy-grid{grid-template-columns:1fr}.hud{grid-template-columns:repeat(2,1fr)}.status-strip{align-items:flex-start;flex-direction:column}.quest-field{min-height:480px}.map-caption{flex-direction:column;gap:2px}.answer-grid{grid-template-columns:1fr}.poi{width:60px;height:60px}.poi-art{width:53px;height:53px}.poi:after{top:62px}.player{width:64px;height:64px}.gps-car-art{width:58px;height:58px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+
+/* Road Trip Quest GPS: dimensional privacy-first map polish. */
+body[data-classic="road-trip-quest-gps"] .topbar{
+  border-bottom:2px solid rgba(255,255,255,.12);
+  box-shadow:inset 0 -2px 0 rgba(255,255,255,.03),0 7px 22px #0008;
+}
+body[data-classic="road-trip-quest-gps"] .landing-card{
+  border:2px solid rgba(255,255,255,.15);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.06),0 9px 0 #03101b99,0 30px 90px rgba(0,0,0,.46);
+}
+body[data-classic="road-trip-quest-gps"] .boundary{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.05),0 5px 0 #1d1a0c55;
+}
+body[data-classic="road-trip-quest-gps"] .mode-grid article{
+  border-width:2px;
+  background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.045),0 6px 0 #03101b88,0 14px 28px #0004;
+}
+body[data-classic="road-trip-quest-gps"] .primary{
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.32),0 6px 0 #7d4210,0 12px 20px #0005;
+  transition:transform .1s ease,box-shadow .1s ease;
+}
+body[data-classic="road-trip-quest-gps"] .primary:hover{
+  transform:translateY(-2px);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.34),0 8px 0 #7d4210,0 15px 23px #0006;
+}
+body[data-classic="road-trip-quest-gps"] .hud-chip{
+  border-width:2px;
+  background:linear-gradient(180deg,#10243a,#091725);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.05),0 4px 0 #020a11,0 8px 14px #0005;
+}
+body[data-classic="road-trip-quest-gps"] .xp-track{
+  height:11px;
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:inset 0 3px 5px #0009,0 1px 0 rgba(255,255,255,.04);
+}
+body[data-classic="road-trip-quest-gps"] .xp-track div{
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.25),0 0 13px #42a5ff55;
+}
+body[data-classic="road-trip-quest-gps"] .status-strip{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.04),0 5px 0 #020a11,0 10px 20px #0004;
+}
+body[data-classic="road-trip-quest-gps"] :is(.soft-button,.danger,.collection-tabs button,.controls button){
+  border-width:2px;
+  background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.045));
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.06),0 4px 0 #020a11;
+  transition:transform .1s ease,background .12s ease;
+}
+body[data-classic="road-trip-quest-gps"] :is(.soft-button,.collection-tabs button,.controls button):hover{
+  transform:translateY(-2px);
+}
+body[data-classic="road-trip-quest-gps"] .danger{
+  background:linear-gradient(180deg,rgba(255,92,92,.2),rgba(120,25,37,.18));
+}
+body[data-classic="road-trip-quest-gps"] .quest-field{
+  border:2px solid rgba(255,255,255,.13);
+  background:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
+    radial-gradient(circle at 70% 26%,rgba(53,230,196,.17),transparent 20%),
+    radial-gradient(circle at 18% 72%,rgba(66,165,255,.11),transparent 22%),
+    linear-gradient(145deg,#13324b,#0b1c2f 58%,#081724);
+  background-size:45px 45px,45px 45px,auto,auto,auto;
+  box-shadow:inset 0 18px 34px #0004,inset 0 -18px 30px #0006,0 10px 30px #0004;
+}
+body[data-classic="road-trip-quest-gps"] .road{
+  background:linear-gradient(90deg,#304357,#263546 48%,#1f2d3d);
+  border-width:3px;
+  border-color:#5a6d80;
+  box-shadow:inset 0 4px 0 rgba(255,255,255,.05),inset 0 -7px 0 rgba(0,0,0,.2),0 8px 15px #0005;
+}
+body[data-classic="road-trip-quest-gps"] .road:after{
+  border-color:#ffd54acc;
+  filter:drop-shadow(0 1px 0 #5d4300);
+}
+body[data-classic="road-trip-quest-gps"] .park-zone{
+  background:
+    radial-gradient(circle at 35% 30%,rgba(118,255,166,.14),transparent 28%),
+    linear-gradient(145deg,rgba(48,181,103,.24),rgba(25,108,62,.15));
+  border-width:3px;
+  box-shadow:inset 0 0 30px rgba(75,255,143,.08),0 0 18px rgba(75,255,143,.07);
+}
+body[data-classic="road-trip-quest-gps"] .poi{
+  border-width:3px;
+  box-shadow:inset 0 4px 0 #ffffff4f,inset 0 -9px 12px #03101d77,0 7px 0 #07131f,0 14px 20px #0008,0 0 24px var(--poi-glow,rgba(255,255,255,.2));
+}
+body[data-classic="road-trip-quest-gps"] .poi:hover{
+  scale:1.1;
+  box-shadow:inset 0 4px 0 #ffffff59,inset 0 -9px 12px #03101d77,0 9px 0 #07131f,0 18px 25px #0009,0 0 30px var(--poi-glow,rgba(255,255,255,.28));
+}
+body[data-classic="road-trip-quest-gps"] .poi:after{
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 3px 0 #02070d;
+}
+body[data-classic="road-trip-quest-gps"] .player{
+  border-width:4px;
+  box-shadow:inset 0 5px 0 #ffffff66,inset 0 -10px 14px #174c9270,0 8px 0 #153a5e,0 16px 24px #0008,0 0 32px rgba(66,165,255,.82);
+}
+body[data-classic="road-trip-quest-gps"] .range-ring{
+  border-width:3px;
+  box-shadow:inset 0 0 28px rgba(66,165,255,.08),0 0 20px rgba(66,165,255,.08);
+}
+body[data-classic="road-trip-quest-gps"] .map-caption{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.04),0 5px 0 #020a11;
+}
+body[data-classic="road-trip-quest-gps"] .dialog-card>div,
+body[data-classic="road-trip-quest-gps"] .dialog-card>form{
+  border:2px solid rgba(255,255,255,.15);
+  background:linear-gradient(155deg,#112a43,#091725 68%);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.05),0 9px 0 #02080d,0 30px 90px #000c;
+}
+body[data-classic="road-trip-quest-gps"] :is(.place-tag,.subject-badge){
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.05),0 3px 0 #020a11;
+}
+body[data-classic="road-trip-quest-gps"] .reward-box{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.05),0 4px 0 #17150955;
+}
+body[data-classic="road-trip-quest-gps"] .answer-grid button{
+  border-width:2px;
+  background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.05),0 4px 0 #020a11;
+  transition:transform .1s ease;
+}
+body[data-classic="road-trip-quest-gps"] .answer-grid button:hover:not(:disabled){
+  transform:translateY(-2px);
+}
+body[data-classic="road-trip-quest-gps"] .collection-item,
+body[data-classic="road-trip-quest-gps"] .privacy-grid article{
+  border-width:2px;
+  background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.025));
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.04),0 4px 0 #020a11;
+}
+body[data-classic="road-trip-quest-gps"] .collection-item:not(.locked){
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.05),0 5px 0 #020a11,0 10px 18px #0004;
+}
+body[data-classic="road-trip-quest-gps"] .boundary-text{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.04),0 4px 0 #17150955;
+}
+body[data-classic="road-trip-quest-gps"] #toast{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.05),0 6px 0 #02070d,0 14px 26px #0009;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest-gps"] :is(
+  .topbar,.landing-card,.boundary,.mode-grid article,.hud-chip,.status-strip,.map-caption,
+  .dialog-card>div,.dialog-card>form,.reward-box,.answer-grid button,.collection-item,.privacy-grid article,.boundary-text
+){
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest-gps"] .quest-field{
+  background:#000!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest-gps"] .road{
+  background:#222!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest-gps"] .poi{
+  background:#000!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest-gps"] .poi:after{
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest-gps"] .player{
+  background:#000!important;
+  border-color:#fff!important;
+  box-shadow:0 0 0 4px #00d9ff!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest-gps"] .range-ring{
+  border-color:#00d9ff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest-gps"] :is(.soft-button,.danger,.collection-tabs button,.controls button){
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-classic="road-trip-quest-gps"] :is(.primary,.soft-button,.danger,.collection-tabs button,.controls button,.poi,.answer-grid button){transition:none}
+}
