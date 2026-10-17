@@ -3,3 +3,216 @@
 #gameScreen{flex-direction:column;min-height:100vh;background:linear-gradient(#111a36,#11152a)}.hud{height:66px;display:grid;grid-template-columns:auto 1.5fr 1fr 1fr auto;align-items:center;gap:12px;padding:8px 14px;background:rgba(0,0,0,.72);border-bottom:1px solid var(--line);z-index:3}.hud>a{font-size:1.5rem;color:var(--gold);text-decoration:none}.hud div{min-width:0}.hud small{display:block;color:#7182a3;font-size:.62rem;text-transform:uppercase}.hud strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hud button{border:1px solid var(--line);background:#18213a;color:#fff;border-radius:12px;padding:8px 11px;font-weight:800}.boss-progress{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:8px 15px;background:#090d19;font-size:.75rem;font-weight:900}.boss-progress>div{height:9px;border-radius:9px;background:#222a3d;overflow:hidden}.boss-progress i{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--orange),var(--gold),var(--green));transition:width .35s}.road-wrap{flex:1;display:flex;flex-direction:column;min-height:0}.skyline{height:90px;background:linear-gradient(transparent,rgba(0,0,0,.32)),linear-gradient(90deg,#24375b,#332e63,#223759);position:relative;overflow:hidden}.skyline .scenery-object{position:absolute;bottom:4px;width:74px;height:74px;animation:scenery 7s linear forwards}.scenery-art{display:block;width:100%;height:100%;filter:drop-shadow(0 6px 4px #0008)}.scenery-object--airplane{bottom:30px!important}.road{position:relative;flex:1;min-height:390px;overflow:hidden;background:linear-gradient(90deg,#294d27 0 10%,#343434 10% 90%,#294d27 90%);border-top:8px solid #6f737c;border-bottom:8px solid #6f737c}.road:before,.road:after{content:"";position:absolute;top:0;bottom:0;width:4px;background:#fff8;left:10%}.road:after{left:auto;right:10%}.lane-line{position:absolute;top:0;bottom:0;width:5px;background:repeating-linear-gradient(to bottom,var(--gold) 0 30px,transparent 30px 65px);opacity:.75}.lane-line.one{left:36.66%}.lane-line.two{left:63.33%}.car{position:absolute;bottom:22px;left:50%;width:92px;height:92px;text-align:center;transform:translateX(-50%);filter:drop-shadow(0 8px 8px #000);transition:left .18s ease;z-index:3}.player-car-art{display:block;width:100%;height:100%}.road-item{position:absolute;top:-70px;width:76px;text-align:center;z-index:2;animation:driveDown var(--speed,5s) linear forwards;cursor:pointer;border:0;background:transparent;color:#111}.road-item b{display:grid;place-items:center;width:56px;height:56px;margin:auto;border:2px solid #fff9;border-radius:18px;background:radial-gradient(circle at 32% 24%,#fff 0 8%,#ffe689 22%,#af61cf 68%,#402b75);box-shadow:inset 0 -8px 12px #271c694f,0 7px 0 #161b2d,0 11px 13px #0009;font-size:2.35rem}.road-item small{display:inline-block;background:#fff;color:#172035;padding:2px 7px;border-radius:12px;font-weight:900;font-size:.58rem;box-shadow:0 3px 0 #12192b}.road-item.special b{width:62px;height:62px;font-size:2.8rem;border-color:#ffe67a}.road-message{position:absolute;top:14px;left:50%;transform:translateX(-50%);background:#080c18cc;border:1px solid var(--line);border-radius:18px;padding:8px 15px;font-weight:800;font-size:.72rem;z-index:2;white-space:nowrap}.lane-controls{display:grid;grid-template-columns:auto minmax(180px,1fr);align-items:center;justify-content:center;gap:12px;padding:10px;background:#090d19}.lane-movers{display:flex;align-items:center;justify-content:center;gap:8px}.lane-controls button{border:1px solid var(--line);border-radius:14px;background:#18213a;color:#fff;padding:12px;font-weight:900}.lane-movers button{width:68px;min-height:48px;font-size:1.15rem}.lane-controls #battleButton{background:linear-gradient(135deg,#7420aa,#303db0)}.lane-controls #battleButton:disabled{opacity:.4}.bottom-nav{display:grid;grid-template-columns:repeat(4,1fr);background:#070b15;border-top:1px solid var(--line);padding:7px}.bottom-nav button{border:0;background:transparent;color:#a9b7d0;padding:8px 4px;font-size:.72rem;font-weight:900}.bottom-nav span{display:inline-grid;place-items:center;min-width:18px;height:18px;background:var(--red);color:#fff;border-radius:50%;font-size:.6rem}
 .dialog{border:0;padding:0;background:transparent;color:#fff;width:min(650px,calc(100% - 24px));max-height:92vh}.dialog::backdrop{background:#02040bd9;backdrop-filter:blur(5px)}.dialog-card{position:relative;border:1px solid var(--line);border-radius:25px;padding:24px;background:linear-gradient(155deg,#171e36,#090d1b);box-shadow:0 30px 100px #000;max-height:90vh;overflow:auto}.dialog h2{font-family:Boogaloo,cursive;font-size:clamp(1.55rem,5vw,2.25rem);text-align:center;margin:13px}.opponents{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px}.opponents>div{text-align:center}.opponents span{font-size:2.8rem;display:block}.opponents #battleCar{width:72px;height:72px;margin:auto}.battle-car-art{display:block;width:100%;height:100%}.opponents small{display:block;font-weight:900}.hp{height:9px;background:#30384c;border-radius:9px;overflow:hidden;margin-top:5px}.hp i{display:block;width:100%;height:100%;background:linear-gradient(90deg,var(--red),var(--green));transition:width .3s}.subject{width:max-content;margin:15px auto 0;padding:4px 12px;border-radius:20px;background:#24325a;color:#82c8ff;text-transform:uppercase;font-size:.65rem;font-weight:900}.answers{display:grid;grid-template-columns:1fr 1fr;gap:9px}.answers button{min-height:58px;border:1px solid var(--line);border-radius:14px;background:#161e34;color:#d8e4fa;font-weight:900;padding:10px}.answers button:hover{border-color:var(--gold)}.answers button.correct{background:#073d2a;border-color:var(--green)}.answers button.wrong{background:#491323;border-color:var(--red)}.item-row{display:flex;gap:7px;overflow-x:auto;padding:6px 0 14px}.item-row button{flex:0 0 auto;border:1px solid var(--line);border-radius:12px;padding:7px 9px;background:#11182a;color:#fff}.item-row button.used{opacity:.35}.feedback{text-align:center;min-height:24px;font-weight:900}.next{width:100%;box-shadow:none}.close{position:absolute;right:13px;top:10px;border:0;background:transparent;color:#fff;font-size:2rem;cursor:pointer}.panel-card h2,.result-card h2{font-family:Boogaloo,cursive;font-size:2rem;margin:8px 0}.inventory,.route-list,.hero-list{display:grid;gap:9px}.inventory article,.route-list article,.hero-list article{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);background:#10172a;border-radius:15px}.inventory article>span,.hero-list article>span{font-size:2rem}.route-list article.current{border-color:var(--gold)}.route-list article.won{border-color:#1f8b65}.muted{display:block;color:#8090ae}.result-card{text-align:center}.result-icon{font-size:4.5rem}.reward-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}.reward-grid div{padding:12px 6px;border-radius:13px;background:#11182a}.reward-grid b{display:block;color:var(--gold);font-size:1.2rem}.toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,30px);opacity:0;pointer-events:none;padding:10px 16px;border-radius:15px;background:#fff;color:#111;font-weight:900;z-index:20;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}body.paused .road-item,body.paused .skyline .scenery-object{animation-play-state:paused}
 @keyframes driveDown{to{top:calc(100% + 80px)}}@keyframes scenery{from{left:105%;transform:scale(var(--scenery-scale,1))}to{left:-15%;transform:scale(var(--scenery-scale,1))}}@keyframes drift{to{background-position:34px 34px}}@media(max-width:600px){.hud{grid-template-columns:auto 1.5fr 1fr auto}.hud div:nth-of-type(3){display:none}.title-card{padding:25px 18px}.answers{grid-template-columns:1fr}.road{min-height:420px}.car{width:76px;height:76px}.road-demo>span,.road-demo>b{width:46px;height:46px}.road-demo i{width:45px}.lane-controls{grid-template-columns:1fr}.lane-movers{justify-self:center}.lane-movers button{width:72px}.lane-controls #battleButton{width:100%}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important}.stars{animation:none}.car{transition:none}}
+
+
+/* Road Trip Quest: dimensional highway and battle-cabinet polish. */
+body[data-classic="road-trip-quest"] .title-card{
+  border:2px solid rgba(255,255,255,.18);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.08),0 10px 0 rgba(3,6,16,.65),0 32px 90px rgba(0,0,0,.52);
+}
+body[data-classic="road-trip-quest"] .road-demo>span,
+body[data-classic="road-trip-quest"] .road-demo>b{
+  filter:drop-shadow(0 7px 5px #0008);
+}
+body[data-classic="road-trip-quest"] .primary{
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.35),0 7px 0 #8a4200,0 12px 20px #0005;
+}
+body[data-classic="road-trip-quest"] .hud{
+  border-bottom:2px solid rgba(255,255,255,.12);
+  box-shadow:inset 0 -2px 0 rgba(255,255,255,.03),0 6px 18px #0007;
+}
+body[data-classic="road-trip-quest"] .hud>div{
+  padding:5px 8px;
+  border-radius:10px;
+  background:linear-gradient(180deg,#17213a,#10182b);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.05),0 3px 0 #060912;
+}
+body[data-classic="road-trip-quest"] .hud button{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.06),0 4px 0 #080c16;
+}
+body[data-classic="road-trip-quest"] .boss-progress{
+  border-bottom:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 -2px 0 #0008;
+}
+body[data-classic="road-trip-quest"] .boss-progress>div{
+  border:1px solid #39445c;
+  box-shadow:inset 0 3px 5px #0008,0 1px 0 rgba(255,255,255,.04);
+}
+body[data-classic="road-trip-quest"] .boss-progress i{
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.25),0 0 12px #ffd70055;
+}
+body[data-classic="road-trip-quest"] .skyline{
+  background:
+    radial-gradient(circle at 82% 20%,#ffd77655 0 5%,transparent 6%),
+    linear-gradient(transparent 58%,rgba(4,8,17,.3) 59%),
+    linear-gradient(90deg,#24375b,#332e63 48%,#223759);
+  border-bottom:2px solid #59657a;
+  box-shadow:inset 0 -18px 22px #08102055;
+}
+body[data-classic="road-trip-quest"] .skyline::before,
+body[data-classic="road-trip-quest"] .skyline::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  height:26px;
+  background:#16223b;
+  opacity:.78;
+}
+body[data-classic="road-trip-quest"] .skyline::before{
+  left:0;right:52%;
+  clip-path:polygon(0 100%,0 54%,8% 54%,8% 18%,16% 18%,16% 66%,25% 66%,25% 32%,36% 32%,36% 72%,47% 72%,47% 43%,59% 43%,59% 100%);
+}
+body[data-classic="road-trip-quest"] .skyline::after{
+  left:48%;right:0;
+  clip-path:polygon(0 100%,0 62%,10% 62%,10% 28%,20% 28%,20% 75%,33% 75%,33% 46%,46% 46%,46% 18%,58% 18%,58% 67%,72% 67%,72% 36%,84% 36%,84% 58%,100% 58%,100% 100%);
+}
+body[data-classic="road-trip-quest"] .road{
+  background:
+    linear-gradient(90deg,#2d572b 0 10%,transparent 10% 90%,#2d572b 90%),
+    radial-gradient(ellipse at 50% 115%,#4c4c4c 0 36%,#373737 66%,#2a2a2a 100%);
+  border-top-color:#838893;
+  border-bottom-color:#555b66;
+  box-shadow:inset 0 18px 28px #0005,inset 0 -16px 24px #0006;
+}
+body[data-classic="road-trip-quest"] .road:before,
+body[data-classic="road-trip-quest"] .road:after{
+  width:6px;
+  background:linear-gradient(90deg,#d5d8dd,#fff,#aeb4bd);
+  box-shadow:0 0 8px #fff4;
+}
+body[data-classic="road-trip-quest"] .lane-line{
+  width:6px;
+  background:repeating-linear-gradient(to bottom,#ffe866 0 30px,#a66d00 30px 34px,transparent 34px 67px);
+  box-shadow:1px 0 0 #fff2,-1px 0 0 #0007;
+  opacity:.95;
+}
+body[data-classic="road-trip-quest"] .car{
+  filter:drop-shadow(0 12px 8px #000b) drop-shadow(0 0 12px #7edbff22);
+}
+body[data-classic="road-trip-quest"] .road-message{
+  border:2px solid rgba(255,255,255,.15);
+  background:linear-gradient(180deg,#10172bdd,#070b14dd);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.06),0 5px 0 #03050b88,0 10px 20px #0006;
+}
+body[data-classic="road-trip-quest"] .road-item b{
+  border-width:3px;
+  box-shadow:inset 0 4px 0 #ffffff7d,inset 0 -10px 14px #271c6970,0 7px 0 #161b2d,0 14px 18px #000a;
+}
+body[data-classic="road-trip-quest"] .road-item small{
+  border:1px solid #d9e3ef;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #12192b,0 7px 10px #0007;
+}
+body[data-classic="road-trip-quest"] .lane-controls{
+  border-top:1px solid rgba(255,255,255,.07);
+  box-shadow:inset 0 3px 0 #0005;
+}
+body[data-classic="road-trip-quest"] .lane-controls button{
+  border-width:2px;
+  background:linear-gradient(180deg,#22304e,#131c31);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.07),0 5px 0 #070b14;
+  transition:transform .1s ease,box-shadow .1s ease;
+}
+body[data-classic="road-trip-quest"] .lane-controls button:hover:not(:disabled){
+  transform:translateY(-2px);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.09),0 7px 0 #070b14;
+}
+body[data-classic="road-trip-quest"] .lane-controls #battleButton{
+  background:linear-gradient(135deg,#8a2abb,#3c49c8);
+  border-color:#9c65d3;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.12),0 5px 0 #241b6b;
+}
+body[data-classic="road-trip-quest"] .bottom-nav{
+  box-shadow:inset 0 3px 0 #0007,0 -5px 16px #0005;
+}
+body[data-classic="road-trip-quest"] .bottom-nav button{
+  border-radius:10px;
+  transition:background .12s ease,transform .1s ease;
+}
+body[data-classic="road-trip-quest"] .bottom-nav button:hover{
+  background:#121c30;
+  transform:translateY(-1px);
+}
+body[data-classic="road-trip-quest"] .dialog-card{
+  border:2px solid rgba(255,255,255,.15);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.05),0 10px 0 #03050c,0 34px 100px #000;
+}
+body[data-classic="road-trip-quest"] .hp{
+  height:12px;
+  border:1px solid #46516b;
+  box-shadow:inset 0 3px 5px #000a;
+}
+body[data-classic="road-trip-quest"] .hp i{
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.22);
+}
+body[data-classic="road-trip-quest"] .subject{
+  border:1px solid #3f5689;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.06),0 3px 0 #0a1020;
+}
+body[data-classic="road-trip-quest"] .answers button,
+body[data-classic="road-trip-quest"] .item-row button{
+  border-width:2px;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.05),0 4px 0 #080c17;
+  transition:transform .1s ease,background .12s ease;
+}
+body[data-classic="road-trip-quest"] .answers button:hover:not(:disabled),
+body[data-classic="road-trip-quest"] .item-row button:hover:not(:disabled){
+  transform:translateY(-2px);
+}
+body[data-classic="road-trip-quest"] .answers button.correct{
+  box-shadow:inset 0 3px 0 #ffffff10,0 4px 0 #03271a;
+}
+body[data-classic="road-trip-quest"] .answers button.wrong{
+  box-shadow:inset 0 3px 0 #ffffff0b,0 4px 0 #2c0b15;
+}
+body[data-classic="road-trip-quest"] :is(.inventory article,.route-list article,.hero-list article,.reward-grid div){
+  border-width:2px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.04),0 4px 0 #060a13;
+}
+body[data-classic="road-trip-quest"] .route-list article.current{
+  background:linear-gradient(145deg,#1c243d,#3b3215);
+}
+body[data-classic="road-trip-quest"] .route-list article.won{
+  background:linear-gradient(145deg,#10172a,#0e3529);
+}
+body[data-classic="road-trip-quest"] .toast{
+  border:2px solid #d7dfeb;
+  box-shadow:inset 0 2px 0 #fff,0 6px 0 #252d3b66,0 13px 24px #0006;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest"] :is(
+  .title-card,.hud,.hud>div,.boss-progress,.road-message,.lane-controls,.bottom-nav,.dialog-card,
+  .answers button,.item-row button,.inventory article,.route-list article,.hero-list article,.reward-grid div
+){
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest"] .road{
+  background:#111!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest"] .road:before,
+html.larriverse-high-contrast body[data-classic="road-trip-quest"] .road:after{
+  background:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest"] .lane-line{
+  background:repeating-linear-gradient(to bottom,#ffd400 0 30px,transparent 30px 65px)!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest"] .road-item small{
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="road-trip-quest"] :is(.lane-controls button,.bottom-nav button){
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-classic="road-trip-quest"] :is(.lane-controls button,.bottom-nav button,.answers button,.item-row button){transition:none}
+}
