@@ -83,3 +83,162 @@ html.larriverse-high-contrast .letter.found0,html.larriverse-high-contrast .lett
 html.larriverse-reduced-motion *{transition:none!important;animation:none!important}
 @media(max-width:960px){.game-layout{grid-template-columns:1fr}.chapters{grid-template-columns:repeat(3,minmax(0,1fr))}.word-hero{grid-template-columns:1fr .5fr}.hero-scene{transform:scale(.8)}}
 @media(max-width:620px){.word-world{padding:10px 9px 70px}.word-hero{padding:21px 17px;grid-template-columns:1fr}.hero-scene{display:none}.chapters{grid-template-columns:repeat(2,minmax(0,1fr))}.chapter{min-height:73px;padding:8px}.board-card,.side-card{padding:13px 10px}.stat-row{gap:4px}.stat-row>div{padding:7px 2px}.stat-row strong{font-size:.88rem}.word-list{gap:5px}.word-list li{padding:9px 3px}.letter{font-size:clamp(.82rem,4vw,1.38rem)}#wordGrid[data-size="12"] .letter{font-size:clamp(.7rem,2.85vw,.95rem)}.controls button{font-size:.8rem;padding:9px 5px;flex:1 1 29%}.board-head h2{font-size:1.38rem}}
+
+
+/* Word Search World: dimensional puzzle-board polish. */
+body[data-classic="word-search-world"] .word-hero{
+  box-shadow:inset 0 3px 0 #fff,0 9px 0 #6c8ca329,0 24px 48px #204b7620;
+}
+body[data-classic="word-search-world"] .magnifier-glass{
+  border-width:16px;
+  box-shadow:inset 0 0 0 4px #daefff,inset 0 -9px 0 #4e88a826,0 13px 0 #275f7d38,0 25px 34px #1e446f38;
+}
+body[data-classic="word-search-world"] .magnifier-glass b{
+  border:1px solid #c7dce9;
+  box-shadow:inset 0 3px 0 #fff,inset 0 -5px 0 #d7e9ee,0 4px 0 #8bb8c84a;
+}
+body[data-classic="word-search-world"] .magnifier-handle{
+  box-shadow:inset 4px 0 0 #f7c27a,0 7px 0 #6f432b55;
+}
+body[data-classic="word-search-world"] .hero-pills span,
+body[data-classic="word-search-world"] .chapter{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #728b9b2b,0 9px 15px #204b760c;
+}
+body[data-classic="word-search-world"] .chapter.active{
+  box-shadow:inset 0 2px 0 #fff,0 5px 0 #3186b23f,0 11px 18px #27617d18;
+}
+body[data-classic="word-search-world"] .chapter.complete{
+  box-shadow:inset 0 2px 0 #fff,0 5px 0 #3995763c,0 11px 18px #20664f15;
+}
+body[data-classic="word-search-world"] :is(.board-card,.side-card){
+  box-shadow:inset 0 3px 0 #fff,0 8px 0 #6f87962b,0 22px 42px #204b7618;
+}
+body[data-classic="word-search-world"] .stat-row>div{
+  border:1px solid #cbdde8;
+  background:linear-gradient(145deg,#fbfdff,#eaf4f8);
+  color:#243d50;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #7892a126;
+}
+body[data-classic="word-search-world"] .stat-row small{
+  color:#405b72;
+}
+body[data-classic="word-search-world"] .stat-row strong{
+  color:#243d50;
+}
+body[data-classic="word-search-world"] .progress{
+  height:14px;
+  border:1px solid #c4d6e1;
+  box-shadow:inset 0 3px 5px #4b677326,0 1px 0 #fff;
+}
+body[data-classic="word-search-world"] .progress span{
+  box-shadow:inset 0 2px 0 #ffffff8f,0 0 12px #5893e35e;
+}
+body[data-classic="word-search-world"] #wordGrid{
+  border-width:5px;
+  box-shadow:inset 0 4px 0 #fff,0 8px 0 #356b9660,0 20px 30px #204b7620;
+}
+body[data-classic="word-search-world"] .letter{
+  background:linear-gradient(145deg,#fff,#f1f6fa);
+  box-shadow:inset 0 2px 0 #fff,inset 0 -4px 0 #dfe9ee;
+  transition:transform .08s ease,background .12s ease,box-shadow .12s ease;
+}
+body[data-classic="word-search-world"] .letter:hover{
+  background:linear-gradient(145deg,#fff,#e7f4f8);
+}
+body[data-classic="word-search-world"] .letter.preview{
+  background:linear-gradient(145deg,#fff8c9,#f4dc78)!important;
+  box-shadow:inset 0 3px 0 #fff7d8,inset 0 -5px 0 #d8b34b,0 0 0 3px #d59a27!important;
+}
+body[data-classic="word-search-world"] .letter.hinted{
+  outline-width:4px;
+  background:linear-gradient(145deg,#fff8ea,#f4e2b0);
+}
+body[data-classic="word-search-world"] .letter[class*="found"]{
+  box-shadow:inset 0 3px 0 #ffffff96,inset 0 -5px 0 #00000012;
+}
+body[data-classic="word-search-world"] .controls button{
+  border-width:2px;
+  background:linear-gradient(145deg,#f8fcff,#e1f1f9);
+  box-shadow:inset 0 3px 0 #fff,0 4px 0 #6d94aa3b;
+  transition:transform .1s ease,background .12s ease;
+}
+body[data-classic="word-search-world"] .controls button:hover{
+  transform:translateY(-2px);
+}
+body[data-classic="word-search-world"] .feedback,
+body[data-classic="word-search-world"] .buddy,
+body[data-classic="word-search-world"] .learning-card{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #6e889628;
+}
+body[data-classic="word-search-world"] .word-list li{
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #7c94a230;
+}
+body[data-classic="word-search-world"] .word-list li.found{
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #4f8e7538;
+}
+body[data-classic="word-search-world"] .celebration{
+  box-shadow:inset 0 3px 0 #fff,0 7px 0 #b38e3e38,0 16px 28px #5f6c771c;
+}
+html.larriverse-dark body[data-classic="word-search-world"] .word-hero,
+html.larriverse-dark body[data-classic="word-search-world"] :is(.board-card,.side-card,.chapter,.stat-row>div){
+  box-shadow:inset 0 3px 0 #ffffff0d,0 7px 0 #08111a66,0 18px 34px #0005;
+}
+html.larriverse-dark body[data-classic="word-search-world"] .stat-row>div{
+  background:#2a445f;
+  color:#f4f9ff;
+  border-color:#617f9a;
+}
+html.larriverse-dark body[data-classic="word-search-world"] .stat-row small{
+  color:#d2e7f1;
+}
+html.larriverse-dark body[data-classic="word-search-world"] .stat-row strong{
+  color:#fff;
+}
+html.larriverse-dark body[data-classic="word-search-world"] .letter{
+  background:linear-gradient(145deg,#2e425a,#263950);
+  box-shadow:inset 0 2px 0 #ffffff0d,inset 0 -4px 0 #19283a;
+}
+html.larriverse-dark body[data-classic="word-search-world"] .letter.preview{
+  background:linear-gradient(145deg,#7b692c,#604f1f)!important;
+  color:#fff7d8!important;
+}
+html.larriverse-dark body[data-classic="word-search-world"] .controls button{
+  background:#304967;
+  color:#f1faff;
+  border-color:#668dad;
+  box-shadow:inset 0 3px 0 #ffffff0d,0 4px 0 #09111b66;
+}
+html.larriverse-dark body[data-classic="word-search-world"] :is(.feedback,.buddy,.learning-card,.word-list li){
+  box-shadow:inset 0 2px 0 #ffffff0d,0 4px 0 #09111b66;
+}
+html.larriverse-high-contrast body[data-classic="word-search-world"] :is(
+  .word-hero,.board-card,.side-card,.chapter,.stat-row>div,.feedback,.buddy,.learning-card,.word-list li,.controls button
+){
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="word-search-world"] #wordGrid{
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="word-search-world"] .letter{
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="word-search-world"] .letter.preview{
+  background:#fff!important;
+  color:#000!important;
+  outline:4px solid #ffd400!important;
+}
+html.larriverse-high-contrast body[data-classic="word-search-world"] .letter.hinted{
+  outline:4px dotted #ffd400!important;
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-classic="word-search-world"] :is(.letter,.controls button){transition:none}
+}
