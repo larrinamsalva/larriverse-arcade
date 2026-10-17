@@ -295,3 +295,29 @@ html.larriverse-high-contrast body[data-classic="kids-sudoku"] .sudoku-cell.conf
 @media(prefers-reduced-motion:reduce){
   body[data-classic="kids-sudoku"] :is(.sudoku-cell,.play-switches button,.puzzle-buttons button,#numberPad button){transition:none}
 }
+
+
+/* Keep the dimensional Sudoku controls readable when the shared dark theme is active. */
+html.larriverse-dark body[data-classic="kids-sudoku"] .status-strip div{
+  background:#313955;
+  color:#f2f4ff;
+  border-color:#58658e;
+}
+html.larriverse-dark body[data-classic="kids-sudoku"] .status-strip small{
+  color:#d8e1f0;
+}
+html.larriverse-dark body[data-classic="kids-sudoku"] .status-strip strong{
+  color:#fff;
+}
+html.larriverse-dark body[data-classic="kids-sudoku"] :is(
+  .play-switches button,.puzzle-buttons button,#numberPad button
+){
+  background:#303e60;
+  color:#eff5ff;
+  border-color:#6776a0;
+}
+html.larriverse-dark body[data-classic="kids-sudoku"] .puzzle-buttons #checkButton{
+  background:#624db0;
+  color:#fff;
+  border-color:#8d7ee0;
+}
