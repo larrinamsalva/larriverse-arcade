@@ -5,3 +5,144 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 /* Preserve the square atlas panels when the featured window becomes narrow. */
 .spotlight-art{position:relative;container-type:size;background-image:none}.spotlight-art::before{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:max(100cqw,100cqh);height:max(100cqw,100cqh);background-image:url('worlds-atlas-v2.webp');background-size:400% 300%;background-position:var(--art-x) var(--art-y)}
+
+
+/* Final LarriVerse hub polish: bring the arcade front door up to cabinet depth. */
+.nav-wrap{
+  border-bottom-width:2px;
+  box-shadow:inset 0 -2px 0 #ffffffb3,0 6px 20px #2234550d;
+}
+.brand-mark{
+  border:2px solid #8070df;
+  background:linear-gradient(145deg,#7863e6,#5743be);
+  box-shadow:inset 0 3px 0 #ffffff3d,0 4px 0 #c5bdeb,0 9px 16px #3c2c831f;
+}
+.nav-pills a,
+.nav-control,
+.nav-theme{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 #ffffffb8,0 3px 0 #d7dceb;
+}
+.nav-pills a.current{
+  box-shadow:inset 0 2px 0 #ffffff8a,0 3px 0 #bcb1e8;
+}
+.player-pill{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #dbe0ea,0 9px 16px #263d6410;
+}
+.spotlight{
+  border-width:2px;
+  box-shadow:inset 0 3px 0 #ffffff70,0 8px 0 #d7d6e6,0 18px 36px #463a7517;
+}
+.spotlight::after{
+  content:"";
+  position:absolute;
+  right:-8%;
+  bottom:-36%;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  background:radial-gradient(circle,#ffffff55 0 8%,#8a74df2a 35%,transparent 70%);
+  pointer-events:none;
+}
+.new-label{
+  border:1px solid #d4c9f0;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #c9c0e5;
+}
+.primary{
+  box-shadow:inset 0 3px 0 #ffffff36,0 5px 0 #463299,0 10px 18px #4632992a;
+  transition:transform .1s ease,box-shadow .1s ease,background .15s ease;
+}
+.primary:hover{
+  transform:translateY(-2px);
+  box-shadow:inset 0 3px 0 #ffffff3d,0 7px 0 #463299,0 13px 21px #46329930;
+}
+.secondary,
+.danger{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #dbe0ea;
+  transition:transform .1s ease,background .15s ease;
+}
+.secondary:hover,
+.danger:hover{
+  transform:translateY(-2px);
+}
+.quick-quest{
+  border-width:2px;
+  box-shadow:inset 0 3px 0 #ffffffa8,0 6px 0 #cee2db,0 14px 26px #24483c12;
+}
+.passport-quest{
+  box-shadow:inset 0 3px 0 #ffffffa8,0 6px 0 #e3cfa2,0 14px 26px #6f551412;
+}
+.count-badge{
+  border:1px solid #cabfec;
+  box-shadow:inset 0 2px 0 #ffffffb0,0 3px 0 #d0c7ea;
+}
+.search{
+  border-width:2px;
+  box-shadow:inset 0 3px 7px #253a5709,0 4px 0 #dde2eb;
+}
+.filter{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #dde2eb;
+  transition:transform .1s ease,background .15s ease;
+}
+.filter:hover{
+  transform:translateY(-2px);
+}
+.filter.active{
+  box-shadow:inset 0 2px 0 #ffffff26,0 3px 0 #192638;
+}
+.game-card{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 #fff,0 6px 0 #e4e8f0,0 14px 26px #263d6410;
+}
+.game-card:hover{
+  transform:translateY(-5px);
+  box-shadow:inset 0 2px 0 #fff,0 8px 0 #e4e8f0,0 20px 32px #263d6418;
+}
+.cover-tag{
+  border:1px solid #ded7ef;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #cfc7e5,0 6px 10px #00000012;
+}
+.launch{
+  border:1px solid #d9d0f2;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #d7d0ec;
+}
+.family-strip{
+  border-width:2px;
+  box-shadow:inset 0 3px 0 #ffffff90,0 6px 0 #c8d8e7,0 14px 26px #31527312;
+}
+.control-center{
+  border-width:2px;
+  box-shadow:inset 0 3px 0 #fff,0 9px 0 #c9d0dc,0 34px 90px #17284266;
+}
+.control-section{
+  border-top-width:2px;
+}
+.profile-fields input,
+.toggle-row select,
+.lv-comfort-card select{
+  border-width:2px;
+  box-shadow:inset 0 3px 7px #2d3a4d0c;
+}
+html.larriverse-dark .nav-wrap,
+html.larriverse-dark footer{
+  box-shadow:none;
+}
+html.larriverse-dark :is(.player-pill,.game-card,.search,.filter,.secondary,.danger,.control-center){
+  box-shadow:inset 0 2px 0 #ffffff0f,0 4px 0 #151226,0 10px 22px #00000024;
+}
+html.larriverse-dark .spotlight{
+  box-shadow:inset 0 3px 0 #ffffff0d,0 7px 0 #1b1730,0 18px 34px #0000002b;
+}
+html.larriverse-high-contrast :is(
+  .brand-mark,.player-pill,.spotlight,.quick-quest,.game-card,.search,.filter,.secondary,.danger,
+  .family-strip,.control-center,.cover-tag,.launch,.new-label
+){
+  box-shadow:none!important;
+  border-color:#fff!important;
+}
+@media(prefers-reduced-motion:reduce){
+  :is(.primary,.secondary,.danger,.filter,.game-card){transition:none}
+}
