@@ -19,3 +19,38 @@
   .feature-pager { gap: .35rem; }
   .discovery-art { width: 52px; height: 60px; flex-basis: 52px; }
 }
+
+
+/* Final LarriVerse discovery-card depth. */
+.discovery-group{
+  border-width:2px;
+  box-shadow:inset 0 3px 0 #ffffffb8,0 6px 0 #e5deef,0 14px 24px #4c3b7210;
+}
+.discovery-card{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #e4deec,0 9px 16px #4c3b7210;
+  transition:transform .1s ease,box-shadow .1s ease;
+}
+.discovery-card:hover{
+  transform:translateY(-2px);
+  box-shadow:inset 0 2px 0 #fff,0 6px 0 #e4deec,0 13px 20px #4c3b7217;
+}
+.discovery-art{
+  border:1px solid #d8d0e8;
+  box-shadow:inset 0 2px 0 #ffffff80,0 4px 0 #d7d0e5,0 8px 12px #00000012;
+}
+.feature-pager button{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #d3cae7;
+}
+html.larriverse-dark .discovery-group,
+html.larriverse-dark .discovery-card{
+  box-shadow:inset 0 2px 0 #ffffff0d,0 4px 0 #151226,0 10px 20px #00000025;
+}
+html.larriverse-high-contrast :is(.discovery-group,.discovery-card,.discovery-art,.feature-pager button){
+  box-shadow:none!important;
+  border-color:#fff!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .discovery-card{transition:none}
+}
