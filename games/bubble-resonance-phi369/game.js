@@ -1,7 +1,7 @@
 'use strict';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d');
 const W=1000,H=600,PHI=1.618,LAM=.618,R=28,WALL=18,COLS=16,ROWS=10,HEX=Math.sqrt(3)*R;
-const SHOT_SPEED=9,MIN_UPWARD_RATIO=.38,MAX_BOUNCES=6,MAX_TRAVEL=H*3,DROP_MS=360,POWER_INTERVAL=5,LEVEL_CLEAR_PAUSE_MS=2200;
+const SHOT_SPEED=9,MIN_UPWARD_RATIO=.38,MAX_BOUNCES=6,MAX_TRAVEL=H*3,MAX_SHOT_MS=3200,DROP_MS=360,POWER_INTERVAL=5,LEVEL_CLEAR_PAUSE_MS=2200;
 const left=WALL,right=W-WALL,top=WALL,bottom=H-10,x0=left+R+2,y0=top+R+2;
 const GAME_ID='bubble-resonance-phi369';
 const CANVAS_THEMES={
@@ -229,10 +229,10 @@ function end(title='FIELD EXPLORED',sub=`score: ${score} · cleared: ${cleared} 
   setLevelAction('Start a new game');tone(60,'sawtooth',1,.15);hud();
 }
 function shotDirection(tx,ty){const sx=W/2,sy=bottom-R-6,dx=tx-sx,dy=ty-sy;if(dy>=0)return null;const len=Math.hypot(dx,dy)||1;let ux=dx/len,uy=dy/len;if(-uy<MIN_UPWARD_RATIO){uy=-MIN_UPWARD_RATIO;ux=Math.sign(ux||1)*Math.sqrt(1-uy*uy)}return{x:ux,y:uy}}
-function fire(tx,ty){if(shot||gameOver||levelCleared||dropAnimation)return;const sx=W/2,sy=bottom-R-6,dir=shotDirection(tx,ty);if(!dir)return;shot={x:sx,y:sy,vx:dir.x*SHOT_SPEED,vy:dir.y*SHOT_SPEED,bounces:0,travel:0};canvas.setAttribute('aria-busy','true');tone(440,'sine',.1,.07)}
+function fire(tx,ty){if(shot||gameOver||levelCleared||dropAnimation)return;const sx=W/2,sy=bottom-R-6,dir=shotDirection(tx,ty);if(!dir)return;shot={x:sx,y:sy,vx:dir.x*SHOT_SPEED,vy:dir.y*SHOT_SPEED,bounces:0,travel:0,startedAt:performance.now()};canvas.setAttribute('aria-busy','true');tone(440,'sine',.1,.07)}
 function autoFire(){const a=-Math.PI/2+(Math.random()-.5)*Math.PI*.7;fire(W/2+Math.cos(a)*200,bottom-R-6+Math.sin(a)*200)}
 function settleShot(x,y){if(place(x,y)){shot=null;if(!dropAnimation)canvas.setAttribute('aria-busy','false');if(!gameOver&&!levelCleared)nextBubble();return true}shot=null;canvas.setAttribute('aria-busy','false');end();return true}
-function stepShot(){if(!shot)return;for(let i=0;i<6;i++){const dxStep=shot.vx/6,dyStep=shot.vy/6;shot.x+=dxStep;shot.y+=dyStep;shot.travel+=Math.hypot(dxStep,dyStep);if(shot.x<=left+R){shot.x=left+R;shot.vx=Math.abs(shot.vx);shot.bounces++;tone(200,'square',.04,.03)}if(shot.x>=right-R){shot.x=right-R;shot.vx=-Math.abs(shot.vx);shot.bounces++;tone(200,'square',.04,.03)}if(shot.bounces>MAX_BOUNCES||shot.travel>MAX_TRAVEL){settleShot(shot.x,shot.y);if(!gameOver&&!levelCleared)announce('SHOT SETTLED','Try a steeper angle for a cleaner bank shot','#5dcaa5');return}if(shot.y<=top+R){shot.y=top+R;settleShot(shot.x,shot.y);return}for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){const b=grid[r][c];if(b&&distance(shot.x,shot.y,b.x,b.y)<R*1.82){const dx=shot.x-b.x,dy=shot.y-b.y,d=Math.hypot(dx,dy)||1;settleShot(b.x+dx/d*R*1.82,b.y+dy/d*R*1.82);return}}}}
+function stepShot(){if(!shot)return;if(performance.now()-shot.startedAt>=MAX_SHOT_MS){settleShot(shot.x,shot.y);if(!gameOver&&!levelCleared)announce('SHOT SETTLED','That long bank shot was safely settled so play can continue.','#5dcaa5');return}for(let i=0;i<6;i++){const dxStep=shot.vx/6,dyStep=shot.vy/6;shot.x+=dxStep;shot.y+=dyStep;shot.travel+=Math.hypot(dxStep,dyStep);if(shot.x<=left+R){shot.x=left+R;shot.vx=Math.abs(shot.vx);shot.bounces++;tone(200,'square',.04,.03)}if(shot.x>=right-R){shot.x=right-R;shot.vx=-Math.abs(shot.vx);shot.bounces++;tone(200,'square',.04,.03)}if(shot.bounces>MAX_BOUNCES||shot.travel>MAX_TRAVEL){settleShot(shot.x,shot.y);if(!gameOver&&!levelCleared)announce('SHOT SETTLED','Try a steeper angle for a cleaner bank shot','#5dcaa5');return}if(shot.y<=top+R){shot.y=top+R;settleShot(shot.x,shot.y);return}for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){const b=grid[r][c];if(b&&distance(shot.x,shot.y,b.x,b.y)<R*1.82){const dx=shot.x-b.x,dy=shot.y-b.y,d=Math.hypot(dx,dy)||1;settleShot(b.x+dx/d*R*1.82,b.y+dy/d*R*1.82);return}}}}
 function powerMark(x,y,r,power,freq){
   const spec=POWER_TYPES[power];
   ctx.save();
