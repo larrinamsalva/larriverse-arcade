@@ -124,3 +124,174 @@ html.larriverse-high-contrast button:focus-visible{outline:4px solid #f90}
 html.larriverse-reduced-motion *{transition:none!important;animation:none!important}
 @media(max-width:900px){.puzzle-layout{grid-template-columns:1fr}.sudoku-hero{grid-template-columns:1fr auto}.hero-art{min-height:145px}.art-grid{width:140px}.art-face{font-size:35px}.art-face.small{font-size:30px}.chapter-track{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:620px){.sudoku-shell{padding:12px 10px 55px}.sudoku-hero{padding:22px 20px;grid-template-columns:1fr}.hero-art{display:none}.chapter-track{grid-template-columns:repeat(2,minmax(0,1fr))}.chapter-tile{min-height:74px;padding:8px}.sudoku-play{padding:13px 10px}.status-strip{gap:4px}.status-strip div{padding:8px 3px}.status-strip strong{font-size:.88rem}.game-heading h2{font-size:1.42rem}.level-chooser select{max-width:100%}.sudoku-cell{font-size:clamp(1rem,5.8vw,2rem)}#sudokuBoard[data-size="9"] .sudoku-cell{font-size:clamp(.9rem,4.2vw,1.5rem)}#numberPad{gap:4px}#numberPad button{min-width:40px;flex:1 1 9%;padding:4px}.puzzle-buttons button{flex:1 1 30%;padding:7px 6px;font-size:.8rem}.play-switches button{font-size:.78rem;padding:8px}.play-guide{padding:17px}}
+
+
+/* Kids Sudoku: dimensional puzzle-board polish without changing puzzle logic. */
+body[data-classic="kids-sudoku"] .sudoku-hero{
+  border:2px solid #ddd8ef;
+  box-shadow:inset 0 3px 0 #fff,0 9px 0 #8c79b72d,0 24px 48px #25336a20;
+}
+body[data-classic="kids-sudoku"] .art-grid{
+  border-width:5px;
+  box-shadow:inset 0 4px 0 #fff,15px 17px 0 #7467bf30,0 25px 34px #4f467022;
+}
+body[data-classic="kids-sudoku"] .art-grid span{
+  box-shadow:inset 0 2px 0 #fff;
+}
+body[data-classic="kids-sudoku"] .hero-pills span,
+body[data-classic="kids-sudoku"] .chapter-tile{
+  border-width:2px;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #7d84a52b,0 9px 15px #2a42820c;
+}
+body[data-classic="kids-sudoku"] .chapter-tile.active{
+  box-shadow:inset 0 2px 0 #fff,0 5px 0 #7755e94a,0 11px 18px #49359418;
+}
+body[data-classic="kids-sudoku"] .chapter-tile.complete{
+  box-shadow:inset 0 2px 0 #fff,0 5px 0 #36aa8940,0 11px 18px #206d5815;
+}
+body[data-classic="kids-sudoku"] .game-card{
+  border:2px solid #d7dced;
+  box-shadow:inset 0 3px 0 #fff,0 8px 0 #7480a12b,0 22px 42px #25336a1b;
+}
+body[data-classic="kids-sudoku"] .status-strip div{
+  border:1px solid #d2d8ea;
+  background:linear-gradient(145deg,#fbfcff,#eef1fb);
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #77819a26;
+}
+body[data-classic="kids-sudoku"] .progress-track{
+  height:14px;
+  border:1px solid #c5cde0;
+  box-shadow:inset 0 3px 5px #4e5d7c26,0 1px 0 #fff;
+}
+body[data-classic="kids-sudoku"] .progress-track span{
+  box-shadow:inset 0 2px 0 #ffffff8f,0 0 12px #705ad75c;
+}
+body[data-classic="kids-sudoku"] #sudokuBoard{
+  border-width:4px;
+  border-radius:16px;
+  box-shadow:inset 0 4px 0 #fff,0 8px 0 #203e624a,0 18px 30px #25336a1f;
+}
+body[data-classic="kids-sudoku"] .sudoku-cell{
+  background:linear-gradient(145deg,#fff,#f2f5fb);
+  box-shadow:inset 0 2px 0 #fff,inset 0 -4px 0 #e0e6f0;
+  transition:transform .08s ease,background .12s ease,box-shadow .12s ease;
+}
+body[data-classic="kids-sudoku"] .sudoku-cell:hover:not(.given){
+  background:linear-gradient(145deg,#fff,#e8f5f2);
+}
+body[data-classic="kids-sudoku"] .sudoku-cell.given{
+  background:linear-gradient(145deg,#f5f2ff,#dfdaf7);
+  box-shadow:inset 0 2px 0 #fff,inset 0 -4px 0 #cbc4ec;
+}
+body[data-classic="kids-sudoku"] .sudoku-cell.player-value{
+  background:linear-gradient(145deg,#effff7,#d3f2e4);
+  box-shadow:inset 0 2px 0 #fff,inset 0 -4px 0 #b9e2d0;
+}
+body[data-classic="kids-sudoku"] .sudoku-cell.same{
+  box-shadow:inset 0 0 0 3px #92d4bd,inset 0 -4px 0 #b9e2d0;
+}
+body[data-classic="kids-sudoku"] .sudoku-cell.selected{
+  background:linear-gradient(145deg,#fff8d7,#f4d97f)!important;
+  box-shadow:inset 0 3px 0 #fff9d9,inset 0 -5px 0 #d2a944,0 0 0 3px #b88517!important;
+  transform:translateY(-1px);
+}
+body[data-classic="kids-sudoku"] .sudoku-cell.conflict{
+  background:linear-gradient(145deg,#fff1f4,#f3c3cd)!important;
+  box-shadow:inset 0 3px 0 #fff,inset 0 -5px 0 #dda5b2;
+}
+body[data-classic="kids-sudoku"] .play-switches button,
+body[data-classic="kids-sudoku"] .puzzle-buttons button,
+body[data-classic="kids-sudoku"] #numberPad button{
+  border-width:2px;
+  box-shadow:inset 0 3px 0 #fff,0 4px 0 #7a839b35;
+  transition:transform .1s ease,background .12s ease;
+}
+body[data-classic="kids-sudoku"] .play-switches button:hover,
+body[data-classic="kids-sudoku"] .puzzle-buttons button:hover,
+body[data-classic="kids-sudoku"] #numberPad button:hover{
+  transform:translateY(-2px);
+}
+body[data-classic="kids-sudoku"] #numberPad button{
+  background:linear-gradient(145deg,#f4fdff,#d9f1f7);
+  border-color:#83b7d2;
+  box-shadow:inset 0 3px 0 #fff,inset 0 -5px 0 #bddce8,0 4px 0 #6e9bb044;
+}
+body[data-classic="kids-sudoku"] .puzzle-buttons #checkButton{
+  box-shadow:inset 0 3px 0 #ffffff24,0 5px 0 #3f328f;
+}
+body[data-classic="kids-sudoku"] .puzzle-feedback,
+body[data-classic="kids-sudoku"] #buddyMessage{
+  border:2px solid #cad5ea;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #72809d28;
+}
+body[data-classic="kids-sudoku"] .celebration{
+  box-shadow:inset 0 3px 0 #fff,0 7px 0 #c49e4f35,0 16px 28px #5b49651c;
+}
+body[data-classic="kids-sudoku"] .mini-rule span{
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #5d927d35;
+}
+html.larriverse-dark body[data-classic="kids-sudoku"] .sudoku-hero,
+html.larriverse-dark body[data-classic="kids-sudoku"] .game-card,
+html.larriverse-dark body[data-classic="kids-sudoku"] .chapter-tile,
+html.larriverse-dark body[data-classic="kids-sudoku"] .status-strip div{
+  box-shadow:inset 0 3px 0 #ffffff0d,0 7px 0 #0a0d1766,0 18px 34px #0005;
+}
+html.larriverse-dark body[data-classic="kids-sudoku"] .sudoku-cell{
+  background:linear-gradient(145deg,#27334f,#202b46);
+  box-shadow:inset 0 2px 0 #ffffff0c,inset 0 -4px 0 #151d31;
+}
+html.larriverse-dark body[data-classic="kids-sudoku"] .sudoku-cell.given{
+  background:linear-gradient(145deg,#3a4167,#30365b);
+}
+html.larriverse-dark body[data-classic="kids-sudoku"] .sudoku-cell.player-value{
+  background:linear-gradient(145deg,#285a58,#214c4d);
+}
+html.larriverse-dark body[data-classic="kids-sudoku"] .sudoku-cell.selected{
+  background:linear-gradient(145deg,#7a642d,#655124)!important;
+  color:#fff9dc;
+}
+html.larriverse-dark body[data-classic="kids-sudoku"] .sudoku-cell.conflict{
+  background:linear-gradient(145deg,#75394a,#653140)!important;
+}
+html.larriverse-dark body[data-classic="kids-sudoku"] :is(.play-switches button,.puzzle-buttons button,#numberPad button){
+  box-shadow:inset 0 3px 0 #ffffff0d,0 4px 0 #0b0e1766;
+}
+html.larriverse-high-contrast body[data-classic="kids-sudoku"] :is(
+  .sudoku-hero,.game-card,.chapter-tile,.status-strip div,.puzzle-feedback,#buddyMessage,
+  .play-switches button,.puzzle-buttons button,#numberPad button
+){
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="kids-sudoku"] #sudokuBoard{
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="kids-sudoku"] .sudoku-cell{
+  background:#000!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-classic="kids-sudoku"] .sudoku-cell.given{
+  outline:2px solid #fff;
+  outline-offset:-3px;
+}
+html.larriverse-high-contrast body[data-classic="kids-sudoku"] .sudoku-cell.player-value{
+  background:#111!important;
+}
+html.larriverse-high-contrast body[data-classic="kids-sudoku"] .sudoku-cell.selected{
+  background:#fff!important;
+  color:#000!important;
+  outline:4px solid #ffd400!important;
+  outline-offset:-4px;
+}
+html.larriverse-high-contrast body[data-classic="kids-sudoku"] .sudoku-cell.conflict{
+  background:#000!important;
+  color:#fff!important;
+  outline:4px dashed #ff4b73!important;
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-classic="kids-sudoku"] :is(.sudoku-cell,.play-switches button,.puzzle-buttons button,#numberPad button){transition:none}
+}
