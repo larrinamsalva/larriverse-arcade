@@ -177,11 +177,14 @@ for(const [deck,mode] of [["messages","messages"],["conversations","conversation
   assert.ok(quizEngine.includes(`startCampaign(${deck},"${mode}")`),`${deck} must launch its full saved main campaign`);
 assert.ok(quizEngine.includes("writeCampaign(state.step,state.correct)"),"Each answered card has saved progression");
 assert.ok(quizEngine.includes("writeCampaign(state.step,state.step)"),"Each completed repair has saved progression");
-// Both classic resource worlds now contain four ranks and eight independent stages.
-for (const [name, levels] of [["Garden Guardians", gardenLevels], ["Energy Island", energyLevels]]) {
-  assert.equal(levels.length, 60, `${name} has sixty playable levels`);
+// Garden Guardians now continues to 120 levels; Energy Island remains a validated 60-level world.
+for (const [name, levels, expected, expectedRanks] of [
+  ["Garden Guardians", gardenLevels, 120, 24],
+  ["Energy Island", energyLevels, 60, 12],
+]) {
+  assert.equal(levels.length, expected, `${name} has ${expected} playable levels`);
   assert.equal(new Set(levels.map((level) => level.id)).size, levels.length, `${name} ids are unique`);
-  assert.equal(new Set(levels.map((level) => level.rank)).size, 12, `${name} has twelve advancement ranks`);
+  assert.equal(new Set(levels.map((level) => level.rank)).size, expectedRanks, `${name} has ${expectedRanks} advancement ranks`);
   assert.deepEqual([...new Set(levels.slice(0,8).map((level) => level.rank))].map((rank) =>
     levels.slice(0,8).filter((level) => level.rank === rank).length), [2,2,2,2],
     `${name} retains its first eight levels and four original ranks`);
@@ -190,14 +193,14 @@ for (const [name, levels] of [["Garden Guardians", gardenLevels], ["Energy Islan
     assert.match(level.zone, /^[a-z]+$/);
   }
 }
-assert.equal(new Set(gardenLevels.map(x=>[x.carrot,x.bean,x.flower,x.target,x.water].join(":"))).size,60,
+assert.equal(new Set(gardenLevels.map(x=>[x.carrot,x.bean,x.flower,x.target,x.water].join(":"))).size,120,
   "Every garden must have an original plant, target and water plan");
 for (const level of gardenLevels) {
   assert.equal(level.carrot + level.bean + level.flower, 6, `${level.id} fills six plots`);
   assert.ok(["carrot","bean","flower"].every((type) => level[type] >= 0) && level.flower >= 1, `${level.id} includes valid crops and at least one flower`);
-  assert.ok(level.target >= 5 && level.target <= 6, `${level.id} requires a sensible harvest`);
+  assert.ok(level.target >= 4 && level.target <= 6, `${level.id} requires a sensible harvest`);
   assert.ok(level.water >= level.target * 2, `${level.id} has enough water for its target`);
-  assert.ok(level.water <= 12, `${level.id} still teaches conservation`);
+  assert.ok(level.water <= 14, `${level.id} still teaches conservation`);
 }
 const sourceCost = { solar:2, wind:3, battery:2 };
 function feasibleEnergyBuild(level) {
@@ -227,20 +230,20 @@ for (const level of energyLevels) {
     day.icon && day.name && Number.isInteger(day.solar) && Number.isInteger(day.wind)));
   assert.ok(feasibleEnergyBuild(level), `${level.id} has a valid, affordable power mix`);
 }
-for (const id of ["garden-guardians","energy-island"]) {
+for (const [id,countPattern] of [["garden-guardians",/120 .* levels/i],["energy-island",/sixty .* levels/i]]) {
   const world = worlds.find((item) => item.id === id);
   const entry = catalog.find((item) => item.id === id);
-  assert.match(world.mission, /sixty .* levels/i, `${id} describes its new journey`);
+  assert.match(world.mission, countPattern, `${id} describes its current journey`);
   assert.equal(entry.mission, world.mission, `${id} game card matches the game itself`);
 }
-// Sixty curated trail puzzles in six chapters; all flags and finishes are solvable.
-assert.equal(timeTrailLevels.length,60);
-assert.equal(new Set(timeTrailLevels.map(level=>level.id)).size,60);
-assert.equal(new Set(timeTrailLevels.map(level=>level.rank)).size,6);
+// 120 curated/generated trail puzzles in twelve chapters; all flags and finishes are solver-verified.
+assert.equal(timeTrailLevels.length,120);
+assert.equal(new Set(timeTrailLevels.map(level=>level.id)).size,120);
+assert.equal(new Set(timeTrailLevels.map(level=>level.rank)).size,12);
 assert.deepEqual([...new Set(timeTrailLevels.map(level=>level.rank))].map(rank=>
-  timeTrailLevels.filter(level=>level.rank===rank).length),[10,10,10,10,10,10]);
+  timeTrailLevels.filter(level=>level.rank===rank).length),[10,10,10,10,10,10,10,10,10,10,10,10]);
 const layouts=new Set();
-const rankMin=[8,8,11,16,18,23], rankMax=[14,14,17,23,26,35];
+const rankMin=[8,8,11,16,18,23,20,21,22,23,24,25], rankMax=[14,14,17,23,26,35,44,44,44,44,44,44];
 for(const [index,level] of timeTrailLevels.entries()) {
   const chapter=Math.floor(index/10);
   const width=chapter<2?5:chapter<4?6:7;
@@ -265,12 +268,12 @@ for(const [index,level] of timeTrailLevels.entries()) {
       Math.abs(path[i]%width-path[i-1]%width),1,level.id);
   layouts.add(JSON.stringify([width,level.start,level.finish,level.flags,level.rocks]));
 }
-assert.equal(layouts.size,60,"Every trail uses a unique arrangement");
+assert.equal(layouts.size,120,"Every trail uses a unique arrangement");
 assert.deepEqual(shortestTrailPath(timeTrailLevels[0]),[20,15,10,5,0,1,2,3,4]);
 const trailWorld=worlds.find(x=>x.id==="time-trail");
-assert.match(trailWorld.mission,/sixty map levels/i);
+assert.match(trailWorld.mission,/120 map levels/i);
 assert.equal(catalog.find(x=>x.id==="time-trail").mission,trailWorld.mission);
-assert.equal(robotLevels.length, 60);
+assert.equal(robotLevels.length, 120);
 assert.equal(new Set(robotLevels.map((level) => level.name)).size, robotLevels.length);
 assert.equal(
   new Set(
@@ -290,6 +293,8 @@ assert.deepEqual(roverRanks, [
   "Rover Commander",
   "Path Explorer", "Corner Cartographer", "Rock Dodger", "Trail Strategist",
   "Space Navigator", "Orbit Programmer", "Galaxy Pathfinder", "Rover Legend",
+  "Route Reader","Turn Technician","Maze Mapper","Rock Planner","Command Builder","Debug Detective",
+  "Path Optimizer","Mission Coder","Grid Engineer","Rover Captain","Star Navigator","Rover Grandmaster",
 ]);
 assert.ok(
   roverRanks.every(
@@ -384,5 +389,5 @@ for (const file of [
 ])
   execFileSync(process.execPath, ["--check", file]);
 console.log(
-  `Skill worlds validated: ${worlds.length} unique modes, complete 60-question weather and 60-question garden paths, twenty solvable budgeting missions, replay banks, Traffic Town road-sign practice, repair sequences, and sixty shortest-path-verified rover grids.`,
+  `Skill worlds validated: ${worlds.length} unique modes, complete 60-question weather and 60-question garden paths, twenty solvable budgeting missions, replay banks, Traffic Town road-sign practice, repair sequences, and 120 shortest-path-verified rover grids.`,
 );

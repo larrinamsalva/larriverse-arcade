@@ -19,6 +19,12 @@ export const TRAIL_CHAPTERS = Object.freeze([
   {rank:"Cloud Navigator",zone:"cloud",icon:"☁️",width:6,flags:4},
   {rank:"Mountain Ranger",zone:"mountain",icon:"⛰️",width:7,flags:4},
   {rank:"Summit Champion",zone:"summit",icon:"🌟",width:7,flags:5},
+  {rank:"Trail Analyst",zone:"highland",icon:"🧭",width:7,flags:5},
+  {rank:"Switchback Scout",zone:"ridge",icon:"🥾",width:7,flags:5},
+  {rank:"Map Strategist",zone:"canyon",icon:"🗺️",width:7,flags:5},
+  {rank:"Route Engineer",zone:"alpine",icon:"📐",width:7,flags:5},
+  {rank:"Summit Navigator",zone:"aurora",icon:"✨",width:7,flags:5},
+  {rank:"Trail Grandmaster",zone:"stars",icon:"🏔️",width:7,flags:5},
 ]);
 function turnTile(index, turns, width=5) {
   let row=Math.floor(index/width),col=index%width;
@@ -94,7 +100,63 @@ const added = EXPANDED_MAPS.map(([start,finish,flags,rocks],index)=>{
     start,finish,flags,rocks,
   };
 });
-export const timeTrailLevels = Object.freeze([...opening,...added]);
+
+// Levels 61–120: deterministic 7×7 route puzzles with five flags.
+// A local solver rejects layouts that are too short or cannot be completed.
+const trailNext=seed=>((seed*1664525+1013904223)>>>0);
+function candidateTrailPath(plan){
+ const {width,start,finish,rocks,flags}=plan,blocked=new Set(rocks),all=(1<<flags.length)-1;
+ const queue=[{tile:start,found:0,steps:0}],seen=new Set([start+":0"]);
+ for(let i=0;i<queue.length;i++){
+  const state=queue[i];
+  if(state.tile===finish&&state.found===all)return state.steps;
+  const row=Math.floor(state.tile/width),col=state.tile%width;
+  for(const next of [row>0?state.tile-width:-1,row<width-1?state.tile+width:-1,col>0?state.tile-1:-1,col<width-1?state.tile+1:-1]){
+   if(next<0||blocked.has(next))continue;
+   const at=flags.indexOf(next),found=state.found|(at<0?0:1<<at),key=next+":"+found;
+   if(seen.has(key))continue;seen.add(key);queue.push({tile:next,found,steps:state.steps+1});
+  }
+ }
+ return null;
+}
+const advancedTrailNamesA=["Aurora","Cedar","Eagle","Fox","Granite","Juniper","Lantern","Meteor","Northstar","Otter","Pine","Quartz"];
+const advancedTrailNamesB=["Traverse","Switchback","Circuit","Pass","Expedition"];
+const advancedTrailLayouts=new Set();
+const advancedTrails=Array.from({length:60},(_,i)=>{
+ let seed=(424242+i*65537)>>>0,chosen=null;
+ for(let attempt=0;attempt<16000;attempt++){
+  const width=7,cells=49;
+  seed=trailNext(seed);const start=seed%cells;
+  seed=trailNext(seed);const finish=seed%cells;
+  if(start===finish)continue;
+  const excluded=new Set([start,finish]),flags=[];
+  while(flags.length<5){
+   seed=trailNext(seed);const cell=seed%cells;
+   if(!excluded.has(cell)){excluded.add(cell);flags.push(cell);}
+  }
+  const rocks=[],rockTarget=8+Math.floor(i/12);
+  for(let cell=0;cell<cells;cell++){
+   if(excluded.has(cell))continue;
+   seed=trailNext(seed);
+   if((seed%37)<rockTarget)rocks.push(cell);
+  }
+  const plan={width,start,finish,flags,rocks};
+  const moves=candidateTrailPath(plan),minimum=20+Math.floor(i/10);
+  const key=[start,finish,flags.join(","),rocks.join(",")].join(":");
+  if(moves!==null&&moves>=minimum&&moves<=44&&!advancedTrailLayouts.has(key)){
+   chosen={...plan,best:moves};advancedTrailLayouts.add(key);break;
+  }
+ }
+ if(!chosen)throw new Error("Advanced Time Trail generator could not find map "+(i+61));
+ const chapter=6+Math.floor(i/10),guide=TRAIL_CHAPTERS[chapter],step=i%10;
+ const name=advancedTrailNamesA[chapter-6]+" "+advancedTrailNamesB[step%advancedTrailNamesB.length]+" "+(Math.floor(step/5)+1);
+ return {
+  id:"advanced-map-"+String(i+61).padStart(3,"0"),name,icon:guide.icon,zone:guide.zone,rank:guide.rank,chapter,width:7,
+  start:chosen.start,finish:chosen.finish,flags:chosen.flags,rocks:chosen.rocks,
+  lesson:"Collect all five flags on this 7 by 7 route before reaching the finish. Advanced maps require longer planning, checking dead ends, and saving enough moves for the final flag."
+ };
+});
+export const timeTrailLevels = Object.freeze([...opening,...added,...advancedTrails]);
 // Explore (tile position, collected-flags bitmask), preserving all checkpoints.
 export function shortestTrailPath(plan=timeTrailLevels[0]) {
   const {width,start,finish,rocks,flags}=plan;
