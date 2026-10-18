@@ -195,7 +195,7 @@
       "id": "traffic-town",
       "title": "Traffic Town",
       "route": "games/traffic-town/index.html",
-      "manualFocus": "Complete six ten-question Traffic Town rounds, verify all 60 dimensional signs appear once, and confirm the guidance remains age-appropriate and not a licensing claim."
+      "manualFocus": "Complete representative Traffic Town levels across all twelve chapters, including levels 1, 60, 61, and 120. Verify all 120 sign titles are unique, every included sign uses dimensional artwork rather than the generic fallback, saved 60-level progress continues into level 61, and the guidance remains age-appropriate and not a licensing claim."
     },
     {
       "id": "street-safety-scout",
