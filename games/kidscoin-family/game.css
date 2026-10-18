@@ -197,3 +197,89 @@ html.larriverse-high-contrast body[data-classic="kidscoin-family"] :is(.tabs,.pa
 @media(prefers-reduced-motion:reduce){
   body[data-classic="kidscoin-family"] :is(.soft,.parent,.icon,.secondary,.card-button,.primary,.tabs button,.parent-tabs button,.option-list button){transition:none}
 }
+
+
+/* KidsCoin Family: chore-earned KC growth graph. This is progress, not a market price. */
+.kc-growth-card{
+  margin:1rem 0;
+  padding:1rem 1.1rem;
+  border:2px solid rgba(74,240,181,.24);
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 84% 0,rgba(84,216,255,.10),transparent 32%),
+    linear-gradient(145deg,rgba(18,36,58,.96),rgba(7,17,31,.98));
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.04),0 6px 0 #030b13,0 16px 28px #0005;
+}
+.kc-growth-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:1rem;
+}
+.kc-growth-head h2{margin:.15rem 0 .35rem}
+.kc-growth-head p:not(.eyebrow){margin:0;color:var(--muted);line-height:1.45;max-width:720px}
+.kc-growth-total{
+  flex:none;
+  min-width:145px;
+  padding:.7rem .8rem;
+  border:1px solid rgba(255,211,90,.24);
+  border-radius:16px;
+  background:rgba(255,211,90,.06);
+  text-align:right;
+}
+.kc-growth-total b,.kc-growth-total span{display:block}
+.kc-growth-total b{font-size:1.45rem;color:var(--gold)}
+.kc-growth-total span{margin-top:.1rem;color:var(--muted);font-size:.72rem}
+.kc-growth-stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem 1rem;
+  margin:.8rem 0 .4rem;
+  color:var(--muted);
+  font-size:.82rem;
+}
+.kc-growth-stats b{color:var(--mint)}
+.kc-growth-chart{
+  width:100%;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  background:linear-gradient(180deg,rgba(84,216,255,.035),rgba(74,240,181,.015));
+}
+.kc-growth-chart svg{
+  display:block;
+  width:100%;
+  height:auto;
+  min-height:185px;
+  color:var(--mint);
+}
+.kc-chart-grid line{stroke:rgba(255,255,255,.08);stroke-width:1}
+.kc-chart-grid text,.kc-chart-axis-label{fill:var(--muted);font-size:11px;font-weight:800}
+.kc-chart-area{fill:url(#kcGrowthArea)}
+.kc-chart-line{
+  fill:none;
+  stroke:var(--mint);
+  stroke-width:5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  filter:drop-shadow(0 0 7px rgba(74,240,181,.30));
+}
+.kc-chart-point{
+  fill:var(--gold);
+  stroke:#302000;
+  stroke-width:2;
+}
+.kc-chart-start{fill:var(--cyan);stroke:#06101d;stroke-width:2}
+.kc-growth-note{margin:.55rem 0 0;color:var(--muted);font-size:.76rem;line-height:1.4}
+html.larriverse-high-contrast .kc-growth-card{background:#000!important;border-color:#fff!important;box-shadow:none!important}
+html.larriverse-high-contrast .kc-growth-chart{background:#000!important;border-color:#fff!important}
+html.larriverse-high-contrast .kc-chart-grid line{stroke:#fff;opacity:.4}
+html.larriverse-high-contrast .kc-chart-grid text,
+html.larriverse-high-contrast .kc-chart-axis-label{fill:#fff}
+html.larriverse-high-contrast .kc-chart-line{stroke:#fff;filter:none}
+html.larriverse-high-contrast .kc-chart-point{fill:#fff;stroke:#000}
+@media(max-width:620px){
+  .kc-growth-head{flex-direction:column}
+  .kc-growth-total{width:100%;text-align:left}
+  .kc-growth-chart svg{min-height:155px}
+}
