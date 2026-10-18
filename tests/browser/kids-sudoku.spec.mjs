@@ -24,14 +24,14 @@ test("Kids Sudoku: eighty puzzle solutions are unique and obey grid rules",()=>{
   expect(SUDOKU_LEVELS.slice(0,20).every(l=>l.size===4)).toBe(true);
   expect(SUDOKU_LEVELS.slice(20,40).every(l=>l.size===6)).toBe(true);
   expect(SUDOKU_LEVELS.slice(40).every(l=>l.size===9)).toBe(true);
-  expect(new Set(SUDOKU_LEVELS.map(x=>x.puzzle)).size).toBe(60);
+  expect(new Set(SUDOKU_LEVELS.map(x=>x.puzzle)).size).toBe(80);
   for(const level of SUDOKU_LEVELS)expect(countSudokuSolutions(level.puzzle,level)).toBe(1);
 });
 test("Kids Sudoku: accessible mini puzzle, notes, pictures, hints, mistakes and save",async({page})=>{
   const errors=[];page.on("pageerror",error=>errors.push(error.message));
   await page.goto("/games/kids-sudoku/");
   await expect(page.locator(".sudoku-cell")).toHaveCount(16);
-  await expect(page.locator(".chapter-tile")).toHaveCount(6);
+  await expect(page.locator(".chapter-tile")).toHaveCount(8);
   await expect(page.locator("#levelSelect option")).toHaveCount(1);
   await page.locator("#pictureMode").click();
   await expect(page.locator("#pictureMode")).toHaveAttribute("aria-pressed","true");
