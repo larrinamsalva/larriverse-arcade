@@ -129,6 +129,8 @@ for(const plan of resourceAdventures) {
   assert.equal(new Set(plan.steps).size,3);
   assert.ok(plan.steps.every(x=>x.length>=15),plan.id);
 }
+const trafficSceneSource=fs.readFileSync("assets/arcade-scenes.js","utf8");
+for (const item of trafficQuestions.slice(60)) assert.ok(trafficSceneSource.includes(`["${item.title}",`), `${item.title} needs dedicated Traffic Town artwork`);
 const resourceSource=fs.readFileSync("assets/skill-games.js","utf8");
 assert.ok(resourceSource.includes("state.deck=[...resourceAdventures]"),"Pocket Planet must use its real sixty-project main deck");
 assert.ok(resourceSource.includes("writeCampaign(state.passed,state.correct)"),"Every completed project must save a checkpoint");
@@ -138,7 +140,9 @@ assert.ok(!resourceSource.includes('data-buy='));
 assert.match(catalog.find(x=>x.id==="pocket-planet").mission,/sixty projects across six connected chapters/i);
 assert.equal(catalog.find(x=>x.id==="pocket-planet").mission,worlds.find(x=>x.id==="pocket-planet").mission);
 assert.equal(catalog.find(x=>x.id==="pocket-planet").topic,"Planet");
-assert.equal(trafficQuestions.length, 60);
+assert.equal(trafficQuestions.length, 120, "Traffic Town includes 120 dedicated sign levels");
+assert.equal(new Set(trafficQuestions.map((item) => item.title)).size, 120, "Every Traffic Town level teaches a different sign title");
+assert.equal(new Set(trafficQuestions.map((item) => item.family)).size >= 3, true, "Expanded Traffic Town covers regulatory, guide/service, and warning families");
 assert.equal(new Set(trafficQuestions.map((item) => item.text)).size, trafficQuestions.length);
 for (const item of trafficQuestions) {
   assert.equal(item.options.length, 3);
