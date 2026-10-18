@@ -2354,3 +2354,8 @@ html.larriverse-high-contrast body[data-world="compass-cove"] .compass-direction
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
 }
+
+/* Compass Cove playtest accessibility: keep the route-start label above AA contrast. */
+body[data-world="compass-cove"] .compass-clue-card .eyebrow{color:#3c3154}
+html.larriverse-dark body[data-world="compass-cove"] .compass-clue-card .eyebrow{color:#f3edff}
+html.larriverse-high-contrast body[data-world="compass-cove"] .compass-clue-card .eyebrow{color:#fff!important}
