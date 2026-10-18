@@ -155,7 +155,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 ## Visual gallery approval
 
 - [ ] Download the successful `larriverse-gallery-review-<run>` artifact and open its offline `index.html`.
-- [ ] Review all 72 desktop/mobile images and their SHA-256 digests.
+- [ ] Review all 74 desktop/mobile images and their SHA-256 digests.
 - [ ] No personal names, family notes, location prompts, coordinates, or real saved progress appear.
 - [ ] Useful alt text is approved for every image.
 - [ ] Export the `larriverse-gallery-approval` JSON.
@@ -167,19 +167,19 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 - [ ] Open the guided QA route on the actual desktop/laptop and export a complete schema-v2 desktop report.
 - [ ] Send the QA link to one physical phone and export a complete schema-v2 physical-phone report.
 - [ ] Confirm the phone report names the real phone, reports touch capability, and is not desktop emulation.
-- [ ] Confirm both reports contain 35 reachable routes, 35 cabinet passes, and six device-wide checks.
+- [ ] Confirm both reports contain 36 reachable routes, 36 cabinet passes, and six device-wide checks.
 
 ## Deployment and evidence rehearsal
 
 - [ ] Open `qa/readiness.html` on the deployed site and confirm its deployment identity matches the merged commit.
-- [ ] Confirm Readiness shows all five checks passed and all 35 cabinet routes reachable.
+- [ ] Confirm Readiness shows all five checks passed and all 36 cabinet routes reachable.
 - [ ] Confirm the Learning Goals, Progress Passport, and Family Learning Report routes are published and the final approval record, repository scripts, and workflow files are not publicly reachable.
 - [ ] Load the gallery, desktop, and phone files through evidence preflight and resolve every structural issue.
 
 ## Release Room handoff
 
 - [ ] Open `qa/release-room.html` from the live HTTPS deployment.
-- [ ] Confirm the exact deployment commit, release digest, 35/35 cabinet routes, and private-path exclusion.
+- [ ] Confirm the exact deployment commit, release digest, 36/36 cabinet routes, and private-path exclusion.
 - [ ] Load the approved gallery JSON, desktop QA JSON, and physical-phone QA JSON.
 - [ ] Export the private evidence bundle and keep it out of the public Pages artifact.
 - [ ] Import the evidence bundle into `qa/release-approval.html` and confirm the three original hashes are preserved.
@@ -198,7 +198,7 @@ Browser evidence does not replace the manual gameplay, real-device, print, and v
 
 ## Modern arcade expansion
 
-The collection includes 35 playable games: eight original cabinets, sixteen practice worlds listed below, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (72 images). The formal release still requires the documented human review.
+The collection includes 36 playable games: eight original cabinets, sixteen practice worlds listed below, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (72 images). The formal release still requires the documented human review.
 
 - **Traffic Town** — Read traffic signs & choose safe actions. Complete a round, inspect explanations, replay for a fresh set, and check one saved completion with sound off.
 - **Street Safety Scout** — Identify signs, signals, vehicle lights, roadside warnings, and hazards. Complete a fifteen-stop route, inspect explanations, replay for unseen scenes, and check one saved completion with sound off.
@@ -236,3 +236,5 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 - [ ] **Word Search World** — Solve 6×6, 7×7, 8×8, 9×9, 10×10 and 12×12 challenges; verify sixty unique solvable grids, finger-swipe, two-tap and keyboard controls, diagonal/backwards words, hint feedback, saved word progress, stars, unlocks, final Level 60 win, dark/light/contrast and phone display. Preserve human approval requirements.
 
 - [ ] **Crossword World** — Solve real crossing clues in Levels 1, 20, 40 and 60; test Across/Down toggling at intersections, 26-letter on-screen keyboard, physical keyboard, corrections, hint, check word and board, local resume, stars, Next Level, last-level victory, mobile 320px reflow, light/dark/high-contrast modes. Do not approve gallery or device QA without human review.
+
+- [ ] **Fresh Food Detectives** — Play representative levels from all 12 chapters and Level 120. Verify the 3-D bread, carton, cup, egg, deli, frozen, can, jar, box and bottle models; printed date clues; quality-date explanations; FIFO rotation; damaged-package guidance; sample Sunny Bakery tie-color chart with its non-universal warning; lot/batch-code lessons; local progress; keyboard/touch; mobile; dark mode and high contrast. Preserve human approval requirements.

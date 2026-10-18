@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#4f7654">
+<meta name="description" content="Fresh Food Detectives teaches kids to find printed food dates, understand common label phrases, use sample bread-tie charts carefully, notice package condition, and practice food rotation across 120 levels.">
+<title>Fresh Food Detectives · LarriVerse Arcade</title>
+<link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+<link rel="stylesheet" href="game.css">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/fresh-food-detectives/">
+</head>
+<body data-classic="fresh-food-detectives">
+<a class="skip-link" href="#gamePanel">Skip to game</a>
+<header class="food-nav">
+  <a href="../../index.html" class="food-brand"><span>✦</span> LarriVerse <small>Back to Arcade</small></a>
+  <div><button type="button" data-lv-comfort>Comfort & accessibility</button><a href="../../passport/">My passport</a></div>
+</header>
+<main class="food-shell">
+<section class="food-hero">
+  <div>
+    <p class="eyebrow">Everyday life · food-label literacy</p>
+    <h1>Fresh Food <span>Detectives</span></h1>
+    <p>Inspect realistic package models, find dates and codes, practice shelf rotation, and learn why bread-tie colors are only useful when you know the bakery’s own chart.</p>
+    <div class="hero-pills"><span>120 levels</span><span>12 chapters</span><span>No timer</span><span>3-D package lab</span></div>
+  </div>
+  <div class="hero-grocery" aria-hidden="true"><span>🥖</span><span>🥛</span><span>🥚</span><span>🥫</span><span>🧃</span></div>
+</section>
+
+<section id="chapterTrack" class="chapter-track" aria-label="Twelve learning chapters"></section>
+
+<div class="food-layout">
+<section class="food-card game-panel" id="gamePanel" tabindex="-1">
+  <div class="level-head">
+    <div><p class="eyebrow" id="levelChapter"></p><h2 id="levelTitle"></h2><p id="levelSummary"></p></div>
+    <label class="level-picker">Unlocked level<select id="levelSelect" aria-label="Choose an unlocked level"></select></label>
+  </div>
+  <div class="status-row">
+    <div><small>Level</small><strong id="levelCounter"></strong></div>
+    <div><small>Chapter</small><strong id="chapterCounter"></strong></div>
+    <div><small>Stars</small><strong id="starCounter"></strong></div>
+    <div><small>Progress</small><strong id="progressText"></strong></div>
+  </div>
+  <div class="progress-track" role="progressbar" aria-label="Fresh Food Detectives progress" aria-valuemin="0" aria-valuemax="120"><span id="progressFill"></span></div>
+
+  <div class="detective-scene">
+    <div id="foodObject" class="object-stage" aria-label="3-D food package model"></div>
+    <aside class="label-board">
+      <p class="eyebrow">Package clue</p>
+      <strong id="visualLabel"></strong>
+      <small id="modelCaption"></small>
+    </aside>
+  </div>
+
+  <section id="bakeryChart" class="bakery-chart" hidden>
+    <div><p class="eyebrow">Practice bakery chart</p><strong>Sunny Bakery only</strong><small>Real stores may use different colors. Printed package information comes first.</small></div>
+    <div id="tieLegend" class="tie-legend"></div>
+  </section>
+
+  <div class="question-card">
+    <p class="eyebrow">Detective question</p>
+    <h3 id="questionText"></h3>
+    <div id="answers" class="answer-grid"></div>
+  </div>
+
+  <output id="feedback" class="feedback" aria-live="polite">Look closely at the package, then choose an answer.</output>
+  <div class="game-actions">
+    <button id="hintButton" class="secondary" type="button">🔎 Hint</button>
+    <button id="nextButton" class="primary" type="button" hidden>Next level →</button>
+  </div>
+</section>
+
+<aside class="food-card guide-card">
+  <div class="buddy">🕵️<div><strong>Inspector Sprout</strong><p id="buddyMessage">Printed information beats guessing. Check the whole package.</p></div></div>
+  <h2>Detective rules</h2>
+  <div class="rule"><span>1</span><p><b>Find the words.</b> Look for phrases like Best if Used By, Sell By, or Freeze By.</p></div>
+  <div class="rule"><span>2</span><p><b>Don’t decode mystery numbers.</b> Lot and batch codes can be manufacturer-specific.</p></div>
+  <div class="rule"><span>3</span><p><b>Check the package too.</b> Open, leaking, bulging, torn, or broken-seal packages need adult attention.</p></div>
+  <div class="rule"><span>4</span><p><b>Bread colors vary.</b> This game uses one sample bakery chart so you can practice reading a chart.</p></div>
+  <div class="safe-note"><b>Important:</b> Food dates alone do not prove that a food is safe. Follow storage/cooking directions and ask a trusted adult when unsure. Infant formula has special federal date requirements.</div>
+</aside>
+</div>
+<section id="celebration" class="celebration" hidden><div>🌟🛒🌟</div><h2 id="winTitle"></h2><p id="winText"></p><button id="celebrateNext" class="primary" type="button"></button></section>
+</main>
+<script src="../../assets/arcade-sdk.js"></script>
+<script type="module" src="game.js"></script>
+<script src="../../assets/cabinet-shell.js"></script>
+</body></html>

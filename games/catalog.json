@@ -725,5 +725,26 @@
     "href": "games/crossword-world/index.html",
     "source": "Original LarriVerse Crossword World, 2026",
     "integration": "arcade-sdk-v3"
+  },
+  {
+    "id": "fresh-food-detectives",
+    "title": "Fresh Food Detectives",
+    "icon": "🕵️",
+    "category": "Little life skills",
+    "topic": "Everyday life",
+    "age": "7+",
+    "minutes": "15 min",
+    "art": 3,
+    "skill": "Read food dates, labels & package clues",
+    "desc": "Explore 120 food-label missions with dimensional packages: printed dates, quality phrases, sample bread-tie charts, lot codes, storage clues, package condition and shelf rotation.",
+    "mission": "Work through 12 chapters and 120 levels. Inspect realistic 3-D package models, find printed dates, distinguish label phrases from lot codes, practice a clearly labeled sample bakery color chart, and finish full grocery-check challenges.",
+    "take": "Read the printed package information and storage directions instead of guessing from a date or color alone. Bread-tie systems can vary, and kids should ask a trusted adult when food storage or package condition is uncertain.",
+    "available": true,
+    "featured": true,
+    "isNew": true,
+    "status": "Playable",
+    "href": "games/fresh-food-detectives/index.html",
+    "source": "Original LarriVerse food-label literacy world, 2026",
+    "integration": "arcade-sdk-v3"
   }
 ]

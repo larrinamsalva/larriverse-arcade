@@ -36,7 +36,8 @@ const descriptions = Object.freeze({
   'road-trip-quest': 'Road Trip Quest opening card with learning-path choices, a start button, saved-trip controls, and shared arcade context.',
   'road-trip-quest-gps': 'Road Trip Quest GPS opening view with Demo Mode, optional Live Movement, the passenger-only warning, and privacy controls.',
   'weather-watchers': 'Weather Watchers level-one picture challenge with a dimensional sky scene, visible weather clues, four-rank advancement trail, three illustrated choices, and local progress.',
-  'garden-grow-harvest': 'Garden Grow and Harvest level-one picture challenge with a dimensional garden bed, realistic tool or plant model, four-rank advancement trail, three illustrated choices, and local progress.'
+  'garden-grow-harvest': 'Garden Grow and Harvest level-one picture challenge with a dimensional garden bed, realistic tool or plant model, four-rank advancement trail, three illustrated choices, and local progress.',
+  'fresh-food-detectives': 'Fresh Food Detectives opening label-reading challenge with a dimensional food package, printed date clue, four answer choices, twelve-chapter progress, and kid-friendly food-label guidance.'
 });
 
 // Mobile captures begin at the top of the page; most boards are farther down.
@@ -77,7 +78,8 @@ const mobileDescriptions = Object.freeze({
   'road-trip-quest': 'Road Trip Quest opening adventure title beneath shared LarriVerse player context, an arcade return, and comfort controls.',
   'road-trip-quest-gps': 'Road Trip Quest GPS opening Demo Mode introduction beneath shared LarriVerse player context, an arcade return, and comfort controls.',
   'weather-watchers': 'Weather Watchers illustrated introduction to sky clues, clouds, safe preparation, and simple forecasts, with four visible levels and shared comfort controls.',
-  'garden-grow-harvest': 'Garden Grow and Harvest illustrated introduction to bed building, planting, crop care, harvesting, and freshness, with four visible levels and shared comfort controls.'
+  'garden-grow-harvest': 'Garden Grow and Harvest illustrated introduction to bed building, planting, crop care, harvesting, and freshness, with four visible levels and shared comfort controls.',
+  'fresh-food-detectives': 'Fresh Food Detectives mobile introduction with its 120-level food-label mission, twelve chapter tiles, dimensional grocery-package artwork, and shared comfort controls.'
 });
 
 export function galleryMetadata(subject, project) {
