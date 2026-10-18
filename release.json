@@ -201,7 +201,7 @@
       "id": "street-safety-scout",
       "title": "Street Safety Scout",
       "route": "games/street-safety-scout/index.html",
-      "manualFocus": "Complete a fifteen-stop route, confirm all five safety zones appear, inspect the roadside-caution scenes, replay for unseen scenarios, and verify the game defers to local rules and real emergency directions."
+      "manualFocus": "Complete all 120 safety stops across eight routes. Confirm 24 scenarios in each of five categories, save/resume after any stop, route transitions every 15 stops, readable dimensional scenes, local-rule caveats, touch/keyboard, and final award."
     },
     {
       "id": "pocket-planet",
@@ -213,25 +213,25 @@
       "id": "scam-sleuth",
       "title": "Scam Sleuth",
       "route": "games/scam-sleuth/index.html",
-      "manualFocus": "Complete ten unique questions in one round, then six rounds without repeated questions across a sixty-item bank for Scam Sleuth. Check correct-answer feedback, keyboard/touch access, contrast, no paid costs, saved completions, and replay. Manual release approval required."
+      "manualFocus": "Complete all 120 saved message decisions across twelve compact chapters. Verify trusted-source, check-another-way, impersonation, gift-card, remote-access, verification-code and secrecy cases, explanatory feedback, local resume, contrast, touch and keyboard."
     },
     {
       "id": "kindness-quest",
       "title": "Kindness Quest",
       "route": "games/kindness-quest/index.html",
-      "manualFocus": "Complete ten unique questions in one round, then six rounds without repeated questions across a sixty-item bank for Kindness Quest. Check correct-answer feedback, keyboard/touch access, contrast, no paid costs, saved completions, and replay. Manual release approval required."
+      "manualFocus": "Complete all 120 saved social-skill decisions across twelve compact chapters. Check listening, boundaries, privacy, teamwork, apologies, personal space, adult-help and sportsmanship situations; verify varied correct-answer positions and readable compact progress."
     },
     {
       "id": "fact-finder",
       "title": "Fact Finder",
       "route": "games/fact-finder/index.html",
-      "manualFocus": "Complete ten unique questions in one round, then six rounds without repeated questions across a sixty-item bank for Fact Finder. Check correct-answer feedback, keyboard/touch access, contrast, no paid costs, saved completions, and replay. Manual release approval required."
+      "manualFocus": "Complete all 120 news-desk cards across twelve compact chapters. Verify balanced evidence, opinion, advertising and needs-checking classifications, source/context explanations, saved progress, light/dark contrast, touch and keyboard."
     },
     {
       "id": "repair-cafe",
       "title": "Repair Café",
       "route": "games/repair-cafe/index.html",
-      "manualFocus": "Complete ten unique questions in one round, then six rounds without repeated questions across a sixty-item bank for Repair Café. Check correct-answer feedback, keyboard/touch access, contrast, no paid costs, saved completions, and replay. Manual release approval required."
+      "manualFocus": "Complete all 120 four-step repair challenges across twelve compact chapters. Verify inspect → choose → align/repair → test sequencing, adult/tool safety language, saved resume, compact progress, and unique repair titles/steps."
     },
     {
       "id": "time-trail",
@@ -255,7 +255,7 @@
       "id": "reuse-rally",
       "title": "Reuse Rally",
       "route": "games/reuse-rally/index.html",
-      "manualFocus": "Complete ten unique questions in one round, then six rounds without repeated questions across a sixty-item bank for Reuse Rally. Check correct-answer feedback, keyboard/touch access, contrast, no paid costs, saved completions, and replay. Manual release approval required."
+      "manualFocus": "Sort all 120 unique Toy Town objects across twelve compact chapters. Verify reuse/recycle/compost/trash explanations, local-rule caveats, recognizable object art, saved resume, compact progress, contrast and touch/keyboard."
     },
     {
       "id": "robot-rover",

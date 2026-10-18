@@ -49,7 +49,7 @@ for (const [deck, options] of [
   [conversations, 3],
   [newsCards, 4],
 ]) {
-  assert.equal(deck.length,60,"Each digital/social quiz bank includes sixty scenarios");
+  assert.equal(deck.length,120,"Each digital/social quiz bank includes 120 scenarios");
   assert.equal(new Set(deck.map((item) => item.text)).size, deck.length);
   for (const item of deck) {
     assert.ok(item.text.length > 20 && item.why.length > 20);
@@ -60,7 +60,7 @@ for (const [deck, options] of [
     );
   }
 }
-assert.equal(sorting.length,60,"Reuse Rally includes sixty illustrated sorting challenges");
+assert.equal(sorting.length,120,"Reuse Rally includes 120 illustrated sorting challenges");
 assert.equal(new Set(sorting.map((item) => item.name)).size, sorting.length);
 for (const item of sorting) {
   assert.ok(
@@ -149,7 +149,7 @@ for (const item of trafficQuestions) {
   assert.ok(item.text.length > 20 && item.why.length > 20);
   assert.ok(Number.isInteger(item.answer) && item.answer >= 0 && item.answer < item.options.length);
 }
-assert.equal(repairs.length,60,"Repair Café includes sixty distinct four-step repairs");
+assert.equal(repairs.length,120,"Repair Café includes 120 distinct four-step repairs");
 assert.equal(new Set(repairs.map((item) => item.title)).size, repairs.length);
 assert.equal(new Set(repairs.map((item) => item.steps.join(' | '))).size, repairs.length);
 assert.ok(repairs.every(item => item.steps.every(step=>step.length>=16)),"All repair instructions are substantive");
@@ -158,7 +158,7 @@ for (const item of repairs) {
   assert.equal(new Set(item.steps).size, 4);
 }
 // For all five expanded lesson banks, the primary game now offers one saved
-// six-chapter journey of sixty distinct activities, not six disconnected rounds.
+// twelve-chapter journey of 120 distinct activities, not disconnected rounds.
 for(const [name,mode,length] of [
   ["Scam Sleuth","messages",messages.length],
   ["Kindness Quest","conversation",conversations.length],
@@ -166,15 +166,15 @@ for(const [name,mode,length] of [
   ["Repair Café","repair",repairs.length],
   ["Reuse Rally","sorting",sorting.length],
 ]){
-  assert.equal(length,60,`${name}: exactly sixty playable scenarios`);
+  assert.equal(length,120,`${name}: exactly 120 playable scenarios`);
   const world=worlds.find(entry=>entry.mode===mode);
-  assert.match(world?.mission||"",/\b(sixty|60)\b/i,`${name}: explicitly states the full sixty-question journey`);
+  assert.match(world?.mission||"",/\b120\b/i,`${name}: explicitly states the full 120-question journey`);
   const catalogWorld=catalog.find(entry=>entry.id===world.id);
   assert.equal(catalogWorld?.mission,world.mission,`${name}: catalog matches world`);
 }
 const quizEngine = fs.readFileSync("assets/skill-games.js","utf8");
 for(const [deck,mode] of [["messages","messages"],["conversations","conversation"],["newsCards","news"],["repairs","repair"],["sorting","sorting"],["trafficQuestions","traffic"]])
-  assert.ok(quizEngine.includes(`startCampaign(${deck},"${mode}")`),`${deck} must launch a full saved sixty-question main campaign`);
+  assert.ok(quizEngine.includes(`startCampaign(${deck},"${mode}")`),`${deck} must launch its full saved main campaign`);
 assert.ok(quizEngine.includes("writeCampaign(state.step,state.correct)"),"Each answered card has saved progression");
 assert.ok(quizEngine.includes("writeCampaign(state.step,state.step)"),"Each completed repair has saved progression");
 // Both classic resource worlds now contain four ranks and eight independent stages.

@@ -1,4 +1,6 @@
-export const streetSafetyScenarios = Object.freeze([
+import { advancedStreetSafetyScenarios } from "./advanced-scenarios.js";
+
+const originalStreetSafetyScenarios = Object.freeze([
   {
     id: 'steady-red',
     category: 'Signal lights',
@@ -660,6 +662,8 @@ export const streetSafetyScenarios = Object.freeze([
     visual: 'roadside-tow'
   }
 ]);
+
+export const streetSafetyScenarios = Object.freeze([...originalStreetSafetyScenarios, ...advancedStreetSafetyScenarios]);
 
 export const streetSafetyCategories = Object.freeze([
   'Signal lights',
