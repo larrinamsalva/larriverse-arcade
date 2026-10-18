@@ -5,7 +5,7 @@ import { extraPipePaths, extraHarborLevels, extraCompassClues, extraCipherLevels
 export const expeditions = [
   { id: "bridge-buddies", title: "Bridge Buddies", icon: "🌉", topic: "Build & create", category: "Little engineers", age: "8+", minutes: "12 min", art: 0, mode: "bridge", skill: "Test, improve, try again", desc: "Build and test sixty distinct bridge-load plans with unlimited free supports, from first spans to reinforced summit crossings.", mission: "Build four strong spans per level across sixty increasingly demanding crossings. All supports stay free and replaceable. Move through twelve bridge-builder ranks and carry each cargo safely.", take: "Choose the right support for the job. Test a small model, notice what happened, and change one thing at a time." },
   { id: "water-works", title: "Water Works", icon: "💧", topic: "Planet", category: "Flow & resources", age: "7+", minutes: "12 min", art: 1, mode: "pipes", skill: "See how a system connects", desc: "Turn pipes through sixty increasingly winding and branching-looking flow puzzles and bring water through the toy filter to town.", mission: "Rotate each pipe network from the reservoir to town. Pass through the toy filter while advancing from Flow Finder to Waterworks Master.", take: "Trace a problem from its starting point and check each connection. This toy filter does not make real water safe to drink." },
-  { id: "harbor-helpers", title: "Harbor Helpers", icon: "⛵", topic: "Adventures", category: "Cooperative adventures", age: "8+", minutes: "12 min", art: 2, mode: "harbor", skill: "Plan deliveries together", desc: "Load your boat for sixty increasingly demanding island deliveries and bring each community exactly what it requested.", mission: "Read each island request, choose the matching crates, stay within the boat limit, and advance through sixty harbor routes.", take: "A useful delivery starts with listening. Plan loads and routes together so supplies reach the neighbors who asked for them." },
+  { id: "harbor-helpers", title: "Harbor Helpers", icon: "⛵", topic: "Adventures", category: "Cooperative adventures", age: "8+", minutes: "12 min", art: 2, mode: "harbor", skill: "Plan deliveries together", desc: "Grow from a small skiff to cargo boats and dock-truck ferry runs across sixty increasingly demanding island deliveries.", mission: "Read each island request, choose from an expanding cargo shelf, load 3 to 8 crates as your transport grows, and advance through six harbor chapters.", take: "A useful delivery starts with listening. Plan loads and routes together so supplies reach the neighbors who asked for them." },
   { id: "pantry-picnic", title: "Pantry Picnic", icon: "🥪", topic: "Everyday life", category: "Little life skills", age: "7+", minutes: "10 min", art: 3, mode: "pantry", skill: "Use what you already have", desc: "Plan sixty distinct picnics in one saved adventure across six food-smart chapters.", mission: "Pack sixty different picnic boxes in six connected chapters. Choose one main and two produce portions, use marked leftovers first, and resume at your next challenge.", take: "Check what you already have before getting more. Planning portions can reduce waste; ask an adult about allergies, food preparation, and safe storage." },
   { id: "compass-cove", title: "Compass Cove", icon: "🧭", topic: "Adventures", category: "Map adventures", age: "7+", minutes: "12 min", art: 4, mode: "compass", skill: "Read landmarks and directions", desc: "Explore a tiny island through sixty unique compass routes and hidden treasures.", mission: "Find sixty routes to treasure by following clues from island landmarks. Advance from Shore Scout to Master Navigator while north stays up on the map.", take: "Start from a landmark you can identify. A map and a compass help you explain a route and check where a direction will take you." },
   { id: "cipher-club", title: "Cipher Club", icon: "🔎", topic: "Digital life", category: "Secret-code workshop", age: "8+", minutes: "12 min", art: 5, mode: "cipher", skill: "Make meaning with a shared key", desc: "Turn the code wheel and solve sixty messages that grow from three to nine letters.", mission: "Use the toy A–H alphabet and a shared number key to encode or decode sixty clubhouse messages. Advance through twelve code ranks as the words grow longer.", take: "A shared rule can change how a message looks. This tiny code is easy to break and must never be used to protect passwords or real secrets." },
@@ -90,12 +90,16 @@ export const pipePaths = [...originalPipePaths, ...extraPipePaths];
 export const directions = ["north", "east", "south", "west"];
 
 export const cargo = [
-  { id: "water", name: "Water barrels", icon: "drop", count: 4 },
-  { id: "seeds", name: "Seed boxes", icon: "seed", count: 4 },
-  { id: "wood", name: "Lumber", icon: "wood", count: 4 },
-  { id: "books", name: "Book crates", icon: "book", count: 4 },
-  { id: "food", name: "Food baskets", icon: "bread", count: 4 },
-  { id: "tools", name: "Tool cases", icon: "metal", count: 4 },
+  { id: "water", name: "Water barrels", icon: "drop", count: 8, unlockAt: 0 },
+  { id: "seeds", name: "Seed boxes", icon: "seed", count: 8, unlockAt: 0 },
+  { id: "wood", name: "Lumber", icon: "wood", count: 8, unlockAt: 0 },
+  { id: "books", name: "Book crates", icon: "book", count: 8, unlockAt: 0 },
+  { id: "food", name: "Food baskets", icon: "bread", count: 8, unlockAt: 0 },
+  { id: "tools", name: "Tool cases", icon: "metal", count: 8, unlockAt: 0 },
+  { id: "fruit", name: "Orchard crates", icon: "apple", count: 8, unlockAt: 20 },
+  { id: "lights", name: "Lantern boxes", icon: "star", count: 8, unlockAt: 30 },
+  { id: "market", name: "Market cartons", icon: "market", count: 8, unlockAt: 40 },
+  { id: "music", name: "Festival cases", icon: "music", count: 8, unlockAt: 50 },
 ];
 const originalHarborLevels = [
   { name: "Sprout Island", icon: "tree", fuel: 1, capacity: 3, needs: { water: 2, seeds: 1 } },
@@ -119,7 +123,37 @@ const originalHarborLevels = [
   { name: "Community Key", icon: "market", fuel: 4, capacity: 4, needs: { water: 1, wood: 1, food: 1, tools: 1 } },
   { name: "Celebration Harbor", icon: "star", fuel: 4, capacity: 4, needs: { water: 1, seeds: 1, books: 1, tools: 1 } },
 ];
-export const harborLevels = [...originalHarborLevels, ...extraHarborLevels];
+const harborTransportStages = [
+  { name: "Harbor skiff", icon: "boat", capacity: 3 },
+  { name: "Island supply boat", icon: "boat", capacity: 4 },
+  { name: "Cargo boat", icon: "boat", capacity: 5 },
+  { name: "Large supply boat", icon: "boat", capacity: 6 },
+  { name: "Dock truck + ferry", icon: "truck", capacity: 7 },
+  { name: "Harbor hauler + ferry", icon: "truck", capacity: 8 },
+];
+function growHarborLevel(level, index) {
+  const chapter = Math.min(harborTransportStages.length - 1, Math.floor(index / 10));
+  const transport = harborTransportStages[chapter];
+  const needs = { ...level.needs };
+  const unlocked = cargo.filter(item => item.unlockAt <= index).map(item => item.id);
+  let loaded = Object.values(needs).reduce((sum, count) => sum + count, 0);
+  let cursor = (index * 3 + chapter) % unlocked.length;
+  while (loaded < transport.capacity) {
+    const id = unlocked[cursor % unlocked.length];
+    needs[id] = (needs[id] || 0) + 1;
+    loaded++;
+    cursor += 2;
+  }
+  return {
+    ...level,
+    capacity: transport.capacity,
+    needs,
+    vehicle: transport.name,
+    vehicleIcon: transport.icon,
+    chapter: chapter + 1,
+  };
+}
+export const harborLevels = [...originalHarborLevels, ...extraHarborLevels].map(growHarborLevel);
 export const pantryFoods = [
   { id: "bread", name: "Bread sandwich", group: "main", icon: "bread" },
   { id: "beans", name: "Prepared beans", group: "main", icon: "beans" },
