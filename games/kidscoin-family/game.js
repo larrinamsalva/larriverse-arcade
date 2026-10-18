@@ -248,6 +248,55 @@
     window.addEventListener('larriverse:profile', renderSummary);
   }
 
+
+  function renderCoinGrowth() {
+    const profileState = activeProfile();
+    const earns = profileState.tx.filter(item => item.type === 'earn');
+    const totalEarned = earns.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+    const recent = earns.slice(0, 20).reverse();
+    const recentEarned = recent.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+    let runningTotal = Math.max(0, totalEarned - recentEarned);
+    const values = [runningTotal];
+    recent.forEach(item => {
+      runningTotal += Number(item.amount || 0);
+      values.push(runningTotal);
+    });
+
+    const chart = $('#coinGrowthChart');
+    if (!chart) return;
+    const width = 640, height = 180, left = 24, right = 616, top = 20, bottom = 145;
+    const maxValue = Math.max(9, ...values);
+    const minValue = Math.min(...values, 0);
+    const range = Math.max(1, maxValue - minValue);
+    const xFor = index => values.length === 1
+      ? left
+      : left + (right - left) * index / (values.length - 1);
+    const yFor = value => bottom - (bottom - top) * (value - minValue) / range;
+    const points = values.map((value, index) => [xFor(index), yFor(value)]);
+    const pointText = points.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+    const areaPath = points.length
+      ? `M ${points[0][0].toFixed(1)} ${bottom} L ${pointText.replaceAll(' ', ' L ')} L ${points.at(-1)[0].toFixed(1)} ${bottom} Z`
+      : '';
+
+    $('#coinGrowthLine').setAttribute('points', pointText);
+    $('#coinGrowthArea').setAttribute('d', areaPath);
+    $('#coinGrowthDots').innerHTML = points.map(([x, y], index) =>
+      `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${index === points.length - 1 ? 5 : 3}"></circle>`
+    ).join('');
+    $('#coinGrowthTotal').textContent = Math.floor(totalEarned);
+    $('#coinGrowthEvents').textContent = earns.length;
+    const latest = earns[0];
+    $('#coinGrowthLatest').textContent = latest
+      ? `Latest: +${latest.amount} KC · ${latest.label}`
+      : 'Start earning to grow the line.';
+    chart.setAttribute(
+      'aria-label',
+      earns.length
+        ? `KidsCoin earned growth graph showing ${Math.floor(totalEarned)} total Family KC across ${earns.length} earning moments.`
+        : 'KidsCoin earned growth graph. No earning moments yet.'
+    );
+  }
+
   function renderSummary() {
     const profileState = activeProfile();
     const arcade = window.LarriVerseArcade?.summary?.() || { kc: 0 };
@@ -259,6 +308,7 @@
     $('#pendingValue').textContent = pendingCount(profileState.id);
     $('#sharedValue').textContent = Math.floor(arcade.kc || 0);
     $('#profileButton').textContent = `${profileState.avatar} ${profileState.name} ▾`;
+    renderCoinGrowth();
   }
 
   function render() {
