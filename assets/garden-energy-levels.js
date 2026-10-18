@@ -1,4 +1,4 @@
-import { gardenExtraLevels, energyExtraLevels } from "./remaining-fixed-worlds.js";
+import { gardenExtraLevels, gardenAdvancedLevels, energyExtraLevels } from "./remaining-fixed-worlds.js";
 // Offline-only progression for the original Garden Guardians and Energy Island worlds.
 // These are simplified, fictional practice missions; no actual planting or electrical advice.
 const originalGardenLevels = [
@@ -12,7 +12,7 @@ const originalGardenLevels = [
   { id:"grand-garden", name:"Grand Garden", rank:"Garden Steward", zone:"sunset", water:12, target:6, carrot:2, bean:1, flower:3, lesson:"Use what you learned: three plant kinds, six planned plots, and careful watering." },
 ];
 
-export const gardenLevels = [...originalGardenLevels, ...gardenExtraLevels];
+export const gardenLevels = [...originalGardenLevels, ...gardenExtraLevels, ...gardenAdvancedLevels];
 
 const conditions = {
   sunny: { name:"Sunny", icon:"☀️", solar:3, wind:1 },

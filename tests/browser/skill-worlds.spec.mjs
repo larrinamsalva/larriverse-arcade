@@ -416,17 +416,17 @@ test("Repair Café: complete all 120 unique step-by-step repairs", async ({
     expect(new Set(seen).size).toBe(120);
   });
 });
-test("Time Trail: complete sixty growing maps over six chapters",async({page})=>{
-  test.setTimeout(420000);
-  expect(timeTrailLevels).toHaveLength(60);
+test("Time Trail: complete 120 growing maps over twelve chapters",async({page})=>{
+  test.setTimeout(900000);
+  expect(timeTrailLevels).toHaveLength(120);
   await round(page,"time-trail",async()=>{
     await expect(page.locator(".route-level-hero")).toContainText(timeTrailLevels[0].name);
-    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(6);
+    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(12);
     await page.locator('[data-tile="4"]').click();
     await expect(page.locator("#feedback")).toContainText("glowing nearby");
     for(const [index,level] of timeTrailLevels.entries()){
       const path=shortestTrailPath(level);
-      await expect(page.locator("#stageLabel")).toContainText(`Map ${index+1} of 60`);
+      await expect(page.locator("#stageLabel")).toContainText(`Map ${index+1} of 120`);
       await expect(page.locator(".route-level-hero")).toContainText(level.name);
       await expect(page.locator(".tile-grid .tile")).toHaveCount(level.width*level.width);
       await expect(page.locator(".route-stats")).toContainText(`Flags found0/${level.flags.length}`);
@@ -437,12 +437,25 @@ test("Time Trail: complete sixty growing maps over six chapters",async({page})=>
         await page.locator(`[data-tile="${tile}"]`).click();
       }
       await expect(page.locator("#feedback")).toContainText("3 stars earned");
-      await page.getByRole("button",{name:index===59?"See all my trails":"Next trail"}).click();
-      if(index<59)await expect(page.locator(".route-stats")).toContainText(`Trail stars${(index+1)*3}/180`);
+      await page.getByRole("button",{name:index===119?"See all my trails":"Next trail"}).click();
+      if(index<119)await expect(page.locator(".route-stats")).toContainText(`Trail stars${(index+1)*3}/360`);
     }
-    await expect(page.locator("#finishMessage")).toContainText("180 of 180 trail stars");
+    await expect(page.locator("#finishMessage")).toContainText("360 of 360 trail stars");
   });
 });
+test("Time Trail: old 60-level save expands without losing earned stars",async({page})=>{
+  await page.goto("/games/time-trail/index.html");
+  await page.evaluate(()=>{
+    localStorage.setItem("larriverse.timeTrail.progress.v2",JSON.stringify({nextLevel:59,stars:Array(60).fill(3)}));
+  });
+  await page.reload();
+  await expect(page.locator("#stageLabel")).toContainText("Map 60 of 120");
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.timeTrail.progress.v2")));
+  // Save is migrated in memory; reaching the next checkpoint will persist the padded 120-star array.
+  expect(saved.stars.length).toBe(60);
+  await expect(page.locator(".route-stats")).toContainText("Trail stars180/360");
+});
+
 test("Time Trail: exhausted moves allow retry without locking other levels",async({page})=>{
   await page.goto("/games/time-trail/index.html");
   const level=timeTrailLevels[0];
@@ -461,24 +474,24 @@ test("Time Trail: checkpoint resumes after a page reload and can replay from map
   const path=shortestTrailPath(timeTrailLevels[0]);
   for(const tile of path.slice(1))await page.locator(`[data-tile="${tile}"]`).click();
   await page.getByRole("button",{name:"Next trail"}).click();
-  await expect(page.locator("#stageLabel")).toContainText("Map 2 of 60");
+  await expect(page.locator("#stageLabel")).toContainText("Map 2 of 120");
   await page.reload();
   await expect(page.locator("#stageLabel")).toContainText("Map 2 of 60");
   await expect(page.locator(".route-stats")).toContainText("Trail stars3/180");
   await page.getByRole("button",{name:"Replay from first map"}).click();
-  await expect(page.locator("#stageLabel")).toContainText("Map 1 of 60");
+  await expect(page.locator("#stageLabel")).toContainText("Map 1 of 120");
   await expect(page.locator(".route-stats")).toContainText("Trail stars3/180");
   const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.timeTrail.progress.v2")));
   expect(saved.nextLevel).toBe(0);
   expect(saved.stars[0]).toBe(3);
 });
-test("Garden Guardians: sixty gardens with sustainable water planning", async ({ page }) => {
-  test.setTimeout(420000);
-  expect(gardenLevels).toHaveLength(60);
+test("Garden Guardians: 120 gardens with sustainable water planning", async ({ page }) => {
+  test.setTimeout(900000);
+  expect(gardenLevels).toHaveLength(120);
   await round(page, "garden-guardians", async () => {
-    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(12);
+    await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(24);
     for (const [levelIndex, level] of gardenLevels.entries()) {
-      await expect(page.locator("#stageLabel")).toContainText(`Garden level ${levelIndex + 1} of 60`);
+      await expect(page.locator("#stageLabel")).toContainText(`Garden level ${levelIndex + 1} of 120`);
       await expect(page.locator(".nature-banner")).toContainText(level.name);
       await expect(page.locator("#gameBoard")).toContainText(level.lesson);
       await expect(page.locator(".stat-row")).toContainText(`Water drops${level.water}`);
@@ -504,11 +517,11 @@ test("Garden Guardians: sixty gardens with sustainable water planning", async ({
         await page.getByRole("button", { name: "Next day" }).click();
       }
       await expect(page.locator(".stat-row")).toContainText(`Ready plants${level.target}/${level.target}`);
-      await page.getByRole("button", { name: levelIndex === 59 ? "Visit my garden" : "Next garden" }).click();
-      if (levelIndex < 59)
-        await expect(page.locator(".stat-row")).toContainText(`Garden stars${(levelIndex + 1) * 3}/180`);
+      await page.getByRole("button", { name: levelIndex === 119 ? "Visit my garden" : "Next garden" }).click();
+      if (levelIndex < 119)
+        await expect(page.locator(".stat-row")).toContainText(`Garden stars${(levelIndex + 1) * 3}/360`);
     }
-    await expect(page.locator("#finishMessage")).toContainText("180 of 180 garden stars");
+    await expect(page.locator("#finishMessage")).toContainText("360 of 360 garden stars");
   });
 });
 test("Weather Watchers: complete 60 illustrated challenges across four ranks", async ({
@@ -577,14 +590,14 @@ test("Energy Island: sixty solvable power grids respond to four-day forecasts", 
     await expect(page.locator("#finishMessage")).toContainText("180 of 180 island stars");
   });
 });
-test("Robot Rover: debug a collision and solve sixty original mazes at par", async ({
+test("Robot Rover: debug a collision and solve 120 original mazes at par", async ({
   page,
 }) => {
-  test.setTimeout(420000);
+  test.setTimeout(900000);
   await round(page, "robot-rover", async () => {
-    expect(robotLevels).toHaveLength(60);
-    await expect(page.locator("#stageLabel")).toContainText("Robot world 1 of 60");
-    await expect(page.locator(".rover-level-trail .level-node")).toHaveCount(12);
+    expect(robotLevels).toHaveLength(120);
+    await expect(page.locator("#stageLabel")).toContainText("Robot world 1 of 120");
+    await expect(page.locator(".rover-level-trail .level-node")).toHaveCount(24);
     await expect(page.locator(".rover-level-trail .level-node.active")).toContainText(
       "Rover Rookie",
     );
@@ -638,9 +651,9 @@ test("Robot Rover: debug a collision and solve sixty original mazes at par", asy
 
       if (i < programs.length - 1) {
         await expect(page.locator("#stageLabel")).toContainText(
-          `Robot world ${i + 2} of 60`,
+          `Robot world ${i + 2} of 120`,
         );
-        if ([4, 9, 14, 19, 24, 29, 34, 39, 44, 49, 54].includes(i)) {
+        if ((i + 1) % 5 === 0 && i < programs.length - 1) {
           await expect(page.locator("#feedback")).toContainText("unlocked");
           await expect(
             page.locator(".rover-level-trail .level-node.active"),
@@ -650,9 +663,9 @@ test("Robot Rover: debug a collision and solve sixty original mazes at par", asy
     }
 
     await expect(page.locator("#finishMessage")).toContainText(
-      "180 of 180 efficiency stars",
+      "360 of 360 efficiency stars",
     );
-    await expect(page.locator("#finishMessage")).toContainText("across 12 ranks");
+    await expect(page.locator("#finishMessage")).toContainText("across 24 ranks");
   });
 });
 test("Lemonade Lab: four forecasts and a ledger balancing revenue minus cost", async ({

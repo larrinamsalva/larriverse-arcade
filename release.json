@@ -237,13 +237,13 @@
       "id": "time-trail",
       "title": "Time Trail",
       "route": "games/time-trail/index.html",
-      "manualFocus": "Play 60 distinct route maps across six ranks: test 5×5 to 7×7 grids, increasingly long solutions and 3–5 flags, retries, next-level transitions, on-device checkpoint/reload, saved stars, theme contrast, touch/keyboard, sound-off, and completion. Keep human release approval."
+      "manualFocus": "Complete representative maps across all twelve chapters and verify the full 120-map solver. Check 5×5, 6×6 and advanced 7×7 routes, five-flag later maps, retries, compact level selector, next-level transitions, old 60-level save migration, stars, touch/keyboard and final 360-star completion."
     },
     {
       "id": "garden-guardians",
       "title": "Garden Guardians",
       "route": "games/garden-guardians/index.html",
-      "manualFocus": "Complete eight garden levels and four ranks. Check the planting quotas, crop variety, different water budgets, stars, next-garden progression, keyboard/touch access, and saved completion."
+      "manualFocus": "Complete representative Garden Guardians levels across all 24 ranks and verify all 120 distinct crop/target/water plans. Test Clear this garden without losing the current level, the visible Water plants tool, two-day watering, tighter and looser water budgets, compact level selector, stars, and light/dark/touch accessibility."
     },
     {
       "id": "energy-island",
@@ -261,7 +261,7 @@
       "id": "robot-rover",
       "title": "Robot Rover",
       "route": "games/robot-rover/index.html",
-      "manualFocus": "Complete a full Robot Rover round using touch and keyboard, read the feedback, confirm one saved completion, then verify replay and sound-off behavior."
+      "manualFocus": "Solve representative Robot Rover worlds across all 24 ranks and verify all 120 boards are unique and shortest-path solvable. Test collision/debug feedback, clear-code behavior, longer later programs, compact level selector, 3-star par targets, reduced motion, touch/keyboard and final 360-star completion."
     },
     {
       "id": "lemonade-lab",

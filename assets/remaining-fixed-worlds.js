@@ -161,3 +161,79 @@ export const roverExtraLevels=Array.from({length:40},(_,i)=>{
   ", column "+(chosen.start%5+1)+", and seek the star at row "+(Math.floor(chosen.goal/5)+1)+
   ", column "+(chosen.goal%5+1)+". Use Left and Right turns before moving Forward; avoid the rocks."};
 });
+
+
+// Garden Guardians levels 61–120: harder resource plans with more varied harvest targets.
+// Every tuple of crop mix + target + water budget is distinct from the first 60.
+const advancedGardenRanks=[
+ "Soil Systems","Water Wise","Crop Balancer","Pollinator Planner","Drought Detective","Harvest Planner",
+ "Habitat Builder","Season Strategist","Garden Analyst","Resource Mentor","Eco Steward","Master Gardener"
+];
+const originalGardenPlanKeys=new Set([
+ "2:2:2:6:12","3:2:1:6:12","1:2:3:5:11","1:4:1:5:10",
+ "3:1:2:5:11","1:1:4:6:12","2:3:1:5:10","2:1:3:6:12",
+ ...gardenExtraLevels.map(level=>[level.carrot,level.bean,level.flower,level.target,level.water].join(":"))
+]);
+const advancedGardenCandidates=[];
+for(let flowers=1;flowers<=4;flowers++)
+ for(let carrots=0;carrots<=6-flowers;carrots++){
+  const bean=6-flowers-carrots;
+  for(const target of [4,5,6])
+   for(let water=target*2;water<=14;water++){
+    const key=[carrots,bean,flowers,target,water].join(":");
+    if(!originalGardenPlanKeys.has(key))advancedGardenCandidates.push({carrot:carrots,bean,flower:flowers,target,water,key});
+   }
+ }
+if(advancedGardenCandidates.length<60)throw new Error("Not enough distinct advanced garden plans");
+const advancedGardenPlaces=["Cedar","Marigold","Juniper","Lavender","Robin","Creek","Honeybee","Oak","Moonflower","Basil"];
+const advancedGardenKinds=["Terrace","Commons","Nursery","Hollow","Garden","Yard"];
+export const gardenAdvancedLevels=advancedGardenCandidates.slice(0,60).map((plan,i)=>{
+ const level=i+61,rank=advancedGardenRanks[Math.floor(i/5)],zone=["meadow","orchard","hill","sunset"][Math.floor(i/15)];
+ const name=advancedGardenPlaces[i%advancedGardenPlaces.length]+" "+advancedGardenKinds[Math.floor(i/advancedGardenPlaces.length)];
+ return {
+  id:"garden-"+String(level).padStart(3,"0"),name,rank,zone,
+  carrot:plan.carrot,bean:plan.bean,flower:plan.flower,target:plan.target,water:plan.water,
+  lesson:"Build "+name+" with "+plan.carrot+" carrots, "+plan.bean+" beans and "+plan.flower+
+   " flowers. You have "+plan.water+" water drops; plan two watering days so at least "+plan.target+
+   " plants thrive without spending water where it is not needed."
+ };
+});
+
+// Robot Rover levels 61–120: deterministic, solver-verified mazes.
+const advancedRoverRanks=[
+ "Route Reader","Turn Technician","Maze Mapper","Rock Planner","Command Builder","Debug Detective",
+ "Path Optimizer","Mission Coder","Grid Engineer","Rover Captain","Star Navigator","Rover Grandmaster"
+];
+const advancedRoverAdjectives=["Amber","Beacon","Cinder","Delta","Emerald","Frost","Golden","Harbor","Ion","Jade","Kepler","Lunar"];
+const advancedRoverNouns=["Crossing","Circuit","Pass","Switchback","Maze"];
+const advancedRoverBoards=new Set(roverExtraLevels.map(level=>[level.start,level.goal,level.dir,level.rocks.join(",")].join(":")));
+export const roverAdvancedLevels=Array.from({length:60},(_,i)=>{
+ let seed=(900001+i*104729)>>>0,chosen=null;
+ for(let attempts=0;attempts<12000;attempts++){
+  seed=roverNext(seed);const start=seed%25;
+  seed=roverNext(seed);const goal=seed%25;
+  seed=roverNext(seed);const dir=seed%4;
+  if(start===goal)continue;
+  const rocks=[],rockCount=7+Math.floor(i/15);
+  for(let cell=0;cell<25;cell++){
+   if(cell===start||cell===goal)continue;
+   seed=roverNext(seed);
+   if((seed%31)<rockCount)rocks.push(cell);
+  }
+  const candidate={start,goal,dir,rocks};
+  const path=roverShortestPath(candidate);
+  const minLength=8+Math.floor(i/10);
+  const key=[start,goal,dir,rocks.join(",")].join(":");
+  if(path&&path.length>=minLength&&path.length<=30&&!advancedRoverBoards.has(key)){
+   chosen={...candidate,par:path.length};advancedRoverBoards.add(key);break;
+  }
+ }
+ if(!chosen)throw new Error("Advanced Rover generator could not find puzzle "+(i+61));
+ const rank=advancedRoverRanks[Math.floor(i/5)],zone=["meadow","canyon","crystal","cosmic"][Math.floor(i/15)];
+ const name=advancedRoverAdjectives[Math.floor(i/5)]+" "+advancedRoverNouns[i%5];
+ return {...chosen,name,rank,zone,
+  hint:"Plan "+name.toLowerCase()+" in short sections. Rover begins at row "+(Math.floor(chosen.start/5)+1)+
+   ", column "+(chosen.start%5+1)+", facing "+["north","east","south","west"][chosen.dir]+
+   ". Reach row "+(Math.floor(chosen.goal/5)+1)+", column "+(chosen.goal%5+1)+
+   " without touching a rock. Test, notice the first wrong turn, then change only the commands that need debugging."};
+});

@@ -792,10 +792,12 @@ function readTrailSave() {
   const fresh={nextLevel:0,stars:Array(timeTrailLevels.length).fill(0)};
   try {
     const saved=JSON.parse(localStorage.getItem(TRAIL_SAVE_KEY)||"null");
-    if(!saved||!Array.isArray(saved.stars)||saved.stars.length!==timeTrailLevels.length)return fresh;
+    if(!saved||!Array.isArray(saved.stars))return fresh;
+    const stars=Array(timeTrailLevels.length).fill(0);
+    saved.stars.slice(0,timeTrailLevels.length).forEach((n,index)=>{stars[index]=Number.isInteger(n)&&n>=0&&n<=3?n:0;});
     return {
       nextLevel:Number.isInteger(saved.nextLevel)&&saved.nextLevel>=0&&saved.nextLevel<timeTrailLevels.length?saved.nextLevel:0,
-      stars:saved.stars.map(n=>Number.isInteger(n)&&n>=0&&n<=3?n:0),
+      stars,
     };
   }catch {return fresh;}
 }
@@ -823,7 +825,7 @@ function renderRoute() {
   board.innerHTML=`${levelTrail(timeTrailLevels,state.level)}
     <section class="route-level-hero route-zone--${esc(level.zone)}">
       <span aria-hidden="true">${esc(level.icon)}</span>
-      <div><h2>${esc(level.name)}</h2><p>${esc(level.lesson)}</p><small>Chapter ${level.chapter+1} of 6 · ${level.width} × ${level.width} map</small></div>
+      <div><h2>${esc(level.name)}</h2><p>${esc(level.lesson)}</p><small>Chapter ${level.chapter+1} of ${[...new Set(timeTrailLevels.map(item=>item.chapter))].length} · ${level.width} × ${level.width} map</small></div>
     </section>
     <p class="route-instruction"><strong>${level.stepLimit} moves maximum</strong><span>Collect ${level.flags.length} flags and reach the picnic. Glowing tiles are one move away.</span></p>
     <div class="stat-row route-stats">
@@ -848,7 +850,7 @@ function renderRoute() {
       if(state.level===timeTrailLevels.length-1){
         const total=state.levelStars.reduce((sum,n)=>sum+n,0);
         saveTrail(0);
-        finish(`You explored all ${timeTrailLevels.length} trails across six chapters and earned ${total} of ${timeTrailLevels.length*3} trail stars!`,
+        finish(`You explored all ${timeTrailLevels.length} trails across ${[...new Set(timeTrailLevels.map(item=>item.chapter))].length} chapters and earned ${total} of ${timeTrailLevels.length*3} trail stars!`,
           Math.round(total/(timeTrailLevels.length*3)*100));
       }else{state.level++;saveTrail(state.level);startTrailLevel();say("New trail unlocked! Check the flags and plan the next route.","good");}
     });

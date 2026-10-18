@@ -1,4 +1,4 @@
-import { roverExtraLevels } from "./remaining-fixed-worlds.js";
+import { roverExtraLevels, roverAdvancedLevels } from "./remaining-fixed-worlds.js";
 import { expeditions } from "./expedition-worlds.js";
 import { messageExtras, conversationExtras, newsExtras, sortingExtras, trafficQuestions } from "./expanded-scenarios.js";
 import { sixtyMessageExtras, sixtyConversationExtras, sixtyNewsExtras, sixtySortingExtras, sixtyRepairExtras } from "./sixty-world-extras.js";
@@ -113,9 +113,9 @@ export const worlds = [
     minutes: "15 min",
     art: 5,
     skill: "Route planning & navigation",
-    desc: "Explore sixty progressively longer trails over six chapters, from easy 5×5 paths to giant 7×7 summits.",
+    desc: "Explore 120 progressively longer trails over twelve chapters, from easy 5×5 paths to advanced 7×7 route-planning expeditions.",
     mission:
-      "Explore sixty map levels in six chapters. Collect three, four, or five flags, plan around new rock patterns, and follow your saved checkpoint from one session to the next.",
+      "Explore 120 map levels in twelve chapters. Collect three, four, or five flags, plan around new rock patterns, and follow your saved checkpoint from one session to the next.",
     take: "Plan the whole route before the first step. If a route does not work, reset and try a different one.",
     mode: "route",
   },
@@ -129,9 +129,9 @@ export const worlds = [
     minutes: "4 min",
     art: 6,
     skill: "Resource care & diversity",
-    desc: "Grow sixty different gardens, balance crops and pollinator flowers, and protect your water supply.",
+    desc: "Grow 120 different gardens, balance crops and pollinator flowers, and protect a changing water budget.",
     mission:
-      "Advance through sixty garden levels and twelve ranks. Match each planting plan, water wisely across three days, and earn up to three stars per garden.",
+      "Advance through 120 garden levels and twenty-four ranks. Match each planting plan, use the Water plants tool wisely across three days, and earn up to three stars per garden.",
     take: "Different plants support different needs. Sharing limited water takes planning.",
     mode: "garden",
   },
@@ -177,7 +177,7 @@ export const worlds = [
     minutes: "15 min",
     art: 9,
     skill: "Sequencing & debugging",
-    desc: "Code a little rover through sixty progressive star-filled worlds and twelve explorer ranks.",
+    desc: "Code a little rover through 120 progressive star-filled worlds and twenty-four explorer ranks.",
     mission:
       "Build a command list with forward, turn left, and turn right. Watch Rover's facing direction, test your path, and improve it for efficiency stars.",
     take: "Debugging means noticing what happened and improving one part of your plan. Mistakes are clues.",
@@ -836,7 +836,7 @@ const originalRobotLevels = [
     hint: "Use short turns to reach the right edge, travel down and around the lower rocks, then climb and turn west for the final star.",
   },
 ];
-export const robotLevels = [...originalRobotLevels, ...roverExtraLevels];
+export const robotLevels = [...originalRobotLevels, ...roverExtraLevels, ...roverAdvancedLevels];
 
 export const weatherChallenges = [
   {
