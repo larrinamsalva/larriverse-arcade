@@ -1,6 +1,6 @@
 // Curated offline Sudoku adventures. 0 is an empty cell.
 // 20 small 4×4, 20 middle 6×6, and 20 classic 9×9 boards.
-// All 60 puzzle solutions are unique and verified by validate-kids-sudoku.mjs.
+// All 80 puzzle solutions are unique and verified by validate-kids-sudoku.mjs.
 const ENTRIES = `1000320120344310|1423324121344312
 2013300212040301|2413314212344321
 0130304020101024|4132324124131324
