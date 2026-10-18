@@ -2121,3 +2121,115 @@ html.larriverse-high-contrast body[data-world="bridge-buddies"] .bridge-build-he
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
 }
+
+
+/* Harbor Helpers: six-stage transport and cargo progression. */
+body[data-world="harbor-helpers"] .harbor-map{
+  border:2px solid #6ea8ad;
+  box-shadow:inset 0 3px 0 #ffffff80,0 6px 0 #4d899044,0 14px 24px #2d59651f;
+}
+body[data-world="harbor-helpers"] .harbor-map--chapter-3 .harbor-boat,
+body[data-world="harbor-helpers"] .harbor-map--chapter-4 .harbor-boat{
+  filter:drop-shadow(0 8px 4px #17455255);
+}
+body[data-world="harbor-helpers"] .harbor-ferry,
+body[data-world="harbor-helpers"] .harbor-truck{
+  filter:drop-shadow(0 7px 4px #17364355);
+}
+body[data-world="harbor-helpers"] .harbor-request-card{
+  margin:15px 0;
+  padding:16px 18px;
+  border:2px solid #9bc4b6;
+  border-radius:18px;
+  background:linear-gradient(145deg,#f7fff9,#e7f4ef);
+  box-shadow:inset 0 2px 0 #fff,0 5px 0 #6c9d8d33;
+}
+body[data-world="harbor-helpers"] .harbor-request-card h2{
+  margin:.1rem 0 .45rem;
+}
+body[data-world="harbor-helpers"] .harbor-cargo-shelf{
+  grid-template-columns:repeat(auto-fit,minmax(125px,1fr));
+}
+body[data-world="harbor-helpers"] .harbor-cargo-card{
+  min-height:132px;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #c8bea955;
+}
+body[data-world="harbor-helpers"] .harbor-manifest{
+  margin-top:16px;
+  padding:14px;
+  border:2px solid #d4bb93;
+  border-radius:18px;
+  background:linear-gradient(180deg,#fffaf0,#f3e5cd);
+  box-shadow:inset 0 3px 0 #fff,0 5px 0 #a17c4b3d;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-head{
+  display:flex;
+  justify-content:space-between;
+  gap:8px 18px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+  color:#59452f;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-head span{
+  font-size:.8rem;
+  font-weight:800;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(105px,1fr));
+  gap:8px;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates>button{
+  min-height:86px;
+  padding:8px;
+  border:2px solid #c9ad82;
+  border-radius:13px;
+  background:linear-gradient(145deg,#fffdf7,#efe0c8);
+  color:#4d3b29;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #9e7a4d3d;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates>button span{
+  display:block;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates .object-icon{
+  width:42px;
+  height:42px;
+  margin:auto;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates small{
+  display:block;
+  margin-top:4px;
+  line-height:1.25;
+  font-weight:800;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates p{
+  grid-column:1/-1;
+  margin:0;
+  color:#6c5d4d;
+  font-size:.85rem;
+}
+html.larriverse-dark body[data-world="harbor-helpers"] :is(.harbor-request-card,.harbor-manifest,.harbor-manifest-crates>button){
+  background:#27263a;
+  color:#f6f2ff;
+  border-color:#746b8c;
+}
+html.larriverse-dark body[data-world="harbor-helpers"] :is(.harbor-manifest-head,.harbor-manifest-crates p){
+  color:#f2ebff;
+}
+html.larriverse-high-contrast body[data-world="harbor-helpers"] :is(.harbor-request-card,.harbor-manifest,.harbor-manifest-crates>button){
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="harbor-helpers"] :is(.harbor-manifest-head,.harbor-manifest-crates p){
+  color:#fff!important;
+}
+@media(max-width:600px){
+  body[data-world="harbor-helpers"] .harbor-cargo-shelf{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  body[data-world="harbor-helpers"] .harbor-manifest-crates{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
