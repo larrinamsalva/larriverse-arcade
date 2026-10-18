@@ -2,6 +2,7 @@ import { roverExtraLevels } from "./remaining-fixed-worlds.js";
 import { expeditions } from "./expedition-worlds.js";
 import { messageExtras, conversationExtras, newsExtras, sortingExtras, trafficQuestions } from "./expanded-scenarios.js";
 import { sixtyMessageExtras, sixtyConversationExtras, sixtyNewsExtras, sixtySortingExtras, sixtyRepairExtras } from "./sixty-world-extras.js";
+import { scamMessageBonus } from "./eighty-world-extras.js";
 import { weatherExtendedChallenges, gardenExtendedChallenges } from "./sixty-garden-weather-challenges.js";
 import { gardenBonusChallenges } from "./garden-bonus-challenges.js";
 export { trafficQuestions };
@@ -51,7 +52,7 @@ export const worlds = [
     skill: "Spotting online tricks",
     desc: "Investigate sneaky messages and protect your digital clubhouse.",
     mission:
-      "Explore all 60 original different suspicious messages in six connected chapters. Spot urgency, secrecy, or pressure; save progress after every message.",
+      "Explore 80 different suspicious messages in eight connected chapters. Spot urgency, secrecy, impersonation, payment tricks, or pressure; save progress after every message.",
     take: "Slow down when a message asks for secrets, money, or a rushed decision. Check through a route you already trust.",
     mode: "messages",
   },
@@ -294,6 +295,7 @@ export const messages = [
   },
   ...messageExtras,
   ...sixtyMessageExtras,
+  ...scamMessageBonus,
 ];
 export const conversations = [
   {
