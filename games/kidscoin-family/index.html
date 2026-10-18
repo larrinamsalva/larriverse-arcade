@@ -57,6 +57,38 @@
       <article><b id="sharedValue">0</b><span>shared arcade KC</span></article>
     </section>
 
+    <section class="coin-growth" aria-labelledby="coinGrowthTitle">
+      <div class="coin-growth-copy">
+        <p class="eyebrow">My earned KidsCoin growth</p>
+        <h2 id="coinGrowthTitle">Watch your Family KC climb</h2>
+        <p>Each approved chore, first-time lesson reward, or parent bonus adds a new step. This is a pretend learning graph — not cryptocurrency or a real market price.</p>
+        <div class="coin-growth-stats">
+          <span><b id="coinGrowthTotal">0</b> total KC earned</span>
+          <span><b id="coinGrowthEvents">0</b> earning moments</span>
+          <span id="coinGrowthLatest">Start earning to grow the line.</span>
+        </div>
+      </div>
+      <div class="coin-growth-chart-wrap">
+        <svg id="coinGrowthChart" class="coin-growth-chart" viewBox="0 0 640 180" role="img" aria-label="KidsCoin earned growth graph">
+          <defs>
+            <linearGradient id="coinGrowthFill" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="currentColor" stop-opacity=".28"></stop>
+              <stop offset="100%" stop-color="currentColor" stop-opacity=".02"></stop>
+            </linearGradient>
+          </defs>
+          <g class="coin-grid" aria-hidden="true">
+            <line x1="24" y1="35" x2="616" y2="35"></line>
+            <line x1="24" y1="90" x2="616" y2="90"></line>
+            <line x1="24" y1="145" x2="616" y2="145"></line>
+          </g>
+          <path id="coinGrowthArea" class="coin-growth-area" d=""></path>
+          <polyline id="coinGrowthLine" class="coin-growth-line" points=""></polyline>
+          <g id="coinGrowthDots" class="coin-growth-dots" aria-hidden="true"></g>
+        </svg>
+        <div class="coin-growth-axis"><span>Earlier</span><strong>↗ Keep earning</strong><span>Now</span></div>
+      </div>
+    </section>
+
     <nav class="tabs" aria-label="KidsCoin sections">
       <button class="active" data-tab="home">Home</button><button data-tab="tasks">Chores</button><button data-tab="learn">Learn</button><button data-tab="ledger">Ledger</button><button data-tab="rewards">Rewards</button><button data-tab="notes">Notes</button>
     </nav>
