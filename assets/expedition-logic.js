@@ -1,7 +1,12 @@
 export const alphabet = "ABCDEFGH";
 export const wrap = (value, amount = 0) => ((value + amount) % 8 + 8) % 8;
 export const encode = (word, shift) => [...word].map(letter => alphabet[wrap(alphabet.indexOf(letter), shift)]).join("");
-export const compassTarget = (landmark, clue) => landmark.id + clue.east + clue.south * 6;
+export const compassTarget = (landmark, clue) => {
+  const delta = Array.isArray(clue.steps)
+    ? clue.steps.reduce((sum, step) => ({ east: sum.east + (step.east || 0), south: sum.south + (step.south || 0) }), { east: 0, south: 0 })
+    : { east: clue.east, south: clue.south };
+  return landmark.id + delta.east + delta.south * 6;
+};
 export const adjacent = (left, right, width = 3) => Math.abs(left % width - right % width) + Math.abs(Math.floor(left / width) - Math.floor(right / width)) === 1;
 export function townNeeds(plots) {
   const park = plots.indexOf("park"), hut = plots.indexOf("hut"), ramp = plots.indexOf("ramp"), bench = plots.indexOf("bench");
