@@ -99,13 +99,13 @@ const counts=Object.entries(sequential);
 const ready=counts.filter(([id,n])=>n>=60);
 const notReady=counts.filter(([id,n])=>n<60);
 const minimums={
- "bridge-buddies":60,"water-works":60,"harbor-helpers":60,"compass-cove":60,"cipher-club":60,"trade-town":60,"critter-council":60,"pocket-planet":60,"garden-guardians":60,"energy-island":60,"robot-rover":60,"pantry-picnic":60,"traffic-town":60,"street-safety-scout":60,
+ "bridge-buddies":60,"water-works":60,"harbor-helpers":60,"compass-cove":60,"cipher-club":60,"trade-town":60,"critter-council":60,"pocket-planet":60,"garden-guardians":60,"energy-island":60,"robot-rover":60,"pantry-picnic":60,"traffic-town":120,"street-safety-scout":60,
  "scam-sleuth":60,"kindness-quest":60,"fact-finder":60,"repair-cafe":60,
  "time-trail":60,"reuse-rally":60,"kids-sudoku":60,
  "bubble-resonance-phi369":60,"weather-watchers":60,"garden-grow-harvest":60,
  "word-search-world":60,"crossword-world":60
 };
-for(const [id,floor] of Object.entries(minimums))assert.equal(sequential[id],floor,`${id} must keep all sixty distinct playable challenges`);
+for(const [id,floor] of Object.entries(minimums))assert.equal(sequential[id],floor,`${id} must keep its intended distinct playable challenge count`);
 for(const [id,n] of ready)assert.ok(n>=60,id+" regressed");
 assert.equal(ready.length,26,"All fixed-sequence worlds now provide sixty real challenges");
 assert.ok(gps.questions&&Object.values(gps.questions).reduce((n,a)=>n+a.length,0)===gps.source.questionCount);
