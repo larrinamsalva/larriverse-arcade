@@ -206,7 +206,7 @@ test("Pocket Planet: ten finished projects unlock chapter two and survive reload
   const checkpoint=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.mainCampaign.pocket-planet.v1")));
   expect(checkpoint).toEqual({next:10,correct:10});
   await page.reload();
-  await expect(page.locator("#stageLabel")).toContainText("Chapter 2/6");
+  await expect(page.locator("#stageLabel")).toContainText("Chapter 2/8");
   await expect(page.locator("#stageLabel")).toContainText("Project 11/60");
   await expect(page.locator(".level-node.complete")).toHaveCount(1);
   await expect(page.locator(".level-node.active")).toHaveCount(1);
@@ -223,25 +223,25 @@ test("Pocket Planet: ten finished projects unlock chapter two and survive reload
   expect(size.scroll).toBeLessThanOrEqual(size.width+4);
 });
 
-test("Scam Sleuth: complete shuffled messages and explanatory feedback · full 60-challenge journey", async ({
+test("Scam Sleuth: complete shuffled messages and explanatory feedback · full 80-challenge journey", async ({
   page,
 }) => {
-  test.setTimeout(420000);
+  test.setTimeout(560000);
   await round(page, "scam-sleuth", () =>
     chooseDeck(page, messages, [
       "Read it",
       "Check another way",
       "Block & tell an adult",
-    ]),
+    ], 80),
   );
 });
-test("Core life-skill worlds: five unique question banks contain sixty scenarios",()=>{
-  expect(messages).toHaveLength(60);
+test("Core life-skill worlds keep their intended unique scenario counts",()=>{
+  expect(messages).toHaveLength(80);
   expect(conversations).toHaveLength(60);
   expect(newsCards).toHaveLength(60);
   expect(repairs).toHaveLength(60);
   expect(sorting).toHaveLength(60);
-  expect(new Set(messages.map(item=>item.text)).size).toBe(60);
+  expect(new Set(messages.map(item=>item.text)).size).toBe(80);
   expect(new Set(conversations.map(item=>item.text)).size).toBe(60);
   expect(new Set(newsCards.map(item=>item.text)).size).toBe(60);
   expect(new Set(repairs.map(item=>item.title)).size).toBe(60);
@@ -259,7 +259,7 @@ test("Scam Sleuth: ten cleared tasks resume from eleven after reload",async({pag
   expect(await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.mainCampaign.scam-sleuth.v1")).next)).toBe(10);
   await page.reload();
   await expect(page.locator("#stageLabel")).toContainText("Chapter 2/6");
-  await expect(page.locator("#stageLabel")).toContainText("11/60");
+  await expect(page.locator("#stageLabel")).toContainText("11/80");
 });
 test("Scam Sleuth: center evidence stays readable in light, dark, and high contrast", async ({
   page,
