@@ -46,7 +46,7 @@ export function createExpedition(world, a) {
     pipes: ["Flow Finder","Pipe Planner","Network Engineer","Waterworks Master","Bend Builder","Filter Tracker","Flow Explorer","Route Analyst","Water Connector","Flow Specialist","Pipeline Designer","Waterworks Champion"],
     harbor: ["Dock Helper","Route Planner","Harbor Captain","Community Admiral","Supply Scout","Island Planner","Resource Organizer","Cargo Navigator","Delivery Leader","Harbor Coordinator","Community Captain","Master Harbor Helper"],
     compass: ["Shore Scout","Trail Finder","Cove Navigator","Master Navigator","Map Pathfinder","Direction Decoder","Landmark Tracker","Route Explorer","Island Cartographer","Wayfinding Expert","Map Strategist","Compass Champion"],
-    cipher: ["Code Rookie","Pattern Solver","Cipher Detective","Code Master","Letter Explorer","Shift Specialist","Symbol Strategist","Word Decoder","Code Researcher","Pattern Architect","Message Mentor","Cipher Champion"],
+    cipher: ["Code Rookie","Pattern Solver","Cipher Detective","Code Master","Letter Explorer","Shift Specialist","Symbol Strategist","Word Decoder","Code Researcher","Pattern Architect","Message Mentor","Cipher Champion","Alphabet Explorer","Long Word Scout","Phrase Pathfinder","Clue Connector","Pattern Navigator","Message Builder","Cipher Analyst","Word Strategist","Code Cartographer","Decoder Mentor","Master Cryptographer","Cipher Grandmaster"],
     town: ["Kind Listener", "Neighborhood Helper", "Access Planner", "Council Champion", "Park Pathfinder", "Neighbor Advocate", "Inclusive Designer", "Access Engineer", "Community Planner", "Shared Space Leader", "Council Mentor", "Neighborhood Champion"],
     trade: ["Careful Shopper", "Market Helper", "Price Detective", "Budget Builder", "Bundle Checker", "Fee Finder", "Unit Price Pro", "Smart Saver", "Whole Cost Planner", "Deal Detective", "Community Buyer", "Market Master"],
     pantry: ["Picnic Helper","Snack Sorter","Produce Picker","Leftover Saver","Lunch Planner","Pantry Scout","Balanced Packer","Food Waste Fighter","Picnic Planner","Pantry Pro","Lunch Leader","Pantry Champion"],
@@ -332,22 +332,69 @@ export function createExpedition(world, a) {
     if (s.passed) nextLevel(compassClues.length, `${compassClues.length} treasures found! You grew from short landmark clues into longer turn-by-turn compass routes.`);
   }
   function cipher() {
-    const level = cipherLevels[s.level], message = level.encode ? level.word : encode(level.word, level.shift);
-    a.stage(`Clubhouse message ${s.level + 1} of ${cipherLevels.length}`); a.progress(s.level + (s.passed ? 1 : 0), cipherLevels.length); a.score((s.level + (s.passed ? 1 : 0)) / cipherLevels.length * 100);
-    a.board.innerHTML = `${advancement(cipherLevels.length)}<div class="cipher-workshop cipher-workshop--3d"><div class="cipher-dial cipher-dial--3d">${iconSvg("key")}<b>Shared key: ${level.shift}</b><span>Wheel now: ${s.shift}</span><div class="stepper"><button type="button" data-key="-1" data-focus="key-minus" aria-label="Turn key back">−</button><button type="button" data-key="1" data-focus="key-plus" aria-label="Turn key forward">+</button></div></div><div class="cipher-message cipher-message--panel"><span>${level.encode ? "Encode this message" : "Decode this message"}</span><strong>${message}</strong><p>${level.encode ? "Read from plain letters to code letters." : "Read from code letters back to plain letters."}</p>${level.clue ? `<p class="cipher-word-clue"><b>Word meaning:</b> ${a.esc(level.clue)}</p>` : ""}</div></div><div class="cipher-key cipher-key--tiles">${[...alphabet].map(letter => `<span><b>${letter}</b><i>↓</i><b>${encode(letter, s.shift)}</b></span>`).join("")}</div><div class="cipher-answer cipher-answer--slots" aria-label="Your answer">${Array.from({length:level.word.length}, (_, index) => `<span>${s.tokens[index] || "·"}</span>`).join("")}</div><div class="letter-keys cipher-letter-keys">${[...alphabet].map(letter => `<button type="button" data-letter="${letter}" data-focus="letter-${letter}" ${s.passed ? "disabled" : ""}>${letter}</button>`).join("")}</div><p class="small-note">A toy code for exploring patterns. It cannot protect real secrets.</p>`;
-    a.bind("[data-key]", node => { if (!s.passed) { s.shift = wrap(s.shift, Number(node.dataset.key)); render(); } });
-    a.bind("[data-letter]", node => { if (s.tokens.length < level.word.length) { s.tokens.push(node.dataset.letter); render(); } });
-    if (s.passed) nextLevel(cipherLevels.length, `${cipherLevels.length} clubhouse messages solved! A shared key helps you turn a pattern into meaning.`);
+    const level = cipherLevels[s.level];
+    const letters = level.alphabet || alphabet;
+    const encodeLevel = (text,shift) => [...text].map(character => {
+      const index=letters.indexOf(character);
+      return index<0?character:letters[(index+shift)%letters.length];
+    }).join("");
+    const message = level.encode ? level.word : encodeLevel(level.word, level.shift);
+    const chapter=Math.floor(s.level/5)+1;
+    a.stage(`Clubhouse message ${s.level + 1} of ${cipherLevels.length} · Chapter ${chapter}/24`);
+    a.progress(s.level + (s.passed ? 1 : 0), cipherLevels.length);
+    a.score((s.level + (s.passed ? 1 : 0)) / cipherLevels.length * 100);
+    a.board.innerHTML = `${advancement(cipherLevels.length)}
+      <div class="cipher-workshop cipher-workshop--3d">
+        <div class="cipher-dial cipher-dial--3d">${iconSvg("key")}
+          <b>Shared key: ${level.shift}</b>
+          <span>${letters.length===8?"A–H starter wheel":"A–Z advanced wheel"} · Wheel now: ${s.shift}</span>
+          <div class="stepper">
+            <button type="button" data-key="-1" data-focus="key-minus" aria-label="Turn key back">−</button>
+            <button type="button" data-key="1" data-focus="key-plus" aria-label="Turn key forward">+</button>
+          </div>
+        </div>
+        <div class="cipher-message cipher-message--panel">
+          <span>${level.encode ? "Encode this message" : "Decode this message"}</span>
+          <strong>${message}</strong>
+          <p>${level.encode ? "Read from plain letters to code letters." : "Read from code letters back to plain letters."}</p>
+          ${level.clue ? `<p class="cipher-word-clue"><b>Word meaning:</b> ${a.esc(level.clue)}</p>` : ""}
+        </div>
+      </div>
+      <div class="cipher-key cipher-key--tiles ${letters.length>8?"cipher-key--full":""}">
+        ${[...letters].map(letter => `<span><b>${letter}</b><i>↓</i><b>${encodeLevel(letter, s.shift)}</b></span>`).join("")}
+      </div>
+      <div class="cipher-answer cipher-answer--slots ${level.word.length>9?"cipher-answer--long":""}" aria-label="Your answer">
+        ${Array.from({length:level.word.length}, (_, index) => `<span>${s.tokens[index] || "·"}</span>`).join("")}
+      </div>
+      <div class="letter-keys cipher-letter-keys ${letters.length>8?"cipher-letter-keys--full":""}">
+        ${[...letters].map(letter => `<button type="button" data-letter="${letter}" data-focus="letter-${letter}" ${s.passed ? "disabled" : ""}>${letter}</button>`).join("")}
+      </div>
+      <p class="small-note">A toy code for exploring patterns. It cannot protect real secrets.</p>`;
+    a.bind("[data-key]", node => {
+      if (!s.passed) {
+        const delta=Number(node.dataset.key);
+        s.shift=(s.shift+delta+letters.length)%letters.length;
+        render();
+      }
+    });
+    a.bind("[data-letter]", node => {
+      if (s.tokens.length < level.word.length) {
+        s.tokens.push(node.dataset.letter);
+        render();
+      }
+    });
+    if (s.passed) nextLevel(cipherLevels.length, `${cipherLevels.length} clubhouse messages solved! You grew from a tiny A–H wheel into longer full-alphabet code words.`);
     else {
       a.button("Check my message", () => {
         if (s.shift !== level.shift) { a.say(`Turn the wheel to the shared key ${level.shift} first.`, "try"); return; }
-        const answer = level.encode ? encode(level.word, level.shift) : level.word;
+        const answer = level.encode ? encodeLevel(level.word, level.shift) : level.word;
         if (s.tokens.join("") !== answer) { a.say("Check one letter at a time using the key chart. Clear your answer and try again.", "try"); return; }
         s.passed = true; render(); a.say("Message solved! Your shared key worked.", "good");
       });
       a.button("Clear my answer", () => { s.tokens = []; render(); }, "secondary");
     }
   }
+
   function trade() {
     const level = tradeLevels[s.level], quantity = s.cart.reduce((sum,count,index) => sum + count * level.deals[index].quantity, 0), cost = s.cart.reduce((sum,count,index) => sum + count * (level.deals[index].price + level.deals[index].fee), 0);
     a.stage(`${level.name} · ${s.level + 1} of ${tradeLevels.length}`); a.progress(s.level, tradeLevels.length);

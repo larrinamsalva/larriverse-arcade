@@ -176,7 +176,7 @@
     {
       "id": "cipher-club",
       "title": "Cipher Club",
-      "manualFocus": "Encode and decode sixty unique A–H words of three to nine letters, verify meaningful vocabulary hints and nine-letter responsive answer slots, key turns, clear/submit feedback, all twelve ranks, keyboard/mobile, and manual QA.",
+      "manualFocus": "Complete starter and advanced Cipher Club levels, verify the first 60 retain the A–H wheel, level 61 unlocks all 26 letters, long answer slots wrap cleanly on phone and desktop, and all 120 words remain unique and solvable.",
       "route": "games/cipher-club/index.html"
     },
     {
