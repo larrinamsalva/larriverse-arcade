@@ -98,6 +98,7 @@ const BUBBLE_LEVELS=[
   ['Aurora Observatory',6,6,3,'Watch both current and next bubbles before choosing a target.'],
   ['Prism Planet',6,6,3,'Use powers as part of a chain instead of firing them immediately.'],
   ['Coherence Castle',6,6,3,'Keep calm in the tight field and clear supporting clusters first.'],
+  ['Starlight Sanctuary',6,6,3,'Protect a clear lane, then use a precise rebound to reach the final supports.'],
   ['Grand Resonance Finale',6,6,3,'Clear the final mastery field to earn the eighty-level crown.'],
 ].map(([name,rows,frequencies,dropAfter,tip],index)=>({id:index+1,name,rows,frequencies,dropAfter,tip}));
 const MAX_LEVEL=BUBBLE_LEVELS.length,currentStage=()=>BUBBLE_LEVELS[level-1]||BUBBLE_LEVELS.at(-1);
