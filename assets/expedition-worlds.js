@@ -7,7 +7,7 @@ export const expeditions = [
   { id: "water-works", title: "Water Works", icon: "💧", topic: "Planet", category: "Flow & resources", age: "7+", minutes: "12 min", art: 1, mode: "pipes", skill: "See how a system connects", desc: "Turn pipes through sixty increasingly winding and branching-looking flow puzzles and bring water through the toy filter to town.", mission: "Rotate each pipe network from the reservoir to town. Pass through the toy filter while advancing from Flow Finder to Waterworks Master.", take: "Trace a problem from its starting point and check each connection. This toy filter does not make real water safe to drink." },
   { id: "harbor-helpers", title: "Harbor Helpers", icon: "⛵", topic: "Adventures", category: "Cooperative adventures", age: "8+", minutes: "12 min", art: 2, mode: "harbor", skill: "Plan deliveries together", desc: "Grow from a small skiff to cargo boats and dock-truck ferry runs across sixty increasingly demanding island deliveries.", mission: "Read each island request, choose from an expanding cargo shelf, load 3 to 8 crates as your transport grows, and advance through six harbor chapters.", take: "A useful delivery starts with listening. Plan loads and routes together so supplies reach the neighbors who asked for them." },
   { id: "pantry-picnic", title: "Pantry Picnic", icon: "🥪", topic: "Everyday life", category: "Little life skills", age: "7+", minutes: "10 min", art: 3, mode: "pantry", skill: "Use what you already have", desc: "Plan sixty distinct picnics in one saved adventure across six food-smart chapters.", mission: "Pack sixty different picnic boxes in six connected chapters. Choose one main and two produce portions, use marked leftovers first, and resume at your next challenge.", take: "Check what you already have before getting more. Planning portions can reduce waste; ask an adult about allergies, food preparation, and safe storage." },
-  { id: "compass-cove", title: "Compass Cove", icon: "🧭", topic: "Adventures", category: "Map adventures", age: "7+", minutes: "12 min", art: 4, mode: "compass", skill: "Read landmarks and directions", desc: "Explore a tiny island through sixty unique compass routes and hidden treasures.", mission: "Find sixty routes to treasure by following clues from island landmarks. Advance from Shore Scout to Master Navigator while north stays up on the map.", take: "Start from a landmark you can identify. A map and a compass help you explain a route and check where a direction will take you." },
+  { id: "compass-cove", title: "Compass Cove", icon: "🧭", topic: "Adventures", category: "Map adventures", age: "7+", minutes: "15 min", art: 4, mode: "compass", skill: "Read landmarks and multi-step directions", desc: "Explore a tiny island through sixty compass routes that grow from short two-step clues into longer turn-by-turn treasure trails.", mission: "Find sixty treasures by following numbered directions from island landmarks. Early routes are short; later routes add more turns and direction steps as you advance toward Compass Champion.", take: "Start from the named landmark, keep north at the top, and follow one numbered step at a time. A wrong square is only a clue to try again; your treasure progress stays safe." },
   { id: "cipher-club", title: "Cipher Club", icon: "🔎", topic: "Digital life", category: "Secret-code workshop", age: "8+", minutes: "12 min", art: 5, mode: "cipher", skill: "Make meaning with a shared key", desc: "Turn the code wheel and solve sixty messages that grow from three to nine letters.", mission: "Use the toy A–H alphabet and a shared number key to encode or decode sixty clubhouse messages. Advance through twelve code ranks as the words grow longer.", take: "A shared rule can change how a message looks. This tiny code is easy to break and must never be used to protect passwords or real secrets." },
   { id: "trade-town", title: "Trade Town", icon: "🪙", topic: "Money", category: "Smart shopping", age: "8+", minutes: "7 min", art: 6, mode: "trade", skill: "Compare the whole deal", desc: "Explore 60 different shopping requests through six saved market districts, from bundle basics to extra-fee comparisons.", mission: "Work through 60 different shopping requests across six saved market districts. Compare quantities, whole costs and fees; progress resumes next visit.", take: "The biggest pack is not always the best fit. Compare the whole cost, including fees, with how much you actually need." },
   { id: "critter-council", title: "Critter Council", icon: "🌱", topic: "People", category: "Community builders", age: "8+", minutes: "12 min", art: 7, mode: "town", skill: "Design for different needs", desc: "Listen to 240 different neighbor requests while building sixty welcoming woodland neighborhoods.", mission: "Advance through sixty town-planning levels. Place a shaded park, quiet reading hut, step-free ramp, and bench so every set of four neighbor requests is met.", take: "People can need different things from the same place. Ask, listen, and design so more neighbors can take part comfortably." },
@@ -397,7 +397,29 @@ const originalCompassClues = [
   { landmark: 1, east: -5, south: 5 }, { landmark: 2, east: 5, south: 1 },
   { landmark: 3, east: -2, south: -4 }, { landmark: 4, east: 3, south: 3 },
 ];
-export const compassClues = [...originalCompassClues, ...extraCompassClues];
+function buildCompassSteps(clue) {
+  const horizontal = Math.sign(clue.east);
+  const vertical = Math.sign(clue.south);
+  let east = Math.abs(clue.east), south = Math.abs(clue.south);
+  const steps = [];
+  // Alternate axes whenever possible so longer clues practice turns instead of one giant jump.
+  while (east || south) {
+    if (east) {
+      steps.push({ east: horizontal, south: 0 });
+      east--;
+    }
+    if (south) {
+      steps.push({ east: 0, south: vertical });
+      south--;
+    }
+  }
+  return steps;
+}
+export const compassClues = [...originalCompassClues, ...extraCompassClues].map((clue,index) => ({
+  ...clue,
+  chapter: Math.floor(index / 10) + 1,
+  steps: buildCompassSteps(clue),
+}));
 
 const originalCipherLevels = [
   { shift: 1, word: "BED", encode: true }, { shift: 2, word: "ACE", encode: false },
