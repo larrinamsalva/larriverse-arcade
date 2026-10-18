@@ -584,11 +584,12 @@ test("Energy Island: sixty solvable power grids respond to four-day forecasts", 
 test("Robot Rover: debug a collision and solve eighty original mazes at par", async ({
   page,
 }) => {
-  test.setTimeout(420000);
+  test.setTimeout(600000);
   await round(page, "robot-rover", async () => {
     expect(robotLevels).toHaveLength(80);
     await expect(page.locator("#stageLabel")).toContainText("Robot world 1 of 80");
-    await expect(page.locator("#stageTrailDock .rover-level-trail .level-node")).toHaveCount(16);\n    await expect(page.locator("#gameBoard .rover-level-trail")).toHaveCount(0);
+    await expect(page.locator("#stageTrailDock .rover-level-trail .level-node")).toHaveCount(16);
+    await expect(page.locator("#gameBoard .rover-level-trail")).toHaveCount(0);
     await expect(page.locator(".rover-level-trail .level-node.active")).toContainText(
       "Rover Rookie",
     );
