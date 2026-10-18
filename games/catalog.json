@@ -418,7 +418,7 @@
     "minutes": "15 min",
     "art": 9,
     "skill": "Sequencing & debugging",
-    "desc": "Code a little rover through sixty progressive star-filled worlds and twelve explorer ranks.",
+    "desc": "Code a little rover through eighty progressive star-filled worlds and sixteen explorer ranks.",
     "mission": "Build a command list with forward, turn left, and turn right. Watch Rover's facing direction, test your path, and improve it for efficiency stars.",
     "take": "Debugging means noticing what happened and improving one part of your plan. Mistakes are clues.",
     "available": true,
