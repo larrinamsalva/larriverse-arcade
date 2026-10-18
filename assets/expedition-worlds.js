@@ -131,19 +131,52 @@ const harborTransportStages = [
   { name: "Dock truck + ferry", icon: "truck", capacity: 7 },
   { name: "Harbor hauler + ferry", icon: "truck", capacity: 8 },
 ];
+const harborLoadSignatures = new Set();
+const harborSignature = needs => cargo.map(item => needs[item.id] || 0).join(":");
+function harborCompositions(ids, total, minKinds) {
+  const plans = [];
+  const build = (position, remaining, plan) => {
+    if (position === ids.length) {
+      if (remaining === 0 && Object.values(plan).filter(Boolean).length >= minKinds)
+        plans.push({ ...plan });
+      return;
+    }
+    const id = ids[position];
+    for (let count = 0; count <= Math.min(4, remaining); count++) {
+      if (count) plan[id] = count;
+      else delete plan[id];
+      build(position + 1, remaining - count, plan);
+    }
+    delete plan[id];
+  };
+  build(0, total, {});
+  return plans;
+}
 function growHarborLevel(level, index) {
   const chapter = Math.min(harborTransportStages.length - 1, Math.floor(index / 10));
   const transport = harborTransportStages[chapter];
-  const needs = { ...level.needs };
   const unlocked = cargo.filter(item => item.unlockAt <= index).map(item => item.id);
-  let loaded = Object.values(needs).reduce((sum, count) => sum + count, 0);
-  let cursor = (index * 3 + chapter) % unlocked.length;
-  while (loaded < transport.capacity) {
-    const id = unlocked[cursor % unlocked.length];
-    needs[id] = (needs[id] || 0) + 1;
-    loaded++;
-    cursor += 2;
+  let needs;
+  if (index < 20) {
+    // Keep the familiar first twenty deliveries intact while transport skills are introduced.
+    needs = { ...level.needs };
+  } else {
+    const local = index % 10;
+    const minKinds = chapter >= 4 ? 4 : 3;
+    const requiredId = unlocked[local % unlocked.length];
+    const candidates = harborCompositions(unlocked, transport.capacity, minKinds)
+      .filter(plan => (plan[requiredId] || 0) > 0);
+    const offset = (local * 17 + chapter * 11) % candidates.length;
+    needs = candidates.find((_, attempt) => {
+      const candidate = candidates[(offset + attempt) % candidates.length];
+      return !harborLoadSignatures.has(harborSignature(candidate));
+    });
+    if (!needs) throw Error(`No unique Harbor Helpers cargo plan for route ${index + 1}`);
   }
+  const signature = harborSignature(needs);
+  if (harborLoadSignatures.has(signature))
+    throw Error(`Repeated Harbor Helpers cargo plan at route ${index + 1}`);
+  harborLoadSignatures.add(signature);
   return {
     ...level,
     capacity: transport.capacity,
