@@ -279,7 +279,7 @@
       "id": "kidscoin-family",
       "title": "KidsCoin Family App",
       "route": "games/kidscoin-family/index.html",
-      "manualFocus": "Create a local profile, request and approve a task, then confirm backup and restore preserve the family ledger without exposing notes."
+      "manualFocus": "Create a local profile, approve multiple chores, and confirm the top Chore Growth graph adds one rising point per chore-earned Family KC event. Verify lessons, parent bonuses, and reward redemptions do not change the chore-growth total; old chore ledger entries still backfill by chore title; fictional/no-real-money wording remains visible; then confirm backup/restore preserves the ledger without exposing notes."
     },
     {
       "id": "brain-sweat-expanded",

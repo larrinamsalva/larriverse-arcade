@@ -139,13 +139,14 @@
     });
   }
 
-  function addTransaction(profileState, type, amount, label, icon = '🪙') {
+  function addTransaction(profileState, type, amount, label, icon = '🪙', source = 'other') {
     profileState.tx.unshift({
       id: uid(),
       type,
       amount,
       label,
       icon,
+      source,
       at: new Date().toISOString()
     });
     profileState.tx = profileState.tx.slice(0, 100);
@@ -182,15 +183,15 @@
       profileState.claimed.push(milestone.days);
       profileState.balance += milestone.bonusKc;
       profileState.xp += milestone.bonusXp;
-      addTransaction(profileState, 'earn', milestone.bonusKc, milestone.title, milestone.icon);
+      addTransaction(profileState, 'earn', milestone.bonusKc, milestone.title, milestone.icon, 'milestone');
       notification(`${profileState.name} unlocked ${milestone.title}.`, milestone.icon);
     }
   }
 
-  function earn(profileState, kc, xp, label, icon, metrics = {}) {
+  function earn(profileState, kc, xp, label, icon, metrics = {}, source = 'other') {
     profileState.balance += kc;
     profileState.xp += xp;
-    addTransaction(profileState, 'earn', kc, label, icon);
+    addTransaction(profileState, 'earn', kc, label, icon, source);
     updateStreak(profileState);
     window.LarriVerseArcade?.award?.(ID, {
       xp,
@@ -209,6 +210,74 @@
 
   function level(profileState) {
     return Math.max(1, Math.floor(Math.sqrt(Math.max(0, profileState.xp) / 36)) + 1);
+  }
+
+  function choreTransactions(profileState) {
+    const choreTitles = new Set(allTasks().map(task => task.title));
+    return [...profileState.tx]
+      .filter(item => item.type === 'earn' && (
+        item.source === 'chore' ||
+        (!item.source && choreTitles.has(item.label))
+      ))
+      .sort((a, b) => new Date(a.at) - new Date(b.at));
+  }
+
+  function renderChoreGrowth(profileState) {
+    const svg = $('#choreGrowthSvg');
+    if (!svg) return;
+    const transactions = choreTransactions(profileState);
+    const total = transactions.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+    const latest = transactions.at(-1);
+    $('#choreGrowthTotal').textContent = `${Math.floor(total)} KC`;
+    $('#choreGrowthCount').textContent = transactions.length;
+    $('#choreGrowthLatest').textContent = latest
+      ? `Latest climb: +${latest.amount} KC · ${latest.label}`
+      : 'Complete a chore to start the climb.';
+
+    const width = 720, height = 240;
+    const pad = { left: 44, right: 20, top: 24, bottom: 34 };
+    const plotWidth = width - pad.left - pad.right;
+    const plotHeight = height - pad.top - pad.bottom;
+    let running = 0;
+    const series = [{ total: 0, label: 'Start' }, ...transactions.map(item => {
+      running += Number(item.amount || 0);
+      return { total: running, label: item.label, amount: item.amount };
+    })];
+    const ceiling = Math.max(6, total);
+    const x = index => pad.left + (series.length === 1 ? 0 : index / (series.length - 1) * plotWidth);
+    const y = value => pad.top + plotHeight - (value / ceiling * plotHeight);
+    const points = series.map((item, index) => `${x(index).toFixed(1)},${y(item.total).toFixed(1)}`).join(' ');
+    const area = `${pad.left},${pad.top + plotHeight} ${points} ${x(series.length - 1).toFixed(1)},${pad.top + plotHeight}`;
+
+    const grid = [0, .25, .5, .75, 1].map(ratio => {
+      const value = Math.round(ceiling * ratio);
+      const gy = y(value).toFixed(1);
+      return `<g class="kc-chart-grid"><line x1="${pad.left}" y1="${gy}" x2="${width-pad.right}" y2="${gy}"></line><text x="8" y="${Number(gy)+4}">${value}</text></g>`;
+    }).join('');
+
+    const dots = series.slice(1).map((item, index) => {
+      const px = x(index + 1).toFixed(1), py = y(item.total).toFixed(1);
+      return `<circle class="kc-chart-point" cx="${px}" cy="${py}" r="5"><title>Chore ${index + 1}: ${esc(item.label)} · +${item.amount} KC · ${item.total} KC earned</title></circle>`;
+    }).join('');
+
+    svg.innerHTML = `
+      <defs>
+        <linearGradient id="kcGrowthArea" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="currentColor" stop-opacity=".30"></stop>
+          <stop offset="100%" stop-color="currentColor" stop-opacity=".02"></stop>
+        </linearGradient>
+      </defs>
+      ${grid}
+      <polygon class="kc-chart-area" points="${area}"></polygon>
+      <polyline class="kc-chart-line" points="${points}"></polyline>
+      <circle class="kc-chart-start" cx="${pad.left}" cy="${y(0)}" r="4"></circle>
+      ${dots}
+      <text class="kc-chart-axis-label" x="${pad.left}" y="${height-9}">Start</text>
+      <text class="kc-chart-axis-label" text-anchor="end" x="${width-pad.right}" y="${height-9}">${transactions.length ? transactions.length + ' chores' : 'first chore'}</text>
+    `;
+    svg.setAttribute('aria-label', transactions.length
+      ? `${profileState.name} has earned ${Math.floor(total)} fictional Family KC from ${transactions.length} approved chores. The line rises with each chore.`
+      : `${profileState.name} has no approved chore earnings yet. The fictional Family KC growth chart is at zero.`);
   }
 
   async function init() {
@@ -259,6 +328,7 @@
     $('#pendingValue').textContent = pendingCount(profileState.id);
     $('#sharedValue').textContent = Math.floor(arcade.kc || 0);
     $('#profileButton').textContent = `${profileState.avatar} ${profileState.name} ▾`;
+    renderChoreGrowth(profileState);
   }
 
   function render() {
@@ -553,7 +623,7 @@
         lessonsCompleted: 1,
         correctAnswers: round.correct,
         questionsAnswered: round.questions.length
-      });
+      }, 'lesson');
     } else {
       save();
     }
@@ -816,7 +886,7 @@
       earn(profileState, kc, task.xp, task.title, task.icon, {
         tasksApproved: 1,
         familyKcEarned: kc
-      });
+      }, 'chore');
       notification(`${profileState.name} earned ${kc} Family KC for ${task.title}.`, task.icon);
     }
 
@@ -827,7 +897,7 @@
         request.reason = 'Balance changed before approval.';
       } else {
         profileState.balance -= reward.cost;
-        addTransaction(profileState, 'spend', reward.cost, reward.title, reward.icon);
+        addTransaction(profileState, 'spend', reward.cost, reward.title, reward.icon, 'reward');
         notification(`${profileState.name}'s reward was approved: ${reward.title}.`, reward.icon);
         window.LarriVerseArcade?.award?.(ID, {
           xp: 6,
@@ -1042,7 +1112,7 @@
         earn(profileState, amount, amount * 2, 'Parent bonus', '🌟', {
           parentBonuses: 1,
           familyKcEarned: amount
-        });
+        }, 'bonus');
         notification(`${profileState.name} received a ${amount} KC parent bonus.`, '🌟');
         save();
         renderParent();
