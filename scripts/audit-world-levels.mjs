@@ -113,9 +113,14 @@ for(const item of weatherChallenges.concat(gardenGrowthChallenges)){
  assert.ok(item.options[item.answer].label.trim().length>=2, "Short but clear weather labels such as Fog remain valid");
  assert.ok(item.why.length>40);
 }
-for(const id of ["weather-watchers","garden-grow-harvest","bridge-buddies","bubble-resonance-phi369"]){
+for(const [id,expected] of [
+ ["weather-watchers",/sixty|60/i],
+ ["garden-grow-harvest",/eighty|80/i],
+ ["bridge-buddies",/sixty|60/i],
+ ["bubble-resonance-phi369",/eighty|80/i]
+]){
  const game=catalog.find(g=>g.id===id);
- assert.ok(game&&/sixty|60/i.test(game.mission||game.desc),"Updated game has truthful sixty-challenge metadata");
+ assert.ok(game&&expected.test(game.mission||game.desc),"Updated game has truthful challenge-count metadata");
 }
 assert.equal(ready.length+Object.keys(optionalMissionPaths).length,35,"Every cabinet has a real sixty-step path; no fake levels");
 const report={cabinetCount:ids.length,complete:ready.length,optionalMissionPaths,worldsWithSixtyMissions:ready.length+Object.keys(optionalMissionPaths).length,belowTarget:notReady.map(([id,count])=>({id,count,remaining:60-count})),otherModes,
