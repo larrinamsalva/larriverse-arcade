@@ -67,7 +67,7 @@ const otherModes={
  "brain-sweat-life-skills":{kind:"60 reviewed original questions in twelve unlocked lessons + optional 60-question progression",count:lifeMissions.length},
  "chill-brain-rewards":{kind:"guided calm sessions plus sixty optional untimed focus choices",count:chillMissions.length},
  "creature-catcher":{kind:"classic creature collection + optional distinct wildlife missions",count:creatureMissions.length},
- "road-trip-quest":{kind:"eight-city adventure + optional distinct travel missions",count:roadMissions.length},
+ "road-trip-quest":{kind:"sixteen-city adventure + optional distinct travel missions",count:roadMissions.length},
  "road-trip-quest-gps":{kind:"GPS demo field + sixty optional no-location map/privacy challenges",count:gpsMissions.length}
 };
 const ids=catalog.map(x=>x.id);
@@ -101,9 +101,9 @@ const notReady=counts.filter(([id,n])=>n<60);
 const minimums={
  "bridge-buddies":60,"water-works":60,"harbor-helpers":60,"compass-cove":60,"cipher-club":60,"trade-town":60,"critter-council":60,"pocket-planet":60,"garden-guardians":60,"energy-island":60,"robot-rover":60,"pantry-picnic":60,"traffic-town":120,"street-safety-scout":60,
  "scam-sleuth":60,"kindness-quest":60,"fact-finder":60,"repair-cafe":60,
- "time-trail":60,"reuse-rally":60,"kids-sudoku":60,
- "bubble-resonance-phi369":60,"weather-watchers":60,"garden-grow-harvest":60,
- "word-search-world":60,"crossword-world":60
+ "time-trail":60,"reuse-rally":60,"kids-sudoku":80,
+ "bubble-resonance-phi369":80,"weather-watchers":60,"garden-grow-harvest":80,
+ "word-search-world":60,"crossword-world":80
 };
 for(const [id,floor] of Object.entries(minimums))assert.equal(sequential[id],floor,`${id} must keep its intended distinct playable challenge count`);
 for(const [id,n] of ready)assert.ok(n>=60,id+" regressed");
