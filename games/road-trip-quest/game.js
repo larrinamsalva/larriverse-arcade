@@ -17,7 +17,15 @@ import { iconSvg } from '../../assets/arcade-scenes.js';
     {name:'Las Vegas',emoji:'🎰',boss:{name:'Neon Phantom',emoji:'💎',hp:100,subject:'math'},reward:{name:'Lucky Dragon',emoji:'🐉',desc:'Brings good fortune on all journeys!'}},
     {name:'Los Angeles',emoji:'🌴',boss:{name:'Surf Titan',emoji:'🏄',hp:110,subject:'trivia'},reward:{name:'Pacific Rider',emoji:'🌊',desc:'Rides the endless waves!'}},
     {name:'Denver',emoji:'⛰️',boss:{name:'Mountain Mammoth',emoji:'🦣',hp:105,subject:'science'},reward:{name:'Summit Elk',emoji:'🦌',desc:'Roams the highest peaks!'}},
-    {name:'New Orleans',emoji:'🎷',boss:{name:'Jazz Phantom',emoji:'👻',hp:115,subject:'reading'},reward:{name:'Mardi Fox',emoji:'🦊',desc:'Dances through the night!'}}
+    {name:'New Orleans',emoji:'🎷',boss:{name:'Jazz Phantom',emoji:'👻',hp:115,subject:'reading'},reward:{name:'Mardi Fox',emoji:'🦊',desc:'Dances through the night!'}},
+    {name:'Seattle',emoji:'☕',boss:{name:'Raincloud Raven',emoji:'🐦‍⬛',hp:120,subject:'science'},reward:{name:'Evergreen Eagle',emoji:'🦅',desc:'Soars above the rainy northwest!'}},
+    {name:'San Francisco',emoji:'🌉',boss:{name:'Fog Horn',emoji:'🌫️',hp:125,subject:'math'},reward:{name:'Golden Gate Gull',emoji:'🐦',desc:'Knows every turn by the bay!'}},
+    {name:'Phoenix',emoji:'🌵',boss:{name:'Desert Mirage',emoji:'☀️',hp:130,subject:'trivia'},reward:{name:'Cactus Coyote',emoji:'🐺',desc:'Keeps cool on the desert road!'}},
+    {name:'Salt Lake City',emoji:'🏔️',boss:{name:'Salt Crystal Giant',emoji:'🧊',hp:135,subject:'science'},reward:{name:'Wasatch Ram',emoji:'🐏',desc:'Climbs every mountain road!'}},
+    {name:'Austin',emoji:'🎶',boss:{name:'Lone Star Amplifier',emoji:'🎛️',hp:140,subject:'reading'},reward:{name:'Beat Bat',emoji:'🦇',desc:'Keeps the road-trip rhythm going!'}},
+    {name:'St. Louis',emoji:'🌈',boss:{name:'Gateway Golem',emoji:'🗿',hp:145,subject:'math'},reward:{name:'Arch Falcon',emoji:'🦅',desc:'Guards the gateway to the next adventure!'}},
+    {name:'Boston',emoji:'⛵',boss:{name:'Harbor Historian',emoji:'📜',hp:150,subject:'reading'},reward:{name:'Tea Party Turtle',emoji:'🐢',desc:'Carries stories from the harbor!'}},
+    {name:'Miami',emoji:'🌴',boss:{name:'Sunset Shark',emoji:'🦈',hp:155,subject:'trivia'},reward:{name:'Flamingo Flash',emoji:'🦩',desc:'Finishes the coast-to-coast tour in style!'}}
   ];
 
   const ITEMS = [
