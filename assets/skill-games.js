@@ -110,7 +110,7 @@ function writeCampaign(next,correct) {
 function campaignTrail(step,total) {
   const chapters=total/10;
   if(!Number.isInteger(chapters))return "";
-  return '<div class="level-trail" aria-label="Six adventure chapters">'+
+  return '<div class="level-trail" aria-label="'+chapters+' adventure chapters">'+
     Array.from({length:chapters},(_,i)=>{
       const marker=(i+1)*10,done=step>=marker,active=step>=i*10&&step<marker;
       return '<span class="level-node '+(done?'complete':active?'active':'')+'"><b>'+
@@ -118,11 +118,12 @@ function campaignTrail(step,total) {
     }).join("")+"</div>";
 }
 function endCampaignScreen() {
-  stage("🏆 All 60 challenges explored");
-  board.innerHTML='<div class="message-card"><div class="message-copy"><h2 class="board-title">You explored every challenge!</h2><p>Sixty different activities are complete in this world. Replay them whenever you want; the original arcade best score remains saved.</p></div></div>'+campaignTrail(60,60);
-  progress(60,60,"60 of 60 completed · Six chapters finished");
-  updateScore(Math.round(state.correct/60*100));
-  button("Replay all 60 adventures",()=>{
+  const total=state.deck.length, chapters=total/10;
+  stage(`🏆 All ${total} challenges explored`);
+  board.innerHTML='<div class="message-card"><div class="message-copy"><h2 class="board-title">You explored every challenge!</h2><p>'+total+' different activities are complete in this world. Replay them whenever you want; the original arcade best score remains saved.</p></div></div>'+campaignTrail(total,total);
+  progress(total,total,total+" of "+total+" completed · "+chapters+" chapters finished");
+  updateScore(Math.round(state.correct/total*100));
+  button("Replay all "+total+" adventures",()=>{
     writeCampaign(0,0);
     initialize();
   });
@@ -154,7 +155,7 @@ let hint = world.take;
 
 $("skillLabel").textContent = world.skill;
 $("worldDescription").textContent = world.desc;
-$("worldMeta").textContent = `Ages ${world.age} · ${campaignModes.has(world.mode)||["market","music","trade","pantry"].includes(world.mode)?"60 levels · save and resume":`about ${world.minutes}`}`;
+$("worldMeta").textContent = `Ages ${world.age} · ${world.mode==="traffic"?`${trafficQuestions.length} levels · save and resume`:campaignModes.has(world.mode)||["market","music","trade","pantry"].includes(world.mode)?"60 levels · save and resume":`about ${world.minutes}`}`;
 $("missionIcon").textContent = world.icon;
 if (world.mode === "bridge") $("missionIcon").innerHTML = iconSvg("wood");
 $("missionTitle").textContent = world.skill;
@@ -162,7 +163,7 @@ $("missionText").textContent = world.mission;
 $("takeaway").textContent = world.take;
 if (world.mode === "compass") {
   $("restartButton").textContent = "Clear my try";
-  $("restartButton").setAttribute("aria-label", "Clear only my last Compass Cove try");
+  $("restartButton").setAttribute("aria-label", "Clear my try");
 }
 
 function say(text, kind = "info") {
@@ -464,7 +465,7 @@ function renderCards(mode) {
     item = deck[state.step];
   state.answered = false;
   stage(
-    `${mode === "sorting" ? "Toy Town cleanup" : mode === "news" ? "Tiny news desk" : mode === "conversation" ? "Treehouse crew" : mode === "traffic" ? "Traffic Town road school" : "Clubhouse inbox"} · Chapter ${Math.floor(state.step/10)+1}/6 · Challenge ${state.step + 1}/${deck.length}`,
+    `${mode === "sorting" ? "Toy Town cleanup" : mode === "news" ? "Tiny news desk" : mode === "conversation" ? "Treehouse crew" : mode === "traffic" ? "Traffic Town road school" : "Clubhouse inbox"} · Chapter ${Math.floor(state.step/10)+1}/${deck.length/10} · Challenge ${state.step + 1}/${deck.length}`,
   );
   const labels =
     mode === "messages"
@@ -1511,7 +1512,8 @@ $("restartButton").addEventListener("click",()=>{
     return;
   }
   if(campaignModes.has(world.mode)){
-    if(!window.confirm("Replay all 60 challenges in this world from the beginning?"))return;
+    const total=world.mode==="traffic"?trafficQuestions.length:60;
+    if(!window.confirm("Replay all "+total+" challenges in this world from the beginning?"))return;
     writeCampaign(0,0);
   }
   initialize();

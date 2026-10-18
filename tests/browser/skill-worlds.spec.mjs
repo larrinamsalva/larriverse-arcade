@@ -350,11 +350,16 @@ test("Reuse Rally: sort all sixty objects through six chapters", async ({
     }
   });
 });
-test("Traffic Town: complete sixty different signs and six chapters", async ({ page }) => {
-  test.setTimeout(420000);
-  await round(page, "traffic-town", () => chooseDeck(page, trafficQuestions, null, 60));
+test("Traffic Town: complete 120 different signs across twelve chapters", async ({ page }) => {
+  test.setTimeout(840000);
+  expect(trafficQuestions).toHaveLength(120);
+  expect(new Set(trafficQuestions.map(item=>item.title)).size).toBe(120);
+  await round(page, "traffic-town", async () => {
+    await expect(page.locator(".level-node")).toHaveCount(12);
+    await chooseDeck(page, trafficQuestions, null, 120);
+  });
 });
-test("Traffic Town: ten cleared signs resume at eleven after reload",async({page})=>{
+test("Traffic Town: old and new progress resumes through the 120-sign journey",async({page})=>{
   await page.goto("/games/traffic-town/index.html");
   for(let i=0;i<10;i++){
     const prompt=await page.locator(".message-card p").innerText();
@@ -364,8 +369,19 @@ test("Traffic Town: ten cleared signs resume at eleven after reload",async({page
     await page.getByRole("button",{name:"Next discovery"}).click();
   }
   await page.reload();
-  await expect(page.locator("#stageLabel")).toContainText("11/60");
+  await expect(page.locator("#stageLabel")).toContainText("11/120");
 });
+test("Traffic Town: saved sixty-level completion resumes at sign 61",async({page})=>{
+  await page.goto("/games/traffic-town/index.html");
+  await page.evaluate(()=>{
+    localStorage.setItem("larriverse.mainCampaign.traffic-town.v1",JSON.stringify({next:60,correct:60}));
+  });
+  await page.reload();
+  await expect(page.locator("#stageLabel")).toContainText("Chapter 7/12");
+  await expect(page.locator("#stageLabel")).toContainText("Challenge 61/120");
+  await expect(page.locator(".board-title")).toHaveText(trafficQuestions[60].title);
+});
+
 test("Repair Café: complete all sixty unique step-by-step repairs", async ({
   page,
 }) => {

@@ -17,15 +17,16 @@ const campaigns=[
  ["reuse-rally","sorting",sorting]
 ];
 for(const [id,mode,deck] of campaigns){
- assert.equal(deck.length,60,id+" must have exactly 60 original distinct activities");
+ const expected=id==="traffic-town"?120:60;
+ assert.equal(deck.length,expected,id+" must have its intended full distinct activity count");
  const key=mode==="repair"?"title":mode==="sorting"?"name":"text";
- assert.equal(new Set(deck.map(m=>m[key])).size,60,id+" no duplicate activities");
- assert.ok(skill.includes(`startCampaign(${mode==="messages"?"messages":mode==="conversation"?"conversations":mode==="news"?"newsCards":mode==="repair"?"repairs":mode==="sorting"?"sorting":"trafficQuestions"},"${mode}")`),id+" must use 60-item main game, never pick ten random cards");
- assert.ok(catalog.find(w=>w.id===id)?.mission.includes("60"),id+" catalog explains full mission count");
+ assert.equal(new Set(deck.map(m=>m[key])).size,expected,id+" no duplicate activities");
+ assert.ok(skill.includes(`startCampaign(${mode==="messages"?"messages":mode==="conversation"?"conversations":mode==="news"?"newsCards":mode==="repair"?"repairs":mode==="sorting"?"sorting":"trafficQuestions"},"${mode}")`),id+" must use its full saved main game, never pick ten random cards");
+ assert.ok(catalog.find(w=>w.id===id)?.mission.includes(String(expected)),id+" catalog explains full mission count");
 }
 assert.ok(skill.includes("larriverse.mainCampaign.")&&skill.includes("writeCampaign(state.step,state.correct)"),"Quiz save checkpoints");
 assert.ok(skill.includes("writeCampaign(state.step,state.step)"),"Repair save checkpoints");
-assert.ok(skill.includes("Chapter ${Math.floor(state.step/10)+1}/6"),"Visible six-chapter quest");
+assert.ok(skill.includes("Chapter ${Math.floor(state.step/10)+1}/${deck.length/10}"),"Visible chapter count follows each deck length");
 assert.equal(streetSafetyScenarios.length,60);
 for(const cat of streetSafetyCategories)
  assert.equal(streetSafetyScenarios.filter(x=>x.category===cat).length,12,"Twelve distinct safety stops in "+cat);
@@ -41,4 +42,4 @@ assert.ok(skill.includes('case "music":\n      state.musicMode="missions"'),"Bea
 assert.ok(skill.includes("Return to four-day lab")&&skill.includes("Return to freestyle"),"Free-play modes remain accessible");
 for(const id of ["lemonade-lab","beat-builder","trade-town"])
  assert.match(catalog.find(x=>x.id===id)?.mission||"",/60/,id+" catalogs main campaign");
-console.log("Validated long-form main gameplay for ten worlds; six 60-card decks, Street's 60 stops, trade's 60 saved markets and two creative 60-mission campaigns.");
+console.log("Validated long-form main gameplay: Traffic Town has 120 signs, the other saved card worlds remain at 60, and Street/Trade/creative campaigns retain their validated counts.");
