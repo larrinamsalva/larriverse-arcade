@@ -10,6 +10,21 @@ assert.equal(pipePaths.length, 60);
 assert.equal(harborLevels.length, 60);
 assert.deepEqual(directions, ["north", "east", "south", "west"]);
 assert.equal(compassClues.length, 60);
+assert.ok(compassClues.slice(0,5).every(clue=>clue.steps.length===2), "First Compass Cove clues begin with two clear direction steps");
+assert.ok(compassClues.slice(40).every(clue=>clue.steps.length>=4), "Late Compass Cove clues use longer multi-step routes");
+assert.ok(Math.max(...compassClues.slice(40).map(clue=>clue.steps.length))>=8, "Advanced Compass Cove includes long direction sequences");
+for (const clue of compassClues) {
+  assert.ok(Array.isArray(clue.steps) && clue.steps.length>=2, "Every Compass Cove clue has numbered direction steps");
+  const summed=clue.steps.reduce((sum,step)=>({east:sum.east+(step.east||0),south:sum.south+(step.south||0)}),{east:0,south:0});
+  assert.equal(summed.east,clue.east,"Compass step sequence keeps the authored east/west destination");
+  assert.equal(summed.south,clue.south,"Compass step sequence keeps the authored north/south destination");
+  let row=Math.floor(landmarks[clue.landmark].id/6), col=landmarks[clue.landmark].id%6;
+  for(const step of clue.steps){
+    row+=step.south||0; col+=step.east||0;
+    assert.ok(row>=0&&row<6&&col>=0&&col<6,"Every Compass Cove intermediate step stays on the island map");
+  }
+  assert.equal(row*6+col,compassTarget(landmarks[clue.landmark],clue),"Compass route ends on its treasure tile");
+}
 assert.equal(cipherLevels.length, 60);
 assert.equal(tradeLevels.length, 60);
 assert.equal(townLevels.length, 60);
