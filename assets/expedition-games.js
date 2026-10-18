@@ -75,6 +75,7 @@ export function createExpedition(world, a) {
       s.flow = []; s.leak = -1;
     }
     if (world.mode === "harbor") s.load = {};
+    if (world.mode === "compass") s.wrongMap = -1;
     if (world.mode === "cipher") Object.assign(s, { shift: 0, tokens: [] });
     if (world.mode === "trade") s.cart = [0,0,0];
     if (world.mode === "pantry") s.box = {};
@@ -111,7 +112,7 @@ export function createExpedition(world, a) {
   function bridge() {
     const level = bridgeLevels[s.level];
     a.stage(`${level.name} · ${s.level + 1} of ${bridgeLevels.length}`); a.progress(s.level + (s.passed ? 1 : 0), bridgeLevels.length); a.score((s.level + (s.passed ? 1 : 0)) / bridgeLevels.length * 100);
-    a.board.innerHTML = `${advancement(bridgeLevels.length)}<div class="expedition-stats">${a.chip("Supports placed", `${s.parts.filter(Boolean).length}/4`)}${a.chip("Crossings", `${s.level + (s.passed ? 1 : 0)}/${bridgeLevels.length}`)}</div><p class="board-intro">Choose any support, then tap a span. All materials are free and unlimited! Each span must hold the vehicle load shown above it. Test and improve your design.</p><div class="tool-shelf bridge-tool-shelf">${bridgeParts.map(item => tool(item, s.tool)).join("")}<button type="button" class="build-tool" data-tool="erase" data-focus="tool-erase" aria-pressed="${s.tool === "erase"}"><span class="erase-tool" aria-hidden="true"></span><b>Clear a span</b><small>Change or remove a support</small></button></div><div class="bridge-landscape bridge-crossing--${level.scene} ${s.passed ? "crossed" : ""}">${bridgeMiniatureLandscape(level.scene)}<div class="bridge-scenery" aria-hidden="true"><span class="bridge-tree tree-left">${iconSvg("tree")}</span><span class="bridge-tree tree-right">${iconSvg("tree")}</span><span class="bridge-landmark">${iconSvg(level.landmark)}</span><span class="bridge-flowers flowers-left"></span><span class="bridge-flowers flowers-right"></span><span class="bridge-load-plaque"><b>${a.esc(level.name)}</b><small>${a.esc(level.cargo)}</small></span></div><div class="bridge-cart" aria-hidden="true">${bridgeCartSvg(level.vehicle)}</div><div class="bridge-abutment abutment-left" aria-hidden="true"></div><div class="bridge-abutment abutment-right" aria-hidden="true"></div><div class="bridge-piers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><div class="bridge-spans">${s.parts.map((id, index) => `<button type="button" class="bridge-span ${id || "empty"} ${s.failed.includes(index) ? "weak" : ""}" data-span="${index}" data-focus="span-${index}" ${s.passed ? "disabled" : ""} aria-label="Span ${index + 1}, load ${level.loads[index]}, ${part(id)?.name || "empty"}"><span class="load-label">Load ${level.loads[index]}</span><svg class="bridge-structure" viewBox="0 0 140 96" aria-hidden="true">${bridgePartDrawing(id)}</svg><b>${part(id)?.name || "Add a support"}</b><small>${id ? `Holds ${part(id).capacity}` : "Choose a tool first"}</small></button>`).join("")}</div><div class="bridge-river" aria-hidden="true"><i></i><i></i><i></i></div></div>`;
+    a.board.innerHTML = `${advancement(bridgeLevels.length)}<div class="expedition-stats">${a.chip("Supports placed", `${s.parts.filter(Boolean).length}/4`)}${a.chip("Crossings", `${s.level + (s.passed ? 1 : 0)}/${bridgeLevels.length}`)}</div><p class="board-intro">Choose any support, then tap a span. All materials are free and unlimited! Each span must hold the vehicle load shown above it. Test and improve your design.</p><div class="tool-shelf bridge-tool-shelf">${bridgeParts.map(item => tool(item, s.tool)).join("")}<button type="button" class="build-tool" data-tool="erase" data-focus="tool-erase" aria-pressed="${s.tool === "erase"}"><span class="erase-tool" aria-hidden="true"></span><b>Clear a span</b><small>Change or remove a support</small></button></div><div class="bridge-landscape bridge-crossing--${level.scene} ${s.passed ? "crossed" : ""}">${bridgeMiniatureLandscape(level.scene)}<div class="bridge-scenery" aria-hidden="true"><span class="bridge-tree tree-left">${iconSvg("tree")}</span><span class="bridge-tree tree-right">${iconSvg("tree")}</span><span class="bridge-landmark">${iconSvg(level.landmark)}</span><span class="bridge-flowers flowers-left"></span><span class="bridge-flowers flowers-right"></span><span class="bridge-load-plaque"><b>${a.esc(level.name)}</b><small>${a.esc(level.cargo)}</small></span></div><div class="bridge-cart" aria-hidden="true">${bridgeCartSvg(level.vehicle)}</div><div class="bridge-abutment abutment-left" aria-hidden="true"></div><div class="bridge-abutment abutment-right" aria-hidden="true"></div><div class="bridge-piers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><div class="bridge-preview-deck" aria-hidden="true">${s.parts.map(id => `<i class="bridge-preview-segment ${id || "empty"}"></i>`).join("")}</div><div class="bridge-river" aria-hidden="true"><i></i><i></i><i></i></div></div><section class="bridge-build-panel" aria-label="Bridge span answer area"><div class="bridge-build-heading"><b>Build the four bridge spans</b><span>Choose a support above, then tap the span where you want to place it.</span></div><div class="bridge-spans">${s.parts.map((id, index) => `<button type="button" class="bridge-span ${id || "empty"} ${s.failed.includes(index) ? "weak" : ""}" data-span="${index}" data-focus="span-${index}" ${s.passed ? "disabled" : ""} aria-label="Span ${index + 1}, load ${level.loads[index]}, ${part(id)?.name || "empty"}"><span class="load-label">Load ${level.loads[index]}</span><svg class="bridge-structure" viewBox="0 0 140 96" aria-hidden="true">${bridgePartDrawing(id)}</svg><b>${part(id)?.name || "Add a support"}</b><small>${id ? `Holds ${part(id).capacity}` : "Choose a tool first"}</small></button>`).join("")}</div></section>`;
     toolBindings();
     a.bind("[data-span]", node => {
       if (s.passed) return;
@@ -137,22 +138,90 @@ export function createExpedition(world, a) {
   function harbor() {
     const level = harborLevels[s.level];
     const cargoById = new Map(cargo.map(item => [item.id, item]));
+    const availableCargo = cargo.filter(item => s.level >= (item.unlockAt || 0));
     const request = Object.entries(level.needs).map(([id, count]) => `${count} ${cargoById.get(id).name.toLowerCase()}`).join(" · ");
-    a.stage(`${level.name} · ${s.level + 1} of ${harborLevels.length}`); a.progress(s.level + (s.passed ? 1 : 0), harborLevels.length); a.score((s.level + (s.passed ? 1 : 0)) / harborLevels.length * 100);
-    a.board.innerHTML = `${advancement(harborLevels.length)}<div class="expedition-stats">${a.chip("Route fuel", level.fuel)}${a.chip("Boat load", `${total(s.load)}/${level.capacity}`)}${a.chip("Deliveries", `${s.level + (s.passed ? 1 : 0)}/${harborLevels.length}`)}</div><div class="harbor-map harbor-route--${s.level + 1} harbor-map--dimensional" aria-hidden="true"><svg viewBox="0 0 620 190"><defs><linearGradient id="harbor-water" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b9edf0"/><stop offset="1" stop-color="#49b5ca"/></linearGradient></defs><rect width="620" height="190" rx="24" fill="url(#harbor-water)"/><circle cx="532" cy="42" r="24" fill="#ffe07a"/><path d="M0 128q100-28 200 0t200 0 220 0" stroke="#d9ffff" stroke-width="8" fill="none" opacity=".72"/><g transform="translate(405 35) scale(1.12)"><ellipse cx="50" cy="95" rx="82" ry="18" fill="#8fc98a"/>${iconDrawing(level.icon)}</g><g class="harbor-boat harbor-boat--3d" transform="translate(105 85) scale(.8)">${iconDrawing("boat")}</g><path d="M194 139q88-42 190-24" fill="none" stroke="#fff" stroke-width="5" stroke-dasharray="10 12" opacity=".72"/></svg></div><article class="harbor-request-card"><p class="eyebrow">Island request</p><h2>${a.esc(level.name)}</h2><p>Load exactly <b>${a.esc(request)}</b>. The boat holds ${level.capacity} crates for this route.</p>${level.purpose ? `<p class="small-note">${a.esc(level.purpose)}</p>` : ""}</article><div class="cargo-shelf">${cargo.map(item => `<button type="button" class="supply-card harbor-cargo-card harbor-cargo-card--${item.id}" data-cargo="${item.id}" data-focus="cargo-${item.id}" ${(s.load[item.id] || 0) >= item.count || s.passed ? "disabled" : ""}>${iconSvg(item.icon)}<b>${a.esc(item.name)}</b><small>${s.load[item.id] || 0} on boat · tap to load</small></button>`).join("")}</div>`;
+    const loadEntries = Object.entries(s.load).flatMap(([id, count]) => Array.from({ length: count }, () => id));
+    const transportScale = level.chapter <= 2 ? .76 : level.chapter <= 4 ? .92 : 1.02;
+    const transportArt = level.vehicleIcon === "truck"
+      ? `<g class="harbor-ferry harbor-ferry--3d" transform="translate(230 90) scale(.92)">${iconDrawing("boat")}</g><g class="harbor-truck harbor-truck--3d" transform="translate(74 87) scale(.78)">${iconDrawing("truck")}</g>`
+      : `<g class="harbor-boat harbor-boat--3d harbor-boat--chapter-${level.chapter}" transform="translate(105 85) scale(${transportScale})">${iconDrawing("boat")}</g>`;
+    a.stage(`${level.name} · Chapter ${level.chapter}/6 · ${s.level + 1} of ${harborLevels.length}`);
+    a.progress(s.level + (s.passed ? 1 : 0), harborLevels.length);
+    a.score((s.level + (s.passed ? 1 : 0)) / harborLevels.length * 100);
+    a.board.innerHTML = `${advancement(harborLevels.length)}
+      <div class="expedition-stats">
+        ${a.chip("Route fuel", level.fuel)}
+        ${a.chip("Transport", level.vehicle)}
+        ${a.chip("Cargo load", `${total(s.load)}/${level.capacity}`)}
+        ${a.chip("Deliveries", `${s.level + (s.passed ? 1 : 0)}/${harborLevels.length}`)}
+      </div>
+      <div class="harbor-map harbor-route--${s.level + 1} harbor-map--dimensional harbor-map--chapter-${level.chapter}" aria-hidden="true">
+        <svg viewBox="0 0 620 190">
+          <defs><linearGradient id="harbor-water" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b9edf0"/><stop offset="1" stop-color="#49b5ca"/></linearGradient></defs>
+          <rect width="620" height="190" rx="24" fill="url(#harbor-water)"/>
+          <circle cx="532" cy="42" r="24" fill="#ffe07a"/>
+          <path d="M0 128q100-28 200 0t200 0 220 0" stroke="#d9ffff" stroke-width="8" fill="none" opacity=".72"/>
+          ${level.vehicleIcon === "truck" ? '<path d="M0 108h205v82H0Z" fill="#a9c78e"/><path d="M0 135h208" stroke="#657277" stroke-width="24"/><path d="M0 135h208" stroke="#e8dfac" stroke-width="3" stroke-dasharray="15 12"/>' : ""}
+          <g transform="translate(405 35) scale(1.12)"><ellipse cx="50" cy="95" rx="82" ry="18" fill="#8fc98a"/>${iconDrawing(level.icon)}</g>
+          ${transportArt}
+          <path d="M194 139q88-42 190-24" fill="none" stroke="#fff" stroke-width="5" stroke-dasharray="10 12" opacity=".72"/>
+        </svg>
+      </div>
+      <article class="harbor-request-card">
+        <p class="eyebrow">Island request · Chapter ${level.chapter} of 6</p>
+        <h2>${a.esc(level.name)}</h2>
+        <p>Load exactly <b>${a.esc(request)}</b>. Your <b>${a.esc(level.vehicle)}</b> carries ${level.capacity} crates on this route.</p>
+        ${level.purpose ? `<p class="small-note">${a.esc(level.purpose)}</p>` : ""}
+      </article>
+      <div class="harbor-cargo-shelf cargo-shelf">
+        ${availableCargo.map(item => `<button type="button" class="supply-card harbor-cargo-card harbor-cargo-card--${item.id}" data-cargo="${item.id}" data-focus="cargo-${item.id}" ${(s.load[item.id] || 0) >= item.count || s.passed ? "disabled" : ""}>${iconSvg(item.icon)}<b>${a.esc(item.name)}</b><small>${s.load[item.id] || 0} loaded · tap to add</small></button>`).join("")}
+      </div>
+      <section class="harbor-manifest" aria-label="Loaded cargo">
+        <div class="harbor-manifest-head"><b>Cargo manifest</b><span>${total(s.load)} of ${level.capacity} spaces filled</span></div>
+        <div class="harbor-manifest-crates">
+          ${loadEntries.length ? loadEntries.map((id, index) => `<button type="button" data-unload-cargo="${id}" aria-label="Unload one ${a.esc(cargoById.get(id).name)}"><span aria-hidden="true">${iconSvg(cargoById.get(id).icon)}</span><small>${a.esc(cargoById.get(id).name)}</small></button>`).join("") : '<p>Choose supplies above. Loaded crates will appear here.</p>'}
+        </div>
+      </section>`;
     a.bind("[data-cargo]", node => {
-      if (total(s.load) >= level.capacity) { a.say(`This boat holds ${level.capacity} crates. Unload if you want to change the plan.`, "try"); return; }
-      const id = node.dataset.cargo; s.load[id] = (s.load[id] || 0) + 1; render();
+      if (total(s.load) >= level.capacity) {
+        a.say(`Your ${level.vehicle.toLowerCase()} holds ${level.capacity} crates. Tap a loaded crate below to unload one, or clear the whole load.`, "try");
+        return;
+      }
+      const id = node.dataset.cargo;
+      s.load[id] = (s.load[id] || 0) + 1;
+      render();
     });
-    if (s.passed) nextLevel(harborLevels.length, `You completed ${harborLevels.length} island deliveries and matched every community request. Listening before loading makes help more useful.`);
+    a.bind("[data-unload-cargo]", node => {
+      if (s.passed) return;
+      const id = node.dataset.unloadCargo;
+      s.load[id]--;
+      if (!s.load[id]) delete s.load[id];
+      render();
+      a.say("One crate is back on the dock. Keep planning your load.");
+    });
+    if (s.passed) nextLevel(harborLevels.length, `You completed ${harborLevels.length} island deliveries, grew from a small skiff to big harbor transport, and matched every community request.`);
     else {
       a.button(`Sail to ${level.name}`, () => {
-        if (!total(s.load)) { a.say("Load the requested crates before you sail.", "try"); return; }
+        if (!total(s.load)) {
+          a.say("Load the requested crates before you sail.", "try");
+          return;
+        }
         const cargoIds = new Set([...Object.keys(level.needs), ...Object.keys(s.load)]);
-        if ([...cargoIds].some(id => (s.load[id] || 0) !== (level.needs[id] || 0))) { a.say("The load does not match the island request yet. Check every crate and replan at the harbor.", "try"); return; }
-        s.passed = true; s.quality.push(100); render(); a.say(`Delivery arrived at ${level.name}! Every requested crate is aboard.`, "good"); a.tone(1);
+        if ([...cargoIds].some(id => (s.load[id] || 0) !== (level.needs[id] || 0))) {
+          a.say("The load does not match the island request yet. Check every crate and replan at the harbor.", "try");
+          return;
+        }
+        s.passed = true;
+        s.quality.push(100);
+        render();
+        a.say(`Delivery arrived at ${level.name}! Every requested crate is aboard.`, "good");
+        a.tone(1);
       });
-      a.button("Unload the boat", () => { s.load = {}; render(); a.say("The crates are back at the harbor. Try a different load."); }, "secondary");
+      a.button("Unload the boat", () => {
+        s.load = {};
+        render();
+        a.say("The crates are back at the harbor. Try a different load.");
+      }, "secondary");
     }
   }
   function pantry() {
@@ -215,19 +284,52 @@ export function createExpedition(world, a) {
   }
   function compass() {
     const clue = compassClues[s.level], landmark = landmarks[clue.landmark];
-    const moves = [clue.east ? `${Math.abs(clue.east)} ${clue.east > 0 ? "east (right)" : "west (left)"}` : "", clue.south ? `${Math.abs(clue.south)} ${clue.south > 0 ? "south (down)" : "north (up)"}` : ""].filter(Boolean).join(", then ");
-    a.stage(`Treasure ${s.level + 1} of ${compassClues.length}`); a.progress(s.found.length, compassClues.length); a.score(s.found.length / compassClues.length * 100);
-    a.board.innerHTML = `${advancement(compassClues.length)}<div class="map-clue compass-clue-card"><span class="compass-rose compass-rose--3d" aria-hidden="true">N ↑<br>W ← ✦ → E<br>S ↓</span><p>Start at the <b>${landmark.name}</b>. Go <b>${moves}</b>. Tap the treasure tile.</p></div><div class="compass-grid compass-grid--island">${Array.from({length:36}, (_,index) => {
-      const place = landmarks.find(item => item.id === index), found = s.found.includes(index);
-      return `<button type="button" class="map-tile compass-map-tile ${place ? "landmark" : ""} ${found ? "found" : ""}" data-map="${index}" data-focus="map-${index}" ${s.passed ? "disabled" : ""} aria-label="Row ${Math.floor(index / 6) + 1}, column ${index % 6 + 1}${place ? `, ${place.name}` : ""}${found ? ", treasure found" : ""}">${place ? iconSvg(place.icon, "object-icon landmark-icon") : found ? iconSvg("coin") : '<span class="map-dot" aria-hidden="true"></span>'}${found && place ? iconSvg("coin", "treasure-marker") : ""}<small>${index + 1}</small></button>`;
-    }).join("")}</div><div class="map-legend compass-map-legend">${landmarks.map(item => `<span>${iconSvg(item.icon)} ${item.name}</span>`).join("")}</div>`;
+    const steps = clue.steps || [];
+    const directionName = step => step.east > 0 ? ["East", "right"] : step.east < 0 ? ["West", "left"] : step.south > 0 ? ["South", "down"] : ["North", "up"];
+    const routeList = steps.map((step,index) => {
+      const [name,screen] = directionName(step);
+      return `<li><span>${index + 1}</span><div><b>${name}</b><small>Move 1 tile ${screen}</small></div></li>`;
+    }).join("");
+    a.stage(`Treasure ${s.level + 1} of ${compassClues.length} · Chapter ${clue.chapter}/6`);
+    a.progress(s.found.length, compassClues.length);
+    a.score(s.found.length / compassClues.length * 100);
+    a.board.innerHTML = `${advancement(compassClues.length)}
+      <div class="expedition-stats">
+        ${a.chip("Direction steps", steps.length)}
+        ${a.chip("Treasures found", `${s.found.length}/${compassClues.length}`)}
+      </div>
+      <div class="map-clue compass-clue-card compass-clue-card--steps">
+        <span class="compass-rose compass-rose--3d" aria-hidden="true">N ↑<br>W ← ✦ → E<br>S ↓</span>
+        <div class="compass-route-copy">
+          <p class="eyebrow">Start at the ${a.esc(landmark.name)}</p>
+          <h2>Follow each numbered step in order</h2>
+          <p>Move one map tile for every step. Later treasure routes have more turns, so take them one at a time.</p>
+          <ol class="compass-direction-list">${routeList}</ol>
+        </div>
+      </div>
+      <p class="compass-gentle-note">Picked the wrong square? Nothing is erased. The red marker only shows your last try; use <b>Clear my try</b> and keep the same treasure clue.</p>
+      <div class="compass-grid compass-grid--island">${Array.from({length:36}, (_,index) => {
+        const place = landmarks.find(item => item.id === index), found = s.found.includes(index), wrong = s.wrongMap === index;
+        return `<button type="button" class="map-tile compass-map-tile ${place ? "landmark" : ""} ${found ? "found" : ""} ${wrong ? "wrong-pick" : ""}" data-map="${index}" data-focus="map-${index}" ${s.passed ? "disabled" : ""} aria-label="Row ${Math.floor(index / 6) + 1}, column ${index % 6 + 1}${place ? `, ${place.name}` : ""}${found ? ", treasure found" : ""}${wrong ? ", not the treasure yet" : ""}">${place ? iconSvg(place.icon, "object-icon landmark-icon") : found ? iconSvg("coin") : '<span class="map-dot" aria-hidden="true"></span>'}${found && place ? iconSvg("coin", "treasure-marker") : ""}${wrong ? '<span class="compass-wrong-marker" aria-hidden="true">×</span>' : ""}<small>${index + 1}</small></button>`;
+      }).join("")}</div>
+      <div class="map-legend compass-map-legend">${landmarks.map(item => `<span>${iconSvg(item.icon)} ${item.name}</span>`).join("")}</div>`;
     a.bind("[data-map]", node => {
       if (s.passed) return;
       const target = compassTarget(landmark, clue), selected = Number(node.dataset.map);
-      if (selected !== target) { a.say(`Try again from the ${landmark.name}. Count one tile for each step in the clue.`, "try"); return; }
-      s.found.push(target); s.passed = true; render(); a.say("Treasure found! Your directions led to the right tile.", "good"); a.tone(1);
+      if (selected !== target) {
+        s.wrongMap = selected;
+        render();
+        a.say(`Not here yet — nothing was lost. Go back to the ${landmark.name} and follow Step 1, Step 2, and each direction in order.`, "try");
+        return;
+      }
+      s.wrongMap = -1;
+      s.found.push(target);
+      s.passed = true;
+      render();
+      a.say(`Treasure found! You followed all ${steps.length} direction steps in order.`, "good");
+      a.tone(1);
     });
-    if (s.passed) nextLevel(compassClues.length, `${compassClues.length} treasures found! You used landmarks and compass directions to explain your route.`);
+    if (s.passed) nextLevel(compassClues.length, `${compassClues.length} treasures found! You grew from short landmark clues into longer turn-by-turn compass routes.`);
   }
   function cipher() {
     const level = cipherLevels[s.level], message = level.encode ? level.word : encode(level.word, level.shift);
@@ -312,5 +414,11 @@ export function createExpedition(world, a) {
     resetLevel();render();
 
   }
-  return { start };
+  function clearTry() {
+    if (world.mode !== "compass" || !s) return;
+    s.wrongMap = -1;
+    render();
+    a.say("Cleared just that try. Your treasure progress and current clue are still here.");
+  }
+  return { start, clearTry };
 }

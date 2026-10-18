@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { bridgeLevels, bridgeParts, pipePaths, directions, harborLevels, expeditions, pantryFoods, pantryChallenges, PANTRY_ROUND_SIZE, compassClues, landmarks, cipherLevels, tradeLevels, townParts, townLevels } from "../../assets/expedition-worlds.js";
+import { bridgeLevels, bridgeParts, pipePaths, directions, harborLevels, cargo, expeditions, pantryFoods, pantryChallenges, PANTRY_ROUND_SIZE, compassClues, landmarks, cipherLevels, tradeLevels, townParts, townLevels } from "../../assets/expedition-worlds.js";
 import { checkPantryBox, compassTarget, encode, checkTownLevel } from "../../assets/expedition-logic.js";
 
 async function adventure(page,id,play) {
@@ -94,6 +94,12 @@ test("Water Works: every one of sixty unique filter-connected networks works",as
 test("Harbor Helpers: sixty increasingly complex exact deliveries fit their boat",async({page})=>{
   test.setTimeout(300_000);
   await adventure(page,"harbor-helpers",async()=>{
+    expect(harborLevels).toHaveLength(60);
+    expect(cargo).toHaveLength(10);
+    expect(harborLevels.map(level=>level.capacity).filter((value,index,array)=>index===0||value!==array[index-1])).toEqual([3,4,5,6,7,8]);
+    expect(harborLevels[0].vehicle).toBe("Harbor skiff");
+    expect(harborLevels[59].vehicle).toBe("Harbor hauler + ferry");
+    await expect(page.locator(".harbor-manifest")).toBeVisible();
     await page.locator('[data-cargo="wood"]').click(); await action(page,"Sail to Sprout Island");
     await expect(page.locator("#feedback")).toContainText("does not match");
     await action(page,"Unload the boat");
@@ -195,14 +201,26 @@ test("Pantry Picnic: sixty continuous, unique picnics with saved checkpoints and
   expect(after.completions).toBe(1);
   expect(errors).toEqual([]);
 });
-test("Compass Cove: sixty unique landmark routes and checked map positions",async({page})=>{
+test("Compass Cove: sixty progressive multi-step routes with gentle wrong-answer recovery",async({page})=>{
   test.setTimeout(180_000);
+  expect(compassClues.slice(0,5).every(clue=>clue.steps.length===2)).toBe(true);
+  expect(compassClues.slice(40).every(clue=>clue.steps.length>=4)).toBe(true);
+  expect(Math.max(...compassClues.slice(40).map(clue=>clue.steps.length))).toBeGreaterThanOrEqual(8);
   await adventure(page,"compass-cove",async()=>{
-    await page.locator('[data-map="0"]').click(); await expect(page.locator("#feedback")).toHaveClass(/try/);
+    await expect(page.locator("#restartButton")).toHaveText("Clear my try");
+    await expect(page.locator(".compass-direction-list li")).toHaveCount(compassClues[0].steps.length);
+    await page.locator('[data-map="0"]').click();
+    await expect(page.locator("#feedback")).toHaveClass(/try/);
+    await expect(page.locator("#feedback")).toContainText("nothing was lost");
+    await expect(page.locator('[data-map="0"]')).toHaveClass(/wrong-pick/);
+    await action(page,"Clear my try");
+    await expect(page.locator(".compass-map-tile.wrong-pick")).toHaveCount(0);
+    await expect(page.locator("#stageLabel")).toContainText("Treasure 1 of 60");
     const targets=compassClues.map(clue=>compassTarget(landmarks[clue.landmark],clue));
     expect(new Set(targets.slice(0,20)).size).toBe(20);
     expect(new Set(compassClues.map(c=>[c.landmark,c.east,c.south].join(":"))).size).toBe(60);
     for(let index=0;index<compassClues.length;index++) {
+      await expect(page.locator(".compass-direction-list li")).toHaveCount(compassClues[index].steps.length);
       await page.locator(`[data-map="${targets[index]}"]`).click();
       await expect(page.locator("#feedback")).toHaveClass(/good/);
       await expect(page.locator(`[data-map="${targets[index]}"]`)).toHaveClass(/found/);

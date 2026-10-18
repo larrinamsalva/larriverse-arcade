@@ -160,6 +160,10 @@ if (world.mode === "bridge") $("missionIcon").innerHTML = iconSvg("wood");
 $("missionTitle").textContent = world.skill;
 $("missionText").textContent = world.mission;
 $("takeaway").textContent = world.take;
+if (world.mode === "compass") {
+  $("restartButton").textContent = "Clear my try";
+  $("restartButton").setAttribute("aria-label", "Clear only my last Compass Cove try");
+}
 
 function say(text, kind = "info") {
   feedback.textContent = text;
@@ -1501,6 +1505,11 @@ function startMusic() {
 }
 
 $("restartButton").addEventListener("click",()=>{
+  if(world.mode==="compass"){
+    expedition?.clearTry();
+    $("hintText").hidden=true;
+    return;
+  }
   if(campaignModes.has(world.mode)){
     if(!window.confirm("Replay all 60 challenges in this world from the beginning?"))return;
     writeCampaign(0,0);

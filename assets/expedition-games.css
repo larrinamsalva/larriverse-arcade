@@ -2004,3 +2004,353 @@ html.larriverse-dark body[data-world="critter-council"] .critter-town-plot small
     min-height:0;
   }
 }
+
+
+/* Bridge Buddies: keep the interactive answers below the scenery instead of on top of it. */
+body[data-world="bridge-buddies"] .bridge-landscape{
+  min-height:280px;
+  padding:0;
+  overflow:hidden;
+}
+body[data-world="bridge-buddies"] .bridge-backdrop{
+  height:100%;
+}
+body[data-world="bridge-buddies"] .bridge-preview-deck{
+  position:absolute;
+  z-index:3;
+  top:137px;
+  left:58px;
+  right:58px;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:5px;
+  pointer-events:none;
+}
+body[data-world="bridge-buddies"] .bridge-preview-segment{
+  height:16px;
+  border:2px solid #73452b;
+  border-radius:4px;
+  background:linear-gradient(#efbd7d 0 28%,#c77843 29% 72%,#814a2c 73%);
+  box-shadow:inset 0 2px 0 #ffe0ad,0 5px 0 #57331f,0 8px 10px #24445042;
+}
+body[data-world="bridge-buddies"] .bridge-preview-segment.empty{
+  border:2px dashed #e5f2e9;
+  background:#ffffff26;
+  box-shadow:none;
+}
+body[data-world="bridge-buddies"] .bridge-preview-segment.beam{
+  height:20px;
+  background:linear-gradient(#e0a25f 0 22%,#9d5732 23% 78%,#633923 79%);
+}
+body[data-world="bridge-buddies"] .bridge-preview-segment.triangle{
+  height:22px;
+  background:
+    linear-gradient(135deg,transparent 0 35%,#d38a4c 36% 47%,transparent 48% 100%),
+    linear-gradient(45deg,transparent 0 35%,#d38a4c 36% 47%,transparent 48% 100%),
+    #8f5332;
+}
+body[data-world="bridge-buddies"] .bridge-build-panel{
+  margin-top:18px;
+  padding:16px;
+  border:2px solid #c6ab88;
+  border-radius:20px;
+  background:linear-gradient(180deg,#fffdf6,#f5ecdd);
+  box-shadow:inset 0 3px 0 #fff,0 6px 0 #9d795447,0 13px 22px #5d46301f;
+}
+body[data-world="bridge-buddies"] .bridge-build-heading{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:10px 18px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+  color:#503823;
+}
+body[data-world="bridge-buddies"] .bridge-build-heading b{
+  font-size:1rem;
+}
+body[data-world="bridge-buddies"] .bridge-build-heading span{
+  color:#6d5b49;
+  font-size:.82rem;
+}
+body[data-world="bridge-buddies"] .bridge-build-panel .bridge-spans{
+  position:relative;
+  z-index:auto;
+  padding:0;
+  gap:10px;
+}
+body[data-world="bridge-buddies"] .bridge-build-panel .bridge-span{
+  min-height:154px;
+  background:linear-gradient(150deg,#fffef8,#f3eadb);
+  backdrop-filter:none;
+}
+html.larriverse-dark body[data-world="bridge-buddies"] .bridge-build-panel{
+  background:linear-gradient(180deg,#282237,#201c2d);
+  border-color:#7e6b58;
+  box-shadow:inset 0 3px 0 #ffffff0b,0 6px 0 #15111f,0 13px 22px #0005;
+}
+html.larriverse-dark body[data-world="bridge-buddies"] .bridge-build-heading,
+html.larriverse-dark body[data-world="bridge-buddies"] .bridge-build-heading span{
+  color:#f5eadb;
+}
+html.larriverse-high-contrast body[data-world="bridge-buddies"] .bridge-build-panel{
+  background:#000;
+  color:#fff;
+  border-color:#fff;
+  box-shadow:none;
+}
+html.larriverse-high-contrast body[data-world="bridge-buddies"] .bridge-build-heading,
+html.larriverse-high-contrast body[data-world="bridge-buddies"] .bridge-build-heading span{
+  color:#fff;
+}
+@media(max-width:600px){
+  body[data-world="bridge-buddies"] .bridge-landscape{
+    min-height:245px;
+  }
+  body[data-world="bridge-buddies"] .bridge-preview-deck{
+    top:126px;
+    left:34px;
+    right:34px;
+    gap:3px;
+  }
+  body[data-world="bridge-buddies"] .bridge-build-panel{
+    margin-top:14px;
+    padding:12px;
+  }
+  body[data-world="bridge-buddies"] .bridge-build-panel .bridge-spans{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+
+/* Harbor Helpers: six-stage transport and cargo progression. */
+body[data-world="harbor-helpers"] .harbor-map{
+  border:2px solid #6ea8ad;
+  box-shadow:inset 0 3px 0 #ffffff80,0 6px 0 #4d899044,0 14px 24px #2d59651f;
+}
+body[data-world="harbor-helpers"] .harbor-map--chapter-3 .harbor-boat,
+body[data-world="harbor-helpers"] .harbor-map--chapter-4 .harbor-boat{
+  filter:drop-shadow(0 8px 4px #17455255);
+}
+body[data-world="harbor-helpers"] .harbor-ferry,
+body[data-world="harbor-helpers"] .harbor-truck{
+  filter:drop-shadow(0 7px 4px #17364355);
+}
+body[data-world="harbor-helpers"] .harbor-request-card{
+  margin:15px 0;
+  padding:16px 18px;
+  border:2px solid #9bc4b6;
+  border-radius:18px;
+  background:linear-gradient(145deg,#f7fff9,#e7f4ef);
+  box-shadow:inset 0 2px 0 #fff,0 5px 0 #6c9d8d33;
+}
+body[data-world="harbor-helpers"] .harbor-request-card h2{
+  margin:.1rem 0 .45rem;
+}
+body[data-world="harbor-helpers"] .harbor-cargo-shelf{
+  grid-template-columns:repeat(auto-fit,minmax(125px,1fr));
+}
+body[data-world="harbor-helpers"] .harbor-cargo-card{
+  min-height:132px;
+  box-shadow:inset 0 2px 0 #fff,0 4px 0 #c8bea955;
+}
+body[data-world="harbor-helpers"] .harbor-manifest{
+  margin-top:16px;
+  padding:14px;
+  border:2px solid #d4bb93;
+  border-radius:18px;
+  background:linear-gradient(180deg,#fffaf0,#f3e5cd);
+  box-shadow:inset 0 3px 0 #fff,0 5px 0 #a17c4b3d;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-head{
+  display:flex;
+  justify-content:space-between;
+  gap:8px 18px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+  color:#59452f;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-head span{
+  font-size:.8rem;
+  font-weight:800;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(105px,1fr));
+  gap:8px;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates>button{
+  min-height:86px;
+  padding:8px;
+  border:2px solid #c9ad82;
+  border-radius:13px;
+  background:linear-gradient(145deg,#fffdf7,#efe0c8);
+  color:#4d3b29;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #9e7a4d3d;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates>button span{
+  display:block;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates .object-icon{
+  width:42px;
+  height:42px;
+  margin:auto;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates small{
+  display:block;
+  margin-top:4px;
+  line-height:1.25;
+  font-weight:800;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates p{
+  grid-column:1/-1;
+  margin:0;
+  color:#6c5d4d;
+  font-size:.85rem;
+}
+html.larriverse-dark body[data-world="harbor-helpers"] :is(.harbor-request-card,.harbor-manifest,.harbor-manifest-crates>button){
+  background:#27263a;
+  color:#f6f2ff;
+  border-color:#746b8c;
+}
+html.larriverse-dark body[data-world="harbor-helpers"] :is(.harbor-manifest-head,.harbor-manifest-crates p){
+  color:#f2ebff;
+}
+html.larriverse-high-contrast body[data-world="harbor-helpers"] :is(.harbor-request-card,.harbor-manifest,.harbor-manifest-crates>button){
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="harbor-helpers"] :is(.harbor-manifest-head,.harbor-manifest-crates p){
+  color:#fff!important;
+}
+@media(max-width:600px){
+  body[data-world="harbor-helpers"] .harbor-cargo-shelf{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  body[data-world="harbor-helpers"] .harbor-manifest-crates{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+
+/* Compass Cove: gentle wrong-answer feedback and progressive turn-by-turn routes. */
+body[data-world="compass-cove"] .compass-clue-card--steps{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:18px;
+  align-items:start;
+}
+body[data-world="compass-cove"] .compass-route-copy h2{
+  margin:.1rem 0 .35rem;
+  font-size:1.12rem;
+}
+body[data-world="compass-cove"] .compass-route-copy>p:not(.eyebrow){
+  margin:.2rem 0 .8rem;
+  line-height:1.5;
+}
+body[data-world="compass-cove"] .compass-direction-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(126px,1fr));
+  gap:8px;
+  padding:0;
+  margin:10px 0 0;
+  list-style:none;
+}
+body[data-world="compass-cove"] .compass-direction-list li{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-height:62px;
+  padding:8px 10px;
+  border:2px solid #b9c9df;
+  border-radius:13px;
+  background:linear-gradient(145deg,#fff,#edf4fb);
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #7489a12d;
+}
+body[data-world="compass-cove"] .compass-direction-list li>span{
+  display:grid;
+  place-items:center;
+  flex:none;
+  width:31px;
+  height:31px;
+  border-radius:50%;
+  background:#6657c8;
+  color:#fff;
+  font-weight:1000;
+}
+body[data-world="compass-cove"] .compass-direction-list b,
+body[data-world="compass-cove"] .compass-direction-list small{
+  display:block;
+}
+body[data-world="compass-cove"] .compass-direction-list small{
+  margin-top:2px;
+  color:#52657c;
+  font-size:.72rem;
+}
+body[data-world="compass-cove"] .compass-gentle-note{
+  margin:12px 0;
+  padding:10px 13px;
+  border:2px solid #d7c780;
+  border-radius:13px;
+  background:#fff8d9;
+  color:#5d5229;
+  line-height:1.45;
+  font-size:.84rem;
+}
+body[data-world="compass-cove"] .compass-map-tile.wrong-pick{
+  position:relative;
+  border-color:#c85d68;
+  background:linear-gradient(145deg,#fff1f2,#f7d9dc);
+  box-shadow:inset 0 0 0 2px #fff,0 4px 0 #9f424a55;
+}
+body[data-world="compass-cove"] .compass-wrong-marker{
+  position:absolute;
+  right:5px;
+  top:4px;
+  display:grid;
+  place-items:center;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:#b94855;
+  color:#fff;
+  font-size:1.15rem;
+  font-weight:1000;
+  line-height:1;
+  box-shadow:0 2px 0 #7a2e35;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-direction-list li{
+  background:#28344a;
+  color:#f4f7ff;
+  border-color:#667795;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-direction-list small{
+  color:#d8e2f3;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-gentle-note{
+  background:#403a25;
+  color:#fff0b6;
+  border-color:#807044;
+}
+html.larriverse-high-contrast body[data-world="compass-cove"] :is(.compass-direction-list li,.compass-gentle-note,.compass-map-tile.wrong-pick){
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="compass-cove"] .compass-direction-list small{
+  color:#fff!important;
+}
+@media(max-width:620px){
+  body[data-world="compass-cove"] .compass-clue-card--steps{
+    grid-template-columns:1fr;
+  }
+  body[data-world="compass-cove"] .compass-rose{
+    justify-self:center;
+  }
+  body[data-world="compass-cove"] .compass-direction-list{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}

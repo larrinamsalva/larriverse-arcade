@@ -10,6 +10,21 @@ assert.equal(pipePaths.length, 60);
 assert.equal(harborLevels.length, 60);
 assert.deepEqual(directions, ["north", "east", "south", "west"]);
 assert.equal(compassClues.length, 60);
+assert.ok(compassClues.slice(0,5).every(clue=>clue.steps.length===2), "First Compass Cove clues begin with two clear direction steps");
+assert.ok(compassClues.slice(40).every(clue=>clue.steps.length>=4), "Late Compass Cove clues use longer multi-step routes");
+assert.ok(Math.max(...compassClues.slice(40).map(clue=>clue.steps.length))>=8, "Advanced Compass Cove includes long direction sequences");
+for (const clue of compassClues) {
+  assert.ok(Array.isArray(clue.steps) && clue.steps.length>=2, "Every Compass Cove clue has numbered direction steps");
+  const summed=clue.steps.reduce((sum,step)=>({east:sum.east+(step.east||0),south:sum.south+(step.south||0)}),{east:0,south:0});
+  assert.equal(summed.east,clue.east,"Compass step sequence keeps the authored east/west destination");
+  assert.equal(summed.south,clue.south,"Compass step sequence keeps the authored north/south destination");
+  let row=Math.floor(landmarks[clue.landmark].id/6), col=landmarks[clue.landmark].id%6;
+  for(const step of clue.steps){
+    row+=step.south||0; col+=step.east||0;
+    assert.ok(row>=0&&row<6&&col>=0&&col<6,"Every Compass Cove intermediate step stays on the island map");
+  }
+  assert.equal(row*6+col,compassTarget(landmarks[clue.landmark],clue),"Compass route ends on its treasure tile");
+}
 assert.equal(cipherLevels.length, 60);
 assert.equal(tradeLevels.length, 60);
 assert.equal(townLevels.length, 60);
@@ -34,15 +49,21 @@ assert.ok(bridgeLevels.slice(40).every(level=>level.loads.every(load=>load>=7)),
 assert.equal(new Set(harborLevels.map(level => level.name)).size, harborLevels.length);
 assert.equal(new Set(harborLevels.map(level=>cargo.map(item=>(level.needs[item.id]||0)).join(":"))).size, 60,
   "Each island has a unique crate combination");
-assert.ok(harborLevels.slice(20).every(level=>Object.values(level.needs).reduce((a,b)=>a+b,0)===4));
-assert.ok(harborLevels.slice(50).every(level=>Object.keys(level.needs).length===4),
-  "Final island missions combine four supply categories");
+assert.deepEqual(
+  harborLevels.map(level => level.capacity).filter((capacity,index,list)=>index===0||capacity!==list[index-1]),
+  [3,4,5,6,7,8],
+  "Harbor transport grows from a three-crate skiff to an eight-crate hauler"
+);
+assert.ok(harborLevels.slice(20,40).every(level=>Object.keys(level.needs).length>=3),
+  "Mid-route cargo missions combine at least three supply categories");
+assert.ok(harborLevels.slice(40).every(level=>Object.keys(level.needs).length>=4),
+  "Late harbor missions combine at least four supply categories");
 const cargoIds = new Set(cargo.map(item => item.id));
 const cargoUsage = new Set();
 for (const level of harborLevels) {
   const crateCount = Object.values(level.needs).reduce((sum, count) => sum + count, 0);
   assert.ok(crateCount >= 2 && crateCount <= level.capacity, `${level.name} fits its boat`);
-  assert.ok(level.capacity >= 3 && level.capacity <= 4, `${level.name} has a focused boat capacity`);
+  assert.ok(level.capacity >= 3 && level.capacity <= 8, `${level.name} has a progressive transport capacity`);
   assert.ok(Number.isInteger(level.fuel) && level.fuel >= 1, `${level.name} has route fuel`);
   for (const [id, count] of Object.entries(level.needs)) {
     assert.ok(cargoIds.has(id), `${level.name} uses known cargo`);
