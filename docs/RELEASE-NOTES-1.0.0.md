@@ -182,6 +182,6 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 - **Water Works** — 60 distinct reservoir-to-town filter routes, progressing to longer pipe networks; 12 ranks and full flow/leak checks.
 - **Harbor Helpers** — 60 named island deliveries, with progressively more mixed cargo categories, guaranteed capacity-safe requests, and stories for the 40 new destinations.
 - **Compass Cove** — 60 unique landmark-and-step instructions on the original 36-tile map. Different routes may lead to the same map tile; each route is a different navigation exercise.
-- **Cipher Club** — 60 unique real A–H words, increasingly long messages and optional vocabulary hints; the simple cipher is not real security.
+- **Cipher Club** — 120 unique code levels. The first 60 retain the A–H starter wheel; chapters 13–24 unlock A–Z and longer 7–12 letter words with vocabulary clues. The toy cipher is not real security.
 
 The release still requires desktop/mobile Browser QA, manually reviewed gallery evidence, and final human approval.

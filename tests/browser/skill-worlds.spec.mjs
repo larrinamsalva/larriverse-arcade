@@ -793,3 +793,53 @@ test("New worlds retain readable controls at 200% font size with shared contrast
     expect(size.scroll, world.id).toBeLessThanOrEqual(size.width + 4);
   }
 });
+
+
+test("Playtest compact progress: long worlds keep chapter and rank rows collapsed until requested",async({page})=>{
+  for(const id of ["scam-sleuth","kindness-quest","fact-finder","repair-cafe","reuse-rally","time-trail","garden-guardians","robot-rover"]){
+    await page.goto(`/games/${id}/index.html`);
+    const box=page.locator(".compact-progress-box").first();
+    await expect(box,`${id} compact progress`).toBeVisible();
+    await expect(box).not.toHaveAttribute("open","");
+    await expect(box.locator("summary")).toContainText(/Chapter|Level|Robot/);
+  }
+});
+
+test("Garden Guardians: clear only this garden and use a visible watering tool",async({page})=>{
+  await page.goto("/games/garden-guardians/index.html");
+  await expect(page.locator("#restartButton")).toHaveText("Clear this garden");
+  await page.locator('[data-plant="carrot"]').click();
+  await page.locator('[data-plot="0"]').click();
+  await expect(page.locator('[data-plot="0"]')).toContainText("Carrot");
+  await page.locator("#restartButton").click();
+  await expect(page.locator("#stageLabel")).toContainText("Garden level 1");
+  await expect(page.locator('[data-plot="0"]')).toContainText("Tap to plant");
+
+  const level=gardenLevels[0];
+  let plot=0;
+  for(const type of ["carrot","bean","flower"]){
+    await page.locator(`[data-plant="${type}"]`).click();
+    for(let i=0;i<level[type];i++)await page.locator(`[data-plot="${plot++}"]`).click();
+  }
+  await page.getByRole("button",{name:"Start growing"}).click();
+  const water=page.getByRole("button",{name:/Water plants/});
+  await expect(water).toBeVisible();
+  await water.click();
+  await page.locator('[data-plot="0"]').click();
+  await expect(page.locator(".stat-row")).toContainText(`Water drops${level.water-1}`);
+});
+
+test("Beat Builder: pads and labels remain readable in dark mode",async({page})=>{
+  await page.goto("/games/beat-builder/index.html");
+  await page.evaluate(()=>window.LarriVerseArcade.setSettings({theme:"dark",highContrast:false,reducedMotion:true}));
+  await expect(page.locator(".beat-cell").first()).toBeVisible();
+  const reading=await page.locator(".beat-cell").first().evaluate(node=>{
+    const parse=color=>(color.match(/[\d.]+/g)||[]).slice(0,3).map(Number);
+    const lum=color=>parse(color).map(v=>{v/=255;return v<=.03928?v/12.92:((v+.055)/1.055)**2.4})
+      .reduce((sum,v,i)=>sum+v*[.2126,.7152,.0722][i],0);
+    const style=getComputedStyle(node),a=lum(style.color),b=lum(style.backgroundColor);
+    return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+  });
+  expect(reading).toBeGreaterThanOrEqual(4.5);
+  await expect(page.locator(".track-label").first()).toBeVisible();
+});

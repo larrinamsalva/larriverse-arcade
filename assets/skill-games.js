@@ -107,15 +107,20 @@ function writeCampaign(next,correct) {
   try {localStorage.setItem(campaignKey(),JSON.stringify({next,correct}));}
   catch {say("This browser cannot save this mission yet. You can still continue.","try");}
 }
+function compactProgressBox(label,trail,details="Tap to view chapters / levels") {
+  return '<details class="compact-progress-box"><summary><span>'+esc(label)+'</span><small>'+esc(details)+'</small></summary>'+trail+'</details>';
+}
 function campaignTrail(step,total) {
   const chapters=total/10;
   if(!Number.isInteger(chapters))return "";
-  return '<div class="level-trail" aria-label="'+chapters+' adventure chapters">'+
+  const active=Math.min(chapters,Math.floor(step/10)+1);
+  const trail='<div class="level-trail" aria-label="'+chapters+' adventure chapters">'+
     Array.from({length:chapters},(_,i)=>{
-      const marker=(i+1)*10,done=step>=marker,active=step>=i*10&&step<marker;
-      return '<span class="level-node '+(done?'complete':active?'active':'')+'"><b>'+
+      const marker=(i+1)*10,done=step>=marker,activeChapter=step>=i*10&&step<marker;
+      return '<span class="level-node '+(done?'complete':activeChapter?'active':'')+'"><b>'+
         (done?'✓':i+1)+'</b><small>Chapter '+(i+1)+'</small></span>';
     }).join("")+"</div>";
+  return compactProgressBox("Chapter "+active+" of "+chapters+" · Challenge "+Math.min(step+1,total)+" of "+total,trail);
 }
 function endCampaignScreen() {
   const total=state.deck.length, chapters=total/10;
@@ -164,6 +169,10 @@ $("takeaway").textContent = world.take;
 if (world.mode === "compass") {
   $("restartButton").textContent = "Clear my try";
   $("restartButton").setAttribute("aria-label", "Clear my try");
+}
+if (world.mode === "garden") {
+  $("restartButton").textContent = "Clear this garden";
+  $("restartButton").setAttribute("aria-label", "Clear only the current Garden Guardians level");
 }
 
 function say(text, kind = "info") {
@@ -866,9 +875,10 @@ const plants = {
 function levelTrail(levels, current) {
   const ranks = [...new Set(levels.map((level) => level.rank))];
   const active = ranks.indexOf(levels[current].rank);
-  return `<div class="level-trail nature-level-trail" aria-label="Adventure ranks">
+  const trail=`<div class="level-trail nature-level-trail" aria-label="Adventure ranks">
     ${ranks.map((rank, i) => `<span class="level-node ${i < active ? "complete" : i === active ? "active" : ""}"><b>${i < active ? "✓" : i + 1}</b><small>${esc(rank)}</small></span>`).join("")}
   </div>`;
+  return compactProgressBox(`Level ${current+1} of ${levels.length} · ${levels[current].rank}`,trail,"Tap to view advancement");
 }
 function stageStars(levels) {
   return state.levelStars.reduce((sum, value) => sum + value, 0);
@@ -880,6 +890,7 @@ function startGardenLevel() {
   state.water = level.water;
   state.day = 0;
   state.watered = new Set();
+  state.gardenTool = "plant";
   renderGarden();
 }
 function gardenQuota(level) {
@@ -905,19 +916,22 @@ function renderGarden() {
     <div class="nature-quotas" aria-label="Planting plan">${gardenQuota(level)}</div>
     <p class="board-note">${state.day === 0 ? "Choose a crop, then plant all six plots to match the plan." : "Water each growing plot at most once per day. Two watered days grow a plant. You can leave a plot unwatered to save drops."}</p>
     ${state.day === 0 ? `<div class="plant-picker garden-plant-picker">${Object.entries(plants).map(([id, plant]) =>
-      `<button data-plant="${id}" class="garden-plant-choice garden-plant-choice--${id} ${state.tool === id ? "selected" : ""}" aria-pressed="${state.tool === id}"><span class="garden-plant-icon" aria-hidden="true">${plant.icon}</span><span>${plant.name}</span></button>`).join("")}</div>` : ""}
+      `<button data-plant="${id}" class="garden-plant-choice garden-plant-choice--${id} ${state.tool === id ? "selected" : ""}" aria-pressed="${state.tool === id}"><span class="garden-plant-icon" aria-hidden="true">${plant.icon}</span><span>${plant.name}</span></button>`).join("")}</div>`
+      : `<div class="garden-action-tools"><button type="button" class="garden-water-tool selected" data-garden-tool="water" aria-pressed="true"><span aria-hidden="true">💧</span><b>Water plants</b><small>Tap a growing plot after choosing the watering can.</small></button></div>`}
     <div class="garden-grid garden-grid--${esc(level.zone)}">${state.plots.map((plot, i) =>
       `<button class="plot garden-plot ${plot.plant ? `garden-plot--${plot.plant}` : "garden-plot--empty"} garden-growth-${plot.growth} ${state.watered.has(i) ? "selected" : ""}" data-plot="${i}" aria-label="Plot ${i + 1}, ${plot.plant ? plants[plot.plant].name : "empty"}, growth ${plot.growth} of 2" ${levelDone ? "disabled" : ""}>
         <span class="garden-growth-art" aria-hidden="true">${plot.plant ? (plot.growth >= 2 ? plants[plot.plant].icon : plot.growth === 1 ? "🌿" : "🌱") : "+"}</span>
         <small>${plot.plant ? `${plants[plot.plant].name} · ${plot.growth}/2` : "Tap to plant"}</small>
       </button>`).join("")}</div>`;
-  bind("[data-plant]", (node) => { state.tool = node.dataset.plant; renderGarden(); });
+  bind("[data-plant]", (node) => { state.tool = node.dataset.plant; state.gardenTool="plant"; renderGarden(); });
+  bind("[data-garden-tool]", () => { state.gardenTool="water"; say("Watering can ready. Tap a growing plot to use one drop."); });
   bind("[data-plot]", (node) => {
     const i = Number(node.dataset.plot), plot = state.plots[i];
     if (state.day === 0) {
       plot.plant = state.tool;
       say(`${plants[state.tool].name} planted. Check the planting plan above.`);
     } else {
+      if (state.gardenTool!=="water") { say("Choose the Water plants button first.", "try"); return; }
       if (state.watered.has(i)) { say("You already watered this plot today. Try a different one."); return; }
       if (plot.growth >= 2) { say("That plant is already grown. Save your water."); return; }
       if (state.water <= 0) { say("Out of drops! Move to the next day to check your harvest.", "try"); return; }
@@ -934,7 +948,7 @@ function renderGarden() {
       say("Plant all six plots before growing.", "try"); return;
     }
     if (state.day < 3) {
-      state.day++; state.watered.clear(); renderGarden();
+      state.day++; state.watered.clear(); state.gardenTool="water"; renderGarden();
       say(`Day ${state.day}: check each plant and decide how to use your water.`);
       return;
     }
@@ -1064,7 +1078,7 @@ function renderRobot() {
     })
     .join("");
   stage(`Robot world ${state.level + 1} of ${robotLevels.length} · ${level.rank} · ${level.name}`);
-  board.innerHTML = `<div class="level-trail rover-level-trail" aria-label="Rover advancement ranks">${rankTrail}</div><div class="stat-row rover-stats">${chip("Facing", directions[state.dir])}${chip("World", `${state.level + 1}/${robotLevels.length}`)}${chip("Rank", level.rank)}${chip("3-star target", `${level.par} cmds`)}${chip("Stars earned", `${roverStarTotal()}/${robotLevels.length * 3}`)}</div><p class="board-note rover-lesson"><strong>Forward moves Rover in the direction it is facing.</strong> Left and Right turn Rover in place. The dotted trail shows where it has traveled.</p><div class="tile-grid rover-grid rover-zone--${level.zone}" aria-label="${esc(level.name)} rover path grid">${Array.from({ length: 25 }, (_, i) => {
+  board.innerHTML = `${compactProgressBox(`Robot level ${state.level+1} of ${robotLevels.length} · ${level.rank}`,`<div class="level-trail rover-level-trail" aria-label="Rover advancement ranks">${rankTrail}</div>`,"Tap to view rover ranks")}<div class="stat-row rover-stats">${chip("Facing", directions[state.dir])}${chip("World", `${state.level + 1}/${robotLevels.length}`)}${chip("Rank", level.rank)}${chip("3-star target", `${level.par} cmds`)}${chip("Stars earned", `${roverStarTotal()}/${robotLevels.length * 3}`)}</div><p class="board-note rover-lesson"><strong>Forward moves Rover in the direction it is facing.</strong> Left and Right turn Rover in place. The dotted trail shows where it has traveled.</p><div class="tile-grid rover-grid rover-zone--${level.zone}" aria-label="${esc(level.name)} rover path grid">${Array.from({ length: 25 }, (_, i) => {
     const rock = level.rocks.includes(i);
     const player = i === state.player;
     const goal = i === level.goal;
@@ -1509,6 +1523,12 @@ $("restartButton").addEventListener("click",()=>{
   if(world.mode==="compass"){
     expedition?.clearTry();
     $("hintText").hidden=true;
+    return;
+  }
+  if(world.mode==="garden"){
+    startGardenLevel();
+    $("hintText").hidden=true;
+    say("Cleared only this garden. Your current level and earlier garden stars are still here.");
     return;
   }
   if(campaignModes.has(world.mode)){
