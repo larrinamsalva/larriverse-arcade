@@ -101,7 +101,7 @@ LarriVerse Arcade 1.0 is a release candidate with 35 independently playable game
 ## 1.0 polish candidate
 
 - Shared LarriVerse context, arcade return, comfort dialog, local profile summary, and replay/return treatment across original cabinets.
-- Optional device-local discovery alongside all 35 searchable and filterable games.
+- Optional device-local discovery alongside all 36 searchable and filterable games.
 - Focus and reflow hardening at 320px, 390px, tablet, desktop, and 200% text; numbered Bubble Resonance cues and keyboard aiming; stationary Road Trip collection under reduced motion.
 - Explicit deterministic metadata and integrity verification for all 72 release gallery images, including the eight expeditions, Street Safety Scout, Weather Watchers, and Garden Grow & Harvest.
 - Shared local branding and public page metadata, with repository setting recommendations documented.
@@ -111,12 +111,12 @@ See [V1-POLISH.md](V1-POLISH.md) for the implementation and privacy boundaries.
 
 ## Release qualification
 
-GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all 35 cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
+GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all 36 cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
 
 
 ## Modern arcade expansion
 
-The collection includes 35 playable games: eight original cabinets, seventeen practice worlds including Traffic Town, Street Safety Scout, Weather Watchers, and Garden Grow & Harvest, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (72 images). The formal release still requires the documented human review.
+The collection includes 36 playable games: eight original cabinets, eighteen practice worlds including Traffic Town, Street Safety Scout, Weather Watchers, Garden Grow & Harvest, and Fresh Food Detectives, and eight expeditions. The release gallery covers the lobby plus every game in both viewports (74 images). The formal release still requires the documented human review.
 
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
@@ -185,3 +185,7 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 - **Cipher Club** — 60 unique real A–H words, increasingly long messages and optional vocabulary hints; the simple cipher is not real security.
 
 The release still requires desktop/mobile Browser QA, manually reviewed gallery evidence, and final human approval.
+
+### Fresh Food Detectives
+
+- **Fresh Food Detectives** — A 120-level, 12-chapter food-label literacy world with dimensional package models, printed-date location practice, common quality-label phrases, first-in-first-out shelf rotation, refrigerated/frozen storage reminders, damaged-package awareness, a clearly labeled sample bakery bread-tie chart, and manufacturer lot/batch-code lessons. Bread-tie colors are explicitly taught as bakery-specific rather than universal, and kids are told to use printed package information and ask a trusted adult when food storage or package condition is uncertain.
