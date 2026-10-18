@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { bridgeLevels, bridgeParts, pipePaths, directions, harborLevels, expeditions, pantryFoods, pantryChallenges, PANTRY_ROUND_SIZE, compassClues, landmarks, cipherLevels, tradeLevels, townParts, townLevels } from "../../assets/expedition-worlds.js";
+import { bridgeLevels, bridgeParts, pipePaths, directions, harborLevels, cargo, expeditions, pantryFoods, pantryChallenges, PANTRY_ROUND_SIZE, compassClues, landmarks, cipherLevels, tradeLevels, townParts, townLevels } from "../../assets/expedition-worlds.js";
 import { checkPantryBox, compassTarget, encode, checkTownLevel } from "../../assets/expedition-logic.js";
 
 async function adventure(page,id,play) {
@@ -94,6 +94,12 @@ test("Water Works: every one of sixty unique filter-connected networks works",as
 test("Harbor Helpers: sixty increasingly complex exact deliveries fit their boat",async({page})=>{
   test.setTimeout(300_000);
   await adventure(page,"harbor-helpers",async()=>{
+    expect(harborLevels).toHaveLength(60);
+    expect(cargo).toHaveLength(10);
+    expect(harborLevels.map(level=>level.capacity).filter((value,index,array)=>index===0||value!==array[index-1])).toEqual([3,4,5,6,7,8]);
+    expect(harborLevels[0].vehicle).toBe("Harbor skiff");
+    expect(harborLevels[59].vehicle).toBe("Harbor hauler + ferry");
+    await expect(page.locator(".harbor-manifest")).toBeVisible();
     await page.locator('[data-cargo="wood"]').click(); await action(page,"Sail to Sprout Island");
     await expect(page.locator("#feedback")).toContainText("does not match");
     await action(page,"Unload the boat");
