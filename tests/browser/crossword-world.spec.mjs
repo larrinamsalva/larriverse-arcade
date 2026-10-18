@@ -33,7 +33,7 @@ test("Crossword World: eighty levels with valid real Across/Down intersections",
 test("Crossword World: beginner letter entry, checking, free hints and local resume",async({page})=>{
  const errors=[];page.on("pageerror",e=>errors.push(e.message));
  await page.goto("/games/crossword-world/");
- await expect(page.locator(".chapter")).toHaveCount(6);
+ await expect(page.locator(".chapter")).toHaveCount(8);
  await expect(page.locator(".clue")).toHaveCount(4);
  await expect(page.locator("#levelPicker option")).toHaveCount(1);
  await expect(page.locator("#keyboard button")).toHaveCount(26);
