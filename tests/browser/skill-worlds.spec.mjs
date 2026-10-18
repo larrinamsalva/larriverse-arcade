@@ -259,7 +259,7 @@ test("Scam Sleuth: ten cleared tasks resume from eleven after reload",async({pag
   expect(await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.mainCampaign.scam-sleuth.v1")).next)).toBe(10);
   await page.reload();
   await expect(page.locator("#stageLabel")).toContainText("Chapter 2/6");
-  await expect(page.locator("#stageLabel")).toContainText("11/120");
+  await expect(page.locator("#stageLabel")).toContainText("11/60");
 });
 test("Scam Sleuth: center evidence stays readable in light, dark, and high contrast", async ({
   page,
@@ -369,7 +369,7 @@ test("Traffic Town: old and new progress resumes through the 120-sign journey",a
     await page.getByRole("button",{name:"Next discovery"}).click();
   }
   await page.reload();
-  await expect(page.locator("#stageLabel")).toContainText("11/60");
+  await expect(page.locator("#stageLabel")).toContainText("11/120");
 });
 test("Traffic Town: saved sixty-level completion resumes at sign 61",async({page})=>{
   await page.goto("/games/traffic-town/index.html");
