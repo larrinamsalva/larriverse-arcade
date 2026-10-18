@@ -10,7 +10,7 @@ const phases = {
   harvesting: /ripe tomato|carrot harvest|lettuce harvest|berry storage/
 };
 
-test('Garden Grow & Harvest: all 60 illustrated challenges remain playable', async ({ page }, testInfo) => {
+test('Garden Grow & Harvest: all 80 illustrated challenges remain playable', async ({ page }, testInfo) => {
   test.setTimeout(150_000);
   const browserErrors = [];
   page.on('pageerror', error => browserErrors.push(error.message));
@@ -20,7 +20,7 @@ test('Garden Grow & Harvest: all 60 illustrated challenges remain playable', asy
   fs.mkdirSync(dir, { recursive: true });
   const captured = new Set();
 
-  for (let index = 0; index < 60; index++) {
+  for (let index = 0; index < 80; index++) {
     const scene = page.locator('.garden-learning-art');
     const choices = page.locator('button[data-learning-answer]');
     await expect(scene).toHaveAttribute('role', 'img');
