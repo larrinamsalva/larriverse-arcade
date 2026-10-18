@@ -167,10 +167,14 @@ function growHarborLevel(level, index) {
     const candidates = harborCompositions(unlocked, transport.capacity, minKinds)
       .filter(plan => (plan[requiredId] || 0) > 0);
     const offset = (local * 17 + chapter * 11) % candidates.length;
-    needs = candidates.find((_, attempt) => {
+    needs = null;
+    for (let attempt = 0; attempt < candidates.length; attempt++) {
       const candidate = candidates[(offset + attempt) % candidates.length];
-      return !harborLoadSignatures.has(harborSignature(candidate));
-    });
+      if (!harborLoadSignatures.has(harborSignature(candidate))) {
+        needs = candidate;
+        break;
+      }
+    }
     if (!needs) throw Error(`No unique Harbor Helpers cargo plan for route ${index + 1}`);
   }
   const signature = harborSignature(needs);
