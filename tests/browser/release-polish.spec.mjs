@@ -266,7 +266,7 @@ test('Bubble Resonance fills the play area, settles shallow bank shots, and keep
   expect(bubbleSource).toContain('function bubble(');
   expect(bubbleSource).toContain('ctx.arc(x,y,r*.94');
   expect(bubbleSource).not.toContain('function hex(');
-  await expect(page.locator('#level')).toHaveText('1 / 60');
+  await expect(page.locator('#level')).toHaveText('1 / 80');
   await expect(page.locator('#levelName')).toHaveText('First Ripple');
 
   const widthUse = await page.locator('#game').evaluate(node => {
@@ -332,7 +332,7 @@ test('Bubble Resonance shooter and cabinet follow light and dark color modes', a
   expect(light.fieldBackground).not.toBe(dark.fieldBackground);
 });
 
-test('Bubble Resonance advances through the first twenty of sixty levels with no premature victory', async ({ page }) => {
+test('Bubble Resonance advances through the first twenty of eighty levels with no premature victory', async ({ page }) => {
   test.setTimeout(60_000);
   await page.addInitScript(() => { Math.random = () => .01; });
   await page.goto('/games/bubble-resonance-phi369/index.html');
@@ -341,7 +341,7 @@ test('Bubble Resonance advances through the first twenty of sixty levels with no
   const game = page.locator('#game');
   const box = await game.boundingBox();
   for(let level=1;level<=20;level++) {
-    await expect(page.locator('#level')).toHaveText(`${level} / 60`);
+    await expect(page.locator('#level')).toHaveText(`${level} / 80`);
     const scoreAtStart = await page.locator('#score').innerText();
     await game.click({ position: { x: box.width * .5, y: box.height * .35 } });
     await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
@@ -355,11 +355,11 @@ test('Bubble Resonance advances through the first twenty of sixty levels with no
       const clearedScore = await page.locator('#score').innerText();
       expect(Number(clearedScore.replaceAll(',', ''))).toBeGreaterThanOrEqual(Number(scoreAtStart.replaceAll(',', '')));
       await page.locator('#levelAction').click();
-      await expect(page.locator('#level')).toHaveText(`${level+1} / 60`);
+      await expect(page.locator('#level')).toHaveText(`${level+1} / 80`);
       await expect(page.locator('#score')).toHaveText(clearedScore);
     }
   }
-  await expect(page.locator('#level')).toHaveText('21 / 60');
+  await expect(page.locator('#level')).toHaveText('21 / 80');
   await expect(page.locator('#levelName')).toHaveText('Moonlight Mirrors');
   await expect(page.locator('#limit')).toHaveText('CLEAR');
   await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false');
