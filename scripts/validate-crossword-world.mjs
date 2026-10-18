@@ -2,12 +2,12 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import {CROSSWORD_LEVELS,CROSSWORD_CHAPTERS,buildCrossword,matchingEntryCells,solvedCrossword} from "../games/crossword-world/puzzles.js";
 assert.equal(CROSSWORD_LEVELS.length,80);
-assert.equal(CROSSWORD_CHAPTERS.length,6);
+assert.equal(CROSSWORD_CHAPTERS.length,8);
 assert.equal(new Set(CROSSWORD_LEVELS.map(level=>level.spine)).size,80,"Every puzzle starts with a different anchor word");
 for(const [i,level] of CROSSWORD_LEVELS.entries()){
  assert.equal(level.id,i+1);
  assert.equal(level.chapter,Math.floor(i/10));
- assert.equal(level.bars,[3,4,4,5,5,6][level.chapter],"Crossword challenges grow in word count");
+ assert.equal(level.bars,[3,4,4,5,5,6,4,4][level.chapter],"Crossword challenge word count matches its authored chapter");
  assert.ok(level.spineClue.length>=9,"Every anchor needs a meaningful clue");
  const puzzle=buildCrossword(level);
  const again=buildCrossword(level);
