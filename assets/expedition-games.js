@@ -75,6 +75,7 @@ export function createExpedition(world, a) {
       s.flow = []; s.leak = -1;
     }
     if (world.mode === "harbor") s.load = {};
+    if (world.mode === "compass") s.wrongMap = -1;
     if (world.mode === "cipher") Object.assign(s, { shift: 0, tokens: [] });
     if (world.mode === "trade") s.cart = [0,0,0];
     if (world.mode === "pantry") s.box = {};
@@ -283,19 +284,52 @@ export function createExpedition(world, a) {
   }
   function compass() {
     const clue = compassClues[s.level], landmark = landmarks[clue.landmark];
-    const moves = [clue.east ? `${Math.abs(clue.east)} ${clue.east > 0 ? "east (right)" : "west (left)"}` : "", clue.south ? `${Math.abs(clue.south)} ${clue.south > 0 ? "south (down)" : "north (up)"}` : ""].filter(Boolean).join(", then ");
-    a.stage(`Treasure ${s.level + 1} of ${compassClues.length}`); a.progress(s.found.length, compassClues.length); a.score(s.found.length / compassClues.length * 100);
-    a.board.innerHTML = `${advancement(compassClues.length)}<div class="map-clue compass-clue-card"><span class="compass-rose compass-rose--3d" aria-hidden="true">N ↑<br>W ← ✦ → E<br>S ↓</span><p>Start at the <b>${landmark.name}</b>. Go <b>${moves}</b>. Tap the treasure tile.</p></div><div class="compass-grid compass-grid--island">${Array.from({length:36}, (_,index) => {
-      const place = landmarks.find(item => item.id === index), found = s.found.includes(index);
-      return `<button type="button" class="map-tile compass-map-tile ${place ? "landmark" : ""} ${found ? "found" : ""}" data-map="${index}" data-focus="map-${index}" ${s.passed ? "disabled" : ""} aria-label="Row ${Math.floor(index / 6) + 1}, column ${index % 6 + 1}${place ? `, ${place.name}` : ""}${found ? ", treasure found" : ""}">${place ? iconSvg(place.icon, "object-icon landmark-icon") : found ? iconSvg("coin") : '<span class="map-dot" aria-hidden="true"></span>'}${found && place ? iconSvg("coin", "treasure-marker") : ""}<small>${index + 1}</small></button>`;
-    }).join("")}</div><div class="map-legend compass-map-legend">${landmarks.map(item => `<span>${iconSvg(item.icon)} ${item.name}</span>`).join("")}</div>`;
+    const steps = clue.steps || [];
+    const directionName = step => step.east > 0 ? ["East", "right"] : step.east < 0 ? ["West", "left"] : step.south > 0 ? ["South", "down"] : ["North", "up"];
+    const routeList = steps.map((step,index) => {
+      const [name,screen] = directionName(step);
+      return `<li><span>${index + 1}</span><div><b>${name}</b><small>Move 1 tile ${screen}</small></div></li>`;
+    }).join("");
+    a.stage(`Treasure ${s.level + 1} of ${compassClues.length} · Chapter ${clue.chapter}/6`);
+    a.progress(s.found.length, compassClues.length);
+    a.score(s.found.length / compassClues.length * 100);
+    a.board.innerHTML = `${advancement(compassClues.length)}
+      <div class="expedition-stats">
+        ${a.chip("Direction steps", steps.length)}
+        ${a.chip("Treasures found", `${s.found.length}/${compassClues.length}`)}
+      </div>
+      <div class="map-clue compass-clue-card compass-clue-card--steps">
+        <span class="compass-rose compass-rose--3d" aria-hidden="true">N ↑<br>W ← ✦ → E<br>S ↓</span>
+        <div class="compass-route-copy">
+          <p class="eyebrow">Start at the ${a.esc(landmark.name)}</p>
+          <h2>Follow each numbered step in order</h2>
+          <p>Move one map tile for every step. Later treasure routes have more turns, so take them one at a time.</p>
+          <ol class="compass-direction-list">${routeList}</ol>
+        </div>
+      </div>
+      <p class="compass-gentle-note">Picked the wrong square? Nothing is erased. The red marker only shows your last try; use <b>Clear my try</b> and keep the same treasure clue.</p>
+      <div class="compass-grid compass-grid--island">${Array.from({length:36}, (_,index) => {
+        const place = landmarks.find(item => item.id === index), found = s.found.includes(index), wrong = s.wrongMap === index;
+        return `<button type="button" class="map-tile compass-map-tile ${place ? "landmark" : ""} ${found ? "found" : ""} ${wrong ? "wrong-pick" : ""}" data-map="${index}" data-focus="map-${index}" ${s.passed ? "disabled" : ""} aria-label="Row ${Math.floor(index / 6) + 1}, column ${index % 6 + 1}${place ? `, ${place.name}` : ""}${found ? ", treasure found" : ""}${wrong ? ", not the treasure yet" : ""}">${place ? iconSvg(place.icon, "object-icon landmark-icon") : found ? iconSvg("coin") : '<span class="map-dot" aria-hidden="true"></span>'}${found && place ? iconSvg("coin", "treasure-marker") : ""}${wrong ? '<span class="compass-wrong-marker" aria-hidden="true">×</span>' : ""}<small>${index + 1}</small></button>`;
+      }).join("")}</div>
+      <div class="map-legend compass-map-legend">${landmarks.map(item => `<span>${iconSvg(item.icon)} ${item.name}</span>`).join("")}</div>`;
     a.bind("[data-map]", node => {
       if (s.passed) return;
       const target = compassTarget(landmark, clue), selected = Number(node.dataset.map);
-      if (selected !== target) { a.say(`Try again from the ${landmark.name}. Count one tile for each step in the clue.`, "try"); return; }
-      s.found.push(target); s.passed = true; render(); a.say("Treasure found! Your directions led to the right tile.", "good"); a.tone(1);
+      if (selected !== target) {
+        s.wrongMap = selected;
+        render();
+        a.say(`Not here yet — nothing was lost. Go back to the ${landmark.name} and follow Step 1, Step 2, and each direction in order.`, "try");
+        return;
+      }
+      s.wrongMap = -1;
+      s.found.push(target);
+      s.passed = true;
+      render();
+      a.say(`Treasure found! You followed all ${steps.length} direction steps in order.`, "good");
+      a.tone(1);
     });
-    if (s.passed) nextLevel(compassClues.length, `${compassClues.length} treasures found! You used landmarks and compass directions to explain your route.`);
+    if (s.passed) nextLevel(compassClues.length, `${compassClues.length} treasures found! You grew from short landmark clues into longer turn-by-turn compass routes.`);
   }
   function cipher() {
     const level = cipherLevels[s.level], message = level.encode ? level.word : encode(level.word, level.shift);
@@ -380,5 +414,11 @@ export function createExpedition(world, a) {
     resetLevel();render();
 
   }
-  return { start };
+  function clearTry() {
+    if (world.mode !== "compass" || !s) return;
+    s.wrongMap = -1;
+    render();
+    a.say("Cleared just that try. Your treasure progress and current clue are still here.");
+  }
+  return { start, clearTry };
 }
