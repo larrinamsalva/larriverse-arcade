@@ -363,7 +363,7 @@ test('Bubble Resonance advances through the first twenty of eighty levels with n
   await expect(page.locator('#levelName')).toHaveText('Moonlight Mirrors');
   await expect(page.locator('#limit')).toHaveText('CLEAR');
   await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false');
-  // The player has not beaten all 60 stages, so the arcade must not
+  // The player has not beaten all 80 stages, so the arcade must not
   // report a completed run merely because the old level-20 cap was crossed.
   const result = await page.evaluate(() => window.LarriVerseArcade.summary().games['bubble-resonance-phi369']);
   expect(result?.completions || 0).toBe(0);
