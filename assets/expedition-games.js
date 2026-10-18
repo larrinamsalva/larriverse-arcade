@@ -146,7 +146,7 @@ export function createExpedition(world, a) {
     const transportArt = level.vehicleIcon === "truck"
       ? `<g class="harbor-ferry harbor-ferry--3d" transform="translate(230 90) scale(.92)">${iconDrawing("boat")}</g><g class="harbor-truck harbor-truck--3d" transform="translate(74 87) scale(.78)">${iconDrawing("truck")}</g>`
       : `<g class="harbor-boat harbor-boat--3d harbor-boat--chapter-${level.chapter}" transform="translate(105 85) scale(${transportScale})">${iconDrawing("boat")}</g>`;
-    a.stage(`${level.name} · Chapter ${level.chapter}/6 · ${s.level + 1} of ${harborLevels.length}`);
+    a.stage(`${level.name} · Chapter ${level.chapter}/${Math.ceil(harborLevels.length / 10)} · ${s.level + 1} of ${harborLevels.length}`);
     a.progress(s.level + (s.passed ? 1 : 0), harborLevels.length);
     a.score((s.level + (s.passed ? 1 : 0)) / harborLevels.length * 100);
     a.board.innerHTML = `${advancement(harborLevels.length)}

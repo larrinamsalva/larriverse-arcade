@@ -17,7 +17,7 @@ const campaigns=[
  ["reuse-rally","sorting",sorting]
 ];
 for(const [id,mode,deck] of campaigns){
- const expected=id==="traffic-town"?120:60;
+ const expected=id==="traffic-town"?120:id==="scam-sleuth"?80:60;
  assert.equal(deck.length,expected,id+" must have its intended full distinct activity count");
  const key=mode==="repair"?"title":mode==="sorting"?"name":"text";
  assert.equal(new Set(deck.map(m=>m[key])).size,expected,id+" no duplicate activities");
@@ -42,4 +42,4 @@ assert.ok(skill.includes('case "music":\n      state.musicMode="missions"'),"Bea
 assert.ok(skill.includes("Return to four-day lab")&&skill.includes("Return to freestyle"),"Free-play modes remain accessible");
 for(const id of ["lemonade-lab","beat-builder","trade-town"])
  assert.match(catalog.find(x=>x.id===id)?.mission||"",/60/,id+" catalogs main campaign");
-console.log("Validated long-form main gameplay: Traffic Town has 120 signs, the other saved card worlds remain at 60, and Street/Trade/creative campaigns retain their validated counts.");
+console.log("Validated long-form main gameplay: Traffic Town has 120 signs, Scam Sleuth has 80 cases, the other saved card worlds remain at 60, and Street/Trade/creative campaigns retain their validated counts.");
