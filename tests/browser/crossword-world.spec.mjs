@@ -2,10 +2,10 @@ import {test,expect} from "@playwright/test";
 import {CROSSWORD_LEVELS,buildCrossword} from "../../games/crossword-world/puzzles.js";
 async function seed(page,index){
  await page.goto("/games/crossword-world/");
- const stars=Array(60).fill(0);for(let j=0;j<index;j++)stars[j]=1;
+ const stars=Array(80).fill(0);for(let j=0;j<index;j++)stars[j]=1;
  await page.evaluate(data=>localStorage.setItem("larriverse.crosswordWorld.v1",JSON.stringify(data)),{
   open:index,unlocked:index,stars,current:null});
- await page.reload();await expect(page.locator("#levelCount")).toHaveText((index+1)+" / 60");
+ await page.reload();await expect(page.locator("#levelCount")).toHaveText((index+1)+" / 80");
 }
 async function solve(page,index){
  const p=buildCrossword(CROSSWORD_LEVELS[index]);
@@ -16,8 +16,8 @@ async function solve(page,index){
  }
  await expect(page.locator("#celebration")).toBeVisible();
 }
-test("Crossword World: sixty levels with valid real Across/Down intersections",()=>{
- expect(CROSSWORD_LEVELS).toHaveLength(60);
+test("Crossword World: eighty levels with valid real Across/Down intersections",()=>{
+ expect(CROSSWORD_LEVELS).toHaveLength(80);
  for(const level of CROSSWORD_LEVELS){
   const p=buildCrossword(level);
   expect(p.entries).toHaveLength(level.bars+1);
@@ -47,16 +47,16 @@ test("Crossword World: beginner letter entry, checking, free hints and local res
  await page.locator("#checkBoard").click();
  await expect(page.locator("#feedback")).toContainText("Good work");
  await page.reload();
- await expect(page.locator("#levelCount")).toHaveText("1 / 60");
+ await expect(page.locator("#levelCount")).toHaveText("1 / 80");
  await expect(page.locator("#hintsCount")).toHaveText("1");
  await expect(page.locator('[data-cell="'+cell+'"]')).toContainText(letter);
  await solve(page,0);
  await expect(page.locator("#nextLevel")).toHaveText(/Next Level 2/);
  await page.locator("#nextLevel").click();
- await expect(page.locator("#levelCount")).toHaveText("2 / 60");
+ await expect(page.locator("#levelCount")).toHaveText("2 / 80");
  await expect(page.locator("#levelPicker option")).toHaveCount(2);
  await page.reload();
- await expect(page.locator("#levelCount")).toHaveText("2 / 60");
+ await expect(page.locator("#levelCount")).toHaveText("2 / 80");
  const progress=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.crosswordWorld.v1")));
  expect(progress.stars[0]).toBeGreaterThan(0);
  expect(errors).toEqual([]);
@@ -66,23 +66,23 @@ test("Crossword World: later chapters unlock without skipping or trapping player
  await seed(page,19);
  await solve(page,19);
  await page.locator("#nextLevel").click();
- await expect(page.locator("#levelCount")).toHaveText("21 / 60");
+ await expect(page.locator("#levelCount")).toHaveText("21 / 80");
  await expect(page.locator("#puzzleTitle")).toContainText("Kindness Club");
  await seed(page,39);
  await solve(page,39);
  await page.locator("#nextLevel").click();
- await expect(page.locator("#levelCount")).toHaveText("41 / 60");
+ await expect(page.locator("#levelCount")).toHaveText("41 / 80");
  await expect(page.locator("#puzzleTitle")).toContainText("Money Masters");
 });
-test("Crossword World: final crossword awards all sixty and is readable on phones",async({page})=>{
+test("Crossword World: final crossword awards all eighty and is readable on phones",async({page})=>{
  test.setTimeout(130000);
- await seed(page,59);
- await expect(page.locator("#stage")).toContainText("LEVEL 60 OF 60");
- await solve(page,59);
- await expect(page.locator("#winTitle")).toContainText("All 60 crosswords complete");
+ await seed(page,79);
+ await expect(page.locator("#stage")).toContainText("LEVEL 80 OF 80");
+ await solve(page,79);
+ await expect(page.locator("#winTitle")).toContainText("All 80 crosswords complete");
  await expect(page.locator("#nextLevel")).toHaveText("Replay final crossword");
  const progress=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.crosswordWorld.v1")));
- expect(progress.stars.filter(Boolean)).toHaveLength(60);
+ expect(progress.stars.filter(Boolean)).toHaveLength(80);
  const size=await page.evaluate(()=>({document:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
  expect(size.document).toBeLessThanOrEqual(size.viewport+4);
 });
