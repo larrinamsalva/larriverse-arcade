@@ -1,3 +1,4 @@
+import { trafficExtraQuestions } from "./traffic-extra-signs.js";
 export const messageExtras = [
   { from: "Password reset surprise", icon: "🔐", text: "A message says your account will close today unless you type your password into a link you did not request.", answer: 2, why: "Do not give a password to a surprise link. Open the real app or site yourself and ask a trusted adult if you are unsure." },
   { from: "Tournament invite", icon: "🏆", text: "An unknown player promises a rare skin if you send a verification code that just arrived on your device.", answer: 2, why: "Verification codes are secrets that can unlock accounts. Never send one to a stranger; block the request and get help." },
@@ -122,4 +123,5 @@ export const trafficQuestions = [
   { icon: "🧺", title: "REST AREA", text: "A blue guide sign says REST AREA. What does it point toward?", options: ["A designated place where travelers can leave the road and take a break.", "A lane where drivers may stop in moving traffic.", "A residential street with no services."], answer: 0, why: "REST AREA signs guide travelers to an off-road stopping place. Drivers should use the marked entrance and exit rather than stopping on the travel lane." },
   { icon: "↗️", title: "EXIT", text: "A green guide sign says EXIT with an arrow. What information does it provide?", options: ["The direction to leave the current roadway at a marked interchange or junction.", "A warning that the road is closed.", "A command to stop beside the sign."], answer: 0, why: "Green guide signs help with routes and destinations. An EXIT arrow shows where to leave the roadway, while lane markings and other controls guide the movement." },
   { icon: "🛣️", title: "INTERSTATE ROUTE", text: "A red, white, and blue shield contains an Interstate number. What does the shield identify?", options: ["The speed limit for every road nearby.", "A numbered route in the Interstate Highway System.", "The number of lanes ahead."], answer: 1, why: "An Interstate shield identifies a route, not a speed. Directional signs may pair the shield with arrows, destinations, or words such as NORTH and SOUTH." }
+  ...trafficExtraQuestions,
 ];
