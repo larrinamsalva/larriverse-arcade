@@ -3,6 +3,7 @@ import { expeditions } from "./expedition-worlds.js";
 import { messageExtras, conversationExtras, newsExtras, sortingExtras, trafficQuestions } from "./expanded-scenarios.js";
 import { sixtyMessageExtras, sixtyConversationExtras, sixtyNewsExtras, sixtySortingExtras, sixtyRepairExtras } from "./sixty-world-extras.js";
 import { weatherExtendedChallenges, gardenExtendedChallenges } from "./sixty-garden-weather-challenges.js";
+import { gardenBonusChallenges } from "./garden-bonus-challenges.js";
 export { trafficQuestions };
 export const worlds = [
   ...expeditions,
@@ -242,7 +243,7 @@ export const worlds = [
     artSet: "garden-learning",
     skill: "Build, grow, harvest & keep food fresh",
     desc: "Choose the right picture to build a garden, plant seeds, care for crops, harvest produce, and keep it fresh.",
-    mission: "Advance through four grower ranks and all sixty unique picture challenges: build the bed, plant wisely, care for crops, then harvest and store food safely.",
+    mission: "Advance through four grower ranks and all eighty picture challenges: build the bed, plant wisely, care for crops, then harvest and store food safely.",
     take: "Every plant and climate is different. Read the seed packet, work with a trusted adult, use tools safely, and wash garden food before eating it.",
     mode: "garden-grow",
   },
@@ -1573,4 +1574,5 @@ export const gardenGrowthChallenges = [
     why: "Refrigerate cut tomatoes promptly in a clean covered container. Whole uncut tomatoes are often stored differently, so ask an adult.",
   },
   ...gardenExtendedChallenges,
+  ...gardenBonusChallenges,
 ];
