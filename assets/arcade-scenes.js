@@ -318,13 +318,112 @@ export function gardenLessonSvg(kind) {
   return renderGardenScene(kind, iconDrawing);
 }
 
+const trafficExtraSignDesigns = new Map([
+  ["NO TURN ON RED",{kind:"rule",lines:["NO TURN","ON RED"],accent:"#c93339"}],
+  ["NO TURNS",{kind:"rule",lines:["NO","TURNS"],accent:"#c93339"}],
+  ["STRAIGHT ONLY",{kind:"rule",lines:["↑","ONLY"],big:true}],
+  ["LEFT OR STRAIGHT ONLY",{kind:"rule",lines:["←  ↑","ONLY"],big:true}],
+  ["RIGHT OR STRAIGHT ONLY",{kind:"rule",lines:["↑  →","ONLY"],big:true}],
+  ["LEFT OR RIGHT ONLY",{kind:"rule",lines:["←  →","ONLY"],big:true}],
+  ["LEFT LANE MUST TURN LEFT",{kind:"rule",lines:["LEFT LANE","MUST","TURN LEFT"]}],
+  ["KEEP LEFT",{kind:"rule",lines:["↙","KEEP LEFT"],big:true}],
+  ["SLOWER TRAFFIC KEEP RIGHT",{kind:"rule",lines:["SLOWER","TRAFFIC","KEEP RIGHT"]}],
+  ["PASS WITH CARE",{kind:"rule",lines:["PASS","WITH CARE"],accent:"#23834e"}],
+  ["MINIMUM SPEED 40",{kind:"rule",lines:["MINIMUM","SPEED","40"],bigLast:true}],
+  ["TRUCKS USE RIGHT LANE",{kind:"rule",lines:["TRUCKS","USE","RIGHT LANE"]}],
+  ["NO PEDESTRIANS",{kind:"prohibit",lines:["WALK"]}],
+  ["NO BICYCLES",{kind:"prohibit",lines:["BIKE"]}],
+  ["NO MOTOR VEHICLES",{kind:"prohibit",lines:["MOTOR","VEHICLES"]}],
+  ["NO STOPPING",{kind:"rule",lines:["NO","STOPPING"],accent:"#c93339"}],
+  ["NO STANDING",{kind:"rule",lines:["NO","STANDING"],accent:"#c93339"}],
+  ["PARKING 2 HOURS",{kind:"rule",lines:["2 HOUR","PARKING"],accent:"#23834e"}],
+  ["ACCESSIBLE PARKING",{kind:"rule",lines:["♿","PARKING"],accent:"#2469ad",big:true}],
+  ["HOV 2+ ONLY",{kind:"rule",lines:["◇ HOV","2+ ONLY"],big:true}],
+  ["BIKE LANE",{kind:"rule",lines:["BIKE","LANE"],accent:"#23834e"}],
+  ["BICYCLES MAY USE FULL LANE",{kind:"rule",lines:["BICYCLES","MAY USE","FULL LANE"]}],
+  ["YIELD HERE TO PEDESTRIANS",{kind:"rule",lines:["YIELD HERE","TO","PEDESTRIANS"]}],
+  ["STOP HERE FOR PEDESTRIANS",{kind:"rule",lines:["STOP HERE","FOR","PEDESTRIANS"]}],
+  ["TRUCK ROUTE",{kind:"rule",lines:["TRUCK","ROUTE"],accent:"#23834e"}],
+  ["US ROUTE",{kind:"usShield",lines:["US","40"]}],
+  ["STATE ROUTE",{kind:"stateShield",lines:["STATE","12"]}],
+  ["JUNCTION",{kind:"guide",lines:["JCT","40"]}],
+  ["MILEPOST",{kind:"guide",lines:["MILE","128"]}],
+  ["STREET NAME",{kind:"guide",lines:["MAPLE ST"]}],
+  ["AIRPORT",{kind:"service",lines:["✈","AIRPORT"],big:true}],
+  ["GAS",{kind:"service",lines:["FUEL","GAS"]}],
+  ["FOOD",{kind:"service",lines:["FOOD","DINING"]}],
+  ["LODGING",{kind:"service",lines:["LODGING","BED"]}],
+  ["CAMPING",{kind:"service",lines:["CAMP","TENT"]}],
+  ["PICNIC AREA",{kind:"service",lines:["PICNIC","AREA"]}],
+  ["EV CHARGING",{kind:"service",lines:["EV","CHARGING"],big:true}],
+  ["PARKING",{kind:"service",lines:["P","PARKING"],big:true}],
+  ["TOURIST INFORMATION",{kind:"service",lines:["i","INFO"],big:true}],
+  ["TELEPHONE",{kind:"service",lines:["PHONE","☎"]}],
+  ["PLAYGROUND",{kind:"schoolWarn",lines:["PLAY","AREA"]}],
+  ["SCHOOL BUS STOP AHEAD",{kind:"schoolWarn",lines:["SCHOOL BUS","STOP AHEAD"]}],
+  ["SCHOOL SPEED LIMIT 20",{kind:"rule",lines:["SCHOOL","SPEED LIMIT","20"],bigLast:true}],
+  ["FIRE STATION",{kind:"warning",lines:["FIRE","STATION"]}],
+  ["EMERGENCY VEHICLE",{kind:"warning",lines:["EMERGENCY","VEHICLE"]}],
+  ["HORSE CROSSING",{kind:"warning",lines:["HORSE","CROSSING"]}],
+  ["ELK CROSSING",{kind:"warning",lines:["ELK","CROSSING"]}],
+  ["SNOWMOBILE CROSSING",{kind:"warning",lines:["SNOWMOBILE","CROSSING"]}],
+  ["SOFT SHOULDER",{kind:"warning",lines:["SOFT","SHOULDER"]}],
+  ["SHOULDER DROP-OFF",{kind:"warning",lines:["SHOULDER","DROP-OFF"]}],
+  ["UNEVEN LANES",{kind:"warning",lines:["UNEVEN","LANES"]}],
+  ["PAVEMENT ENDS",{kind:"warning",lines:["PAVEMENT","ENDS"]}],
+  ["GROOVED PAVEMENT",{kind:"warning",lines:["GROOVED","PAVEMENT"]}],
+  ["FOG AREA",{kind:"warning",lines:["FOG","AREA"]}],
+  ["HIDDEN DRIVEWAY",{kind:"warning",lines:["HIDDEN","DRIVEWAY"]}],
+  ["ADDED LANE",{kind:"warning",lines:["ADDED","LANE"]}],
+  ["DOUBLE ARROW",{kind:"warning",lines:["←  →"],big:true}],
+  ["MEDIAN AHEAD",{kind:"warning",lines:["MEDIAN","AHEAD"]}],
+  ["ONE LANE ROAD AHEAD",{kind:"work",lines:["ONE LANE","ROAD","AHEAD"]}],
+  ["BE PREPARED TO STOP",{kind:"work",lines:["BE PREPARED","TO STOP"]}],
+]);
+
 export function trafficSignSvg(title) {
   const upper = String(title).toUpperCase();
   const diamond = (symbol, fill = '#ffd34f') => `<path d="M60 6 114 60 60 114 6 60Z" fill="${fill}" stroke="#323638" stroke-width="5"/>${symbol}`;
   const ruleSign = symbol => `<rect x="16" y="8" width="88" height="104" rx="7" fill="#fff" stroke="#24282a" stroke-width="5"/>${symbol}`;
   const prohibition = symbol => `${ruleSign(symbol)}<circle cx="60" cy="59" r="39" fill="none" stroke="#d93e3e" stroke-width="8"/><path d="m32 31 56 56" stroke="#d93e3e" stroke-width="9" stroke-linecap="round"/>`;
+  const design = trafficExtraSignDesigns.get(upper);
+  const textFace = (lines, fill, textColor, stroke="#24282a", shape="rect", big=false, bigLast=false, accent=null) => {
+    const face = shape === "diamond"
+      ? `<path d="M60 6 114 60 60 114 6 60Z" fill="${fill}" stroke="${stroke}" stroke-width="5"/>`
+      : shape === "pentagon"
+        ? `<path d="M60 6 108 39 91 112H29L12 39Z" fill="${fill}" stroke="${stroke}" stroke-width="5"/>`
+        : `<rect x="12" y="10" width="96" height="100" rx="7" fill="${fill}" stroke="${stroke}" stroke-width="5"/>`;
+    const count = lines.length;
+    const startY = count === 1 ? 67 : count === 2 ? 50 : 37;
+    const gap = count === 1 ? 0 : count === 2 ? 29 : 25;
+    return face + lines.map((line,index)=>{
+      const size = big ? (index===0 ? 30 : 13) : bigLast && index===count-1 ? 31 : count===1 ? 18 : count===2 ? 15 : 12;
+      const color = accent && index===0 ? accent : textColor;
+      return `<text x="60" y="${startY+index*gap}" text-anchor="middle" fill="${color}" font-size="${size}" font-weight="1000">${svgText(line)}</text>`;
+    }).join("");
+  };
   let sign;
-  if (upper === 'STOP') sign = '<path d="M38 7h44l31 31v44l-31 31H38L7 82V38Z" fill="#d93e3e" stroke="#fff" stroke-width="6"/><text x="60" y="69" text-anchor="middle" fill="#fff" font-size="25" font-weight="900">STOP</text>';
+  if (design) {
+    if (design.kind === "prohibit")
+      sign = prohibition(textFace(design.lines,"#fff","#25292b","#24282a","rect",false,false,null).replace(/<rect[^>]+\/>/,""));
+    else if (design.kind === "warning")
+      sign = textFace(design.lines,"#ffd34f","#25292b","#323638","diamond",design.big);
+    else if (design.kind === "work")
+      sign = textFace(design.lines,"#f49a3f","#25292b","#323638","diamond",design.big);
+    else if (design.kind === "schoolWarn")
+      sign = textFace(design.lines,"#d9f15d","#202826","#29332c","pentagon",design.big);
+    else if (design.kind === "service")
+      sign = textFace(design.lines,"#2469ad","#fff","#fff","rect",design.big);
+    else if (design.kind === "guide")
+      sign = textFace(design.lines,"#23834e","#fff","#fff","rect",design.big);
+    else if (design.kind === "usShield")
+      sign = '<path d="M15 20q45 13 90 0l-5 53q-5 27-40 37-35-10-40-37Z" fill="#fff" stroke="#24282a" stroke-width="5"/><text x="60" y="46" text-anchor="middle" fill="#24282a" font-size="13" font-weight="1000">US</text><text x="60" y="86" text-anchor="middle" fill="#24282a" font-size="34" font-weight="1000">40</text>';
+    else if (design.kind === "stateShield")
+      sign = '<circle cx="60" cy="60" r="49" fill="#fff" stroke="#24282a" stroke-width="5"/><text x="60" y="45" text-anchor="middle" fill="#24282a" font-size="11" font-weight="1000">STATE</text><text x="60" y="84" text-anchor="middle" fill="#24282a" font-size="34" font-weight="1000">12</text>';
+    else
+      sign = textFace(design.lines,"#fff","#25292b","#24282a","rect",design.big,design.bigLast,design.accent);
+  }
+  else if (upper === 'STOP') sign = '<path d="M38 7h44l31 31v44l-31 31H38L7 82V38Z" fill="#d93e3e" stroke="#fff" stroke-width="6"/><text x="60" y="69" text-anchor="middle" fill="#fff" font-size="25" font-weight="900">STOP</text>';
   else if (upper === 'YIELD') sign = '<path d="M60 108 10 18h100Z" fill="#fff" stroke="#d94343" stroke-width="10"/><text x="60" y="60" text-anchor="middle" fill="#b72f35" font-size="18" font-weight="900">YIELD</text>';
   else if (upper.startsWith('SPEED LIMIT')) sign = `<rect x="22" y="8" width="76" height="104" rx="6" fill="#fff" stroke="#222" stroke-width="5"/><text x="60" y="35" text-anchor="middle" fill="#222" font-size="14" font-weight="900">SPEED</text><text x="60" y="54" text-anchor="middle" fill="#222" font-size="14" font-weight="900">LIMIT</text><text x="60" y="94" text-anchor="middle" fill="#222" font-size="35" font-weight="900">${svgText(upper.match(/\d+/)?.[0] || '')}</text>`;
   else if (upper === 'DO NOT ENTER') sign = '<circle cx="60" cy="60" r="51" fill="#d83d3d" stroke="#fff" stroke-width="5"/><rect x="20" y="51" width="80" height="18" rx="4" fill="#fff"/>';
