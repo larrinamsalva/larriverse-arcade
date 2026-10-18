@@ -117,10 +117,19 @@ function campaignTrail(step,total) {
         (done?'✓':i+1)+'</b><small>Chapter '+(i+1)+'</small></span>';
     }).join("")+"</div>";
 }
+function setStageTrail(markup) {
+  const dock = $("stageTrailDock");
+  if (!dock) return false;
+  dock.innerHTML = markup || "";
+  dock.hidden = !markup;
+  return Boolean(markup);
+}
 function endCampaignScreen() {
   const total=state.deck.length, chapters=total/10;
   stage(`🏆 All ${total} challenges explored`);
-  board.innerHTML='<div class="message-card"><div class="message-copy"><h2 class="board-title">You explored every challenge!</h2><p>'+total+' different activities are complete in this world. Replay them whenever you want; the original arcade best score remains saved.</p></div></div>'+campaignTrail(total,total);
+  const trailMarkup = campaignTrail(total,total);
+  const trailDocked = setStageTrail(trailMarkup);
+  board.innerHTML='<div class="message-card"><div class="message-copy"><h2 class="board-title">You explored every challenge!</h2><p>'+total+' different activities are complete in this world. Replay them whenever you want; the original arcade best score remains saved.</p></div></div>'+(trailDocked?"":trailMarkup);
   progress(total,total,total+" of "+total+" completed · "+chapters+" chapters finished");
   updateScore(Math.round(state.correct/total*100));
   button("Replay all "+total+" adventures",()=>{
@@ -155,7 +164,15 @@ let hint = world.take;
 
 $("skillLabel").textContent = world.skill;
 $("worldDescription").textContent = world.desc;
-$("worldMeta").textContent = `Ages ${world.age} · ${world.mode==="traffic"?`${trafficQuestions.length} levels · save and resume`:campaignModes.has(world.mode)||["market","music","trade","pantry"].includes(world.mode)?"60 levels · save and resume":`about ${world.minutes}`}`;
+const campaignCounts = {
+  messages: messages.length,
+  conversation: conversations.length,
+  news: newsCards.length,
+  repair: repairs.length,
+  sorting: sorting.length,
+  traffic: trafficQuestions.length,
+};
+$("worldMeta").textContent = `Ages ${world.age} · ${campaignModes.has(world.mode)?`${campaignCounts[world.mode]} levels · save and resume`:["market","music","trade"].includes(world.mode)?"60 levels · save and resume":world.mode==="pantry"?`${world.id==="pantry-picnic"?"80":"60"} levels · save and resume`:`about ${world.minutes}`}`;
 $("missionIcon").textContent = world.icon;
 if (world.mode === "bridge") $("missionIcon").innerHTML = iconSvg("wood");
 $("missionTitle").textContent = world.skill;
@@ -531,7 +548,9 @@ function renderCards(mode) {
                 <div class="fact-source-lights"><i></i><i></i><i></i><i></i></div>
               </div>`
             : `<span class="message-icon" aria-hidden="true">${item.icon}</span>`;
-  board.innerHTML = `${campaignTrail(state.step,deck.length)}<div class="message-card ${mode === "traffic" ? "traffic-message" : mode === "sorting" ? "reuse-message" : mode === "messages" ? "scam-message" : mode === "conversation" ? "kindness-message" : mode === "news" ? "fact-message" : ""}">${messageArt}<div class="message-copy">${mode === "messages" ? '<span class="eyebrow scam-case-label">Incoming case file</span>' : mode === "conversation" ? '<span class="eyebrow kindness-scene-label">Treehouse moment</span>' : mode === "news" ? '<span class="eyebrow fact-desk-label">Source check desk</span>' : ""}<h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""} ${mode === "messages" ? "scam-action-grid" : mode === "conversation" ? "kindness-choice-grid" : mode === "news" ? "fact-choice-grid" : ""}">${display.map((choice) => `<button class="choice-button ${mode === "messages" ? `scam-action scam-action--${choice.index}` : mode === "conversation" ? "kindness-choice" : mode === "news" ? `fact-choice fact-choice--${choice.index}` : ""}" data-answer="${choice.index}">${mode === "messages" ? `<span class="scam-action-icon" aria-hidden="true">${choice.index === 0 ? "✓" : choice.index === 1 ? "?" : "!"}</span>` : mode === "conversation" ? '<span class="kindness-choice-marker" aria-hidden="true">♥</span>' : mode === "news" ? `<span class="fact-choice-marker" aria-hidden="true">${choice.index === 0 ? "E" : choice.index === 1 ? "O" : choice.index === 2 ? "A" : "?"}</span>` : ""}${esc(choice.label)}</button>`).join("")}</div>${mode === "messages" ? '<div class="scam-safety-strip" aria-label="Scam Sleuth action guide"><span class="safe"><i aria-hidden="true"></i>Read only when it checks out</span><span class="check"><i aria-hidden="true"></i>Verify surprising messages</span><span class="stop"><i aria-hidden="true"></i>Stop when secrets or pressure appear</span></div>' : mode === "news" ? '<div class="fact-source-guide" aria-label="Fact Finder source guide"><span><i class="evidence" aria-hidden="true"></i>Evidence can be checked</span><span><i class="opinion" aria-hidden="true"></i>Opinion shares a view</span><span><i class="ad" aria-hidden="true"></i>Ads try to sell</span><span><i class="check" aria-hidden="true"></i>Missing context needs checking</span></div>' : mode === "sorting" ? '<p class="board-note reuse-rule-card">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
+  const trailMarkup = campaignTrail(state.step,deck.length);
+  const trailDocked = setStageTrail(trailMarkup);
+  board.innerHTML = `${trailDocked ? "" : trailMarkup}<div class="message-card ${mode === "traffic" ? "traffic-message" : mode === "sorting" ? "reuse-message" : mode === "messages" ? "scam-message" : mode === "conversation" ? "kindness-message" : mode === "news" ? "fact-message" : ""}">${messageArt}<div class="message-copy">${mode === "messages" ? '<span class="eyebrow scam-case-label">Incoming case file</span>' : mode === "conversation" ? '<span class="eyebrow kindness-scene-label">Treehouse moment</span>' : mode === "news" ? '<span class="eyebrow fact-desk-label">Source check desk</span>' : ""}<h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""} ${mode === "messages" ? "scam-action-grid" : mode === "conversation" ? "kindness-choice-grid" : mode === "news" ? "fact-choice-grid" : ""}">${display.map((choice) => `<button class="choice-button ${mode === "messages" ? `scam-action scam-action--${choice.index}` : mode === "conversation" ? "kindness-choice" : mode === "news" ? `fact-choice fact-choice--${choice.index}` : ""}" data-answer="${choice.index}">${mode === "messages" ? `<span class="scam-action-icon" aria-hidden="true">${choice.index === 0 ? "✓" : choice.index === 1 ? "?" : "!"}</span>` : mode === "conversation" ? '<span class="kindness-choice-marker" aria-hidden="true">♥</span>' : mode === "news" ? `<span class="fact-choice-marker" aria-hidden="true">${choice.index === 0 ? "E" : choice.index === 1 ? "O" : choice.index === 2 ? "A" : "?"}</span>` : ""}${esc(choice.label)}</button>`).join("")}</div>${mode === "messages" ? '<div class="scam-safety-strip" aria-label="Scam Sleuth action guide"><span class="safe"><i aria-hidden="true"></i>Read only when it checks out</span><span class="check"><i aria-hidden="true"></i>Verify surprising messages</span><span class="stop"><i aria-hidden="true"></i>Stop when secrets or pressure appear</span></div>' : mode === "news" ? '<div class="fact-source-guide" aria-label="Fact Finder source guide"><span><i class="evidence" aria-hidden="true"></i>Evidence can be checked</span><span><i class="opinion" aria-hidden="true"></i>Opinion shares a view</span><span><i class="ad" aria-hidden="true"></i>Ads try to sell</span><span><i class="check" aria-hidden="true"></i>Missing context needs checking</span></div>' : mode === "sorting" ? '<p class="board-note reuse-rule-card">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
   progress(state.step, deck.length);
   bind("[data-answer]", (node) => {
     if (state.answered) return;
@@ -1064,7 +1083,8 @@ function renderRobot() {
     })
     .join("");
   stage(`Robot world ${state.level + 1} of ${robotLevels.length} · ${level.rank} · ${level.name}`);
-  board.innerHTML = `<div class="level-trail rover-level-trail" aria-label="Rover advancement ranks">${rankTrail}</div><div class="stat-row rover-stats">${chip("Facing", directions[state.dir])}${chip("World", `${state.level + 1}/${robotLevels.length}`)}${chip("Rank", level.rank)}${chip("3-star target", `${level.par} cmds`)}${chip("Stars earned", `${roverStarTotal()}/${robotLevels.length * 3}`)}</div><p class="board-note rover-lesson"><strong>Forward moves Rover in the direction it is facing.</strong> Left and Right turn Rover in place. The dotted trail shows where it has traveled.</p><div class="tile-grid rover-grid rover-zone--${level.zone}" aria-label="${esc(level.name)} rover path grid">${Array.from({ length: 25 }, (_, i) => {
+  setStageTrail(`<div class="level-trail rover-level-trail" aria-label="Rover advancement ranks">${rankTrail}</div>`);
+  board.innerHTML = `<div class="stat-row rover-stats">${chip("Facing", directions[state.dir])}${chip("World", `${state.level + 1}/${robotLevels.length}`)}${chip("Rank", level.rank)}${chip("3-star target", `${level.par} cmds`)}${chip("Stars earned", `${roverStarTotal()}/${robotLevels.length * 3}`)}</div><p class="board-note rover-lesson"><strong>Forward moves Rover in the direction it is facing.</strong> Left and Right turn Rover in place. The dotted trail shows where it has traveled.</p><div class="tile-grid rover-grid rover-zone--${level.zone}" aria-label="${esc(level.name)} rover path grid">${Array.from({ length: 25 }, (_, i) => {
     const rock = level.rocks.includes(i);
     const player = i === state.player;
     const goal = i === level.goal;
@@ -1512,7 +1532,7 @@ $("restartButton").addEventListener("click",()=>{
     return;
   }
   if(campaignModes.has(world.mode)){
-    const total=world.mode==="traffic"?trafficQuestions.length:60;
+    const total=state.deck?.length || campaignCounts[world.mode] || 60;
     if(!window.confirm("Replay all "+total+" challenges in this world from the beginning?"))return;
     writeCampaign(0,0);
   }

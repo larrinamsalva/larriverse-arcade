@@ -106,9 +106,14 @@ const roverNames=["Dune Detour","North Ridge","Crystal Pass","Satellite Lane","C
  "Orbit Puzzle","Quartz Crossing","Pine Passage","Solar Valley","Meteor Circuit",
  "Twilight Trail","Asteroid Bridge","Aurora Lane","Summit Loop","Moonbeam Maze",
  "Starlight Canyon","Cosmic Orchard","Rocket Ridge","Saturn Passage","Skyline Maze",
- "Aurora Outpost","Nebula Switch","Comet Gateway","Stargazer Route","Rover Finale"];
+ "Aurora Outpost","Nebula Switch","Comet Gateway","Stargazer Route","Rover Finale",
+ "Solar Switchback","Meteor Meadow","Crater Crossing","Ion Ridge","Photon Path",
+ "Cosmic Creek","Moonstone Maze","Gravity Garden","Nova Narrows","Orbit Overpass",
+ "Stellar Steps","Rocket Ravine","Pulsar Pass","Eclipse Edge","Galaxy Grove",
+ "Comet Corridor","Aurora Ascent","Satellite Summit","Starfield Sprint","Rover Grand Finale"];
 const roverRanks=["Path Explorer","Corner Cartographer","Rock Dodger","Trail Strategist",
- "Space Navigator","Orbit Programmer","Galaxy Pathfinder","Rover Legend"];
+ "Space Navigator","Orbit Programmer","Galaxy Pathfinder","Rover Legend",
+ "Astro Coder","Star Mapper","Mission Engineer","Rover Grandmaster"];
 const roverNext=(seed)=>((seed*1664525+1013904223)>>>0);
 const nextStep=(cell,dir)=>{
  const r=Math.floor(cell/5),c=cell%5;
@@ -132,7 +137,7 @@ export function roverShortestPath(level){
  return null;
 }
 const uniqueBoards=new Set();
-export const roverExtraLevels=Array.from({length:40},(_,i)=>{
+export const roverExtraLevels=Array.from({length:60},(_,i)=>{
  let seed=(104729+i*7919)>>>0;
  let chosen=null;
  for(let attempts=0;attempts<6000;attempts++){
@@ -156,7 +161,7 @@ export const roverExtraLevels=Array.from({length:40},(_,i)=>{
   }
  }
  if(!chosen)throw new Error("Rover generator could not find puzzle "+(i+21));
- return {...chosen,name:roverNames[i],rank:roverRanks[Math.floor(i/5)],zone:["meadow","canyon","crystal","cosmic"][Math.floor(i/10)],
+ return {...chosen,name:roverNames[i],rank:roverRanks[Math.floor(i/5)],zone:["meadow","canyon","crystal","cosmic"][Math.floor(i/10)%4],
   hint:"Plan a safe "+roverNames[i].toLowerCase()+" route. Start at row "+(Math.floor(chosen.start/5)+1)+
   ", column "+(chosen.start%5+1)+", and seek the star at row "+(Math.floor(chosen.goal/5)+1)+
   ", column "+(chosen.goal%5+1)+". Use Left and Right turns before moving Forward; avoid the rocks."};

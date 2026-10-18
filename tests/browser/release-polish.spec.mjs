@@ -220,6 +220,9 @@ test('reduced-motion Road Trip keeps same-lane collection, saved inventory and d
   });
   await page.locator('#startButton').click();
   await expect(page.locator('#motionRoadNote')).toBeVisible();
+  const laneControls = await page.locator('.lane-controls').boundingBox();
+  const laneMovers = await page.locator('.lane-movers').boundingBox();
+  expect(Math.abs((laneMovers.x + laneMovers.width / 2) - (laneControls.x + laneControls.width / 2))).toBeLessThanOrEqual(3);
   await page.clock.fastForward(1200);
   const item = page.locator('.road-item.stationary');
   await expect(item).toHaveCount(1);

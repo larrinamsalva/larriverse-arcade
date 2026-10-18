@@ -1,12 +1,13 @@
 import { tradeExtraLevels, townExtraLevels } from "./next-expedition-levels.js";
 import { newPantryChallenges } from "./pantry-extra-challenges.js";
 import { extraPipePaths, extraHarborLevels, extraCompassClues, extraCipherLevels } from "./sixty-expedition-puzzles.js";
+import { bonusPipePaths, bonusHarborLevels, bonusPantryChallenges } from "./eighty-expedition-extras.js";
 
 export const expeditions = [
   { id: "bridge-buddies", title: "Bridge Buddies", icon: "🌉", topic: "Build & create", category: "Little engineers", age: "8+", minutes: "12 min", art: 0, mode: "bridge", skill: "Test, improve, try again", desc: "Build and test sixty distinct bridge-load plans with unlimited free supports, from first spans to reinforced summit crossings.", mission: "Build four strong spans per level across sixty increasingly demanding crossings. All supports stay free and replaceable. Move through twelve bridge-builder ranks and carry each cargo safely.", take: "Choose the right support for the job. Test a small model, notice what happened, and change one thing at a time." },
-  { id: "water-works", title: "Water Works", icon: "💧", topic: "Planet", category: "Flow & resources", age: "7+", minutes: "12 min", art: 1, mode: "pipes", skill: "See how a system connects", desc: "Turn pipes through sixty increasingly winding and branching-looking flow puzzles and bring water through the toy filter to town.", mission: "Rotate each pipe network from the reservoir to town. Pass through the toy filter while advancing from Flow Finder to Waterworks Master.", take: "Trace a problem from its starting point and check each connection. This toy filter does not make real water safe to drink." },
-  { id: "harbor-helpers", title: "Harbor Helpers", icon: "⛵", topic: "Adventures", category: "Cooperative adventures", age: "8+", minutes: "12 min", art: 2, mode: "harbor", skill: "Plan deliveries together", desc: "Grow from a small skiff to cargo boats and dock-truck ferry runs across sixty increasingly demanding island deliveries.", mission: "Read each island request, choose from an expanding cargo shelf, load 3 to 8 crates as your transport grows, and advance through six harbor chapters.", take: "A useful delivery starts with listening. Plan loads and routes together so supplies reach the neighbors who asked for them." },
-  { id: "pantry-picnic", title: "Pantry Picnic", icon: "🥪", topic: "Everyday life", category: "Little life skills", age: "7+", minutes: "10 min", art: 3, mode: "pantry", skill: "Use what you already have", desc: "Plan sixty distinct picnics in one saved adventure across six food-smart chapters.", mission: "Pack sixty different picnic boxes in six connected chapters. Choose one main and two produce portions, use marked leftovers first, and resume at your next challenge.", take: "Check what you already have before getting more. Planning portions can reduce waste; ask an adult about allergies, food preparation, and safe storage." },
+  { id: "water-works", title: "Water Works", icon: "💧", topic: "Planet", category: "Flow & resources", age: "7+", minutes: "14 min", art: 1, mode: "pipes", skill: "See how a system connects", desc: "Turn pipes through eighty increasingly winding flow puzzles and bring water through the toy filter to town.", mission: "Rotate eighty different pipe networks from the reservoir to town. Pass through the toy filter while advancing from Flow Finder to Waterworks Grandmaster.", take: "Trace a problem from its starting point and check each connection. This toy filter does not make real water safe to drink." },
+  { id: "harbor-helpers", title: "Harbor Helpers", icon: "⛵", topic: "Adventures", category: "Cooperative adventures", age: "8+", minutes: "14 min", art: 2, mode: "harbor", skill: "Plan deliveries together", desc: "Grow from a small skiff to harbor convoys across eighty increasingly demanding island deliveries.", mission: "Read each island request, choose from an expanding cargo shelf, load 3 to 8 crates as your transport grows, and advance through eight harbor chapters.", take: "A useful delivery starts with listening. Plan loads and routes together so supplies reach the neighbors who asked for them." },
+  { id: "pantry-picnic", title: "Pantry Picnic", icon: "🥪", topic: "Everyday life", category: "Little life skills", age: "7+", minutes: "12 min", art: 3, mode: "pantry", skill: "Use what you already have", desc: "Plan eighty distinct picnics in one saved adventure across eight food-smart chapters.", mission: "Pack eighty different picnic boxes in eight connected chapters. Choose one main and two produce portions, use marked leftovers first, and resume at your next challenge.", take: "Check what you already have before getting more. Planning portions can reduce waste; ask an adult about allergies, food preparation, and safe storage." },
   { id: "compass-cove", title: "Compass Cove", icon: "🧭", topic: "Adventures", category: "Map adventures", age: "7+", minutes: "15 min", art: 4, mode: "compass", skill: "Read landmarks and multi-step directions", desc: "Explore a tiny island through sixty compass routes that grow from short two-step clues into longer turn-by-turn treasure trails.", mission: "Find sixty treasures by following numbered directions from island landmarks. Early routes are short; later routes add more turns and direction steps as you advance toward Compass Champion.", take: "Start from the named landmark, keep north at the top, and follow one numbered step at a time. A wrong square is only a clue to try again; your treasure progress stays safe." },
   { id: "cipher-club", title: "Cipher Club", icon: "🔎", topic: "Digital life", category: "Secret-code workshop", age: "8+", minutes: "12 min", art: 5, mode: "cipher", skill: "Make meaning with a shared key", desc: "Turn the code wheel and solve sixty messages that grow from three to nine letters.", mission: "Use the toy A–H alphabet and a shared number key to encode or decode sixty clubhouse messages. Advance through twelve code ranks as the words grow longer.", take: "A shared rule can change how a message looks. This tiny code is easy to break and must never be used to protect passwords or real secrets." },
   { id: "trade-town", title: "Trade Town", icon: "🪙", topic: "Money", category: "Smart shopping", age: "8+", minutes: "7 min", art: 6, mode: "trade", skill: "Compare the whole deal", desc: "Explore 60 different shopping requests through six saved market districts, from bundle basics to extra-fee comparisons.", mission: "Work through 60 different shopping requests across six saved market districts. Compare quantities, whole costs and fees; progress resumes next visit.", take: "The biggest pack is not always the best fit. Compare the whole cost, including fees, with how much you actually need." },
@@ -86,7 +87,7 @@ const originalPipePaths = [
   [10,11,12,17,22,23,18,13,14],
   [10,11,12,7,2,3,4,9,14],
 ];
-export const pipePaths = [...originalPipePaths, ...extraPipePaths];
+export const pipePaths = [...originalPipePaths, ...extraPipePaths, ...bonusPipePaths];
 export const directions = ["north", "east", "south", "west"];
 
 export const cargo = [
@@ -130,6 +131,8 @@ const harborTransportStages = [
   { name: "Large supply boat", icon: "boat", capacity: 6 },
   { name: "Dock truck + ferry", icon: "truck", capacity: 7 },
   { name: "Harbor hauler + ferry", icon: "truck", capacity: 8 },
+  { name: "Coastal convoy + ferry", icon: "truck", capacity: 8 },
+  { name: "Grand harbor convoy", icon: "truck", capacity: 8 },
 ];
 const harborLoadSignatures = new Set();
 const harborSignature = needs => cargo.map(item => needs[item.id] || 0).join(":");
@@ -190,7 +193,7 @@ function growHarborLevel(level, index) {
     chapter: chapter + 1,
   };
 }
-export const harborLevels = [...originalHarborLevels, ...extraHarborLevels].map(growHarborLevel);
+export const harborLevels = [...originalHarborLevels, ...extraHarborLevels, ...bonusHarborLevels].map(growHarborLevel);
 export const pantryFoods = [
   { id: "bread", name: "Bread sandwich", group: "main", icon: "bread" },
   { id: "beans", name: "Prepared beans", group: "main", icon: "beans" },
@@ -378,7 +381,8 @@ export const pantryChallenges = [
     mustUse: { beans: 1, apple: 1, carrot: 1 }, produce: { fruit: 1, vegetable: 1 },
     why: "Every marked leftover fit the request exactly, so nothing else needed to be opened.",
   },
-  ...newPantryChallenges
+  ...newPantryChallenges,
+  ...bonusPantryChallenges
 ];
 export const landmarks = [
   { id: 30, name: "Lighthouse", icon: "lighthouse" }, { id: 5, name: "Reading hut", icon: "hut" },

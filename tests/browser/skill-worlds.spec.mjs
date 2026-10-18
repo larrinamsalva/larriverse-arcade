@@ -328,6 +328,10 @@ test("Reuse Rally: sort all sixty objects through six chapters", async ({
   test.setTimeout(420000);
   await round(page, "reuse-rally", async () => {
     for (let i = 0; i < 60; i++) {
+      if (i === 0) {
+        await expect(page.locator("#stageTrailDock .level-trail .level-node")).toHaveCount(6);
+        await expect(page.locator("#gameBoard > .level-trail")).toHaveCount(0);
+      }
       const art = page.locator(".reuse-item-art");
       await expect(art).toBeVisible();
       await expect(art.locator(".object-model")).toHaveCount(1);
@@ -577,14 +581,15 @@ test("Energy Island: sixty solvable power grids respond to four-day forecasts", 
     await expect(page.locator("#finishMessage")).toContainText("180 of 180 island stars");
   });
 });
-test("Robot Rover: debug a collision and solve sixty original mazes at par", async ({
+test("Robot Rover: debug a collision and solve eighty original mazes at par", async ({
   page,
 }) => {
-  test.setTimeout(420000);
+  test.setTimeout(600000);
   await round(page, "robot-rover", async () => {
-    expect(robotLevels).toHaveLength(60);
-    await expect(page.locator("#stageLabel")).toContainText("Robot world 1 of 60");
-    await expect(page.locator(".rover-level-trail .level-node")).toHaveCount(12);
+    expect(robotLevels).toHaveLength(80);
+    await expect(page.locator("#stageLabel")).toContainText("Robot world 1 of 80");
+    await expect(page.locator("#stageTrailDock .rover-level-trail .level-node")).toHaveCount(16);
+    await expect(page.locator("#gameBoard .rover-level-trail")).toHaveCount(0);
     await expect(page.locator(".rover-level-trail .level-node.active")).toContainText(
       "Rover Rookie",
     );
@@ -638,9 +643,9 @@ test("Robot Rover: debug a collision and solve sixty original mazes at par", asy
 
       if (i < programs.length - 1) {
         await expect(page.locator("#stageLabel")).toContainText(
-          `Robot world ${i + 2} of 60`,
+          `Robot world ${i + 2} of 80`,
         );
-        if ([4, 9, 14, 19, 24, 29, 34, 39, 44, 49, 54].includes(i)) {
+        if ([4, 9, 14, 19, 24, 29, 34, 39, 44, 49, 54, 59, 64, 69, 74].includes(i)) {
           await expect(page.locator("#feedback")).toContainText("unlocked");
           await expect(
             page.locator(".rover-level-trail .level-node.active"),
@@ -650,9 +655,9 @@ test("Robot Rover: debug a collision and solve sixty original mazes at par", asy
     }
 
     await expect(page.locator("#finishMessage")).toContainText(
-      "180 of 180 efficiency stars",
+      "240 of 240 efficiency stars",
     );
-    await expect(page.locator("#finishMessage")).toContainText("across 12 ranks");
+    await expect(page.locator("#finishMessage")).toContainText("across 16 ranks");
   });
 });
 test("Lemonade Lab: four forecasts and a ledger balancing revenue minus cost", async ({

@@ -270,7 +270,7 @@ assert.deepEqual(shortestTrailPath(timeTrailLevels[0]),[20,15,10,5,0,1,2,3,4]);
 const trailWorld=worlds.find(x=>x.id==="time-trail");
 assert.match(trailWorld.mission,/sixty map levels/i);
 assert.equal(catalog.find(x=>x.id==="time-trail").mission,trailWorld.mission);
-assert.equal(robotLevels.length, 60);
+assert.equal(robotLevels.length, 80);
 assert.equal(new Set(robotLevels.map((level) => level.name)).size, robotLevels.length);
 assert.equal(
   new Set(
@@ -290,6 +290,7 @@ assert.deepEqual(roverRanks, [
   "Rover Commander",
   "Path Explorer", "Corner Cartographer", "Rock Dodger", "Trail Strategist",
   "Space Navigator", "Orbit Programmer", "Galaxy Pathfinder", "Rover Legend",
+  "Astro Coder", "Star Mapper", "Mission Engineer", "Rover Grandmaster",
 ]);
 assert.ok(
   roverRanks.every(
@@ -384,5 +385,5 @@ for (const file of [
 ])
   execFileSync(process.execPath, ["--check", file]);
 console.log(
-  `Skill worlds validated: ${worlds.length} unique modes, complete 60-question weather and 80-question garden paths, twenty solvable budgeting missions, replay banks, Traffic Town road-sign practice, repair sequences, and sixty shortest-path-verified rover grids.`,
+  `Skill worlds validated: ${worlds.length} unique modes, complete 60-question weather and 80-question garden paths, twenty solvable budgeting missions, replay banks, Traffic Town road-sign practice, repair sequences, and eighty shortest-path-verified rover grids.`,
 );

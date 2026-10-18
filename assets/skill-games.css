@@ -286,6 +286,40 @@ select:focus-visible,
   margin: 1rem 0 0 !important;
   color: #695322 !important;
 }
+.stage-trail-dock {
+  min-width: 0;
+  margin: .7rem 0 .15rem;
+}
+.stage-trail-dock[hidden] { display: none; }
+.stage-trail-dock .level-trail {
+  display: flex;
+  gap: .4rem;
+  margin: 0;
+  padding: .1rem .05rem .45rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+.stage-trail-dock .level-node {
+  flex: 0 0 auto;
+  grid-template-columns: 24px auto;
+  min-width: 104px;
+  min-height: 38px;
+  padding: .3rem .42rem;
+  gap: .35rem;
+  scroll-snap-align: start;
+}
+.stage-trail-dock .level-node b {
+  width: 24px;
+  height: 24px;
+  font-size: .72rem;
+}
+.stage-trail-dock .level-node small {
+  font-size: .62rem;
+  line-height: 1.05;
+  white-space: nowrap;
+}
 .play-card {
   padding: 1.3rem;
   /* Fit the current challenge instead of displaying an unoccupied white
