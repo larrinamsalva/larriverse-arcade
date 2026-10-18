@@ -164,7 +164,15 @@ let hint = world.take;
 
 $("skillLabel").textContent = world.skill;
 $("worldDescription").textContent = world.desc;
-$("worldMeta").textContent = `Ages ${world.age} · ${world.mode==="traffic"?`${trafficQuestions.length} levels · save and resume`:campaignModes.has(world.mode)||["market","music","trade","pantry"].includes(world.mode)?"60 levels · save and resume":`about ${world.minutes}`}`;
+const campaignCounts = {
+  messages: messages.length,
+  conversation: conversations.length,
+  news: newsCards.length,
+  repair: repairs.length,
+  sorting: sorting.length,
+  traffic: trafficQuestions.length,
+};
+$("worldMeta").textContent = `Ages ${world.age} · ${campaignModes.has(world.mode)?`${campaignCounts[world.mode]} levels · save and resume`:["market","music","trade"].includes(world.mode)?"60 levels · save and resume":world.mode==="pantry"?`${world.id==="pantry-picnic"?"80":"60"} levels · save and resume`:`about ${world.minutes}`}`;
 $("missionIcon").textContent = world.icon;
 if (world.mode === "bridge") $("missionIcon").innerHTML = iconSvg("wood");
 $("missionTitle").textContent = world.skill;
@@ -1524,7 +1532,7 @@ $("restartButton").addEventListener("click",()=>{
     return;
   }
   if(campaignModes.has(world.mode)){
-    const total=world.mode==="traffic"?trafficQuestions.length:60;
+    const total=state.deck?.length || campaignCounts[world.mode] || 60;
     if(!window.confirm("Replay all "+total+" challenges in this world from the beginning?"))return;
     writeCampaign(0,0);
   }
