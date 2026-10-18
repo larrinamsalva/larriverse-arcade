@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { gardenGrowthChallenges } from "../assets/skill-worlds.js";
 import { gardenChoiceSvg, gardenLessonSvg } from "../assets/arcade-scenes.js";
 
-assert.equal(gardenGrowthChallenges.length, 60, "The 60 garden challenges must remain available");
+assert.equal(gardenGrowthChallenges.length, 80, "The 80 garden challenges must remain available");
 const art = new Set();
 const scene = new Set();
 for (const challenge of gardenGrowthChallenges) {

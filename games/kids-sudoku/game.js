@@ -73,7 +73,7 @@ function setHeader() {
   $("hintCounter").textContent = String(hints);
   $("progressFill").style.width = (cleared / levelCount * 100) + "%";
   $("progressTrack").setAttribute("aria-valuenow", String(cleared));
-  $("progressTrack").setAttribute("aria-valuetext", cleared + " of 60 Sudoku levels completed");
+  $("progressTrack").setAttribute("aria-valuetext", cleared + " of " + levelCount + " Sudoku levels completed");
   $("pictureMode").disabled = level.size !== 4;
   $("pictureMode").textContent = level.size === 4
     ? (picture ? "🐱 Picture helpers: on" : "🐱 Picture helpers: off") : "🐱 Picture helpers: for mini grids";
@@ -264,13 +264,13 @@ function completeLevel() {
       });
     } catch { /* Rewards should never stop the next puzzle. */ }
   }
-  $("winTitle").textContent = index === 59 ? "🏆 All 60 levels complete!" : "🎉 Level " + (index + 1) + " solved!";
+  $("winTitle").textContent = index === levelCount - 1 ? "🏆 All " + levelCount + " levels complete!" : "🎉 Level " + (index + 1) + " solved!";
   $("winText").textContent = "You earned " + stars + " star" + (stars === 1 ? "" : "s") +
-    "! " + (index === 59 ? "You're a Sudoku Champion!" : "Your next puzzle is unlocked. Keep going!");
-  $("nextLevel").textContent = index === 59 ? "Replay the Sudoku Summit" : "Next Level " + (index + 2) + " →";
+    "! " + (index === levelCount - 1 ? "You're a Sudoku Champion!" : "Your next puzzle is unlocked. Keep going!");
+  $("nextLevel").textContent = index === levelCount - 1 ? "Replay the Sudoku Summit" : "Next Level " + (index + 2) + " →";
   $("celebration").hidden = false;
   feedback("✨ You solved every row, column, and box! Wonderful work.", "success");
-  buddy(index === 59 ? "🏆 You mastered the whole 60-level adventure!" : "🌟 You've earned your next level. Ready for a new brain challenge?");
+  buddy(index === levelCount - 1 ? "🏆 You mastered the whole " + levelCount + "-level adventure!" : "🌟 You've earned your next level. Ready for a new brain challenge?");
   render();$("celebration").scrollIntoView({behavior:"auto",block:"nearest"});
 }
 function startLevel(target, restore = false) {
@@ -334,6 +334,6 @@ $("toggleGuide").addEventListener("click", () => {
   guide.hidden = hidden;
   $("toggleGuide").setAttribute("aria-expanded", String(!hidden));
 });
-$("nextLevel").addEventListener("click", () => startLevel(index === 59 ? 59 : index + 1));
+$("nextLevel").addEventListener("click", () => startLevel(index === levelCount - 1 ? levelCount - 1 : index + 1));
 window.addEventListener("larriverse:profile",()=>setHeader());
 startLevel(index,true);

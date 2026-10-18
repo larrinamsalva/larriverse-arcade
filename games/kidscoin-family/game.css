@@ -197,3 +197,44 @@ html.larriverse-high-contrast body[data-classic="kidscoin-family"] :is(.tabs,.pa
 @media(prefers-reduced-motion:reduce){
   body[data-classic="kidscoin-family"] :is(.soft,.parent,.icon,.secondary,.card-button,.primary,.tabs button,.parent-tabs button,.option-list button){transition:none}
 }
+
+
+/* Earned KidsCoin growth — a fictional, kid-friendly market-style progress graph. */
+.coin-growth{
+  display:grid;
+  grid-template-columns:minmax(0,.9fr) minmax(320px,1.35fr);
+  gap:22px;
+  align-items:center;
+  margin:18px 0 24px;
+  padding:22px;
+  border:1px solid rgba(120,227,192,.24);
+  border-radius:24px;
+  background:linear-gradient(135deg,rgba(10,35,52,.92),rgba(8,24,39,.78));
+  box-shadow:0 18px 55px rgba(0,0,0,.18);
+}
+.coin-growth-copy h2{margin:.2rem 0 .55rem}
+.coin-growth-copy>p:not(.eyebrow){max-width:58ch;color:var(--muted)}
+.coin-growth-stats{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+.coin-growth-stats span{
+  display:inline-flex;gap:5px;align-items:center;min-height:34px;padding:7px 10px;
+  border:1px solid rgba(255,255,255,.1);border-radius:999px;background:rgba(255,255,255,.055);
+  font-size:.82rem;color:var(--muted)
+}
+.coin-growth-stats b{color:var(--gold,#d4c44a);font-size:1rem}
+.coin-growth-chart-wrap{
+  min-width:0;padding:10px 12px 8px;border-radius:19px;
+  background:radial-gradient(circle at 80% 0%,rgba(120,227,192,.12),transparent 42%),rgba(3,14,25,.58);
+  color:var(--mint,#78e3c0)
+}
+.coin-growth-chart{display:block;width:100%;height:auto;overflow:visible}
+.coin-grid line{stroke:rgba(255,255,255,.09);stroke-width:1}
+.coin-growth-area{fill:url(#coinGrowthFill);stroke:none}
+.coin-growth-line{fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.coin-growth-dots circle{fill:#071525;stroke:currentColor;stroke-width:3}
+.coin-growth-dots circle:last-child{fill:currentColor;stroke:#fff}
+.coin-growth-axis{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:.75rem}
+.coin-growth-axis strong{color:var(--mint,#78e3c0)}
+@media (max-width:760px){
+  .coin-growth{grid-template-columns:1fr;padding:17px}
+  .coin-growth-chart-wrap{padding:7px}
+}

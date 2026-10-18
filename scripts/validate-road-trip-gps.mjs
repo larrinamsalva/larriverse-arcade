@@ -24,7 +24,7 @@ check(manifest.source?.placeTypeCount === 15, 'GPS source preserves 15 place cat
 check(manifest.source?.rewardCount === 41, 'GPS source preserves 41 collectible rewards');
 check(manifest.source?.questionCount === 28, 'GPS source preserves 28 learning questions');
 check(manifest.source?.subjectCount === 4, 'GPS source preserves four question subjects');
-check(manifest.source?.levelCount === 11, 'GPS source preserves eleven level thresholds');
+check(manifest.source?.levelCount === 20, 'GPS source exposes twenty quest levels');
 
 const placeTypes = Object.keys(manifest.placeTypes || {});
 check(placeTypes.length === 15, 'GPS manifest exposes 15 place types');
@@ -78,8 +78,8 @@ for (const subject of ['math', 'science', 'reading', 'trivia']) {
   check(merged.length >= 20, `GPS ${subject} has at least twenty unique questions after the reviewed-bank merge`);
 }
 check(Object.values(mergedSubjectCounts).every(count => count >= 20), 'all four GPS subject banks meet the twenty-question minimum');
-check(Array.isArray(manifest.levelThresholds) && manifest.levelThresholds.length === 11, 'level thresholds total eleven');
-check(Array.isArray(manifest.levelUnlocks) && manifest.levelUnlocks.length === 11, 'level unlocks total eleven');
+check(Array.isArray(manifest.levelThresholds) && manifest.levelThresholds.length === 20, 'level thresholds total twenty');
+check(Array.isArray(manifest.levelUnlocks) && manifest.levelUnlocks.length === 20, 'level unlocks total twenty');
 check(manifest.levelThresholds.every((value, index, values) => Number.isInteger(value) && (index === 0 || value > values[index - 1])), 'level thresholds are strictly increasing');
 
 check(manifest.privacy?.defaultMode === 'demo', 'demo mode is the default');

@@ -520,11 +520,11 @@ test("Weather Watchers: complete 60 illustrated challenges across four ranks", a
     completePicturePath(page, weatherChallenges),
   );
 });
-test("Garden Grow & Harvest: complete 60 picture jobs from soil to storage", async ({
+test("Garden Grow & Harvest: complete 80 picture jobs from soil to storage", async ({
   page,
 }) => {
   test.setTimeout(180000);
-  expect(gardenGrowthChallenges).toHaveLength(60);
+  expect(gardenGrowthChallenges).toHaveLength(80);
   await round(page, "garden-grow-harvest", () =>
     completePicturePath(page, gardenGrowthChallenges),
   );

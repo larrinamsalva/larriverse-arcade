@@ -1,6 +1,6 @@
 // Curated offline Sudoku adventures. 0 is an empty cell.
 // 20 small 4×4, 20 middle 6×6, and 20 classic 9×9 boards.
-// All 60 puzzle solutions are unique and verified by validate-kids-sudoku.mjs.
+// All 80 puzzle solutions are unique and verified by validate-kids-sudoku.mjs.
 const ENTRIES = `1000320120344310|1423324121344312
 2013300212040301|2413314212344321
 0130304020101024|4132324124131324
@@ -61,13 +61,13 @@ const ENTRIES = `1000320120344310|1423324121344312
 603020800002007016900031054000850000040070000397216500000500000784000620506008000|613425879452987316978631254261854793845379162397216548139562487784193625526748931
 087256000000000000000001265000374100000100050021600300068530400035017020710060000|187256934652943718349781265596374182473128659821695347268539471935417826714862593
 600008000024016000000023050900052060070000000250600080562007403400060018001900020|615798342324516879897423651948352167176849235253671984562187493439265718781934526`.trim().split("\n").map(line=>line.split("|"));
-const CHAPTER_NAMES=["Little Patterns","Brave Beginners","Growing Grids","Clever Connections","Sudoku Explorers","Puzzle Champions"];
+const CHAPTER_NAMES=["Little Patterns","Brave Beginners","Growing Grids","Clever Connections","Sudoku Explorers","Puzzle Champions","Master Grid","Grandmaster Grid"];
 const SEEN_SOLUTIONS=new Set();
-export const SUDOKU_LEVELS=Object.freeze(ENTRIES.map(([rawPuzzle,rawSolution],i)=>{
+const BASE_LEVELS=ENTRIES.map(([rawPuzzle,rawSolution],i)=>{
  const n=i<20?4:i<40?6:9;
  let puzzle=rawPuzzle,solution=rawSolution,rotations=0;
  // A few transformed boards shared completed grids; rotate their digit labels
- // so children meet sixty distinct layouts, not duplicated finished patterns.
+ // so children meet distinct layouts, not duplicated finished patterns.
  while(SEEN_SOLUTIONS.has(solution)&&rotations<n){
    const rotate=str=>[...str].map(ch=>ch==="0"?"0":String(Number(ch)%n+1)).join("");
    puzzle=rotate(puzzle);solution=rotate(solution);rotations++;
@@ -80,7 +80,40 @@ export const SUDOKU_LEVELS=Object.freeze(ENTRIES.map(([rawPuzzle,rawSolution],i)
    clues:[...puzzle].filter(ch=>ch!=="0").length,
    title:`${CHAPTER_NAMES[chapter]} · Puzzle ${i%10+1}`,
    mode:n===4?"Mini 4×4":n===6?"Junior 6×6":"Classic 9×9"});
-}));
+});
+function transposeBoard(board,n){
+ let next="";
+ for(let row=0;row<n;row++)for(let col=0;col<n;col++)next+=board[col*n+row];
+ return next;
+}
+function rotateDigits(board,n,shift){
+ return [...board].map(ch=>ch==="0"?"0":String(((Number(ch)-1+shift)%n)+1)).join("");
+}
+// Levels 61–80 are new 9×9 mastery boards created with solution-preserving
+// row/column transposition and digit relabeling. Unique-solution difficulty is preserved.
+const BONUS_LEVELS=BASE_LEVELS.slice(40,60).map((source,j)=>{
+ const chapter=6+Math.floor(j/10);
+ let puzzle=transposeBoard(source.puzzle,9);
+ let solution=transposeBoard(source.solution,9);
+ const shift=(j%8)+1;
+ puzzle=rotateDigits(puzzle,9,shift);
+ solution=rotateDigits(solution,9,shift);
+ let tries=0;
+ while(SEEN_SOLUTIONS.has(solution)&&tries<9){
+   puzzle=rotateDigits(puzzle,9,1);
+   solution=rotateDigits(solution,9,1);
+   tries++;
+ }
+ if(SEEN_SOLUTIONS.has(solution))throw new Error("Duplicated bonus Sudoku solution "+(j+61));
+ SEEN_SOLUTIONS.add(solution);
+ return Object.freeze({
+   id:j+61,size:9,boxRows:3,boxCols:3,chapter,chapterName:CHAPTER_NAMES[chapter],
+   puzzle,solution,clues:[...puzzle].filter(ch=>ch!=="0").length,
+   title:`${CHAPTER_NAMES[chapter]} · Puzzle ${j%10+1}`,
+   mode:"Master 9×9"
+ });
+});
+export const SUDOKU_LEVELS=Object.freeze([...BASE_LEVELS,...BONUS_LEVELS]);
 export const SUDOKU_CHAPTERS=Object.freeze(CHAPTER_NAMES.map((title,i)=>({title,from:i*10+1,to:i*10+10,size:i<2?4:i<4?6:9})));
 export function sudokuPeers(index,size,boxRows,boxCols){
  const row=Math.floor(index/size),col=index%size,seen=new Set();
