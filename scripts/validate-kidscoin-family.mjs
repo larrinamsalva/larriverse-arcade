@@ -118,6 +118,18 @@ check(!js.includes('disabledTasks'), 'old global task-disable gate is removed');
 check(!js.includes('disabledRewards'), 'old global reward-disable gate is removed');
 for (const forbidden of ['KIDZ_PRICE_BASE','livePrice(','staked *','Leaflet','navigator.geolocation']) check(!js.includes(forbidden), `game code excludes ${forbidden}`);
 
+check(html.includes('id="choreGrowthSvg"'), 'KidsCoin shows the chore-earned KC growth graph near the top');
+check(/Chore Growth · fictional Family KC/i.test(html), 'growth graph is explicitly fictional Family KC');
+check(/not cryptocurrency, a market price, or real money/i.test(html), 'growth graph repeats the no-real-finance boundary');
+check(js.includes('function choreTransactions'), 'game computes chore-only earning history');
+check(js.includes("item.source === 'chore'"), 'chore graph uses explicit chore transaction source');
+check(js.includes("}, 'chore');"), 'approved chores tag transactions as chore earnings');
+check(js.includes("}, 'lesson');"), 'lesson rewards stay separate from chore growth');
+check(js.includes("}, 'bonus');"), 'parent bonuses stay separate from chore growth');
+check(js.includes("source = 'other'"), 'ledger transactions preserve an explicit earning source');
+check(js.includes('renderChoreGrowth(profileState)'), 'summary refreshes the chore growth graph');
+check(js.includes('Reward redemptions do not make this progress line fall') || html.includes('Reward redemptions do not make this progress line fall'), 'growth graph explains that spending does not lower chore progress');
+
 const syntax = spawnSync(process.execPath, ['--check', path.join(root, base, 'game.js')], { encoding: 'utf8' });
 check(syntax.status === 0, 'KidsCoin game.js passes node --check');
 const loaderSyntax = spawnSync(process.execPath, ['--check', path.join(root, base, 'family-data-loader.js')], { encoding: 'utf8' });
