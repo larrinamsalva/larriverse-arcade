@@ -2233,3 +2233,124 @@ html.larriverse-high-contrast body[data-world="harbor-helpers"] :is(.harbor-mani
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
 }
+
+
+/* Compass Cove: gentle wrong-answer feedback and progressive turn-by-turn routes. */
+body[data-world="compass-cove"] .compass-clue-card--steps{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:18px;
+  align-items:start;
+}
+body[data-world="compass-cove"] .compass-route-copy h2{
+  margin:.1rem 0 .35rem;
+  font-size:1.12rem;
+}
+body[data-world="compass-cove"] .compass-route-copy>p:not(.eyebrow){
+  margin:.2rem 0 .8rem;
+  line-height:1.5;
+}
+body[data-world="compass-cove"] .compass-direction-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(126px,1fr));
+  gap:8px;
+  padding:0;
+  margin:10px 0 0;
+  list-style:none;
+}
+body[data-world="compass-cove"] .compass-direction-list li{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-height:62px;
+  padding:8px 10px;
+  border:2px solid #b9c9df;
+  border-radius:13px;
+  background:linear-gradient(145deg,#fff,#edf4fb);
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #7489a12d;
+}
+body[data-world="compass-cove"] .compass-direction-list li>span{
+  display:grid;
+  place-items:center;
+  flex:none;
+  width:31px;
+  height:31px;
+  border-radius:50%;
+  background:#6657c8;
+  color:#fff;
+  font-weight:1000;
+}
+body[data-world="compass-cove"] .compass-direction-list b,
+body[data-world="compass-cove"] .compass-direction-list small{
+  display:block;
+}
+body[data-world="compass-cove"] .compass-direction-list small{
+  margin-top:2px;
+  color:#52657c;
+  font-size:.72rem;
+}
+body[data-world="compass-cove"] .compass-gentle-note{
+  margin:12px 0;
+  padding:10px 13px;
+  border:2px solid #d7c780;
+  border-radius:13px;
+  background:#fff8d9;
+  color:#5d5229;
+  line-height:1.45;
+  font-size:.84rem;
+}
+body[data-world="compass-cove"] .compass-map-tile.wrong-pick{
+  position:relative;
+  border-color:#c85d68;
+  background:linear-gradient(145deg,#fff1f2,#f7d9dc);
+  box-shadow:inset 0 0 0 2px #fff,0 4px 0 #9f424a55;
+}
+body[data-world="compass-cove"] .compass-wrong-marker{
+  position:absolute;
+  right:5px;
+  top:4px;
+  display:grid;
+  place-items:center;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:#b94855;
+  color:#fff;
+  font-size:1.15rem;
+  font-weight:1000;
+  line-height:1;
+  box-shadow:0 2px 0 #7a2e35;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-direction-list li{
+  background:#28344a;
+  color:#f4f7ff;
+  border-color:#667795;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-direction-list small{
+  color:#d8e2f3;
+}
+html.larriverse-dark body[data-world="compass-cove"] .compass-gentle-note{
+  background:#403a25;
+  color:#fff0b6;
+  border-color:#807044;
+}
+html.larriverse-high-contrast body[data-world="compass-cove"] :is(.compass-direction-list li,.compass-gentle-note,.compass-map-tile.wrong-pick){
+  background:#000!important;
+  color:#fff!important;
+  border-color:#fff!important;
+  box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="compass-cove"] .compass-direction-list small{
+  color:#fff!important;
+}
+@media(max-width:620px){
+  body[data-world="compass-cove"] .compass-clue-card--steps{
+    grid-template-columns:1fr;
+  }
+  body[data-world="compass-cove"] .compass-rose{
+    justify-self:center;
+  }
+  body[data-world="compass-cove"] .compass-direction-list{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
