@@ -17,7 +17,7 @@ const campaigns=[
  ["reuse-rally","sorting",sorting]
 ];
 for(const [id,mode,deck] of campaigns){
- const expected=id==="traffic-town"?120:60;
+ const expected=120;
  assert.equal(deck.length,expected,id+" must have its intended full distinct activity count");
  const key=mode==="repair"?"title":mode==="sorting"?"name":"text";
  assert.equal(new Set(deck.map(m=>m[key])).size,expected,id+" no duplicate activities");
@@ -27,13 +27,13 @@ for(const [id,mode,deck] of campaigns){
 assert.ok(skill.includes("larriverse.mainCampaign.")&&skill.includes("writeCampaign(state.step,state.correct)"),"Quiz save checkpoints");
 assert.ok(skill.includes("writeCampaign(state.step,state.step)"),"Repair save checkpoints");
 assert.ok(skill.includes("Chapter ${Math.floor(state.step/10)+1}/${deck.length/10}"),"Visible chapter count follows each deck length");
-assert.equal(streetSafetyScenarios.length,60);
+assert.equal(streetSafetyScenarios.length,120);
 for(const cat of streetSafetyCategories)
- assert.equal(streetSafetyScenarios.filter(x=>x.category===cat).length,12,"Twelve distinct safety stops in "+cat);
-assert.ok(street.includes("const ROUND_SIZE = 60")&&street.includes("larriverse.streetSafetyScout.longRoute.v1"));
-assert.ok(street.includes("while (selected.length < 12)"));
+ assert.equal(streetSafetyScenarios.filter(x=>x.category===cat).length,24,"Twenty-four distinct safety stops in "+cat);
+assert.ok(street.includes("const ROUND_SIZE = 120")&&street.includes("larriverse.streetSafetyScout.longRoute.v1"));
+assert.ok(street.includes("while (selected.length < 24)"));
 assert.ok(street.includes("writeJourney(step)"),"Each safety stop saves");
-assert.ok(read("games/street-safety-scout/index.html").includes('aria-valuemax="60"'),"Sixty real stop progress");
+assert.ok(read("games/street-safety-scout/index.html").includes('aria-valuemax="120"'),"120 real stop progress");
 assert.equal(tradeLevels.length,60);
 assert.ok(expedition.includes("larriverse.tradeTown.roadmap.v1")&&expedition.includes("saveTrade(s.level)"),"Trade campaign saves when advancing");
 assert.equal(marketMissions.length,60);assert.equal(beatMissions.length,60);
@@ -42,4 +42,4 @@ assert.ok(skill.includes('case "music":\n      state.musicMode="missions"'),"Bea
 assert.ok(skill.includes("Return to four-day lab")&&skill.includes("Return to freestyle"),"Free-play modes remain accessible");
 for(const id of ["lemonade-lab","beat-builder","trade-town"])
  assert.match(catalog.find(x=>x.id===id)?.mission||"",/60/,id+" catalogs main campaign");
-console.log("Validated long-form main gameplay: Traffic Town has 120 signs, the other saved card worlds remain at 60, and Street/Trade/creative campaigns retain their validated counts.");
+console.log("Validated long-form main gameplay: Traffic Town and five saved life-skill decks have 120 activities, Street Safety has 120 stops, and Trade/creative campaigns retain their validated counts.");

@@ -3,6 +3,7 @@ import { expeditions } from "./expedition-worlds.js";
 import { messageExtras, conversationExtras, newsExtras, sortingExtras, trafficQuestions } from "./expanded-scenarios.js";
 import { sixtyMessageExtras, sixtyConversationExtras, sixtyNewsExtras, sixtySortingExtras, sixtyRepairExtras } from "./sixty-world-extras.js";
 import { weatherExtendedChallenges, gardenExtendedChallenges } from "./sixty-garden-weather-challenges.js";
+import { advancedMessageExtras, advancedConversationExtras, advancedNewsExtras, advancedRepairExtras, advancedSortingExtras } from "./advanced-life-skill-extras.js";
 export { trafficQuestions };
 export const worlds = [
   ...expeditions,
@@ -48,9 +49,9 @@ export const worlds = [
     minutes: "3 min",
     art: 1,
     skill: "Spotting online tricks",
-    desc: "Investigate sneaky messages and protect your digital clubhouse.",
+    desc: "Investigate 120 message and source-checking situations and protect your digital clubhouse.",
     mission:
-      "Explore all 60 original different suspicious messages in six connected chapters. Spot urgency, secrecy, or pressure; save progress after every message.",
+      "Explore 120 different suspicious-message and trusted-source decisions in twelve connected chapters. Later chapters add impersonation, gift-card, remote-access, verification-code, secrecy, and source-checking situations.",
     take: "Slow down when a message asks for secrets, money, or a rushed decision. Check through a route you already trust.",
     mode: "messages",
   },
@@ -64,9 +65,9 @@ export const worlds = [
     minutes: "3 min",
     art: 2,
     skill: "Listening & boundaries",
-    desc: "Help the treehouse crew listen, work together, and set kind boundaries.",
+    desc: "Practice 120 real-life friendship, teamwork, privacy, repair, and boundary decisions with the treehouse crew.",
     mission:
-      "Help the treehouse crew through 60 different listening, boundaries, teamwork, and kindness decisions in six connected chapters, with saved progress.",
+      "Help the treehouse crew through 120 different listening, boundaries, teamwork, repair, privacy, and kindness decisions in twelve connected chapters, with saved progress.",
     take: "You can care about someone and still say no. Ask, listen, and make a plan together.",
     mode: "conversation",
   },
@@ -80,9 +81,9 @@ export const worlds = [
     minutes: "3 min",
     art: 3,
     skill: "Checking claims & sources",
-    desc: "Run a tiny news desk. Sort evidence, opinions, ads, and unchecked claims.",
+    desc: "Run a 120-card news desk. Sort evidence, opinions, ads, missing context, and unchecked claims.",
     mission:
-      "Finish 60 source-checking news desk cards across six saved chapters, distinguishing evidence, opinions, advertising and unchecked claims.",
+      "Finish 120 source-checking news desk cards across twelve saved chapters, distinguishing evidence, opinions, advertising, missing context, and claims that still need checking.",
     take: "A popular claim is not automatically a fact. Look for a source, context, and something you can check.",
     mode: "news",
   },
@@ -96,9 +97,9 @@ export const worlds = [
     minutes: "3 min",
     art: 4,
     skill: "Repair before replacing",
-    desc: "Practice repair-and-care skills with sixty different challenges before replacing something.",
+    desc: "Practice repair-and-care skills with 120 different challenges before replacing something.",
     mission:
-      "Repair 60 different objects in six connected chapters. Practice checking, planning, fixing and testing each object in the correct order. Your work saves.",
+      "Repair 120 different everyday objects in twelve connected chapters. Practice inspecting, choosing a safe repair, aligning the fix, and testing the result. Your work saves.",
     take: "Looking closely can save time, materials, and money. Small repairs can give things a second life.",
     mode: "repair",
   },
@@ -160,9 +161,9 @@ export const worlds = [
     minutes: "3 min",
     art: 8,
     skill: "Reuse & thoughtful sorting",
-    desc: "Clean up Toy Town. Reuse what you can and sort the rest.",
+    desc: "Clean up Toy Town through 120 different reuse, recycling, compost, and trash decisions.",
     mission:
-      "Sort all 60 different objects in six saved Toy Town cleanup chapters: reuse, recycling, compost or trash. Local rules vary.",
+      "Sort 120 different objects in twelve saved Toy Town cleanup chapters: reuse, recycling, compost or trash. Local rules vary, so the game keeps its Toy Town rules clearly labeled.",
     take: "Using something again can avoid waste. Check your local recycling and compost rules with an adult.",
     mode: "sorting",
   },
@@ -293,6 +294,7 @@ export const messages = [
   },
   ...messageExtras,
   ...sixtyMessageExtras,
+  ...advancedMessageExtras,
 ];
 export const conversations = [
   {
@@ -357,6 +359,7 @@ export const conversations = [
   },
   ...conversationExtras,
   ...sixtyConversationExtras,
+  ...advancedConversationExtras,
 ];
 export const newsCards = [
   {
@@ -409,6 +412,7 @@ export const newsCards = [
   },
   ...newsExtras,
   ...sixtyNewsExtras,
+  ...advancedNewsExtras,
 ];
 export const repairs = [
   {
@@ -532,6 +536,7 @@ export const repairs = [
     hint: "A small repair should not create a new problem, so always test how the item opens and closes afterward.",
   },
   ...sixtyRepairExtras,
+  ...advancedRepairExtras,
 ];
 
 export const sorting = [
@@ -607,6 +612,7 @@ export const sorting = [
   },
   ...sortingExtras,
   ...sixtySortingExtras,
+  ...advancedSortingExtras,
 ];
 const originalRobotLevels = [
   {

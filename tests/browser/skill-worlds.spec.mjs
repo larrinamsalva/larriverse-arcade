@@ -54,7 +54,7 @@ async function round(page, id, play) {
   await expect(page.locator("#bestScore")).not.toHaveText("—");
   expect(errors).toEqual([]);
 }
-async function chooseDeck(page, deck, labels, roundSize = 60) {
+async function chooseDeck(page, deck, labels, roundSize = deck.length) {
   for (let i = 0; i < roundSize; i++) {
     const text = await page.locator(".message-card").innerText();
     const item = deck.find((item) => text.includes(item.text || item.name));
@@ -223,7 +223,7 @@ test("Pocket Planet: ten finished projects unlock chapter two and survive reload
   expect(size.scroll).toBeLessThanOrEqual(size.width+4);
 });
 
-test("Scam Sleuth: complete shuffled messages and explanatory feedback · full 60-challenge journey", async ({
+test("Scam Sleuth: complete full 120-challenge message journey", async ({
   page,
 }) => {
   test.setTimeout(420000);
@@ -235,17 +235,17 @@ test("Scam Sleuth: complete shuffled messages and explanatory feedback · full 6
     ]),
   );
 });
-test("Core life-skill worlds: five unique question banks contain sixty scenarios",()=>{
-  expect(messages).toHaveLength(60);
-  expect(conversations).toHaveLength(60);
-  expect(newsCards).toHaveLength(60);
-  expect(repairs).toHaveLength(60);
-  expect(sorting).toHaveLength(60);
-  expect(new Set(messages.map(item=>item.text)).size).toBe(60);
-  expect(new Set(conversations.map(item=>item.text)).size).toBe(60);
-  expect(new Set(newsCards.map(item=>item.text)).size).toBe(60);
-  expect(new Set(repairs.map(item=>item.title)).size).toBe(60);
-  expect(new Set(sorting.map(item=>item.name)).size).toBe(60);
+test("Core life-skill worlds: five unique question banks contain 120 scenarios",()=>{
+  expect(messages).toHaveLength(120);
+  expect(conversations).toHaveLength(120);
+  expect(newsCards).toHaveLength(120);
+  expect(repairs).toHaveLength(120);
+  expect(sorting).toHaveLength(120);
+  expect(new Set(messages.map(item=>item.text)).size).toBe(120);
+  expect(new Set(conversations.map(item=>item.text)).size).toBe(120);
+  expect(new Set(newsCards.map(item=>item.text)).size).toBe(120);
+  expect(new Set(repairs.map(item=>item.title)).size).toBe(120);
+  expect(new Set(sorting.map(item=>item.name)).size).toBe(120);
 });
 test("Scam Sleuth: ten cleared tasks resume from eleven after reload",async({page})=>{
   await page.goto("/games/scam-sleuth/index.html");
@@ -259,7 +259,7 @@ test("Scam Sleuth: ten cleared tasks resume from eleven after reload",async({pag
   expect(await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.mainCampaign.scam-sleuth.v1")).next)).toBe(10);
   await page.reload();
   await expect(page.locator("#stageLabel")).toContainText("Chapter 2/6");
-  await expect(page.locator("#stageLabel")).toContainText("11/60");
+  await expect(page.locator("#stageLabel")).toContainText("11/120");
 });
 test("Scam Sleuth: center evidence stays readable in light, dark, and high contrast", async ({
   page,
@@ -305,11 +305,11 @@ test("Scam Sleuth: center evidence stays readable in light, dark, and high contr
   await expect(page.locator(".message-card")).toHaveCSS("background-color", "rgb(17, 17, 17)");
   await expect(page.locator(".message-card p")).toHaveCSS("color", "rgb(255, 255, 255)");
 });
-test("Kindness Quest: listen, set boundaries, and repair · full 60-challenge journey", async ({ page }) => {
+test("Kindness Quest: 120 listening, boundaries, teamwork and repair decisions", async ({ page }) => {
   test.setTimeout(420000);
   await round(page, "kindness-quest", () => chooseDeck(page, conversations));
 });
-test("Fact Finder: inspect sources, opinions, advertising, and claims · full 60-challenge journey", async ({
+test("Fact Finder: inspect 120 evidence, opinion, ad and source-checking cards", async ({
   page,
 }) => {
   test.setTimeout(420000);
@@ -322,12 +322,12 @@ test("Fact Finder: inspect sources, opinions, advertising, and claims · full 60
     ]),
   );
 });
-test("Reuse Rally: sort all sixty objects through six chapters", async ({
+test("Reuse Rally: sort 120 objects through twelve chapters", async ({
   page,
 }) => {
-  test.setTimeout(420000);
+  test.setTimeout(700000);
   await round(page, "reuse-rally", async () => {
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 120; i++) {
       const art = page.locator(".reuse-item-art");
       await expect(art).toBeVisible();
       await expect(art.locator(".object-model")).toHaveCount(1);
@@ -344,7 +344,7 @@ test("Reuse Rally: sort all sixty objects through six chapters", async ({
       }).click();
       await expect(page.locator("#feedback")).toHaveClass(/good/);
       await page.getByRole("button", {
-        name: i === 59 ? "See what I learned" : "Next discovery",
+        name: i === 119 ? "See what I learned" : "Next discovery",
         exact: true,
       }).click();
     }
@@ -382,14 +382,14 @@ test("Traffic Town: saved sixty-level completion resumes at sign 61",async({page
   await expect(page.locator(".board-title")).toHaveText(trafficQuestions[60].title);
 });
 
-test("Repair Café: complete all sixty unique step-by-step repairs", async ({
+test("Repair Café: complete all 120 unique step-by-step repairs", async ({
   page,
 }) => {
-  test.setTimeout(420000);
+  test.setTimeout(700000);
   await round(page, "repair-cafe", async () => {
-    expect(repairs.length).toBe(60);
+    expect(repairs.length).toBe(120);
     const seen = [];
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 120; i++) {
       const title = await page.locator(".message-card .board-title").innerText();
       const repair = repairs.find((item) => item.title === title);
       expect(repair).toBeTruthy();
@@ -408,12 +408,12 @@ test("Repair Café: complete all sixty unique step-by-step repairs", async ({
 
       await page
         .getByRole("button", {
-          name: i === 59 ? "See my repairs" : "Next repair",
+          name: i === 119 ? "See my repairs" : "Next repair",
           exact: true,
         })
         .click();
     }
-    expect(new Set(seen).size).toBe(60);
+    expect(new Set(seen).size).toBe(120);
   });
 });
 test("Time Trail: complete sixty growing maps over six chapters",async({page})=>{

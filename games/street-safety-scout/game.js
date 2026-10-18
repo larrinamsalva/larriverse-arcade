@@ -1,14 +1,16 @@
 import { streetSafetyCategories, streetSafetyScenarios } from './scenarios.js';
 
 const GAME_ID = 'street-safety-scout';
-const ROUND_SIZE = 60;
+const ROUND_SIZE = 120;
+const ROUTE_SIZE = 15;
+const ROUTE_COUNT = ROUND_SIZE / ROUTE_SIZE;
 const ROTATION_KEY = 'larriverse.streetSafetyScout.rotation.v1';
 const CAMPAIGN_KEY = 'larriverse.streetSafetyScout.longRoute.v1';
 function readJourney(){
  try{
   const raw=JSON.parse(localStorage.getItem(CAMPAIGN_KEY)||"null");
   if(raw&&Array.isArray(raw.ids)&&raw.ids.length===ROUND_SIZE&&
-     new Set(raw.ids).size===ROUND_SIZE&&Number.isInteger(raw.next)&&raw.next>=0&&raw.next<=60&&
+     new Set(raw.ids).size===ROUND_SIZE&&Number.isInteger(raw.next)&&raw.next>=0&&raw.next<=ROUND_SIZE&&
      Number.isInteger(raw.correct)&&raw.correct>=0&&raw.correct<=raw.next&&
      Number.isInteger(raw.streak)&&raw.streak>=0&&raw.streak<=raw.correct){
     const byId=new Map(streetSafetyScenarios.map(item=>[item.id,item]));
@@ -67,7 +69,7 @@ function buildRound() {
     let seen = Array.isArray(rotation[category]) ? [...new Set(rotation[category].filter(id => validIds.has(id)))] : [];
     let unseen = shuffle(pool.filter(item => !seen.includes(item.id)));
     const selected = [];
-    while (selected.length < 12) {
+    while (selected.length < 24) {
       if (!unseen.length) {
         seen = [];
         const selectedIds = new Set(selected.map(item => item.id));
@@ -349,7 +351,7 @@ function safetyVisual(item) {
 function setProgress(done = step) {
   const clamped = Math.max(0, Math.min(ROUND_SIZE, done));
   $('#progressNumber').textContent = `${clamped} / ${ROUND_SIZE}`;
-  $('#progressText').textContent = clamped === 0 ? 'Ready to scout' : clamped === ROUND_SIZE ? 'All four routes explored' : `Route ${Math.min(4,Math.floor(clamped/15)+1)} of 4 · ${ROUND_SIZE - clamped} stops left`;
+  $('#progressText').textContent = clamped === 0 ? 'Ready to scout' : clamped === ROUND_SIZE ? 'All eight routes explored' : `Route ${Math.min(ROUTE_COUNT,Math.floor(clamped/ROUTE_SIZE)+1)} of ${ROUTE_COUNT} · ${ROUND_SIZE - clamped} stops left`;
   $('#progressFill').style.width = `${(clamped / ROUND_SIZE) * 100}%`;
   $('.progress-track').setAttribute('aria-valuenow', String(clamped));
 }
@@ -402,14 +404,14 @@ function renderChallenge() {
   $('#challengePanel').dataset.scenarioId = item.id;
   $('#categoryChip').textContent = item.category;
   $('#categoryChip').dataset.category = item.category;
-  $('#stopCount').textContent = `Route ${Math.floor(step / 15)+1}/4 · Stop ${step + 1} of ${ROUND_SIZE}`;
+  $('#stopCount').textContent = `Route ${Math.floor(step / ROUTE_SIZE)+1}/${ROUTE_COUNT} · Stop ${step + 1} of ${ROUND_SIZE}`;
   $('#scenarioVisual').innerHTML = safetyVisual(item);
   $('#challengeTitle').textContent = item.title;
   $('#challengePrompt').textContent = item.prompt;
   $('#feedback').className = 'feedback';
   $('#feedback').textContent = '';
   $('#nextButton').hidden = true;
-  $('#nextButton').textContent = step === ROUND_SIZE - 1 ? 'See my safety badge' : step%15===14 ? `Enter route ${Math.floor(step/15)+2} of 4` : 'Next safety stop';
+  $('#nextButton').textContent = step === ROUND_SIZE - 1 ? 'See my safety badge' : step%ROUTE_SIZE===ROUTE_SIZE-1 ? `Enter route ${Math.floor(step/ROUTE_SIZE)+2} of ${ROUTE_COUNT}` : 'Next safety stop';
 
   const choices = shuffle(item.options.map((label, originalIndex) => ({ label, originalIndex })));
   $('#answerGrid').innerHTML = choices.map(choice => `<button type="button" class="answer-button" data-answer="${choice.originalIndex}">${esc(choice.label)}</button>`).join('');

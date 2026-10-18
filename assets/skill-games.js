@@ -93,6 +93,17 @@ function rankedDeck(pool) {
 // Long campaigns use every authored puzzle in the main game, not ten-question rounds.
 const campaignModes = new Set(["messages","conversation","news","repair","sorting","traffic","budget"]);
 const CAMPAIGN_VERSION = "v1";
+function campaignLengthForMode(mode){
+  return {
+    messages:messages.length,
+    conversation:conversations.length,
+    news:newsCards.length,
+    repair:repairs.length,
+    sorting:sorting.length,
+    traffic:trafficQuestions.length,
+    budget:resourceAdventures.length,
+  }[mode] || 60;
+}
 const campaignKey = () => "larriverse.mainCampaign."+world.id+"."+CAMPAIGN_VERSION;
 function loadCampaign(count) {
   try {
@@ -160,7 +171,7 @@ let hint = world.take;
 
 $("skillLabel").textContent = world.skill;
 $("worldDescription").textContent = world.desc;
-$("worldMeta").textContent = `Ages ${world.age} · ${world.mode==="traffic"?`${trafficQuestions.length} levels · save and resume`:campaignModes.has(world.mode)||["market","music","trade","pantry"].includes(world.mode)?"60 levels · save and resume":`about ${world.minutes}`}`;
+$("worldMeta").textContent = `Ages ${world.age} · ${campaignModes.has(world.mode)?`${campaignLengthForMode(world.mode)} levels · save and resume`:["market","music","trade","pantry"].includes(world.mode)?"60 levels · save and resume":`about ${world.minutes}`}`;
 $("missionIcon").textContent = world.icon;
 if (world.mode === "bridge") $("missionIcon").innerHTML = iconSvg("wood");
 $("missionTitle").textContent = world.skill;
@@ -731,7 +742,7 @@ function repairVisual(item) {
 
 function renderRepair() {
   const item = state.deck[state.step];
-  stage(`Repair Café · Chapter ${Math.floor(state.step/10)+1}/6 · Repair ${state.step + 1} of ${state.deck.length}`);
+  stage(`Repair Café · Chapter ${Math.floor(state.step/10)+1}/${state.deck.length/10} · Repair ${state.step + 1} of ${state.deck.length}`);
   board.innerHTML = `${campaignTrail(state.step,state.deck.length)}<div class="message-card repair-card">${repairVisual(item)}<div class="repair-copy"><p class="eyebrow">Inspect · choose · repair · test</p><h2 class="board-title">${esc(item.title)}</h2><p>Choose the next repair step. Finished steps stay on the workbench so you can see the order.</p></div></div><div class="repair-list" style="margin-top:1rem">${Array.from({ length: state.position }, (_, i) => `<div class="repair-step done">✓ ${i + 1}. ${esc(item.steps[i])}</div>`).join("")}${state.order
     .filter((i) => i >= state.position)
     .map(
@@ -761,7 +772,7 @@ function renderRepair() {
       if (state.step === state.deck.length) {
         writeCampaign(state.step,state.deck.length);
         finish(
-          `You inspected, chose safe materials, repaired, and tested ${state.deck.length} different objects across six chapters. Each one got another chance.`,
+          `You inspected, chose safe materials, repaired, and tested ${state.deck.length} different objects across ${state.deck.length/10} chapters. Each one got another chance.`,
           100,
         );
       } else {
@@ -1532,7 +1543,7 @@ $("restartButton").addEventListener("click",()=>{
     return;
   }
   if(campaignModes.has(world.mode)){
-    const total=world.mode==="traffic"?trafficQuestions.length:60;
+    const total=state.deck?.length || campaignLengthForMode(world.mode);
     if(!window.confirm("Replay all "+total+" challenges in this world from the beginning?"))return;
     writeCampaign(0,0);
   }
