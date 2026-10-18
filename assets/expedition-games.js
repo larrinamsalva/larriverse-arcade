@@ -137,22 +137,90 @@ export function createExpedition(world, a) {
   function harbor() {
     const level = harborLevels[s.level];
     const cargoById = new Map(cargo.map(item => [item.id, item]));
+    const availableCargo = cargo.filter(item => s.level >= (item.unlockAt || 0));
     const request = Object.entries(level.needs).map(([id, count]) => `${count} ${cargoById.get(id).name.toLowerCase()}`).join(" · ");
-    a.stage(`${level.name} · ${s.level + 1} of ${harborLevels.length}`); a.progress(s.level + (s.passed ? 1 : 0), harborLevels.length); a.score((s.level + (s.passed ? 1 : 0)) / harborLevels.length * 100);
-    a.board.innerHTML = `${advancement(harborLevels.length)}<div class="expedition-stats">${a.chip("Route fuel", level.fuel)}${a.chip("Boat load", `${total(s.load)}/${level.capacity}`)}${a.chip("Deliveries", `${s.level + (s.passed ? 1 : 0)}/${harborLevels.length}`)}</div><div class="harbor-map harbor-route--${s.level + 1} harbor-map--dimensional" aria-hidden="true"><svg viewBox="0 0 620 190"><defs><linearGradient id="harbor-water" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b9edf0"/><stop offset="1" stop-color="#49b5ca"/></linearGradient></defs><rect width="620" height="190" rx="24" fill="url(#harbor-water)"/><circle cx="532" cy="42" r="24" fill="#ffe07a"/><path d="M0 128q100-28 200 0t200 0 220 0" stroke="#d9ffff" stroke-width="8" fill="none" opacity=".72"/><g transform="translate(405 35) scale(1.12)"><ellipse cx="50" cy="95" rx="82" ry="18" fill="#8fc98a"/>${iconDrawing(level.icon)}</g><g class="harbor-boat harbor-boat--3d" transform="translate(105 85) scale(.8)">${iconDrawing("boat")}</g><path d="M194 139q88-42 190-24" fill="none" stroke="#fff" stroke-width="5" stroke-dasharray="10 12" opacity=".72"/></svg></div><article class="harbor-request-card"><p class="eyebrow">Island request</p><h2>${a.esc(level.name)}</h2><p>Load exactly <b>${a.esc(request)}</b>. The boat holds ${level.capacity} crates for this route.</p>${level.purpose ? `<p class="small-note">${a.esc(level.purpose)}</p>` : ""}</article><div class="cargo-shelf">${cargo.map(item => `<button type="button" class="supply-card harbor-cargo-card harbor-cargo-card--${item.id}" data-cargo="${item.id}" data-focus="cargo-${item.id}" ${(s.load[item.id] || 0) >= item.count || s.passed ? "disabled" : ""}>${iconSvg(item.icon)}<b>${a.esc(item.name)}</b><small>${s.load[item.id] || 0} on boat · tap to load</small></button>`).join("")}</div>`;
+    const loadEntries = Object.entries(s.load).flatMap(([id, count]) => Array.from({ length: count }, () => id));
+    const transportScale = level.chapter <= 2 ? .76 : level.chapter <= 4 ? .92 : 1.02;
+    const transportArt = level.vehicleIcon === "truck"
+      ? `<g class="harbor-ferry harbor-ferry--3d" transform="translate(230 90) scale(.92)">${iconDrawing("boat")}</g><g class="harbor-truck harbor-truck--3d" transform="translate(74 87) scale(.78)">${iconDrawing("truck")}</g>`
+      : `<g class="harbor-boat harbor-boat--3d harbor-boat--chapter-${level.chapter}" transform="translate(105 85) scale(${transportScale})">${iconDrawing("boat")}</g>`;
+    a.stage(`${level.name} · Chapter ${level.chapter}/6 · ${s.level + 1} of ${harborLevels.length}`);
+    a.progress(s.level + (s.passed ? 1 : 0), harborLevels.length);
+    a.score((s.level + (s.passed ? 1 : 0)) / harborLevels.length * 100);
+    a.board.innerHTML = `${advancement(harborLevels.length)}
+      <div class="expedition-stats">
+        ${a.chip("Route fuel", level.fuel)}
+        ${a.chip("Transport", level.vehicle)}
+        ${a.chip("Cargo load", `${total(s.load)}/${level.capacity}`)}
+        ${a.chip("Deliveries", `${s.level + (s.passed ? 1 : 0)}/${harborLevels.length}`)}
+      </div>
+      <div class="harbor-map harbor-route--${s.level + 1} harbor-map--dimensional harbor-map--chapter-${level.chapter}" aria-hidden="true">
+        <svg viewBox="0 0 620 190">
+          <defs><linearGradient id="harbor-water" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b9edf0"/><stop offset="1" stop-color="#49b5ca"/></linearGradient></defs>
+          <rect width="620" height="190" rx="24" fill="url(#harbor-water)"/>
+          <circle cx="532" cy="42" r="24" fill="#ffe07a"/>
+          <path d="M0 128q100-28 200 0t200 0 220 0" stroke="#d9ffff" stroke-width="8" fill="none" opacity=".72"/>
+          ${level.vehicleIcon === "truck" ? '<path d="M0 108h205v82H0Z" fill="#a9c78e"/><path d="M0 135h208" stroke="#657277" stroke-width="24"/><path d="M0 135h208" stroke="#e8dfac" stroke-width="3" stroke-dasharray="15 12"/>' : ""}
+          <g transform="translate(405 35) scale(1.12)"><ellipse cx="50" cy="95" rx="82" ry="18" fill="#8fc98a"/>${iconDrawing(level.icon)}</g>
+          ${transportArt}
+          <path d="M194 139q88-42 190-24" fill="none" stroke="#fff" stroke-width="5" stroke-dasharray="10 12" opacity=".72"/>
+        </svg>
+      </div>
+      <article class="harbor-request-card">
+        <p class="eyebrow">Island request · Chapter ${level.chapter} of 6</p>
+        <h2>${a.esc(level.name)}</h2>
+        <p>Load exactly <b>${a.esc(request)}</b>. Your <b>${a.esc(level.vehicle)}</b> carries ${level.capacity} crates on this route.</p>
+        ${level.purpose ? `<p class="small-note">${a.esc(level.purpose)}</p>` : ""}
+      </article>
+      <div class="harbor-cargo-shelf cargo-shelf">
+        ${availableCargo.map(item => `<button type="button" class="supply-card harbor-cargo-card harbor-cargo-card--${item.id}" data-cargo="${item.id}" data-focus="cargo-${item.id}" ${(s.load[item.id] || 0) >= item.count || s.passed ? "disabled" : ""}>${iconSvg(item.icon)}<b>${a.esc(item.name)}</b><small>${s.load[item.id] || 0} loaded · tap to add</small></button>`).join("")}
+      </div>
+      <section class="harbor-manifest" aria-label="Loaded cargo">
+        <div class="harbor-manifest-head"><b>Cargo manifest</b><span>${total(s.load)} of ${level.capacity} spaces filled</span></div>
+        <div class="harbor-manifest-crates">
+          ${loadEntries.length ? loadEntries.map((id, index) => `<button type="button" data-unload-cargo="${id}" aria-label="Unload one ${a.esc(cargoById.get(id).name)}"><span aria-hidden="true">${iconSvg(cargoById.get(id).icon)}</span><small>${a.esc(cargoById.get(id).name)}</small></button>`).join("") : '<p>Choose supplies above. Loaded crates will appear here.</p>'}
+        </div>
+      </section>`;
     a.bind("[data-cargo]", node => {
-      if (total(s.load) >= level.capacity) { a.say(`This boat holds ${level.capacity} crates. Unload if you want to change the plan.`, "try"); return; }
-      const id = node.dataset.cargo; s.load[id] = (s.load[id] || 0) + 1; render();
+      if (total(s.load) >= level.capacity) {
+        a.say(`Your ${level.vehicle.toLowerCase()} holds ${level.capacity} crates. Tap a loaded crate below to unload one, or clear the whole load.`, "try");
+        return;
+      }
+      const id = node.dataset.cargo;
+      s.load[id] = (s.load[id] || 0) + 1;
+      render();
     });
-    if (s.passed) nextLevel(harborLevels.length, `You completed ${harborLevels.length} island deliveries and matched every community request. Listening before loading makes help more useful.`);
+    a.bind("[data-unload-cargo]", node => {
+      if (s.passed) return;
+      const id = node.dataset.unloadCargo;
+      s.load[id]--;
+      if (!s.load[id]) delete s.load[id];
+      render();
+      a.say("One crate is back on the dock. Keep planning your load.");
+    });
+    if (s.passed) nextLevel(harborLevels.length, `You completed ${harborLevels.length} island deliveries, grew from a small skiff to big harbor transport, and matched every community request.`);
     else {
       a.button(`Sail to ${level.name}`, () => {
-        if (!total(s.load)) { a.say("Load the requested crates before you sail.", "try"); return; }
+        if (!total(s.load)) {
+          a.say("Load the requested crates before you sail.", "try");
+          return;
+        }
         const cargoIds = new Set([...Object.keys(level.needs), ...Object.keys(s.load)]);
-        if ([...cargoIds].some(id => (s.load[id] || 0) !== (level.needs[id] || 0))) { a.say("The load does not match the island request yet. Check every crate and replan at the harbor.", "try"); return; }
-        s.passed = true; s.quality.push(100); render(); a.say(`Delivery arrived at ${level.name}! Every requested crate is aboard.`, "good"); a.tone(1);
+        if ([...cargoIds].some(id => (s.load[id] || 0) !== (level.needs[id] || 0))) {
+          a.say("The load does not match the island request yet. Check every crate and replan at the harbor.", "try");
+          return;
+        }
+        s.passed = true;
+        s.quality.push(100);
+        render();
+        a.say(`Delivery arrived at ${level.name}! Every requested crate is aboard.`, "good");
+        a.tone(1);
       });
-      a.button("Unload the boat", () => { s.load = {}; render(); a.say("The crates are back at the harbor. Try a different load."); }, "secondary");
+      a.button("Unload the boat", () => {
+        s.load = {};
+        render();
+        a.say("The crates are back at the harbor. Try a different load.");
+      }, "secondary");
     }
   }
   function pantry() {
