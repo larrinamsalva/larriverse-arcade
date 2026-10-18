@@ -64,7 +64,7 @@ for (const detail of ['wood-grain', 'bridge-structure', 'bridge-abutment', 'brid
 check(game.includes('trafficSignSvg(item.title)'), 'Traffic Town renders recognizable sign artwork');
 const renderedSigns = trafficQuestions.map(question => trafficSignSvg(question.title));
 const signSymbols = renderedSigns.map(svg => svg.replace(/ aria-label="[^"]+"/, ''));
-check(trafficQuestions.length === 60, 'Traffic Town keeps its complete 60-sign learning set');
+check(trafficQuestions.length === 120, 'Traffic Town keeps its complete 120-sign learning set');
 check(new Set(signSymbols).size === trafficQuestions.length, 'every Traffic Town sign has distinct identifying artwork');
 check(renderedSigns.every(svg => /<svg class="traffic-sign-art"[^>]+role="img"/.test(svg)), 'traffic sign artwork retains accessible image semantics');
 check(renderedSigns.every(svg => svg.includes('sign-depth') && svg.includes('sign-sheen') && svg.includes('sign-ground-shadow')), 'every traffic sign includes depth, reflected light, and a cast shadow');
