@@ -1,5 +1,5 @@
 import {CROSSWORD_LEVELS,CROSSWORD_CHAPTERS,buildCrossword,matchingEntryCells,solvedCrossword} from "./puzzles.js";
-const GAME_ID="crossword-world",SAVE_KEY="larriverse.crosswordWorld.v1",$=id=>document.getElementById(id),TOTAL=60;
+const GAME_ID="crossword-world",SAVE_KEY="larriverse.crosswordWorld.v1",$=id=>document.getElementById(id),TOTAL=CROSSWORD_LEVELS.length;
 function readSave(){
  const empty={open:0,unlocked:0,stars:Array(TOTAL).fill(0),current:null};
  try{
@@ -25,16 +25,16 @@ function matches(i){return matchingEntryCells(guesses,puzzle.entries[i])}
 function solvedCount(){return puzzle.entries.filter((entry,i)=>matches(i)).length}
 function setStats(){
  const count=progress.stars.filter(Boolean).length;
- $("stage").textContent="LEVEL "+(levelIndex+1)+" OF 60 · "+level.difficulty;
+ $("stage").textContent="LEVEL "+(levelIndex+1)+" OF "+TOTAL+" · "+level.difficulty;
  $("puzzleTitle").textContent=level.emoji+" "+level.title;
  $("difficulty").textContent=(level.bars+1)+" crossing words · "+level.difficulty;
- $("levelCount").textContent=(levelIndex+1)+" / 60";
+ $("levelCount").textContent=(levelIndex+1)+" / "+TOTAL;
  $("wordCount").textContent=solvedCount()+" / "+puzzle.entries.length;
  $("starsCount").textContent=progress.stars.reduce((a,b)=>a+b,0)+" / 180";
  $("hintsCount").textContent=String(hints);
- $("progressFill").style.width=(count/60*100)+"%";
+ $("progressFill").style.width=(count/TOTAL*100)+"%";
  $("progress").setAttribute("aria-valuenow",String(count));
- $("progress").setAttribute("aria-valuetext",count+" of sixty crossword puzzles completed");
+ $("progress").setAttribute("aria-valuetext",count+" of "+TOTAL+" crossword puzzles completed");
 }
 function renderChapters(){
  const root=$("chapters");root.replaceChildren();
@@ -147,14 +147,14 @@ function finishIfSolved(){
  const stars=hints===0&&misses===0?3:hints<=2&&misses<=2?2:1;
  progress.stars[levelIndex]=Math.max(progress.stars[levelIndex],stars);
  progress.unlocked=Math.max(progress.unlocked,Math.min(TOTAL-1,levelIndex+1));
- save(levelIndex===59?levelIndex:levelIndex+1);
+ save(levelIndex===TOTAL-1?levelIndex:levelIndex+1);
  if(first)try{window.LarriVerseArcade?.award?.(GAME_ID,{
   xp:15+Math.min(50,levelIndex+1),kc:3,score:(levelIndex+1)*100+stars*15,completed:true
  });}catch{/* Rewards must not block gameplay. */}
- $("winTitle").textContent=levelIndex===59?"🏆 All 60 crosswords complete!":"🎉 Level "+(levelIndex+1)+" solved!";
+ $("winTitle").textContent=levelIndex===TOTAL-1?"🏆 All "+TOTAL+" crosswords complete!":"🎉 Level "+(levelIndex+1)+" solved!";
  $("winMessage").textContent="You earned "+stars+" star"+(stars===1?"":"s")+
-  (levelIndex===59?"! You are a Crossword World Champion!":"! Your next crossword is ready.");
- $("nextLevel").textContent=levelIndex===59?"Replay final crossword":"Next Level "+(levelIndex+2)+" →";
+  (levelIndex===TOTAL-1?"! You are a Crossword World Champion!":"! Your next crossword is ready.");
+ $("nextLevel").textContent=levelIndex===TOTAL-1?"Replay final crossword":"Next Level "+(levelIndex+2)+" →";
  $("celebration").hidden=false;
  buddy("🌟 Fantastic crossword thinking! Every crossing fits.");
  tell("All clues solved! Congratulations!","good");
@@ -262,6 +262,6 @@ $("checkWord").addEventListener("click",checkWord);
 $("checkBoard").addEventListener("click",checkBoard);
 $("hint").addEventListener("click",hint);
 $("restart").addEventListener("click",()=>startLevel(levelIndex));
-$("nextLevel").addEventListener("click",()=>startLevel(levelIndex===59?59:levelIndex+1));
+$("nextLevel").addEventListener("click",()=>startLevel(levelIndex===TOTAL-1?TOTAL-1:levelIndex+1));
 window.addEventListener("larriverse:profile",setStats);
 startLevel(levelIndex,true);
