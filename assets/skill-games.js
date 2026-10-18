@@ -163,7 +163,7 @@ $("missionText").textContent = world.mission;
 $("takeaway").textContent = world.take;
 if (world.mode === "compass") {
   $("restartButton").textContent = "Clear my try";
-  $("restartButton").setAttribute("aria-label", "Clear only my last Compass Cove try");
+  $("restartButton").setAttribute("aria-label", "Clear my try");
 }
 
 function say(text, kind = "info") {
