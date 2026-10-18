@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import {CROSSWORD_LEVELS,CROSSWORD_CHAPTERS,buildCrossword,matchingEntryCells,solvedCrossword} from "../games/crossword-world/puzzles.js";
-assert.equal(CROSSWORD_LEVELS.length,60);
+assert.equal(CROSSWORD_LEVELS.length,80);
 assert.equal(CROSSWORD_CHAPTERS.length,6);
-assert.equal(new Set(CROSSWORD_LEVELS.map(level=>level.spine)).size,60,"Every puzzle starts with a different anchor word");
+assert.equal(new Set(CROSSWORD_LEVELS.map(level=>level.spine)).size,80,"Every puzzle starts with a different anchor word");
 for(const [i,level] of CROSSWORD_LEVELS.entries()){
  assert.equal(level.id,i+1);
  assert.equal(level.chapter,Math.floor(i/10));
@@ -56,4 +56,4 @@ for(const id of ["crosswordGrid","acrossClues","downClues","keyboard","hint","ch
 for(const feature of ["typeLetter","matchingEntryCells","solvedCrossword","function save(","checkWord",
  "checkBoard","localStorage","addEventListener","setStats","startLevel","finishIfSolved"])
  assert.ok(engine.includes(feature));
-console.log("Crossword World validated: sixty real intersecting, deterministic, clue-led crosswords; all six growing chapters are solvable.");
+console.log("Crossword World validated: eighty real intersecting, deterministic, clue-led crosswords; all eight growing chapters are solvable.");
