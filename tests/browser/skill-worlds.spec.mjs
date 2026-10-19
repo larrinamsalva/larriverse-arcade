@@ -718,10 +718,10 @@ test("Beat Builder: compose, play silently, pause on hide, and save a pattern", 
   });
 });
 
-test("Lemonade Lab: keep four-day free play and finish all sixty market missions", async function marketE2E({page}){
-  test.setTimeout(420000);
-  expect(marketMissions).toHaveLength(60);
-  expect(new Set(marketMissions.map(m=>m.name)).size).toBe(60);
+test("Lemonade Lab: keep four-day free play and finish all eighty market missions", async function marketE2E({page}){
+  test.setTimeout(520000);
+  expect(marketMissions).toHaveLength(80);
+  expect(new Set(marketMissions.map(m=>m.name)).size).toBe(80);
   await round(page,"lemonade-lab",async()=>{
     await expect(page.locator("[data-market-mission]")).toBeVisible();
     for(let i=0;i<marketMissions.length;i++){
@@ -735,16 +735,16 @@ test("Lemonade Lab: keep four-day free play and finish all sixty market missions
       await expect(page.locator("#feedback")).toHaveClass(/good/);
       const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.creative.market.v1")||"{}").nextLevel);
       expect(saved).toBe(i+1);
-      await page.getByRole("button",{name:i===59?"Celebrate market mastery":"Next market mission"}).click();
+      await page.getByRole("button",{name:i===marketMissions.length-1?"Celebrate market mastery":"Next market mission"}).click();
     }
-    await expect(page.locator("#finishMessage")).toContainText("all 60 market missions");
+    await expect(page.locator("#finishMessage")).toContainText("all 80 market missions");
   });
 });
 
-test("Beat Builder: keep freestyle and complete sixty unique patterns", async function beatE2E({page}){
-  test.setTimeout(420000);
-  expect(beatMissions).toHaveLength(60);
-  expect(new Set(beatMissions.map(m=>m.rows.map(row=>row.join(",")).join("|"))).size).toBe(60);
+test("Beat Builder: keep freestyle and complete eighty unique patterns", async function beatE2E({page}){
+  test.setTimeout(520000);
+  expect(beatMissions).toHaveLength(80);
+  expect(new Set(beatMissions.map(m=>m.rows.map(row=>row.join(",")).join("|"))).size).toBe(80);
   await round(page,"beat-builder",async()=>{
     await expect(page.locator("[data-beat-mission]")).toBeVisible();
     for(let i=0;i<beatMissions.length;i++){
@@ -759,9 +759,9 @@ test("Beat Builder: keep freestyle and complete sixty unique patterns", async fu
       await expect(page.locator("#feedback")).toHaveClass(/good/);
       const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.creative.beat.v1")||"{}").nextLevel);
       expect(saved).toBe(i+1);
-      await page.getByRole("button",{name:i===59?"Celebrate my rhythm journey":"Next beat mission"}).click();
+      await page.getByRole("button",{name:i===beatMissions.length-1?"Celebrate my rhythm journey":"Next beat mission"}).click();
     }
-    await expect(page.locator("#finishMessage")).toContainText("60 different rhythms");
+    await expect(page.locator("#finishMessage")).toContainText("80 different rhythms");
   });
 });
 
