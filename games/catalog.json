@@ -746,5 +746,26 @@
     "href": "games/creative-calm-cove/index.html",
     "source": "Original LarriVerse studio inspired by Domistika (MIT), 2026",
     "integration": "arcade-sdk-v3"
+  },
+  {
+    "id": "date-detective",
+    "title": "Date Detective",
+    "icon": "📅",
+    "category": "Everyday life",
+    "topic": "Everyday life",
+    "age": "8+",
+    "minutes": "10 min",
+    "art": 4,
+    "skill": "Read package dates, labels & codes",
+    "desc": "Investigate eighty package labels and learn Best By, Use By, Sell By, Freeze By, opening dates, manufacture dates, and mystery lot codes.",
+    "mission": "Solve 80 Date Detective cases across eight saved chapters. Read calendar formats, separate quality dates from store dates, follow after-opening directions, learn the infant-formula exception, and decode production codes only when a manufacturer key is provided.",
+    "take": "Read the words around the date before the numbers. A date is one clue: product type, storage directions, package condition, and reliable manufacturer information matter too.",
+    "available": true,
+    "featured": true,
+    "isNew": true,
+    "status": "Playable",
+    "href": "games/date-detective/index.html",
+    "source": "Original LarriVerse everyday-life world grounded in FDA and USDA/FSIS date-label guidance, 2026",
+    "integration": "arcade-sdk-v3"
   }
 ]
