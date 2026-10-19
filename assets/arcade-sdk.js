@@ -141,6 +141,10 @@
       welcome: 'Twenty fields of glossy round bubbles and three rotating power bubbles are ready. Let’s line up a clever bank shot and clear them together.',
       hint: 'Watch the next-bubble preview. Row Wave clears a row, Star Burst clears touching bubbles, and Color Sweep clears every matching number.'
     },
+    'creative-calm-cove': {
+      welcome: 'Welcome to Creative Calm Cove! There are no wrong answers here—draw, mirror, stamp, swirl, or simply make a few marks.',
+      hint: 'Try one tool at a time. If a prompt is not fun today, skip it and choose another. Your canvas can change as many times as you like.'
+    },
     'chill-brain-rewards': {
       welcome: 'I’m right here with you. Choose a gentle pause, breathe comfortably, and go at your own pace.',
       hint: 'Relax your shoulders and make the exhale easy. Stop any exercise that does not feel comfortable.'
