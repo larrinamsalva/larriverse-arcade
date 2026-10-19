@@ -37,7 +37,7 @@ function bootAdventureMissions(){
  let index=0,passed=false,wrongCount=0;
  function read(){
    try{const item=JSON.parse(localStorage.getItem(key)||"{}");
-     if(Number.isInteger(item.next)&&item.next>=0&&item.next<=60)return item.next;}catch{}
+     if(Number.isInteger(item.next)&&item.next>=0&&item.next<=deck.length)return item.next;}catch{}
    return 0;
  }
  function save(next){
@@ -50,19 +50,19 @@ function bootAdventureMissions(){
  }
  function escapeHtml(str){return String(str).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
  function render(){
-   const complete=index===60;
-   $("#adventureBar").style.width=((index+(passed?1:0))/60*100)+"%";
-   $("#adventureStatus").textContent=complete?"All 60 missions completed on this device!":`Mission ${index+1} of 60 · ${index+(passed?1:0)} completed`;
+   const complete=index===deck.length;
+   $("#adventureBar").style.width=((index+(passed?1:0))/deck.length*100)+"%";
+   $("#adventureStatus").textContent=complete?`All ${deck.length} missions completed on this device!`:`Mission ${index+1} of ${deck.length} · ${index+(passed?1:0)} completed`;
    const content=$("#adventureMissionContent");
    content.replaceChildren();
    if(complete){
      const done=document.createElement("div");
      done.className="lv-adventure-success";
-     done.innerHTML=`<h3>🏆 All 60 adventures complete!</h3>
-       <p>You practiced sixty different ${kind==="creature-catcher"?"wildlife science and conservation":kind==="road-trip-quest"?"map reading, packing, weather, passenger safety and respectful travel":kind==="road-trip-quest-gps"?"offline demo-map symbols, route safety and location privacy":kind==="chill-brain-rewards"?"gentle observation, focus, comfort and kindness":kind==="kidscoin-family"?"family budgeting and pretend-currency choices":kind==="brain-sweat-expanded"?"reviewed workshop and problem-solving scenarios":"reviewed practical life-skills questions"} decisions. Original game progress stays safe.</p>`;
+     done.innerHTML=`<h3>🏆 All ${deck.length} adventures complete!</h3>
+       <p>You practiced ${deck.length} different ${kind==="creature-catcher"?"wildlife science and conservation":kind==="road-trip-quest"?"map reading, packing, weather, passenger safety and respectful travel":kind==="road-trip-quest-gps"?"offline demo-map symbols, route safety and location privacy":kind==="chill-brain-rewards"?"gentle observation, focus, comfort and kindness":kind==="kidscoin-family"?"family budgeting and pretend-currency choices":kind==="brain-sweat-expanded"?"reviewed workshop and problem-solving scenarios":"reviewed practical life-skills questions"} decisions. Original game progress stays safe.</p>`;
      content.append(done);
-     content.append(button("Replay the sixty missions",()=>{
-       if(!window.confirm("Restart only this optional sixty-mission journey? Your original game progress stays safe."))return;
+     content.append(button(`Replay all ${deck.length} missions`,()=>{
+       if(!window.confirm(`Restart only this optional ${deck.length}-mission journey? Your original game progress stays safe.`))return;
        index=0;passed=false;wrongCount=0;save(0);render();
      }));
      content.append(button("Return to the original game",()=>dialog.close(),"lv-adventure-secondary"));
@@ -91,9 +91,9 @@ function bootAdventureMissions(){
          feedback.textContent="That's right! "+m.why;
          [...options.children].forEach(x=>x.disabled=true);
          save(index+1);
-         $("#adventureBar").style.width=((index+1)/60*100)+"%";
-         $("#adventureStatus").textContent=`Mission ${index+1} of 60 · ${index+1} completed`;
-         actions.append(button(index===59?"Finish my adventure":"Next mission",()=>{
+         $("#adventureBar").style.width=((index+1)/deck.length*100)+"%";
+         $("#adventureStatus").textContent=`Mission ${index+1} of ${deck.length} · ${index+1} completed`;
+         actions.append(button(index===deck.length-1?"Finish my adventure":"Next mission",()=>{
            index++;passed=false;wrongCount=0;render();
          }));
        }else{
