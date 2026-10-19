@@ -61,7 +61,7 @@ export const CREATIVE_CHAPTERS = Object.freeze([
   ]},
   { id:"space-imagination", name:"Space & Imagination", icon:"🌌", prompts:[
     "Draw a planet with rings, moons, and a place you would visit.",
-    "Create a doorway to another world.",
+    "Create a glowing doorway to another world and imagine what waits beyond it.",
     "Make a star map using dots and connecting lines.",
     "Design a spaceship powered by something silly.",
     "Draw an alien garden growing under two suns.",
