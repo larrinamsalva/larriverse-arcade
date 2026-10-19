@@ -88,13 +88,13 @@ for (const [id,deck] of [["creature-catcher",creatureMissions],["road-trip-quest
 for(const [id,deck] of [["road-trip-quest-gps",gpsMissions],["chill-brain-rewards",chillMissions]]){
  const expected=id==="chill-brain-rewards"?80:60;
  assert.equal(deck.length,expected,`${id} has ${expected} distinct objectives`);
- assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} may not repeat questions`);
+ assert.equal(new Set(deck.map(x=>x.prompt)).size,expected,`${id} may not repeat questions`);
  assert.ok(deck.every(x=>x.why.includes(x.options[x.answer])),`${id} correct choices are explained`);
 }
 for(const [id,deck] of [["kidscoin-family",familyMissions],["brain-sweat-expanded",sweatMissions],["brain-sweat-life-skills",lifeMissions]]){
  const expected=id==="kidscoin-family"?60:80;
  assert.equal(deck.length,expected,`${id} has its intended optional mission count`);
- assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} must not recycle questions`);
+ assert.equal(new Set(deck.map(x=>x.prompt)).size,expected,`${id} must not recycle questions`);
  assert.ok(deck.every(m=>m.options[m.answer]!==undefined),`${id} has answer keys`);
 }
 const counts=Object.entries(sequential);
