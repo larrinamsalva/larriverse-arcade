@@ -5,7 +5,7 @@
   "tag": "v1.0.0",
   "title": "LarriVerse Arcade 1.0",
   "releaseState": "candidate",
-  "cabinetCount": 36,
+  "cabinetCount": 37,
   "humanChecksRequired": true,
   "qaRoute": "qa/index.html",
   "releaseNotes": "docs/RELEASE-NOTES-1.0.0.md",
@@ -35,7 +35,7 @@
   },
   "galleryReview": {
     "schema": "larriverse-gallery-review",
-    "expectedImages": 74,
+    "expectedImages": 76,
     "projects": [
       "desktop-chromium",
       "mobile-chromium"
@@ -358,6 +358,12 @@
       "title": "Creative Calm Cove",
       "route": "games/creative-calm-cove/index.html",
       "manualFocus": "Draw with mouse and touch, test erase and undo/redo, switch mirror and radial symmetry, generate Spiro Garden and Creature Spark art, place stickers, explore prompt cards from all eight chapters, save/reload locally, export PNG, verify no timer or wrong-answer language, and review mobile, dark, high-contrast and reduced-motion layouts."
+    },
+    {
+      "id": "date-detective",
+      "title": "Date Detective",
+      "route": "games/date-detective/index.html",
+      "manualFocus": "Read representative Best By, Use By, Sell By, Freeze By, after-opening and lot-code cases; verify wrong-answer feedback and Clear my choice; unlock/revisit chapters; confirm infant-formula cases say not to use after the Use By date; test 390px layout, dark/high contrast, reduced motion, local save and reload."
     }
   ]
 }
