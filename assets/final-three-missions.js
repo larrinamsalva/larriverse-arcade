@@ -1,3 +1,4 @@
+import { sweatBonusMissions, lifeBonusMissions } from "./eighty-brain-missions.js";
 // 180 unique missions derived from existing reviewed lessons. Correct answers retain source provenance.
 // No new bank access, adult bypass, source curriculum unlocking, or financial purchases.
 export const familyMissions = [
@@ -1863,7 +1864,8 @@ export const sweatMissions = [
     "why": "In this toy workshop exercise, the required planned tools are: Plan First → Write Code → Save File → Test It → Debug → Run Program. Always seek qualified adult help for any real tools.",
     "guide": "This is a simulated classroom choice, not permission or instructions for hands-on hazardous work."
   }
-];
+ ];
+sweatMissions.push(...sweatBonusMissions);
 export const lifeMissions = [
   {
     "sourceId": "kitchen-basics-knife-safety#1",
@@ -2826,3 +2828,4 @@ export const lifeMissions = [
     "id": "life-60"
   }
 ];
+lifeMissions.push(...lifeBonusMissions);
