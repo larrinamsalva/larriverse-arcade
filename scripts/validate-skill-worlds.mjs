@@ -44,12 +44,12 @@ for (const world of worlds) {
   assert.ok(html.includes(`data-world="${world.id}"`));
   assert.ok(html.includes('type="module" src="../../assets/skill-games.js"'));
 }
-for (const [deck, options] of [
-  [messages, 3],
-  [conversations, 3],
-  [newsCards, 4],
+for (const [deck, options, expected] of [
+  [messages, 3, 80],
+  [conversations, 3, 60],
+  [newsCards, 4, 60],
 ]) {
-  assert.equal(deck.length,60,"Each digital/social quiz bank includes sixty scenarios");
+  assert.equal(deck.length,expected,"Digital/social quiz bank keeps its intended scenario count");
   assert.equal(new Set(deck.map((item) => item.text)).size, deck.length);
   for (const item of deck) {
     assert.ok(item.text.length > 20 && item.why.length > 20);
@@ -73,13 +73,13 @@ for (const item of sorting) {
   assert.match(iconSvg(item.art), new RegExp(`object-model--${item.art}`));
 }
 
-assert.equal(marketMissions.length,60,"Lemonade Lab has sixty actual market contracts");
-assert.equal(beatMissions.length,60,"Beat Builder has sixty real, different compositions");
-assert.equal(new Set(marketMissions.map(m=>m.id)).size,60);
-assert.equal(new Set(beatMissions.map(m=>m.id)).size,60);
-assert.equal(new Set(marketMissions.map(m=>[m.base,m.sensitivity,m.supplyCost,m.startCash,m.goal].join(":"))).size,60,
+assert.equal(marketMissions.length,80,"Lemonade Lab has eighty actual market contracts");
+assert.equal(beatMissions.length,80,"Beat Builder has eighty real, different compositions");
+assert.equal(new Set(marketMissions.map(m=>m.id)).size,80);
+assert.equal(new Set(beatMissions.map(m=>m.id)).size,80);
+assert.equal(new Set(marketMissions.map(m=>[m.base,m.sensitivity,m.supplyCost,m.startCash,m.goal].join(":"))).size,80,
   "Market missions must not repeat the same business conditions");
-assert.equal(new Set(beatMissions.map(m=>m.rows.map(row=>row.join(",")).join("|"))).size,60,
+assert.equal(new Set(beatMissions.map(m=>m.rows.map(row=>row.join(",")).join("|"))).size,80,
   "Each rhythm mission needs a different exact musical pattern");
 assert.deepEqual(beatMissions[0].rows,[[0,4,8,12],[4,12],[0,2,4,6,8,10,12,14]]);
 for(const mission of marketMissions){
@@ -101,8 +101,8 @@ for(const mission of beatMissions){
   assert.deepEqual(rhythmMatches(wrong,mission),[false,true,true]);
 }
 const creativeGameSource=fs.readFileSync("assets/skill-games.js","utf8");
-assert.ok(creativeGameSource.includes('button("Explore 60 market missions"'));
-assert.ok(creativeGameSource.includes('button("Explore 60 beat missions"'));
+assert.ok(creativeGameSource.includes('Explore ${marketMissions.length} market missions'));
+assert.ok(creativeGameSource.includes('Explore ${beatMissions.length} beat missions'));
 assert.ok(creativeGameSource.includes("Return to four-day lab"));
 assert.ok(creativeGameSource.includes("Return to freestyle"));
 assert.ok(creativeGameSource.includes("larriverse.creative."),"Optional mission completion persists locally");
@@ -110,7 +110,7 @@ for(const id of ["lemonade-lab","beat-builder"]){
   const world=worlds.find(w=>w.id===id);
   const entry=catalog.find(x=>x.id===id);
   assert.equal(world.mission,entry.mission);
-  assert.match(world.mission,/sixty/i);
+  assert.match(world.mission,/eighty|80/i);
 }
 
 // Pocket Planet: sixty unique offline projects without artificial currencies.
@@ -157,24 +157,23 @@ for (const item of repairs) {
   assert.equal(item.steps.length, 4);
   assert.equal(new Set(item.steps).size, 4);
 }
-// For all five expanded lesson banks, the primary game now offers one saved
-// six-chapter journey of sixty distinct activities, not six disconnected rounds.
-for(const [name,mode,length] of [
-  ["Scam Sleuth","messages",messages.length],
-  ["Kindness Quest","conversation",conversations.length],
-  ["Fact Finder","news",newsCards.length],
-  ["Repair Café","repair",repairs.length],
-  ["Reuse Rally","sorting",sorting.length],
+// Expanded lesson banks use one saved long-form journey rather than disconnected rounds.
+for(const [name,mode,length,expected,countPattern] of [
+  ["Scam Sleuth","messages",messages.length,80,/\b(eighty|80)\b/i],
+  ["Kindness Quest","conversation",conversations.length,60,/\b(sixty|60)\b/i],
+  ["Fact Finder","news",newsCards.length,60,/\b(sixty|60)\b/i],
+  ["Repair Café","repair",repairs.length,60,/\b(sixty|60)\b/i],
+  ["Reuse Rally","sorting",sorting.length,60,/\b(sixty|60)\b/i],
 ]){
-  assert.equal(length,60,`${name}: exactly sixty playable scenarios`);
+  assert.equal(length,expected,`${name}: intended playable scenario count`);
   const world=worlds.find(entry=>entry.mode===mode);
-  assert.match(world?.mission||"",/\b(sixty|60)\b/i,`${name}: explicitly states the full sixty-question journey`);
+  assert.match(world?.mission||"",countPattern,`${name}: explicitly states the full journey count`);
   const catalogWorld=catalog.find(entry=>entry.id===world.id);
   assert.equal(catalogWorld?.mission,world.mission,`${name}: catalog matches world`);
 }
 const quizEngine = fs.readFileSync("assets/skill-games.js","utf8");
 for(const [deck,mode] of [["messages","messages"],["conversations","conversation"],["newsCards","news"],["repairs","repair"],["sorting","sorting"],["trafficQuestions","traffic"]])
-  assert.ok(quizEngine.includes(`startCampaign(${deck},"${mode}")`),`${deck} must launch a full saved sixty-question main campaign`);
+  assert.ok(quizEngine.includes(`startCampaign(${deck},"${mode}")`),`${deck} must launch its full saved main campaign`);
 assert.ok(quizEngine.includes("writeCampaign(state.step,state.correct)"),"Each answered card has saved progression");
 assert.ok(quizEngine.includes("writeCampaign(state.step,state.step)"),"Each completed repair has saved progression");
 // Both classic resource worlds now contain four ranks and eight independent stages.

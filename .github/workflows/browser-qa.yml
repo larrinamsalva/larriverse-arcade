@@ -15,6 +15,12 @@ jobs:
   chromium:
     runs-on: ubuntu-latest
     timeout-minutes: 70
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - desktop-chromium
+          - mobile-chromium
     env:
       CI: true
     steps:
@@ -33,24 +39,24 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run desktop and mobile browser QA
-        run: npx playwright test --config=playwright.config.mjs
+        run: npx playwright test --config=playwright.config.mjs --project=${{ matrix.project }}
 
       - name: Build offline gallery review pack
-        if: success()
+        if: success() && matrix.project == 'desktop-chromium'
         env:
           LARRIVERSE_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           LARRIVERSE_RUN_ID: ${{ github.run_id }}
         run: node scripts/build-gallery-review.mjs
 
       - name: Verify all gallery metadata and image hashes
-        if: success()
+        if: success() && matrix.project == 'desktop-chromium'
         run: npm run gallery:verify
 
       - name: Upload browser QA evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: larriverse-browser-qa-${{ github.run_number }}
+          name: larriverse-browser-qa-${{ github.run_number }}-${{ matrix.project }}
           path: |
             artifacts/screenshots/
             artifacts/gallery-review/
@@ -60,7 +66,7 @@ jobs:
           retention-days: 14
 
       - name: Upload offline gallery review
-        if: success()
+        if: success() && matrix.project == 'desktop-chromium'
         uses: actions/upload-artifact@v4
         with:
           name: larriverse-gallery-review-${{ github.run_number }}

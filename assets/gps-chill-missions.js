@@ -1,3 +1,4 @@
+import { chillBonusMissions } from "./chill-bonus-missions.js";
 // Sixty distinct offline demo-map decisions and sixty optional, untimed calm-skill puzzles.
 // No real-world coordinates or tracking. No health/medical claims, pressure, timers or streak gates.
 // Each five-part journey visits 12 different real-life-inspired situations. Correct first
@@ -179,7 +180,7 @@ const chillChapters=[
   "Kindness includes caring for yourself, others and the world around you."]
 ];
 const calmKeys=["observe","breathe","focus","comfort","kindness"];
-export const chillMissions=chillChapters.flatMap(([chapter,template,key,why],group)=>
+const chillBaseMissions=chillChapters.flatMap(([chapter,template,key,why],group)=>
  calmScenes.map((fields,index)=>{
    const [name,icon,...answers]=fields;
    const options=answers.slice(calmKeys.indexOf(key)*3,calmKeys.indexOf(key)*3+3);
@@ -190,3 +191,4 @@ export const chillMissions=chillChapters.flatMap(([chapter,template,key,why],gro
      prompt:template.replace("{scene}",name.toLowerCase()),options:rotated,answer,
      why:why+" "+options[0]+"."};
  }));
+export const chillMissions=[...chillBaseMissions,...chillBonusMissions];

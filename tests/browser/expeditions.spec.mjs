@@ -75,8 +75,8 @@ test("Bridge Buddies: four strongest braces fit even without builder tokens", as
   await expect(page.locator("#feedback")).toHaveClass(/good/);
 });
 
-test("Water Works: every one of sixty unique filter-connected networks works",async({page})=>{
-  test.setTimeout(360_000);
+test("Water Works: every one of eighty unique filter-connected networks works",async({page})=>{
+  test.setTimeout(480_000);
   await adventure(page,"water-works",async()=>{
     await action(page,"Send the water"); await expect(page.locator("#feedback")).toHaveClass(/try/);
     for (let round=0;round<pipePaths.length;round++) {
@@ -91,14 +91,14 @@ test("Water Works: every one of sixty unique filter-connected networks works",as
     }
   });
 });
-test("Harbor Helpers: sixty increasingly complex exact deliveries fit their boat",async({page})=>{
-  test.setTimeout(300_000);
+test("Harbor Helpers: eighty increasingly complex exact deliveries fit their boat",async({page})=>{
+  test.setTimeout(420_000);
   await adventure(page,"harbor-helpers",async()=>{
-    expect(harborLevels).toHaveLength(60);
+    expect(harborLevels).toHaveLength(80);
     expect(cargo).toHaveLength(10);
     expect(harborLevels.map(level=>level.capacity).filter((value,index,array)=>index===0||value!==array[index-1])).toEqual([3,4,5,6,7,8]);
     expect(harborLevels[0].vehicle).toBe("Harbor skiff");
-    expect(harborLevels[59].vehicle).toBe("Harbor hauler + ferry");
+    expect(harborLevels[79].vehicle).toBe("Grand harbor convoy");
     await expect(page.locator(".harbor-manifest")).toBeVisible();
     await page.locator('[data-cargo="wood"]').click(); await action(page,"Sail to Sprout Island");
     await expect(page.locator("#feedback")).toContainText("does not match");
@@ -106,7 +106,7 @@ test("Harbor Helpers: sixty increasingly complex exact deliveries fit their boat
     await page.locator('[data-cargo="water"]').click(); await page.locator('[data-cargo="water"]').click(); await page.locator('[data-cargo="seeds"]').click();
     await page.locator('[data-cargo="wood"]').click();
     await expect(page.locator("#feedback")).toContainText("holds 3 crates"); await action(page,"Unload the boat");
-    const ranks=["Dock Helper","Route Planner","Harbor Captain","Community Admiral","Supply Scout","Island Planner","Resource Organizer","Cargo Navigator","Delivery Leader","Harbor Coordinator","Community Captain","Master Harbor Helper"];
+    const ranks=["Dock Helper","Route Planner","Harbor Captain","Community Admiral","Supply Scout","Island Planner","Resource Organizer","Cargo Navigator","Delivery Leader","Harbor Coordinator","Community Captain","Master Harbor Helper","Coastal Dispatcher","Fleet Planner","Harbor Strategist","Grand Harbor Captain"];
     for(let index=0;index<harborLevels.length;index++) {
       await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-level",String(index+1));
       await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-rank",ranks[Math.floor(index/5)]);
@@ -115,7 +115,7 @@ test("Harbor Helpers: sixty increasingly complex exact deliveries fit their boat
       await expect(page.locator("#feedback")).toHaveClass(/good/);
       await next(page,index===harborLevels.length-1);
     }
-    await expect(page.locator("#finishMessage")).toContainText("60 island deliveries");
+    await expect(page.locator("#finishMessage")).toContainText("80 island deliveries");
   });
 });
 function pantrySolution(challenge) {
@@ -135,9 +135,9 @@ function pantrySolution(challenge) {
   search(0, 3, {});
   return solutions[0];
 }
-test("Pantry Picnic: sixty continuous, unique picnics with saved checkpoints and one reward",async({page})=>{
-  test.setTimeout(240_000);
-  expect(pantryChallenges).toHaveLength(60);
+test("Pantry Picnic: eighty continuous, unique picnics with saved checkpoints and one reward",async({page})=>{
+  test.setTimeout(360_000);
+  expect(pantryChallenges).toHaveLength(80);
   expect(PANTRY_ROUND_SIZE).toBe(10);
   const errors=[];page.on("pageerror",error=>errors.push(error.message));
   await page.goto("/games/pantry-picnic/index.html");
@@ -151,9 +151,9 @@ test("Pantry Picnic: sixty continuous, unique picnics with saved checkpoints and
     const id=await card.getAttribute("data-pantry-challenge");
     expect(id).toBe(challenge.id);
     visited.push(id);
-    await expect(page.locator("#stageLabel")).toContainText(`Picnic ${index+1} of 60`);
-    await expect(page.locator("#stageLabel")).toContainText(`Chapter ${Math.floor(index/10)+1}/6`);
-    await expect(page.locator(".adventure-advancement")).toContainText(`Level ${index+1} of 60`);
+    await expect(page.locator("#stageLabel")).toContainText(`Picnic ${index+1} of 80`);
+    await expect(page.locator("#stageLabel")).toContainText(`Chapter ${Math.floor(index/10)+1}/8`);
+    await expect(page.locator(".adventure-advancement")).toContainText(`Level ${index+1} of 80`);
     if(index===0){
       await action(page,"Check this picnic");
       await expect(page.locator("#feedback")).toContainText("exactly three portions");
@@ -171,32 +171,32 @@ test("Pantry Picnic: sixty continuous, unique picnics with saved checkpoints and
     // The completed picnic should never have to be solved again.
     if(index===23){
       await page.reload();
-      await expect(page.locator("#stageLabel")).toContainText("Picnic 25 of 60");
+      await expect(page.locator("#stageLabel")).toContainText("Picnic 25 of 80");
       continue;
     }
-    await action(page,index===59?"Celebrate my discoveries":"Next picnic");
-    if(index===9)await expect(page.locator("#stageLabel")).toContainText("Chapter 2/6");
+    await action(page,index===79?"Celebrate my discoveries":"Next picnic");
+    if(index===9)await expect(page.locator("#stageLabel")).toContainText("Chapter 2/8");
   }
-  expect(new Set(visited).size).toBe(60);
+  expect(new Set(visited).size).toBe(80);
   await expect(page.locator("#finishDialog")).toBeVisible();
   const reward=await page.evaluate(()=>window.LarriVerseArcade.summary().games["pantry-picnic"]);
   expect(reward.completions).toBe(1);
   expect(reward.metrics.practiceRuns).toBe(1);
   const checkpoint=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.pantryPicnic.sixty.v1")));
-  expect(checkpoint).toEqual({next:60,rewarded:true});
+  expect(checkpoint).toEqual({next:80,rewarded:true});
 
   await page.locator("#closeFinish").click();
   await page.reload();
   await expect(page.locator("#gameBoard")).toContainText("Your whole picnic journey is complete!");
   await expect(page.getByRole("button",{name:"Celebrate my discoveries"})).toHaveCount(0);
-  await expect(page.getByRole("button",{name:"Replay all 60 picnics"})).toBeVisible();
+  await expect(page.getByRole("button",{name:"Replay all 80 picnics"})).toBeVisible();
   // A replay requires explicit confirmation and must not erase progress casually.
   page.once("dialog",dialog=>dialog.dismiss());
-  await action(page,"Replay all 60 picnics");
+  await action(page,"Replay all 80 picnics");
   await expect(page.locator("#gameBoard")).toContainText("Your whole picnic journey is complete!");
   page.once("dialog",dialog=>dialog.accept());
-  await action(page,"Replay all 60 picnics");
-  await expect(page.locator("#stageLabel")).toContainText("Picnic 1 of 60");
+  await action(page,"Replay all 80 picnics");
+  await expect(page.locator("#stageLabel")).toContainText("Picnic 1 of 80");
   const after=await page.evaluate(()=>window.LarriVerseArcade.summary().games["pantry-picnic"]);
   expect(after.completions).toBe(1);
   expect(errors).toEqual([]);

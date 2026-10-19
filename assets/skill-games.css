@@ -197,6 +197,7 @@ select:focus-visible,
 }
 .mission-card {
   padding: 1.5rem;
+  min-width: 0;
 }
 .mission-icon {
   display: block;
@@ -287,12 +288,19 @@ select:focus-visible,
   color: #695322 !important;
 }
 .stage-trail-dock {
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
+  overflow: hidden;
   margin: .7rem 0 .15rem;
+  box-sizing: border-box;
 }
 .stage-trail-dock[hidden] { display: none; }
 .stage-trail-dock .level-trail {
   display: flex;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   gap: .4rem;
   margin: 0;
   padding: .1rem .05rem .45rem;

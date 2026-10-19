@@ -6,8 +6,8 @@ import { traceWater, checkPantryBox, compassTarget, encode, cheapestShop, townNe
 const catalog = JSON.parse(fs.readFileSync("games/catalog.json", "utf8"));
 assert.equal(expeditions.length, 8);
 assert.equal(bridgeLevels.length, 60);
-assert.equal(pipePaths.length, 60);
-assert.equal(harborLevels.length, 60);
+assert.equal(pipePaths.length, 80);
+assert.equal(harborLevels.length, 80);
 assert.deepEqual(directions, ["north", "east", "south", "west"]);
 assert.equal(compassClues.length, 60);
 assert.ok(compassClues.slice(0,5).every(clue=>clue.steps.length===2), "First Compass Cove clues begin with two clear direction steps");
@@ -29,12 +29,12 @@ assert.equal(cipherLevels.length, 60);
 assert.equal(tradeLevels.length, 60);
 assert.equal(townLevels.length, 60);
 assert.equal(PANTRY_ROUND_SIZE, 10);
-assert.equal(pantryChallenges.length, 60);
+assert.equal(pantryChallenges.length, 80);
 assert.equal(new Set(pantryChallenges.map(challenge => challenge.id)).size, pantryChallenges.length);
 assert.equal(new Set(pantryChallenges.map(challenge => challenge.name)).size, pantryChallenges.length);
 assert.equal(new Set(pantryChallenges.map(challenge => challenge.prompt)).size, pantryChallenges.length);
-assert.equal(pantryChallenges.filter(challenge => challenge.chapter).length, 36);
-assert.equal(new Set(pantryChallenges.map(challenge => challenge.chapter).filter(Boolean)).size, 6);
+assert.equal(pantryChallenges.filter(challenge => challenge.chapter).length, 56);
+assert.equal(new Set(pantryChallenges.map(challenge => challenge.chapter).filter(Boolean)).size, 8);
 assert.ok(pantryFoods.length >= 12);
 assert.equal(new Set(pantryFoods.map(food => food.id)).size, pantryFoods.length);
 assert.ok(pantryFoods.every(food => ["main", "fruit", "vegetable"].includes(food.group)));
@@ -47,7 +47,7 @@ assert.equal(new Set(bridgeLevels.map(level => level.loads.join(":"))).size, 60,
 assert.ok(bridgeLevels.slice(20,40).every(level=>level.loads.every(load=>load>=5)), "Reinforced stages increase support demands");
 assert.ok(bridgeLevels.slice(40).every(level=>level.loads.every(load=>load>=7)), "Summit stages train advanced support planning");
 assert.equal(new Set(harborLevels.map(level => level.name)).size, harborLevels.length);
-assert.equal(new Set(harborLevels.map(level=>cargo.map(item=>(level.needs[item.id]||0)).join(":"))).size, 60,
+assert.equal(new Set(harborLevels.map(level=>cargo.map(item=>(level.needs[item.id]||0)).join(":"))).size, 80,
   "Each island has a unique crate combination");
 assert.deepEqual(
   harborLevels.map(level => level.capacity).filter((capacity,index,list)=>index===0||capacity!==list[index-1]),
@@ -93,7 +93,7 @@ const bridgeGame = bridgeSource.slice(bridgeSource.indexOf("function bridge()"),
 assert.ok(!/Builder tokens|more tokens|Tokens return|cost > level\.budget|spent/.test(bridgeGame),
   "Bridge Buddies must not have hidden token limits");
 assert.match(bridgeGame, /Supports placed/);
-assert.equal(new Set(pipePaths.map(path=>path.join(","))).size, 60, "Each water challenge has a different pipe path");
+assert.equal(new Set(pipePaths.map(path=>path.join(","))).size, 80, "Each water challenge has a different pipe path");
 assert.ok(pipePaths.slice(20,40).every(path=>path.length>=11), "Mid chapters add bends");
 assert.ok(pipePaths.slice(40).every(path=>path.length>=15), "Summit chapters add many bends");
 for (const path of pipePaths) {
@@ -146,8 +146,8 @@ for (const challenge of pantryChallenges) {
 }
 assert.equal(pantryUsage.size, pantryFoods.length);
 const pantryCatalog=catalog.find(game=>game.id==="pantry-picnic");
-assert.match(pantryCatalog.desc,/sixty distinct picnics/i);
-assert.match(pantryCatalog.mission,/sixty different picnic boxes in six connected chapters/i);
+assert.match(pantryCatalog.desc,/eighty distinct picnics/i);
+assert.match(pantryCatalog.mission,/eighty different picnic boxes in eight connected chapters/i);
 assert.match(bridgeSource, /pantryPicnic.sixty.v1|pantryCompleteScreen/);
 const targets = compassClues.map(clue => compassTarget(landmarks[clue.landmark], clue));
 assert.equal(new Set(targets.slice(0,20)).size, 20, "Original twenty distinct treasures remain unchanged");

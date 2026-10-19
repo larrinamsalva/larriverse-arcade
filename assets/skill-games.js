@@ -172,7 +172,7 @@ const campaignCounts = {
   sorting: sorting.length,
   traffic: trafficQuestions.length,
 };
-$("worldMeta").textContent = `Ages ${world.age} · ${campaignModes.has(world.mode)?`${campaignCounts[world.mode]} levels · save and resume`:["market","music","trade"].includes(world.mode)?"60 levels · save and resume":world.mode==="pantry"?`${world.id==="pantry-picnic"?"80":"60"} levels · save and resume`:`about ${world.minutes}`}`;
+$("worldMeta").textContent = `Ages ${world.age} · ${campaignModes.has(world.mode)?`${campaignCounts[world.mode]} levels · save and resume`:world.mode==="market"?`${marketMissions.length} levels · save and resume`:world.mode==="music"?`${beatMissions.length} levels · save and resume`:world.mode==="trade"?"60 levels · save and resume":world.mode==="pantry"?`${world.id==="pantry-picnic"?"80":"60"} levels · save and resume`:`about ${world.minutes}`}`;
 $("missionIcon").textContent = world.icon;
 if (world.mode === "bridge") $("missionIcon").innerHTML = iconSvg("wood");
 $("missionTitle").textContent = world.skill;
@@ -1239,16 +1239,21 @@ async function runRobot() {
   );
 }
 
+function creativeMissionCount(kind){
+  return kind==="market" ? marketMissions.length : kind==="beat" ? beatMissions.length : 0;
+}
 function creativeProgress(kind){
+  const count=creativeMissionCount(kind);
   try {
     const raw=JSON.parse(localStorage.getItem("larriverse.creative."+kind+".v1")||"{}");
-    if(Number.isInteger(raw.nextLevel)&&raw.nextLevel>=0&&raw.nextLevel<60)return raw.nextLevel;
+    if(Number.isInteger(raw.nextLevel)&&raw.nextLevel>=0&&raw.nextLevel<count)return raw.nextLevel;
   }catch{}
   return 0;
 }
 
 function saveCreativeProgress(kind,nextLevel){
-  try{localStorage.setItem("larriverse.creative."+kind+".v1",JSON.stringify({nextLevel:Math.min(60,nextLevel)}));}
+  const count=creativeMissionCount(kind);
+  try{localStorage.setItem("larriverse.creative."+kind+".v1",JSON.stringify({nextLevel:Math.min(count,nextLevel)}));}
   catch{say("This browser could not save your mission progress; you can still keep playing.","try");}
 }
 
@@ -1261,13 +1266,13 @@ function beginMarketJourney(){
 function renderMarketMission(){
   const m=marketMissions[state.mission],done=state.missionPassed;
   const completion=state.mission+(done?1:0);
-  stage(`Lemonade Lab · Mission ${state.mission+1} of 60 · ${m.chapter}`);
+  stage(`Lemonade Lab · Mission ${state.mission+1} of ${marketMissions.length} · ${m.chapter}`);
   board.innerHTML=`<article class="creative-mission-card lemonade-mission-card" data-market-mission="${m.id}"><div class="lemonade-market-scene" aria-hidden="true"><div class="lemonade-canopy"></div><div class="lemonade-counter"><span class="lemonade-pitcher">🍋</span><span class="lemonade-cups">🥤🥤</span><span class="lemonade-cashbox">🪙</span></div><div class="lemonade-customer-row">🧒 🧑 🧒</div></div>
-    <p class="eyebrow">🍋 Market mission ${state.mission+1}/60 · ${esc(m.chapter)}</p>
+    <p class="eyebrow">🍋 Market mission ${state.mission+1}/${marketMissions.length} · ${esc(m.chapter)}</p>
     <h2>${esc(m.name)}</h2><p>At 2 coins per cup, about <strong>${m.base} customers</strong> might visit. Charging more may reduce demand.</p>
     <div class="stat-row">${chip("Supply cost",`${m.supplyCost} coin${m.supplyCost===1?"":"s"}/cup`)}
       ${chip("Available budget",`${m.startCash} coins`)}${chip("Profit goal",`${m.goal}+ coins`)}
-      ${chip("Completed",`${completion}/60`)}</div>
+      ${chip("Completed",`${completion}/${marketMissions.length}`)}</div>
     <p class="board-note">${esc(m.hint)}</p>
     <div class="field-grid lemonade-field-grid">
       <label>Cups to make<select id="stockInput" ${done?"disabled":""}>${marketStockChoices.map(n=>`<option value="${n}" ${state.stock===n?"selected":""}>${n} cups · ${n*m.supplyCost} coins</option>`).join("")}</select></label>
@@ -1280,11 +1285,11 @@ function renderMarketMission(){
   const stockNode=board.querySelector("#stockInput"),priceNode=board.querySelector("#priceInput");
   stockNode?.addEventListener("change",e=>{state.stock=Number(e.target.value);});
   priceNode?.addEventListener("change",e=>{state.price=Number(e.target.value);});
-  progress(completion,60,`${completion} of 60 market missions completed`);
-  updateScore(Math.round(completion/60*100));
+  progress(completion,marketMissions.length,`${completion} of ${marketMissions.length} market missions completed`);
+  updateScore(Math.round(completion/marketMissions.length*100));
   if(done){
-    button(state.mission===59?"Celebrate market mastery":"Next market mission",()=>{
-      if(state.mission===59){finish("You completed all 60 market missions, comparing demand, supplies, prices and profit.",100);return;}
+    button(state.mission===marketMissions.length-1?"Celebrate market mastery":"Next market mission",()=>{
+      if(state.mission===marketMissions.length-1){finish(`You completed all ${marketMissions.length} market missions, comparing demand, supplies, prices and profit.`,100);return;}
       state.mission++;state.missionPassed=false;state.lastMarketResult=null;state.stock=6;state.price=3;
       renderMarketMission();say("New market, new customers! Check your budget and plan.","good");
     });
@@ -1317,11 +1322,11 @@ function beginBeatJourney(){
 
 function renderBeatMission(){
   const m=beatMissions[state.mission],done=state.missionPassed,completion=state.mission+(done?1:0);
-  stage(`Beat Builder · Mission ${state.mission+1} of 60 · ${m.chapter}`);
+  stage(`Beat Builder · Mission ${state.mission+1} of ${beatMissions.length} · ${m.chapter}`);
   board.innerHTML=`<section class="creative-mission-card beat-mission-card" data-beat-mission="${m.id}">
-    <p class="eyebrow">🎵 Rhythm mission ${state.mission+1}/60 · ${esc(m.chapter)}</p>
+    <p class="eyebrow">🎵 Rhythm mission ${state.mission+1}/${beatMissions.length} · ${esc(m.chapter)}</p>
     <h2>${esc(m.name)}</h2><p>${esc(m.explanation)}</p>
-    <div class="stat-row">${chip("Tempo",`${m.bpm} BPM`)}${chip("Completed",`${completion}/60`)}</div>
+    <div class="stat-row">${chip("Tempo",`${m.bpm} BPM`)}${chip("Completed",`${completion}/${beatMissions.length}`)}</div>
     <p class="board-note">Light up the numbered steps below for each instrument. Leave all unlisted steps off. Sound is optional.</p>
     ${musicStudioSvg()}
     <div class="beat-numbers">${Array.from({length:16},(_,i)=>`<span>${i%4===0?i/4+1:"·"}</span>`).join("")}</div>
@@ -1335,12 +1340,12 @@ function renderBeatMission(){
     node.setAttribute("aria-pressed",String(state.tracks[row][col]));
     if(state.tracks[row][col])tone(row);
   });
-  progress(completion,60,`${completion} of 60 rhythm missions completed`);
-  updateScore(Math.round(completion/60*100));
+  progress(completion,beatMissions.length,`${completion} of ${beatMissions.length} rhythm missions completed`);
+  updateScore(Math.round(completion/beatMissions.length*100));
   if(done){
-    button(state.mission===59?"Celebrate my rhythm journey":"Next beat mission",()=>{
+    button(state.mission===beatMissions.length-1?"Celebrate my rhythm journey":"Next beat mission",()=>{
       stopMusic();
-      if(state.mission===59){finish("You completed 60 different rhythms, counting beats and learning to hear the spaces.",100);return;}
+      if(state.mission===beatMissions.length-1){finish(`You completed ${beatMissions.length} different rhythms, counting beats and learning to hear the spaces.`,100);return;}
       state.mission++;state.missionPassed=false;
       state.tracks=Array.from({length:3},()=>Array(16).fill(false));
       state.bpm=beatMissions[state.mission].bpm;
@@ -1426,7 +1431,7 @@ function renderMarket() {
       profit >= 0 ? "good" : "try",
     );
   });
-  button("Explore 60 market missions",beginMarketJourney,"secondary");
+  button(`Explore ${marketMissions.length} market missions`,beginMarketJourney,"secondary");
   hint =
     "At a 3-coin price, expect 2 fewer customers than the 2-coin forecast. Match your batch to likely demand. Profit = revenue − supplies.";
 }
@@ -1500,7 +1505,7 @@ function renderMusic() {
   );
   hint =
     "For the rhythm challenge, switch on only the listed steps for each track. Beat 1 starts at step 1. Every fourth step begins the next beat.";
-  button("Explore 60 beat missions",beginBeatJourney,"secondary");
+  button(`Explore ${beatMissions.length} beat missions`,beginBeatJourney,"secondary");
   paintMusic();
 }
 function paintMusic() {
