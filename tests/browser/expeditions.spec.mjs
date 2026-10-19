@@ -228,16 +228,35 @@ test("Compass Cove: sixty progressive multi-step routes with gentle wrong-answer
     }
   });
 });
-test("Cipher Club: sixty unique A–H words grow from three to nine letters",async({page})=>{
-  test.setTimeout(360_000);
+test("Cipher Club: eighty unique messages grow from A-H starters to long A-Z words",async({page})=>{
+  test.setTimeout(420_000);
+  expect(cipherLevels).toHaveLength(80);
+  expect(new Set(cipherLevels.map(level=>level.word)).size).toBe(80);
+  expect(cipherLevels.slice(60,70).every(level=>level.word.length>=8&&level.alphabet?.length===20)).toBe(true);
+  expect(cipherLevels.slice(70).every(level=>level.word.length>=10&&level.alphabet?.length===26)).toBe(true);
   await adventure(page,"cipher-club",async()=>{
+    await expect(page.locator(".cipher-chapter-strip span")).toHaveCount(8);
     await action(page,"Check my message"); await expect(page.locator("#feedback")).toContainText("shared key 1");
     for(let index=0;index<cipherLevels.length;index++) {
-      const level=cipherLevels[index];
-      for(let turn=0;turn<level.shift;turn++)await page.locator('[data-key="1"]').click();
-      if(index===0) { for(let letter=0;letter<level.word.length;letter++)await page.locator('[data-letter="A"]').click(); await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/try/); await action(page,"Clear my answer"); }
-      const answer=level.encode ? encode(level.word,level.shift) : level.word;
-      for(const letter of answer)await page.locator(`[data-letter="${letter}"]`).click();
+      const level=cipherLevels[index], charset=level.alphabet||"ABCDEFGH";
+      if(index===60){
+        await expect(page.locator("#stageLabel")).toContainText("Chapter 7/8");
+        await expect(page.locator(".cipher-letter-keys button")).toHaveCount(20);
+      }
+      if(index===70){
+        await expect(page.locator("#stageLabel")).toContainText("Chapter 8/8");
+        await expect(page.locator(".cipher-letter-keys button")).toHaveCount(26);
+      }
+      await page.evaluate(({shift,size})=>{
+        const step=shift<=size/2?1:-1, turns=step===1?shift:size-shift;
+        for(let n=0;n<turns;n++)document.querySelector(`[data-key="${step}"]`)?.click();
+      },{shift:level.shift,size:charset.length});
+      if(index===0) {
+        await page.evaluate(length=>{for(let n=0;n<length;n++)document.querySelector('[data-letter="A"]')?.click();},level.word.length);
+        await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/try/); await action(page,"Clear my answer");
+      }
+      const answer=level.encode ? encode(level.word,level.shift,charset) : level.word;
+      await page.evaluate(answer=>{for(const letter of answer)document.querySelector(`[data-letter="${letter}"]`)?.click();},answer);
       await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/good/); await next(page,index===cipherLevels.length-1);
     }
   });

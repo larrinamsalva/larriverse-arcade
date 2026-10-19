@@ -25,7 +25,7 @@ for (const clue of compassClues) {
   }
   assert.equal(row*6+col,compassTarget(landmarks[clue.landmark],clue),"Compass route ends on its treasure tile");
 }
-assert.equal(cipherLevels.length, 60);
+assert.equal(cipherLevels.length, 80);
 assert.equal(tradeLevels.length, 60);
 assert.equal(townLevels.length, 60);
 assert.equal(PANTRY_ROUND_SIZE, 10);
@@ -154,16 +154,24 @@ assert.equal(new Set(targets.slice(0,20)).size, 20, "Original twenty distinct tr
 assert.equal(new Set(compassClues.map(c=>[c.landmark,c.east,c.south].join(":"))).size, 60, "All sixty routes use distinct landmark and step instructions");
 assert.ok(compassClues.slice(20).every(c=>Math.abs(c.east)+Math.abs(c.south)>=3), "Advanced routes have several steps");
 assert.ok(targets.every(target => target >= 0 && target < 36));
-assert.equal(new Set(cipherLevels.map(level=>level.word)).size, 60, "Every code challenge uses a different word");
+assert.equal(new Set(cipherLevels.map(level=>level.word)).size, 80, "Every code challenge uses a different word");
 assert.ok(cipherLevels.slice(20,30).every(level=>level.word.length===4));
 assert.ok(cipherLevels.slice(30,40).every(level=>level.word.length===5));
 assert.ok(cipherLevels.slice(40,50).every(level=>level.word.length===6));
-assert.ok(cipherLevels.slice(50).every(level=>level.word.length>=6));
+assert.ok(cipherLevels.slice(50,60).every(level=>level.word.length>=6&&level.word.length<=9));
 assert.ok(cipherLevels.slice(20).every(level=>level.clue?.length>=10));
+assert.ok(cipherLevels.slice(0,60).every(level=>!level.alphabet&&/^[A-H]{3,9}$/.test(level.word)),"First sixty keep the familiar A-H wheel");
+assert.ok(cipherLevels.slice(60,70).every(level=>level.alphabet==="ABCDEFGHIJKLMNOPQRST"&&level.word.length>=8&&level.word.length<=10),"Chapter seven expands to A-T with longer words");
+assert.ok(cipherLevels.slice(70).every(level=>level.alphabet==="ABCDEFGHIJKLMNOPQRSTUVWXYZ"&&level.word.length>=10),"Chapter eight unlocks A-Z with the longest words");
 for (const level of cipherLevels) {
-  assert.ok(/^[A-H]{3,9}$/.test(level.word), `${level.word} fits the toy alphabet and advancing word lengths`);
-  assert.equal(encode(encode(level.word,level.shift),-level.shift),level.word);
+  const charset=level.alphabet||"ABCDEFGH";
+  assert.ok([...level.word].every(letter=>charset.includes(letter)), `${level.word} fits its authored cipher alphabet`);
+  assert.ok(level.shift>0&&level.shift<charset.length, `${level.word} has a usable shift`);
+  assert.equal(encode(encode(level.word,level.shift,charset),-level.shift,charset),level.word);
 }
+const cipherCatalog=catalog.find(game=>game.id==="cipher-club");
+assert.match(cipherCatalog.desc,/80 progressively harder/i);
+assert.match(cipherCatalog.mission,/80 different real words across eight chapters/i);
 assert.equal(new Set(tradeLevels.map(x => [x.name,x.need,x.budget,...x.deals.flatMap(d=>[d.quantity,d.price,d.fee])].join(":"))).size, 60, "All market prices, amounts and missions must be genuinely distinct");
 assert.ok(tradeLevels.slice(8,20).every(level=>level.deals.every(deal=>deal.fee===0)), "Early new shoppers learn bundle sizes without delivery fees");
 assert.ok(tradeLevels.slice(35).some(level=>level.deals.some(deal=>deal.fee>=2)), "Advanced markets introduce extra fees");
@@ -194,6 +202,6 @@ for (const level of townLevels) {
   }
   assert.ok(solution, `${level.name} has at least one plan satisfying every neighbor`);
 }
-for (const path of ["assets/expedition-worlds.js","assets/expedition-logic.js","assets/expedition-games.js","assets/arcade-scenes.js","tests/browser/expeditions.spec.mjs"]) execFileSync(process.execPath,["--check",path]);
+for (const path of ["assets/cipher-bonus-levels.js","assets/expedition-worlds.js","assets/expedition-logic.js","assets/expedition-games.js","assets/arcade-scenes.js","tests/browser/expeditions.spec.mjs"]) execFileSync(process.execPath,["--check",path]);
 for (const path of ["assets/expedition-atlas.webp","assets/worlds-atlas-v2.webp"]) assert.ok(fs.statSync(path).size < 1_000_000);
-console.log("Eight expeditions validated: sixty-level adventure curriculum, sixty shopping missions, 240 solvable neighbor requests, distinct treasures, cipher keys and shopping comparisons.");
+console.log("Eight expeditions validated: eighty-level Cipher Club and harbor/water/pantry journeys, sixty shopping missions, 240 solvable neighbor requests, distinct treasures, cipher keys and shopping comparisons.");
