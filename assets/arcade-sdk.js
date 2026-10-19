@@ -141,6 +141,10 @@
       welcome: 'Twenty fields of glossy round bubbles and three rotating power bubbles are ready. Let’s line up a clever bank shot and clear them together.',
       hint: 'Watch the next-bubble preview. Row Wave clears a row, Star Burst clears touching bubbles, and Color Sweep clears every matching number.'
     },
+    'date-detective': {
+      welcome: 'Case file open! Read the words around the date before the numbers. Best By, Sell By, Use By, and lot codes do not all mean the same thing.',
+      hint: 'First identify the label phrase, then the date format, then the product and storage directions. If a mystery code has no reliable key, do not guess it.'
+    },
     'creative-calm-cove': {
       welcome: 'Welcome to Creative Calm Cove! There are no wrong answers here—draw, mirror, stamp, swirl, or simply make a few marks.',
       hint: 'Try one tool at a time. If a prompt is not fun today, skip it and choose another. Your canvas can change as many times as you like.'
