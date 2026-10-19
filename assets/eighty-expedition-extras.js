@@ -49,70 +49,70 @@ export const bonusHarborLevels = [
 
 export const bonusPantryChallenges = [
   {
-    id:"creek-side-saver", name:"Creek-side saver", chapter:"Outdoor adventures",
+    id:"creek-side-saver", name:"Creek-side saver", chapter:"Trail & park picnics",
     prompt:"Pack the saved veggie wrap, apple pieces, and cucumber rounds for the creek-side picnic without swapping in another food.",
     stock:{wrap:1,bread:1,apple:1,banana:1,cucumber:1,peas:1},
     mustUse:{wrap:1,apple:1,cucumber:1}, produce:{fruit:1,vegetable:1},
     why:"The saved wrap gives the main while the apple and cucumber add one fruit and one vegetable without opening extra food."
   },
   {
-    id:"orchard-trail-pack", name:"Orchard trail pack", chapter:"Outdoor adventures",
+    id:"orchard-trail-pack", name:"Orchard trail pack", chapter:"Trail & park picnics",
     prompt:"The trail group saved a bread sandwich, banana slices, and carrot sticks. Pack those exact three portions for the walk.",
     stock:{bread:1,rice:1,banana:1,orange:1,carrot:1,cucumber:1},
     mustUse:{bread:1,banana:1,carrot:1}, produce:{fruit:1,vegetable:1},
     why:"Using the three saved portions first makes a simple picnic with one main, one fruit, and one vegetable."
   },
   {
-    id:"park-pasta-picnic", name:"Park pasta picnic", chapter:"Outdoor adventures",
+    id:"park-pasta-picnic", name:"Park pasta picnic", chapter:"Trail & park picnics",
     prompt:"Use the leftover pasta salad, mixed berries, and snap peas to make the park lunch before choosing anything else from the shelf.",
     stock:{pasta:1,beans:1,berries:1,grapes:1,peas:1,carrot:1},
     mustUse:{pasta:1,berries:1,peas:1}, produce:{fruit:1,vegetable:1},
     why:"The pasta is the main and the berries plus snap peas complete the requested fruit-and-vegetable pair with no waste."
   },
   {
-    id:"sunrise-rice-box", name:"Sunrise rice box", chapter:"Outdoor adventures",
+    id:"sunrise-rice-box", name:"Sunrise rice box", chapter:"Trail & park picnics",
     prompt:"For the early trail stop, pack the saved rice cup, orange wedges, and cucumber rounds exactly as the note requests.",
     stock:{rice:1,wrap:1,orange:1,apple:1,cucumber:1,carrot:1},
     mustUse:{rice:1,orange:1,cucumber:1}, produce:{fruit:1,vegetable:1},
     why:"The rice cup supplies the main while the orange and cucumber provide the two produce portions requested for the box."
   },
   {
-    id:"bean-hike-box", name:"Bean hike box", chapter:"Outdoor adventures",
+    id:"bean-hike-box", name:"Bean hike box", chapter:"Trail & park picnics",
     prompt:"The hiking team has prepared beans, a grape bunch, and carrot sticks marked to use first. Pack all three saved portions.",
     stock:{beans:1,bread:1,grapes:1,banana:1,carrot:1,peas:1},
     mustUse:{beans:1,grapes:1,carrot:1}, produce:{fruit:1,vegetable:1},
     why:"Prepared beans make the main, and the grapes with carrots finish the picnic while using every marked leftover first."
   },
   {
-    id:"meadow-mix-box", name:"Meadow mix box", chapter:"Outdoor adventures",
+    id:"meadow-mix-box", name:"Meadow mix box", chapter:"Trail & park picnics",
     prompt:"A meadow picnic note marks the veggie wrap, mixed berries, and snap peas as the portions that should be packed first.",
     stock:{wrap:1,pasta:1,berries:1,apple:1,peas:1,cucumber:1},
     mustUse:{wrap:1,berries:1,peas:1}, produce:{fruit:1,vegetable:1},
     why:"The wrap, berries, and peas meet the one-main and two-produce plan while clearing the marked food from the shelf."
   },
   {
-    id:"shady-park-lunch", name:"Shady park lunch", chapter:"Outdoor adventures",
+    id:"shady-park-lunch", name:"Shady park lunch", chapter:"Trail & park picnics",
     prompt:"Pack the saved bread sandwich, apple pieces, and cucumber rounds for lunch in the shade before opening other choices.",
     stock:{bread:1,beans:1,apple:1,orange:1,cucumber:1,peas:1},
     mustUse:{bread:1,apple:1,cucumber:1}, produce:{fruit:1,vegetable:1},
     why:"The sandwich is the main and the saved apple and cucumber complete a balanced pretend picnic without extra portions."
   },
   {
-    id:"trailhead-pasta-pack", name:"Trailhead pasta pack", chapter:"Outdoor adventures",
+    id:"trailhead-pasta-pack", name:"Trailhead pasta pack", chapter:"Trail & park picnics",
     prompt:"At the trailhead, the pasta salad, banana slices, and carrot sticks are marked leftovers. Put those exact foods in the box.",
     stock:{pasta:1,rice:1,banana:1,grapes:1,carrot:1,cucumber:1},
     mustUse:{pasta:1,banana:1,carrot:1}, produce:{fruit:1,vegetable:1},
     why:"Packing the marked pasta, banana, and carrots uses the leftovers first and gives one main plus two kinds of produce."
   },
   {
-    id:"river-rice-picnic", name:"River rice picnic", chapter:"Outdoor adventures",
+    id:"river-rice-picnic", name:"River rice picnic", chapter:"Trail & park picnics",
     prompt:"The river picnic list calls for the saved rice cup, grape bunch, and snap peas. Pack those three portions without substitutions.",
     stock:{rice:1,bread:1,grapes:1,berries:1,peas:1,carrot:1},
     mustUse:{rice:1,grapes:1,peas:1}, produce:{fruit:1,vegetable:1},
     why:"The rice is the main, and grapes plus snap peas fill the fruit and vegetable spots while using the saved foods first."
   },
   {
-    id:"garden-bean-break", name:"Garden bean break", chapter:"Outdoor adventures",
+    id:"garden-bean-break", name:"Garden bean break", chapter:"Trail & park picnics",
     prompt:"Garden helpers saved prepared beans, orange wedges, and cucumber rounds for their break. Pack all three marked portions.",
     stock:{beans:1,wrap:1,orange:1,banana:1,cucumber:1,peas:1},
     mustUse:{beans:1,orange:1,cucumber:1}, produce:{fruit:1,vegetable:1},
