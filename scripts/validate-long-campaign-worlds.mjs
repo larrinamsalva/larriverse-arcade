@@ -17,7 +17,7 @@ const campaigns=[
  ["reuse-rally","sorting",sorting]
 ];
 for(const [id,mode,deck] of campaigns){
- const expected=id==="traffic-town"?120:60;
+ const expected=id==="traffic-town"?120:id==="scam-sleuth"?80:60;
  assert.equal(deck.length,expected,id+" must have its intended full distinct activity count");
  const key=mode==="repair"?"title":mode==="sorting"?"name":"text";
  assert.equal(new Set(deck.map(m=>m[key])).size,expected,id+" no duplicate activities");
