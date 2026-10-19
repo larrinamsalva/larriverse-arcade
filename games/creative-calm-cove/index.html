@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#6f63c8">
+  <meta name="description" content="Creative Calm Cove is a no-pressure LarriVerse art studio with free drawing, symmetry, spiro art, creature-making, stickers, local saves, and 80 optional creative prompts.">
+  <title>Creative Calm Cove · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="game.css"><link rel="stylesheet" href="../../assets/emoji.css"><link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/creative-calm-cove/">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="LarriVerse Arcade">
+  <meta property="og:title" content="Creative Calm Cove · Draw, relax & imagine">
+  <meta property="og:description" content="A no-pressure creative hideaway with drawing, symmetry, Spiro Garden, Creature Spark, stickers, and 80 optional prompts.">
+  <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/creative-calm-cove/">
+  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+  <meta property="og:image:type" content="image/webp"><meta property="og:image:width" content="1600"><meta property="og:image:height" content="800">
+  <meta property="og:image:alt" content="Colorful illustrated learning worlds in LarriVerse Arcade"><meta name="twitter:card" content="summary_large_image">
+</head>
+<body data-classic="creative-calm-cove">
+<a class="skip-link" href="#artCanvas">Skip to art canvas</a>
+<header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+  <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+  <div class="lv-context"><strong>Creative Calm Cove</strong><small>Art · Imagination · Calm focus</small></div>
+  <nav class="lv-tools" aria-label="Arcade tools"><a class="lv-button" href="../../index.html">Back to Arcade</a><button class="lv-button" type="button" data-lv-comfort>Comfort &amp; accessibility</button></nav>
+  <span data-lv-profile>Progress stays in this browser.</span>
+</header>
+<main class="cove-shell">
+  <section class="cove-hero"><div><p class="eyebrow">🎨 New creative world · 80 optional cards · no timer</p><h1>Creative <span>Calm Cove</span></h1>
+    <p>Draw, stamp, mirror, swirl, invent creatures, or simply make marks. There are no wrong answers and nothing has to be finished.</p>
+    <div class="hero-pills"><span>✏️ Free draw</span><span>🪞 Symmetry</span><span>🌀 Spiro Garden</span><span>👾 Creature Spark</span><span>💾 Local save</span></div></div>
+    <div class="hero-art" aria-hidden="true"><i></i><i></i><i></i><b>✦</b><span>🌿</span></div>
+  </section>
+  <section class="creative-layout">
+    <aside class="prompt-panel">
+      <div class="panel-heading"><div><p class="eyebrow">Optional inspiration</p><h2 id="promptChapter">Color &amp; Doodles</h2></div><strong id="promptCounter">1 / 80</strong></div>
+      <p id="promptText" class="prompt-text">Fill the page with three colors that feel good together.</p>
+      <div class="prompt-actions"><button type="button" id="previousPrompt">← Previous</button><button type="button" id="nextPrompt">Next →</button><button type="button" id="completePrompt" class="primary">✓ I made something</button></div>
+      <label class="prompt-picker">Jump to any creative card<select id="promptSelect" aria-label="Choose any creative prompt"></select></label>
+      <div class="creative-progress" role="progressbar" aria-label="Creative cards explored" aria-valuemin="0" aria-valuemax="80" aria-valuenow="0" id="creativeProgress"><span id="progressFill"></span></div>
+      <p id="progressText" class="muted">0 of 80 cards explored. Skip anything that does not feel fun today.</p><div id="chapterTrack" class="chapter-track" aria-label="Creative chapters"></div>
+    </aside>
+    <section class="studio-card" aria-labelledby="studioTitle">
+      <div class="studio-heading"><div><p class="eyebrow">Your canvas</p><h2 id="studioTitle">Make whatever you want</h2></div><output id="saveStatus" aria-live="polite">Canvas saves on this device.</output></div>
+      <div class="tool-deck" aria-label="Art tools">
+        <div class="tool-group"><span>Tool</span><button type="button" data-tool="draw" aria-pressed="true">✏️ Draw</button><button type="button" data-tool="erase" aria-pressed="false">🧽 Erase</button></div>
+        <label>Color <input id="colorPicker" type="color" value="#6f63c8" aria-label="Brush color"></label>
+        <label>Brush <input id="brushSize" type="range" min="2" max="34" value="9" aria-label="Brush size"><output id="brushValue">9</output></label>
+        <label>Symmetry <select id="symmetryMode" aria-label="Drawing symmetry"><option value="none">None</option><option value="mirror">Mirror</option><option value="radial6">Radial 6</option><option value="radial8">Radial 8</option></select></label>
+      </div>
+      <div class="quick-tools"><button type="button" id="spiroButton">🌀 Spiro Garden</button><button type="button" id="creatureButton">👾 Creature Spark</button><button type="button" id="calmStage" aria-pressed="false">✨ Calm glow</button><button type="button" id="undoButton">↶ Undo</button><button type="button" id="redoButton">↷ Redo</button><button type="button" id="clearButton">🧼 Clear</button></div>
+      <div id="canvasFrame" class="canvas-frame"><canvas id="artCanvas" width="720" height="720" tabindex="0" aria-label="Creative Calm Cove drawing canvas. Use pointer or touch to draw; keyboard-accessible generator and sticker tools are below."></canvas></div>
+      <div class="sticker-row" role="group" aria-label="Sticker stamps"><span>Sticker stamps</span><button type="button" data-sticker="🌸" aria-label="Stamp flower">🌸</button><button type="button" data-sticker="⭐" aria-label="Stamp star">⭐</button><button type="button" data-sticker="🌿" aria-label="Stamp leaf">🌿</button><button type="button" data-sticker="🦋" aria-label="Stamp butterfly">🦋</button><button type="button" data-sticker="☁️" aria-label="Stamp cloud">☁️</button><button type="button" data-sticker="🌙" aria-label="Stamp moon">🌙</button><button type="button" data-sticker="❤️" aria-label="Stamp heart">❤️</button><button type="button" data-sticker="🪐" aria-label="Stamp planet">🪐</button></div>
+      <div class="save-row"><button type="button" id="saveButton" class="primary">💾 Save on this device</button><button type="button" id="exportButton">🖼️ Export PNG</button><button type="button" id="newCanvasButton">✨ New canvas</button></div>
+      <p class="privacy-note">Your artwork stays in this browser unless you choose Export PNG. Creative prompts are invitations, not assignments.</p>
+    </section>
+  </section>
+  <section class="about-card"><div><span aria-hidden="true">🌊</span><h2>A different kind of LarriVerse world</h2></div><p>Creative Calm Cove is for resting your brain while still making and exploring. It uses an original LarriVerse drawing engine inspired by the playful creative possibilities of <a href="https://michaelwave369.github.io/Domistika/" target="_blank" rel="noopener">Domistika</a>, an MIT-licensed browser art studio.</p></section>
+</main>
+<script src="../../assets/arcade-sdk.js"></script><script type="module" src="game.js"></script><script src="../../assets/cabinet-shell.js"></script>
+</body></html>
