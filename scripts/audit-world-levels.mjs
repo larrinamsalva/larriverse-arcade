@@ -63,9 +63,9 @@ const otherModes={
  "lemonade-lab":{kind:"four-day business simulation + optional distinct market missions",count:marketMissions.length},
  "beat-builder":{kind:"freestyle music studio + optional distinct rhythm missions",count:beatMissions.length},
  "kidscoin-family":{kind:"parent-managed chores and rewards + optional 60 approved family-finance lessons",count:familyMissions.length},
- "brain-sweat-expanded":{kind:"69 original reviewed skill activities + optional 60-source activity learning path",count:sweatMissions.length},
- "brain-sweat-life-skills":{kind:"60 reviewed original questions in twelve unlocked lessons + optional 60-question progression",count:lifeMissions.length},
- "chill-brain-rewards":{kind:"guided calm sessions plus sixty optional untimed focus choices",count:chillMissions.length},
+ "brain-sweat-expanded":{kind:"69 original reviewed skill activities + 80-mission learning path with labeled safe bonus practice",count:sweatMissions.length},
+ "brain-sweat-life-skills":{kind:"60 reviewed original questions in twelve unlocked lessons + 80-mission progression with labeled safe bonus practice",count:lifeMissions.length},
+ "chill-brain-rewards":{kind:"guided calm sessions plus eighty optional untimed focus choices",count:chillMissions.length},
  "creature-catcher":{kind:"classic creature collection + optional distinct wildlife missions",count:creatureMissions.length},
  "road-trip-quest":{kind:"sixteen-city adventure + optional distinct travel missions",count:roadMissions.length},
  "road-trip-quest-gps":{kind:"GPS demo field + sixty optional no-location map/privacy challenges",count:gpsMissions.length}
