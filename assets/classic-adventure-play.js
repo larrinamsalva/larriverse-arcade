@@ -59,7 +59,7 @@ function bootAdventureMissions(){
      const done=document.createElement("div");
      done.className="lv-adventure-success";
      done.innerHTML=`<h3>🏆 All ${deck.length} adventures complete!</h3>
-       <p>You practiced ${deck.length} different ${kind==="creature-catcher"?"wildlife science and conservation":kind==="road-trip-quest"?"map reading, packing, weather, passenger safety and respectful travel":kind==="road-trip-quest-gps"?"offline demo-map symbols, route safety and location privacy":kind==="chill-brain-rewards"?"gentle observation, focus, comfort and kindness":kind==="kidscoin-family"?"family budgeting and pretend-currency choices":kind==="brain-sweat-expanded"?"reviewed workshop and problem-solving scenarios":"reviewed practical life-skills questions"} decisions. Original game progress stays safe.</p>`;
+       <p>You practiced ${deck.length} different ${kind==="creature-catcher"?"wildlife science and conservation":kind==="road-trip-quest"?"map reading, packing, weather, passenger safety and respectful travel":kind==="road-trip-quest-gps"?"offline demo-map symbols, route safety and location privacy":kind==="chill-brain-rewards"?"gentle observation, focus, comfort and kindness":kind==="kidscoin-family"?"family budgeting and pretend-currency choices":kind==="brain-sweat-expanded"?"workshop learning and problem-solving":kind==="brain-sweat-life-skills"?"practical life-skill":"reviewed practical life-skills questions"} decisions. Original game progress stays safe.</p>`;
      content.append(done);
      content.append(button(`Replay all ${deck.length} missions`,()=>{
        if(!window.confirm(`Restart only this optional ${deck.length}-mission journey? Your original game progress stays safe.`))return;
