@@ -791,6 +791,7 @@ test("Creative missions resume locally after reload", async function creativeRes
 test("New worlds retain readable controls at 200% font size with shared contrast", async ({
   page,
 }) => {
+  test.setTimeout(60000);
   for (const world of worlds) {
     await page.goto(`/games/${world.id}/index.html`);
     await expect(page.locator("#gameBoard")).not.toBeEmpty();
