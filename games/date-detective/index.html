@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#315f6a">
+  <meta name="description" content="Date Detective teaches kids how to read Best By, Use By, Sell By, Freeze By, opening instructions, manufacture dates, lot codes, and 80 package-date challenges.">
+  <title>Date Detective · Code &amp; Expiration Lab · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="game.css">
+  <link rel="stylesheet" href="../../assets/emoji.css">
+  <link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/date-detective/">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="LarriVerse Arcade">
+  <meta property="og:title" content="Date Detective · Code & Expiration Lab">
+  <meta property="og:description" content="Read package dates and codes across 80 practical, kid-friendly challenges.">
+  <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/date-detective/">
+  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+  <meta property="og:image:type" content="image/webp"><meta property="og:image:width" content="1600"><meta property="og:image:height" content="800">
+  <meta property="og:image:alt" content="Colorful illustrated learning worlds in LarriVerse Arcade">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body data-classic="date-detective">
+  <a class="skip-link" href="#dateQuestion">Skip to date challenge</a>
+  <header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+    <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+    <div class="lv-context"><strong>Date Detective</strong><small>Read package dates, labels &amp; codes</small></div>
+    <nav class="lv-tools" aria-label="Arcade tools">
+      <a class="lv-button" href="../../index.html">Back to Arcade</a>
+      <button class="lv-button" type="button" data-lv-comfort>Comfort &amp; accessibility</button>
+    </nav>
+    <span data-lv-profile>Progress stays in this browser.</span>
+  </header>
+
+  <main class="detective-shell">
+    <section class="hero-card">
+      <div class="hero-copy">
+        <p class="eyebrow">📅 80 levels · 8 chapters · everyday life skill</p>
+        <h1>Date <span>Detective</span></h1>
+        <p>Learn how to read the words around a package date, tell a quality date from a store date, follow after-opening directions, and know when a mystery lot code should <em>not</em> be guessed.</p>
+        <div class="hero-badges"><span>🔍 Read the label</span><span>📆 Decode the date</span><span>🏷️ Spot lot codes</span><span>🧊 Check storage</span></div>
+      </div>
+      <div class="hero-prop" aria-hidden="true">
+        <div class="magnifier"></div><div class="mini-box"><b>BEST BY</b><strong>OCT 18 2027</strong><small>LOT A7K22</small></div>
+      </div>
+    </section>
+
+    <section class="progress-card" aria-label="Date Detective progress">
+      <div class="progress-top">
+        <div><p class="eyebrow">Case progress</p><strong id="levelReadout">Level 1 of 80</strong></div>
+        <div class="score-badge"><span>Cases solved</span><strong id="solvedReadout">0</strong></div>
+      </div>
+      <div class="progress-bar" role="progressbar" aria-label="Date Detective level progress" aria-valuemin="1" aria-valuemax="80" aria-valuenow="1" id="progressBar"><span id="progressFill"></span></div>
+      <div id="chapterTrack" class="chapter-track" aria-label="Date Detective chapters"></div>
+      <label class="level-jump">Revisit an unlocked case
+        <select id="levelSelect" aria-label="Choose an unlocked Date Detective level"></select>
+      </label>
+    </section>
+
+    <section class="game-layout">
+      <section class="case-board" aria-labelledby="dateQuestion">
+        <div id="feedbackBanner" class="feedback-banner" role="status" aria-live="polite">🔎 Read the package carefully, then choose the best answer.</div>
+
+        <div class="case-heading">
+          <div><p id="chapterLabel" class="eyebrow">Chapter 1 · Find the Date</p><h2 id="packageName">Cracker Box</h2></div>
+          <span id="caseNumber" class="case-number">Case 01</span>
+        </div>
+
+        <div class="package-stage" aria-label="Illustrated package label">
+          <div class="package-card">
+            <div class="package-top"><span>DATE DETECTIVE</span><span aria-hidden="true">🔍</span></div>
+            <div class="package-window">
+              <small>PRINTED PACKAGE MARKING</small>
+              <strong id="dateLabel">BEST IF USED BY OCT 18 2026</strong>
+            </div>
+            <div class="barcode" aria-hidden="true"></div>
+            <div class="package-bottom"><span>READ THE WORDS</span><span>THEN THE DATE</span></div>
+          </div>
+        </div>
+
+        <div class="question-card">
+          <h2 id="dateQuestion">What calendar date is printed on this package?</h2>
+          <div id="answerChoices" class="answer-grid"></div>
+        </div>
+
+        <div class="case-actions">
+          <button type="button" id="hintButton">💡 Hint</button>
+          <button type="button" id="clearChoiceButton">↺ Clear my choice</button>
+          <button type="button" id="nextButton" class="primary" disabled>Next case →</button>
+        </div>
+      </section>
+
+      <aside class="detective-panel">
+        <section class="clue-card">
+          <p class="eyebrow">Detective clue</p>
+          <h2>What should I notice?</h2>
+          <p id="hintText">Read the words right next to the numbers.</p>
+        </section>
+        <section id="explanationCard" class="explanation-card" aria-live="polite">
+          <p class="eyebrow">Case file</p>
+          <h2 id="explanationTitle">Solve the case first</h2>
+          <p id="explanationText">After you answer, this card explains why the choice is right and what the label means.</p>
+        </section>
+        <section class="rule-card">
+          <p class="eyebrow">Golden rule</p>
+          <h2>A date is one clue—not the whole story.</h2>
+          <p>Read the phrase, product type, storage directions, and package condition. Never invent the meaning of an unknown lot code.</p>
+        </section>
+      </aside>
+    </section>
+
+    <section class="guide-card">
+      <div>
+        <p class="eyebrow">Grown-up guide</p>
+        <h2>What this world teaches</h2>
+      </div>
+      <p>Most packaged-food dates in the U.S. are quality guidance rather than a universal federal safety cutoff. Infant formula is an important exception: FDA requires a Use By date and says not to use formula after it. Date-label laws can also vary by state, and manufacturer lot codes are not one universal system.</p>
+      <div class="source-links">
+        <a href="https://www.fda.gov/food/consumers/how-cut-food-waste-and-maintain-food-safety" target="_blank" rel="noopener">FDA date-label guidance</a>
+        <a href="https://www.fda.gov/food/buy-store-serve-safe-food/handling-infant-formula-safely-what-you-need-know" target="_blank" rel="noopener">FDA infant-formula guidance</a>
+        <a href="https://ask.fsis.usda.gov/article/Is-food-product-dating-required-by-federal-law" target="_blank" rel="noopener">USDA/FSIS product dating</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../assets/arcade-sdk.js"></script>
+  <script type="module" src="game.js"></script>
+  <script src="../../assets/cabinet-shell.js"></script>
+</body>
+</html>
