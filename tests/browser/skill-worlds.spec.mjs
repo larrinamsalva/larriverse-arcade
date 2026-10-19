@@ -615,7 +615,17 @@ test("Robot Rover: debug a collision and solve eighty original mazes at par", as
     );
 
     for (const [i, program] of programs.entries()) {
-      for (const cmd of program) await command(cmd);
+      // Enter the full program inside the page instead of making hundreds of
+      // Playwright round-trips on narrow mobile layouts. Each click still
+      // uses the real command buttons and render path; Run my code still
+      // executes the actual Rover engine for every one of the 80 worlds.
+      await page.evaluate((commands) => {
+        for (const cmd of commands) {
+          const control = document.querySelector(`[data-command="${cmd}"]`);
+          if (!control) throw new Error(`Missing Rover command button: ${cmd}`);
+          control.click();
+        }
+      }, program);
       await page
         .getByRole("button", { name: "Run my code", exact: true })
         .click();
