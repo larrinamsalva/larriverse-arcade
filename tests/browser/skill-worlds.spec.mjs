@@ -206,7 +206,7 @@ test("Pocket Planet: ten finished projects unlock chapter two and survive reload
   const checkpoint=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.mainCampaign.pocket-planet.v1")));
   expect(checkpoint).toEqual({next:10,correct:10});
   await page.reload();
-  await expect(page.locator("#stageLabel")).toContainText("Chapter 2/8");
+  await expect(page.locator("#stageLabel")).toContainText("Chapter 2/6");
   await expect(page.locator("#stageLabel")).toContainText("Project 11/60");
   await expect(page.locator(".level-node.complete")).toHaveCount(1);
   await expect(page.locator(".level-node.active")).toHaveCount(1);
@@ -258,7 +258,7 @@ test("Scam Sleuth: ten cleared tasks resume from eleven after reload",async({pag
   }
   expect(await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.mainCampaign.scam-sleuth.v1")).next)).toBe(10);
   await page.reload();
-  await expect(page.locator("#stageLabel")).toContainText("Chapter 2/6");
+  await expect(page.locator("#stageLabel")).toContainText("Chapter 2/8");
   await expect(page.locator("#stageLabel")).toContainText("11/80");
 });
 test("Scam Sleuth: center evidence stays readable in light, dark, and high contrast", async ({
