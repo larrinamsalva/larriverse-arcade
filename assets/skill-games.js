@@ -172,7 +172,7 @@ const campaignCounts = {
   sorting: sorting.length,
   traffic: trafficQuestions.length,
 };
-$("worldMeta").textContent = `Ages ${world.age} · ${campaignModes.has(world.mode)?`${campaignCounts[world.mode]} levels · save and resume`:["market","music","trade"].includes(world.mode)?"60 levels · save and resume":world.mode==="pantry"?`${world.id==="pantry-picnic"?"80":"60"} levels · save and resume`:`about ${world.minutes}`}`;
+$("worldMeta").textContent = `Ages ${world.age} · ${campaignModes.has(world.mode)?`${campaignCounts[world.mode]} levels · save and resume`:world.mode==="market"?`${marketMissions.length} levels · save and resume`:world.mode==="music"?`${beatMissions.length} levels · save and resume`:world.mode==="trade"?"60 levels · save and resume":world.mode==="pantry"?`${world.id==="pantry-picnic"?"80":"60"} levels · save and resume`:`about ${world.minutes}`}`;
 $("missionIcon").textContent = world.icon;
 if (world.mode === "bridge") $("missionIcon").innerHTML = iconSvg("wood");
 $("missionTitle").textContent = world.skill;
