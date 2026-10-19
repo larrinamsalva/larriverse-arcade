@@ -15,14 +15,14 @@ const approvedSweat=new Map(reviewedWorlds.flatMap(w=>w.tiers
 const approvedLife=new Map(["cooking","health","law","home2","nature","mind"]
  .flatMap(file=>read(root+"brain-sweat-life-skills/content/"+file+".json").lessons
   .filter(l=>l.status==="reviewed").flatMap(l=>l.questions.map(q=>[l.id+"#"+q.sourceOrder,q]))));
-for(const [id,kind,deck] of [
- ["kidscoin-family","family",familyMissions],
- ["brain-sweat-expanded","sweat",sweatMissions],
- ["brain-sweat-life-skills","life",lifeMissions]
+for(const [id,kind,deck,expected] of [
+ ["kidscoin-family","family",familyMissions,60],
+ ["brain-sweat-expanded","sweat",sweatMissions,80],
+ ["brain-sweat-life-skills","life",lifeMissions,80]
 ]){
- assert.equal(deck.length,60,id+" contains sixty real missions");
- assert.equal(new Set(deck.map(m=>m.id)).size,60,id+" unique IDs");
- assert.equal(new Set(deck.map(m=>m.prompt)).size,60,id+" no repeated question text");
+ assert.equal(deck.length,expected,id+" contains its intended real mission count");
+ assert.equal(new Set(deck.map(m=>m.id)).size,expected,id+" unique IDs");
+ assert.equal(new Set(deck.map(m=>m.prompt)).size,expected,id+" no repeated question text");
  assert.ok(new Set(deck.map(m=>m.chapter)).size>=4,id+" covers distinct subject chapters");
  for(const m of deck){
   assert.match(m.id,new RegExp("^"+kind+"-[0-9]{2}$"));
@@ -31,12 +31,27 @@ for(const [id,kind,deck] of [
   assert.equal(new Set(m.options).size,m.options.length,m.id+" distinct answers");
   assert.ok(Number.isInteger(m.answer)&&m.answer>=0&&m.answer<m.options.length,m.id+" correct index");
   assert.ok(m.guide.includes(kind==="family"?"Family KC":kind==="sweat"?"simulated classroom":"Review-queued"),m.id+" boundary");
-  if(kind==="family"||kind==="life"){
-   const original=(kind==="family"?approvedFamily:approvedLife).get(m.sourceId);
+  if(kind==="family"){
+   const original=approvedFamily.get(m.sourceId);
+   assert.ok(original,m.id+" must use actual reviewed source question");
+   assert.equal(m.prompt,original.prompt,m.id+" question must not have altered meaning");
+   assert.equal(m.options[m.answer],original.options[original.answer],m.id+" answer must match reviewed source exactly");
+  }else if(kind==="life"){
+   if(m.sourceId.startsWith("bonus-life-")){
+    assert.ok(Number(m.id.slice(-2))>=61,m.id+" bonus starts after the reviewed sixty");
+    assert.match(m.title,/Safe Bonus Practice/,m.id+" bonus is labeled honestly");
+    continue;
+   }
+   const original=approvedLife.get(m.sourceId);
    assert.ok(original,m.id+" must use actual reviewed source question");
    assert.equal(m.prompt,original.prompt,m.id+" question must not have altered meaning");
    assert.equal(m.options[m.answer],original.options[original.answer],m.id+" answer must match reviewed source exactly");
   }else{
+   if(m.sourceId.startsWith("bonus-workshop-")){
+    assert.ok(Number(m.id.slice(-2))>=70,m.id+" authored bonus follows the 69 reviewed workshop missions");
+    assert.match(m.title,/Safe Bonus Practice/,m.id+" bonus is labeled honestly");
+    continue;
+   }
    const approved=approvedSweat.get(m.sourceId);
    assert.ok(approved,m.id+" uses an actual approved existing workshop activity");
    if(approved.w.mode==="choice"){
@@ -59,9 +74,9 @@ for(const [id,kind,deck] of [
  assert.ok(html.includes('data-adventure-mission="'+id+'"'),id+" mission entry");
  assert.ok(html.includes("classic-adventure-play.js")&&html.includes("classic-adventure-missions.css"),id+" accessible view");
 }
-assert.equal(familyMissions.length+lifeMissions.length+sweatMissions.length,180);
+assert.equal(familyMissions.length+lifeMissions.length+sweatMissions.length,220);
 assert.ok(baseFamily.boundaries.parentControlled&&baseFamily.boundaries.cryptocurrency===false);
 assert.ok(!fs.readFileSync("assets/classic-adventure-play.js","utf8").includes("navigator.geolocation"),"No location permissions");
-for(const file of ["assets/final-three-missions.js","assets/classic-adventure-play.js","tests/browser/final-three-missions.spec.mjs"])
+for(const file of ["assets/final-three-missions.js","assets/eighty-brain-missions.js","assets/classic-adventure-play.js","tests/browser/final-three-missions.spec.mjs"])
  execFileSync(process.execPath,["--check",file]);
-console.log("All final three curricula pass: 180 distinct missions, source-verified answers, approved-only content, parent boundaries preserved.");
+console.log("Final mission curricula pass: KidsCoin retains 60 reviewed missions; both Brain Sweat trails reach 80 with reviewed/source-backed content first and clearly labeled safe bonus practice after it.");
