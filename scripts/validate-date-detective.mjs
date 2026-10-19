@@ -16,7 +16,7 @@ for(const [index,item] of DATE_DETECTIVE_CHALLENGES.entries()){
   assert.ok(item.tip.length>=25);
   assert.ok(item.label.length>=8);
   assert.ok(item.packageName.length>=4);
-  assert.ok(item.options.every(o=>o.text.length>=4&&o.why.length>=18),"Short date parts such as 2027 or December remain valid answer text");
+  assert.ok(item.options.every(o=>o.text.length>=2&&o.why.length>=18),"Compact date parts such as 08 remain valid while every explanation stays substantive");
 }
 for(let chapter=0;chapter<8;chapter++){
   assert.equal(DATE_DETECTIVE_CHALLENGES.filter(x=>x.chapter===chapter).length,10,"Each Date Detective chapter has ten cases");
