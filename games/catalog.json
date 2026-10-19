@@ -725,5 +725,26 @@
     "href": "games/crossword-world/index.html",
     "source": "Original LarriVerse Crossword World, 2026",
     "integration": "arcade-sdk-v3"
+  },
+  {
+    "id": "creative-calm-cove",
+    "title": "Creative Calm Cove",
+    "icon": "🎨",
+    "category": "Calm & creativity",
+    "topic": "Creative arts",
+    "age": "6+",
+    "minutes": "Open-ended",
+    "art": 2,
+    "skill": "Creativity, patterns & calm focus",
+    "desc": "Draw, stamp, mirror, swirl and invent in a no-pressure art studio with local saves and eighty optional creative prompts.",
+    "mission": "Explore 80 optional creative cards across eight open studio chapters. Free draw, use mirror or radial symmetry, grow Spiro art, spark creatures, add stickers, save locally, or export a PNG. There are no wrong answers and no timer.",
+    "take": "Creative practice can be playful and unhurried. Try a tool, notice what happens, keep what you like, and change direction whenever you want.",
+    "available": true,
+    "featured": true,
+    "isNew": true,
+    "status": "Playable",
+    "href": "games/creative-calm-cove/index.html",
+    "source": "Original LarriVerse studio inspired by Domistika (MIT), 2026",
+    "integration": "arcade-sdk-v3"
   }
 ]
