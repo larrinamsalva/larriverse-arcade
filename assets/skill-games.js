@@ -1239,16 +1239,21 @@ async function runRobot() {
   );
 }
 
+function creativeMissionCount(kind){
+  return kind==="market" ? marketMissions.length : kind==="beat" ? beatMissions.length : 0;
+}
 function creativeProgress(kind){
+  const count=creativeMissionCount(kind);
   try {
     const raw=JSON.parse(localStorage.getItem("larriverse.creative."+kind+".v1")||"{}");
-    if(Number.isInteger(raw.nextLevel)&&raw.nextLevel>=0&&raw.nextLevel<60)return raw.nextLevel;
+    if(Number.isInteger(raw.nextLevel)&&raw.nextLevel>=0&&raw.nextLevel<count)return raw.nextLevel;
   }catch{}
   return 0;
 }
 
 function saveCreativeProgress(kind,nextLevel){
-  try{localStorage.setItem("larriverse.creative."+kind+".v1",JSON.stringify({nextLevel:Math.min(60,nextLevel)}));}
+  const count=creativeMissionCount(kind);
+  try{localStorage.setItem("larriverse.creative."+kind+".v1",JSON.stringify({nextLevel:Math.min(count,nextLevel)}));}
   catch{say("This browser could not save your mission progress; you can still keep playing.","try");}
 }
 
@@ -1267,7 +1272,7 @@ function renderMarketMission(){
     <h2>${esc(m.name)}</h2><p>At 2 coins per cup, about <strong>${m.base} customers</strong> might visit. Charging more may reduce demand.</p>
     <div class="stat-row">${chip("Supply cost",`${m.supplyCost} coin${m.supplyCost===1?"":"s"}/cup`)}
       ${chip("Available budget",`${m.startCash} coins`)}${chip("Profit goal",`${m.goal}+ coins`)}
-      ${chip("Completed",`${completion}/60`)}</div>
+      ${chip("Completed",`${completion}/${marketMissions.length}`)}</div>
     <p class="board-note">${esc(m.hint)}</p>
     <div class="field-grid lemonade-field-grid">
       <label>Cups to make<select id="stockInput" ${done?"disabled":""}>${marketStockChoices.map(n=>`<option value="${n}" ${state.stock===n?"selected":""}>${n} cups · ${n*m.supplyCost} coins</option>`).join("")}</select></label>
@@ -1281,7 +1286,7 @@ function renderMarketMission(){
   stockNode?.addEventListener("change",e=>{state.stock=Number(e.target.value);});
   priceNode?.addEventListener("change",e=>{state.price=Number(e.target.value);});
   progress(completion,marketMissions.length,`${completion} of ${marketMissions.length} market missions completed`);
-  updateScore(Math.round(completion/60*100));
+  updateScore(Math.round(completion/marketMissions.length*100));
   if(done){
     button(state.mission===marketMissions.length-1?"Celebrate market mastery":"Next market mission",()=>{
       if(state.mission===marketMissions.length-1){finish(`You completed all ${marketMissions.length} market missions, comparing demand, supplies, prices and profit.`,100);return;}
@@ -1321,7 +1326,7 @@ function renderBeatMission(){
   board.innerHTML=`<section class="creative-mission-card beat-mission-card" data-beat-mission="${m.id}">
     <p class="eyebrow">🎵 Rhythm mission ${state.mission+1}/${beatMissions.length} · ${esc(m.chapter)}</p>
     <h2>${esc(m.name)}</h2><p>${esc(m.explanation)}</p>
-    <div class="stat-row">${chip("Tempo",`${m.bpm} BPM`)}${chip("Completed",`${completion}/60`)}</div>
+    <div class="stat-row">${chip("Tempo",`${m.bpm} BPM`)}${chip("Completed",`${completion}/${beatMissions.length}`)}</div>
     <p class="board-note">Light up the numbered steps below for each instrument. Leave all unlisted steps off. Sound is optional.</p>
     ${musicStudioSvg()}
     <div class="beat-numbers">${Array.from({length:16},(_,i)=>`<span>${i%4===0?i/4+1:"·"}</span>`).join("")}</div>
@@ -1336,7 +1341,7 @@ function renderBeatMission(){
     if(state.tracks[row][col])tone(row);
   });
   progress(completion,beatMissions.length,`${completion} of ${beatMissions.length} rhythm missions completed`);
-  updateScore(Math.round(completion/60*100));
+  updateScore(Math.round(completion/beatMissions.length*100));
   if(done){
     button(state.mission===beatMissions.length-1?"Celebrate my rhythm journey":"Next beat mission",()=>{
       stopMusic();
