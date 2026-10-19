@@ -74,10 +74,10 @@ const ids=catalog.map(x=>x.id);
 assert.equal(new Set(ids).size,ids.length,"No duplicate game ids");
 assert.deepEqual([...new Set([...Object.keys(sequential),...Object.keys(otherModes)])].sort(),[...ids].sort(),
  "Audit must cover every playable cabinet, including newly added worlds");
-assert.equal(marketMissions.length,60);
-assert.equal(beatMissions.length,60);
-assert.equal(new Set(beatMissions.map(x=>x.rows.map(row=>row.join(",")).join("|"))).size,60,
- "Sixty optional beats must be actually different patterns");
+assert.equal(marketMissions.length,80);
+assert.equal(beatMissions.length,80);
+assert.equal(new Set(beatMissions.map(x=>x.rows.map(row=>row.join(",")).join("|"))).size,80,
+ "Eighty Beat Builder missions must be actually different patterns");
 assert.ok(marketMissions.every(x=>bestMarketPlan(x)?.profit>=x.goal),
  "All market contracts must have affordable winning setups");
 const optionalMissionPaths={ "lemonade-lab":marketMissions.length,"beat-builder":beatMissions.length,"creature-catcher":creatureMissions.length,"road-trip-quest":roadMissions.length,"road-trip-quest-gps":gpsMissions.length,"chill-brain-rewards":chillMissions.length,"kidscoin-family":familyMissions.length,"brain-sweat-expanded":sweatMissions.length,"brain-sweat-life-skills":lifeMissions.length };
@@ -86,12 +86,14 @@ for (const [id,deck] of [["creature-catcher",creatureMissions],["road-trip-quest
  assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} missions are not repeats`);
 }
 for(const [id,deck] of [["road-trip-quest-gps",gpsMissions],["chill-brain-rewards",chillMissions]]){
- assert.equal(deck.length,60,`${id} has 60 distinct objectives`);
+ const expected=id==="chill-brain-rewards"?80:60;
+ assert.equal(deck.length,expected,`${id} has ${expected} distinct objectives`);
  assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} may not repeat questions`);
  assert.ok(deck.every(x=>x.why.includes(x.options[x.answer])),`${id} correct choices are explained`);
 }
 for(const [id,deck] of [["kidscoin-family",familyMissions],["brain-sweat-expanded",sweatMissions],["brain-sweat-life-skills",lifeMissions]]){
- assert.equal(deck.length,60,`${id} has sixty reviewed optional missions`);
+ const expected=id==="kidscoin-family"?60:80;
+ assert.equal(deck.length,expected,`${id} has its intended optional mission count`);
  assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} must not recycle questions`);
  assert.ok(deck.every(m=>m.options[m.answer]!==undefined),`${id} has answer keys`);
 }
