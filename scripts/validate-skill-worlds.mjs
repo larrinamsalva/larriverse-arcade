@@ -26,7 +26,7 @@ import {
 } from "../assets/arcade-scenes.js";
 const catalog = JSON.parse(fs.readFileSync("games/catalog.json", "utf8"));
 const release = JSON.parse(fs.readFileSync("release.json", "utf8"));
-const standaloneV3Cabinets = new Set(["street-safety-scout", "kids-sudoku", "word-search-world", "crossword-world"]);
+const standaloneV3Cabinets = new Set(["street-safety-scout", "kids-sudoku", "word-search-world", "crossword-world", "creative-calm-cove", "date-detective"]);
 assert.equal(worlds.length, catalog.filter(game => game.integration === "arcade-sdk-v3" && !standaloneV3Cabinets.has(game.id)).length);
 assert.equal(new Set(worlds.map((w) => w.id)).size, worlds.length);
 assert.equal(new Set(worlds.map((w) => w.mode)).size, worlds.length);
@@ -73,13 +73,13 @@ for (const item of sorting) {
   assert.match(iconSvg(item.art), new RegExp(`object-model--${item.art}`));
 }
 
-assert.equal(marketMissions.length,60,"Lemonade Lab has sixty actual market contracts");
-assert.equal(beatMissions.length,60,"Beat Builder has sixty real, different compositions");
-assert.equal(new Set(marketMissions.map(m=>m.id)).size,60);
-assert.equal(new Set(beatMissions.map(m=>m.id)).size,60);
-assert.equal(new Set(marketMissions.map(m=>[m.base,m.sensitivity,m.supplyCost,m.startCash,m.goal].join(":"))).size,60,
+assert.equal(marketMissions.length,80,"Lemonade Lab has eighty actual market contracts");
+assert.equal(beatMissions.length,80,"Beat Builder has eighty real, different compositions");
+assert.equal(new Set(marketMissions.map(m=>m.id)).size,80);
+assert.equal(new Set(beatMissions.map(m=>m.id)).size,80);
+assert.equal(new Set(marketMissions.map(m=>[m.base,m.sensitivity,m.supplyCost,m.startCash,m.goal].join(":"))).size,80,
   "Market missions must not repeat the same business conditions");
-assert.equal(new Set(beatMissions.map(m=>m.rows.map(row=>row.join(",")).join("|"))).size,60,
+assert.equal(new Set(beatMissions.map(m=>m.rows.map(row=>row.join(",")).join("|"))).size,80,
   "Each rhythm mission needs a different exact musical pattern");
 assert.deepEqual(beatMissions[0].rows,[[0,4,8,12],[4,12],[0,2,4,6,8,10,12,14]]);
 for(const mission of marketMissions){
@@ -101,8 +101,8 @@ for(const mission of beatMissions){
   assert.deepEqual(rhythmMatches(wrong,mission),[false,true,true]);
 }
 const creativeGameSource=fs.readFileSync("assets/skill-games.js","utf8");
-assert.ok(creativeGameSource.includes('button("Explore 60 market missions"'));
-assert.ok(creativeGameSource.includes('button("Explore 60 beat missions"'));
+assert.ok(creativeGameSource.includes('Explore ${marketMissions.length} market missions'));
+assert.ok(creativeGameSource.includes('Explore ${beatMissions.length} beat missions'));
 assert.ok(creativeGameSource.includes("Return to four-day lab"));
 assert.ok(creativeGameSource.includes("Return to freestyle"));
 assert.ok(creativeGameSource.includes("larriverse.creative."),"Optional mission completion persists locally");
@@ -110,7 +110,7 @@ for(const id of ["lemonade-lab","beat-builder"]){
   const world=worlds.find(w=>w.id===id);
   const entry=catalog.find(x=>x.id===id);
   assert.equal(world.mission,entry.mission);
-  assert.match(world.mission,/sixty/i);
+  assert.match(world.mission,/eighty|80/i);
 }
 
 // Pocket Planet: sixty unique offline projects without artificial currencies.

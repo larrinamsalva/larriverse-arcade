@@ -15,6 +15,12 @@ jobs:
   chromium:
     runs-on: ubuntu-latest
     timeout-minutes: 70
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - desktop-chromium
+          - mobile-chromium
     env:
       CI: true
     steps:
@@ -32,35 +38,64 @@ jobs:
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Run desktop and mobile browser QA
-        run: npx playwright test --config=playwright.config.mjs
+      - name: Run browser QA
+        run: npx playwright test --config=playwright.config.mjs --project=${{ matrix.project }}
+
+      - name: Upload gallery screenshots
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: larriverse-gallery-screenshots-${{ github.run_number }}-${{ matrix.project }}
+          path: artifacts/screenshots/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload browser QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: larriverse-browser-qa-${{ github.run_number }}-${{ matrix.project }}
+          path: |
+            artifacts/screenshots/
+            playwright-report/
+            test-results/
+          if-no-files-found: warn
+          retention-days: 14
+
+  gallery-review:
+    name: gallery review
+    needs: chromium
+    if: success()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CI: true
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Download desktop and mobile screenshots
+        uses: actions/download-artifact@v4
+        with:
+          pattern: larriverse-gallery-screenshots-${{ github.run_number }}-*
+          path: artifacts/screenshots/
+          merge-multiple: true
 
       - name: Build offline gallery review pack
-        if: success()
         env:
           LARRIVERSE_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           LARRIVERSE_RUN_ID: ${{ github.run_id }}
         run: node scripts/build-gallery-review.mjs
 
       - name: Verify all gallery metadata and image hashes
-        if: success()
         run: npm run gallery:verify
 
-      - name: Upload browser QA evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: larriverse-browser-qa-${{ github.run_number }}
-          path: |
-            artifacts/screenshots/
-            artifacts/gallery-review/
-            playwright-report/
-            test-results/
-          if-no-files-found: warn
-          retention-days: 14
-
       - name: Upload offline gallery review
-        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: larriverse-gallery-review-${{ github.run_number }}

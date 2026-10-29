@@ -31,7 +31,7 @@ const ui=fs.readFileSync("assets/classic-adventure-play.js","utf8");
 assert.ok(ui.includes('localStorage.setItem(key'),"Progress saves locally");
 assert.ok(ui.includes('Return to the original game'),"All missions allow returning to existing game");
 assert.ok(ui.includes('if(n===m.answer)'),"Incorrect answers cannot advance");
-assert.ok(ui.includes('index===59'),"Full sixty-mission completion required");
+assert.ok(ui.includes('index===deck.length-1')&&ui.includes('item.next<=deck.length'),"Mission player completes and resumes each deck at its real length");
 assert.ok(ui.includes('Show a free hint'),"All missions include free accessible hints");
 assert.ok(!ui.includes('navigator.geolocation'),"No location tracking");
 for(const file of ["assets/classic-adventure-missions.js","assets/classic-adventure-play.js"])

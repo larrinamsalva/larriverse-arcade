@@ -19,6 +19,8 @@ import {streetSafetyScenarios} from "../games/street-safety-scout/scenarios.js";
 import {SUDOKU_LEVELS} from "../games/kids-sudoku/puzzles.js";
 import {WORD_SEARCH_LEVELS} from "../games/word-search-world/puzzles.js";
 import {CROSSWORD_LEVELS} from "../games/crossword-world/puzzles.js";
+import {CREATIVE_PROMPTS} from "../games/creative-calm-cove/prompts.js";
+import {DATE_DETECTIVE_CHALLENGES} from "../games/date-detective/challenges.js";
 const catalog=JSON.parse(fs.readFileSync("games/catalog.json","utf8"));
 const gps=JSON.parse(fs.readFileSync("games/road-trip-quest-gps/world.json","utf8"));
 const chill=JSON.parse(fs.readFileSync("games/chill-brain-rewards/sessions.json","utf8"));
@@ -63,36 +65,44 @@ const otherModes={
  "lemonade-lab":{kind:"four-day business simulation + optional distinct market missions",count:marketMissions.length},
  "beat-builder":{kind:"freestyle music studio + optional distinct rhythm missions",count:beatMissions.length},
  "kidscoin-family":{kind:"parent-managed chores and rewards + optional 60 approved family-finance lessons",count:familyMissions.length},
- "brain-sweat-expanded":{kind:"69 original reviewed skill activities + optional 60-source activity learning path",count:sweatMissions.length},
- "brain-sweat-life-skills":{kind:"60 reviewed original questions in twelve unlocked lessons + optional 60-question progression",count:lifeMissions.length},
- "chill-brain-rewards":{kind:"guided calm sessions plus sixty optional untimed focus choices",count:chillMissions.length},
+ "brain-sweat-expanded":{kind:"69 original reviewed skill activities + 80-mission learning path with labeled safe bonus practice",count:sweatMissions.length},
+ "brain-sweat-life-skills":{kind:"60 reviewed original questions in twelve unlocked lessons + 80-mission progression with labeled safe bonus practice",count:lifeMissions.length},
+ "chill-brain-rewards":{kind:"guided calm sessions plus eighty optional untimed focus choices",count:chillMissions.length},
  "creature-catcher":{kind:"classic creature collection + optional distinct wildlife missions",count:creatureMissions.length},
  "road-trip-quest":{kind:"sixteen-city adventure + optional distinct travel missions",count:roadMissions.length},
- "road-trip-quest-gps":{kind:"GPS demo field + sixty optional no-location map/privacy challenges",count:gpsMissions.length}
+ "road-trip-quest-gps":{kind:"GPS demo field + sixty optional no-location map/privacy challenges",count:gpsMissions.length},
+ "creative-calm-cove":{kind:"open art studio + eighty optional no-pressure creative cards",count:CREATIVE_PROMPTS.length},
+ "date-detective":{kind:"eighty saved package-date and code-reading cases",count:DATE_DETECTIVE_CHALLENGES.length}
 };
 const ids=catalog.map(x=>x.id);
 assert.equal(new Set(ids).size,ids.length,"No duplicate game ids");
 assert.deepEqual([...new Set([...Object.keys(sequential),...Object.keys(otherModes)])].sort(),[...ids].sort(),
  "Audit must cover every playable cabinet, including newly added worlds");
-assert.equal(marketMissions.length,60);
-assert.equal(beatMissions.length,60);
-assert.equal(new Set(beatMissions.map(x=>x.rows.map(row=>row.join(",")).join("|"))).size,60,
- "Sixty optional beats must be actually different patterns");
+assert.equal(marketMissions.length,80);
+assert.equal(beatMissions.length,80);
+assert.equal(new Set(beatMissions.map(x=>x.rows.map(row=>row.join(",")).join("|"))).size,80,
+ "Eighty Beat Builder missions must be actually different patterns");
 assert.ok(marketMissions.every(x=>bestMarketPlan(x)?.profit>=x.goal),
  "All market contracts must have affordable winning setups");
-const optionalMissionPaths={ "lemonade-lab":marketMissions.length,"beat-builder":beatMissions.length,"creature-catcher":creatureMissions.length,"road-trip-quest":roadMissions.length,"road-trip-quest-gps":gpsMissions.length,"chill-brain-rewards":chillMissions.length,"kidscoin-family":familyMissions.length,"brain-sweat-expanded":sweatMissions.length,"brain-sweat-life-skills":lifeMissions.length };
+const optionalMissionPaths={ "lemonade-lab":marketMissions.length,"beat-builder":beatMissions.length,"creature-catcher":creatureMissions.length,"road-trip-quest":roadMissions.length,"road-trip-quest-gps":gpsMissions.length,"chill-brain-rewards":chillMissions.length,"kidscoin-family":familyMissions.length,"brain-sweat-expanded":sweatMissions.length,"brain-sweat-life-skills":lifeMissions.length,"creative-calm-cove":CREATIVE_PROMPTS.length,"date-detective":DATE_DETECTIVE_CHALLENGES.length };
 for (const [id,deck] of [["creature-catcher",creatureMissions],["road-trip-quest",roadMissions]]) {
  assert.equal(deck.length,60,`${id} offers sixty optional real missions`);
  assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} missions are not repeats`);
 }
 for(const [id,deck] of [["road-trip-quest-gps",gpsMissions],["chill-brain-rewards",chillMissions]]){
- assert.equal(deck.length,60,`${id} has 60 distinct objectives`);
- assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} may not repeat questions`);
+ const expected=id==="chill-brain-rewards"?80:60;
+ assert.equal(deck.length,expected,`${id} has ${expected} distinct objectives`);
+ assert.equal(new Set(deck.map(x=>x.prompt)).size,expected,`${id} may not repeat questions`);
  assert.ok(deck.every(x=>x.why.includes(x.options[x.answer])),`${id} correct choices are explained`);
 }
+assert.equal(CREATIVE_PROMPTS.length,80,"Creative Calm Cove offers eighty optional creative cards");
+assert.equal(DATE_DETECTIVE_CHALLENGES.length,80,"Date Detective offers eighty package-date cases");
+assert.equal(new Set(DATE_DETECTIVE_CHALLENGES.map(x=>x.packageName+"|"+x.label+"|"+x.prompt)).size,80,"Date Detective cases are not repeats");
+assert.equal(new Set(CREATIVE_PROMPTS.map(x=>x.prompt)).size,80,"Creative Calm Cove prompts are not repeats");
 for(const [id,deck] of [["kidscoin-family",familyMissions],["brain-sweat-expanded",sweatMissions],["brain-sweat-life-skills",lifeMissions]]){
- assert.equal(deck.length,60,`${id} has sixty reviewed optional missions`);
- assert.equal(new Set(deck.map(x=>x.prompt)).size,60,`${id} must not recycle questions`);
+ const expected=id==="kidscoin-family"?60:80;
+ assert.equal(deck.length,expected,`${id} has its intended optional mission count`);
+ assert.equal(new Set(deck.map(x=>x.prompt)).size,expected,`${id} must not recycle questions`);
  assert.ok(deck.every(m=>m.options[m.answer]!==undefined),`${id} has answer keys`);
 }
 const counts=Object.entries(sequential);
@@ -122,7 +132,7 @@ for(const [id,expected] of [
  const game=catalog.find(g=>g.id===id);
  assert.ok(game&&expected.test(game.mission||game.desc),"Updated game has truthful challenge-count metadata");
 }
-assert.equal(ready.length+Object.keys(optionalMissionPaths).length,35,"Every cabinet has a real sixty-step path; no fake levels");
+assert.equal(ready.length+Object.keys(optionalMissionPaths).length,37,"Every cabinet has a real sixty-step path or a genuine optional mission/card path; no fake levels");
 const report={cabinetCount:ids.length,complete:ready.length,optionalMissionPaths,worldsWithSixtyMissions:ready.length+Object.keys(optionalMissionPaths).length,belowTarget:notReady.map(([id,count])=>({id,count,remaining:60-count})),otherModes,
  all:ids.map(id=>({id,count:sequential[id]??otherModes[id]?.count??null,kind:id in sequential?"fixed sequence":otherModes[id]?.kind,
  status:id in sequential?(sequential[id]>=60?"60-ready":"under-60"):id in optionalMissionPaths?"60-optional-missions":"needs bespoke level design"}))};

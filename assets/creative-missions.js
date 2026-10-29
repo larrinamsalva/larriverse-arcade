@@ -3,7 +3,7 @@
 export const marketStockChoices=[2,4,6,8,10,12];
 const venues=["School Fair","Park Picnic","Neighborhood Market","Summer Camp","Reading Festival",
   "Garden Party","Sports Day","Community Parade","Art Walk","Library Lawn"];
-const chapters=["First Customers","Plan the Cups","Reading Demand","Price Detectives","Careful Costs","Market Masters"];
+const chapters=["First Customers","Plan the Cups","Reading Demand","Price Detectives","Careful Costs","Market Masters","Forecast & Foot Traffic","Grand Market Challenge"];
 export function calculateMarketDay(mission,stock,price){
   const demand=Math.max(1,mission.base-mission.sensitivity*(price-2));
   const sold=Math.min(stock,demand),cost=stock*mission.supplyCost,revenue=sold*price;
@@ -17,7 +17,7 @@ export function bestMarketPlan(mission){
   }
   return options.sort((a,b)=>b.profit-a.profit||a.leftovers-b.leftovers||a.stock-b.stock)[0]||null;
 }
-export const marketMissions=Array.from({length:60},(_,i)=>{
+export const marketMissions=Array.from({length:80},(_,i)=>{
   const chapter=Math.floor(i/10),supplyCost=chapter<3?1:2,base=6+(i*3%8)+Math.floor(chapter/2);
   const draft={id:"market-"+String(i+1).padStart(2,"0"),
     name:venues[i%10]+" · "+chapters[chapter],chapter:chapters[chapter],
@@ -30,12 +30,12 @@ export const marketMissions=Array.from({length:60},(_,i)=>{
   return {...draft,goal:Math.max(1,best.profit-Math.max(1,5-chapter))};
 });
 
-const rhythmChapters=["First Beats","Backbeat Basics","Hi-Hat Helpers","Rhythm Switches","Offbeat Explorers","Festival Finale"];
+const rhythmChapters=["First Beats","Backbeat Basics","Hi-Hat Helpers","Rhythm Switches","Offbeat Explorers","Festival Finale","Syncopation Lab","Grand Groove Stage"];
 const rhythmNames=["Four on the Floor","Backbeat Bounce","Hat Parade","Sunrise Shuffle","Little March",
  "Moonwalk Groove","Corner Clap","Playground Pulse","Dancing Raindrops","Starry Steps"];
 const codePositions=[1,3,5,7,9,11];
 const noise=seed=>((Math.imul(seed^(seed>>>13),1103515245)+12345)>>>0)%100;
-export const beatMissions=Array.from({length:60},(_,i)=>{
+export const beatMissions=Array.from({length:80},(_,i)=>{
  const chapter=Math.floor(i/10),rows=Array.from({length:3},()=>[]);
  for(let col=0;col<16;col++){
    if(i===0){

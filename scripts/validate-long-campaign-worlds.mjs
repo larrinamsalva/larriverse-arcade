@@ -36,9 +36,9 @@ assert.ok(street.includes("writeJourney(step)"),"Each safety stop saves");
 assert.ok(read("games/street-safety-scout/index.html").includes('aria-valuemax="60"'),"Sixty real stop progress");
 assert.equal(tradeLevels.length,60);
 assert.ok(expedition.includes("larriverse.tradeTown.roadmap.v1")&&expedition.includes("saveTrade(s.level)"),"Trade campaign saves when advancing");
-assert.equal(marketMissions.length,60);assert.equal(beatMissions.length,60);
-assert.ok(skill.includes('case "market":\n      state.marketMode="missions"'),"Lemonade starts with 60 levels");
-assert.ok(skill.includes('case "music":\n      state.musicMode="missions"'),"Beat Builder starts with 60 levels");
+assert.equal(marketMissions.length,80);assert.equal(beatMissions.length,80);
+assert.ok(skill.includes('case "market":\n      state.marketMode="missions"'),"Lemonade starts with its expanded mission path");
+assert.ok(skill.includes('case "music":\n      state.musicMode="missions"'),"Beat Builder starts with its expanded mission path");
 assert.ok(skill.includes("Return to four-day lab")&&skill.includes("Return to freestyle"),"Free-play modes remain accessible");
 for(const id of ["lemonade-lab","beat-builder","trade-town"])
  assert.match(catalog.find(x=>x.id===id)?.mission||"",/60/,id+" catalogs main campaign");

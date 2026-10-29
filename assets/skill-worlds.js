@@ -194,9 +194,9 @@ export const worlds = [
     minutes: "4 min",
     art: 10,
     skill: "Costs, demand & small business",
-    desc: "Start a 60-mission lemonade business journey, or return to the classic four-day free-play stand.",
+    desc: "Start an 80-mission lemonade business journey, or return to the classic four-day free-play stand.",
     mission:
-      "Start with sixty (60) progressively varied market contracts about supply costs, demand, prices and profits. The four-day stand remains available as free play.",
+      "Start with eighty (80) progressively varied market contracts about supply costs, demand, prices and profits. The four-day stand remains available as free play.",
     take: "Revenue is the money that comes in. Profit is what remains after costs. Leftovers and demand matter, too.",
     mode: "market",
   },
@@ -210,9 +210,9 @@ export const worlds = [
     minutes: "4 min",
     art: 11,
     skill: "Rhythm, patterns & creativity",
-    desc: "Master 60 rhythm-building missions or switch into freestyle studio at any time.",
+    desc: "Master 80 rhythm-building missions or switch into freestyle studio at any time.",
     mission:
-      "Begin a saved sixty (60)-mission rhythm campaign with different kick, clap and hi-hat patterns. Freestyle is still available and sound remains optional.",
+      "Begin a saved eighty (80)-mission rhythm campaign with different kick, clap and hi-hat patterns. Freestyle is still available and sound remains optional.",
     take: "A repeating pattern creates rhythm. Small changes can make a familiar pattern feel new.",
     mode: "music",
   },

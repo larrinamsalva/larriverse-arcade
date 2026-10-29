@@ -1283,6 +1283,55 @@ html.larriverse-dark body[data-world="compass-cove"] .compass-map-legend span{
 }
 
 
+/* Cipher Club: compact eight-chapter trail and expanding alphabet grids. */
+body[data-world="cipher-club"] .cipher-chapter-strip{
+  display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  gap:5px;
+  margin:8px 0 14px;
+  padding:7px;
+  border:1px solid #c6bdd9;
+  border-radius:14px;
+  background:#f7f4fb;
+}
+body[data-world="cipher-club"] .cipher-chapter-strip span{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  padding:5px 3px;
+  border-radius:9px;
+  color:#605571;
+  font-size:.68rem;
+  font-weight:850;
+  white-space:nowrap;
+}
+body[data-world="cipher-club"] .cipher-chapter-strip span b{
+  display:grid;
+  place-items:center;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:#e4def0;
+  color:#514367;
+}
+body[data-world="cipher-club"] .cipher-chapter-strip span.active{
+  background:#e8e0f6;
+  color:#40334f;
+}
+body[data-world="cipher-club"] .cipher-chapter-strip span.active b{
+  background:#7159a8;
+  color:#fff;
+}
+body[data-world="cipher-club"] .cipher-chapter-strip span.complete b{
+  background:#3d7b6d;
+  color:#fff;
+}
+body[data-world="cipher-club"] :is(.cipher-key--tiles,.cipher-letter-keys){
+  grid-template-columns:repeat(var(--cipher-columns,8),minmax(0,1fr));
+}
+
 /* Cipher Club: tactile decoder lab, dimensional tiles, and clearer code feedback. */
 body[data-world="cipher-club"] .play-card{
   background:
@@ -1446,6 +1495,21 @@ body[data-world="cipher-club"] .small-note{
 }
 
 /* Cipher Club dark-mode contrast and lab materials. */
+html.larriverse-dark body[data-world="cipher-club"] .cipher-chapter-strip{
+  background:#29243b;
+  border-color:#625875;
+}
+html.larriverse-dark body[data-world="cipher-club"] .cipher-chapter-strip span{
+  color:#e8e2f2;
+}
+html.larriverse-dark body[data-world="cipher-club"] .cipher-chapter-strip span b{
+  background:#403852;
+  color:#f7f3ff;
+}
+html.larriverse-dark body[data-world="cipher-club"] .cipher-chapter-strip span.active{
+  background:#40365a;
+  color:#fff;
+}
 html.larriverse-dark body[data-world="cipher-club"] .play-card{
   background-color:#231e3a;
   background-image:linear-gradient(180deg,#2b2545,#211c37 72%,#1a172d);
@@ -1497,8 +1561,13 @@ html.larriverse-dark body[data-world="cipher-club"] .small-note{
     width:min(260px,100%);
     min-height:190px;
   }
-  body[data-world="cipher-club"] .cipher-key--tiles{
+  body[data-world="cipher-club"] :is(.cipher-key--tiles,.cipher-letter-keys){
     grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+  body[data-world="cipher-club"] .cipher-chapter-strip{
+    overflow-x:auto;
+    grid-template-columns:repeat(8,minmax(72px,1fr));
+    scrollbar-width:thin;
   }
   body[data-world="cipher-club"] .cipher-answer--slots span{
     width:52px;

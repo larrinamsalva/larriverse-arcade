@@ -1,6 +1,6 @@
 export const alphabet = "ABCDEFGH";
-export const wrap = (value, amount = 0) => ((value + amount) % 8 + 8) % 8;
-export const encode = (word, shift) => [...word].map(letter => alphabet[wrap(alphabet.indexOf(letter), shift)]).join("");
+export const wrap = (value, amount = 0, size = alphabet.length) => ((value + amount) % size + size) % size;
+export const encode = (word, shift, charset = alphabet) => [...word].map(letter => charset[wrap(charset.indexOf(letter), shift, charset.length)]).join("");
 export const compassTarget = (landmark, clue) => {
   const delta = Array.isArray(clue.steps)
     ? clue.steps.reduce((sum, step) => ({ east: sum.east + (step.east || 0), south: sum.south + (step.south || 0) }), { east: 0, south: 0 })

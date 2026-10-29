@@ -1,6 +1,6 @@
 # LarriVerse Arcade — Cabinet Gallery
 
-Automated Chromium creates **candidate evidence** for the lobby and all 35 cabinets at desktop and mobile sizes: **72 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
+Automated Chromium creates **candidate evidence** for the lobby and all 37 cabinets at desktop and mobile sizes: **76 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
 
 | Cabinet | Launch path | Candidate evidence | Public gallery |
 | --- | --- | --- | --- |
@@ -39,6 +39,8 @@ Automated Chromium creates **candidate evidence** for the lobby and all 35 cabin
 | Kids Sudoku World | `games/kids-sudoku/index.html` | generated automatically | pending human approval |
 | Word Search World | `games/word-search-world/index.html` | generated automatically | pending human approval |
 | Crossword World | `games/crossword-world/index.html` | generated automatically | pending human approval |
+| Creative Calm Cove | `games/creative-calm-cove/index.html` | generated automatically | pending human approval |
+| Date Detective | `games/date-detective/index.html` | generated automatically | pending human approval |
 
 Run `npm run test:browser`, `npm run gallery:build`, and `npm run gallery:verify` to generate and verify the complete review pack. The builder uses explicit descriptions in `scripts/gallery-metadata.mjs`; missing subject metadata fails instead of inserting an undefined value. Verification checks coverage, title/alt text, viewports, dimensions, byte counts, and image hashes.
 
@@ -62,3 +64,7 @@ See [GALLERY-APPROVAL.md](GALLERY-APPROVAL.md) for the full human review, physic
 - **Word Search World** — Review illustrated sixty-level introduction and the six-theme chapter rail; test visible letters, word list, keyboard/touch guidance, contrast, and readable 12×12 grid at phone width.
 
 - **Crossword World** — Review the numbered crossword grid and legible Across/Down clues, on-screen alphabet, six chapter progression, keyboard/touch controls, stars and kid-friendly illustrations. Human screenshot approval is required.
+
+- **Creative Calm Cove** — Review the no-pressure 80-card prompt panel, free-draw canvas, symmetry controls, Spiro Garden, Creature Spark, stickers, local save/export controls, responsive phone layout, and dark/high-contrast comfort modes.
+
+- **Date Detective** — Review the large package date stamp, 80-level chapter trail, wrong-answer feedback, hint and clear-choice controls, formula exception, after-opening math, lot-code guidance, mobile reflow, and dark/high-contrast readability.
