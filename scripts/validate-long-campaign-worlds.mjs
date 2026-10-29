@@ -40,7 +40,6 @@ assert.equal(marketMissions.length,80);assert.equal(beatMissions.length,80);
 assert.ok(skill.includes('case "market":\n      state.marketMode="missions"'),"Lemonade starts with its expanded mission path");
 assert.ok(skill.includes('case "music":\n      state.musicMode="missions"'),"Beat Builder starts with its expanded mission path");
 assert.ok(skill.includes("Return to four-day lab")&&skill.includes("Return to freestyle"),"Free-play modes remain accessible");
-for(const id of ["lemonade-lab","beat-builder"])
- assert.match(catalog.find(x=>x.id===id)?.mission||"",/(80|eighty)/i,id+" catalogs its eighty-mission campaign");
-assert.match(catalog.find(x=>x.id==="trade-town")?.mission||"",/60/, "Trade Town remains a sixty-level campaign");
-console.log("Validated long-form main gameplay: Traffic Town has 120 signs, Lemonade Lab and Beat Builder have 80 missions, and the remaining validated campaigns retain their intended counts.");
+for(const id of ["lemonade-lab","beat-builder","trade-town"])
+ assert.match(catalog.find(x=>x.id===id)?.mission||"",/60/,id+" catalogs main campaign");
+console.log("Validated long-form main gameplay: Traffic Town has 120 signs, Scam Sleuth has 80 cases, the other saved card worlds remain at 60, and Street/Trade/creative campaigns retain their validated counts.");

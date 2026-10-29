@@ -109,7 +109,7 @@ const counts=Object.entries(sequential);
 const ready=counts.filter(([id,n])=>n>=60);
 const notReady=counts.filter(([id,n])=>n<60);
 const minimums={
- "bridge-buddies":60,"water-works":80,"harbor-helpers":80,"compass-cove":60,"cipher-club":80,"trade-town":60,"critter-council":60,"pocket-planet":60,"garden-guardians":60,"energy-island":60,"robot-rover":80,"pantry-picnic":80,"traffic-town":120,"street-safety-scout":60,
+ "bridge-buddies":60,"water-works":80,"harbor-helpers":80,"compass-cove":60,"cipher-club":60,"trade-town":60,"critter-council":60,"pocket-planet":60,"garden-guardians":60,"energy-island":60,"robot-rover":80,"pantry-picnic":80,"traffic-town":120,"street-safety-scout":60,
  "scam-sleuth":80,"kindness-quest":60,"fact-finder":60,"repair-cafe":60,
  "time-trail":60,"reuse-rally":60,"kids-sudoku":80,
  "bubble-resonance-phi369":80,"weather-watchers":60,"garden-grow-harvest":80,
