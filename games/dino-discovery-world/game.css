@@ -6,7 +6,7 @@ button:focus-visible,select:focus-visible,a:focus-visible,canvas:focus-visible{o
 .dino-shell{max-width:1350px;margin:auto;padding:24px 20px 80px}
 .hero{display:flex;justify-content:space-between;align-items:center;gap:22px;padding:34px 42px;background:linear-gradient(120deg,#0a5c58,#168a75);color:#fff;border-radius:28px;box-shadow:var(--d-shadow);overflow:hidden}
 .eyebrow{font-weight:850;letter-spacing:.09em;text-transform:uppercase;font-size:.78rem;margin:0 0 11px}
-.hero h1{font-size:clamp(2.4rem,5vw,4.7rem);line-height:1.06;margin:0 0 15px;letter-spacing:-.045em}
+.hero h1{font-size:clamp(2.4rem,5vw,4.7rem);line-height:1.06;margin:0 0 15px;letter-spacing:-.045em;overflow-wrap:anywhere}
 .hero h1 span{color:#f9e18e}.hero p:not(.eyebrow){font-size:1.08rem;line-height:1.65;max-width:720px;margin:0 0 18px}
 .hero-tags{display:flex;gap:10px;flex-wrap:wrap}.hero-tags span{border:1px solid #ffffff7b;border-radius:50px;padding:8px 13px;font-size:.86rem;background:#ffffff19;font-weight:700}
 .hero-mark{font-size:clamp(5rem,12vw,10rem);filter:drop-shadow(0 11px 11px #072d2655);transform:rotate(-9deg)}
@@ -20,6 +20,7 @@ button:focus-visible,select:focus-visible,a:focus-visible,canvas:focus-visible{o
 .scene-toolbar{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
 .scene-toolbar button,.mission-actions button,.fossil-action button{flex:1 1 auto;background:#ecf8e9;color:#174b42;padding:11px;border:2px solid #9dcbb1;border-radius:12px;font-weight:800}
 .scene-toolbar button:hover,.mission-actions button:hover:not(:disabled),.fossil-action button:hover{background:#daf0da}
+.dino-shell h2,.dino-shell h3,.source-links a{overflow-wrap:anywhere}
 .scene-help,.model-note,.privacy{font-size:.84rem;line-height:1.55;color:var(--d-sub)}
 .scene-help kbd{font-family:monospace;color:var(--d-ink);background:var(--d-soft);padding:2px 5px;border-radius:4px}
 .specimen-card{display:flex;align-items:center;justify-content:space-between;padding:17px 20px;background:var(--d-soft);border-radius:14px;border:1px solid var(--d-line);margin-top:12px}
@@ -52,5 +53,5 @@ html.larriverse-dark .specimen-card strong{color:var(--d-ink)}
 html.larriverse-high-contrast .answer-option,html.larriverse-high-contrast .chapter-chip,html.larriverse-high-contrast .guide-card{border-width:3px}
 html.larriverse-high-contrast .dino-shell{font-weight:550}
 @media(max-width:990px){.adventure-grid{grid-template-columns:1fr}.chapters{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-mark{font-size:5rem}}
-@media(max-width:720px){.dino-shell{padding:12px 10px 76px}.hero{border-radius:19px;padding:24px 18px}.hero-mark{display:none}.hero h1{font-size:2.65rem}.expedition-progress,.scene-panel,.mission-panel,.museum-panel,.science-sources{padding:17px;border-radius:18px}.scene-toolbar button{flex-basis:calc(50% - 8px)}.scene-tag{font-size:.68rem}.panel-title{align-items:start;flex-wrap:wrap}.field-guide{grid-template-columns:1fr}.chapters{gap:6px}.chapter-chip{font-size:.73rem;padding:9px}.hero-tags span{font-size:.73rem}.mission-panel h3{font-size:1.25rem}}
+@media(max-width:720px){.dino-shell{padding:12px 10px 76px}.hero{border-radius:19px;padding:24px 18px}.hero-mark{display:none}.hero h1{font-size:clamp(1.55rem,7vw,2.65rem)}.expedition-progress,.scene-panel,.mission-panel,.museum-panel,.science-sources{padding:17px;border-radius:18px}.scene-toolbar button{flex-basis:calc(50% - 8px)}.scene-tag{font-size:.68rem}.panel-title{align-items:start;flex-wrap:wrap}.field-guide{grid-template-columns:1fr}.chapters{gap:6px}.chapter-chip{font-size:.73rem;padding:9px}.hero-tags span{font-size:.73rem}.mission-panel h3{font-size:1.25rem}}
 @media(prefers-reduced-motion:reduce){.progress-bar>div{transition:none}}
