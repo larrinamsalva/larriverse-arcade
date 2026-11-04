@@ -1,0 +1,56 @@
+:root{color-scheme:light;--d-ink:#173b39;--d-sub:#40615d;--d-card:#fffef7;--d-line:#bad8c8;--d-accent:#0d766a;--d-soft:#e9f8eb;--d-bg:#eef7e9;--d-shadow:0 14px 36px rgba(28,71,49,.10)}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(150deg,#e9f8ef,#f5f1df 54%,#daf1e6);color:var(--d-ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.52}
+button:focus-visible,select:focus-visible,a:focus-visible,canvas:focus-visible{outline:4px solid #df8e24;outline-offset:3px}
+.dino-shell{max-width:1350px;margin:auto;padding:24px 20px 80px}
+.hero{display:flex;justify-content:space-between;align-items:center;gap:22px;padding:34px 42px;background:linear-gradient(120deg,#0a5c58,#168a75);color:#fff;border-radius:28px;box-shadow:var(--d-shadow);overflow:hidden}
+.eyebrow{font-weight:850;letter-spacing:.09em;text-transform:uppercase;font-size:.78rem;margin:0 0 11px}
+.hero h1{font-size:clamp(2.4rem,5vw,4.7rem);line-height:1.06;margin:0 0 15px;letter-spacing:-.045em}
+.hero h1 span{color:#f9e18e}.hero p:not(.eyebrow){font-size:1.08rem;line-height:1.65;max-width:720px;margin:0 0 18px}
+.hero-tags{display:flex;gap:10px;flex-wrap:wrap}.hero-tags span{border:1px solid #ffffff7b;border-radius:50px;padding:8px 13px;font-size:.86rem;background:#ffffff19;font-weight:700}
+.hero-mark{font-size:clamp(5rem,12vw,10rem);filter:drop-shadow(0 11px 11px #072d2655);transform:rotate(-9deg)}
+.expedition-progress,.scene-panel,.mission-panel,.museum-panel,.science-sources{background:var(--d-card);border:1px solid var(--d-line);box-shadow:var(--d-shadow);border-radius:24px}
+.expedition-progress{margin:22px 0;padding:25px}.progress-top{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;font-size:1.06rem}.progress-top strong{font-size:1.3rem}.progress-bar{height:14px;background:#cbded0;border-radius:20px;margin:15px 0;overflow:hidden}.progress-bar>div{height:100%;width:0;background:linear-gradient(90deg,#26b382,#ffd369);transition:width .2s}
+.chapters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.chapter-chip{border:2px solid var(--d-line);border-radius:13px;background:var(--d-soft);color:var(--d-ink);font-size:.83rem;font-weight:700;padding:11px;text-align:left}.chapter-chip.active{background:#115e59;color:white;border-color:#115e59}.chapter-chip.done{border-color:#d9a23f}.chapter-chip:disabled{opacity:.44}
+.level-select{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:17px;font-weight:650;color:var(--d-sub)}.level-select select{padding:10px 14px;max-width:100%;min-width:245px;border:2px solid var(--d-line);border-radius:10px;background:var(--d-card);color:var(--d-ink)}
+.adventure-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr);gap:20px;align-items:start}
+.scene-panel,.mission-panel{min-width:0;padding:21px}.panel-title{display:flex;justify-content:space-between;gap:8px;align-items:center}.panel-title h2,.mission-panel h2,.museum-panel h2{font-size:1.42rem;margin:0 0 18px}.scene-tag{white-space:nowrap;background:#d8f5d7;border-radius:99px;color:#134d3d;padding:7px 12px;font-size:.77rem;font-weight:850}
+.canvas-frame{overflow:hidden;border:5px solid #acd6b6;border-radius:18px;background:#c6e6dd;box-shadow:inset 0 0 12px #143e3122}#dinoCanvas{display:block;width:100%;height:auto;aspect-ratio:12/7;touch-action:pan-y}
+.scene-toolbar{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.scene-toolbar button,.mission-actions button,.fossil-action button{flex:1 1 auto;background:#ecf8e9;color:#174b42;padding:11px;border:2px solid #9dcbb1;border-radius:12px;font-weight:800}
+.scene-toolbar button:hover,.mission-actions button:hover:not(:disabled),.fossil-action button:hover{background:#daf0da}
+.scene-help,.model-note,.privacy{font-size:.84rem;line-height:1.55;color:var(--d-sub)}
+.scene-help kbd{font-family:monospace;color:var(--d-ink);background:var(--d-soft);padding:2px 5px;border-radius:4px}
+.specimen-card{display:flex;align-items:center;justify-content:space-between;padding:17px 20px;background:var(--d-soft);border-radius:14px;border:1px solid var(--d-line);margin-top:12px}
+.specimen-card strong{display:block;font-size:1.3rem}.specimen-card small{display:block;margin-top:4px;color:var(--d-sub)}.specimen-card span{font-size:2.5rem}
+.mission-panel h2{margin-top:0}.mission-panel h3{font-size:1.4rem;line-height:1.32;margin:20px 0;color:var(--d-ink)}
+.observation{font-size:1rem;line-height:1.6;background:#fff1ce;color:#513b19;padding:15px 18px;border-left:5px solid #dfa343;border-radius:10px}
+.answer-choices{display:grid;gap:10px}.answer-option{width:100%;text-align:left;padding:16px 15px;border:2px solid var(--d-line);border-radius:13px;background:var(--d-soft);color:var(--d-ink);font-weight:750;line-height:1.35;min-height:52px}.answer-option:hover:not(:disabled){border-color:var(--d-accent)}.answer-option.correct{background:#b9e9c7;border-color:#13784d;color:#0a442e}.answer-option.wrong{border-color:#cc8a39;background:#fff0ce;color:#663b05}
+.fossil-action{margin:12px 0}.fossil-action button{width:100%;padding:14px}.fossil-action p{font-weight:700;color:var(--d-sub);margin:8px 0}
+.feedback{min-height:48px;padding:12px 14px;background:#dfeff0;color:#1a575b;border-radius:10px;font-weight:720;line-height:1.5}.feedback.good{background:#d1efdc;color:#164c30}.feedback.try{background:#fff1d1;color:#6a4308}
+.mission-actions{display:flex;gap:9px;flex-wrap:wrap}.mission-actions .primary{background:#117364;color:white;border-color:#117364}
+.science-card{padding:13px 18px;background:#e8f5f4;border:1px solid #bfdad6;border-radius:14px;margin-top:19px}.science-card h3{font-size:1.02rem;margin:5px 0 9px}.science-card p{line-height:1.6;margin:6px 0;color:#274b48}
+.museum-panel,.science-sources{margin-top:22px;padding:26px}.museum-panel{display:flex;flex-wrap:wrap;align-items:start;gap:12px}.museum-panel>div:first-child{flex:1}.museum-panel p{color:var(--d-sub);line-height:1.5;margin-top:0}.museum-counter{white-space:nowrap;background:#ffe7a2;color:#63410f;padding:10px 13px;border-radius:30px}
+.field-guide{flex-basis:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:11px}.field-guide>p{margin:0}.guide-card{padding:15px;text-align:left;background:var(--d-soft);color:var(--d-ink);border:2px solid var(--d-line);border-radius:13px}.guide-card:hover{border-color:var(--d-accent)}.guide-card strong,.guide-card small{display:block}.guide-card small{margin-top:6px;line-height:1.5;color:var(--d-sub)}
+.science-sources p{line-height:1.6;color:var(--d-sub)}.science-sources h2{font-size:1.35rem}.source-links{display:flex;gap:12px;flex-wrap:wrap}.source-links a{color:#0a6155;font-weight:750;text-decoration:underline;text-underline-offset:3px}.source-links a:hover{text-decoration-thickness:3px}
+html.larriverse-dark{color-scheme:dark;--d-ink:#f2f8ee;--d-sub:#c2d7d0;--d-card:#172b2b;--d-line:#53766a;--d-accent:#8bedc3;--d-soft:#233b38;--d-bg:#0d2423}
+html.larriverse-dark body{background:linear-gradient(140deg,#0c2122,#203b35)}
+html.larriverse-dark .scene-tag{background:#294939;color:#e5f8e6}
+html.larriverse-dark .observation{background:#4c391e;color:#ffedc8}
+html.larriverse-dark .answer-option.correct{background:#1b4d35;color:#f2ffe8}
+html.larriverse-dark .answer-option.wrong{background:#54391d;color:#ffebcc}
+html.larriverse-dark .scene-toolbar button,html.larriverse-dark .mission-actions button,html.larriverse-dark .fossil-action button{background:#22423a;color:#e5fff3;border-color:#679b83}
+html.larriverse-dark .mission-actions .primary{background:#147564;color:white}
+html.larriverse-dark .science-card{background:#263c3c;border-color:#567f7d}
+html.larriverse-dark .science-card p{color:#d0e9e4}
+html.larriverse-dark .feedback{background:#29464a;color:#e6f8fb}
+html.larriverse-dark .feedback.good{background:#1d513b;color:#e6fff0}
+html.larriverse-dark .feedback.try{background:#60451f;color:#fff2d7}
+html.larriverse-dark .source-links a{color:#9eedd5}
+html.larriverse-dark .specimen-card strong{color:var(--d-ink)}
+html.larriverse-high-contrast .answer-option,html.larriverse-high-contrast .chapter-chip,html.larriverse-high-contrast .guide-card{border-width:3px}
+html.larriverse-high-contrast .dino-shell{font-weight:550}
+@media(max-width:990px){.adventure-grid{grid-template-columns:1fr}.chapters{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-mark{font-size:5rem}}
+@media(max-width:720px){.dino-shell{padding:12px 10px 76px}.hero{border-radius:19px;padding:24px 18px}.hero-mark{display:none}.hero h1{font-size:2.65rem}.expedition-progress,.scene-panel,.mission-panel,.museum-panel,.science-sources{padding:17px;border-radius:18px}.scene-toolbar button{flex-basis:calc(50% - 8px)}.scene-tag{font-size:.68rem}.panel-title{align-items:start;flex-wrap:wrap}.field-guide{grid-template-columns:1fr}.chapters{gap:6px}.chapter-chip{font-size:.73rem;padding:9px}.hero-tags span{font-size:.73rem}.mission-panel h3{font-size:1.25rem}}
+@media(prefers-reduced-motion:reduce){.progress-bar>div{transition:none}}
