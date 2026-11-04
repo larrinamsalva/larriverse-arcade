@@ -17,6 +17,10 @@
       welcome: 'Hey, explorer! I’m Bloom. Let’s find an adventure that feels just right today.',
       hint: 'Try a game that sounds fun, or use Surprise me. Every try grows a new skill.'
     },
+    'dino-discovery-world': {
+      welcome: 'Dinosaur explorer reporting! Turn the 3D model, brush fossils, and collect discoveries in your field guide.',
+      hint: 'Study the observation, explore the model with the orbit controls, then use fossil and anatomy clues. Birds are living dinosaurs!'
+    },
     'bridge-buddies': {
       welcome: 'Ready to build? We’ll match sturdy planks, beams, and triangle braces to each cart load.',
       hint: 'Read every load label first. Stronger supports cost more, so save them for the heaviest spans.'
