@@ -92,6 +92,13 @@ function renderStations(periodId){
       $("inspectSite").focus();
     });
     card.append(top,clue,button);
+    if(station.id==="fossil-bluff"){
+      const labLink=document.createElement("a");
+      labLink.href="fossil-lab.html";
+      labLink.className="fossil-visit-link";
+      labLink.textContent="🦴 Practice fossils in the 3D lab";
+      card.append(labLink);
+    }
     container.append(card);
   }
 }
