@@ -4,7 +4,7 @@ body{margin:0;background:linear-gradient(150deg,#e9f8ef,#f5f1df 54%,#daf1e6);col
 button,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.52}
 button:focus-visible,select:focus-visible,a:focus-visible,canvas:focus-visible{outline:4px solid #df8e24;outline-offset:3px}
 .dino-shell{max-width:1350px;margin:auto;padding:24px 20px 80px}
-.hero{display:flex;justify-content:space-between;align-items:center;gap:22px;padding:34px 42px;background:linear-gradient(120deg,#0a5c58,#168a75);color:#fff;border-radius:28px;box-shadow:var(--d-shadow);overflow:hidden}
+.hero{display:flex;justify-content:space-between;align-items:center;gap:22px;padding:34px 42px;background:linear-gradient(120deg,#074b49,#0b554e);color:#fff;border-radius:28px;box-shadow:var(--d-shadow);overflow:hidden}
 .eyebrow{font-weight:850;letter-spacing:.09em;text-transform:uppercase;font-size:.78rem;margin:0 0 11px}
 .hero h1{font-size:clamp(2.4rem,5vw,4.7rem);line-height:1.06;margin:0 0 15px;letter-spacing:-.045em;overflow-wrap:anywhere}
 .hero h1 span{color:#f9e18e}.hero p:not(.eyebrow){font-size:1.08rem;line-height:1.65;max-width:720px;margin:0 0 18px}
@@ -65,3 +65,6 @@ html.larriverse-high-contrast .dino-shell{font-weight:550}
 html.larriverse-dark .walk-invite{background:linear-gradient(110deg,#29443b,#544a2c);border-color:#82ab8c}
 html.larriverse-dark .walk-invite h2,html.larriverse-dark .walk-invite p:not(.eyebrow){color:#f3f8e8}
 @media(max-width:720px){.walk-invite{padding:16px}.walk-launch{width:100%}}
+
+/* Keep hero copy white even when the global night-mode p selector applies. */
+html.larriverse-dark .hero p{color:#fff}
