@@ -38,7 +38,7 @@ function card(game) {
   const tag = game.isNew ? '<span class="cover-tag">NEW WORLD</span>' : '';
   const title = escapeHtml(game.title);
   return `<article class="game-card">
-    <a class="game-cover ${game.artSet === "expedition" ? "expedition" : ""}" style="${artPosition(game)}" href="${encodeURI(game.href)}" aria-label="Play ${title}">${tag}</a>
+    <a class="game-cover ${game.artSet === "expedition" ? "expedition" : game.artSet === "dino" ? "dino-art" : ""}" style="${artPosition(game)}" href="${encodeURI(game.href)}" aria-label="Play ${title}">${tag}</a>
     <div class="game-body"><div class="game-badges"><span>${escapeHtml(game.skill || game.topic || game.category)}</span><span>${escapeHtml(game.age || '7+')}</span></div>
     <h3>${title}</h3><p>${escapeHtml(game.desc)}</p>
     <small class="progress-line">${escapeHtml(gameProgress(game))}</small>
@@ -87,7 +87,7 @@ function renderFilters() {
 }
 
 function discoveryCard(game) {
-  return `<a class="discovery-card" href="${encodeURI(game.href)}"><span class="discovery-art ${game.artSet === 'expedition' ? 'expedition' : ''}" style="${artPosition(game)}" aria-hidden="true"></span><span><b>${escapeHtml(game.title)}</b><small>${escapeHtml(game.skill)}</small><small>${escapeHtml(game.minutes || 'Your pace')}</small></span><span aria-hidden="true">→</span></a>`;
+  return `<a class="discovery-card" href="${encodeURI(game.href)}"><span class="discovery-art ${game.artSet === 'expedition' ? 'expedition' : game.artSet === 'dino' ? 'dino-art' : ''}" style="${artPosition(game)}" aria-hidden="true"></span><span><b>${escapeHtml(game.title)}</b><small>${escapeHtml(game.skill)}</small><small>${escapeHtml(game.minutes || 'Your pace')}</small></span><span aria-hidden="true">→</span></a>`;
 }
 
 function renderDiscovery() {
@@ -121,6 +121,7 @@ function showFeature() {
   document.querySelector('#featureSkill').textContent = `${game.skill || game.topic} · Ages ${game.age || '7+'}`;
   document.querySelector('#featureArt').setAttribute('style', artPosition(game));
   document.querySelector('#featureArt').classList.toggle('expedition', game.artSet === 'expedition');
+  document.querySelector('#featureArt').classList.toggle('dino-art', game.artSet === 'dino');
 }
 
 function restartFeatureRotation() {

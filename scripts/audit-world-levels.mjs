@@ -21,6 +21,7 @@ import {WORD_SEARCH_LEVELS} from "../games/word-search-world/puzzles.js";
 import {CROSSWORD_LEVELS} from "../games/crossword-world/puzzles.js";
 import {CREATIVE_PROMPTS} from "../games/creative-calm-cove/prompts.js";
 import {DATE_DETECTIVE_CHALLENGES} from "../games/date-detective/challenges.js";
+import { MISSIONS as DINO_MISSIONS } from "../games/dino-discovery-world/missions.js";
 const catalog=JSON.parse(fs.readFileSync("games/catalog.json","utf8"));
 const gps=JSON.parse(fs.readFileSync("games/road-trip-quest-gps/world.json","utf8"));
 const chill=JSON.parse(fs.readFileSync("games/chill-brain-rewards/sessions.json","utf8"));
@@ -58,6 +59,7 @@ const sequential={
  "kids-sudoku":SUDOKU_LEVELS.length,
  "word-search-world":WORD_SEARCH_LEVELS.length,
  "crossword-world":CROSSWORD_LEVELS.length,
+ "dino-discovery-world":DINO_MISSIONS.length,
 };
 // These cabinets are real and playable, but their mode is not one fixed
 // sequence of distinct puzzles. Report actual activities/missions separately.
@@ -95,6 +97,8 @@ for(const [id,deck] of [["road-trip-quest-gps",gpsMissions],["chill-brain-reward
  assert.equal(new Set(deck.map(x=>x.prompt)).size,expected,`${id} may not repeat questions`);
  assert.ok(deck.every(x=>x.why.includes(x.options[x.answer])),`${id} correct choices are explained`);
 }
+assert.equal(DINO_MISSIONS.length,80,"Dino Discovery offers eighty distinct science missions");
+assert.equal(new Set(DINO_MISSIONS.map(x=>x.prompt)).size,80,"Dino Discovery questions are not repeats");
 assert.equal(CREATIVE_PROMPTS.length,80,"Creative Calm Cove offers eighty optional creative cards");
 assert.equal(DATE_DETECTIVE_CHALLENGES.length,80,"Date Detective offers eighty package-date cases");
 assert.equal(new Set(DATE_DETECTIVE_CHALLENGES.map(x=>x.packageName+"|"+x.label+"|"+x.prompt)).size,80,"Date Detective cases are not repeats");
@@ -113,11 +117,11 @@ const minimums={
  "scam-sleuth":80,"kindness-quest":60,"fact-finder":60,"repair-cafe":60,
  "time-trail":60,"reuse-rally":60,"kids-sudoku":80,
  "bubble-resonance-phi369":80,"weather-watchers":60,"garden-grow-harvest":80,
- "word-search-world":60,"crossword-world":80
+ "word-search-world":60,"crossword-world":80,"dino-discovery-world":80
 };
 for(const [id,floor] of Object.entries(minimums))assert.equal(sequential[id],floor,`${id} must keep its intended distinct playable challenge count`);
 for(const [id,n] of ready)assert.ok(n>=60,id+" regressed");
-assert.equal(ready.length,26,"All fixed-sequence worlds now provide sixty real challenges");
+assert.equal(ready.length,27,"All fixed-sequence worlds now provide sixty real challenges");
 assert.ok(gps.questions&&Object.values(gps.questions).reduce((n,a)=>n+a.length,0)===gps.source.questionCount);
 for(const item of weatherChallenges.concat(gardenGrowthChallenges)){
  assert.ok(item.options[item.answer].label.trim().length>=2, "Short but clear weather labels such as Fog remain valid");
@@ -132,7 +136,7 @@ for(const [id,expected] of [
  const game=catalog.find(g=>g.id===id);
  assert.ok(game&&expected.test(game.mission||game.desc),"Updated game has truthful challenge-count metadata");
 }
-assert.equal(ready.length+Object.keys(optionalMissionPaths).length,37,"Every cabinet has a real sixty-step path or a genuine optional mission/card path; no fake levels");
+assert.equal(ready.length+Object.keys(optionalMissionPaths).length,catalog.length,"Every cabinet has a real sixty-step path or a genuine optional mission/card path; no fake levels");
 const report={cabinetCount:ids.length,complete:ready.length,optionalMissionPaths,worldsWithSixtyMissions:ready.length+Object.keys(optionalMissionPaths).length,belowTarget:notReady.map(([id,count])=>({id,count,remaining:60-count})),otherModes,
  all:ids.map(id=>({id,count:sequential[id]??otherModes[id]?.count??null,kind:id in sequential?"fixed sequence":otherModes[id]?.kind,
  status:id in sequential?(sequential[id]>=60?"60-ready":"under-60"):id in optionalMissionPaths?"60-optional-missions":"needs bespoke level design"}))};

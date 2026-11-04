@@ -1,6 +1,6 @@
 # LarriVerse Arcade — Cabinet Gallery
 
-Automated Chromium creates **candidate evidence** for the lobby and all 37 cabinets at desktop and mobile sizes: **76 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
+Automated Chromium creates **candidate evidence** for the lobby and all 38 cabinets at desktop and mobile sizes: **78 images**. They remain temporary until a person reviews the offline gallery bundle and exports a human approval record.
 
 | Cabinet | Launch path | Candidate evidence | Public gallery |
 | --- | --- | --- | --- |
@@ -40,6 +40,7 @@ Automated Chromium creates **candidate evidence** for the lobby and all 37 cabin
 | Word Search World | `games/word-search-world/index.html` | generated automatically | pending human approval |
 | Crossword World | `games/crossword-world/index.html` | generated automatically | pending human approval |
 | Creative Calm Cove | `games/creative-calm-cove/index.html` | generated automatically | pending human approval |
+| Dino Discovery World | `games/dino-discovery-world/index.html` | generated automatically | pending human approval |
 | Date Detective | `games/date-detective/index.html` | generated automatically | pending human approval |
 
 Run `npm run test:browser`, `npm run gallery:build`, and `npm run gallery:verify` to generate and verify the complete review pack. The builder uses explicit descriptions in `scripts/gallery-metadata.mjs`; missing subject metadata fails instead of inserting an undefined value. Verification checks coverage, title/alt text, viewports, dimensions, byte counts, and image hashes.
@@ -68,3 +69,5 @@ See [GALLERY-APPROVAL.md](GALLERY-APPROVAL.md) for the full human review, physic
 - **Creative Calm Cove** — Review the no-pressure 80-card prompt panel, free-draw canvas, symmetry controls, Spiro Garden, Creature Spark, stickers, local save/export controls, responsive phone layout, and dark/high-contrast comfort modes.
 
 - **Date Detective** — Review the large package date stamp, 80-level chapter trail, wrong-answer feedback, hint and clear-choice controls, formula exception, after-opening math, lot-code guidance, mobile reflow, and dark/high-contrast readability.
+
+- **Dino Discovery World** — Review the 3D scene, orbit and zoom controls, eight chapter rail, fossil brushing, unobstructed mission text, source links, saved field-guide cards, responsive mobile layout, and original stylized-science disclaimer.
