@@ -256,3 +256,13 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 - [ ] Confirm science notes are not presented as exact life reconstructions. Review locality and time-period accuracy.
 - [ ] Check the nine-site journal after reload and a normal LarriVerse backup/restore; verify the existing 80-mission record is unchanged.
 - [ ] Inspect 200%-text, narrow-phone, dark-mode, high-contrast, reduced-motion, keyboard-only and touch controls manually.
+
+## Dino Fossil Discovery Lab — human QA
+
+- [ ] Launch the optional Fossil Lab both from Dino Discovery World and from the Cretaceous Fossil Bluff station.
+- [ ] Brush each of three training trays four times; ensure each layer clears before scientific answers become available.
+- [ ] Rotate/zoom each low-poly fossil on desktop and mobile; check direct button controls and text clues without using the 3D canvas.
+- [ ] Try one incorrect answer, correct it, and confirm an evidence card is added only once and survives reload.
+- [ ] Complete all three specimens and check the lab badge; verify the 80-mission save and nine-site trail are unchanged.
+- [ ] Test 200% text, small screens, light/dark/high contrast, keyboard focus and screen-reader labels.
+- [ ] Review cautious evidence wording: sample models are fictional, never claim specific identity from fragments, and encourage care of real fossils.
