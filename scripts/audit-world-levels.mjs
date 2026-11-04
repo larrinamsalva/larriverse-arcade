@@ -99,7 +99,7 @@ for(const [id,deck] of [["road-trip-quest-gps",gpsMissions],["chill-brain-reward
 }
 assert.equal(DINO_MISSIONS.length,80,"Dino Discovery offers eighty distinct science missions");
 assert.equal(new Set(DINO_MISSIONS.map(x=>x.prompt)).size,80,"Dino Discovery questions are not repeats");
-assert.equal(CREATIVE_PROMPTS.length,"Creative Calm Cove offers eighty optional creative cards");
+assert.equal(CREATIVE_PROMPTS.length,80,"Creative Calm Cove offers eighty optional creative cards");
 assert.equal(DATE_DETECTIVE_CHALLENGES.length,80,"Date Detective offers eighty package-date cases");
 assert.equal(new Set(DATE_DETECTIVE_CHALLENGES.map(x=>x.packageName+"|"+x.label+"|"+x.prompt)).size,80,"Date Detective cases are not repeats");
 assert.equal(new Set(CREATIVE_PROMPTS.map(x=>x.prompt)).size,80,"Creative Calm Cove prompts are not repeats");
