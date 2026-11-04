@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#216e65">
+<meta name="description" content="Travel on foot through three interactive 3D prehistoric time portals, discover nine evidence-based fossil and dinosaur stations, and save a local field journal.">
+<title>3D Explorer Trails · Dino Discovery World · LarriVerse Arcade</title>
+<link rel="stylesheet" href="explore.css">
+<link rel="stylesheet" href="../../assets/emoji.css">
+<link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/dino-discovery-world/explore.html">
+</head>
+<body data-classic="dino-discovery-world">
+<a class="skip-link" href="#worldTitle">Skip to the explorer trail</a>
+<header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+  <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+  <div class="lv-context"><strong>Dino Discovery World</strong><small>Walk-through 3D Expedition</small></div>
+  <nav class="lv-tools" aria-label="Arcade tools">
+    <a class="lv-button" href="index.html">Back to 80 missions</a>
+    <button class="lv-button" type="button" data-lv-comfort>Comfort &amp; accessibility</button>
+  </nav>
+  <span data-lv-profile>Progress stays in this browser.</span>
+</header>
+<main class="trail-shell">
+<section class="trail-hero" aria-labelledby="worldTitle">
+ <div>
+  <p class="eyebrow">🦕 New walking adventure • zero timers • no login</p>
+  <h1 id="worldTitle">3D Dino <span>Explorer Trails</span></h1>
+  <p>Travel through prehistoric time. Walk around stylized 3D exhibits, discover science clues, and collect nine stops in your field journal. Your original 80 missions remain exactly where you left them.</p>
+  <a href="index.html" class="back-link">← Return to the 80 science missions</a>
+ </div>
+ <div class="hero-emoji" aria-hidden="true">🦖</div>
+</section>
+<section class="portal-panel" aria-labelledby="portalTitle">
+ <div><p class="eyebrow">Time portals</p><h2 id="portalTitle">Choose the prehistoric period</h2><p class="subtle">Each portal is a separate scientific reconstruction. Animals from different periods do not all share one habitat.</p></div>
+ <div class="portal-controls" role="group" aria-label="Choose geological period">
+   <button type="button" data-portal="triassic" aria-pressed="true">🌱 Triassic</button>
+   <button type="button" data-portal="jurassic" aria-pressed="false">🌿 Jurassic</button>
+   <button type="button" data-portal="cretaceous" aria-pressed="false">🦖 Cretaceous</button>
+ </div>
+</section>
+<div class="explore-layout">
+ <section class="walk-panel" aria-labelledby="walkTitle">
+   <div class="panel-head"><div><p class="eyebrow">Your walk-through</p><h2 id="walkTitle">Explore a prehistoric world</h2></div><span class="walk-tag">3D movement</span></div>
+   <div class="canvas-wrap">
+     <canvas id="worldCanvas" width="960" height="560" tabindex="0" role="img" aria-label="Interactive 3D prehistoric walk-through. Use W or S to walk, A or D to step sideways, left or right arrows to turn. An accessible station list is below."></canvas>
+   </div>
+   <div class="walk-controls" role="group" aria-label="Accessible camera movement controls">
+    <button type="button" data-step="forward">⬆ Walk forward</button>
+    <button type="button" data-step="back">⬇ Walk back</button>
+    <button type="button" data-step="left">↶ Turn left</button>
+    <button type="button" data-step="right">↷ Turn right</button>
+    <button type="button" data-step="side-left">← Side step</button>
+    <button type="button" data-step="side-right">Side step →</button>
+    <button type="button" id="resetCamera">↩ Start of trail</button>
+   </div>
+   <p class="control-help">On a computer, focus the 3D scene and use <kbd>W</kbd>/<kbd>S</kbd> to move, <kbd>A</kbd>/<kbd>D</kbd> to step sideways, and <kbd>←</kbd>/<kbd>→</kbd> to turn. On phones, use the large direction buttons or drag the scene to turn. Can't use movement controls? Every station has a direct-travel button below.</p>
+   <div class="location-details">
+    <h3 id="periodTitle">🌱 Triassic · Early dinosaur country</h3>
+    <p id="periodYears">About 252–201 million years ago</p>
+    <p id="periodNote">A separate reconstruction of early dinosaur ecosystems.</p>
+   </div>
+ </section>
+ <aside class="field-sidebar" aria-label="Expedition navigator">
+   <section class="wayfinding">
+     <div class="side-head"><h2>🧭 Field navigator</h2><strong><span id="periodCount">0</span> / 3 found here</strong></div>
+     <canvas id="trailMap" width="290" height="280" role="img" aria-label="Overhead trail map: numbered sites and your current blue triangular position. The station list gives the same destinations in text."></canvas>
+     <div class="nearby"><p class="eyebrow">Nearest station</p><strong id="nearestName">Find a landmark</strong><span id="nearestDistance"></span><p id="nearestClue">Explore and look for signs.</p></div>
+     <button id="inspectSite" type="button" disabled>Move closer to examine</button>
+     <div id="scienceDetail" class="science-detail" hidden><strong>🔬 Discovery field note</strong><p id="fieldFact"></p></div>
+     <p id="expeditionStatus" class="status" role="status" aria-live="polite">Choose a portal and explore a prehistoric landscape.</p>
+   </section>
+   <section class="journal-panel" aria-labelledby="journalTitle">
+    <div class="side-head"><h2 id="journalTitle">📔 Trail journal</h2><strong><span id="visitCount">0</span> / 9</strong></div>
+    <p id="journalSummary">0 of 9 field sites recorded across three time portals.</p>
+    <p id="trailBadge" class="badge-award" hidden>🏅 Prehistoric Trail Explorer — all nine field sites discovered!</p>
+    <div id="stationList" class="station-list" aria-label="Travel directly to the sites in the selected period"></div>
+    <p id="saveNote" class="save-note">Your nine trail-site discoveries save on this device. They are backed up with LarriVerse's usual local save export. This journal does not skip or change any of the 80 science missions.</p>
+   </section>
+ </aside>
+</div>
+<section class="museum-note">
+  <h2>🌍 Exploring with real science</h2>
+  <p>Every scene is a simplified 3D model for learning—not a precise reconstruction. Habitats, colors, sounds and animal behavior are sometimes uncertain. We separate each geologic period so no Jurassic Stegosaurus shares a scene with Late Cretaceous T. rex. Birds are the only dinosaurs living today.</p>
+  <p>For further reading, explore the <a href="https://www.amnh.org/dinosaurs/dinosaur-facts" rel="noopener" target="_blank">American Museum of Natural History</a>, the <a href="https://www.nhm.ac.uk/discover/dino-directory.html" rel="noopener" target="_blank">Natural History Museum's dinosaur directory</a> and the <a href="index.html">Dino Discovery World museum and science missions</a>.</p>
+  <p class="save-note">No GPS, sign-in, trackers, outside 3D model downloads, ads or purchases. No time limits, punishments or forced exploration.</p>
+</section>
+</main>
+<script src="../../assets/arcade-sdk.js"></script>
+<script type="module" src="explore.js"></script>
+<script src="../../assets/cabinet-shell.js"></script>
+</body>
+</html>
