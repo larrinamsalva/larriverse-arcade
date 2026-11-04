@@ -38,9 +38,13 @@ test("Dino Discovery: 3D orbit and first science discovery save without repeat r
 });
 
 test("Dino Discovery: fossil dig requires three brush actions and unlocks a field-guide card",async({page})=>{
-  await page.addInitScript(k=>localStorage.setItem(k,JSON.stringify({
-    level:10,unlocked:11,solved:Array.from({length:10},(_,i)=>i+1),fieldGuide:["trike"]
-  })),key);
+  // Seed only the first navigation. Reload must read the real saved progress;
+  // overwriting localStorage on every document load hides persistence regressions.
+  await page.addInitScript(k=>{
+    if(!localStorage.getItem(k))localStorage.setItem(k,JSON.stringify({
+      level:10,unlocked:11,solved:Array.from({length:10},(_,i)=>i+1),fieldGuide:["trike"]
+    }));
+  },key);
   await page.goto(route);
   await expect(page.locator("#levelReadout")).toHaveText("Mission 11 of 80");
   await expect(page.locator("#brushFossil")).toBeVisible();

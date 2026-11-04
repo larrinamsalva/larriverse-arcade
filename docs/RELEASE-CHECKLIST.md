@@ -247,3 +247,12 @@ See [the expedition guide](EXPEDITIONS.md) for game mechanics and new artwork.
 - [ ] Complete, revisit, reload, and back up local mission and field-guide progress; confirm first-time rewards cannot be farmed by replaying.
 - [ ] Check phone-width controls, dark mode, high contrast, keyboard-only answer navigation, and accessible text descriptions.
 - [ ] Approve both desktop and physical-phone game views. This checklist does not claim human approval.
+
+## Dino Discovery: 3D walking-trail human QA
+
+- [ ] From Dino Discovery World, open the optional 3D Explorer Trails page and return to the 80 missions.
+- [ ] Confirm movement, turning, camera perspective, and direct-travel alternatives on desktop and a real phone.
+- [ ] Visit nine evidence-based sites across separate Triassic, Jurassic and Cretaceous time portals; ensure no species from incompatible periods share a scene.
+- [ ] Confirm science notes are not presented as exact life reconstructions. Review locality and time-period accuracy.
+- [ ] Check the nine-site journal after reload and a normal LarriVerse backup/restore; verify the existing 80-mission record is unchanged.
+- [ ] Inspect 200%-text, narrow-phone, dark-mode, high-contrast, reduced-motion, keyboard-only and touch controls manually.
