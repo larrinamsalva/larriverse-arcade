@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#124e49">
+<meta name="description" content="Practice paleontology in a friendly 3D fossil lab. Brush layers carefully, study evidence, and identify bones, tracks and leaf fossils.">
+<title>3D Fossil Discovery Lab · Dino Discovery World · LarriVerse Arcade</title>
+<link rel="stylesheet" href="fossil-lab.css">
+<link rel="stylesheet" href="../../assets/emoji.css">
+<link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/dino-discovery-world/fossil-lab.html">
+</head>
+<body data-classic="dino-discovery-world">
+<a class="skip-link" href="#labTitle">Skip to the fossil lab</a>
+<header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+  <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+  <div class="lv-context"><strong>Dino Discovery World</strong><small>3D Fossil Discovery Lab</small></div>
+  <nav class="lv-tools" aria-label="Arcade tools">
+    <a class="lv-button" href="explore.html">3D Explorer Trails</a>
+    <a class="lv-button" href="index.html">80 Science Missions</a>
+    <button type="button" class="lv-button" data-lv-comfort>Comfort &amp; accessibility</button>
+  </nav>
+  <span data-lv-profile>Progress stays in this browser.</span>
+</header>
+<main class="lab-shell">
+ <section class="lab-hero">
+  <div>
+    <p class="eyebrow">🦴 Junior paleontologist field laboratory</p>
+    <h1 id="labTitle">3D Fossil <span>Discovery Lab</span></h1>
+    <p>Brush away training soil to reveal three kinds of fossil evidence. Rotate the 3D specimen, write an observation, and choose a careful scientific conclusion. You can try again anytime!</p>
+    <p class="hero-note">No timers • no wrong-answer penalty • no login • original learning illustrations</p>
+  </div>
+  <div class="hero-emoji" aria-hidden="true">🦴</div>
+ </section>
+ <section class="specimen-selector" aria-labelledby="trayTitle">
+  <div><p class="eyebrow">Choose your evidence tray</p><h2 id="trayTitle">Three fossil investigations</h2></div>
+  <div class="specimen-buttons" role="group" aria-label="Select a fossil specimen">
+   <button type="button" data-specimen="bone" aria-pressed="true">🦴 Mineralized Bone</button>
+   <button type="button" data-specimen="track" aria-pressed="false">🐾 Footprint</button>
+   <button type="button" data-specimen="leaf" aria-pressed="false">🍃 Leaf Impression</button>
+  </div>
+  <p id="labProgress" class="lab-progress">0 / 3 careful investigations completed</p>
+ </section>
+ <div class="lab-layout">
+  <section class="lab-model" aria-labelledby="modelTitle">
+   <div class="panel-head"><div><p class="eyebrow">3D training tray</p><h2 id="modelTitle">Look for clues in the stone</h2></div><span>Rotate and zoom</span></div>
+   <div class="tray-frame"><canvas id="fossilCanvas" width="960" height="560" tabindex="0" role="img" aria-label="Interactive, simplified 3D fossil specimen covered by training soil. Use A or D to rotate, plus or minus to zoom, or use the buttons below."></canvas></div>
+   <div class="model-controls" role="group" aria-label="3D fossil tray controls">
+    <button type="button" id="rotateLeft">↶ Rotate left</button>
+    <button type="button" id="rotateRight">↷ Rotate right</button>
+    <button type="button" id="zoomCloser">＋ Zoom in</button>
+    <button type="button" id="zoomFarther">－ Zoom out</button>
+   </div>
+   <p class="control-note">Computer: focus the 3D model, then press <kbd>A</kbd>/<kbd>D</kbd> to turn or <kbd>+</kbd>/<kbd>−</kbd> to zoom. On phones, drag to turn or use the buttons. All scientific clues are available as text below if 3D viewing is difficult.</p>
+  </section>
+  <section class="lab-work" aria-labelledby="investigationTitle">
+   <p class="eyebrow">Observe • brush • reason</p>
+   <h2 id="investigationTitle">Investigate the specimen</h2>
+   <h3 id="specimenName">Mineralized Bone</h3>
+   <p class="specimen-type">Evidence type: <strong id="specimenType">body fossil</strong></p>
+   <p id="specimenObservation" class="observation">Look closely at the rock.</p>
+   <div class="brush-panel">
+     <div class="brush-heading"><strong>🖌️ Brush slowly</strong><span id="brushCount">0 of 4 layers</span></div>
+     <div class="progress-track" id="brushProgress" role="progressbar" aria-label="Training soil brushed" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><div id="brushBar"></div></div>
+     <button type="button" id="brushLayer">🖌️ Gently brush one layer</button>
+     <p id="brushNote">Real fossils can be delicate. Work slowly and record where each clue was found.</p>
+   </div>
+   <section class="evidence-panel" aria-labelledby="evidenceTitle">
+     <h3 id="evidenceTitle">🔎 Evidence notebook</h3>
+     <p id="specimenEvidence">Brush the specimen to reveal your evidence notes.</p>
+     <p class="caution">Scientist's rule: a clue supports an explanation, not every possible guess.</p>
+   </section>
+   <h3 id="labQuestion">What have you discovered?</h3>
+   <div id="labChoices" class="answer-grid" role="group" aria-label="Possible scientific conclusions"></div>
+   <p id="labFeedback" class="feedback" role="status" aria-live="polite">Begin by brushing the training soil away.</p>
+   <section id="labExplanation" class="explanation" hidden><h3>📖 What the evidence means</h3><p id="labScience"></p></section>
+  </section>
+ </div>
+ <section class="collection" aria-labelledby="collectionTitle">
+  <div class="collection-head"><h2 id="collectionTitle">📔 My Fossil Evidence Collection</h2><strong><span id="fossilsFound">0</span> / 3</strong></div>
+  <p>Complete an investigation to add an evidence card. Returning to a tray never erases a discovery.</p>
+  <div id="fossilCards" class="fossil-cards"></div>
+  <p id="fossilBadge" class="achievement" hidden>🏅 Careful Fossil Investigator — you completed all three evidence studies!</p>
+  <p id="saveNote" class="save-note">This training lab saves only its own progress in this browser. It never resets your nine-site 3D trail journal or the original 80 science missions. The samples are fictional teaching models, not exact fossil reconstructions.</p>
+ </section>
+ <section class="sources" aria-labelledby="sourceTitle">
+  <h2 id="sourceTitle">🔬 The science behind the fun</h2>
+  <p>Body fossils preserve remains, trace fossils preserve signs of activity, and plant impressions preserve clues about ancient vegetation. Finding a fossil does not automatically tell us the species, age, colors or behavior. Real fossil collection often needs professional permission—leave unknown fossils where they are and ask a responsible adult or museum educator.</p>
+  <p>Learn more: <a href="https://www.nps.gov/subjects/fossils/what-is-a-fossil.htm" rel="noopener" target="_blank">US National Park Service — fossils</a> · <a href="https://www.amnh.org/dinosaurs" rel="noopener" target="_blank">American Museum of Natural History — dinosaurs</a>.</p>
+ </section>
+</main>
+<script src="../../assets/arcade-sdk.js"></script>
+<script type="module" src="fossil-lab.js"></script>
+<script src="../../assets/cabinet-shell.js"></script>
+</body>
+</html>
