@@ -55,3 +55,13 @@ html.larriverse-high-contrast .dino-shell{font-weight:550}
 @media(max-width:990px){.adventure-grid{grid-template-columns:1fr}.chapters{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-mark{font-size:5rem}}
 @media(max-width:720px){.dino-shell{padding:12px 10px 76px}.hero{border-radius:19px;padding:24px 18px}.hero-mark{display:none}.hero h1{font-size:clamp(1.55rem,7vw,2.65rem)}.expedition-progress,.scene-panel,.mission-panel,.museum-panel,.science-sources{padding:17px;border-radius:18px}.scene-toolbar button{flex-basis:calc(50% - 8px)}.scene-tag{font-size:.68rem}.panel-title{align-items:start;flex-wrap:wrap}.field-guide{grid-template-columns:1fr}.chapters{gap:6px}.chapter-chip{font-size:.73rem;padding:9px}.hero-tags span{font-size:.73rem}.mission-panel h3{font-size:1.25rem}}
 @media(prefers-reduced-motion:reduce){.progress-bar>div{transition:none}}
+
+/* Separate walk-through expedition is opt-in; original 80-mission game stays unchanged. */
+.walk-invite{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:22px;padding:20px 24px;background:linear-gradient(110deg,#e0f5df,#fdf0cb);border:2px solid #8fc59c;border-radius:20px;box-shadow:var(--d-shadow)}
+.walk-invite>div{flex:1 1 340px}.walk-invite h2{margin:0 0 7px;font-size:1.3rem;color:#174839}
+.walk-invite p:not(.eyebrow){margin:0;color:#315a4e;line-height:1.55;font-size:.9rem}
+.walk-launch{display:inline-flex;justify-content:center;align-items:center;padding:14px 18px;background:#106e61;border-radius:12px;color:#fff;text-decoration:none;font-weight:850;min-height:48px}
+.walk-launch:hover{background:#075145}.walk-launch:focus-visible{outline:4px solid #df8e24;outline-offset:3px}
+html.larriverse-dark .walk-invite{background:linear-gradient(110deg,#29443b,#544a2c);border-color:#82ab8c}
+html.larriverse-dark .walk-invite h2,html.larriverse-dark .walk-invite p:not(.eyebrow){color:#f3f8e8}
+@media(max-width:720px){.walk-invite{padding:16px}.walk-launch{width:100%}}
