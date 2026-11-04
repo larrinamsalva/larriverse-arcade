@@ -1,6 +1,6 @@
 # LarriVerse Arcade ✦
 
-A free, kid- and teen-friendly arcade with **35 playable games**, including a new 60-level Word Search World, including Kids Sudoku World's 60 progressive puzzles, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
+A free, kid- and teen-friendly arcade with **38 playable games**, including a new 60-level Word Search World, including Kids Sudoku World's 60 progressive puzzles, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
 
 The magical visual system adds cheerful daylight, moonlit dark mode, a follow-device option, richer SVG materials and scenery, and **Bloom**, a hideable local adventure buddy with a different welcome and hint for every game. See the [magical makeover guide](docs/MAGICAL-MAKEOVER.md).
 
@@ -13,6 +13,10 @@ Traffic Town adds a 7+ road-awareness world with 40 unique common U.S. traffic-s
 **Weather Watchers and Garden Grow & Harvest are Games 31 and 35.** Weather Watchers teaches sky observation, common cloud clues, weather preparation, and simple forecast symbols through 60 illustrated challenges. Garden Grow & Harvest teaches bed building, seed and transplant care, crop support, harvesting, and food freshness through 60 illustrated challenges. Both use four visible learning ranks, fifteen distinct questions per rank.
 
 The modern expansion adds twelve adventures: **Pocket Planet, Scam Sleuth, Kindness Quest, Fact Finder, Repair Café, Time Trail, Garden Guardians, Energy Island, Reuse Rally, Robot Rover, Lemonade Lab, and Beat Builder**. These cover money choices, privacy, media literacy, listening and boundaries, repair and reuse, planning, resource care, coding, small business, and music. See [the full game guide](docs/MODERN-ARCADE.md) for mechanics, architecture, and artwork provenance.
+
+## Latest world: Dino Discovery World 🦖
+
+**Dino Discovery World** adds 80 unique dinosaur science missions across eight chapters, a dependency-free 3D model explorer with mouse, touch, and keyboard orbit/zoom, interactive fossil brushing, a local collectible specimen field guide, and museum-linked learning explanations. Living birds are correctly labeled as dinosaurs; flying and sea reptiles are labeled separately. [Explore the dinosaur world](games/dino-discovery-world/index.html).
 
 ## Playable cabinets
 
@@ -118,7 +122,7 @@ Launch any live game from the root arcade lobby.
 
 ## Release candidate
 
-The arcade is at **1.0.0 rc.1**, with 35 playable games. Automation produces candidate evidence; it does not approve a formal release. The existing [release checklist](docs/RELEASE-CHECKLIST.md) still requires hands-on desktop play, real physical-phone QA, human visual/gameplay approval, and print review. No final approval record has been created by this polish pass.
+The arcade is at **1.0.0 rc.1**, with 38 playable games. Automation produces candidate evidence; it does not approve a formal release. The existing [release checklist](docs/RELEASE-CHECKLIST.md) still requires hands-on desktop play, real physical-phone QA, human visual/gameplay approval, and print review. No final approval record has been created by this polish pass.
 
 Start the hands-on phase with the [desktop and phone testing guide](docs/RELEASE-TESTING.md). It links the live QA console, explains the three evidence files, and keeps incomplete checks pending.
 
@@ -159,7 +163,7 @@ The original eight cabinets keep independent engines and local saves. `assets/ca
 
 Twenty-one shared-engine worlds use `assets/skill-games.js`, which implements thirteen practice modes and delegates eight expedition modes to `assets/expedition-games.js`. Their definitions live in `assets/skill-worlds.js` and `assets/expedition-worlds.js`. Street Safety Scout has a dedicated visual engine and 60-scenario module; the lobby reads every cabinet from `games/catalog.json`. Each game preserves its individual board and safety notes. See [MODERN-ARCADE.md](docs/MODERN-ARCADE.md), [EXPEDITIONS.md](docs/EXPEDITIONS.md), and [V1-POLISH.md](docs/V1-POLISH.md).
 
-`assets/arcade-discovery.js` computes optional Continue Playing, Recommended for You, and Try Something New links from the current catalog and aggregate local session history. It writes no records and makes no ability judgment. Search and topic filters still expose all 35 games.
+`assets/arcade-discovery.js` computes optional Continue Playing, Recommended for You, and Try Something New links from the current catalog and aggregate local session history. It writes no records and makes no ability judgment. Search and topic filters still expose all 38 games.
 
 ## Validation
 
@@ -185,7 +189,7 @@ It checks:
 - KidsCoin Family's source features, eight avatars, four task groups, twelve tasks, six reviewed lessons, eight reward requests, and four streak milestones
 - KidsCoin Family keeps rewards fictional and device-local, loads the SDK first, hashes the local PIN, and excludes token-price, staking, blockchain, geolocation, and real-purchase code
 - lobby integration and playable-cabinet counts
-- all 35 contextual Bloom guides, three saved themes, local-only behavior, and reduced-motion coverage
+- all 38 contextual Bloom guides, three saved themes, local-only behavior, and reduced-motion coverage
 - detailed Bridge Buddies, Lemonade Lab, Beat Builder, Robot Rover, Traffic Town, Street Safety Scout, and Pantry Picnic artwork contracts
 
 Pull requests run the same checks through `.github/workflows/validate.yml`. Complete browser QA uses the pinned runner in `.github/workflows/browser-qa.yml`:
@@ -198,7 +202,7 @@ npm run gallery:build
 npm run gallery:verify
 ```
 
-The gallery contains the lobby plus 35 games in desktop/mobile Chromium: **72 images**. Explicit descriptions, PNG dimensions, byte counts, and SHA-256 hashes are verified before the offline human review bundle is uploaded. Missing descriptions fail the build. See [BROWSER-QA.md](docs/BROWSER-QA.md) and [GALLERY-APPROVAL.md](docs/GALLERY-APPROVAL.md).
+The gallery contains the lobby plus 38 games in desktop/mobile Chromium: **78 images**. Explicit descriptions, PNG dimensions, byte counts, and SHA-256 hashes are verified before the offline human review bundle is uploaded. Missing descriptions fail the build. See [BROWSER-QA.md](docs/BROWSER-QA.md) and [GALLERY-APPROVAL.md](docs/GALLERY-APPROVAL.md).
 
 Repository description, homepage, and topic suggestions are documented in [REPOSITORY-METADATA.md](docs/REPOSITORY-METADATA.md).
 
@@ -230,4 +234,4 @@ MIT for repository code unless a file states otherwise. Third-party fonts, maps,
 
 **60-challenge audit:** Run `npm run audit:worlds` to see verified counts for every arcade game. Some still need genuine new levels; see [the game-by-game audit](docs/WORLD-60-LEVEL-AUDIT.md). Do not count repeated free-play sessions as different challenges.
 
-Four additional expedition worlds now provide **sixty playable challenges each**: Water Works, Harbor Helpers, Compass Cove and Cipher Club. Together with the other 60-level worlds, **20 of 35 mainline games** have fully authored sequential progressions. The remaining worlds are tracked in [our honest audit](docs/WORLD-60-LEVEL-AUDIT.md).
+Four additional expedition worlds now provide **sixty playable challenges each**: Water Works, Harbor Helpers, Compass Cove and Cipher Club. Together with the other 60-level worlds, **21 of 38 mainline games** have fully authored sequential progressions. The remaining worlds are tracked in [our honest audit](docs/WORLD-60-LEVEL-AUDIT.md).
