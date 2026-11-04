@@ -1,0 +1,73 @@
+:root{color-scheme:light;--ink:#153e3a;--muted:#41655f;--panel:#fffef6;--soft:#eaf7ec;--edge:#a4c8b8;--accent:#0b756a;--gold:#ffdd88;--shade:0 10px 27px #143f3420}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:linear-gradient(145deg,#e1f3ed,#f7f4dd 70%,#deede4);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+button,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.54}
+button:focus-visible,a:focus-visible,canvas:focus-visible{outline:4px solid #df8f1d;outline-offset:3px}
+.trail-shell{max-width:1390px;margin:0 auto;padding:20px 20px 75px}
+.eyebrow{font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px}
+h1,h2,h3{line-height:1.2;overflow-wrap:anywhere}
+.trail-hero{display:flex;justify-content:space-between;gap:24px;align-items:center;background:linear-gradient(115deg,#0a5855,#238776);color:#fff;padding:30px 38px;border-radius:25px;box-shadow:var(--shade);margin-bottom:20px}
+.trail-hero h1{font-size:clamp(2.2rem,4.5vw,4.3rem);margin:0 0 12px;letter-spacing:-.045em}
+.trail-hero h1 span{color:#ffe69b}
+.trail-hero p:not(.eyebrow){max-width:775px;line-height:1.6;font-size:1.05rem}
+.hero-emoji{font-size:clamp(4rem,11vw,9rem);filter:drop-shadow(0 12px 8px #063a3349)}
+.back-link{display:inline-block;color:#fff;font-weight:800;padding:9px 0;text-underline-offset:5px}
+.portal-panel,.walk-panel,.wayfinding,.journal-panel,.museum-note{background:var(--panel);border:1px solid var(--edge);border-radius:22px;box-shadow:var(--shade)}
+.portal-panel{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:19px 24px;margin-bottom:20px}
+.portal-panel h2{margin:0 0 6px;font-size:1.25rem}
+.subtle{color:var(--muted);margin:0;line-height:1.5}
+.portal-controls{display:flex;gap:10px;flex-wrap:wrap}
+.portal-controls button{border:2px solid var(--edge);background:var(--soft);border-radius:12px;padding:13px 16px;color:var(--ink);font-weight:900;min-height:48px}
+.portal-controls button.active{background:#116a5d;color:white;border-color:#0e6f61}
+.explore-layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(290px,.9fr);gap:20px;align-items:start}
+.walk-panel,.wayfinding,.journal-panel,.museum-note{padding:20px;min-width:0}
+.panel-head,.side-head{display:flex;justify-content:space-between;align-items:start;gap:15px;flex-wrap:wrap}
+.panel-head h2,.side-head h2{font-size:1.35rem;margin:0 0 16px}
+.walk-tag{font-weight:850;color:#195447;background:#d9f4e2;border-radius:40px;padding:8px 10px;font-size:.8rem}
+.canvas-wrap{border:4px solid #a5ccb6;border-radius:17px;overflow:hidden;background:#c1dfd4}
+#worldCanvas{width:100%;height:auto;aspect-ratio:12/7;touch-action:pan-y;display:block}
+.walk-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:15px}
+.walk-controls button,.visit-button,#inspectSite{padding:12px 8px;min-height:48px;border:2px solid #9dbfad;border-radius:12px;background:var(--soft);color:var(--ink);font-weight:820}
+.walk-controls button:hover,.visit-button:hover{background:#d5eddb;border-color:var(--accent)}
+.walk-controls #resetCamera{grid-column:1/-1;background:#f3e9d0;border-color:#c9b681}
+.control-help{line-height:1.65;color:var(--muted);font-size:.88rem}
+kbd{display:inline-block;color:var(--ink);background:var(--soft);border:1px solid var(--edge);border-radius:5px;font-family:monospace;padding:0 5px}
+.location-details{padding:15px 17px;background:var(--soft);border-radius:13px;border:1px solid var(--edge);margin-top:13px}
+.location-details h3{margin:0 0 9px;font-size:1.1rem}.location-details p{margin:7px 0;color:var(--muted);line-height:1.5}
+.field-sidebar{display:grid;gap:20px}
+.side-head strong{font-size:.85rem;white-space:nowrap;border-radius:20px;padding:7px 10px;background:#ffedb4;color:#523b12}
+#trailMap{width:100%;max-width:340px;display:block;margin:0 auto 15px;border:2px solid var(--edge);border-radius:10px;height:auto}
+.nearby{background:var(--soft);padding:15px;border-radius:12px;border:1px solid var(--edge)}
+.nearby strong{display:block;font-size:1.14rem;margin-bottom:3px}
+.nearby span{font-size:.8rem;font-weight:800;color:var(--muted)}
+.nearby p:last-child{font-size:.86rem;line-height:1.5;margin:7px 0 0}
+#inspectSite{width:100%;background:#177763;border-color:#177763;color:#fff;margin-top:11px}
+#inspectSite:hover:not(:disabled){background:#105847}
+.status{line-height:1.55;font-weight:700;background:#eaf6ec;border-left:4px solid #6caa84;border-radius:7px;padding:12px;margin:14px 0 0;color:#204d3c}
+.science-detail{border:2px solid #d7b86b;background:#fff0c9;color:#5b4115;padding:12px;margin-top:14px;border-radius:12px}
+.science-detail p{margin-bottom:0;line-height:1.5}
+.journal-panel>p{color:var(--muted);line-height:1.5}
+.station-list{display:grid;gap:10px;margin-top:11px}
+.station{border:1px solid var(--edge);background:var(--soft);border-radius:12px;padding:13px}
+.station.explored{border-color:#38a67b}
+.station-heading{display:flex;justify-content:space-between;align-items:start;gap:8px}
+.station-heading span{font-size:.75rem;white-space:nowrap;font-weight:700;color:var(--muted)}
+.station p{margin:6px 0 12px;font-size:.86rem;line-height:1.5;color:var(--muted)}
+.visit-button{width:100%;font-size:.87rem;min-height:40px}
+.badge-award{background:#f8e7aa;border-radius:10px;color:#5c420c!important;padding:12px;font-weight:800}
+.save-note{font-size:.83rem;color:var(--muted);line-height:1.55}
+.museum-note{margin-top:20px;line-height:1.65}
+.museum-note h2{font-size:1.33rem}.museum-note a{color:#0a7562;font-weight:800}
+html.larriverse-dark{color-scheme:dark;--ink:#eafaf0;--muted:#c2ddd2;--panel:#172d2c;--soft:#263f3a;--edge:#587f70;--accent:#8bead2;--shade:0 10px 27px #0003}
+html.larriverse-dark body{background:linear-gradient(145deg,#102827,#243b33)}
+html.larriverse-dark .portal-controls button.active{background:#0e6d60;color:#fff}
+html.larriverse-dark .walk-tag{background:#345744;color:#fff}
+html.larriverse-dark .walk-controls button,html.larriverse-dark .visit-button{background:#27453c;color:#f3fffa}
+html.larriverse-dark .walk-controls #resetCamera{background:#4c4129}
+html.larriverse-dark .status{background:#27433b;color:#e5ffec}
+html.larriverse-dark .science-detail{background:#564329;color:#ffedc1}
+html.larriverse-dark .museum-note a{color:#98efd4}
+html.larriverse-high-contrast :is(.walk-controls button,.visit-button,.portal-controls button,#inspectSite){border-width:3px}
+html.larriverse-high-contrast :is(.station,.nearby,.location-details){border-width:2px}
+@media(max-width:1050px){.explore-layout{grid-template-columns:1fr}.field-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))}.portal-panel{align-items:start;flex-direction:column}}
+@media(max-width:700px){.trail-shell{padding:12px 10px 78px}.trail-hero{padding:23px 18px;border-radius:18px}.trail-hero h1{font-size:clamp(1.75rem,7vw,2.6rem)}.hero-emoji{display:none}.portal-panel,.walk-panel,.wayfinding,.journal-panel,.museum-note{padding:16px;border-radius:17px}.field-sidebar{grid-template-columns:1fr}.walk-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.portal-controls button{flex:1}.portal-controls{width:100%}.side-head{flex-wrap:wrap}}
