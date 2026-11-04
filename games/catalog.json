@@ -767,5 +767,27 @@
     "href": "games/date-detective/index.html",
     "source": "Original LarriVerse everyday-life world grounded in FDA and USDA/FSIS date-label guidance, 2026",
     "integration": "arcade-sdk-v3"
+  },
+  {
+    "id": "dino-discovery-world",
+    "title": "Dino Discovery World",
+    "icon": "🦖",
+    "topic": "Planet",
+    "category": "Prehistoric science",
+    "age": "7+",
+    "minutes": "15 min",
+    "art": 0,
+    "skill": "Investigate ancient life in 3D",
+    "desc": "Orbit original 3D dinosaurs, brush fossils, investigate eighty science missions, and build a personal prehistoric field guide.",
+    "mission": "Explore eighty unique paleontology missions in eight chapters, including fossil brushing, evolutionary timelines, science explanations, and a local dinosaur museum.",
+    "take": "Use evidence to learn about prehistoric animals. Birds are living dinosaurs; pterosaurs and marine reptiles were not dinosaurs.",
+    "artSet": "dino",
+    "available": true,
+    "featured": true,
+    "isNew": true,
+    "status": "Playable",
+    "href": "games/dino-discovery-world/index.html",
+    "source": "Original LarriVerse science adventure; museum-guided facts, 2026",
+    "integration": "arcade-sdk-v3"
   }
 ]
