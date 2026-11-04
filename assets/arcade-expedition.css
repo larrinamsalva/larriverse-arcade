@@ -1,1 +1,8 @@
 .game-cover,.world-cover{container-type:size;position:relative;overflow:hidden;background-image:none!important}.game-cover::before,.world-cover::before{content:"";position:absolute;top:50%;left:50%;width:max(100cqw,100cqh);height:max(100cqw,100cqh);transform:translate(-50%,-50%);background-image:url("worlds-atlas-v2.webp");background-size:400% 300%;background-position:var(--art-x,0%) var(--art-y,0%)}.game-cover.expedition::before,.world-cover.expedition::before{background-image:url("expedition-atlas.webp");background-size:400% 200%}.spotlight-art.expedition::before{background-image:url("expedition-atlas.webp");background-size:400% 200%}.cover-tag{z-index:2}.game-cover::after{z-index:1}.game-card:hover .game-cover::before{filter:saturate(1.08)}
+
+/* Original dinosaur world cover. No network assets or unrelated game art. */
+.game-cover.dino-art::before{background-image:none;content:"🦕";display:grid;place-items:center;background:radial-gradient(circle at 50% 78%,#6bbc87 0 25%,transparent 26%),linear-gradient(140deg,#83d8de,#d8eec4 54%,#327b72);font-size:clamp(3.2rem,8cqw,7rem);text-shadow:0 9px 2px #124e4138}
+.spotlight-art.dino-art{background:linear-gradient(135deg,#5bb5b7,#dbf0bd 60%,#448b7d);display:grid;place-items:center}
+.spotlight-art.dino-art::before{content:"🦕";font-size:clamp(5rem,12vw,10rem);filter:drop-shadow(0 11px 7px #18554f55)}
+.discovery-art.dino-art{background:linear-gradient(135deg,#82d1d7,#a9d490);display:grid;place-items:center}
+.discovery-art.dino-art::before{content:"🦖";font-size:2.5rem}
