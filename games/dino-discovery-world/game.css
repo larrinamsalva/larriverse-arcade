@@ -68,3 +68,9 @@ html.larriverse-dark .walk-invite h2,html.larriverse-dark .walk-invite p:not(.ey
 
 /* Keep hero copy white even when the global night-mode p selector applies. */
 html.larriverse-dark .hero p{color:#fff}
+
+
+.dino-adventure-links{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.dino-adventure-links .fossil-link{background:#725320;color:#fff}
+.dino-adventure-links .fossil-link:hover{background:#543b15}
+@media(max-width:720px){.dino-adventure-links{width:100%;flex-direction:column}.dino-adventure-links .walk-launch{width:100%}}

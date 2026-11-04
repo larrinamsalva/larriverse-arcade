@@ -18,6 +18,12 @@ The modern expansion adds twelve adventures: **Pocket Planet, Scam Sleuth, Kindn
 
 **Dino Discovery World** adds 80 unique dinosaur science missions across eight chapters, a dependency-free 3D model explorer with mouse, touch, and keyboard orbit/zoom, interactive fossil brushing, a local collectible specimen field guide, and museum-linked learning explanations. Living birds are correctly labeled as dinosaurs; flying and sea reptiles are labeled separately. [Explore the dinosaur world](games/dino-discovery-world/index.html).
 
+### 3D Fossil Discovery Lab
+
+The dinosaur adventure also includes a self-contained [3D Fossil Discovery Lab](games/dino-discovery-world/fossil-lab.html), available from the Dino Discovery hub or the Fossil Bluff station in Explorer Trails. Kids gently brush four visual layers off three stylized low-poly 3D training specimens (bone, footprint and leaf), then answer a scientific question about what the evidence supports. The lab offers keyboard, mouse/touch, and text-only options without timers or penalties.
+
+The lab stores progress under its own `larriverse.dinoFossilLab.v1` key. It never changes the original 80-mission save or the nine-site trail journal. Training models are fictional educational reconstructions and not claims about any real fossil locality.
+
 ### 3D Dino Explorer Trails (walk-through expansion)
 
 The Dino Discovery World cabinet now links to a separate [3D Explorer Trails adventure](games/dino-discovery-world/explore.html). Learners can walk and turn a camera through three clearly separated **Triassic, Jurassic, and Cretaceous** time portals, investigate **nine evidence-based stations**, and keep a local trail journal. The environments use original low-poly perspective geometry with no extra libraries, GPS, sign-in, or tracking. Touch-friendly on-screen travel buttons, keyboard movement, a simple overhead map and direct-travel site buttons provide different ways to explore. The explorer's separate `larriverse.dinoExplorer.v1` save key protects the existing 80-mission progress.

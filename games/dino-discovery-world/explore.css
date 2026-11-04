@@ -71,3 +71,14 @@ html.larriverse-high-contrast :is(.walk-controls button,.visit-button,.portal-co
 html.larriverse-high-contrast :is(.station,.nearby,.location-details){border-width:2px}
 @media(max-width:1050px){.explore-layout{grid-template-columns:1fr}.field-sidebar{grid-template-columns:repeat(2,minmax(0,1fr))}.portal-panel{align-items:start;flex-direction:column}}
 @media(max-width:700px){.trail-shell{padding:12px 10px 78px}.trail-hero{padding:23px 18px;border-radius:18px}.trail-hero h1{font-size:clamp(1.75rem,7vw,2.6rem)}.hero-emoji{display:none}.portal-panel,.walk-panel,.wayfinding,.journal-panel,.museum-note{padding:16px;border-radius:17px}.field-sidebar{grid-template-columns:1fr}.walk-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.portal-controls button{flex:1}.portal-controls{width:100%}.side-head{flex-wrap:wrap}}
+
+
+.fossil-invite{margin-top:20px;background:#f8edcd;border:2px solid #cda95d;border-radius:19px;padding:19px 22px;display:flex;align-items:center;justify-content:space-between;gap:17px;flex-wrap:wrap}
+.fossil-invite>div{flex:1 1 350px}.fossil-invite h2{color:#4c3718;font-size:1.3rem;margin:0 0 8px}.fossil-invite p{color:#604924;line-height:1.55;margin:0}.fossil-invite .eyebrow{margin-bottom:7px}
+.fossil-invite a,.fossil-visit-link{display:inline-block;padding:12px 13px;background:#68491b;color:#fff;font-weight:850;text-decoration:none;border-radius:11px;min-height:46px;line-height:1.4}
+.fossil-visit-link{display:block;text-align:center;margin-top:10px}
+.fossil-invite a:focus-visible,.fossil-visit-link:focus-visible{outline:4px solid #e0a330;outline-offset:3px}
+html.larriverse-dark .fossil-invite{background:#3b3326;border-color:#bfa36d}
+html.larriverse-dark .fossil-invite h2,html.larriverse-dark .fossil-invite p{color:#ffecc7}
+html.larriverse-dark .fossil-invite a,html.larriverse-dark .fossil-visit-link{background:#745021;color:#fff}
+@media(max-width:700px){.fossil-invite{padding:16px}.fossil-invite a{width:100%;text-align:center}}
