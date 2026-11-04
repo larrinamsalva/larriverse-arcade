@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#166c66">
+  <meta name="description" content="Explore eighty dinosaur learning missions through an interactive 3D prehistoric world with fossil brushing, a field guide, and real paleontology facts.">
+  <title>Dino Discovery World · 3D Prehistoric Explorer · LarriVerse Arcade</title>
+  <link rel="stylesheet" href="game.css">
+  <link rel="stylesheet" href="../../assets/emoji.css">
+  <link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/dino-discovery-world/">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="LarriVerse Arcade">
+  <meta property="og:title" content="Dino Discovery World · 3D Prehistoric Explorer">
+  <meta property="og:description" content="Eighty science adventures, interactive 3D dinosaurs, fossil excavations and a collectible field guide.">
+  <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/dino-discovery-world/">
+  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+  <meta property="og:image:alt" content="Colorful LarriVerse educational adventures">
+</head>
+<body data-classic="dino-discovery-world">
+  <a class="skip-link" href="#missionQuestion">Skip to today's discovery question</a>
+  <header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+    <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+    <div class="lv-context"><strong>Dino Discovery World</strong><small>Investigate ancient life in 3D</small></div>
+    <nav class="lv-tools" aria-label="Arcade tools">
+      <a class="lv-button" href="../../index.html">Back to Arcade</a>
+      <button class="lv-button" type="button" data-lv-comfort>Comfort &amp; accessibility</button>
+    </nav>
+    <span data-lv-profile>Progress stays in this browser.</span>
+  </header>
+  <main class="dino-shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">🦕 LarriVerse prehistoric expedition · 80 missions · 8 chapters</p>
+        <h1>Dino <span>Discovery World</span></h1>
+        <p>Become a junior paleontologist! Orbit friendly 3D prehistoric models, uncover fossil clues, explore ancient habitats, and build your very own discovery museum.</p>
+        <div class="hero-tags"><span>🦖 3D exploration</span><span>🦴 Fossil digs</span><span>📖 Field guide</span><span>🧭 No timers</span></div>
+      </div>
+      <div class="hero-mark" aria-hidden="true">🦕</div>
+    </section>
+
+    <section class="expedition-progress" aria-label="Discovery progress">
+      <div class="progress-top"><div><p class="eyebrow">Expedition progress</p><strong id="levelReadout">Mission 1 of 80</strong></div><div><span>Discoveries </span><strong id="solvedCount">0</strong><span> / 80</span></div></div>
+      <div id="progressBar" class="progress-bar" role="progressbar" aria-label="Missions solved" aria-valuemin="0" aria-valuemax="80" aria-valuenow="0"><div id="progress"></div></div>
+      <div id="chapters" class="chapters" aria-label="Eight prehistoric chapters"></div>
+      <label class="level-select">Revisit an unlocked mission <select id="levelSelect" aria-label="Select an unlocked mission"></select></label>
+    </section>
+
+    <section class="adventure-grid">
+      <section class="scene-panel" aria-labelledby="sceneTitle">
+        <div class="panel-title"><div><p class="eyebrow">Interactive three-dimensional exhibit</p><h2 id="sceneTitle">Explore the prehistoric world</h2></div><span class="scene-tag">3D • Orbit &amp; zoom</span></div>
+        <div class="canvas-frame">
+          <canvas id="dinoCanvas" width="960" height="560" tabindex="0" role="img" aria-label="Interactive 3D dinosaur exhibit. Use arrow keys to orbit and plus or minus to zoom."></canvas>
+        </div>
+        <div class="scene-toolbar" role="group" aria-label="3D explorer controls">
+          <button id="turnLeft" type="button">↶ Turn left</button>
+          <button id="turnRight" type="button">↷ Turn right</button>
+          <button id="zoomIn" type="button">＋ Zoom in</button>
+          <button id="zoomOut" type="button">－ Zoom out</button>
+          <button id="switchDino" type="button">🦕 View another</button>
+        </div>
+        <p class="scene-help">Drag the 3D model on a phone or computer to look around. Keyboard: focus the exhibit, then use <kbd>A</kbd>/<kbd>D</kbd> or arrow keys to turn and <kbd>+</kbd>/<kbd>−</kbd> to zoom. The text clues and mission questions work without the 3D scene.</p>
+        <div class="specimen-card"><div><p class="eyebrow">Now viewing</p><strong id="modelName">Triceratops</strong><small id="modelType">Ceratopsian dinosaur</small></div><span aria-hidden="true">🔍</span></div>
+        <p class="model-note">Models are original, simplified 3D learning illustrations, not exact scientific reconstructions. Dinosaurs, pterosaurs, and marine reptiles are labeled separately.</p>
+      </section>
+      <section class="mission-panel" aria-labelledby="missionQuestion">
+        <p id="chapterName" class="eyebrow">🦕 Chapter 1 · Meet the Dinosaurs</p>
+        <h2>Today's science mission</h2>
+        <p id="observation" class="observation">Study the prehistoric specimen.</p>
+        <h3 id="missionQuestion">What can we discover?</h3>
+        <div class="fossil-action">
+          <button type="button" id="brushFossil" hidden>🖌️ Brush away a fossil layer</button>
+          <p id="brushReadout" hidden aria-live="polite">Brush rock carefully.</p>
+        </div>
+        <div id="answerChoices" class="answer-choices" role="group" aria-label="Discovery answers"></div>
+        <p id="feedback" class="feedback" role="status" aria-live="polite">Explore the model and make a discovery.</p>
+        <div class="mission-actions"><button id="hintButton" type="button">💡 Show clue</button><button id="nextMission" class="primary" type="button" disabled>Next mission →</button></div>
+        <section class="science-card" aria-label="Scientific explanation"><h3>🔬 Science field notes</h3><p id="explanation" aria-live="polite">The science explanation appears here after you solve the mission.</p><p id="hintText">Inspect the specimen and read the observation.</p></section>
+      </section>
+    </section>
+    <section class="museum-panel" aria-labelledby="museumTitle">
+      <div><p class="eyebrow">Your local museum</p><h2 id="museumTitle">📖 My Dinosaur Field Guide</h2><p>Collect specimen cards as you solve missions. Tap any discovered card to view its 3D exhibit. No sign-in needed.</p></div>
+      <strong class="museum-counter"><span id="guideCount">0</span> / 10 exhibits</strong>
+      <div id="fieldGuide" class="field-guide"><p>Solve missions to unlock specimen cards here.</p></div>
+    </section>
+    <section class="science-sources">
+      <h2>🌍 Real science, incredible discoveries</h2>
+      <p>Birds are living dinosaurs. Pterosaurs and ancient marine reptiles were <strong>not</strong> dinosaurs. The prehistoric world changed over millions of years; not all the animals shown here lived together. Learn more from museum researchers:</p>
+      <div class="source-links">
+        <a href="https://www.amnh.org/dinosaurs/dinosaur-facts" rel="noopener" target="_blank">American Museum of Natural History</a>
+        <a href="https://www.nhm.ac.uk/discover/dinosaur-extinction.html" rel="noopener" target="_blank">Natural History Museum: Extinction</a>
+        <a href="https://www.nhm.ac.uk/discover/why-are-birds-the-only-surviving-dinosaurs.html" rel="noopener" target="_blank">Why birds are dinosaurs</a>
+        <a href="https://nhmu.utah.edu/articles/why-arent-pterosaurs-dinosaurs" rel="noopener" target="_blank">Pterosaurs versus dinosaurs</a>
+      </div>
+      <p class="privacy">All progress is stored on this device only and is included in normal LarriVerse backups. No advertising, purchases, analytics, or location access.</p>
+    </section>
+  </main>
+  <script src="../../assets/arcade-sdk.js"></script>
+  <script type="module" src="game.js"></script>
+  <script src="../../assets/cabinet-shell.js"></script>
+</body>
+</html>
