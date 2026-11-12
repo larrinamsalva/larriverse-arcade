@@ -1,4 +1,5 @@
 import { PERIODS, nearestSite } from "./trail-data.js";
+import { drawOrganicDinosaur, TRAIL_SPECIES } from "./organic-dino-models.js";
 
 // A dependency-free 3D *walk-through* renderer, not a flat panoramic image.
 // Geometry is in three-dimensional world coordinates; moving the camera
@@ -13,16 +14,6 @@ const FOCAL_LENGTH=380;
 const EYE_HEIGHT=1.45;
 export const DEFAULT_PITCH=-.12;
 const MIN_PITCH=-.38,MAX_PITCH=.28;
-// Natural-history-inspired palettes; original body colors are artistic guesses.
-const SKINS={
-  "trex":{base:"#b46c43",back:"#643f2d",belly:"#d3a177",stripe:"#874a32",head:"#c07b51"},
-  "large-theropod":{base:"#9a7948",back:"#56553a",belly:"#d3b783",stripe:"#7b5b3b",head:"#af8c57"},
-  "small-theropod":{base:"#887b4d",back:"#4c664c",belly:"#c6b78b",stripe:"#655b3d",head:"#af965f"},
-  "plates":{base:"#8e9a58",back:"#4b663f",belly:"#c1b489",stripe:"#677749",head:"#a5aa69"},
-  "horns":{base:"#629c6a",back:"#376b4c",belly:"#b0c293",stripe:"#457c58",head:"#86ad79"},
-  "prosauropod":{base:"#7d9863",back:"#486748",belly:"#c5bd90",stripe:"#64794d",head:"#9fb07c"},
-  "sauropod":{base:"#658b91",back:"#365f72",belly:"#b5b8a4",stripe:"#4b7480",head:"#90afa1"}
-};
 const palette=(hex,light)=>{
   const n=Number.parseInt(hex.slice(1),16);
   return "rgb("+[n>>16,(n>>8)&255,n&255].map(c=>Math.round(clamp(c*light,0,255))).join(",")+")";
@@ -114,57 +105,26 @@ export function createWalkthrough(canvas,onTravel=()=>{}){
     }
   }
   function animal(x,z,kind){
-    const tall=kind==="sauropod"||kind==="prosauropod";
-    const carnivore=["small-theropod","large-theropod","trex"].includes(kind);
-    const skin=SKINS[kind]||SKINS["small-theropod"];
-    const bodyColor=skin.base;
-    const size=kind==="small-theropod"?.67:kind==="sauropod"?1.25:1;
-    const o=(dx,dy,dz)=>[x+dx*size,dy*size,z+dz*size];
-    const limb=(a,b,r)=>tube(o(...a),o(...b),r*size,bodyColor,7);
+    // Fossil and forest stations are science exhibits, not live dinosaurs.
     if(kind==="forest"){
       for(let i=0;i<5;i++)conifer(x+(i%3-1)*1.05,z+(Math.floor(i/3)-.5)*1.2,.76+i*.08);
       return;
     }
     if(kind==="fossil"){
-      egg(x,.33,z,1.1,.36,.9,"#a8896b",5,9);
+      egg(x,.33,z,1.1,.36,.9,"#a8896b",7,12);
       tube([x-.85,.7,z],[x+.8,.7,z],.12,"#ead7ab");
       for(let i=0;i<4;i++){
-        let xi=x-.6+i*.4;
+        const xi=x-.6+i*.4;
         tube([xi,.7,z],[xi+.13,.78,z+(.3+i*.08)],.07,"#f9e8c2");
       }
       return;
     }
-    // Four-legged herbivores versus two-legged theropods.
-    if(carnivore){
-      for(const side of [-1,1])limb([-.35,1.1,side*.38],[-.4,.12,side*.4],.18);
-    } else {
-      for(const forward of [-.8,.8])for(const side of [-1,1])
-        limb([forward,1.14,side*.37],[forward,.12,side*.4],.18);
-    }
-    egg(x,1.32*size,z,1.2*size,.55*size,.56*size,bodyColor,8,12,skin);
-    tube(o(-1,1.32,0),o(-2.05,1.22,0),.20*size,skin.back,7);
-    if(tall){
-      tube(o(.75,1.5,0),o(1.25,3.15,0),.23*size,skin.base,7);
-      egg(x+1.35*size,3.2*size,z,.45*size,.22*size,.29*size,skin.head,7,10);
-    }else{
-      tube(o(.75,1.5,0),o(1.23,1.8,0),.30*size,skin.base,7);
-      egg(x+1.42*size,1.85*size,z,.51*size,.32*size,.4*size,skin.head,7,10);
-    }
-    if(kind==="horns"){
-      for(const side of [-1,1])tube(o(1.55,2.04,side*.25),o(1.83,2.78,side*.3),.12,"#f0dfb8");
-      tube(o(1.9,1.76,0),o(2.24,1.95,0),.09,"#f0dfb8");
-    }
-    if(kind==="plates"){
-      for(let i=0;i<5;i++){
-        const a=-.8+i*.4;
-        face([o(a-.2,1.8,0),o(a,2.65+(i%2)*.25,0),o(a+.22,1.8,0)],"#dd9650");
-      }
-    }
-    if(carnivore){
-      for(const side of [-1,1])limb([.85,1.55,side*.27],[1.35,1.18,side*.27],.09);
-      if(kind==="small-theropod")for(let i=0;i<3;i++)cone(x-i*.3,1.55*size,z,.19,.32,"#c0d3a5",5);
-    }
-    egg(x+1.5*size,(tall?3.22:1.9)*size,z-.32*size,.065,.065,.065,"#262d29",4,5);
+    const species=TRAIL_SPECIES[kind];
+    if(!species)return;
+    // Same model as the main viewer. Smaller, distance-aware level of detail
+    // makes whole dinosaurs visible at the existing direct-travel camera stop.
+    const size=kind==="small-theropod"?.52:kind==="sauropod"?.58:.66;
+    drawOrganicDinosaur(species,face,{x,y:0,z:z+1.05,scale:size,quality:"trail"});
   }
   function buildWorld(){
     // Flat shaded terrain tiles in actual world space: the horizon recedes as the viewer walks.
