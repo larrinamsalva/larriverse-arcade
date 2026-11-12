@@ -111,3 +111,24 @@ test("3D trails: wider dinosaur framing, vertical look and backward-compatible l
  expect(legacy.z).toBe(4);
  expect(legacy.heading).toBeCloseTo(.4,5);
 });
+
+test("3D trails: all dinosaur stations use matching organic model shapes",async({page})=>{
+ const errors=[];page.on("pageerror",e=>errors.push(e.message));
+ await page.goto(route);
+ const model=await page.evaluate(async()=>{
+   const {TRAIL_SPECIES,ORGANIC_PALETTES}=await import("/games/dino-discovery-world/organic-dino-models.js");
+   const {PERIODS}=await import("/games/dino-discovery-world/trail-data.js");
+   return PERIODS.flatMap(p=>p.sites).filter(s=>s.kind!=="forest"&&s.kind!=="fossil")
+     .map(s=>({site:s.id,kind:TRAIL_SPECIES[s.kind],matchingPalette:!!ORGANIC_PALETTES[TRAIL_SPECIES[s.kind]]}));
+ });
+ expect(model).toHaveLength(7);
+ expect(model.every(s=>s.kind&&s.matchingPalette)).toBe(true);
+ await page.locator('[data-portal="cretaceous"]').click();
+ await page.getByRole("button",{name:"Travel to Tyrannosaurus rex"}).click();
+ await expect(page.locator("#inspectSite")).toBeEnabled();
+ const before=await page.locator("#worldCanvas").evaluate(c=>c.toDataURL());
+ await page.locator('[data-step="look-up"]').click();
+ const after=await page.locator("#worldCanvas").evaluate(c=>c.toDataURL());
+ expect(after).not.toBe(before);
+ expect(errors).toEqual([]);
+});
