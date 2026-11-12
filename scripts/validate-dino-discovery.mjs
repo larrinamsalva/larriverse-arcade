@@ -33,6 +33,8 @@ for(const feature of ["localStorage","LarriVerseArcade?.award","new Set","brushe
 for(const feature of ["createScene","pointerdown","pointermove","keydown","project","polygon","yaw","pitch","tilt","zoom","getContext"]){
   assert.ok(scene.includes(feature),"3D scene includes "+feature);
 }
+assert.ok(scene.includes("markings.belly")&&scene.includes("markings.back")&&scene.includes("markings.stripe"),"Dinosaur bodies have distinct belly, dorsal and patterned colors");
+assert.ok(scene.includes("light = clamp(.79 + .38"),"Dinosaur facets have richer directional sunlight and shade");
 assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|geolocation/i.test(game+scene),"3D dinosaur cabinet makes no external requests or location calls");
 assert.ok(html.includes("arcade-sdk.js")&&html.includes("cabinet-shell.js")&&html.includes("arcade-accessibility.css"));
 assert.ok(css.includes("html.larriverse-dark")&&css.includes("html.larriverse-high-contrast")&&css.includes("@media(max-width:720px)"));
