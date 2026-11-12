@@ -11,7 +11,7 @@ const tint = (hex, shade) => {
 export function createScene(canvas) {
   const ctx = canvas.getContext("2d", { alpha:false });
   const W = canvas.width, H = canvas.height;
-  let yaw = 0.35, pitch = 0.25, zoom = 1, subject = "trike", fossilProgress = 0;
+  let yaw = 0.35, pitch = 0.12, zoom = 1, subject = "trike", fossilProgress = 0;
   let faces = [];
   let pointer = null;
 
@@ -205,6 +205,7 @@ export function createScene(canvas) {
   }
   function setSubject(s){subject=s;fossilProgress=0;paint();}
   function rotate(delta){yaw+=delta;paint();}
+  function tilt(delta){pitch=clamp(pitch+delta,-.35,.55);paint();}
   function changeZoom(delta){zoom=clamp(zoom+delta,.65,1.5);paint();}
   function setFossilProgress(p){fossilProgress=clamp(p,0,1);paint();}
   canvas.addEventListener("pointerdown",e=>{pointer={x:e.clientX,y:e.clientY,id:e.pointerId};canvas.setPointerCapture?.(e.pointerId);});
@@ -216,7 +217,9 @@ export function createScene(canvas) {
     if(e.key==="ArrowRight"||e.key.toLowerCase()==="d"){e.preventDefault();rotate(.18);}
     if(e.key==="+"||e.key==="="){e.preventDefault();changeZoom(.1);}
     if(e.key==="-"){e.preventDefault();changeZoom(-.1);}
+    if(e.key==="PageUp"){e.preventDefault();tilt(-.12);}
+    if(e.key==="PageDown"){e.preventDefault();tilt(.12);}
   });
   paint();
-  return {setSubject,rotate,changeZoom,setFossilProgress,getView:()=>({yaw,zoom})};
+  return {setSubject,rotate,tilt,changeZoom,setFossilProgress,getView:()=>({yaw,pitch,zoom})};
 }

@@ -1,12 +1,12 @@
 import { PERIODS, SITE_IDS, ALL_SITES } from "./trail-data.js";
-import { createWalkthrough } from "./walkthrough-3d.js";
+import { createWalkthrough, DEFAULT_PITCH } from "./walkthrough-3d.js";
 
 const KEY="larriverse.dinoExplorer.v1";
 const $=id=>document.getElementById(id);
 const clamp=(n,lo,hi)=>Math.max(lo,Math.min(hi,n));
 
 function read(){
-  const fallback={version:1,position:{period:"triassic",x:0,z:0,heading:0},discovered:[]};
+  const fallback={version:1,position:{period:"triassic",x:0,z:0,heading:0,pitch:DEFAULT_PITCH},discovered:[]};
   try{
     const raw=JSON.parse(localStorage.getItem(KEY)||"null");
     if(!raw || typeof raw!=="object")return fallback;
@@ -19,7 +19,8 @@ function read(){
         period:PERIODS.some(p=>p.id===v?.period)?v.period:"triassic",
         x:clamp(Number.isFinite(v?.x)?v.x:0,-7.5,7.5),
         z:clamp(Number.isFinite(v?.z)?v.z:0,-1.5,18),
-        heading:Number.isFinite(v?.heading)?v.heading:0
+        heading:Number.isFinite(v?.heading)?v.heading:0,
+        pitch:clamp(Number.isFinite(v?.pitch)?v.pitch:DEFAULT_PITCH,-.38,.28)
       }
     };
   }catch{return fallback;}
@@ -44,7 +45,7 @@ function renderPortal(periodId){
   $("periodTitle").textContent=period.icon+" "+period.label+" · "+period.landscape;
   $("periodYears").textContent=period.years;
   $("periodNote").textContent=period.note;
-  $("worldCanvas").setAttribute("aria-label","Interactive 3D "+period.label+" walk-through. Use W and S to walk forward or backward, A and D to step sideways, and left or right arrows to turn. All locations are also available as text buttons.");
+  $("worldCanvas").setAttribute("aria-label","Interactive 3D "+period.label+" walk-through. Use W and S to walk forward or backward, A and D to step sideways, and left or right arrows to turn, with Page Up or Page Down to look vertically. All locations are also available as text buttons.");
 }
 function drawMap(position){
   const canvas=$("trailMap"),ctx=canvas.getContext("2d");

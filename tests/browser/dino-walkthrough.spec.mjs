@@ -78,3 +78,36 @@ test("3D trails: all nine stops reachable, mobile reflows, dark high-contrast se
  await page.reload();
  await expect(page.locator("#visitCount")).toHaveText("9");
 });
+
+test("3D trails: wider dinosaur framing, vertical look and backward-compatible local saves",async({page})=>{
+ await page.goto(route);
+ const first=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)).position,trailKey);
+ expect(first.pitch).toBeCloseTo(-.12,5);
+ const before=await page.locator("#worldCanvas").evaluate(c=>c.toDataURL());
+ await page.locator('[data-step="look-up"]').click();
+ const after=await page.locator("#worldCanvas").evaluate(c=>c.toDataURL());
+ expect(after).not.toBe(before);
+ const pitched=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)).position,trailKey);
+ expect(pitched.pitch).toBeLessThan(first.pitch);
+ await page.locator('[data-step="look-down"]').click();
+ await page.getByRole("button",{name:"Travel to Coelophysis"}).click();
+ const atSite=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)).position,trailKey);
+ expect(atSite.x).toBe(-3);
+ expect(atSite.z).toBeCloseTo(3.5,3);
+ expect(atSite.pitch).toBeCloseTo(-.12,5);
+ await expect(page.locator("#inspectSite")).toBeEnabled();
+ await page.locator("#worldCanvas").focus();
+ await page.keyboard.press("PageDown");
+ const keyboardPitch=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)).position.pitch,trailKey);
+ expect(keyboardPitch).toBeGreaterThan(atSite.pitch);
+ await page.reload();
+ const restored=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)).position,trailKey);
+ expect(restored.pitch).toBeCloseTo(keyboardPitch,5);
+ await page.evaluate(key=>localStorage.setItem(key,JSON.stringify({version:1,position:{period:"jurassic",x:1,z:4,heading:.4},discovered:[]})),trailKey);
+ await page.reload();
+ const legacy=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)).position,trailKey);
+ expect(legacy.pitch).toBeCloseTo(-.12,5);
+ expect(legacy.x).toBe(1);
+ expect(legacy.z).toBe(4);
+ expect(legacy.heading).toBeCloseTo(.4,5);
+});

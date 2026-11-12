@@ -83,3 +83,18 @@ test("Dino Discovery: last mission, dark contrast and narrow phone layout",async
   await expect(page.locator("#dinoCanvas")).toBeVisible();
   await expect(page.locator("#missionQuestion")).toBeVisible();
 });
+
+test("Dino Discovery: dinosaur model has look-up/look-down controls without changing mission saves",async({page})=>{
+ await page.goto(route);
+ const initial=await page.locator("#dinoCanvas").evaluate(c=>c.toDataURL());
+ await page.locator("#tiltUp").click();
+ const moved=await page.locator("#dinoCanvas").evaluate(c=>c.toDataURL());
+ expect(moved).not.toBe(initial);
+ await page.locator("#tiltDown").click();
+ await page.locator("#dinoCanvas").focus();
+ await page.keyboard.press("PageDown");
+ const keyboard=await page.locator("#dinoCanvas").evaluate(c=>c.toDataURL());
+ expect(keyboard).not.toBe(initial);
+ const saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
+ expect(saved?.solved||[]).toEqual([]);
+});

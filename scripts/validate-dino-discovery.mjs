@@ -24,13 +24,13 @@ assert.ok(SOURCES.length>=3&&SOURCES.every(s=>s.url.startsWith("https://")),"Mus
 const root="games/dino-discovery-world/";
 const html=fs.readFileSync(root+"index.html","utf8"),css=fs.readFileSync(root+"game.css","utf8");
 const game=fs.readFileSync(root+"game.js","utf8"),scene=fs.readFileSync(root+"scene-3d.js","utf8");
-for(const name of ["dinoCanvas","turnLeft","turnRight","zoomIn","zoomOut","switchDino","brushFossil","brushReadout","fieldGuide","answerChoices","chapterName","missionQuestion","nextMission","levelSelect"]){
+for(const name of ["dinoCanvas","turnLeft","turnRight","zoomIn","zoomOut","tiltUp","tiltDown","switchDino","brushFossil","brushReadout","fieldGuide","answerChoices","chapterName","missionQuestion","nextMission","levelSelect"]){
   assert.ok(html.includes('id="'+name+'"'),"3D scene exposes "+name);
 }
 for(const feature of ["localStorage","LarriVerseArcade?.award","new Set","brushes","fieldGuide","unlocked"]){
   assert.ok(game.includes(feature),"Game engine includes "+feature);
 }
-for(const feature of ["createScene","pointerdown","pointermove","keydown","project","polygon","yaw","zoom","getContext"]){
+for(const feature of ["createScene","pointerdown","pointermove","keydown","project","polygon","yaw","pitch","tilt","zoom","getContext"]){
   assert.ok(scene.includes(feature),"3D scene includes "+feature);
 }
 assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|geolocation/i.test(game+scene),"3D dinosaur cabinet makes no external requests or location calls");

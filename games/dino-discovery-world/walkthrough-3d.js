@@ -7,6 +7,12 @@ import { PERIODS, nearestSite } from "./trail-data.js";
 const TAU=Math.PI*2;
 const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
 const NEAR=.38;
+// A wider lens and lower eye-level frame the dinosaurs instead of filling the
+// screen with ground or cropping heads when travelling directly to a station.
+const FOCAL_LENGTH=380;
+const EYE_HEIGHT=1.45;
+export const DEFAULT_PITCH=-.12;
+const MIN_PITCH=-.38,MAX_PITCH=.28;
 const palette=(hex,light)=>{
   const n=Number.parseInt(hex.slice(1),16);
   return "rgb("+[n>>16,(n>>8)&255,n&255].map(c=>Math.round(clamp(c*light,0,255))).join(",")+")";
@@ -14,14 +20,17 @@ const palette=(hex,light)=>{
 
 export function createWalkthrough(canvas,onTravel=()=>{}){
   const ctx=canvas.getContext("2d",{alpha:false});
-  const W=canvas.width,H=canvas.height,F=680;
-  const camera={x:0,z:0,heading:0};
+  const W=canvas.width,H=canvas.height,F=FOCAL_LENGTH;
+  const camera={x:0,z:0,heading:0,pitch:DEFAULT_PITCH};
   let period=PERIODS[0],triangles=[],paused=false;
 
   const worldToView=point=>{
     const dx=point[0]-camera.x,dz=point[2]-camera.z;
     const si=Math.sin(camera.heading),co=Math.cos(camera.heading);
-    return [dx*co-dz*si,point[1]-1.85,dx*si+dz*co];
+    const sideways=dx*co-dz*si,forward=dx*si+dz*co;
+    const dy=point[1]-EYE_HEIGHT;
+    const cp=Math.cos(camera.pitch),sp=Math.sin(camera.pitch);
+    return [sideways,dy*cp+forward*sp,forward*cp-dy*sp];
   };
   const interpolate=(a,b,t)=>a.map((v,i)=>v+(b[i]-v)*t);
   function clipNear(points) {
@@ -193,18 +202,19 @@ export function createWalkthrough(canvas,onTravel=()=>{}){
     ctx.fillText("WALK  •  TURN  •  EXPLORE THE SIGNS",20,H-20);
   }
   function notify(){render();onTravel(getState());}
-  function getState(){return {period:period.id,x:camera.x,z:camera.z,heading:camera.heading};}
+  function getState(){return {period:period.id,x:camera.x,z:camera.z,heading:camera.heading,pitch:camera.pitch};}
   function setState(input) {
     period=PERIODS.find(p=>p.id===input?.period)||PERIODS[0];
     camera.x=clamp(Number.isFinite(input?.x)?input.x:0,-7.5,7.5);
     camera.z=clamp(Number.isFinite(input?.z)?input.z:0,-1.5,18);
     camera.heading=Number.isFinite(input?.heading)?input.heading:0;
+    camera.pitch=clamp(Number.isFinite(input?.pitch)?input.pitch:DEFAULT_PITCH,MIN_PITCH,MAX_PITCH);
     notify();
   }
   function switchPeriod(id){
     const next=PERIODS.find(p=>p.id===id);
     if(!next)return;
-    period=next;camera.x=0;camera.z=0;camera.heading=0;notify();
+    period=next;camera.x=0;camera.z=0;camera.heading=0;camera.pitch=DEFAULT_PITCH;notify();
   }
   function step(action){
     const speed=.85, si=Math.sin(camera.heading), co=Math.cos(camera.heading);
@@ -215,6 +225,8 @@ export function createWalkthrough(canvas,onTravel=()=>{}){
       case "right":camera.heading+=.23;break;
       case "side-left":camera.x-=co*speed;camera.z+=si*speed;break;
       case "side-right":camera.x+=co*speed;camera.z-=si*speed;break;
+      case "look-up":camera.pitch=clamp(camera.pitch-.10,MIN_PITCH,MAX_PITCH);break;
+      case "look-down":camera.pitch=clamp(camera.pitch+.10,MIN_PITCH,MAX_PITCH);break;
       default:return;
     }
     camera.x=clamp(camera.x,-7.5,7.5);
@@ -225,15 +237,18 @@ export function createWalkthrough(canvas,onTravel=()=>{}){
     const s=period.sites.find(s=>s.id===stationId);
     if(!s)return false;
     camera.x=clamp(s.x,-7.5,7.5);
-    camera.z=clamp(s.z-1.9,-1.5,18);
+    // Stop far enough back for a whole dinosaur, but remain within the
+    // existing 2.6-step examination radius.
+    camera.z=clamp(s.z-2.5,-1.5,18);
     camera.heading=0;
+    camera.pitch=DEFAULT_PITCH;
     notify();
     return true;
   }
   function nearest(){return nearestSite(period.id,camera.x,camera.z);}
   function onKeydown(e){
     if(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey)return;
-    const actions={w:"forward",ArrowUp:"forward",s:"back",ArrowDown:"back",a:"side-left",d:"side-right",ArrowLeft:"left",ArrowRight:"right"};
+    const actions={w:"forward",ArrowUp:"forward",s:"back",ArrowDown:"back",a:"side-left",d:"side-right",ArrowLeft:"left",ArrowRight:"right",PageUp:"look-up",PageDown:"look-down"};
     const action=actions[e.key]||actions[e.key.toLowerCase()];
     if(action){e.preventDefault();step(action);}
   }

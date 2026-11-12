@@ -30,7 +30,7 @@ const css=fs.readFileSync(root+"explore.css","utf8");
 for(const id of ["worldCanvas","trailMap","inspectSite","periodTitle","periodCount","nearestName","stationList","expeditionStatus","trailBadge","visitCount","scienceDetail","saveNote"]){
  assert.ok(html.includes('id="'+id+'"'),"Explorer has "+id);
 }
-for(const text of ['data-portal="triassic"','data-portal="jurassic"','data-portal="cretaceous"','data-step="forward"','data-step="back"','data-step="side-left"','data-step="side-right"']){
+for(const text of ['data-portal="triassic"','data-portal="jurassic"','data-portal="cretaceous"','data-step="forward"','data-step="back"','data-step="side-left"','data-step="side-right"','data-step="look-up"','data-step="look-down"']){
  assert.ok(html.includes(text),"Explorer provides "+text);
 }
 assert.ok(page.includes('href="explore.html"'),"Existing 80-mission hub links to optional explorer");
@@ -38,7 +38,7 @@ assert.ok(html.includes('href="index.html"'),"Explorer links back to the unmodif
 assert.ok(html.includes("arcade-sdk.js")&&html.includes("cabinet-shell.js")&&html.includes("arcade-accessibility.css"));
 assert.ok(logic.includes("larriverse.dinoExplorer.v1")&&!logic.includes("larriverse.dinoDiscovery.v1"),"Trail journal never overwrites 80-mission saves");
 assert.ok(logic.includes("localStorage")&&logic.includes("new Set")&&logic.includes("persist()"),"Trail journal is saved locally");
-assert.ok(renderer.includes("worldToView")&&renderer.includes("clipNear")&&renderer.includes("camera.heading")&&renderer.includes("pointermove")&&renderer.includes("step(action)")&&renderer.includes("canvas.addEventListener(\"keydown\""),"Renderer has real 3D perspective and interactive motion");
+assert.ok(renderer.includes("worldToView")&&renderer.includes("clipNear")&&renderer.includes("camera.heading")&&renderer.includes("camera.pitch")&&renderer.includes("FOCAL_LENGTH=380")&&renderer.includes("pointermove")&&renderer.includes("step(action)")&&renderer.includes("canvas.addEventListener(\"keydown\""),"Renderer frames dinosaurs with working vertical look controls");
 assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|geolocation|watchPosition|sendBeacon/i.test(logic+renderer),"Explorer never calls network or location APIs");
 assert.ok(css.includes("html.larriverse-dark")&&css.includes("html.larriverse-high-contrast")&&css.includes("@media(max-width:700px)"),"Explorer styles support comfort and mobile");
 for(const file of ["trail-data.js","walkthrough-3d.js","explore.js"]){
