@@ -13,6 +13,16 @@ const FOCAL_LENGTH=380;
 const EYE_HEIGHT=1.45;
 export const DEFAULT_PITCH=-.12;
 const MIN_PITCH=-.38,MAX_PITCH=.28;
+// Natural-history-inspired palettes; original body colors are artistic guesses.
+const SKINS={
+  "trex":{base:"#b46c43",back:"#643f2d",belly:"#d3a177",stripe:"#874a32",head:"#c07b51"},
+  "large-theropod":{base:"#9a7948",back:"#56553a",belly:"#d3b783",stripe:"#7b5b3b",head:"#af8c57"},
+  "small-theropod":{base:"#887b4d",back:"#4c664c",belly:"#c6b78b",stripe:"#655b3d",head:"#af965f"},
+  "plates":{base:"#8e9a58",back:"#4b663f",belly:"#c1b489",stripe:"#677749",head:"#a5aa69"},
+  "horns":{base:"#629c6a",back:"#376b4c",belly:"#b0c293",stripe:"#457c58",head:"#86ad79"},
+  "prosauropod":{base:"#7d9863",back:"#486748",belly:"#c5bd90",stripe:"#64794d",head:"#9fb07c"},
+  "sauropod":{base:"#658b91",back:"#365f72",belly:"#b5b8a4",stripe:"#4b7480",head:"#90afa1"}
+};
 const palette=(hex,light)=>{
   const n=Number.parseInt(hex.slice(1),16);
   return "rgb("+[n>>16,(n>>8)&255,n&255].map(c=>Math.round(clamp(c*light,0,255))).join(",")+")";
@@ -51,17 +61,24 @@ export function createWalkthrough(canvas,onTravel=()=>{}){
     const v=view[2].map((n,i)=>n-view[0][i]);
     const ny=u[2]*v[0]-u[0]*v[2],nx=u[1]*v[2]-u[2]*v[1],nz=u[0]*v[1]-u[1]*v[0];
     const normal=Math.hypot(nx,ny,nz)||1;
-    const lighting=clamp(.88+(ny*.52+nx*.3+nz*.15)/normal*.23,.63,1.13);
+    // Richer directional daylight to separate brighter highlights and shadows.
+    const lighting=clamp(.81+(ny*.62+nx*.31+nz*.18)/normal*.36,.48,1.20);
     const projected=view.map(p=>[W/2+p[0]*F/p[2],H*.51-p[1]*F/p[2]]);
     triangles.push({projected,color:palette(color,lighting),depth});
   }
-  function egg(x,y,z,rx,ry,rz,color,lat=6,lon=9){
+  function egg(x,y,z,rx,ry,rz,color,lat=6,lon=9,markings=null){
     const p=(a,t)=>[x+rx*Math.cos(a)*Math.cos(t),y+ry*Math.sin(a),z+rz*Math.cos(a)*Math.sin(t)];
     for(let i=0;i<lat;i++){
       const a=-Math.PI/2+i*Math.PI/lat,b=a+Math.PI/lat;
       for(let j=0;j<lon;j++){
         const c=j*TAU/lon,d=(j+1)*TAU/lon;
-        face([p(a,c),p(b,c),p(b,d),p(a,d)],color);
+        let facet=color;
+        if(markings){
+          if(i<Math.max(1,Math.floor(lat*.25)))facet=markings.belly;
+          else if(i>=Math.ceil(lat*.72))facet=markings.back;
+          else if(j%4===0&&i>1&&i<lat-1)facet=markings.stripe;
+        }
+        face([p(a,c),p(b,c),p(b,d),p(a,d)],facet);
       }
     }
   }
@@ -99,7 +116,8 @@ export function createWalkthrough(canvas,onTravel=()=>{}){
   function animal(x,z,kind){
     const tall=kind==="sauropod"||kind==="prosauropod";
     const carnivore=["small-theropod","large-theropod","trex"].includes(kind);
-    const bodyColor=kind==="trex"?"#ba7863":kind==="large-theropod"?"#9c8b68":kind==="plates"?"#b5a878":kind==="horns"?"#6aa98a":kind==="prosauropod"?"#8aaf86":"#79a6b0";
+    const skin=SKINS[kind]||SKINS["small-theropod"];
+    const bodyColor=skin.base;
     const size=kind==="small-theropod"?.67:kind==="sauropod"?1.25:1;
     const o=(dx,dy,dz)=>[x+dx*size,dy*size,z+dz*size];
     const limb=(a,b,r)=>tube(o(...a),o(...b),r*size,bodyColor,7);
@@ -123,30 +141,30 @@ export function createWalkthrough(canvas,onTravel=()=>{}){
       for(const forward of [-.8,.8])for(const side of [-1,1])
         limb([forward,1.14,side*.37],[forward,.12,side*.4],.18);
     }
-    egg(x,1.32*size,z,1.2*size,.55*size,.56*size,bodyColor);
-    limb([-1,1.32,0],[-2.05,1.22,0],.20);
+    egg(x,1.32*size,z,1.2*size,.55*size,.56*size,bodyColor,8,12,skin);
+    tube(o(-1,1.32,0),o(-2.05,1.22,0),.20*size,skin.back,7);
     if(tall){
-      limb([.75,1.5,0],[1.25,3.15,0],.23);
-      egg(x+1.35*size,3.2*size,z,.45*size,.22*size,.29*size,"#9ac9a5");
+      tube(o(.75,1.5,0),o(1.25,3.15,0),.23*size,skin.base,7);
+      egg(x+1.35*size,3.2*size,z,.45*size,.22*size,.29*size,skin.head,7,10);
     }else{
-      limb([.75,1.5,0],[1.23,1.8,0],.30);
-      egg(x+1.42*size,1.85*size,z,.51*size,.32*size,.4*size,bodyColor);
+      tube(o(.75,1.5,0),o(1.23,1.8,0),.30*size,skin.base,7);
+      egg(x+1.42*size,1.85*size,z,.51*size,.32*size,.4*size,skin.head,7,10);
     }
     if(kind==="horns"){
-      for(const side of [-1,1])tube(o(1.55,2.04,side*.25),o(1.83,2.78,side*.3),.12,"#fff0bf");
-      tube(o(1.9,1.76,0),o(2.24,1.95,0),.09,"#fff0bf");
+      for(const side of [-1,1])tube(o(1.55,2.04,side*.25),o(1.83,2.78,side*.3),.12,"#f0dfb8");
+      tube(o(1.9,1.76,0),o(2.24,1.95,0),.09,"#f0dfb8");
     }
     if(kind==="plates"){
       for(let i=0;i<5;i++){
         const a=-.8+i*.4;
-        face([o(a-.2,1.8,0),o(a,2.65+(i%2)*.25,0),o(a+.22,1.8,0)],"#e2a468");
+        face([o(a-.2,1.8,0),o(a,2.65+(i%2)*.25,0),o(a+.22,1.8,0)],"#dd9650");
       }
     }
     if(carnivore){
       for(const side of [-1,1])limb([.85,1.55,side*.27],[1.35,1.18,side*.27],.09);
       if(kind==="small-theropod")for(let i=0;i<3;i++)cone(x-i*.3,1.55*size,z,.19,.32,"#c0d3a5",5);
     }
-    egg(x+1.5*size,(tall?3.22:1.9)*size,z-.32*size,.065,.065,.065,"#29302d",4,5);
+    egg(x+1.5*size,(tall?3.22:1.9)*size,z-.32*size,.065,.065,.065,"#262d29",4,5);
   }
   function buildWorld(){
     // Flat shaded terrain tiles in actual world space: the horizon recedes as the viewer walks.
