@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { spawnSync } from "node:child_process";
 import { PERIODS, ALL_SITES, SITE_IDS, nearestSite } from "../games/dino-discovery-world/trail-data.js";
+import { TRAIL_SPECIES, ORGANIC_PALETTES } from "../games/dino-discovery-world/organic-dino-models.js";
 
 const root="games/dino-discovery-world/";
 assert.deepEqual(PERIODS.map(p=>p.id),["triassic","jurassic","cretaceous"],"Three separate, ordered time portals");
@@ -39,11 +40,13 @@ assert.ok(html.includes("arcade-sdk.js")&&html.includes("cabinet-shell.js")&&htm
 assert.ok(logic.includes("larriverse.dinoExplorer.v1")&&!logic.includes("larriverse.dinoDiscovery.v1"),"Trail journal never overwrites 80-mission saves");
 assert.ok(logic.includes("localStorage")&&logic.includes("new Set")&&logic.includes("persist()"),"Trail journal is saved locally");
 assert.ok(renderer.includes("worldToView")&&renderer.includes("clipNear")&&renderer.includes("camera.heading")&&renderer.includes("camera.pitch")&&renderer.includes("FOCAL_LENGTH=380")&&renderer.includes("pointermove")&&renderer.includes("step(action)")&&renderer.includes("canvas.addEventListener(\"keydown\""),"Renderer frames dinosaurs with working vertical look controls");
-assert.ok(renderer.includes("markings.belly")&&renderer.includes("markings.back")&&renderer.includes("markings.stripe"),"Walking dinosaur models use dorsal, belly and patterned coloring");
-assert.ok((renderer.match(/head:"#/g)||[]).length>=7,"All seven walking dinosaur types have distinct natural color palettes");
+assert.ok(renderer.includes('from "./organic-dino-models.js"')&&renderer.includes("TRAIL_SPECIES[kind]")&&renderer.includes('quality:"trail"'),"Walking models share the same organic dinosaur meshes and use phone-friendly detail");
+assert.equal(Object.keys(TRAIL_SPECIES).length,7,"Seven walking dinosaur kinds map to a shared model");
+assert.ok(Object.values(TRAIL_SPECIES).every(kind=>Boolean(ORGANIC_PALETTES[kind])),"Every trail dinosaur has a matching museum model palette");
+assert.ok(PERIODS.flatMap(p=>p.sites).filter(s=>s.kind!=="forest"&&s.kind!=="fossil").every(s=>Boolean(TRAIL_SPECIES[s.kind])),"Every walk-through dinosaur uses a known shared species mesh");
 assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|geolocation|watchPosition|sendBeacon/i.test(logic+renderer),"Explorer never calls network or location APIs");
 assert.ok(css.includes("html.larriverse-dark")&&css.includes("html.larriverse-high-contrast")&&css.includes("@media(max-width:700px)"),"Explorer styles support comfort and mobile");
-for(const file of ["trail-data.js","walkthrough-3d.js","explore.js"]){
+for(const file of ["trail-data.js","walkthrough-3d.js","explore.js","organic-dino-models.js"]){
  const result=spawnSync(process.execPath,["--check",root+file],{encoding:"utf8"});
  assert.equal(result.status,0,file+" must pass syntax checking: "+result.stderr);
 }
