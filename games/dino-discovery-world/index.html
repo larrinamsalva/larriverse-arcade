@@ -58,16 +58,18 @@
       <section class="scene-panel" aria-labelledby="sceneTitle">
         <div class="panel-title"><div><p class="eyebrow">Interactive three-dimensional exhibit</p><h2 id="sceneTitle">Explore the prehistoric world</h2></div><span class="scene-tag">3D • Orbit &amp; zoom</span></div>
         <div class="canvas-frame">
-          <canvas id="dinoCanvas" width="960" height="560" tabindex="0" role="img" aria-label="Interactive 3D dinosaur exhibit. Use arrow keys to orbit and plus or minus to zoom."></canvas>
+          <canvas id="dinoCanvas" width="960" height="560" tabindex="0" role="img" aria-label="Interactive 3D dinosaur exhibit. Use arrow keys to orbit, Page Up or Page Down to look up or down, and plus or minus to zoom."></canvas>
         </div>
         <div class="scene-toolbar" role="group" aria-label="3D explorer controls">
           <button id="turnLeft" type="button">↶ Turn left</button>
           <button id="turnRight" type="button">↷ Turn right</button>
+          <button id="tiltUp" type="button">👀 Look up</button>
+          <button id="tiltDown" type="button">👀 Look down</button>
           <button id="zoomIn" type="button">＋ Zoom in</button>
           <button id="zoomOut" type="button">－ Zoom out</button>
           <button id="switchDino" type="button">🦕 View another</button>
         </div>
-        <p class="scene-help">Drag the 3D model on a phone or computer to look around. Keyboard: focus the exhibit, then use <kbd>A</kbd>/<kbd>D</kbd> or arrow keys to turn and <kbd>+</kbd>/<kbd>−</kbd> to zoom. The text clues and mission questions work without the 3D scene.</p>
+        <p class="scene-help">Drag the 3D model on a phone or computer to look around. Keyboard: focus the exhibit, then use <kbd>A</kbd>/<kbd>D</kbd> or arrow keys to turn, <kbd>Page Up</kbd>/<kbd>Page Down</kbd> to look up and down, and <kbd>+</kbd>/<kbd>−</kbd> to zoom. The text clues and mission questions work without the 3D scene.</p>
         <div class="specimen-card"><div><p class="eyebrow">Now viewing</p><strong id="modelName">Triceratops</strong><small id="modelType">Ceratopsian dinosaur</small></div><span aria-hidden="true">🔍</span></div>
         <p class="model-note">Models are original, simplified 3D learning illustrations, not exact scientific reconstructions. Dinosaurs, pterosaurs, and marine reptiles are labeled separately.</p>
       </section>
