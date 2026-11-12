@@ -98,3 +98,27 @@ test("Dino Discovery: dinosaur model has look-up/look-down controls without chan
  const saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
  expect(saved?.solved||[]).toEqual([]);
 });
+
+test("Dino Discovery: shared organic animal models use more detailed gallery meshes",async({page})=>{
+ const errors=[];page.on("pageerror",e=>errors.push(e.message));
+ await page.goto(route);
+ const counts=await page.evaluate(async()=>{
+   const {drawOrganicDinosaur,ORGANIC_PALETTES,TRAIL_SPECIES}=await import("/games/dino-discovery-world/organic-dino-models.js");
+   const get=(kind,quality)=>{
+     let faces=0;const colors=new Set();
+     drawOrganicDinosaur(kind,(pts,c)=>{if(pts.some(p=>p.some(n=>!Number.isFinite(n))))throw Error("Non-finite mesh");colors.add(c);faces++;},{quality});
+     return {faces,colors:colors.size};
+   };
+   return {kinds:Object.keys(ORGANIC_PALETTES).length,mapped:Object.keys(TRAIL_SPECIES).length,
+     main:get("trike","high"),trail:get("trike","trail"),tRex:get("rex","high"),sauropod:get("longneck","high")};
+ });
+ expect(counts.kinds).toBe(11);
+ expect(counts.mapped).toBe(7);
+ expect(counts.main.faces).toBeGreaterThan(counts.trail.faces);
+ expect(counts.main.colors).toBeGreaterThan(4);
+ expect(counts.tRex.faces).toBeGreaterThan(500);
+ expect(counts.sauropod.faces).toBeGreaterThan(500);
+ await page.locator("#switchDino").click();
+ await expect(page.locator("#modelName")).toHaveText("Tyrannosaurus rex");
+ expect(errors).toEqual([]);
+});
