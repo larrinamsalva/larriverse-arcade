@@ -33,7 +33,7 @@
       <div>
         <p class="eyebrow">🦕 LarriVerse prehistoric expedition · 80 missions · 8 chapters</p>
         <h1>Dino <span>Discovery World</span></h1>
-        <p>Become a junior paleontologist! Orbit friendly 3D prehistoric models, uncover fossil clues, explore ancient habitats, and build your very own discovery museum.</p>
+        <p>Become a junior paleontologist! Choose any chapter or mission from the start, orbit friendly 3D prehistoric models, uncover fossil clues, explore ancient habitats, and build your very own discovery museum.</p>
         <div class="hero-tags"><span>🦖 3D exploration</span><span>🦴 Fossil digs</span><span>📖 Field guide</span><span>🧭 No timers</span></div>
       </div>
       <div class="hero-mark" aria-hidden="true">🦕</div>
@@ -50,8 +50,10 @@
     <section class="expedition-progress" aria-label="Discovery progress">
       <div class="progress-top"><div><p class="eyebrow">Expedition progress</p><strong id="levelReadout">Mission 1 of 80</strong></div><div><span>Discoveries </span><strong id="solvedCount">0</strong><span> / 80</span></div></div>
       <div id="progressBar" class="progress-bar" role="progressbar" aria-label="Missions solved" aria-valuemin="0" aria-valuemax="80" aria-valuenow="0"><div id="progress"></div></div>
-      <div id="chapters" class="chapters" aria-label="Eight prehistoric chapters"></div>
-      <label class="level-select">Revisit an unlocked mission <select id="levelSelect" aria-label="Select an unlocked mission"></select></label>
+      <h2 class="chapter-heading">Choose what you want to play</h2>
+      <p class="chapter-help" id="chapterHelp">Every chapter is open! Tap a box such as 🦴 Fossil Dig to jump straight in. Your completed discoveries still earn field-guide cards and awards.</p>
+      <div id="chapters" class="chapters" role="group" aria-label="Choose any of eight prehistoric chapters" aria-describedby="chapterHelp"></div>
+      <label class="level-select">Or choose any of the 80 missions <select id="levelSelect" aria-label="Choose any dinosaur mission"></select></label>
     </section>
 
     <section class="adventure-grid">
@@ -75,7 +77,7 @@
       </section>
       <section class="mission-panel" aria-labelledby="missionQuestion">
         <p id="chapterName" class="eyebrow">🦕 Chapter 1 · Meet the Dinosaurs</p>
-        <h2>Today's science mission</h2>
+        <h2>Your chosen science mission</h2>
         <p id="observation" class="observation">Study the prehistoric specimen.</p>
         <h3 id="missionQuestion">What can we discover?</h3>
         <div class="fossil-action">
