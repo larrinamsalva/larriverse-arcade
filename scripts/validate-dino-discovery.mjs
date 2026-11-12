@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { spawnSync } from "node:child_process";
 import { CHAPTERS, MISSIONS, SOURCES } from "../games/dino-discovery-world/missions.js";
+import { drawOrganicDinosaur, ORGANIC_PALETTES } from "../games/dino-discovery-world/organic-dino-models.js";
 
 assert.equal(CHAPTERS.length,8,"Dino Discovery contains eight science chapters");
 assert.equal(MISSIONS.length,80,"Dino Discovery contains eighty authored missions");
@@ -33,14 +34,33 @@ for(const feature of ["localStorage","LarriVerseArcade?.award","new Set","brushe
 for(const feature of ["createScene","pointerdown","pointermove","keydown","project","polygon","yaw","pitch","tilt","zoom","getContext"]){
   assert.ok(scene.includes(feature),"3D scene includes "+feature);
 }
-assert.ok(scene.includes("markings.belly")&&scene.includes("markings.back")&&scene.includes("markings.stripe"),"Dinosaur bodies have distinct belly, dorsal and patterned colors");
+assert.ok(scene.includes('from "./organic-dino-models.js"')&&scene.includes('drawOrganicDinosaur(kind,polygon,{quality:"high"})'),"Main 3D gallery uses the shared high-detail organic animal meshes");
+assert.ok(Object.keys(ORGANIC_PALETTES).length>=11,"Dinosaur, bird and reptile models have a shared palette");
 assert.ok(scene.includes("light = clamp(.79 + .38"),"Dinosaur facets have richer directional sunlight and shade");
 assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|geolocation/i.test(game+scene),"3D dinosaur cabinet makes no external requests or location calls");
 assert.ok(html.includes("arcade-sdk.js")&&html.includes("cabinet-shell.js")&&html.includes("arcade-accessibility.css"));
 assert.ok(css.includes("html.larriverse-dark")&&css.includes("html.larriverse-high-contrast")&&css.includes("@media(max-width:720px)"));
-for(const f of ["missions.js","game.js","scene-3d.js"]){
+for(const f of ["missions.js","game.js","scene-3d.js","organic-dino-models.js"]){
   const result=spawnSync(process.execPath,["--check",root+f],{encoding:"utf8"});
   assert.equal(result.status,0,root+f+" must parse: "+result.stderr);
+}
+// Validate all model geometry at both quality levels. A malformed point would
+// project as a missing polygon or a giant jagged screen-filling triangle.
+for(const kind of Object.keys(ORGANIC_PALETTES)){
+ const counts=[];
+ for(const quality of ["trail","high"]){
+  let count=0;
+  const shades=new Set();
+  drawOrganicDinosaur(kind,(polygon,color)=>{
+   assert.ok(polygon.length>=3&&polygon.every(p=>p.length===3&&p.every(Number.isFinite)),kind+" must emit finite 3D polygons");
+   assert.match(color,/^#[0-9a-f]{6}$/i,kind+" has a valid hex color");
+   shades.add(color);count++;
+  },{quality});
+  assert.ok(count>180&&count<8500,kind+" "+quality+" geometry has bounded detail: "+count);
+  assert.ok(shades.size>=4,kind+" has natural shading and multiple color tones");
+  counts.push(count);
+ }
+ assert.ok(counts[1]>counts[0],kind+" has greater model detail in museum view than walking trail");
 }
 const catalog=JSON.parse(fs.readFileSync("games/catalog.json","utf8"));
 const release=JSON.parse(fs.readFileSync("release.json","utf8"));
