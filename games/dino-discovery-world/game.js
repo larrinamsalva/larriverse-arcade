@@ -25,7 +25,9 @@ function load(){
     if(!raw||typeof raw!=="object")return base;
     const solved = Array.isArray(raw.solved) ? [...new Set(raw.solved.filter(n=>Number.isInteger(n)&&n>=1&&n<=80))].sort((a,b)=>a-b) : [];
     const unlocked = clamp(Number.isInteger(raw.unlocked)?raw.unlocked:1,1,80);
-    const level = clamp(Number.isInteger(raw.level)?raw.level:0,0,unlocked-1);
+    // Chapter access is free-choice; older saved games may have a low unlocked
+    // checkpoint even when a player has selected a later chapter directly.
+    const level = clamp(Number.isInteger(raw.level)?raw.level:0,0,MISSIONS.length-1);
     const fieldGuide = Array.isArray(raw.fieldGuide) ? [...new Set(raw.fieldGuide.filter(k=>Object.hasOwn(GUIDE,k)))] : [];
     return {level,unlocked,solved,fieldGuide};
   } catch {return base;}
@@ -52,10 +54,15 @@ function renderGuide(){
   }
 }
 function chapterRail(){
+  // All eight chapter boxes are playable immediately. Discovery counts track
+  // real accomplishments; being able to visit a chapter is not an award.
   $("chapters").innerHTML=CHAPTERS.map((item,i)=>{
-    const active=current().chapter===i, unlocked=state.unlocked>i*10;
-    const complete=Array.from({length:10},(_,j)=>i*10+j+1).every(id=>state.solved.includes(id));
-    return '<button type="button" data-chapter="'+i+'" class="chapter-chip'+(active?' active':'')+(complete?' done':'')+'" '+(unlocked?'':'disabled')+'>'+item.icon+' '+item.name+'</button>';
+    const active=current().chapter===i;
+    const solved=MISSIONS.slice(i*10,(i+1)*10).filter(m=>state.solved.includes(m.id)).length;
+    const complete=solved===10;
+    return '<button type="button" data-chapter="'+i+'" aria-pressed="'+active+'" class="chapter-chip'+(active?' active':'')+(complete?' done':'')+'">'+
+      '<span class="chapter-title">'+item.icon+' '+item.name+'</span>'+
+      '<small class="chapter-count">'+solved+' / 10 discoveries</small></button>';
   }).join("");
 }
 function updateScene(){
@@ -81,8 +88,11 @@ function render(){
   $("feedback").className="feedback";
   $("feedback").textContent=solvedHere?"Already discovered! Revisit the mission or continue.":"Explore the model and make a discovery. There's no timer.";
   $("explanation").textContent=solvedHere?item.explanation:"The science explanation appears here when you discover the answer.";
-  $("nextMission").disabled=!solvedHere;
-  $("nextMission").textContent=item.id===80?"Finish museum tour 🏆":"Next mission →";
+  // Moving between learning activities never requires a correct answer first.
+  $("nextMission").disabled=false;
+  $("nextMission").textContent=item.id===80
+    ?state.solved.length===80?"Finish museum tour 🏆":"Back to mission 1 ↺"
+    :"Next mission →";
   $("brushFossil").hidden=item.mode!=="dig";
   $("brushFossil").disabled=brushes>=3;
   $("brushReadout").hidden=item.mode!=="dig";
@@ -95,8 +105,8 @@ function render(){
     btn.addEventListener("click",()=>answer(index,btn));
     $("answerChoices").append(btn);
   });
-  $("levelSelect").innerHTML=MISSIONS.slice(0,state.unlocked).map((mission,i)=>
-    '<option value="'+i+'">Mission '+mission.id+' · '+CHAPTERS[mission.chapter].name+'</option>'
+  $("levelSelect").innerHTML=MISSIONS.map((mission,i)=>
+    '<option value="'+i+'">Mission '+mission.id+' · '+CHAPTERS[mission.chapter].name+(state.solved.includes(mission.id)?' ✓':'')+'</option>'
   ).join("");
   $("levelSelect").value=String(state.level);
   chapterRail();renderGuide();
@@ -123,6 +133,11 @@ function answer(index,button){
   }
   solvedHere=true;persist();renderGuide();
   $("nextMission").disabled=false;
+  if(state.solved.length===80&&item.id===80)$("nextMission").textContent="Finish museum tour 🏆";
+  // Update the mission menu's completion indicator without replacing the
+  // selected mission or resetting any of the current fossil-dig interactions.
+  const selectedOption=$("levelSelect").selectedOptions[0];
+  if(selectedOption&&!selectedOption.textContent.endsWith(" ✓"))selectedOption.textContent+=" ✓";
   $("feedback").className="feedback good";
   $("feedback").textContent="✓ Discovery recorded! "+(fresh?"A field-guide card has been unlocked.":"You knew this one already!");
   $("explanation").textContent=item.explanation;
@@ -132,21 +147,25 @@ function answer(index,button){
   $("progressBar").setAttribute("aria-valuenow",String(state.solved.length));
 }
 function jump(level){
-  state.level=clamp(level,0,state.unlocked-1);persist();render();
+  state.level=clamp(Number.isFinite(level)?level:0,0,MISSIONS.length-1);
+  persist();render();
 }
 $("chapters").addEventListener("click",e=>{
   const target=e.target.closest("[data-chapter]");
   if(!target||target.disabled)return;
-  jump(Math.min(state.unlocked-1,Number(target.dataset.chapter)*10));
+  jump(Number(target.dataset.chapter)*10);
 });
 $("levelSelect").addEventListener("change",e=>jump(Number(e.target.value)));
 $("nextMission").addEventListener("click",()=>{
-  if(!solvedHere)return;
   if(current().id===80){
-    $("feedback").textContent="🏆 Master Paleontologist! All 80 discoveries are in your museum.";
+    if(state.solved.length===80){
+      $("feedback").textContent="🏆 Master Paleontologist! All 80 discoveries are in your museum.";
+    }else{
+      jump(0);
+    }
     return;
   }
-  jump(Math.min(state.level+1,state.unlocked-1));
+  jump(state.level+1);
 });
 $("brushFossil").addEventListener("click",()=>{
   if(brushes>=3)return;

@@ -31,6 +31,12 @@ for(const name of ["dinoCanvas","turnLeft","turnRight","zoomIn","zoomOut","tiltU
 for(const feature of ["localStorage","LarriVerseArcade?.award","new Set","brushes","fieldGuide","unlocked"]){
   assert.ok(game.includes(feature),"Game engine includes "+feature);
 }
+assert.ok(game.includes('MISSIONS.map((mission,i)')&&!game.includes("MISSIONS.slice(0,state.unlocked)"),"All 80 mission choices are always visible");
+assert.ok(game.includes('aria-pressed')&&game.includes('class="chapter-chip')&&!game.includes("(unlocked?'':'disabled')"),"Eight chapter cards are always selectable with an accessible active indicator");
+assert.ok(game.includes("jump(Number(target.dataset.chapter)*10)")&&!game.includes("state.unlocked-1"),"Chapter and mission selection are not gated by solved progress");
+assert.ok(game.includes("state.solved.length===80"),"Completion reward still requires 80 actual discoveries");
+assert.ok(html.includes("Every chapter is open!")&&html.includes('aria-label="Choose any dinosaur mission"'),"Choose-any-chapter instructions and complete mission picker are present");
+assert.ok(css.includes(".chapter-count")&&css.includes("html.larriverse-dark .chapter-chip"),"Chapter progress and dark mode are styled");
 for(const feature of ["createScene","pointerdown","pointermove","keydown","project","polygon","yaw","pitch","tilt","zoom","getContext"]){
   assert.ok(scene.includes(feature),"3D scene includes "+feature);
 }

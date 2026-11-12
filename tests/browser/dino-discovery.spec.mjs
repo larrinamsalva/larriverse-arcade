@@ -122,3 +122,69 @@ test("Dino Discovery: shared organic animal models use more detailed gallery mes
  await expect(page.locator("#modelName")).toHaveText("Tyrannosaurus rex");
  expect(errors).toEqual([]);
 });
+
+test("Dino Discovery: every chapter box and all 80 missions are selectable on a fresh game",async({page})=>{
+ const errors=[];page.on("pageerror",e=>errors.push(e.message));
+ await page.goto(route);
+ const chapters=page.locator("#chapters .chapter-chip");
+ await expect(chapters).toHaveCount(8);
+ await expect(page.locator("#levelSelect option")).toHaveCount(80);
+ for(let chapter=0;chapter<8;chapter++){
+   await expect(chapters.nth(chapter)).toBeEnabled();
+   await chapters.nth(chapter).click();
+   await expect(page.locator("#levelReadout")).toHaveText("Mission "+(chapter*10+1)+" of 80");
+   await expect(chapters.nth(chapter)).toHaveAttribute("aria-pressed","true");
+ }
+ await expect(page.locator("#solvedCount")).toHaveText("0");
+ await page.locator("#levelSelect").selectOption("79");
+ await expect(page.locator("#levelReadout")).toHaveText("Mission 80 of 80");
+ await page.locator("#nextMission").click();
+ await expect(page.locator("#levelReadout")).toHaveText("Mission 1 of 80");
+ await expect(page.locator("#feedback")).not.toContainText("Master Paleontologist");
+ const saved=await page.evaluate(k=>JSON.parse(localStorage.getItem(k)),key);
+ expect(saved.solved).toEqual([]);
+ expect(saved.unlocked).toBe(1);
+ expect(errors).toEqual([]);
+});
+
+test("Dino Discovery: fossil dig is free-choice, progress stays earned and a later selection survives reload",async({page})=>{
+ const errors=[];page.on("pageerror",e=>errors.push(e.message));
+ await page.goto(route);
+ await page.locator('[data-chapter="1"]').click();
+ await expect(page.locator("#levelReadout")).toHaveText("Mission 11 of 80");
+ await expect(page.locator("#brushFossil")).toBeVisible();
+ await expect(page.locator(".answer-option").first()).toBeDisabled();
+ for(let i=0;i<3;i++)await page.locator("#brushFossil").click();
+ const fossil=await getMission(page,10);
+ await page.locator('[data-answer="'+fossil.answer+'"]').click();
+ await expect(page.locator("#solvedCount")).toHaveText("1");
+ await expect(page.locator('[data-chapter="1"] .chapter-count')).toHaveText("1 / 10 discoveries");
+ await expect(page.locator(".guide-card")).toHaveCount(1);
+ await page.locator('[data-chapter="7"]').click();
+ await expect(page.locator("#levelReadout")).toHaveText("Mission 71 of 80");
+ await page.reload();
+ await expect(page.locator("#levelReadout")).toHaveText("Mission 71 of 80");
+ await expect(page.locator("#levelSelect option")).toHaveCount(80);
+ await expect(page.locator("#solvedCount")).toHaveText("1");
+ const saved=await page.evaluate(k=>JSON.parse(localStorage.getItem(k)),key);
+ expect(saved.level).toBe(70);
+ expect(saved.solved).toEqual([11]);
+ expect(saved.fieldGuide).toEqual(["fossil"]);
+ expect(errors).toEqual([]);
+});
+
+test("Dino Discovery: older saved free-choice position remains selectable when legacy unlock checkpoint is low",async({page})=>{
+ await page.addInitScript(k=>{
+   if(!localStorage.getItem(k))localStorage.setItem(k,JSON.stringify({
+     level:69,unlocked:2,solved:[1],fieldGuide:["trike"]
+   }));
+ },key);
+ await page.goto(route);
+ await expect(page.locator("#levelReadout")).toHaveText("Mission 70 of 80");
+ await expect(page.locator("#levelSelect option")).toHaveCount(80);
+ await expect(page.locator("#solvedCount")).toHaveText("1");
+ await page.locator("#nextMission").click();
+ await expect(page.locator("#levelReadout")).toHaveText("Mission 71 of 80");
+ await page.reload();
+ await expect(page.locator("#levelReadout")).toHaveText("Mission 71 of 80");
+});

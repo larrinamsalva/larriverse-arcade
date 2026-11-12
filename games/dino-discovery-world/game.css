@@ -13,6 +13,16 @@ button:focus-visible,select:focus-visible,a:focus-visible,canvas:focus-visible{o
 .expedition-progress,.scene-panel,.mission-panel,.museum-panel,.science-sources{background:var(--d-card);border:1px solid var(--d-line);box-shadow:var(--d-shadow);border-radius:24px}
 .expedition-progress{margin:22px 0;padding:25px}.progress-top{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;font-size:1.06rem}.progress-top strong{font-size:1.3rem}.progress-bar{height:14px;background:#cbded0;border-radius:20px;margin:15px 0;overflow:hidden}.progress-bar>div{height:100%;width:0;background:linear-gradient(90deg,#26b382,#ffd369);transition:width .2s}
 .chapters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.chapter-chip{border:2px solid var(--d-line);border-radius:13px;background:var(--d-soft);color:var(--d-ink);font-size:.83rem;font-weight:700;padding:11px;text-align:left}.chapter-chip.active{background:#115e59;color:white;border-color:#115e59}.chapter-chip.done{border-color:#d9a23f}.chapter-chip:disabled{opacity:.44}
+.chapter-heading{font-size:1.18rem;margin:22px 0 6px;line-height:1.3;color:var(--d-ink)}
+.chapter-help{margin:0 0 14px;color:var(--d-sub);line-height:1.5}
+.chapter-chip{min-height:80px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;transition:border-color .15s,background-color .15s}
+.chapter-chip:hover{border-color:var(--d-accent);background:#d5f2dc}
+.chapter-chip.active:hover{background:#115e59}
+.chapter-title{display:block;line-height:1.35;overflow-wrap:anywhere}
+.chapter-count{display:block;font-size:.76rem;font-weight:700;color:var(--d-sub)}
+.chapter-chip.active .chapter-count{color:#e5f9ef}
+html.larriverse-dark .chapter-chip:hover:not(.active){background:#36564e}
+html.larriverse-dark .chapter-chip.active .chapter-count{color:#e5f9ef}
 .level-select{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:17px;font-weight:650;color:var(--d-sub)}.level-select select{padding:10px 14px;max-width:100%;min-width:245px;border:2px solid var(--d-line);border-radius:10px;background:var(--d-card);color:var(--d-ink)}
 .adventure-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr);gap:20px;align-items:start}
 .scene-panel,.mission-panel{min-width:0;padding:21px}.panel-title{display:flex;justify-content:space-between;gap:8px;align-items:center}.panel-title h2,.mission-panel h2,.museum-panel h2{font-size:1.42rem;margin:0 0 18px}.scene-tag{white-space:nowrap;background:#d8f5d7;border-radius:99px;color:#134d3d;padding:7px 12px;font-size:.77rem;font-weight:850}
