@@ -62,7 +62,7 @@ function updateScene(){
   scene.setSubject(selectedSubject);
   $("modelName").textContent=GUIDE[selectedSubject].name;
   $("modelType").textContent=GUIDE[selectedSubject].family;
-  $("dinoCanvas").setAttribute("aria-label","Interactive 3D illustrated "+GUIDE[selectedSubject].name+". "+GUIDE[selectedSubject].fact+" Use A and D or left and right arrows to orbit; plus and minus to zoom.");
+  $("dinoCanvas").setAttribute("aria-label","Interactive 3D illustrated "+GUIDE[selectedSubject].name+". "+GUIDE[selectedSubject].fact+" Use A and D or left and right arrows to orbit; Page Up and Page Down to look vertically; plus and minus to zoom.");
   if(current().mode==="dig" && brushes>0)scene.setFossilProgress(brushes/3);
 }
 function render(){
@@ -165,6 +165,8 @@ $("hintButton").addEventListener("click",()=>{
 });
 $("turnLeft").addEventListener("click",()=>scene.rotate(-.22));
 $("turnRight").addEventListener("click",()=>scene.rotate(.22));
+$("tiltUp").addEventListener("click",()=>scene.tilt(-.12));
+$("tiltDown").addEventListener("click",()=>scene.tilt(.12));
 $("zoomIn").addEventListener("click",()=>scene.changeZoom(.12));
 $("zoomOut").addEventListener("click",()=>scene.changeZoom(-.12));
 $("switchDino").addEventListener("click",()=>{
