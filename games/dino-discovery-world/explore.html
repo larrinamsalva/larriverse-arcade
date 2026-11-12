@@ -44,7 +44,7 @@
  <section class="walk-panel" aria-labelledby="walkTitle">
    <div class="panel-head"><div><p class="eyebrow">Your walk-through</p><h2 id="walkTitle">Explore a prehistoric world</h2></div><span class="walk-tag">3D movement</span></div>
    <div class="canvas-wrap">
-     <canvas id="worldCanvas" width="960" height="560" tabindex="0" role="img" aria-label="Interactive 3D prehistoric walk-through. Use W or S to walk, A or D to step sideways, left or right arrows to turn. An accessible station list is below."></canvas>
+     <canvas id="worldCanvas" width="960" height="560" tabindex="0" role="img" aria-label="Interactive 3D prehistoric walk-through. Use W or S to walk, A or D to step sideways, left or right arrows to turn, and Page Up or Page Down to look up or down. An accessible station list is below."></canvas>
    </div>
    <div class="walk-controls" role="group" aria-label="Accessible camera movement controls">
     <button type="button" data-step="forward">⬆ Walk forward</button>
@@ -53,9 +53,11 @@
     <button type="button" data-step="right">↷ Turn right</button>
     <button type="button" data-step="side-left">← Side step</button>
     <button type="button" data-step="side-right">Side step →</button>
+    <button type="button" data-step="look-up">👀 Look up</button>
+    <button type="button" data-step="look-down">👀 Look down</button>
     <button type="button" id="resetCamera">↩ Start of trail</button>
    </div>
-   <p class="control-help">On a computer, focus the 3D scene and use <kbd>W</kbd>/<kbd>S</kbd> to move, <kbd>A</kbd>/<kbd>D</kbd> to step sideways, and <kbd>←</kbd>/<kbd>→</kbd> to turn. On phones, use the large direction buttons or drag the scene to turn. Can't use movement controls? Every station has a direct-travel button below.</p>
+   <p class="control-help">On a computer, focus the 3D scene and use <kbd>W</kbd>/<kbd>S</kbd> to move, <kbd>A</kbd>/<kbd>D</kbd> to step sideways, and <kbd>←</kbd>/<kbd>→</kbd> to turn, then <kbd>Page Up</kbd>/<kbd>Page Down</kbd> to look up and down. On phones, use the large direction buttons or drag the scene to turn. Can't use movement controls? Every station has a direct-travel button below.</p>
    <div class="location-details">
     <h3 id="periodTitle">🌱 Triassic · Early dinosaur country</h3>
     <p id="periodYears">About 252–201 million years ago</p>
