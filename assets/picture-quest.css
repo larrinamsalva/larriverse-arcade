@@ -85,6 +85,14 @@ html.larriverse-large-text .quest{font-size:1.14rem}
 @media(max-width:550px){.quest{padding:12px 10px 70px}.quest-hero{padding:20px 18px}.hero-art{display:none}.progress-card,.learning-panel,.sidebar,.parent-guide{padding:17px}.choices{gap:7px}.picture-answer{padding:5px;border-width:2px}.answer-title{font-size:.73rem}.chapter-chip{min-height:78px}.level-jump select{width:100%}.actions button{flex:1 1 40%}}
 @media(prefers-reduced-motion:reduce){.track>div{transition:none}}
 
+/* Helping Hands needs large, recognizable first-aid props and human scenes on phones.
+   The pictures are real authored SVG diagrams, not generic emoji or downloaded photos. */
+@media(max-width:550px){
+  body[data-classic="helping-hands"] .choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  body[data-classic="helping-hands"] .picture-answer{padding:7px}
+  body[data-classic="helping-hands"] .picture-answer:last-child{grid-column:1 / -1;width:100%;max-width:210px;justify-self:center}
+  body[data-classic="helping-hands"] .answer-title{font-size:.82rem}
+}
 /* Field-guide spider markings need bigger pictures than generic safety icons.
    Use two readable answer columns on phones; Helping Hands keeps its layout. */
 @media(max-width:550px){
