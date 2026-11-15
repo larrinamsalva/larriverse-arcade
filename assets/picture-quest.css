@@ -65,7 +65,8 @@ html.larriverse-dark body{background:#0d2127}
 html.larriverse-dark .quest-hero{background:linear-gradient(125deg,#153a48,#2e5a5b)}
 html.larriverse-dark .chapter-chip{background:#274548;color:#f5fcfa}
 html.larriverse-dark .chapter-chip small{color:#d4eae4}
-html.larriverse-dark .chapter-chip.active{background:#276c75}
+html.larriverse-dark .chapter-chip.active{background:#164953;color:#fff}
+html.larriverse-dark .chapter-chip.active small{color:#fff}
 html.larriverse-dark .observation,html.larriverse-dark .teaching-note{background:#29474a}
 html.larriverse-dark .feedback{background:#28494e;color:#edf8fa}
 html.larriverse-dark .feedback.good{background:#214f3e}
