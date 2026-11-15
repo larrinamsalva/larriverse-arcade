@@ -1,3 +1,5 @@
+import {animeFace,animePerson,animeResting,animeListening,animeNosebleedPose} from './helping-hands-anime-characters.js';
+// Anime-character edition: filled silhouettes, expressive faces, layered clothes and child-safe scenes.
 // Educational, original, offline vector paintings. Not live emergency guidance.
 // Each artwork has a scene-specific silhouette, recognizable objects, skin/hair
 // detail, visible fingers or tools where needed, and NO external image requests.
@@ -57,29 +59,8 @@ function outside(mode='park'){
  bg+=e(270,53,32,27,'#aad1cc',{opacity:.7});
  return bg;
 }
-function face(x,y,scale=1,tone=skin,expression='calm'){
- let body=e(0,2,27,33,tone,{stroke:'#a87965','stroke-width':2});
- body+=p('M-21 -5 Q-24 -37 0 -38 Q22 -36 24 -11 Q12 -29 -6 -24 Q-18 -25 -21 -5Z','#584c44');
- body+=e(-20,3,6,9,tone,{stroke:'#a87965','stroke-width':1.8});
- body+=p('M4 -1 Q11 5 10 10 Q8 13 2 12','none','#9e6958',2.4,{'data-anatomy':'nose'});
- body+=e(-10,-4,2.5,3.2,'#293d49')+e(12,-4,2.5,3.2,'#293d49');
- body+=p('M-12 -12 L-4 -13 M9 -13 L16 -12','none','#6b5246',2);
- body+=expression==='sad'?
-   p('M-8 25 Q0 17 8 25','none','#9d5e58',2.4):
-   p('M-7 20 Q1 23 10 19','none','#9d675c',2.1);
- return g(body,'translate('+x+' '+y+') scale('+scale+')');
-}
-function person(x,y,scale=1,opts={}){
- const shirtColor=opts.color||shirt;
- let part=e(0,57,48,15,'#415d68',{opacity:.11});
- part+=p('M-26 56 L-23 89 M18 57 L23 89','none','#596d78',15);
- part+=p('M-28 36 Q-36 18 -22 12 Q0 5 22 12 Q38 17 32 54 L-30 56Z',shirtColor,{stroke:'#37636a','stroke-width':2.8});
- part+=p('M-24 22 Q-40 32 -40 53 M26 21 Q42 31 43 51','none',tone(opts),10);
- part+=p('M-9 4 V19 M12 4 V19','none',tone(opts),7);
- part+=face(0,-18,1,tone(opts),opts.sad?'sad':'calm');
- return g(part,'translate('+x+' '+y+') scale('+scale+')');
-}
-function tone(opts){return opts.tone||skin;}
+function face(x,y,scale=1,tone=skin,expression='calm'){return animeFace(x,y,scale,tone,expression);}
+function person(x,y,scale=1,opts={}){return animePerson(x,y,scale,opts);}
 function hand(x,y,scale=1,angle=0){
  const fingers=p('M-29 15 Q-25 1 -16 -13 Q-11 -22 -4 -18 Q0 -13 -8 -2 L-3 -18 Q1 -29 8 -24 Q14 -20 8 -8 L12 -15 Q18 -22 23 -17 Q29 -12 21 -2 Q34 0 32 9 Q29 25 10 27 L-5 29Z',
  '#e9b68e','#a97966',2);
@@ -179,21 +160,11 @@ function magnifier(){
 }
 function peoplePair(){
  return person(107,118,.68,{color:'#7b90b3'})+
-    person(221,118,.79,{color:'#d2a269'})+
+    person(221,118,.79,{color:'#d2a269',style:2,pose:'comfort'})+
     p('M130 129 Q160 143 184 127','none','#a77761',7);
 }
-function resting(){
- return e(160,161,106,11,'#7f989e',{opacity:.18})+
-    r(66,124,195,25,9,'#7eaaa8',{stroke:'#4f7d86','stroke-width':3})+
-    face(103,113,.65)+
-    p('M121 132 Q160 110 218 131','none','#3c8c9b',30)+
-    p('M183 147 L242 150','none','#4b7083',14);
-}
-function listening(){
- return face(146,100,1.14,'#efc19d','calm')+
-   p('M194 93 Q214 103 202 126 Q193 137 187 124','none','#9d6b56',5)+
-   p('M75 167 Q118 143 139 160 Q172 148 210 169','none','#8cb6bf',15);
-}
+function resting(){return animeResting();}
+function listening(){return animeListening();}
 function shelter(){
  return r(75,55,177,124,7,'#e4bc92',{stroke:'#a87f62','stroke-width':4})+
    p('M63 68 L164 20 L265 68','none','#b08060',13)+
@@ -247,29 +218,7 @@ function actionParts(kind){
  }
 }
 // Detailed, explicit nose/profile + pinching fingers, not a face-shaped circle.
-function nosebleedPose(withContext=true){
- const head=g(
-   p('M-46 -40 Q-56 -5 -43 30 Q-34 59 -4 65 Q33 65 44 35 L48 18 L58 15 Q64 10 54 2 L42 -16 Q33 -54 0 -57 Q-30 -56 -46 -40Z',
-     '#e9b894','#a47661',3)+
-   p('M-46 -32 Q-50 -66 -13 -71 Q27 -80 48 -47 L36 -23 Q24 -43 0 -39 Q-27 -44 -46 -18Z','#59463e')+
-   p('M-10 -4 L9 -7','none','#6c5248',3)+
-   e(4,4,3.6,4.6,'#273c45')+
-   p('M32 8 Q37 23 53 23 Q45 33 37 29','none','#9c6959',3,{'data-face-part':'nose-bridge'})+
-   e(43,28,2.7,1.9,'#9a604f')+
-   p('M14 49 Q24 53 35 48','none','#a36360',2.6)+
-   p('M46 29 Q44 36 46 45','none','#bf5a60',2.9,{'data-bleed-cue':'small'})+
-   e(47,46,2.8,3.4,'#c65c66'),
-  'translate(158 81) rotate(10) scale(.98)');
- const torso=p('M87 182 Q95 133 136 140 L155 132 Q202 136 228 183Z','#5da5a5','#3a777d',4);
- const arm=p('M232 185 Q223 157 219 144 Q219 129 214 118','none','#e9b894',18);
- // Clear thumb/finger pinch to the soft lower nose, with individual knuckles.
- const fingers=p('M216 125 Q208 107 199 105 Q188 102 184 112 Q182 117 190 121 L198 131 Q184 129 181 139 Q181 148 194 148 Q207 148 212 137Z',
-   '#edc19a','#a47461',2.8,{'data-first-aid-action':'pinch-soft-nose'})+
-   p('M197 126 Q202 120 204 114 M195 139 L203 140','none','#c38f76',1.7);
- const guidance=withContext?
-  p('M78 183 Q97 159 115 174','none','#d0b099',5):'';
- return guidance+torso+head+arm+fingers;
-}
+function nosebleedPose(withContext=true){return animeNosebleedPose(withContext);}
 export function helpActionPicture(kind){
  const key=KINDS.includes(kind)?kind:'observe';
  return frame(actionParts(key),'answer',key);
@@ -329,21 +278,21 @@ function scenarioScene(index){
     p('M112 110 L154 154 L179 111','none','#638ca0',5),'')+
     g(person(0,0,.78),'translate(230 16)');
    break;
-  case 13:scene=base+person(101,119,.78,{color:'#7ba0b0',sad:true})+
-    person(223,119,.78,{color:'#daa975'})+
+  case 13:scene=base+person(101,119,.78,{color:'#7ba0b0',sad:true,style:1})+
+    person(223,119,.78,{color:'#daa975',style:2,pose:'comfort'})+
     p('M138 125 Q162 117 183 123','none','#e6b18c',8);
    break;
   case 14:scene=base+person(95,115,.74,{color:'#84a6b5',sad:true})+
-    person(225,119,.86,{color:'#cf9a70'})+
+    person(225,119,.86,{color:'#cf9a70',style:2,pose:'comfort'})+
     g(person(0,0,.5,{color:'#7d9367'}),'translate(164 62)');
    break;
   case 15:scene=base+g(shelter(),'translate(88 11) scale(.77)')+
     person(98,110,.72,{color:'#7aa2b2'})+
-    person(220,105,.86,{color:'#c4a16e'});
+    person(220,105,.86,{color:'#c4a16e',style:3,pose:'comfort'});
    break;
   case 16:scene=base+g(fire(),'translate(-50 30) scale(.85)')+
     g(arrowAway(),'translate(144 58) scale(.58)')+
-    g(person(0,0,.54,{color:'#72a396'}),'translate(263 86)');
+    g(person(0,0,.54,{color:'#72a396',pose:'signal'}),'translate(263 86)');
    break;
   case 17:scene=base+r(18,116,284,60,10,'#9fcfdc')+
     p('M22 120 Q68 103 115 121 T211 121 T299 120','none','#67a8bd',6)+
@@ -353,7 +302,7 @@ function scenarioScene(index){
    break;
   case 18:scene=base+g(bottle(),'translate(-38 40) scale(.75)')+
     g(phone(false),'translate(120 36) scale(.6)')+
-    g(person(0,0,.45,{color:'#96a76a'}),'translate(262 78)');
+    g(person(0,0,.45,{color:'#96a76a',style:1}),'translate(262 78)');
    break;
   case 19:scene=base+person(112,111,.77,{color:'#73a39c'})+
     g(p('M68 85 Q84 78 93 92','none','#b65c66',5),'')+
