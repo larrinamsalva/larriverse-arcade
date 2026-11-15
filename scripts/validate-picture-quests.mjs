@@ -92,7 +92,8 @@ for(const kind of FIELD_GUIDE_SPECIES){
  assert.ok(svg.includes('data-markings="'+kind+'"'),kind+' has a distinct markings layer');
  assert.ok((svg.match(/<path /g)||[]).length>=22,kind+' must have substantially more visual detail than a simple oval sketch');
  assert.ok(svg.length>4500&&svg.length<55000,kind+' SVG must be detailed but lightweight enough for mobile');
- assert.ok(!/<script|foreignObject|https?:\/\/|<image|@import|onload=|javascript:/i.test(svg),
+ const contentWithoutSvgNamespace=svg.replace('xmlns="http://www.w3.org/2000/svg"','');
+ assert.ok(!/<script|foreignObject|https?:\/\/|<image|@import|onload=|javascript:/i.test(contentWithoutSvgNamespace),
    kind+' picture must contain no external assets, remote scripts or interactive code');
  drawings.add(svg);
 }
