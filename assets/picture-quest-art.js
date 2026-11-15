@@ -1,4 +1,5 @@
 import { spiderPicture } from './spider-field-guide-art.js';
+import { helpScenePicture } from './helping-hands-realistic-art.js';
 export { spiderPicture } from './spider-field-guide-art.js';
 // Original, offline SVG picture cards shared by Spider Scout and Helping Hands.
 // These are teaching illustrations, never reliable species diagnosis or medical instructions.
@@ -82,5 +83,5 @@ export function actionPicture(key){
   return picture(inner);
 }
 export function scenePicture(item,mode){
-  return mode==='spider'?spiderPicture(item.scene):actionPicture(item.scene);
+  return mode==='spider'?spiderPicture(item.scene):helpScenePicture(item);
 }

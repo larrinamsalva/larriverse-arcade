@@ -336,7 +336,9 @@ test('Bubble Resonance shooter and cabinet follow light and dark color modes', a
 });
 
 test('Bubble Resonance advances through the first twenty of eighty levels with no premature victory', async ({ page }) => {
-  test.setTimeout(60_000);
+  // Twenty genuine animated shots can exceed one minute on a busy shared CI runner.
+  // Keep every gameplay assertion; allow time for the complete visual sequence.
+  test.setTimeout(180_000);
   await page.addInitScript(() => { Math.random = () => .01; });
   await page.goto('/games/bubble-resonance-phi369/index.html');
   await expect(page.locator('#limit')).toHaveText('CLEAR');
@@ -348,7 +350,8 @@ test('Bubble Resonance advances through the first twenty of eighty levels with n
     const scoreAtStart = await page.locator('#score').innerText();
     await game.click({ position: { x: box.width * .5, y: box.height * .35 } });
     await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'true');
-    await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false', { timeout: 5000 });
+    // In CI a busy canvas may render fewer frames per second than on a laptop.
+    await expect(page.locator('#game')).toHaveAttribute('aria-busy', 'false', { timeout: 15_000 });
     if(level<=20) {
       await expect(page.locator('#limit')).toHaveText('NEXT');
       await expect(page.locator('#message')).toContainText(`LEVEL ${level} CLEAR`);

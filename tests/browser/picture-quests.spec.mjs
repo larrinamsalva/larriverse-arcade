@@ -134,3 +134,76 @@ test('Spider Scout: larger phone pictures preserve 80 missions and saved discove
  const dims=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth}));
  expect(dims.scroll).toBeLessThanOrEqual(dims.client+4);
 });
+
+test('Helping Hands: all twenty real-world scenes are unique, illustrated and valid SVG',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('/games/helping-hands/index.html');
+ const pictures=await page.evaluate(async()=>{
+  const {helpScenePicture,HELPING_SCENE_TITLES}=await import('/assets/helping-hands-realistic-art.js');
+  return HELPING_SCENE_TITLES.map(title=>{
+   const svg=helpScenePicture({title});
+   const root=new DOMParser().parseFromString(svg,'image/svg+xml');
+   return {title,svg,parseErrors:root.querySelectorAll('parsererror').length,
+     art:root.documentElement.getAttribute('data-help-art'),
+     key:root.documentElement.getAttribute('data-key'),
+     shapes:root.querySelectorAll('path,rect,circle,ellipse').length};
+  });
+ });
+ expect(pictures).toHaveLength(20);
+ expect(new Set(pictures.map(p=>p.key)).size).toBe(20);
+ expect(pictures.every(p=>p.parseErrors===0&&p.art==='realistic-2'&&p.shapes>=10)).toBe(true);
+ await expect(page.locator('#sceneArt svg[data-kind="scenario"]')).toHaveCount(1);
+ await expect(page.locator('#sceneArt svg[data-key="case-1"]')).toHaveCount(1);
+ const pic=pictures[0].svg;
+ expect(pic).toContain('data-face-part="nose-bridge"');
+ expect(pic).toContain('data-first-aid-action="pinch-soft-nose"');
+ expect(pic).toContain('data-bleed-cue="small"');
+ // The same nosebleed illustration appears in each of four different question chapters.
+ await page.locator('#levelSelect').selectOption('20');
+ await expect(page.locator('#sceneArt svg[data-key="case-1"]')).toHaveCount(1);
+ await page.locator('#levelSelect').selectOption('40');
+ await expect(page.locator('#sceneArt svg[data-key="case-1"]')).toHaveCount(1);
+ await page.locator('#levelSelect').selectOption('60');
+ await expect(page.locator('#sceneArt svg[data-key="case-1"]')).toHaveCount(1);
+ expect(errors).toEqual([]);
+});
+
+test('Helping Hands: every answer object has its own detailed picture',async({page})=>{
+ await page.goto('/games/helping-hands/index.html');
+ const results=await page.evaluate(async()=>{
+  const {helpActionPicture,HELPING_ACTION_TYPES}=await import('/assets/helping-hands-realistic-art.js');
+  return HELPING_ACTION_TYPES.map(key=>{
+   const svg=helpActionPicture(key);
+   const doc=new DOMParser().parseFromString(svg,'image/svg+xml');
+   return {key,valid:doc.querySelectorAll('parsererror').length===0,
+     detail:doc.querySelectorAll('path,rect,circle,ellipse').length,
+     art:doc.documentElement.getAttribute('data-help-art'),
+     scene:doc.documentElement.getAttribute('data-key')};
+  });
+ });
+ expect(results.length).toBeGreaterThanOrEqual(24);
+ expect(results.every(x=>x.valid&&x.detail>=3&&x.art==='realistic-2'&&x.scene===x.key)).toBe(true);
+ await expect(page.locator('#choices svg[data-help-art="realistic-2"]')).toHaveCount(3);
+ await expect(page.locator('#choices svg[data-key="nose"]')).toHaveCount(1);
+ await page.locator('#levelSelect').selectOption('21');
+ await expect(page.locator('#sceneArt svg[data-key="case-2"]')).toHaveCount(1);
+});
+
+test('Helping Hands: readable larger picture cards on narrow phones, with progress preserved',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/games/helping-hands/index.html');
+ const columns=await page.locator('#choices').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length);
+ expect(columns).toBe(2);
+ await expect(page.locator('#levelSelect option')).toHaveCount(80);
+ await expect(page.locator('#choices svg[data-help-art="realistic-2"]')).toHaveCount(3);
+ const answer=await page.evaluate(async()=>{
+  const {HELP_MISSIONS}=await import('/games/helping-hands/questions.js');
+  return HELP_MISSIONS[0].answer;
+ });
+ await page.locator('[data-answer="'+answer+'"]').click();
+ await expect(page.locator('#solvedCount')).toHaveText('1');
+ await page.reload();
+ await expect(page.locator('#solvedCount')).toHaveText('1');
+ const dims=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth}));
+ expect(dims.scroll).toBeLessThanOrEqual(dims.client+4);
+});
