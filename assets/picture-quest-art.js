@@ -1,3 +1,5 @@
+import { spiderPicture } from './spider-field-guide-art.js';
+export { spiderPicture } from './spider-field-guide-art.js';
 // Original, offline SVG picture cards shared by Spider Scout and Helping Hands.
 // These are teaching illustrations, never reliable species diagnosis or medical instructions.
 const esc=value=>String(value).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -79,39 +81,6 @@ export function actionPicture(key){
   const inner=art[key]||art.observe;
   return picture(inner);
 }
-const species={
-  jumping:{body:'#3e4546',accent:'#f6e6ce',long:30,eyes:true,hab:'leaf'},
-  orb:{body:'#b7763e',accent:'#f5df9c',long:47,web:true,hab:'web'},
-  wolf:{body:'#7f6b51',accent:'#c7a887',long:53,striped:true,hab:'leaf'},
-  cellar:{body:'#ac9378',accent:'#f4dfb9',long:78,thin:true,hab:'house'},
-  crab:{body:'#f0c764',accent:'#b98535',long:40,wide:true,hab:'flower'},
-  tarantula:{body:'#65504c',accent:'#a38c81',long:48,thick:true,hab:'burrow'},
-  widow:{body:'#272c33',accent:'#df565c',long:56,mark:true,hab:'wood'},
-  recluse:{body:'#b98962',accent:'#805536',long:47,violin:true,hab:'house'},
-  grass:{body:'#82795d',accent:'#d7c69f',long:51,striped:true,hab:'grass'},
-  trapdoor:{body:'#543f36',accent:'#b38d73',long:42,thick:true,hab:'burrow'}
-};
-export const spiderPicture=kind=>{
-  const s=species[kind]||species.jumping;
-  const backdrop={
-    leaf:art.leaf,web:art.web,house:art.house,flower:art.flower,burrow:art.burrow,wood:art.wood,grass:art.grass
-  }[s.hab]||art.leaf;
-  const cx=160,cy=111,len=s.long;
-  const legs=Array.from({length:8},(_,i)=>{
-    const side=i<4?-1:1,k=i%4,dy=(k-1.5)*13,reach=(s.wide?1.55:1)*len;
-    const shoulder=cx+side*(s.wide?26:20), elbow=cx+side*(reach*.73),end=cx+side*(reach+21);
-    const endY=cy+(k-1.5)*18+(k===3?12:-9);
-    return `<path d="M${shoulder} ${cy+dy*.4} Q${elbow} ${cy+dy-16} ${end} ${endY}" fill="none" stroke="${s.body}" stroke-width="${s.thick?9:s.thin?2.5:6}" stroke-linecap="round"/>`;
-  }).join('');
-  const body=`<ellipse cx="180" cy="110" rx="${s.thin?15:31}" ry="${s.thin?18:27}" fill="${s.body}" stroke="#3c3938" stroke-width="3"/>
-    <ellipse cx="139" cy="110" rx="${s.thin?12:21}" ry="${s.thin?15:21}" fill="${s.body}" stroke="#3c3938" stroke-width="3"/>`;
-  const accents=s.mark?`<path d="M171 105 l9 -7 9 7 -9 11Z" fill="#e44c58"/>`:
-    s.violin?`<path d="M135 97 Q147 92 146 102 L146 117 Q137 125 133 115Z" fill="#7d503c"/>`:
-    s.eyes?`<circle cx="132" cy="101" r="9" fill="#f3e7d4"/><circle cx="148" cy="101" r="9" fill="#f3e7d4"/><circle cx="132" cy="101" r="5" fill="#162b39"/><circle cx="148" cy="101" r="5" fill="#162b39"/>`:
-    s.striped?`<path d="M174 85 Q189 111 174 134" stroke="${s.accent}" fill="none" stroke-width="9"/>`:
-    `<path d="M185 94 Q199 109 186 122" stroke="${s.accent}" fill="none" stroke-width="7"/>`;
-  return picture(`<g opacity=".42">${backdrop}</g><g>${legs}${body}${accents}</g>`);
-};
 export function scenePicture(item,mode){
   return mode==='spider'?spiderPicture(item.scene):actionPicture(item.scene);
 }
