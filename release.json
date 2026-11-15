@@ -5,7 +5,7 @@
   "tag": "v1.0.0",
   "title": "LarriVerse Arcade 1.0",
   "releaseState": "candidate",
-  "cabinetCount": 38,
+  "cabinetCount": 40,
   "humanChecksRequired": true,
   "qaRoute": "qa/index.html",
   "releaseNotes": "docs/RELEASE-NOTES-1.0.0.md",
@@ -35,7 +35,7 @@
   },
   "galleryReview": {
     "schema": "larriverse-gallery-review",
-    "expectedImages": 78,
+    "expectedImages": 82,
     "projects": [
       "desktop-chromium",
       "mobile-chromium"
@@ -370,6 +370,18 @@
       "title": "Dino Discovery World",
       "manualFocus": "Orbit and zoom low-poly 3D exhibits with mouse, keyboard and touch; brush all three fossil layers; verify all 80 unique educational missions and explanations, local field-guide card unlocks, XP and KC rewards, reload persistence, high-contrast and dark mode, mobile layouts, and no external requests. Real phone and human science review required.",
       "route": "games/dino-discovery-world/index.html"
+    },
+    {
+      "id": "spider-scout",
+      "title": "Spider Scout",
+      "route": "games/spider-scout/index.html",
+      "manualFocus": "Open all eight chapters and try all 80 picture missions. Inspect original jumping, wolf, orb-weaver, widow and recluse illustrations and text clues; check that sightings never encourage touching, brown recluse geography is accurate, species art is not used as a definitive diagnosis, and unsafe choices are explained gently. Verify laptop/phone responsive pictures, dark and high contrast, screen-reader answer names, local save/revisit, earned-once awards and real emergency guidance links."
+    },
+    {
+      "id": "helping-hands",
+      "title": "Helping Hands",
+      "route": "games/helping-hands/index.html",
+      "manualFocus": "Choose nosebleed lean-forward/soft-nose pressure for 10–15 minutes, first-aid kit/bandage for minor scrapes, emergency calls for trouble breathing/unresponsiveness and significant bleeding, plus trusted-adult help and calm care in all 80 picture missions. Check no dangerous answer is presented as correct, safe no-touch behavior, 911 U.S. labeling and Poison Help, local persistence, no real-life incident data, desktop/mobile illustrations, dark mode and high-contrast. Real professional first-aid review and physical-device QA remain required."
     }
   ]
 }
