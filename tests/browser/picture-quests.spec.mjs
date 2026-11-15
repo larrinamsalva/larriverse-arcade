@@ -151,7 +151,7 @@ test('Helping Hands: all twenty real-world scenes are unique, illustrated and va
  });
  expect(pictures).toHaveLength(20);
  expect(new Set(pictures.map(p=>p.key)).size).toBe(20);
- expect(pictures.every(p=>p.parseErrors===0&&p.art==='realistic-2'&&p.shapes>=10)).toBe(true);
+ expect(pictures.every(p=>p.parseErrors===0&&p.art==='anime-3'&&p.shapes>=10)).toBe(true);
  await expect(page.locator('#sceneArt svg[data-kind="scenario"]')).toHaveCount(1);
  await expect(page.locator('#sceneArt svg[data-key="case-1"]')).toHaveCount(1);
  const pic=pictures[0].svg;
@@ -182,8 +182,8 @@ test('Helping Hands: every answer object has its own detailed picture',async({pa
   });
  });
  expect(results.length).toBeGreaterThanOrEqual(24);
- expect(results.every(x=>x.valid&&x.detail>=3&&x.art==='realistic-2'&&x.scene===x.key)).toBe(true);
- await expect(page.locator('#choices svg[data-help-art="realistic-2"]')).toHaveCount(3);
+ expect(results.every(x=>x.valid&&x.detail>=3&&x.art==='anime-3'&&x.scene===x.key)).toBe(true);
+ await expect(page.locator('#choices svg[data-help-art="anime-3"]')).toHaveCount(3);
  await expect(page.locator('#choices svg[data-key="nose"]')).toHaveCount(1);
  await page.locator('#levelSelect').selectOption('21');
  await expect(page.locator('#sceneArt svg[data-key="case-2"]')).toHaveCount(1);
@@ -195,7 +195,7 @@ test('Helping Hands: readable larger picture cards on narrow phones, with progre
  const columns=await page.locator('#choices').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length);
  expect(columns).toBe(2);
  await expect(page.locator('#levelSelect option')).toHaveCount(80);
- await expect(page.locator('#choices svg[data-help-art="realistic-2"]')).toHaveCount(3);
+ await expect(page.locator('#choices svg[data-help-art="anime-3"]')).toHaveCount(3);
  const answer=await page.evaluate(async()=>{
   const {HELP_MISSIONS}=await import('/games/helping-hands/questions.js');
   return HELP_MISSIONS[0].answer;
@@ -206,4 +206,48 @@ test('Helping Hands: readable larger picture cards on narrow phones, with progre
  await expect(page.locator('#solvedCount')).toHaveText('1');
  const dims=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth}));
  expect(dims.scroll).toBeLessThanOrEqual(dims.client+4);
+});
+
+test('Helping Hands: expressive anime anatomy replaces stick figures across all situations',async({page})=>{
+ const pageErrors=[];page.on('pageerror',error=>pageErrors.push(error.message));
+ await page.goto('/games/helping-hands/index.html');
+ const portraits=await page.evaluate(async()=>{
+  const {HELPING_SCENE_TITLES,helpScenePicture}=await import('/assets/helping-hands-realistic-art.js');
+  return HELPING_SCENE_TITLES.map((title)=>{
+   const markup=helpScenePicture({title});
+   const doc=new DOMParser().parseFromString(markup,'image/svg+xml');
+   return {title,parseErrors:doc.querySelectorAll('parsererror').length,
+    version:doc.documentElement.getAttribute('data-help-art'),
+    face:doc.querySelectorAll('[data-anime-feature="expressive-face"]').length,
+    people:doc.querySelectorAll('[data-anime-character="full-body"]').length,
+    specific:doc.querySelectorAll('[data-anime-scene]').length,
+    externalImages:doc.querySelectorAll('image,foreignObject,script').length};
+  });
+ });
+ expect(portraits).toHaveLength(20);
+ expect(portraits.every(x=>x.parseErrors===0&&x.version==='anime-3'&&
+   (x.face>0||x.people>0||x.specific>0)&&x.externalImages===0)).toBe(true);
+ expect(portraits.filter(x=>x.people>0).length).toBeGreaterThanOrEqual(10);
+ expect(pageErrors).toEqual([]);
+});
+
+test('Helping Hands: nosebleed anatomy, full-body helper and worried anime face stay readable on phone',async({page})=>{
+ const errors=[];page.on('pageerror',error=>errors.push(error.message));
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/games/helping-hands/index.html');
+ const scene=page.locator('#sceneArt svg');
+ await expect(scene).toHaveAttribute('data-help-art','anime-3');
+ await expect(scene.locator('[data-anime-scene="nosebleed-forward-lean"]')).toHaveCount(1);
+ await expect(scene.locator('[data-anime-anatomy="nose-and-face"]')).toHaveCount(1);
+ await expect(scene.locator('[data-first-aid-action="pinch-soft-nose"]')).toHaveCount(1);
+ await expect(scene.locator('[data-bleed-cue="small"]')).toHaveCount(1);
+ await page.locator('#levelSelect').selectOption('13');
+ await expect(scene.locator('[data-anime-character="full-body"]')).toHaveCount(2);
+ await expect(scene.locator('[data-anime-feature="expressive-face"]')).toHaveCount(2);
+ await page.evaluate(()=>window.LarriVerseArcade.setSettings({theme:'dark',highContrast:true}));
+ await expect(page.locator('#sceneArt svg[data-help-art="anime-3"]')).toHaveCount(1);
+ const dims=await page.evaluate(()=>({width:document.documentElement.clientWidth,
+  scroll:document.documentElement.scrollWidth}));
+ expect(dims.scroll).toBeLessThanOrEqual(dims.width+4);
+ expect(errors).toEqual([]);
 });
