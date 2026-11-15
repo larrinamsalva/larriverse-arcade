@@ -137,7 +137,7 @@ function legs(spec){
       const expansion=long?1.1:1;
       const anchorX=topX[i],anchorY=108+side*([11,18,16,12][i]);
       const knee=[xy(153+(kneeX[i]-153)*shorten*expansion+shift),xy(108+side*(108-kneeY[i]))];
-      const tip=[xy(153+(tipX[i]-153)*shorten*expansion+shift),xy(108+side*(108-tipY[i]))];
+      const tip=[xy(Math.max(15,Math.min(302,153+(tipX[i]-153)*shorten*expansion+shift))),xy(Math.max(18,Math.min(181,108+side*(108-tipY[i]))))];
       const curve='M'+anchorX+' '+anchorY+' Q'+xy((anchorX+knee[0])/2)+' '+xy((anchorY+knee[1])/2-8*side)+' '+knee[0]+' '+knee[1]+
         ' Q'+xy((knee[0]+tip[0])/2)+' '+xy((knee[1]+tip[1])/2+2*side)+' '+tip[0]+' '+tip[1];
       output.push(path(curve,'none',{stroke:blend(spec.leg,'#151b21',.45),'stroke-width':w+1.8,'stroke-linejoin':'round','stroke-linecap':'round'}));
