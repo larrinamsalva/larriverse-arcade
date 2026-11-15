@@ -58,7 +58,7 @@ assert.ok(/recluse/i.test(spiderText)&&/midwest/i.test(spiderText),'Recluse rang
 assert.ok(/widow/i.test(spiderText)&&/venom/i.test(spiderText),'Widow warning and venom education');
 assert.ok(/without touching|leave.*alone|never/.test(spiderText),'Wildlife observation discourages handling');
 const helpText=JSON.stringify(HELP_MISSIONS);
-for(const required of ['nosebleed','10–15 minutes','911','Poison Control','choking','seizure','burn','bully','adult']){
+for(const required of ['nosebleed','10–15 minutes','911','Poison Control','choking','seizure','burn','bullied','adult']){
  assert.ok(helpText.toLowerCase().includes(required.toLowerCase()),'Helping Hands must teach '+required);
 }
 assert.ok(helpText.includes('cannot cough')&&helpText.includes('lean a little forward'),'Danger and nosebleed guidance');
