@@ -5,6 +5,7 @@ import {SPIDERS,SPIDER_CHAPTERS,SPIDER_MISSIONS} from '../games/spider-scout/que
 import {HELP_CASE_COUNT,HELP_CHAPTERS,HELP_MISSIONS} from '../games/helping-hands/questions.js';
 import {spiderPicture,actionPicture} from '../assets/picture-quest-art.js';
 import {helpActionPicture,helpScenePicture,HELPING_ACTION_TYPES,HELPING_SCENE_TITLES} from '../assets/helping-hands-realistic-art.js';
+import {animePerson,animeFace,animeNosebleedPose,animeResting,animeListening} from '../assets/helping-hands-anime-characters.js';
 import {FIELD_GUIDE_SPECIES} from '../assets/spider-field-guide-art.js';
 
 const catalog=JSON.parse(fs.readFileSync('games/catalog.json','utf8'));
@@ -120,7 +121,7 @@ assert.ok(HELPING_ACTION_TYPES.length>=24,'Every object/action icon gets upgrade
 const seenSceneArt=new Set();
 for(const title of HELPING_SCENE_TITLES){
  const pic=helpScenePicture({title});
- assert.ok(pic.includes('data-help-art="realistic-2"')&&pic.includes('data-kind="scenario"'),title+' displays a realism scene');
+ assert.ok(pic.includes('data-help-art="anime-3"')&&pic.includes('data-kind="scenario"'),title+' displays a realism scene');
  assert.ok(pic.includes('data-key="case-'+(HELPING_SCENE_TITLES.indexOf(title)+1)+'"'),title+' has a distinct visual scene key');
  assert.ok(pic.includes('<svg')&&pic.includes('<path')&&pic.length>1400,title+' contains meaningful native SVG art');
  assert.ok(!/<script|foreignObject|<image|onload=|javascript:|@import/i.test(pic),title+' remains local and noninteractive');
@@ -162,4 +163,40 @@ const helpSyntax=spawnSync(process.execPath,['--check','assets/helping-hands-rea
 assert.equal(helpSyntax.status,0,'New first aid SVG art module must parse cleanly: '+helpSyntax.stderr);
 assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|navigator\.geolocation|sendBeacon|setInterval/.test(helpArt),
  'Realistic safety art never collects incidents or contacts a remote server');
+// The anime update must solve the underlying stick-figure problem, not just
+// recolor a head: bodies, arms, hands, two legs, clothing, shoes, faces and eyes
+// have actual filled vector geometry.
+const expressive=animePerson(150,98,.85,{pose:'comfort',sad:true,style:2});
+for(const label of ['data-anime-character="full-body"','data-anime-anatomy="torso-and-clothing"',
+ 'data-anime-anatomy="arm-sleeve-hand"','data-anime-anatomy="hand-and-fingers"',
+ 'data-anime-anatomy="face-and-jaw"','data-anime-layer="layered-bangs"',
+ 'data-anime-feature="expressive-face"','data-pose="comfort"']){
+ assert.ok(expressive.includes(label),'Characters require expressive anime anatomy: '+label);
+}
+assert.ok((expressive.match(/data-anime-anatomy="arm-sleeve-hand"/g)||[]).length===2,
+ 'Each illustrated person has two filled-in arms');
+assert.ok(expressive.includes('<ellipse')&&expressive.includes('<path'),
+ 'Anime characters contain eyes, hair shapes, full silhouettes and fabric details');
+assert.ok(animeFace(151,86,1).includes('data-anime-feature="expressive-face"'),
+ 'Faces include layered eyes, chin and hair');
+assert.ok(animeResting().includes('data-anime-scene="resting-with-support"'),
+ 'Resting child has a filled lying pose, pillow and bedding');
+assert.ok(animeListening().includes('data-anime-scene="attentive-listener"'),
+ 'Listening answer shows a recognizable person, not an ear-only icon');
+assert.ok(animeNosebleedPose().includes('data-anime-scene="nosebleed-forward-lean"'),
+ 'Nosebleed scene now has an expressive anime face and upright shoulders');
+for(const title of HELPING_SCENE_TITLES){
+ const pic=helpScenePicture({title});
+ assert.ok(pic.includes('data-help-art="anime-3"'),'Every Helping Hands scene uses current anime illustration version');
+ assert.ok(pic.includes('data-anime-'),'Every situation includes a filled anime person or character scene: '+title);
+}
+for(const k of ['nose','adult','friend','rest','listen','wait']){
+ assert.ok(helpActionPicture(k).includes('data-anime-'),
+  'Human-related answer pictures have an actual anime character: '+k);
+}
+const animeSrc=fs.readFileSync('assets/helping-hands-anime-characters.js','utf8');
+assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|navigator\.geolocation|sendBeacon|setInterval|<script/i.test(animeSrc),
+ 'Anime drawings require no servers, timers, telemetry or unsafe markup');
+const animeSyntax=spawnSync(process.execPath,['--check','assets/helping-hands-anime-characters.js'],{encoding:'utf8'});
+assert.equal(animeSyntax.status,0,'Anime character module must parse cleanly: '+animeSyntax.stderr);
 console.log('Picture Quest validated: 40 playable worlds, 2 new visual games, 160 picture missions, safe local progress and accessibility.');
