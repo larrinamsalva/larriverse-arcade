@@ -35,7 +35,7 @@ const tx=(x,y,value,size=15,fill=ink)=>h('text',{x,y,fill,'text-anchor':'middle'
 // Soft painterly floor and slight cast shadows make the objects feel tangible.
 function frame(inner,kind,key,background='#f1f5f2'){
  return h('svg',{xmlns:'http://www.w3.org/2000/svg',viewBox:'0 0 320 200',focusable:'false','aria-hidden':'true',
-   'data-help-art':'realistic-2','data-kind':kind,'data-key':key},
+   'data-help-art':'anime-3','data-kind':kind,'data-key':key,'data-illustration':'offline-original-svg'},
    r(2,2,316,196,21,background,{stroke:'#a4bbc1','stroke-width':3})+
    c(269,42,32,'#ffffff',{opacity:.27})+
    e(165,172,126,12,'#536b72',{opacity:.11})+
@@ -45,6 +45,8 @@ function room(theme='classroom'){
  let bg= r(12,12,296,170,12,theme==='school'?'#e8f0eb':'#f3f1e9');
  bg+=p('M13 138 H307 V181 H13Z',theme==='school'?'#d2e3d5':'#ddd8c9');
  bg+=line(13,138,307,138,'#a4b5ac',2);
+ bg+=p('M19 19 H92 L117 108 H42Z','#fffaf0','none',0,{opacity:.23});
+ bg+=p('M225 20 L304 32 V81 L259 60Z','#ffffff','none',0,{opacity:.25});
  bg+=r(28,28,68,68,7,'#d2e9f1',{stroke:'#9ab9bc','stroke-width':3})+
       line(62,29,62,96,'#9fb8b7',3)+line(29,62,96,62,'#9fb8b7',3);
  if(theme==='school')bg+=r(228,34,56,37,4,'#d2e7d4',{stroke:'#789981','stroke-width':3})+
