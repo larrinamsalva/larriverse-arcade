@@ -4,6 +4,7 @@ import {spawnSync} from 'node:child_process';
 import {SPIDERS,SPIDER_CHAPTERS,SPIDER_MISSIONS} from '../games/spider-scout/questions.js';
 import {HELP_CASE_COUNT,HELP_CHAPTERS,HELP_MISSIONS} from '../games/helping-hands/questions.js';
 import {spiderPicture,actionPicture} from '../assets/picture-quest-art.js';
+import {FIELD_GUIDE_SPECIES} from '../assets/spider-field-guide-art.js';
 
 const catalog=JSON.parse(fs.readFileSync('games/catalog.json','utf8'));
 const release=JSON.parse(fs.readFileSync('release.json','utf8'));
@@ -77,4 +78,36 @@ for(const file of ['assets/picture-quest.js','assets/picture-quest-art.js','game
  const result=spawnSync(process.execPath,['--check',file],{encoding:'utf8'});
  assert.equal(result.status,0,file+' must parse cleanly: '+result.stderr);
 }
+// Each field-guide picture is an original standalone SVG, never an image URL or
+// a diagnostic certificate. Test model variety and four pairs of legs.
+assert.deepEqual(FIELD_GUIDE_SPECIES,SPIDERS.map(s=>s.key),
+  'Every Spider Scout lesson subject has a specifically authored field-guide illustration');
+const drawings=new Set();
+for(const kind of FIELD_GUIDE_SPECIES){
+ const svg=spiderPicture(kind);
+ assert.ok(svg.includes('data-species="'+kind+'"')&&svg.includes('data-art-version="field-guide-2"'),kind+' identifies its illustration');
+ assert.ok(svg.includes('data-habitat=')&&svg.includes('data-anatomy="cephalothorax-abdomen"'),kind+' has a distinct habitat and body');
+ assert.equal((svg.match(/data-leg="/g)||[]).length,8,kind+' must show all eight joined legs');
+ assert.ok(svg.includes('<radialGradient')&&svg.includes('data-eyes='),kind+' has dimensional shading and a species-relevant eye arrangement');
+ assert.ok(svg.includes('data-markings="'+kind+'"'),kind+' has a distinct markings layer');
+ assert.ok((svg.match(/<path /g)||[]).length>=22,kind+' must have substantially more visual detail than a simple oval sketch');
+ assert.ok(svg.length>4500&&svg.length<55000,kind+' SVG must be detailed but lightweight enough for mobile');
+ const contentWithoutSvgNamespace=svg.replace('xmlns="http://www.w3.org/2000/svg"','');
+ assert.ok(!/<script|foreignObject|https?:\/\/|<image|@import|onload=|javascript:/i.test(contentWithoutSvgNamespace),
+   kind+' picture must contain no external assets, remote scripts or interactive code');
+ drawings.add(svg);
+}
+assert.equal(drawings.size,10,'All ten spider pictures are visibly different designs');
+for(const kind of ['jumping','wolf','cellar','tarantula','widow','recluse']){
+ const s=spiderPicture(kind);
+ assert.ok(s.includes('data-species="'+kind+'"')&&s.includes('data-markings="'+kind+'"'));
+}
+assert.ok(spiderPicture('jumping').includes('data-eyes="jumper"'),'Jumping spiders have prominent forward-looking eyes');
+assert.ok(spiderPicture('wolf').includes('data-eyes="wolf"'),'Wolf spiders have their own eye pattern');
+assert.ok(spiderPicture('recluse').includes('data-eyes="recluse"'),'Recluse art includes eye grouping without claiming definitive identification');
+assert.ok(spiderPicture('widow').includes('data-habitat="wood"'),'Widow art shows a sheltered woodpile habitat');
+const spiderUi=fs.readFileSync('assets/picture-quest.css','utf8');
+assert.ok(spiderUi.includes('body[data-classic="spider-scout"] .choices'), 'Spider pictures stay large enough to compare on phones');
+const moduleSyntax=spawnSync(process.execPath,['--check','assets/spider-field-guide-art.js'],{encoding:'utf8'});
+assert.equal(moduleSyntax.status,0,'Field guide renderer must parse as JavaScript: '+moduleSyntax.stderr);
 console.log('Picture Quest validated: 40 playable worlds, 2 new visual games, 160 picture missions, safe local progress and accessibility.');
