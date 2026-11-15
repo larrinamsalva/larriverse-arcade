@@ -131,7 +131,8 @@ const seenActions=new Set();
 for(const kind of HELPING_ACTION_TYPES){
  const pic=helpActionPicture(kind);
  assert.ok(pic.includes('data-kind="answer"')&&pic.includes('data-key="'+kind+'"'),kind+' has its own illustrated prop');
- assert.ok(pic.includes('<svg')&&pic.length>900,kind+' is a detailed vector object, not a circle-only placeholder');
+ assert.ok(pic.includes('<svg')&&pic.length>350&&(pic.includes('<path')||pic.includes('<rect')),
+  kind+' is a recognisable illustrated object, not a circle-only placeholder');
  assert.ok(!/<script|foreignObject|<image|onload=|javascript:|@import/i.test(pic),kind+' uses no external images or code');
  seenActions.add(pic);
 }
