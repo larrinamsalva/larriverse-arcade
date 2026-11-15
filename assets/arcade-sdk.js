@@ -13,6 +13,14 @@
   const darkModeQuery = window.matchMedia?.('(prefers-color-scheme: dark)');
 
   const BLOOM_GUIDES = Object.freeze({
+    'spider-scout': {
+      welcome: 'Hello, spider scientist! Look at body shapes, webs and habitats in the pictures. Leave real spiders where they are.',
+      hint: 'Compare several clues, not just color. Observe without touching and ask a trusted adult if you find an unknown spider.'
+    },
+    'helping-hands': {
+      welcome: 'Helping is a team skill! Study the situation and choose a calm, safe picture.',
+      hint: 'Check whether the scene is safe, get a trusted adult, and remember that immediate danger needs 911 in the U.S. or your local emergency number.'
+    },
     'arcade-home': {
       welcome: 'Hey, explorer! I’m Bloom. Let’s find an adventure that feels just right today.',
       hint: 'Try a game that sounds fun, or use Surprise me. Every try grows a new skill.'

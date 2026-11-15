@@ -1,6 +1,6 @@
 # LarriVerse Arcade ✦
 
-A free, kid- and teen-friendly arcade with **38 playable games**, including a new 60-level Word Search World, including Kids Sudoku World's 60 progressive puzzles, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
+A free, kid- and teen-friendly arcade with **40 playable games**, including a new 60-level Word Search World, including Kids Sudoku World's 60 progressive puzzles, original illustrated worlds, device-local progress, and practical skills to explore together. [Play the arcade](https://larrinamsalva.github.io/larriverse-arcade/).
 
 The magical visual system adds cheerful daylight, moonlit dark mode, a follow-device option, richer SVG materials and scenery, and **Bloom**, a hideable local adventure buddy with a different welcome and hint for every game. See the [magical makeover guide](docs/MAGICAL-MAKEOVER.md).
 
@@ -126,7 +126,7 @@ Launch any live game from the root arcade lobby.
 
 ## Release candidate
 
-The arcade is at **1.0.0 rc.1**, with 38 playable games. Automation produces candidate evidence; it does not approve a formal release. The existing [release checklist](docs/RELEASE-CHECKLIST.md) still requires hands-on desktop play, real physical-phone QA, human visual/gameplay approval, and print review. No final approval record has been created by this polish pass.
+The arcade is at **1.0.0 rc.1**, with 40 playable games. Automation produces candidate evidence; it does not approve a formal release. The existing [release checklist](docs/RELEASE-CHECKLIST.md) still requires hands-on desktop play, real physical-phone QA, human visual/gameplay approval, and print review. No final approval record has been created by this polish pass.
 
 Start the hands-on phase with the [desktop and phone testing guide](docs/RELEASE-TESTING.md). It links the live QA console, explains the three evidence files, and keeps incomplete checks pending.
 
@@ -167,7 +167,7 @@ The original eight cabinets keep independent engines and local saves. `assets/ca
 
 Twenty-one shared-engine worlds use `assets/skill-games.js`, which implements thirteen practice modes and delegates eight expedition modes to `assets/expedition-games.js`. Their definitions live in `assets/skill-worlds.js` and `assets/expedition-worlds.js`. Street Safety Scout has a dedicated visual engine and 60-scenario module; the lobby reads every cabinet from `games/catalog.json`. Each game preserves its individual board and safety notes. See [MODERN-ARCADE.md](docs/MODERN-ARCADE.md), [EXPEDITIONS.md](docs/EXPEDITIONS.md), and [V1-POLISH.md](docs/V1-POLISH.md).
 
-`assets/arcade-discovery.js` computes optional Continue Playing, Recommended for You, and Try Something New links from the current catalog and aggregate local session history. It writes no records and makes no ability judgment. Search and topic filters still expose all 38 games.
+`assets/arcade-discovery.js` computes optional Continue Playing, Recommended for You, and Try Something New links from the current catalog and aggregate local session history. It writes no records and makes no ability judgment. Search and topic filters still expose all 40 games.
 
 ## Validation
 
@@ -193,7 +193,7 @@ It checks:
 - KidsCoin Family's source features, eight avatars, four task groups, twelve tasks, six reviewed lessons, eight reward requests, and four streak milestones
 - KidsCoin Family keeps rewards fictional and device-local, loads the SDK first, hashes the local PIN, and excludes token-price, staking, blockchain, geolocation, and real-purchase code
 - lobby integration and playable-cabinet counts
-- all 38 contextual Bloom guides, three saved themes, local-only behavior, and reduced-motion coverage
+- all 40 contextual Bloom guides, three saved themes, local-only behavior, and reduced-motion coverage
 - detailed Bridge Buddies, Lemonade Lab, Beat Builder, Robot Rover, Traffic Town, Street Safety Scout, and Pantry Picnic artwork contracts
 
 Pull requests run the same checks through `.github/workflows/validate.yml`. Complete browser QA uses the pinned runner in `.github/workflows/browser-qa.yml`:
@@ -206,7 +206,7 @@ npm run gallery:build
 npm run gallery:verify
 ```
 
-The gallery contains the lobby plus 38 games in desktop/mobile Chromium: **78 images**. Explicit descriptions, PNG dimensions, byte counts, and SHA-256 hashes are verified before the offline human review bundle is uploaded. Missing descriptions fail the build. See [BROWSER-QA.md](docs/BROWSER-QA.md) and [GALLERY-APPROVAL.md](docs/GALLERY-APPROVAL.md).
+The gallery contains the lobby plus 40 games in desktop/mobile Chromium: **82 images**. Explicit descriptions, PNG dimensions, byte counts, and SHA-256 hashes are verified before the offline human review bundle is uploaded. Missing descriptions fail the build. See [BROWSER-QA.md](docs/BROWSER-QA.md) and [GALLERY-APPROVAL.md](docs/GALLERY-APPROVAL.md).
 
 Repository description, homepage, and topic suggestions are documented in [REPOSITORY-METADATA.md](docs/REPOSITORY-METADATA.md).
 
@@ -238,4 +238,12 @@ MIT for repository code unless a file states otherwise. Third-party fonts, maps,
 
 **60-challenge audit:** Run `npm run audit:worlds` to see verified counts for every arcade game. Some still need genuine new levels; see [the game-by-game audit](docs/WORLD-60-LEVEL-AUDIT.md). Do not count repeated free-play sessions as different challenges.
 
-Four additional expedition worlds now provide **sixty playable challenges each**: Water Works, Harbor Helpers, Compass Cove and Cipher Club. Together with the other 60-level worlds, **21 of 38 mainline games** have fully authored sequential progressions. The remaining worlds are tracked in [our honest audit](docs/WORLD-60-LEVEL-AUDIT.md).
+Four additional expedition worlds now provide **sixty playable challenges each**: Water Works, Harbor Helpers, Compass Cove and Cipher Club. Together with the other 60-level worlds, **23 of 40 mainline games** have fully authored sequential progressions. The remaining worlds are tracked in [our honest audit](docs/WORLD-60-LEVEL-AUDIT.md).
+
+
+## New picture-choice learning worlds 🕷️🩹
+
+- **[Spider Scout](games/spider-scout/)** — 80 illustration-led missions across eight open chapters about spider body clues, webs, common habitats, ecology and venom awareness. Spider drawings are educational, not certain identifications; children should never touch unknown spiders. Source links include CDC, Extension and Mayo Clinic.
+- **[Helping Hands](games/helping-hands/)** — 80 picture decisions across eight open chapters covering minor cuts, nosebleeds, first-aid kits, severe emergencies, bullying, lost children and calling for adult help. Red Cross and Poison Help guidance is linked in the game. It does not replace first-aid training or emergency assistance.
+
+Both worlds are free, playable without sign-in, work without external art downloads, award each discovery once, store only local game progress, and support 390px phone layouts, keyboard buttons, light/dark and high-contrast comfort settings. Human medical, scientific and physical-device review still applies before formal release.

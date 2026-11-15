@@ -1,6 +1,6 @@
 # LarriVerse Arcade 1.0
 
-LarriVerse Arcade 1.0 is a release candidate with 38 independently playable games across puzzles, practical skills, creativity, calm play, road awareness, and expeditions. They share device-local progress, fictional rewards, comfort controls, validation, and privacy and safety boundaries. Human visual/gameplay approval and real physical-phone QA remain required before the formal release.
+LarriVerse Arcade 1.0 is a release candidate with 40 independently playable games across puzzles, practical skills, creativity, calm play, road awareness, and expeditions. They share device-local progress, fictional rewards, comfort controls, validation, and privacy and safety boundaries. Human visual/gameplay approval and real physical-phone QA remain required before the formal release.
 
 ## Eight original cabinets
 
@@ -52,7 +52,7 @@ LarriVerse Arcade 1.0 is a release candidate with 38 independently playable game
 ## Progress Passport
 
 - A first-class `/passport/` route turns existing local saves into a private progress view.
-- The Passport shows shared level progress, XP, Arcade KC, sessions, completed sessions, current learning goals, all 38 cabinet stamps, adaptive-learning trails, per-subject accuracy, and friendly achievement labels.
+- The Passport shows shared level progress, XP, Arcade KC, sessions, completed sessions, current learning goals, all 40 cabinet stamps, adaptive-learning trails, per-subject accuracy, and friendly achievement labels.
 - One gentle next mission recommends an unvisited cabinet, a practiced subject below 75% accuracy, or the least-completed cabinet.
 - The page supports keyboard focus, mobile layouts, larger text, high contrast, reduced motion, and a print-specific layout.
 - A downloadable `larriverse-progress-passport` summary contains totals and learning statistics without raw family records or location data.
@@ -61,7 +61,7 @@ LarriVerse Arcade 1.0 is a release candidate with 38 independently playable game
 ## Family Learning Report
 
 - A first-class `/report/` route presents the same local progress in a calmer family-review format.
-- The report summarizes current goals, shared totals, all 38 cabinet participation records, adaptive learning paths, aggregate subject accuracy, and up to five recent cabinet timestamps.
+- The report summarizes current goals, shared totals, all 40 cabinet participation records, adaptive learning paths, aggregate subject accuracy, and up to five recent cabinet timestamps.
 - Growing strengths require at least two answers and at least 80% accuracy; gentle practice opportunities require at least two answers and below 75% accuracy.
 - Short histories are described as needing more data instead of being treated as ability conclusions.
 - Generated conversation starters invite celebration, curiosity, and optional practice without grading or punishment language.
@@ -101,9 +101,9 @@ LarriVerse Arcade 1.0 is a release candidate with 38 independently playable game
 ## 1.0 polish candidate
 
 - Shared LarriVerse context, arcade return, comfort dialog, local profile summary, and replay/return treatment across original cabinets.
-- Optional device-local discovery alongside all 38 searchable and filterable games.
+- Optional device-local discovery alongside all 40 searchable and filterable games.
 - Focus and reflow hardening at 320px, 390px, tablet, desktop, and 200% text; numbered Bubble Resonance cues and keyboard aiming; stationary Road Trip collection under reduced motion.
-- Explicit deterministic metadata and integrity verification for all 78 release gallery images, including the eight expeditions, Street Safety Scout, Weather Watchers, and Garden Grow & Harvest.
+- Explicit deterministic metadata and integrity verification for all 82 release gallery images, including the eight expeditions, Street Safety Scout, Weather Watchers, and Garden Grow & Harvest.
 - Shared local branding and public page metadata, with repository setting recommendations documented.
 - Physical-phone, human visual/gameplay, sound/touch, and print release gates remain pending.
 
@@ -111,12 +111,12 @@ See [V1-POLISH.md](V1-POLISH.md) for the implementation and privacy boundaries.
 
 ## Release qualification
 
-GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all 38 cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
+GitHub Actions verifies routes, syntax, combined question counts, expansion-pack schemas, difficulty paths, device-local memory, Learning Goals baselines and privacy boundaries, Learning Day choice generation, measured baselines, completion locking, release behavior and privacy boundaries, Progress Passport calculations and privacy boundaries, Family Learning Report thresholds and export boundaries, assignment behavior, source counts, review gates, location lifecycle, save schema, and accessibility contracts. Chromium seeds realistic learner progress, pins and completes goals, chooses and completes a Learning Day step from real counter changes, verifies reload and release behavior, and checks desktop and mobile widths alongside the lobby, all 40 cabinets, progress views, and release tooling. Real-device gameplay, physical-phone layout, print review, backup round-trip testing, and privacy-safe screenshots remain human release gates documented in `docs/RELEASE-CHECKLIST.md` and the device-local `qa/` console.
 
 
 ## Modern arcade expansion
 
-The collection includes 38 playable games, including Creative Calm Cove, Traffic Town, Street Safety Scout, Weather Watchers, Garden Grow & Harvest, and the eight expedition worlds. The release gallery covers the lobby plus every game in both viewports (78 images). The formal release still requires the documented human review.
+The collection includes 40 playable games, including Creative Calm Cove, Traffic Town, Street Safety Scout, Weather Watchers, Garden Grow & Harvest, and the eight expedition worlds. The release gallery covers the lobby plus every game in both viewports (82 images). The formal release still requires the documented human review.
 
 - **Pocket Planet** — Planning a budget. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
 - **Scam Sleuth** — Spotting online tricks. Complete a round, inspect the feedback, replay, and check one saved completion with sound off.
@@ -202,3 +202,11 @@ The new cabinet uses the existing device-local Arcade SDK for rewards and backup
 The Dino Discovery World hub now opens a separate walk-through prehistoric trail with three time portals, one for each Mesozoic period, and nine distinct sites. Players move through actual low-poly perspective geometry using keyboard or touch-friendly controls, examine nearby science stations, or use accessible direct-travel buttons and a text equivalent to navigate without camera controls. A simple overhead trail map provides orientation.
 
 The new optional `games/dino-discovery-world/explore.html` route records only explored site IDs and camera position in `larriverse.dinoExplorer.v1`. This is independent of the existing 80-mission `larriverse.dinoDiscovery.v1` record: it does not unlock existing chapters or award repeatable mission credits. No new main arcade cabinet was added; the catalog count remains unchanged. Site facts and period separation require human scientific and physical-device review before release.
+
+
+## Two new picture-choice learning worlds — Spider Scout & Helping Hands
+
+- **Spider Scout** — 80 original picture challenges across eight free-choice chapters: identify visible traits, compare webs and habitats, see how spiders hunt and help nature, and learn venom awareness. Drawings are stylized and should not be used as certain IDs; black widows and brown recluses have region-specific risks. No one is asked to handle spiders. CDC, university extension and clinician resources are linked for human science review.
+- **Helping Hands** — 80 illustrated, calm situation decisions over eight free-choice chapters. Children practice recognizing nosebleeds, small wounds, life-threatening bleeding, choking, unresponsiveness, burns, severe allergy, seizures, bullying, missing family members, water dangers and more. The right picture teaches getting a trusted adult, using a safe first-aid item or calling 911 for a real U.S. emergency. No real calls, incident reports or personal medical data are recorded.
+
+Both games use an original offline SVG picture library, independent local saves and first-answer-only rewards, without an account, timer or penalties for mistakes. The shared accessible picture board supports keyboard and touch, no remote artwork, dark/high-contrast themes and reduced motion. The games are educational practice—not medical certification, medical advice, emergency dispatch or reliable wildlife diagnosis. Human expert and physical-device reviews remain pending before a formal release.

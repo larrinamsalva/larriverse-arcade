@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#176d77"><meta name="description" content="Spot spider features, find their habitats and learn when to keep a safe distance.">
+<title>Spider Scout · Web & Habitat Lab · LarriVerse Arcade</title>
+<link rel="stylesheet" href="../../assets/picture-quest.css">
+<link rel="stylesheet" href="../../assets/emoji.css">
+<link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/spider-scout/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LarriVerse Arcade">
+<meta property="og:title" content="Spider Scout · Web & Habitat Lab"><meta property="og:description" content="Spot spider features, find their habitats and learn when to keep a safe distance.">
+<meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/spider-scout/">
+<meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+</head>
+<body data-classic="spider-scout">
+<a class="skip-link" href="#question">Skip to today's picture challenge</a>
+<header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+  <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+  <div class="lv-context"><strong>Spider Scout</strong><small>Know spiders without disturbing them</small></div>
+  <nav class="lv-tools" aria-label="Arcade tools">
+    <a class="lv-button" href="../../index.html">Back to Arcade</a>
+    <button class="lv-button" type="button" data-lv-comfort>Comfort &amp; accessibility</button>
+  </nav>
+  <span data-lv-profile>Progress stays in this browser.</span>
+</header>
+<main class="quest">
+  <section class="quest-hero" aria-labelledby="pageTitle">
+    <div><p class="eyebrow">80 picture missions · 8 chapters · free-choice learning</p>
+    <h1 id="pageTitle">Spider Scout</h1><p class="eyebrow">Spider features, habitats &amp; bite awareness</p><p>Explore spider eyes, body shapes, webs and hiding places. Learn which spiders need extra caution, without ever touching wildlife.</p>
+    <div class="chips"><span>🔍 Identify clues</span><span>🕸️ Webs & habitats</span><span>🛡️ Venom awareness</span><span>🌿 Nature explorers</span></div></div>
+    <div class="hero-art" aria-hidden="true">🕷️</div>
+  </section>
+  <section class="progress-card" aria-label="Picture world progress">
+    <div class="progress-head"><div><p class="eyebrow">Your adventure</p><strong id="caseCount">Mission 1 / 80</strong></div>
+    <div><span>Discoveries: </span><strong id="solvedCount">0</strong><span> / 80</span></div></div>
+    <div class="track" id="progressBar" role="progressbar" aria-label="Completed picture missions" aria-valuemin="0" aria-valuemax="80" aria-valuenow="0"><div id="progress"></div></div>
+    <h2 class="chapter-heading">Choose a picture adventure</h2>
+    <p class="chapter-help" id="chapterHelp">All eight chapter boxes and every mission are open. Explore in any order—no timer, no pressure, and no penalty for trying again.</p>
+    <div id="chapters" class="chapters" role="group" aria-label="Choose any chapter" aria-describedby="chapterHelp"></div>
+    <label class="level-jump">Pick any mission
+      <select id="levelSelect" aria-label="Choose any of eighty picture missions"></select>
+    </label>
+  </section>
+  <div class="layout">
+    <section class="learning-panel" aria-labelledby="question">
+      <p id="chapterLabel" class="eyebrow">Chapter 1</p>
+      <h2 id="caseTitle" class="case-title">Your first scene</h2>
+      <p id="observation" class="observation">Read the clues in this scene.</p>
+      <div id="sceneArt" class="scene-art" role="img" aria-label="Illustrated learning scene"></div>
+      <h2 id="question" class="question">Which picture would you choose?</h2>
+      <div id="choices" class="choices" role="group" aria-label="Picture answers"></div>
+      <p id="feedback" class="feedback" role="status" aria-live="polite">Choose a picture to begin.</p>
+      <div class="actions">
+        <button type="button" id="hint">💡 Show a clue</button>
+        <button type="button" id="next">Next picture →</button>
+      </div>
+    </section>
+    <aside class="sidebar">
+      <p class="eyebrow">Why it matters</p><h2>Learn the reason</h2>
+      <p id="teaching" class="teaching-note" aria-live="polite">Choose a picture to see the explanation.</p>
+      <section class="rule-box">
+        <h2>Look with your eyes. Leave spiders alone.</h2>
+        <p>Most spiders avoid humans; many help control insects. Some, including widow and recluse spiders in the U.S., can cause serious bites. A picture or skin mark cannot confirm species or a bite. Never pick one up to check.</p>
+      </section>
+    </aside>
+  </div>
+  <section class="parent-guide" aria-labelledby="guideTitle">
+    <p class="eyebrow">For families, teachers &amp; curious explorers</p>
+    <h2 id="guideTitle">Science and spider safety</h2>
+    <p>These original SVG drawings show general body shapes and common habitats. Spiders can vary in appearance by sex, age, species, and geography. “Venomous” is the better word for biting spiders. We cannot certify a spider as safe or dangerous from an illustration alone.</p>
+    <div class="sources" aria-label="Reviewed educational references"><a href="https://www.cdc.gov/niosh/outdoor-workers/about/venomous-spiders.html" target="_blank" rel="noopener noreferrer">CDC: Venomous spiders</a>
+<a href="https://extension.umn.edu/garden-and-home/home-maintenance/household-insects/spiders" target="_blank" rel="noopener noreferrer">University Extension: Spider identification</a>
+<a href="https://www.mayoclinic.org/first-aid/first-aid-spider-bites/basics/art-20056618" target="_blank" rel="noopener noreferrer">Mayo Clinic: Spider bites</a></div>
+    <p>Free and offline-friendly: no accounts, ads, geolocation, uploads, real emergency calls, or personal incident records. Game progress stays only in this browser. Real-life emergencies require real-life help.</p>
+  </section>
+</main>
+<script src="../../assets/arcade-sdk.js"></script>
+<script type="module" src="game.js"></script>
+<script src="../../assets/cabinet-shell.js"></script>
+</body>
+</html>

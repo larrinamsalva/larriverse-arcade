@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#176d77"><meta name="description" content="Practice choosing calm, safe picture responses when somebody needs help.">
+<title>Helping Hands · What Would You Do? · LarriVerse Arcade</title>
+<link rel="stylesheet" href="../../assets/picture-quest.css">
+<link rel="stylesheet" href="../../assets/emoji.css">
+<link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/helping-hands/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="LarriVerse Arcade">
+<meta property="og:title" content="Helping Hands · What Would You Do?"><meta property="og:description" content="Practice choosing calm, safe picture responses when somebody needs help.">
+<meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/helping-hands/">
+<meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+</head>
+<body data-classic="helping-hands">
+<a class="skip-link" href="#question">Skip to today's picture challenge</a>
+<header class="lv-cabinet-shell" aria-label="LarriVerse game context">
+  <a class="lv-brand" href="../../index.html"><img src="../../assets/favicon.svg" alt="">LarriVerse Arcade</a>
+  <div class="lv-context"><strong>Helping Hands</strong><small>Recognize, choose, and help safely</small></div>
+  <nav class="lv-tools" aria-label="Arcade tools">
+    <a class="lv-button" href="../../index.html">Back to Arcade</a>
+    <button class="lv-button" type="button" data-lv-comfort>Comfort &amp; accessibility</button>
+  </nav>
+  <span data-lv-profile>Progress stays in this browser.</span>
+</header>
+<main class="quest">
+  <section class="quest-hero" aria-labelledby="pageTitle">
+    <div><p class="eyebrow">80 picture missions · 8 chapters · free-choice learning</p>
+    <h1 id="pageTitle">Helping Hands</h1><p class="eyebrow">Recognize help needs &amp; choose safe first steps</p><p>Someone has a nosebleed, a scrape, or needs urgent help. Look at the scene and choose the picture showing the safest next step.</p>
+    <div class="chips"><span>🩹 Bandages & first aid</span><span>📞 Know when to call</span><span>👀 Recognize danger</span><span>🤝 Calm teamwork</span></div></div>
+    <div class="hero-art" aria-hidden="true">💜</div>
+  </section>
+  <section class="progress-card" aria-label="Picture world progress">
+    <div class="progress-head"><div><p class="eyebrow">Your adventure</p><strong id="caseCount">Mission 1 / 80</strong></div>
+    <div><span>Discoveries: </span><strong id="solvedCount">0</strong><span> / 80</span></div></div>
+    <div class="track" id="progressBar" role="progressbar" aria-label="Completed picture missions" aria-valuemin="0" aria-valuemax="80" aria-valuenow="0"><div id="progress"></div></div>
+    <h2 class="chapter-heading">Choose a picture adventure</h2>
+    <p class="chapter-help" id="chapterHelp">All eight chapter boxes and every mission are open. Explore in any order—no timer, no pressure, and no penalty for trying again.</p>
+    <div id="chapters" class="chapters" role="group" aria-label="Choose any chapter" aria-describedby="chapterHelp"></div>
+    <label class="level-jump">Pick any mission
+      <select id="levelSelect" aria-label="Choose any of eighty picture missions"></select>
+    </label>
+  </section>
+  <div class="layout">
+    <section class="learning-panel" aria-labelledby="question">
+      <p id="chapterLabel" class="eyebrow">Chapter 1</p>
+      <h2 id="caseTitle" class="case-title">Your first scene</h2>
+      <p id="observation" class="observation">Read the clues in this scene.</p>
+      <div id="sceneArt" class="scene-art" role="img" aria-label="Illustrated learning scene"></div>
+      <h2 id="question" class="question">Which picture would you choose?</h2>
+      <div id="choices" class="choices" role="group" aria-label="Picture answers"></div>
+      <p id="feedback" class="feedback" role="status" aria-live="polite">Choose a picture to begin.</p>
+      <div class="actions">
+        <button type="button" id="hint">💡 Show a clue</button>
+        <button type="button" id="next">Next picture →</button>
+      </div>
+    </section>
+    <aside class="sidebar">
+      <p class="eyebrow">Why it matters</p><h2>Learn the reason</h2>
+      <p id="teaching" class="teaching-note" aria-live="polite">Choose a picture to see the explanation.</p>
+      <section class="rule-box">
+        <h2>Check safety. Get an adult. Call 911 for emergencies.</h2>
+        <p>This is a picture practice game for children—not live emergency guidance or a first-aid certification. If danger is happening now, contact a trusted adult and call 911 in the U.S. (or your local emergency number). Never risk your own safety.</p>
+      </section>
+    </aside>
+  </div>
+  <section class="parent-guide" aria-labelledby="guideTitle">
+    <p class="eyebrow">For families, teachers &amp; curious explorers</p>
+    <h2 id="guideTitle">Practice is not an emergency plan</h2>
+    <p>Children should practice with adults. Situations can change quickly, and the correct real-world response depends on the person and surroundings. Check the scene, call for trained help when needed, and give care only as appropriate to your training. U.S. Poison Help is 1-800-222-1222.</p>
+    <div class="sources" aria-label="Reviewed educational references"><a href="https://www.redcross.org/take-a-class/resources/articles/the-three-cs-of-first-aid-check-call-care" target="_blank" rel="noopener noreferrer">American Red Cross: Check, Call, Care</a>
+<a href="https://www.redcross.org/take-a-class/resources/learn-first-aid/nosebleeds" target="_blank" rel="noopener noreferrer">American Red Cross: Nosebleeds</a>
+<a href="https://www.redcross.org/take-a-class/first-aid/performing-first-aid/first-aid-steps" target="_blank" rel="noopener noreferrer">American Red Cross: Learn first aid</a>
+<a href="https://poisonhelp.org/" target="_blank" rel="noopener noreferrer">Poison Help: U.S. poison centers</a></div>
+    <p>Free and offline-friendly: no accounts, ads, geolocation, uploads, real emergency calls, or personal incident records. Game progress stays only in this browser. Real-life emergencies require real-life help.</p>
+  </section>
+</main>
+<script src="../../assets/arcade-sdk.js"></script>
+<script type="module" src="game.js"></script>
+<script src="../../assets/cabinet-shell.js"></script>
+</body>
+</html>
