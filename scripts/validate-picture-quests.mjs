@@ -4,7 +4,7 @@ import {spawnSync} from 'node:child_process';
 import {SPIDERS,SPIDER_CHAPTERS,SPIDER_MISSIONS} from '../games/spider-scout/questions.js';
 import {HELP_CASE_COUNT,HELP_CHAPTERS,HELP_MISSIONS} from '../games/helping-hands/questions.js';
 import {spiderPicture,actionPicture} from '../assets/picture-quest-art.js';
-import {helpActionPicture,helpScenePicture,HELPING_ACTION_TYPES,HELPING_SCENE_TITLES} from '../assets/helping-hands-realistic-art.js';
+import {helpActionPicture,helpScenePicture,HELPING_ACTION_SCENES,HELPING_ACTION_TYPES,HELPING_SCENE_TITLES} from '../assets/helping-hands-realistic-art.js';
 import {animePerson,animeFace,animeNosebleedPose,animeResting,animeListening} from '../assets/helping-hands-anime-characters.js';
 import {FIELD_GUIDE_SPECIES} from '../assets/spider-field-guide-art.js';
 
@@ -135,7 +135,9 @@ assert.equal(seenSceneArt.size,20,'All twenty helping scenes are individual illu
 assert.equal(seenSceneImages.size,20,'All twenty rendered Helping Hands scenes are distinct files');
 const seenActions=new Set();
 for(const kind of HELPING_ACTION_TYPES){
- const bitmap=fs.readFileSync('assets/helping-hands-answers/'+kind+'.webp');
+ const caseNumber=HELPING_ACTION_SCENES[kind];
+ const path=caseNumber?'assets/helping-hands-scenes/case-'+caseNumber+'.webp':'assets/helping-hands-answers/'+kind+'.webp';
+ const bitmap=fs.readFileSync(path);
  assert.equal(bitmap.toString('ascii',0,4),'RIFF',kind+' has a WebP container');
  assert.equal(bitmap.toString('ascii',8,12),'WEBP',kind+' has a WebP signature');
  const pic=helpActionPicture(kind);
@@ -157,6 +159,10 @@ const helpScenarioOrder=[...new Set(HELP_MISSIONS.map(q=>q.title))];
 assert.deepEqual(helpScenarioOrder,HELPING_SCENE_TITLES,'Each Helping Hands scenario maps to its matching image');
 assert.ok(HELP_MISSIONS.every(q=>q.options.every(option=>HELPING_ACTION_TYPES.includes(option.icon))),
  'Every image answer in the 80 Helping Hands missions uses an illustrated, registered object');
+for(const mission of HELP_MISSIONS){
+ assert.equal(new Set(mission.options.map(option=>option.icon)).size,3,
+  'Helping Hands mission '+mission.id+' has three distinct answer illustrations');
+}
 const qs=fs.readFileSync('assets/picture-quest.js','utf8');
 assert.ok(qs.includes("if(world==='help'){\n        renderHelpAnswerPicture(image,option.icon);"),
  'Realism answers are limited to Helping Hands and do not replace Spider Scout art');

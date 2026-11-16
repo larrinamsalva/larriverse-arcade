@@ -138,7 +138,7 @@ test('Spider Scout: larger phone pictures preserve 80 missions and saved discove
  expect(dims.scroll).toBeLessThanOrEqual(dims.client+4);
 });
 
-test('Helping Hands: all twenty rendered scenes match their missions and load locally',async({page})=>{
+test('Helping Hands: all 80 missions load the right scene and three distinct choice images',async({page})=>{
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/games/helping-hands/index.html');
  const pictures=await page.evaluate(async()=>{
@@ -152,13 +152,16 @@ test('Helping Hands: all twenty rendered scenes match their missions and load lo
    const image=scene.querySelector('img');
    await image.decode();
    const url=new URL(image.src);
+   const choices=Array.from(document.querySelectorAll('#choices img'),img=>new URL(img.src).pathname);
    pictures.push({
     path:url.pathname,
     local:url.origin===location.origin,
     size:[image.naturalWidth,image.naturalHeight],
     alt:image.alt,
     label:scene.getAttribute('aria-label'),
-    expectedLabel:mission.sceneAlt
+    expectedLabel:mission.sceneAlt,
+    choices,
+    correctPicture:choices[mission.answer]
    });
   }
   return pictures;
@@ -170,29 +173,36 @@ test('Helping Hands: all twenty rendered scenes match their missions and load lo
   expect(picture.size).toEqual([960,600]);
   expect(picture.alt).toBe('');
   expect(picture.label).toBe(picture.expectedLabel);
+  expect(new Set(picture.choices).size,`Mission ${index+1} choice pictures`).toBe(3);
  }
+ expect(pictures[12].correctPicture).toBe('/assets/helping-hands-answers/roadsideHelp.webp');
+ expect(pictures[16].correctPicture).toBe('/assets/helping-hands-answers/safeExit.webp');
+ expect(pictures[38].correctPicture).toBe('/assets/helping-hands-answers/medicine.webp');
+ expect(pictures[38].choices).toContain('/assets/helping-hands-answers/randomPill.webp');
+ expect(pictures[43].correctPicture).toBe('/assets/helping-hands-scenes/case-4.webp');
  expect(errors).toEqual([]);
 });
 
 test('Helping Hands: every answer picture loads and matches its option',async({page})=>{
  await page.goto('/games/helping-hands/index.html');
  const pictures=await page.evaluate(async()=>{
-  const {HELPING_ACTION_TYPES}=await import('/assets/helping-hands-realistic-art.js');
+  const {HELPING_ACTION_SCENES,HELPING_ACTION_TYPES}=await import('/assets/helping-hands-realistic-art.js');
   const {renderHelpAnswerPicture}=await import('/assets/helping-hands-answer-art.js');
   return Promise.all(HELPING_ACTION_TYPES.map(async key=>{
    const container=document.createElement('span');
    renderHelpAnswerPicture(container,key);
    const picture=container.querySelector('img');
    await picture.decode();
-   return {key,path:new URL(picture.src).pathname,local:new URL(picture.src).origin===location.origin,
+   return {key,caseNumber:HELPING_ACTION_SCENES[key],path:new URL(picture.src).pathname,local:new URL(picture.src).origin===location.origin,
      width:picture.naturalWidth,height:picture.naturalHeight};
   }));
  });
  expect(pictures.length).toBeGreaterThanOrEqual(24);
- for(const {key,path,local,width,height} of pictures){
-  expect(path).toBe('/assets/helping-hands-answers/'+key+'.webp');
+ for(const {key,caseNumber,path,local,width,height} of pictures){
+  const expectedPath=caseNumber?'/assets/helping-hands-scenes/case-'+caseNumber+'.webp':'/assets/helping-hands-answers/'+key+'.webp';
+  expect(path).toBe(expectedPath);
   expect(local).toBe(true);
-  expect([width,height]).toEqual([480,300]);
+  expect([width,height]).toEqual(caseNumber?[960,600]:[480,300]);
  }
  await expect(page.locator('#choices img')).toHaveCount(3);
  const nose=page.locator('#choices img[src$="/nose.webp"]');
@@ -210,6 +220,7 @@ test('Helping Hands: every answer picture loads and matches its option',async({p
 
 test('Helping Hands: failed picture requests keep the answer artwork and controls usable',async({page})=>{
  await page.route('**/helping-hands-answers/*.webp',route=>route.abort());
+ await page.route('**/helping-hands-scenes/case-4.webp',route=>route.abort());
  await page.goto('/games/helping-hands/index.html');
  await expect(page.locator('#choices svg[data-help-art="anime-3"]')).toHaveCount(3);
  await expect(page.locator('#choices svg[data-key="nose"]')).toHaveCount(1);
@@ -217,6 +228,11 @@ test('Helping Hands: failed picture requests keep the answer artwork and control
  await answer.focus();
  await answer.press('Enter');
  await expect(page.locator('#solvedCount')).toHaveText('1');
+ await page.locator('#levelSelect').selectOption('43');
+ await expect(page.locator('#choices svg')).toHaveCount(3);
+ await expect(page.locator('#choices svg[data-key="chokingWarning"] [data-scene-action="choking-hands-at-throat"]')).toHaveCount(1);
+ await expect(page.locator('#choices svg[data-key="untiedShoe"]')).toHaveCount(1);
+ await expect(page.locator('#choices svg[data-key="tissues"]')).toHaveCount(1);
 });
 
 test('Helping Hands: readable larger picture cards on narrow phones, with progress preserved',async({page})=>{

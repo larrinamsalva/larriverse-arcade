@@ -3,10 +3,15 @@ import {animeFace,animePerson,animeResting,animeListening,animeNosebleedPose} fr
 // Educational, original, offline vector paintings. Not live emergency guidance.
 // Each artwork has a scene-specific silhouette, recognizable objects, skin/hair
 // detail, visible fingers or tools where needed, and NO external image requests.
+export const HELPING_ACTION_SCENES=Object.freeze({
+ chokingWarning:4,unresponsive:5,allergyWarning:8,waterDistress:18
+});
 const KINDS=Object.freeze([
  'emergency','phone','kit','bandage','pressure','water','nose','ice','medicine',
  'adult','friend','listen','rest','stop','away','noTouch','observe','clock',
- 'food','cloth','door','wait','house','fire','lifeRing'
+ 'food','cloth','door','wait','house','fire','lifeRing',
+ 'roadsideHelp','safeExit','randomPill','tissues','untiedShoe','drinkingWater',
+ 'soapAndWater','video','meetingPoint',...Object.keys(HELPING_ACTION_SCENES)
 ]);
 export const HELPING_ACTION_TYPES=KINDS;
 const SITUATIONS=Object.freeze([
@@ -194,7 +199,60 @@ function lifeRing(){
   c(160,101,62,'none',{stroke:'#cc6b45','stroke-width':34})+
   p('M160 23 V56 M238 101 H205 M160 179 V146 M82 101 H115','none','#fff7e8',18);
 }
+function roadsideHelp(){
+ return outside('street')+r(12,109,296,41,0,'#d4ddda')+
+  line(14,150,306,150,'#6e858b',4)+g(peoplePair(),'translate(16 -13) scale(.86)');
+}
+function safeExit(){
+ return r(94,55,132,124,5,'#d8f1ea',{stroke:'#396971','stroke-width':5})+
+  p('M98 58 L142 72 V170 L98 178Z','#7ca7a4','#3d6d6d',3)+
+  p('M142 166 Q174 139 219 146 V176 H142Z','#a9c78c')+
+  r(98,28,124,26,3,'#24765c')+tx(160,47,'EXIT',18,'#ffffff');
+}
+function randomPill(){
+ return g(r(80,73,160,56,28,'#f1eee4',{stroke:'#547780','stroke-width':4})+
+  p('M160 74 H212 A27 27 0 0 1 212 128 H160Z','#b3d8da','#547780',2),
+  'rotate(-18 160 101)');
+}
+function tissues(){
+ return g(peoplePair(),'translate(37 -1) scale(.74)')+
+  r(105,134,110,36,5,'#60a3ab',{stroke:'#406e79','stroke-width':3})+
+  p('M130 134 Q139 119 141 106 Q159 111 166 119 Q174 113 193 117 L181 134Z',
+    '#f7faf4','#91aeb2',2);
+}
+function untiedShoe(){
+ return p('M72 134 L93 125 L111 79 L146 80 L177 109 L220 112 Q254 115 252 148 H72Z',
+   '#6096a6','#3e6879',4)+r(71,138,182,16,5,'#ecefe5',{stroke:'#728f92','stroke-width':3})+
+  p('M119 95 L165 101 M113 106 L172 113 M133 100 Q105 119 88 110 L64 122 M155 106 Q186 76 212 92 L232 82',
+    'none','#fff9e9',5);
+}
+function drinkingWater(){
+ return e(161,172,66,9,'#7d9c9d',{opacity:.21})+
+  p('M110 52 H212 L199 164 H123Z','#e5f4f2','#5e8d98',4)+
+  p('M115 96 Q140 100 159 96 T207 95 L199 163 H123Z','#91d3db','#68b2bf',2)+
+  e(161,52,51,9,'#f2faf7',{stroke:'#5e8d98','stroke-width':3});
+}
+function soapAndWater(){
+ return faucet()+r(232,99,49,65,9,'#62a8a6',{stroke:'#3c7680','stroke-width':3})+
+  p('M255 99 V77 H276','none','#3c7680',6)+r(240,115,32,26,4,'#eaf5ee');
+}
+function video(){
+ return r(56,42,208,118,12,'#335868',{stroke:'#234653','stroke-width':4})+
+  r(68,51,184,100,6,'#b8d5d1')+
+  c(160,101,32,'#397c81')+p('M151 84 L178 101 L151 119Z','#ffffff');
+}
+function meetingPoint(){
+ return outside()+g(shelter(),'translate(148 -3) scale(.48)')+
+  g(peoplePair(),'translate(13 29) scale(.75)');
+}
+function storeDesk(){
+ return person(184,93,.67,{color:'#3d8689',style:2})+
+  r(69,111,182,62,7,'#d4ab82',{stroke:'#9c795a','stroke-width':4})+
+  c(159,140,21,'#397f83')+tx(159,150,'i',27,'#ffffff');
+}
 function actionParts(kind){
+ const caseNumber=HELPING_ACTION_SCENES[kind];
+ if(caseNumber)return scenarioScene(caseNumber-1);
  switch(kind){
   case 'emergency':return phone(true);
   case 'phone':return phone(false);
@@ -219,9 +277,18 @@ function actionParts(kind){
   case 'cloth':return medicalCloth();
   case 'door':return door();
   case 'wait':return person(159,108,.79)+thermometerClock();
-  case 'house':return shelter();
+  case 'house':return storeDesk();
   case 'fire':return fire();
   case 'lifeRing':return lifeRing();
+  case 'roadsideHelp':return roadsideHelp();
+  case 'safeExit':return safeExit();
+  case 'randomPill':return randomPill();
+  case 'tissues':return tissues();
+  case 'untiedShoe':return untiedShoe();
+  case 'drinkingWater':return drinkingWater();
+  case 'soapAndWater':return soapAndWater();
+  case 'video':return video();
+  case 'meetingPoint':return meetingPoint();
   default:return magnifier();
  }
 }
