@@ -1,0 +1,370 @@
+{
+  "schema": "larriverse-visual-rollout",
+  "version": 1,
+  "scope": "all 40 existing playable world routes",
+  "styleVersion": "real-world-foundation-1",
+  "artState": "initial homepage foundation, original game art remains until each world is reviewed",
+  "principle": "real-world recognizable shapes and anime/animated-film finish, not emojis or stick figures",
+  "worlds": [
+    {
+      "id": "bridge-buddies",
+      "title": "Bridge Buddies",
+      "wave": 2,
+      "currentArtFamily": "expedition",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "water-works",
+      "title": "Water Works",
+      "wave": 3,
+      "currentArtFamily": "expedition",
+      "visualTarget": "layered natural environments, real materials and recognizable objects",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "harbor-helpers",
+      "title": "Harbor Helpers",
+      "wave": 2,
+      "currentArtFamily": "expedition",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "pantry-picnic",
+      "title": "Pantry Picnic",
+      "wave": 3,
+      "currentArtFamily": "expedition",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "compass-cove",
+      "title": "Compass Cove",
+      "wave": 3,
+      "currentArtFamily": "expedition",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "cipher-club",
+      "title": "Cipher Club",
+      "wave": 4,
+      "currentArtFamily": "expedition",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "trade-town",
+      "title": "Trade Town",
+      "wave": 3,
+      "currentArtFamily": "expedition",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "critter-council",
+      "title": "Critter Council",
+      "wave": 1,
+      "currentArtFamily": "expedition",
+      "visualTarget": "recognizable creatures with correct anatomy, proportion, habitat and gentle expressions",
+      "status": "planned-visual-review",
+      "safetyGate": "qualified science/creature educator review"
+    },
+    {
+      "id": "traffic-town",
+      "title": "Traffic Town",
+      "wave": 2,
+      "currentArtFamily": "traffic",
+      "visualTarget": "expressive anime-inspired people with complete anatomy, clothing and context",
+      "status": "planned-visual-review",
+      "safetyGate": "age-appropriate situation and safety educator review"
+    },
+    {
+      "id": "street-safety-scout",
+      "title": "Street Safety Scout",
+      "wave": 1,
+      "currentArtFamily": "traffic",
+      "visualTarget": "expressive anime-inspired people with complete anatomy, clothing and context",
+      "status": "planned-visual-review",
+      "safetyGate": "age-appropriate situation and safety educator review"
+    },
+    {
+      "id": "pocket-planet",
+      "title": "Pocket Planet",
+      "wave": 3,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "layered natural environments, real materials and recognizable objects",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "scam-sleuth",
+      "title": "Scam Sleuth",
+      "wave": 2,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "expressive anime-inspired people with complete anatomy, clothing and context",
+      "status": "planned-visual-review",
+      "safetyGate": "age-appropriate situation and safety educator review"
+    },
+    {
+      "id": "kindness-quest",
+      "title": "Kindness Quest",
+      "wave": 1,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "expressive anime-inspired people with complete anatomy, clothing and context",
+      "status": "planned-visual-review",
+      "safetyGate": "age-appropriate situation and safety educator review"
+    },
+    {
+      "id": "fact-finder",
+      "title": "Fact Finder",
+      "wave": 4,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "repair-cafe",
+      "title": "Repair Café",
+      "wave": 2,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "time-trail",
+      "title": "Time Trail",
+      "wave": 3,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "garden-guardians",
+      "title": "Garden Guardians",
+      "wave": 2,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "recognizable creatures with correct anatomy, proportion, habitat and gentle expressions",
+      "status": "planned-visual-review",
+      "safetyGate": "qualified science/creature educator review"
+    },
+    {
+      "id": "energy-island",
+      "title": "Energy Island",
+      "wave": 3,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "layered natural environments, real materials and recognizable objects",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "reuse-rally",
+      "title": "Reuse Rally",
+      "wave": 3,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "robot-rover",
+      "title": "Robot Rover",
+      "wave": 2,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "lemonade-lab",
+      "title": "Lemonade Lab",
+      "wave": 3,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "beat-builder",
+      "title": "Beat Builder",
+      "wave": 4,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "kidscoin-family",
+      "title": "KidsCoin Family App",
+      "wave": 3,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "expressive anime-inspired people with complete anatomy, clothing and context",
+      "status": "planned-visual-review",
+      "safetyGate": "age-appropriate situation and safety educator review"
+    },
+    {
+      "id": "brain-sweat-expanded",
+      "title": "Brain Sweat Expanded",
+      "wave": 4,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "brain-sweat-life-skills",
+      "title": "Brain Sweat Life Skills",
+      "wave": 4,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "expressive anime-inspired people with complete anatomy, clothing and context",
+      "status": "planned-visual-review",
+      "safetyGate": "age-appropriate situation and safety educator review"
+    },
+    {
+      "id": "bubble-resonance-phi369",
+      "title": "Bubble Resonance Φ369",
+      "wave": 4,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "chill-brain-rewards",
+      "title": "Chill Brain Rewards",
+      "wave": 4,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "creature-catcher",
+      "title": "Creature Catcher",
+      "wave": 1,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "recognizable creatures with correct anatomy, proportion, habitat and gentle expressions",
+      "status": "planned-visual-review",
+      "safetyGate": "qualified science/creature educator review"
+    },
+    {
+      "id": "road-trip-quest",
+      "title": "Road Trip Quest",
+      "wave": 2,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "expressive anime-inspired people with complete anatomy, clothing and context",
+      "status": "planned-visual-review",
+      "safetyGate": "age-appropriate situation and safety educator review"
+    },
+    {
+      "id": "road-trip-quest-gps",
+      "title": "Road Trip Quest GPS",
+      "wave": 2,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "expressive anime-inspired people with complete anatomy, clothing and context",
+      "status": "planned-visual-review",
+      "safetyGate": "age-appropriate situation and safety educator review"
+    },
+    {
+      "id": "weather-watchers",
+      "title": "Weather Watchers",
+      "wave": 3,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "layered natural environments, real materials and recognizable objects",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "garden-grow-harvest",
+      "title": "Garden Grow & Harvest",
+      "wave": 2,
+      "currentArtFamily": "garden-learning",
+      "visualTarget": "layered natural environments, real materials and recognizable objects",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "kids-sudoku",
+      "title": "Kids Sudoku World",
+      "wave": 4,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "word-search-world",
+      "title": "Word Search World",
+      "wave": 4,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "crossword-world",
+      "title": "Crossword World",
+      "wave": 4,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "creative-calm-cove",
+      "title": "Creative Calm Cove",
+      "wave": 3,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "date-detective",
+      "title": "Date Detective",
+      "wave": 4,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "rich believable environments, recognizable objects and depth of lighting",
+      "status": "planned-visual-review",
+      "safetyGate": "visual clarity and learning content review"
+    },
+    {
+      "id": "dino-discovery-world",
+      "title": "Dino Discovery World",
+      "wave": 1,
+      "currentArtFamily": "dino",
+      "visualTarget": "recognizable creatures with correct anatomy, proportion, habitat and gentle expressions",
+      "status": "planned-visual-review",
+      "safetyGate": "qualified science/creature educator review"
+    },
+    {
+      "id": "spider-scout",
+      "title": "Spider Scout",
+      "wave": 1,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "recognizable creatures with correct anatomy, proportion, habitat and gentle expressions",
+      "status": "planned-visual-review",
+      "safetyGate": "qualified science/creature educator review"
+    },
+    {
+      "id": "helping-hands",
+      "title": "Helping Hands",
+      "wave": 1,
+      "currentArtFamily": "shared-worlds-atlas",
+      "visualTarget": "expressive anime-inspired people with complete anatomy, clothing and context",
+      "status": "planned-visual-review",
+      "safetyGate": "age-appropriate situation and safety educator review"
+    }
+  ]
+}
