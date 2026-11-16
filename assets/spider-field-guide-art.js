@@ -14,6 +14,16 @@ const TYPE=Object.freeze({
   trapdoor:{hab:'burrow',head:'#483b35',body:'#665148',leg:'#53443b',accent:'#ae917b',h:[27,25],a:[32,27],feet:8,eye:'tiny',fuzz:2,mark:'plain',pose:'heavy'}
 });
 export const FIELD_GUIDE_SPECIES=Object.freeze(Object.keys(TYPE));
+export function spiderFigureSize(kind){
+  const { h, a, feet }=TYPE[kind]||TYPE.jumping;
+  const left=137-h[0]-3, right=182+a[0]+2;
+  return {
+    left,
+    width:right-left,
+    height:4+2*Math.max(h[1],a[1]),
+    legWidth:feet
+  };
+}
 // All values are generated internally. No unsafe user strings are interpolated.
 const n=(name,attrs={},inside='')=>'<'+name+Object.entries(attrs).map(([k,v])=>' '+k+'="'+v+'"').join('')+'>'+inside+'</'+name+'>';
 const xy=(num)=>Number(num.toFixed(1));
@@ -145,8 +155,8 @@ export function spiderLegLayout(kind){
     const shift=sideways?(i<2?-17:18):0;
     const shorten=compact?.78:1, expansion=long?1.1:1;
     const anchor=[xy(137+spec.h[0]*[-.63,-.28,.16,.6][i]),xy(108+side*spec.h[1]*[.48,.67,.7,.5][i])];
-    const knee=[153+(kneeX[i]-153)*shorten*expansion+shift,108+side*(108-kneeY[i])];
-    const tip=[xy(Math.max(15,Math.min(302,153+(tipX[i]-153)*shorten*expansion+shift))),xy(Math.max(18,Math.min(181,108+side*(108-tipY[i]))))];
+    const knee=[153+(kneeX[i]-153)*shorten*expansion+shift,108+side*(108-kneeY[i])*shorten];
+    const tip=[xy(Math.max(15,Math.min(302,153+(tipX[i]-153)*shorten*expansion+shift))),xy(Math.max(18,Math.min(181,108+side*(108-tipY[i])*shorten)))];
     return {number:index+1,side,pair:i,anchor,knee:restKnee(anchor,knee,tip,side),tip};
   });
 }

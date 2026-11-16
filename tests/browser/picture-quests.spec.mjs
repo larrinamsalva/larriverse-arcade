@@ -122,6 +122,46 @@ test('Spider Scout: ten field-guide spiders show articulated legs and natural ha
  expect(errors).toEqual([]);
 });
 
+test('Spider Scout: every mission spider and answer portrait has local wildlife art', async ({ page }) => {
+  await page.goto('/games/spider-scout/index.html');
+  const { SPIDERS } = await import('../../games/spider-scout/questions.js');
+  const scene = page.locator('#sceneArt svg');
+  await expect(page.locator('#choices svg[data-spider-art="wildlife"]')).toHaveCount(3);
+  for (const [index, spider] of SPIDERS.entries()) {
+    await page.locator('#levelSelect').selectOption(String(index));
+    await expect(scene).toHaveAttribute('data-species', spider.key);
+    await expect(scene).toHaveAttribute('data-spider-art', 'wildlife');
+    const layers = await scene.locator('[data-wildlife-layer]').evaluateAll(images =>
+      images.map(image => {
+        const url = new URL(image.getAttribute('href'));
+        return { kind: image.dataset.wildlifeLayer, path: url.pathname, sameOrigin: url.origin === location.origin };
+      }));
+    expect(layers).toHaveLength(18);
+    expect(layers.filter(layer => layer.kind === 'leg')).toHaveLength(16);
+    expect(layers.some(layer => layer.path === `/assets/spider-wildlife/habitats/${spider.key}.webp`)).toBe(true);
+    expect(layers.some(layer => layer.path === `/assets/spider-wildlife/bodies/${spider.key}.webp`)).toBe(true);
+    expect(layers.every(layer => layer.sameOrigin && layer.path.endsWith('/' + spider.key + '.webp'))).toBe(true);
+    await expect(page.locator('#choices svg[data-spider-art="wildlife"]')).toHaveCount(3);
+  }
+});
+
+test('Spider Scout: a missing wildlife texture leaves the illustrated mission playable', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.route('**/spider-wildlife/bodies/jumping.webp', route => route.abort());
+  await page.goto('/games/spider-scout/index.html');
+  const scene = page.locator('#sceneArt svg');
+  await expect(page.locator('#choices svg[data-spider-art="wildlife"]')).toHaveCount(2);
+  await expect(scene).toHaveAttribute('data-art-version', 'field-guide-2');
+  await expect(scene.locator('[data-wildlife-layer]')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Watch spider move' }).click();
+  await expect(scene.locator('[data-spider-body]')).toHaveAttribute('transform', /translate\(-/);
+  await page.locator('#choices button').first().click();
+  await expect(page.locator('#feedback')).toHaveClass(/good|retry/);
+  await page.locator('#levelSelect').selectOption('2');
+  await expect(scene).toHaveAttribute('data-spider-art', 'wildlife');
+  await expect(scene).toHaveAttribute('data-species', 'wolf');
+});
+
 test('Spider Scout: all ten spiders move jointed legs, with planted feet during a walk', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/games/spider-scout/index.html');
@@ -178,10 +218,12 @@ test('Spider Scout: a keyboard replay animates the mission picture and honors bo
   const art = page.locator('#sceneArt');
   const watch = page.getByRole('button', { name: 'Watch spider move' });
   const body = art.locator('[data-spider-body]');
+  await expect(art.locator('svg')).toHaveAttribute('data-spider-art', 'wildlife');
   await art.scrollIntoViewIfNeeded();
   await watch.focus();
   await page.keyboard.press('Enter');
   await expect(body).toHaveAttribute('transform', /translate\(-/);
+  await expect(art.locator('[data-leg-part][transform] [data-wildlife-layer="leg"]')).toHaveCount(16);
   await expect(page.locator('#choices [data-leg-part][transform]')).toHaveCount(0);
   await expect(page.locator('#solvedCount')).toHaveText('0');
 

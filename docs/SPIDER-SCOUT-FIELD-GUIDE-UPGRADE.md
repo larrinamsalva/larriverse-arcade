@@ -10,7 +10,7 @@ Make Spider Scout easier and more engaging to study by replacing flat symbol-lik
 
 ## Art implementation
 
-`assets/spider-field-guide-art.js` now draws ten distinct spiders directly in local SVG. Both the large scene view and identification answer cards reuse `spiderPicture(kind)`. The rest of `assets/picture-quest-art.js` is unchanged so Helping Hands keeps its own existing first-aid illustrations.
+Each of the ten species groups has a wildlife close-up with a textured body, legs, and a distinct habitat. `assets/spider-wildlife-art.js` applies the local WebP layers to the mission picture and the spider identification choices. The layers attach to the same joints used by the SVG movement controller. The SVG illustration also provides a playable fallback when an image fails to load.
 
 Every spider has:
 
@@ -43,6 +43,10 @@ Every spider has:
 - Answer cards use existing text labels; scene artwork is paired with descriptive `aria-label` text. Child-facing safety explanations remain visible.
 - Spider Scout uses two columns of larger answer art at phone widths. Helping Hands keeps its original picture-card layout.
 - Same keyboard, mobile, reduced-motion, dark/high-contrast and save/backup behavior.
+
+## Artwork references
+
+The new illustrations use warm documentary lighting, macro habitat close-ups, and separate transparent body and leg textures. The species details and settings follow field guides for [common spiders](https://extension.umn.edu/garden-and-home/home-maintenance/household-insects/spiders), [widows](https://ipm.ucanr.edu/home-and-landscape/widow-spiders-and-their-relatives/), [brown recluses](https://entomology.ca.uky.edu/files/ef631.pdf), [grass spiders](https://mdc.mo.gov/discover-nature/field-guide/grass-spiders), and [burrow-dwelling spiders](https://australian.museum/learn/animals/spiders/prey-capture-and-feeding/).
 
 ## Human review and testing
 

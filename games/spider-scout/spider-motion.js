@@ -121,6 +121,7 @@ export function setupSpiderMotion(scene, button) {
   let frame = null;
   let inView = false;
   let played = false;
+  let artReady = false;
   const reduced = () => deviceMotion.matches ||
     document.documentElement.classList.contains('larriverse-reduced-motion');
 
@@ -147,13 +148,13 @@ export function setupSpiderMotion(scene, button) {
   function refreshComfort() {
     button.hidden = reduced();
     if (reduced() || document.hidden) stop();
-    else if (inView && !played) play();
+    else if (inView && artReady && !played) play();
   }
 
   const observer = new IntersectionObserver(([entry]) => {
     inView = entry.isIntersecting && entry.intersectionRatio >= .45;
     if (!inView) stop();
-    else if (!played) play();
+    else if (artReady && !played) play();
   }, { threshold: [.45] });
   observer.observe(scene);
   button.addEventListener('click', () => {
@@ -165,10 +166,17 @@ export function setupSpiderMotion(scene, button) {
   window.addEventListener('larriverse:settings', refreshComfort);
   window.addEventListener('larriverse:comfort-opened', stop);
 
-  return function showSpider() {
+  return function showSpider(artLoading) {
     stop();
-    rig = createSpiderRig(scene.querySelector('svg[data-species]'));
+    const currentRig = createSpiderRig(scene.querySelector('svg[data-species]'));
+    rig = currentRig;
     played = false;
+    artReady = false;
     refreshComfort();
+    Promise.resolve(artLoading).then(() => {
+      if (rig !== currentRig) return;
+      artReady = true;
+      refreshComfort();
+    });
   };
 }
