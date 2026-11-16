@@ -511,6 +511,8 @@ const themes = {
 };
 
 export function mountScene(world) {
+  const panel = document.querySelector('.play-card');
+  if (!panel || panel.querySelector('[data-lv-world-motion]')) return;
   const scene = document.createElement('div');
   scene.className = `world-scene world-scene--${world.mode}`;
   scene.setAttribute('aria-hidden', 'true');
@@ -530,5 +532,5 @@ export function mountScene(world) {
     <g class="scene-friend" transform="translate(62 120)"><path d="M0 34Q-2-12 23-12T47 34q-23 16-47 0"/><circle cx="15" cy="11" r="3"/><circle cx="32" cy="11" r="3"/><path d="M18 21q7 6 12 0" stroke-width="2" fill="none"/></g>
     <g class="scene-friend friend-two" style="--delay:1s" transform="translate(714 124)"><path d="M0 31Q-2-12 22-12T45 31q-22 15-45 0"/><circle cx="14" cy="10" r="3"/><circle cx="31" cy="10" r="3"/><path d="M18 20q6 5 11 0" stroke-width="2" fill="none"/></g>
   </svg>`;
-  document.querySelector('.play-card')?.prepend(scene);
+  panel.prepend(scene);
 }

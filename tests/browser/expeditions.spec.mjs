@@ -6,7 +6,7 @@ async function adventure(page,id,play) {
   const errors = []; page.on("pageerror",error => errors.push(error.message));
   await page.goto(`/games/${id}/index.html`);
   await expect(page.locator("#gameBoard")).not.toBeEmpty();
-  await expect(page.locator(".world-scene svg")).toBeVisible();
+  await expect(page.locator(`[data-lv-world-motion="${id}"]`)).toBeVisible();
   await expect(page.locator("#soundToggle")).toHaveAttribute("aria-pressed","false");
   await play();
   await expect(page.locator("#finishDialog")).toBeVisible();
@@ -141,7 +141,7 @@ test("Pantry Picnic: eighty continuous, unique picnics with saved checkpoints an
   expect(PANTRY_ROUND_SIZE).toBe(10);
   const errors=[];page.on("pageerror",error=>errors.push(error.message));
   await page.goto("/games/pantry-picnic/index.html");
-  await expect(page.locator(".world-scene svg")).toBeVisible();
+  await expect(page.locator('[data-lv-world-motion="pantry-picnic"]')).toBeVisible();
   await expect(page.locator("#soundToggle")).toHaveAttribute("aria-pressed","false");
 
   const visited=[];
@@ -360,8 +360,11 @@ test("Eight expeditions remain usable with larger text, high contrast and reduce
 test("Comfort control stops decorative animation and persists after reload",async({page})=>{
   await page.emulateMedia({reducedMotion:"no-preference"}); await page.goto("/games/bridge-buddies/index.html");
   await page.evaluate(()=>window.LarriVerseArcade.setSettings({reducedMotion:false}));
-  expect(await page.locator(".scene-cloud").evaluate(node=>getComputedStyle(node).animationName)).toBe("cloud-drift");
+  const scene=page.locator('[data-lv-world-motion="bridge-buddies"]');
+  await scene.getByRole("button",{name:/Play scene/}).click();
+  await expect.poll(()=>scene.evaluate(node=>node.getAnimations({subtree:true}).length)).toBeGreaterThan(0);
   await page.locator("#comfortToggle").click(); await expect(page.locator("#comfortToggle")).toHaveAttribute("aria-pressed","true");
-  expect(await page.locator(".scene-cloud").evaluate(node=>getComputedStyle(node).animationName)).toBe("none");
+  await expect(scene.getByRole("button",{name:/Play scene/})).toBeHidden();
+  expect(await scene.evaluate(node=>node.getAnimations({subtree:true}).length)).toBe(0);
   await page.reload(); await expect(page.locator("#comfortToggle")).toHaveAttribute("aria-pressed","true");
 });

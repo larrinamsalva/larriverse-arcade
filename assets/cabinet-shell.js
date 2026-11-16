@@ -122,6 +122,9 @@
       target: document.querySelector('.game-shell, main, #app') || document.body,
       focusTarget: document.querySelector('#playArea, #gameScreen, #world, main, #app')
     });
+    import(new URL('./world-motion.js', document.currentScript.src))
+      .then(({ mountWorldMotion }) => mountWorldMotion(gameId, sdk))
+      .catch(error => console.warn('World scene could not open.', error));
   }
 
   if (gameId === 'creature-catcher') {
