@@ -75,7 +75,7 @@ assert.ok(game.includes("button.dataset.chapter")&&game.includes("missions.forEa
 assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|geolocation|sendBeacon|setInterval/.test(game+art),'Picture engine uses no external calls, device location or timers');
 assert.ok(css.includes('larriverse-dark')&&css.includes('larriverse-high-contrast')&&css.includes('@media(max-width:550px)'),'Dark, contrast and phone styles');
 assert.ok(art.includes('<svg')&&spiderPicture('widow').includes('<ellipse')&&actionPicture('kit').includes('<rect'),'Original SVG spider and first-aid pictures');
-for(const file of ['assets/picture-quest.js','assets/picture-quest-art.js','assets/helping-hands-answer-art.js','games/spider-scout/game.js',
+for(const file of ['assets/picture-quest.js','assets/picture-quest-art.js','assets/helping-hands-answer-art.js','assets/helping-hands-picture-art.js','games/spider-scout/game.js',
  'games/spider-scout/questions.js','games/helping-hands/game.js','games/helping-hands/questions.js']){
  const result=spawnSync(process.execPath,['--check',file],{encoding:'utf8'});
  assert.equal(result.status,0,file+' must parse cleanly: '+result.stderr);
@@ -112,21 +112,27 @@ const spiderUi=fs.readFileSync('assets/picture-quest.css','utf8');
 assert.ok(spiderUi.includes('body[data-classic="spider-scout"] .choices'), 'Spider pictures stay large enough to compare on phones');
 const moduleSyntax=spawnSync(process.execPath,['--check','assets/spider-field-guide-art.js'],{encoding:'utf8'});
 assert.equal(moduleSyntax.status,0,'Field guide renderer must parse as JavaScript: '+moduleSyntax.stderr);
-// Helping Hands uses local WebP answer art with SVG fallbacks and keeps its
-// twenty distinct SVG scenarios.
+// Helping Hands bundles local WebP answers and scenarios with SVG fallbacks.
 assert.equal(HELPING_SCENE_TITLES.length,20,'Twenty individual Helping Hands teaching scenes exist');
 assert.equal(new Set(HELPING_SCENE_TITLES).size,20,'Every real-life situation has a unique scene');
 assert.ok(HELPING_ACTION_TYPES.length>=24,'Every object/action icon gets upgraded art');
 const seenSceneArt=new Set();
-for(const title of HELPING_SCENE_TITLES){
+const seenSceneImages=new Set();
+for(const [index,title] of HELPING_SCENE_TITLES.entries()){
+ const file='case-'+(index+1);
+ const bitmap=fs.readFileSync('assets/helping-hands-scenes/'+file+'.webp');
+ assert.equal(bitmap.toString('ascii',0,4),'RIFF',title+' has a WebP container');
+ assert.equal(bitmap.toString('ascii',8,12),'WEBP',title+' has a WebP signature');
+ seenSceneImages.add(bitmap.toString('base64'));
  const pic=helpScenePicture({title});
  assert.ok(pic.includes('data-help-art="anime-3"')&&pic.includes('data-kind="scenario"'),title+' displays a realism scene');
- assert.ok(pic.includes('data-key="case-'+(HELPING_SCENE_TITLES.indexOf(title)+1)+'"'),title+' has a distinct visual scene key');
+ assert.ok(pic.includes('data-key="'+file+'"'),title+' has a distinct visual scene key');
  assert.ok(pic.includes('<svg')&&pic.includes('<path')&&pic.length>1400,title+' contains meaningful native SVG art');
  assert.ok(!/<script|foreignObject|<image|onload=|javascript:|@import/i.test(pic),title+' remains local and noninteractive');
  seenSceneArt.add(pic);
 }
 assert.equal(seenSceneArt.size,20,'All twenty helping scenes are individual illustrations');
+assert.equal(seenSceneImages.size,20,'All twenty rendered Helping Hands scenes are distinct files');
 const seenActions=new Set();
 for(const kind of HELPING_ACTION_TYPES){
  const bitmap=fs.readFileSync('assets/helping-hands-answers/'+kind+'.webp');
@@ -147,8 +153,8 @@ for(const art of [noseScene,noseOption]){
  assert.ok(art.includes('data-first-aid-action="pinch-soft-nose"'),'Nosebleed art shows fingers pinching the soft part');
  assert.ok(art.includes('data-bleed-cue="small"'),'Nosebleed art includes a tiny non-graphic bleed cue');
 }
-const helpQuestionSet=HELP_MISSIONS.map(q=>q.title);
-assert.equal(new Set(helpQuestionSet).size,20,'Each of the original twenty scenarios retains all four types of decision');
+const helpScenarioOrder=[...new Set(HELP_MISSIONS.map(q=>q.title))];
+assert.deepEqual(helpScenarioOrder,HELPING_SCENE_TITLES,'Each Helping Hands scenario maps to its matching image');
 assert.ok(HELP_MISSIONS.every(q=>q.options.every(option=>HELPING_ACTION_TYPES.includes(option.icon))),
  'Every image answer in the 80 Helping Hands missions uses an illustrated, registered object');
 const qs=fs.readFileSync('assets/picture-quest.js','utf8');

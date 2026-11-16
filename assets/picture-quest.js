@@ -1,5 +1,6 @@
 import { actionPicture, scenePicture, spiderPicture } from './picture-quest-art.js';
 import { renderHelpAnswerPicture } from './helping-hands-answer-art.js';
+import { renderHelpScenePicture } from './helping-hands-picture-art.js';
 // Same offline, accessible choice-board engine for both worlds. No timers,
 // accounts, user-entered medical data, location, uploads, or remote assets.
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
@@ -40,7 +41,11 @@ export function startPictureQuest({id,world,chapters,missions}){
     el('question').textContent=mission.prompt;
     el('observation').textContent=mission.observation;
     const art=el('sceneArt');
-    art.innerHTML=scenePicture(mission,world);
+    if(world==='help'){
+      renderHelpScenePicture(art,mission);
+    }else{
+      art.innerHTML=scenePicture(mission,world);
+    }
     art.setAttribute('aria-label',mission.sceneAlt||mission.title+' illustration. Use the written clues for safety.');
     el('choices').replaceChildren();
     mission.options.forEach((option,index)=>{
