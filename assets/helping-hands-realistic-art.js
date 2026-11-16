@@ -30,7 +30,7 @@ const e=(cx,cy,rx,ry,fill,other={})=>h('ellipse',{cx,cy,rx,ry,fill,...other});
 const c=(cx,cy,r,fill,other={})=>h('circle',{cx,cy,r,fill,...other});
 const r=(x,y,w,hgt,rx,fill,other={})=>h('rect',{x,y,width:w,height:hgt,rx,fill,...other});
 const line=(x1,y1,x2,y2,color,width=2)=>p('M'+x1+' '+y1+' L'+x2+' '+y2,'none',color,width);
-const g=(inside,transform)=>h('g',transform?{transform}: {},inside);
+const g=(inside,transform,metadata={})=>h('g',transform?{transform,...metadata}:metadata,inside);
 const tx=(x,y,value,size=15,fill=ink)=>h('text',{x,y,fill,'text-anchor':'middle','font-family':'system-ui,Arial,sans-serif','font-size':size,'font-weight':800},value);
 // Soft painterly floor and slight cast shadows make the objects feel tangible.
 function frame(inner,kind,key,background='#f1f5f2'){
@@ -241,9 +241,14 @@ function scenarioScene(index){
     g(pressure(),'translate(150 79) scale(.55)')+
     g(phone(true),'translate(234 20) scale(.28)');
    break;
-  case 3:scene=base+person(105,115,.86,{color:'#7d9fb5'})+
-    g(p('M-19 0 Q0 15 19 -7','none','#d2a080',15),'translate(105 72)')+
-    g(phone(true),'translate(170 68) scale(.58)');
+  case 3: // A real symptom pose: leaning forward, both hands at throat.
+   // NOT a demonstration of choking treatment or abdominal thrusts.
+   scene=base+
+     g(person(125,98,.71,{color:'#d39172',style:1,pose:'choking',expression:'distress'}),
+       'rotate(11 125 118)',{'data-scene-action':'choking-hands-at-throat'})+
+     g(food(),'translate(215 93) scale(.38)')+
+     g(phone(true),'translate(250 28) scale(.21)');
+
    break;
   case 4:scene=base+g(resting(),'translate(-27 -16) scale(1.08)')+
     g(phone(true),'translate(191 73) scale(.53)');

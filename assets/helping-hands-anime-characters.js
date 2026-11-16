@@ -21,42 +21,50 @@ const mouth=(sad)=>sad?
  P('M-8 24 Q0 15 10 24','none','#a65e62',2.5):
  P('M-9 21 Q0 29 12 20','none','#a55f63',2.5);
 const eye=(x,y,sad)=>{
- const eyeY=sad?y+2:y;
+ const eyeY=sad?y+1:y;
  return G(
-   E(0,0,9,11,'#fff9f4',{stroke:'#654c51','stroke-width':1.7})+
-   E(1,1,5.3,8,sad?'#9d7489':'#6685a0')+
-   E(1,2,3.4,5.3,'#243845')+
-   C(-1,-3,2.4,'#ffffff')+E(4,4,1.4,2,'#cce1ed')+
-   P('M-10 -5 Q-1 -13 9 -6','none','#533e45',2.6)+
-   (sad?P('M-10 -15 L9 -17','none','#684d4b',2):P('M-10 -16 Q0 -21 10 -17','none','#73544c',1.8)),
+   E(0,0,9.5,11,'#fffaf6',{stroke:'#654c51','stroke-width':1.8})+
+   E(1,1,5.7,8,sad?'#95769c':'#668bb4')+
+   E(1,2,3.5,5.4,'#273e50')+
+   C(-1,-3,2.5,'#ffffff')+E(4,4,1.5,2.2,'#cceaf7')+
+   P('M-10 -5 Q-1 -13 10 -6','none','#533e45',2.7)+
+   (sad?P('M-10 -15 Q1 -19 10 -13','none','#684d4b',2.2):P('M-10 -16 Q0 -21 10 -17','none','#73544c',1.9)),
    'translate('+x+' '+eyeY+')');
 };
 export function animeFace(x,y,scale=1,tone,expression='calm',opts={}){
- const look=palette({...opts,tone});const sad=expression==='sad';
+ const look=palette({...opts,tone});
+ const distressed=expression==='distress';
+ const sad=expression==='sad'||distressed;
  const outline='#875e52',hair=look.hair,shine=look.light;
  let svg='';
- // Thick back-hair masses, not a round helmet: pointed locks and sideburns.
- svg+=P('M-33 -7 Q-46 -32 -31 -49 Q-20 -69 3 -62 Q24 -67 38 -45 Q48 -18 34 20 L28 27 Q34 9 25 -12 L-26 -9 Q-24 13 -32 28Z',
+ // Round, wide anime-style head with a short jaw. The previous face was
+ // tall and narrow; this silhouette matches the cheeks, not a stretched oval.
+ svg+=P('M-38 -15 Q-48 -37 -33 -51 Q-24 -63 5 -60 Q31 -61 41 -39 Q49 -19 38 17 L30 26 Q40 4 28 -15 L-29 -12 Q-29 8 -32 25Z',
    hair,'#40383d',2.8,{'data-anime-layer':'hair-back'});
- svg+=P('M-33 -10 Q-38 -19 -33 -28 L-26 -15 L-24 5 L-29 19Z',shine,'none',0,{opacity:.45});
- svg+=E(-29,0,8,11,look.skin,{stroke:outline,'stroke-width':2});
- svg+=E(29,0,8,11,look.skin,{stroke:outline,'stroke-width':2});
- svg+=P('M-27 -28 Q-8 -42 19 -32 Q30 -29 30 -8 L29 15 Q20 37 0 42 Q-19 36 -28 16 Q-31 -6 -27 -28Z',
-   look.skin,outline,2.6,{'data-anime-anatomy':'face-and-jaw'});
- svg+=P('M18 -25 Q32 -7 26 18 Q19 32 3 37 Q24 33 29 14 L30 -8Z','#d99d83',{opacity:.63});
- svg+=E(-21,15,8,3.7,BASE.cheek,{opacity:sad?.4:.3});
- svg+=E(21,15,8,3.7,BASE.cheek,{opacity:sad?.4:.3});
- svg+=eye(-13,-3,sad)+eye(14,-3,sad);
- svg+=P('M0 3 Q-3 11 1 12','none','#b77e6f',1.8,{'data-anatomy':'nose'});
- svg+=mouth(sad);
- if(sad)svg+=P('M-22 9 Q-24 15 -20 23','none','#8bc1d1',2.8,{'data-expression':'worried'});
- // Strands overlap brow without covering the eyes.
- svg+=P('M-34 -28 Q-27 -51 -2 -57 Q19 -54 36 -35 L40 -16 Q29 -24 21 -34 Q21 -22 12 -18 L7 -30 Q-4 -17 -15 -17 L-15 -29 Q-24 -18 -33 -14Z',
+ svg+=E(-33,0,7.5,10.5,look.skin,{stroke:outline,'stroke-width':2});
+ svg+=E(33,0,7.5,10.5,look.skin,{stroke:outline,'stroke-width':2});
+ svg+=P('M-31 -22 Q-28 -39 1 -39 Q30 -38 32 -19 Q38 -1 33 15 Q24 33 0 36 Q-24 33 -33 15 Q-38 -2 -31 -22Z',
+   look.skin,outline,2.6,{'data-anime-anatomy':'face-and-jaw','data-face-proportion':'rounded-anime'});
+ svg+=P('M20 -24 Q34 -8 31 12 Q23 29 5 34 Q29 26 33 15 L32 -17Z','#d99d83',{opacity:.38});
+ svg+=E(-23,15,8,3.8,BASE.cheek,{opacity:sad?.43:.28});
+ svg+=E(23,15,8,3.8,BASE.cheek,{opacity:sad?.43:.28});
+ svg+=eye(-14,-3,sad)+eye(14,-3,sad);
+ svg+=P('M0 4 Q-3 11 2 12','none','#b77e6f',1.6,{'data-anatomy':'nose'});
+ if(distressed){
+  svg+=E(2,24,6,8,'#85434d',{stroke:'#ad6162','stroke-width':2,'data-expression':'open-mouth'});
+  svg+=E(2,27,3,2.2,'#e99e9c');
+  svg+=P('M-25 -17 L-15 -22 M15 -22 L25 -17','none','#694d4b',2.6);
+  svg+=P('M-26 -2 L-29 6 M26 0 L29 8','none','#b87b74',1.5);
+ } else svg+=mouth(sad);
+ if(sad&&!distressed)svg+=P('M-22 10 Q-24 16 -20 23','none','#8bc1d1',2.4,{'data-expression':'worried'});
+ svg+=P('M-39 -26 Q-29 -53 -2 -58 Q25 -56 40 -36 L43 -14 Q29 -24 22 -34 Q21 -22 12 -18 L7 -32 Q-5 -19 -16 -17 L-16 -30 Q-24 -18 -37 -15Z',
    hair,'#40383d',2.5,{'data-anime-layer':'layered-bangs'});
- svg+=P('M-26 -36 Q-14 -49 -3 -50 M11 -51 Q22 -48 32 -34','none',shine,2.4,{opacity:.85});
- svg+=P('M-29 -22 Q-37 -10 -30 13 M36 -27 Q41 -4 30 19','none',hair,3);
- svg+=E(-23,0,3,5,'#bc8573',{opacity:.65});
- return G(svg,'translate('+x+' '+y+') scale('+scale+')',{'data-anime-feature':'expressive-face'});
+ svg+=P('M-28 -38 Q-14 -53 0 -50 M12 -49 Q25 -46 35 -32','none',shine,2.4,{opacity:.88});
+ svg+=P('M-34 -22 Q-39 -10 -33 11 M39 -23 Q42 -5 32 18','none',hair,3);
+ svg+=E(-27,1,2,4,'#bc8573',{opacity:.58});
+ return G(svg,'translate('+x+' '+y+') scale('+scale+')',{
+  'data-anime-feature':'expressive-face','data-face-shape':'compact-rounded','data-expression':expression
+ });
 }
 function animeHand(x,y,scale=1,angle=0,tone='#eeb893'){
  return G(P('M-10 10 Q-14 3 -15 -5 Q-17 -11 -11 -13 Q-7 -14 -3 -7 L-4 -19 Q-4 -24 1 -24 Q7 -22 7 -15 L10 -23 Q15 -26 19 -21 Q21 -18 16 -7 Q26 -14 30 -7 Q32 -2 24 9 Q19 17 4 20 L-5 20Z',
@@ -75,6 +83,19 @@ function animeLeg(side,look){
    'scale('+S+' 1)');
 }
 function animeArm(side,look,pose){
+ if(pose==='choking'){
+  // Both real hands meet at the throat. This is an observable symptom,
+  // NOT an illustration of how a child should treat an airway obstruction.
+  const sleeve=P('M22 18 Q35 14 43 27 L45 42 L28 49 L14 35Z',
+    look.shirt,'#427887',2.3);
+  const arm=P('M37 41 Q35 23 21 5 L10 -6 Q5 2 8 12 Q22 35 27 51Z',
+    look.skin,'#a4745e',2.3,{'data-anime-anatomy':'forearm'});
+  const hand=animeHand(12,2,.71,side===1?30:-22,look.skin);
+  return G(sleeve+arm+hand,'scale('+side+' 1)',{
+   'data-anime-anatomy':'arm-sleeve-hand',
+   'data-body-language':'hand-at-throat'
+  });
+ }
  const S=side;
  const sleeve=pose==='comfort'&&side===1?
   P('M22 18 Q33 15 40 28 L48 40 Q46 49 34 51 L18 38Z',look.shirt,'#427887',2.3):
@@ -105,9 +126,9 @@ export function animePerson(x,y,scale=1,opts={}){
  svg+=P('M-12 11 L0 25 L12 11 M0 25 L0 57','none','#e0f3ef',2.1);
  svg+=P('M-21 51 Q0 56 23 51','none','#39758a',2.2);
  svg+=P('M-9 3 L-8 18 L12 18 L10 1Z',look.skin,'#b78470',1.5);
- svg+=animeFace(0,-17,1,look.skin,opts.sad?'sad':'calm',look);
+ svg+=animeFace(0,-17,.98,look.skin,opts.expression||(opts.sad?'sad':'calm'),look);
  return G(svg,'translate('+x+' '+y+') scale('+scale+')',{
-  'data-anime-character':'full-body','data-render-style':'cel-shaded','data-pose':pose});
+  'data-anime-character':'full-body','data-render-style':'cel-shaded','data-pose':pose,'data-body-language':pose==='choking'?'choking-symptoms':'normal'});
 }
 export function animeResting(){
  // An actual resting child, with full face/hair and filled arms/pants/shoes.
@@ -167,7 +188,8 @@ export function animeNosebleedPose(withContext=true){
   P('M208 108 Q211 111 210 116','none','#fff0df',2.4,{opacity:.7});
  const detail=P('M98 160 Q132 177 167 158 M201 162 Q219 169 223 183','none','#b5d8db',2.5)+
    (withContext?E(87,188,42,6,'#5b7b83',{opacity:.13}):'');
- return G(detail+shirt+collar+sleeve+neck+hairBack+ears+jaw+shade+
-  eyes+realNose+nostril+blush+hairFront+blood+arm+fingers,'',
+ return G(detail+shirt+collar+sleeve+neck+
+  G(hairBack+ears+jaw+shade+eyes+realNose+nostril+blush+hairFront+blood,'translate(0 24) scale(1 .78)',{'data-face-proportion':'rounded-anime'})+
+  arm+fingers,'',
  {'data-anime-scene':'nosebleed-forward-lean','data-art-style':'anime-character'});
 }

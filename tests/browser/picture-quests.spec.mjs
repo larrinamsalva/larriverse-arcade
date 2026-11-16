@@ -251,3 +251,43 @@ test('Helping Hands: nosebleed anatomy, full-body helper and worried anime face 
  expect(dims.scroll).toBeLessThanOrEqual(dims.width+4);
  expect(errors).toEqual([]);
 });
+
+test('Helping Hands: choking image acts out the symptom with a normal anime head, not a generic icon',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('/games/helping-hands/index.html');
+ await page.locator('#levelSelect').selectOption('3');
+ const root=page.locator('#sceneArt svg');
+ await expect(root.locator('[data-scene-action="choking-hands-at-throat"]')).toHaveCount(1);
+ await expect(root.locator('[data-body-language="hand-at-throat"]')).toHaveCount(2);
+ await expect(root.locator('[data-body-language="choking-symptoms"]')).toHaveCount(1);
+ await expect(root.locator('[data-expression="open-mouth"]')).toHaveCount(1);
+ await expect(root.locator('[data-face-proportion="rounded-anime"]')).toHaveCount(1);
+ const face=await root.locator('[data-face-proportion="rounded-anime"]').evaluate(el=>{
+  const b=el.getBBox();return {width:b.width,height:b.height};
+ });
+ expect(face.width).toBeGreaterThan(55);
+ expect(face.height/face.width,'No unnaturally stretched head').toBeLessThan(1.26);
+ await page.setViewportSize({width:390,height:844});
+ await expect(root.locator('[data-scene-action="choking-hands-at-throat"]')).toHaveCount(1);
+ const dims=await page.evaluate(()=>({
+  scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth
+ }));
+ expect(dims.scroll).toBeLessThanOrEqual(dims.client+4);
+ expect(errors).toEqual([]);
+});
+test('Helping Hands: every expressive face uses shorter rounded anime proportions',async({page})=>{
+ await page.goto('/games/helping-hands/index.html');
+ const ratios=await page.evaluate(async()=>{
+  const {animePerson,animeFace}=await import('/assets/helping-hands-anime-characters.js');
+  const drawings=[animeFace(100,90),...['calm','sad','distress'].map(expression=>
+   animePerson(100,90,.75,{expression,pose:expression==='distress'?'choking':'comfort'}))];
+  return drawings.map(svg=>{
+   const node=document.createElementNS('http://www.w3.org/2000/svg','svg');
+   node.innerHTML=svg;document.body.append(node);
+   const part=node.querySelector('[data-face-proportion="rounded-anime"]');
+   const box=part?.getBBox();node.remove();
+   return {present:!!part,width:box?.width,height:box?.height};
+  });
+ });
+ expect(ratios.every(x=>x.present&&x.width>55&&x.height/x.width<1.26)).toBe(true);
+});
