@@ -125,7 +125,7 @@ h1, h2, h3, p { margin-top: 0; }
   transform: rotate(1deg);
 }
 
-.hero-scene svg {
+.hero-scene img {
   display: block;
   width: 100%;
   height: auto;
@@ -407,6 +407,14 @@ h1, h2, h3, p { margin-top: 0; }
 
 .scenario-visual .pulse-light { animation: safety-pulse 1.05s ease-in-out infinite; }
 .scenario-visual .fog-layer { animation: fog-drift 6s ease-in-out infinite alternate; }
+.safety-scenery { animation: street-scenery-drift 14s ease-in-out infinite alternate; }
+.signal-flash { animation: street-signal-flash 1.2s steps(1, end) infinite; }
+.signal-flash-second { animation-delay: -.6s; }
+.finish-crossing { animation: street-finish-crossing 1.65s ease-out both; }
+.safety-rail-gate {
+  transform-origin: 202px 254px;
+  animation: street-lower-gate 2s ease-out both;
+}
 
 .question-copy {
   padding: 1.15rem .2rem .3rem;
@@ -545,6 +553,24 @@ a:focus-visible,
   outline-offset: 4px;
 }
 
+@keyframes street-scenery-drift {
+  to { transform: translateX(7px); }
+}
+
+@keyframes street-signal-flash {
+  50% { opacity: .08; }
+}
+
+@keyframes street-finish-crossing {
+  from { transform: translate(-6px, -13px); }
+  to { transform: translate(0, 0); }
+}
+
+@keyframes street-lower-gate {
+  from { transform: rotate(-16deg); }
+  to { transform: rotate(0); }
+}
+
 @keyframes safety-pulse {
   50% { opacity: .28; filter: brightness(.65); }
 }
@@ -639,7 +665,6 @@ html.larriverse-reduced-motion body[data-classic="street-safety-scout"] *::after
   .zone-grid { grid-template-columns: 1fr 1fr; }
   .answer-grid { grid-template-columns: 1fr; }
   .answer-button { min-height: 70px; }
-  .scenario-visual svg { min-height: 215px; object-fit: cover; }
   .learning-strip { align-items: flex-start; }
 }
 
@@ -661,7 +686,7 @@ body[data-classic="street-safety-scout"] .world-banner{
     0 12px 0 rgba(32,83,102,.10),
     0 28px 56px rgba(15,61,79,.18);
 }
-body[data-classic="street-safety-scout"] .hero-scene svg{
+body[data-classic="street-safety-scout"] .hero-scene img{
   border:2px solid #d8f8ff66;
   box-shadow:inset 0 3px 0 #ffffff33,0 12px 0 rgba(3,31,42,.31),0 32px 58px rgba(0,0,0,.28);
 }
