@@ -2,6 +2,7 @@ import {test,expect} from '@playwright/test';
 
 for(const slug of ['spider-scout','helping-hands']){
  const answerPicture=slug==='helping-hands'?'.picture-answer img':'.picture-answer svg';
+ const sceneImage=slug==='helping-hands'?'#sceneArt img':'#sceneArt svg';
  test(slug+': 80 selectable picture missions and eight open chapters',async({page})=>{
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   await page.goto('/games/'+slug+'/index.html');
@@ -9,7 +10,7 @@ for(const slug of ['spider-scout','helping-hands']){
   await expect(page.locator('#levelSelect option')).toHaveCount(80);
   await expect(page.locator('.picture-answer')).toHaveCount(3);
   await expect(page.locator(answerPicture)).toHaveCount(3);
-  await expect(page.locator('#sceneArt svg')).toHaveCount(1);
+  await expect(page.locator(sceneImage)).toHaveCount(1);
   for(let i=0;i<8;i++){
    await page.locator('#chapters [data-chapter="'+i+'"]').click();
    await expect(page.locator('#caseCount')).toHaveText('Mission '+(i*10+1)+' / 80');
@@ -137,36 +138,39 @@ test('Spider Scout: larger phone pictures preserve 80 missions and saved discove
  expect(dims.scroll).toBeLessThanOrEqual(dims.client+4);
 });
 
-test('Helping Hands: all twenty real-world scenes are unique, illustrated and valid SVG',async({page})=>{
+test('Helping Hands: all twenty rendered scenes match their missions and load locally',async({page})=>{
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/games/helping-hands/index.html');
  const pictures=await page.evaluate(async()=>{
-  const {helpScenePicture,HELPING_SCENE_TITLES}=await import('/assets/helping-hands-realistic-art.js');
-  return HELPING_SCENE_TITLES.map(title=>{
-   const svg=helpScenePicture({title});
-   const root=new DOMParser().parseFromString(svg,'image/svg+xml');
-   return {title,svg,parseErrors:root.querySelectorAll('parsererror').length,
-     art:root.documentElement.getAttribute('data-help-art'),
-     key:root.documentElement.getAttribute('data-key'),
-     shapes:root.querySelectorAll('path,rect,circle,ellipse').length};
-  });
+  const {HELP_MISSIONS}=await import('/games/helping-hands/questions.js');
+  const selector=document.querySelector('#levelSelect');
+  const scene=document.querySelector('#sceneArt');
+  const pictures=[];
+  for(const mission of HELP_MISSIONS){
+   selector.value=String(mission.id-1);
+   selector.dispatchEvent(new Event('change',{bubbles:true}));
+   const image=scene.querySelector('img');
+   await image.decode();
+   const url=new URL(image.src);
+   pictures.push({
+    path:url.pathname,
+    local:url.origin===location.origin,
+    size:[image.naturalWidth,image.naturalHeight],
+    alt:image.alt,
+    label:scene.getAttribute('aria-label'),
+    expectedLabel:mission.sceneAlt
+   });
+  }
+  return pictures;
  });
- expect(pictures).toHaveLength(20);
- expect(new Set(pictures.map(p=>p.key)).size).toBe(20);
- expect(pictures.every(p=>p.parseErrors===0&&p.art==='anime-3'&&p.shapes>=10)).toBe(true);
- await expect(page.locator('#sceneArt svg[data-kind="scenario"]')).toHaveCount(1);
- await expect(page.locator('#sceneArt svg[data-key="case-1"]')).toHaveCount(1);
- const pic=pictures[0].svg;
- expect(pic).toContain('data-face-part="nose-bridge"');
- expect(pic).toContain('data-first-aid-action="pinch-soft-nose"');
- expect(pic).toContain('data-bleed-cue="small"');
- // The same nosebleed illustration appears in each of four different question chapters.
- await page.locator('#levelSelect').selectOption('20');
- await expect(page.locator('#sceneArt svg[data-key="case-1"]')).toHaveCount(1);
- await page.locator('#levelSelect').selectOption('40');
- await expect(page.locator('#sceneArt svg[data-key="case-1"]')).toHaveCount(1);
- await page.locator('#levelSelect').selectOption('60');
- await expect(page.locator('#sceneArt svg[data-key="case-1"]')).toHaveCount(1);
+ expect(pictures).toHaveLength(80);
+ for(const [index,picture] of pictures.entries()){
+  expect(picture.path).toBe('/assets/helping-hands-scenes/case-'+(index%20+1)+'.webp');
+  expect(picture.local).toBe(true);
+  expect(picture.size).toEqual([960,600]);
+  expect(picture.alt).toBe('');
+  expect(picture.label).toBe(picture.expectedLabel);
+ }
  expect(errors).toEqual([]);
 });
 
@@ -257,8 +261,9 @@ test('Helping Hands: expressive anime anatomy replaces stick figures across all 
  expect(pageErrors).toEqual([]);
 });
 
-test('Helping Hands: nosebleed anatomy, full-body helper and worried anime face stay readable on phone',async({page})=>{
+test('Helping Hands: nosebleed and helper SVG fallbacks stay readable on phone',async({page})=>{
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
+ await page.route('**/helping-hands-scenes/*.webp',route=>route.abort());
  await page.setViewportSize({width:390,height:844});
  await page.goto('/games/helping-hands/index.html');
  const scene=page.locator('#sceneArt svg');
@@ -278,11 +283,16 @@ test('Helping Hands: nosebleed anatomy, full-body helper and worried anime face 
  expect(errors).toEqual([]);
 });
 
-test('Helping Hands: choking image acts out the symptom with a normal anime head, not a generic icon',async({page})=>{
+test('Helping Hands: failed scene requests show the correct SVG after navigation',async({page})=>{
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.route('**/helping-hands-scenes/case-4.webp',route=>route.abort());
  await page.goto('/games/helping-hands/index.html');
+ const previous=await page.locator('#sceneArt img').elementHandle();
  await page.locator('#levelSelect').selectOption('3');
  const root=page.locator('#sceneArt svg');
+ await expect(root).toHaveAttribute('data-key','case-4');
+ await previous.dispatchEvent('error');
+ await expect(root).toHaveAttribute('data-key','case-4');
  await expect(root.locator('[data-scene-action="choking-hands-at-throat"]')).toHaveCount(1);
  await expect(root.locator('[data-body-language="hand-at-throat"]')).toHaveCount(2);
  await expect(root.locator('[data-body-language="choking-symptoms"]')).toHaveCount(1);
