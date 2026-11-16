@@ -1,0 +1,213 @@
+/* Real World Foundation: keeps the existing kid-safe 3D illustrations but treats
+   each world as an inviting PLACE, rather than an icon or flat colored tile.
+   Reusable for all 40 cover cards, discoveries, and feature spotlight. */
+:root{
+ --world-paper:#fffdf8;
+ --world-stroke:#bdcfda;
+ --world-shade:#263d53;
+ --world-sun:#ffdf9b;
+ --world-rim:#ffe6b6;
+}
+.world-portals{margin:2rem 0 1.25rem;scroll-margin-top:2rem}
+.world-portals-heading{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+.world-portals-heading h2{font-size:clamp(1.55rem,2.9vw,2.15rem);margin:.2rem 0 .4rem}
+.world-portals-heading p:not(.eyebrow){margin:0;max-width:640px;color:var(--muted);font-size:.93rem}
+.world-portals-heading .secondary{white-space:nowrap}
+.world-portal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.world-portal{
+ display:flex;flex-direction:column;position:relative;isolation:isolate;
+ overflow:hidden;min-height:330px;
+ border-radius:24px;border:3px solid #dfd9c9;
+ background:#34566a;text-decoration:none;
+ box-shadow:inset 0 0 0 1px #ffffff55,0 10px 0 #d8dee5,0 23px 34px #233c601d;
+ transition:transform .22s ease,box-shadow .22s ease
+}
+.world-portal:hover,.world-portal:focus-visible{transform:translateY(-4px);box-shadow:0 13px 0 #d8dee5,0 28px 42px #233c6030}
+.world-portal-visual{
+ position:absolute;inset:0;container-type:size;overflow:hidden;
+ pointer-events:none
+}
+.world-portal-visual::before{
+ content:"";position:absolute;top:50%;left:50%;
+ width:max(100cqw,100cqh);height:max(100cqw,100cqh);
+ transform:translate(-50%,-50%);
+ background-image:url('worlds-atlas-v2.webp');
+ background-size:400% 300%;
+ background-position:var(--art-x,0%) var(--art-y,0%);
+ filter:saturate(1.14) contrast(1.07)
+}
+.world-portal-visual.expedition::before{
+ background-image:url('expedition-atlas.webp');background-size:400% 200%
+}
+.world-portal-visual::after{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(180deg,#12233106 15%,#12233112 39%,#0a2336b8 73%,#091b2be8 100%);
+}
+.world-portal::before{
+ content:"";pointer-events:none;position:absolute;inset:5px;
+ border:1px solid #fff8;border-radius:19px;z-index:2;
+}
+.world-portal-content{
+ position:relative;z-index:3;margin-top:auto;display:grid;gap:.35rem;
+ padding:2rem 1.3rem 1.3rem;color:#fff;text-shadow:0 2px 6px #1424348a
+}
+.world-portal-kicker{font-weight:900;letter-spacing:.13em;font-size:.69rem;color:#ffe5ae}
+.world-portal h3{margin:0;font-size:1.45rem;line-height:1.16;letter-spacing:-.028em;color:#fff}
+.world-portal-content p{font-size:.84rem;line-height:1.45;margin:0;max-width:32ch;color:#f7f7f2}
+.world-portal-action{display:flex;align-items:center;justify-content:space-between;gap:.4rem;margin-top:.55rem;font-size:.83rem;font-weight:900;color:#fff}
+.world-portal-action span:last-child{border:1px solid #fff8;border-radius:100px;width:30px;height:30px;display:grid;place-items:center;background:#ffffff26}
+/* Keep artwork in every old world card, but make the painting the focus. */
+.game-card{background:var(--world-paper);border-color:var(--world-stroke);border-radius:23px}
+.game-cover{isolation:isolate}
+.game-cover::after{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(180deg,transparent 37%,#112b3a44 100%);
+ pointer-events:none
+}
+.game-cover::before{filter:saturate(1.08) contrast(1.04)}
+.game-card:hover .game-cover::before,.game-card:focus-within .game-cover::before{filter:saturate(1.14) contrast(1.07)}
+.game-card .game-body{background:var(--world-paper);position:relative}
+.game-card .game-body::before{
+ content:"";height:3px;background:linear-gradient(90deg,#e2b466,#91cdb7,#86a8cf);
+ position:absolute;top:0;left:0;right:0
+}
+.game-card .launch{border-radius:12px}
+.spotlight{background:linear-gradient(110deg,#e0e9e6,#e4d6bd 60%,#bdded2)}
+.spotlight-art::after{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(90deg,#e2e9e6b9,transparent 36%);
+ pointer-events:none
+}
+.spotlight-copy{z-index:2}
+.spotlight-copy h2{font-size:clamp(1.75rem,2.4vw,2.2rem)}
+.spotlight-copy p{color:#344854}
+.world-art-note{font-size:.74rem;color:var(--muted);margin:1rem 0 0}
+/* Never exchange readability or accessibility for atmospheric effects. */
+html.larriverse-dark .world-portals-heading p:not(.eyebrow){color:#cddfe7}
+html.larriverse-dark .game-card .game-body{background:var(--world-paper)}
+html.larriverse-dark .game-card{--world-paper:#192c38;--world-stroke:#5c7b85}
+html.larriverse-dark .spotlight{background:linear-gradient(115deg,#24394b,#344152)}
+html.larriverse-dark .spotlight-copy p{color:#e4eef5}
+html.larriverse-dark .spotlight-art::after{background:linear-gradient(90deg,#24394b9e,transparent 38%)}
+html.larriverse-dark .world-art-note{color:#cbdde1}
+html.larriverse-high-contrast .world-portal{
+ border-color:#fff!important;box-shadow:none!important;
+}
+html.larriverse-high-contrast .world-portal-visual::after{
+ background:linear-gradient(180deg,#0000 9%,#0007 40%,#000 77%);
+}
+html.larriverse-high-contrast .world-portal-content,
+html.larriverse-high-contrast .world-portal-content p,
+html.larriverse-high-contrast .world-portal-kicker{color:#fff!important;text-shadow:0 2px 2px #000}
+html.larriverse-high-contrast .game-card,
+html.larriverse-high-contrast .game-card .game-body{background:#000!important;border-color:#fff!important;color:#fff}
+html.larriverse-high-contrast .game-cover::after{background:linear-gradient(180deg,transparent 40%,#0009)}
+@media(max-width:1050px){
+ .world-portal-grid{gap:.75rem}
+ .world-portal{min-height:305px}
+ .world-portal-content{padding:1.2rem}
+ .world-portal h3{font-size:1.21rem}
+}
+@media(max-width:700px){
+ .world-portals{margin:1.6rem 0 1rem}
+ .world-portals-heading{align-items:start;flex-direction:column}
+ .world-portals-heading h2{font-size:1.5rem}
+ .world-portal-grid{grid-template-columns:1fr;gap:.8rem}
+ .world-portal{min-height:245px}
+ .world-portal-content{padding:1.4rem;max-width:460px}
+ .world-portal h3{font-size:1.42rem}
+}
+@media(min-width:450px) and (max-width:700px){
+ .world-portal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .world-portal:last-child{grid-column:1/-1}
+}
+@media(prefers-reduced-motion:reduce){
+ .world-portal{transition:none}
+}
+html.larriverse-reduced-motion .world-portal{transition:none}
+
+/* Readable layouts at 200% browser text size: don't let no-wrap CTAs or
+   nested flex/grid min-content sizes push the 320px arcade off-screen. */
+.world-portals,
+.world-portals-heading,
+.world-portals-heading > *,
+.world-portal-grid,
+.world-portal,
+.world-portal-content,
+.world-portal-content > *{
+  min-width:0;
+  max-width:100%;
+}
+.world-portals-heading .secondary{
+  white-space:normal;
+  text-align:center;
+  overflow-wrap:anywhere;
+  flex-shrink:1;
+}
+.world-portal-kicker,
+.world-portal h3,
+.world-portal-content p,
+.world-portal-action{
+  overflow-wrap:anywhere;
+}
+.world-portal-action{
+  flex-wrap:wrap;
+  min-width:0;
+}
+.world-portal-action > span:first-child{
+  min-width:0;
+  flex:1 1 auto;
+}
+.world-portal-action > span:last-child{
+  flex:0 0 30px;
+}
+@media(max-width:700px){
+  .world-portals-heading{align-items:stretch}
+  .world-portals-heading .secondary{align-self:flex-start;max-width:100%}
+  .world-portal-grid{grid-template-columns:minmax(0,1fr)}
+  .world-portal-content{width:100%;padding:1.1rem}
+}
+@media(min-width:450px) and (max-width:700px){
+  .world-portal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* Restore, erase and export must remain separate, usable hit targets in the
+   320px + 200%-text settings dialog. Do not change their behavior or files. */
+@media(max-width:700px){
+  #controlCenter{
+    overflow-y:auto;
+    max-height:calc(100dvh - 18px);
+    max-width:calc(100vw - 18px);
+  }
+  .control-card,.control-section,.data-actions{min-width:0;max-width:100%}
+  .data-actions{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    flex-wrap:nowrap;
+    gap:.75rem;
+  }
+  .data-actions > .primary,
+  .data-actions > .secondary,
+  .data-actions > .danger{
+    position:relative;
+    box-sizing:border-box;
+    display:flex;
+    flex:0 0 auto;
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    min-height:48px;
+    height:auto;
+    margin:0;
+    padding:.7rem .5rem;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+  .data-actions .import-label input{
+    width:1px;height:1px;position:absolute;opacity:0;
+  }
+}

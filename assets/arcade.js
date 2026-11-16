@@ -1,4 +1,5 @@
 import { discoverGames } from './arcade-discovery.js';
+import { visualPortalModels, worldArtPosition } from './larriverse-visual-foundation.js';
 const grid = document.querySelector('#gameGrid');
 const filters = document.querySelector('#filters');
 const search = document.querySelector('#search');
@@ -30,10 +31,7 @@ function gameProgress(game) {
   return `${record.sessions || 0} session${record.sessions === 1 ? '' : 's'} started`;
 }
 
-function artPosition(game) {
-  const art = Number(game.art || 0);
-  return `--art-x:${art % 4 * 100 / 3}%;--art-y:${Math.floor(art / 4) * (game.artSet === "expedition" ? 100 : 50)}%`;
-}
+function artPosition(game) { return worldArtPosition(game); }
 function card(game) {
   const tag = game.isNew ? '<span class="cover-tag">NEW WORLD</span>' : '';
   const title = escapeHtml(game.title);
@@ -44,6 +42,25 @@ function card(game) {
     <small class="progress-line">${escapeHtml(gameProgress(game))}</small>
     <a class="launch" href="${encodeURI(game.href)}"><span>Play game</span><span>${escapeHtml(game.minutes || 'Explore')}</span></a></div>
   </article>`;
+}
+
+function renderWorldPortals() {
+  const surface=document.querySelector('#worldPortalGrid');
+  if(!surface)return;
+  const portals=visualPortalModels(games);
+  surface.innerHTML=portals.map(({story,game})=>{
+    const label=escapeHtml(story.subtitle);
+    const title=escapeHtml(game.title);
+    return `<a class="world-portal" href="${encodeURI(game.href)}" aria-label="Explore ${title}: ${label}">
+      <span class="world-portal-visual ${game.artSet==='expedition'?'expedition':''}"
+       style="${artPosition(game)}" aria-hidden="true"></span>
+      <span class="world-portal-content">
+        <span class="world-portal-kicker">${escapeHtml(story.kicker)}</span>
+        <h3>${title}</h3>
+        <p>${escapeHtml(story.description)}</p>
+        <span class="world-portal-action"><span>Explore this world</span><span aria-hidden="true">→</span></span>
+      </span></a>`;
+  }).join('');
 }
 
 function render() {
@@ -262,6 +279,7 @@ fetch('games/catalog.json')
     document.querySelector('#gameCount').textContent = games.length;
     document.querySelector('#playableCount').textContent = playable.length;
     renderFilters();
+    renderWorldPortals();
     render();
     renderProfile();
     showFeature();
