@@ -25,11 +25,18 @@ html.larriverse-dark .chapter-chip:hover:not(.active){background:#36564e}
 html.larriverse-dark .chapter-chip.active .chapter-count{color:#e5f9ef}
 .level-select{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:17px;font-weight:650;color:var(--d-sub)}.level-select select{padding:10px 14px;max-width:100%;min-width:245px;border:2px solid var(--d-line);border-radius:10px;background:var(--d-card);color:var(--d-ink)}
 .adventure-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr);gap:20px;align-items:start}
-.scene-panel,.mission-panel{min-width:0;padding:21px}.panel-title{display:flex;justify-content:space-between;gap:8px;align-items:center}.panel-title h2,.mission-panel h2,.museum-panel h2{font-size:1.42rem;margin:0 0 18px}.scene-tag{white-space:nowrap;background:#d8f5d7;border-radius:99px;color:#134d3d;padding:7px 12px;font-size:.77rem;font-weight:850}
+.scene-panel,.mission-panel{min-width:0;padding:21px}.panel-title h2,.mission-panel h2,.museum-panel h2{font-size:1.42rem;margin:0 0 18px}
 .canvas-frame{overflow:hidden;border:5px solid #acd6b6;border-radius:18px;background:#c6e6dd;box-shadow:inset 0 0 12px #143e3122}#dinoCanvas{display:block;width:100%;height:auto;aspect-ratio:12/7;touch-action:pan-y}
+#illustrationView img{display:block;width:100%;height:auto;aspect-ratio:12/7}
+.exhibit-toolbar,.exhibit-modes{display:flex;flex-wrap:wrap;gap:7px}
+.exhibit-toolbar{margin-bottom:12px}
+.exhibit-modes{flex:1 1 13rem;min-width:0}
+.exhibit-modes[hidden]{display:none}
+.exhibit-toolbar button{min-width:0;overflow-wrap:anywhere}
 .scene-toolbar{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
-.scene-toolbar button,.mission-actions button,.fossil-action button{flex:1 1 auto;background:#ecf8e9;color:#174b42;padding:11px;border:2px solid #9dcbb1;border-radius:12px;font-weight:800}
-.scene-toolbar button:hover,.mission-actions button:hover:not(:disabled),.fossil-action button:hover{background:#daf0da}
+.exhibit-toolbar button,.scene-toolbar button,.mission-actions button,.fossil-action button{flex:1 1 auto;background:#ecf8e9;color:#174b42;padding:11px;border:2px solid #9dcbb1;border-radius:12px;font-weight:800}
+.exhibit-toolbar button:hover,.scene-toolbar button:hover,.mission-actions button:hover:not(:disabled),.fossil-action button:hover{background:#daf0da}
+.exhibit-modes button[aria-pressed="true"]{background:#115e59;color:#fff;border-color:#115e59}
 .dino-shell h2,.dino-shell h3,.source-links a{overflow-wrap:anywhere}
 .scene-help,.model-note,.privacy{font-size:.84rem;line-height:1.55;color:var(--d-sub)}
 .scene-help kbd{font-family:monospace;color:var(--d-ink);background:var(--d-soft);padding:2px 5px;border-radius:4px}
@@ -47,11 +54,11 @@ html.larriverse-dark .chapter-chip.active .chapter-count{color:#e5f9ef}
 .science-sources p{line-height:1.6;color:var(--d-sub)}.science-sources h2{font-size:1.35rem}.source-links{display:flex;gap:12px;flex-wrap:wrap}.source-links a{color:#0a6155;font-weight:750;text-decoration:underline;text-underline-offset:3px}.source-links a:hover{text-decoration-thickness:3px}
 html.larriverse-dark{color-scheme:dark;--d-ink:#f2f8ee;--d-sub:#c2d7d0;--d-card:#172b2b;--d-line:#53766a;--d-accent:#8bedc3;--d-soft:#233b38;--d-bg:#0d2423}
 html.larriverse-dark body{background:linear-gradient(140deg,#0c2122,#203b35)}
-html.larriverse-dark .scene-tag{background:#294939;color:#e5f8e6}
 html.larriverse-dark .observation{background:#4c391e;color:#ffedc8}
 html.larriverse-dark .answer-option.correct{background:#1b4d35;color:#f2ffe8}
 html.larriverse-dark .answer-option.wrong{background:#54391d;color:#ffebcc}
-html.larriverse-dark .scene-toolbar button,html.larriverse-dark .mission-actions button,html.larriverse-dark .fossil-action button{background:#22423a;color:#e5fff3;border-color:#679b83}
+html.larriverse-dark .exhibit-toolbar button,html.larriverse-dark .scene-toolbar button,html.larriverse-dark .mission-actions button,html.larriverse-dark .fossil-action button{background:#22423a;color:#e5fff3;border-color:#679b83}
+html.larriverse-dark .exhibit-modes button[aria-pressed="true"]{background:#0e514a;border-color:#8bedc3;color:#fff}
 html.larriverse-dark .mission-actions .primary{background:#147564;color:white}
 html.larriverse-dark .science-card{background:#263c3c;border-color:#567f7d}
 html.larriverse-dark .science-card p{color:#d0e9e4}
@@ -60,10 +67,11 @@ html.larriverse-dark .feedback.good{background:#1d513b;color:#e6fff0}
 html.larriverse-dark .feedback.try{background:#60451f;color:#fff2d7}
 html.larriverse-dark .source-links a{color:#9eedd5}
 html.larriverse-dark .specimen-card strong{color:var(--d-ink)}
-html.larriverse-high-contrast .answer-option,html.larriverse-high-contrast .chapter-chip,html.larriverse-high-contrast .guide-card{border-width:3px}
+html.larriverse-high-contrast .answer-option,html.larriverse-high-contrast .chapter-chip,html.larriverse-high-contrast .guide-card,html.larriverse-high-contrast .exhibit-toolbar button{border-width:3px}
+html.larriverse-high-contrast .exhibit-modes button[aria-pressed="true"]{text-decoration:underline;text-decoration-thickness:.13em;text-underline-offset:.2em}
 html.larriverse-high-contrast .dino-shell{font-weight:550}
 @media(max-width:990px){.adventure-grid{grid-template-columns:1fr}.chapters{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-mark{font-size:5rem}}
-@media(max-width:720px){.dino-shell{padding:12px 10px 76px}.hero{border-radius:19px;padding:24px 18px}.hero-mark{display:none}.hero h1{font-size:clamp(1.55rem,7vw,2.65rem)}.expedition-progress,.scene-panel,.mission-panel,.museum-panel,.science-sources{padding:17px;border-radius:18px}.scene-toolbar button{flex-basis:calc(50% - 8px)}.scene-tag{font-size:.68rem}.panel-title{align-items:start;flex-wrap:wrap}.field-guide{grid-template-columns:1fr}.chapters{gap:6px}.chapter-chip{font-size:.73rem;padding:9px}.hero-tags span{font-size:.73rem}.mission-panel h3{font-size:1.25rem}}
+@media(max-width:720px){.dino-shell{padding:12px 10px 76px}.hero{border-radius:19px;padding:24px 18px}.hero-mark{display:none}.hero h1{font-size:clamp(1.55rem,7vw,2.65rem)}.expedition-progress,.scene-panel,.mission-panel,.museum-panel,.science-sources{padding:17px;border-radius:18px}.scene-toolbar button{flex-basis:calc(50% - 8px)}.field-guide{grid-template-columns:1fr}.chapters{gap:6px}.chapter-chip{font-size:.73rem;padding:9px}.hero-tags span{font-size:.73rem}.mission-panel h3{font-size:1.25rem}}
 @media(prefers-reduced-motion:reduce){.progress-bar>div{transition:none}}
 
 /* Separate walk-through expedition is opt-in; original 80-mission game stays unchanged. */

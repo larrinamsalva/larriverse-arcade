@@ -33,7 +33,7 @@
       <div>
         <p class="eyebrow">🦕 LarriVerse prehistoric expedition · 80 missions · 8 chapters</p>
         <h1>Dino <span>Discovery World</span></h1>
-        <p>Become a junior paleontologist! Choose any chapter or mission from the start, orbit friendly 3D prehistoric models, uncover fossil clues, explore ancient habitats, and build your very own discovery museum.</p>
+        <p>Become a junior paleontologist! Choose any chapter or mission, explore illustrated habitats, turn and zoom 3D models, uncover fossils, and build your own discovery museum.</p>
         <div class="hero-tags"><span>🦖 3D exploration</span><span>🦴 Fossil digs</span><span>📖 Field guide</span><span>🧭 No timers</span></div>
       </div>
       <div class="hero-mark" aria-hidden="true">🦕</div>
@@ -58,22 +58,31 @@
 
     <section class="adventure-grid">
       <section class="scene-panel" aria-labelledby="sceneTitle">
-        <div class="panel-title"><div><p class="eyebrow">Interactive three-dimensional exhibit</p><h2 id="sceneTitle">Explore the prehistoric world</h2></div><span class="scene-tag">3D • Orbit &amp; zoom</span></div>
-        <div class="canvas-frame">
-          <canvas id="dinoCanvas" width="960" height="560" tabindex="0" role="img" aria-label="Interactive 3D dinosaur exhibit. Use arrow keys to orbit, Page Up or Page Down to look up or down, and plus or minus to zoom."></canvas>
+        <div class="panel-title"><h2 id="sceneTitle">Explore the prehistoric world</h2></div>
+        <div class="exhibit-toolbar">
+          <div id="exhibitModes" class="exhibit-modes" role="group" aria-label="Exhibit view" hidden>
+            <button id="illustrationMode" type="button" data-exhibit-view="illustration" aria-pressed="false" aria-controls="illustrationView">Habitat art</button>
+            <button id="modelMode" type="button" data-exhibit-view="model" aria-pressed="true" aria-controls="modelView">3D model</button>
+          </div>
+          <button id="switchDino" type="button">View another</button>
         </div>
-        <div class="scene-toolbar" role="group" aria-label="3D explorer controls">
-          <button id="turnLeft" type="button">↶ Turn left</button>
-          <button id="turnRight" type="button">↷ Turn right</button>
-          <button id="tiltUp" type="button">👀 Look up</button>
-          <button id="tiltDown" type="button">👀 Look down</button>
-          <button id="zoomIn" type="button">＋ Zoom in</button>
-          <button id="zoomOut" type="button">－ Zoom out</button>
-          <button id="switchDino" type="button">🦕 View another</button>
+        <div id="illustrationView" class="canvas-frame" hidden></div>
+        <div id="modelView">
+          <div class="canvas-frame">
+            <canvas id="dinoCanvas" width="960" height="560" tabindex="0" role="img" aria-label="Interactive 3D dinosaur exhibit. Use arrow keys to orbit, Page Up or Page Down to look up or down, and plus or minus to zoom."></canvas>
+          </div>
+          <div class="scene-toolbar" role="group" aria-label="3D explorer controls">
+            <button id="turnLeft" type="button">↶ Turn left</button>
+            <button id="turnRight" type="button">↷ Turn right</button>
+            <button id="tiltUp" type="button">👀 Look up</button>
+            <button id="tiltDown" type="button">👀 Look down</button>
+            <button id="zoomIn" type="button">＋ Zoom in</button>
+            <button id="zoomOut" type="button">－ Zoom out</button>
+          </div>
+          <p class="scene-help">Drag the 3D model to look around. With the model focused, use <kbd>A</kbd>/<kbd>D</kbd> or arrow keys to turn, <kbd>Page Up</kbd>/<kbd>Page Down</kbd> to look up and down, and <kbd>+</kbd>/<kbd>−</kbd> to zoom.</p>
         </div>
-        <p class="scene-help">Drag the 3D model on a phone or computer to look around. Keyboard: focus the exhibit, then use <kbd>A</kbd>/<kbd>D</kbd> or arrow keys to turn, <kbd>Page Up</kbd>/<kbd>Page Down</kbd> to look up and down, and <kbd>+</kbd>/<kbd>−</kbd> to zoom. The text clues and mission questions work without the 3D scene.</p>
-        <div class="specimen-card"><div><p class="eyebrow">Now viewing</p><strong id="modelName">Triceratops</strong><small id="modelType">Ceratopsian dinosaur</small></div><span aria-hidden="true">🔍</span></div>
-        <p class="model-note">Models are original, simplified 3D learning illustrations, not exact scientific reconstructions. Their natural-looking skin colors and patterns are artistic interpretations; most prehistoric body colors remain unknown. Dinosaurs, pterosaurs, and marine reptiles are labeled separately.</p>
+        <div class="specimen-card" aria-live="polite"><div><p class="eyebrow">Now viewing</p><strong id="modelName">Triceratops</strong><small id="modelType">Ceratopsian dinosaur</small></div><span aria-hidden="true">🔍</span></div>
+        <p class="model-note">The scenes and models are artist reconstructions. Prehistoric skin colors and patterns are interpretations.</p>
       </section>
       <section class="mission-panel" aria-labelledby="missionQuestion">
         <p id="chapterName" class="eyebrow">🦕 Chapter 1 · Meet the Dinosaurs</p>
@@ -85,13 +94,13 @@
           <p id="brushReadout" hidden aria-live="polite">Brush rock carefully.</p>
         </div>
         <div id="answerChoices" class="answer-choices" role="group" aria-label="Discovery answers"></div>
-        <p id="feedback" class="feedback" role="status" aria-live="polite">Explore the model and make a discovery.</p>
+        <p id="feedback" class="feedback" role="status" aria-live="polite">Explore the exhibit and make a discovery.</p>
         <div class="mission-actions"><button id="hintButton" type="button">💡 Show clue</button><button id="nextMission" class="primary" type="button" disabled>Next mission →</button></div>
         <section class="science-card" aria-label="Scientific explanation"><h3>🔬 Science field notes</h3><p id="explanation" aria-live="polite">The science explanation appears here after you solve the mission.</p><p id="hintText">Inspect the specimen and read the observation.</p></section>
       </section>
     </section>
     <section class="museum-panel" aria-labelledby="museumTitle">
-      <div><p class="eyebrow">Your local museum</p><h2 id="museumTitle">📖 My Dinosaur Field Guide</h2><p>Collect specimen cards as you solve missions. Tap any discovered card to view its 3D exhibit. No sign-in needed.</p></div>
+      <div><p class="eyebrow">Your local museum</p><h2 id="museumTitle">📖 My Dinosaur Field Guide</h2><p>Collect specimen cards as you solve missions. Tap any discovered card to view its exhibit. No sign-in needed.</p></div>
       <strong class="museum-counter"><span id="guideCount">0</span> / 10 exhibits</strong>
       <div id="fieldGuide" class="field-guide"><p>Solve missions to unlock specimen cards here.</p></div>
     </section>

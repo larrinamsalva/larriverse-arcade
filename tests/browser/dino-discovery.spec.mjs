@@ -13,6 +13,7 @@ test("Dino Discovery: 3D orbit and first science discovery save without repeat r
   await expect(page.locator("#levelReadout")).toHaveText("Mission 1 of 80");
   const count=await page.evaluate(async()=> (await import("/games/dino-discovery-world/missions.js")).MISSIONS.length);
   expect(count).toBe(80);
+  await page.locator("#modelMode").click();
   const before=await page.locator("#dinoCanvas").evaluate(c=>c.toDataURL());
   await page.locator("#turnRight").click();
   const after=await page.locator("#dinoCanvas").evaluate(c=>c.toDataURL());
@@ -49,7 +50,12 @@ test("Dino Discovery: fossil dig requires three brush actions and unlocks a fiel
   await expect(page.locator("#levelReadout")).toHaveText("Mission 11 of 80");
   await expect(page.locator("#brushFossil")).toBeVisible();
   await expect(page.locator(".answer-option").first()).toBeDisabled();
+  await expect(page.locator("#dinoCanvas")).toBeVisible();
+  await page.locator("#switchDino").click();
+  await expect(page.locator("#illustrationView img")).toHaveAttribute("src",/\/bird\.webp$/);
   await page.locator("#brushFossil").click();
+  await expect(page.locator("#modelName")).toHaveText("Fossil discovery");
+  await expect(page.locator("#dinoCanvas")).toBeVisible();
   await page.locator("#brushFossil").click();
   await expect(page.locator(".answer-option").first()).toBeDisabled();
   await page.locator("#brushFossil").click();
@@ -76,8 +82,9 @@ test("Dino Discovery: last mission, dark contrast and narrow phone layout",async
   await expect(page.locator("#solvedCount")).toHaveText("80");
   await page.locator("#nextMission").click();
   await expect(page.locator("#feedback")).toContainText("Master Paleontologist");
-  await page.evaluate(()=>window.LarriVerseArcade.setSettings({darkMode:true,highContrast:true,reducedMotion:true}));
+  await page.evaluate(()=>window.LarriVerseArcade.setSettings({theme:"dark",highContrast:true,reducedMotion:true}));
   await page.setViewportSize({width:390,height:844});
+  await expect(page.locator("html")).toHaveClass(/larriverse-dark/);
   const layout=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:document.documentElement.clientWidth}));
   expect(layout.scroll).toBeLessThanOrEqual(layout.width+4);
   await expect(page.locator("#dinoCanvas")).toBeVisible();
@@ -86,6 +93,7 @@ test("Dino Discovery: last mission, dark contrast and narrow phone layout",async
 
 test("Dino Discovery: dinosaur model has look-up/look-down controls without changing mission saves",async({page})=>{
  await page.goto(route);
+ await page.locator("#modelMode").click();
  const initial=await page.locator("#dinoCanvas").evaluate(c=>c.toDataURL());
  await page.locator("#tiltUp").click();
  const moved=await page.locator("#dinoCanvas").evaluate(c=>c.toDataURL());
@@ -97,6 +105,56 @@ test("Dino Discovery: dinosaur model has look-up/look-down controls without chan
  expect(keyboard).not.toBe(initial);
  const saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
  expect(saved?.solved||[]).toEqual([]);
+});
+
+test("Dino Discovery: eight creature illustrations load locally and the 3D view stays keyboard accessible",async({page})=>{
+ await page.goto(route);
+ await expect(page.locator("#illustrationMode")).toHaveAttribute("aria-pressed","true");
+ await expect(page.locator("#illustrationView img")).toBeVisible();
+ await expect(page.locator("#dinoCanvas")).toBeHidden();
+ await page.locator("#modelMode").focus();
+ await page.keyboard.press("Enter");
+ await expect(page.locator("#dinoCanvas")).toBeVisible();
+ await page.locator("#levelSelect").selectOption("1");
+ await expect(page.locator("#modelName")).toHaveText("Tyrannosaurus rex");
+ await expect(page.locator("#modelMode")).toHaveAttribute("aria-pressed","true");
+ await page.locator("#illustrationMode").click();
+ const exhibits=await page.evaluate(async()=>{
+  const {MISSIONS}=await import("/games/dino-discovery-world/missions.js");
+  const {EXHIBIT_ILLUSTRATIONS}=await import("/games/dino-discovery-world/exhibit-art.js");
+  const select=document.querySelector("#levelSelect");
+  const result=[];
+  for(const kind of Object.keys(EXHIBIT_ILLUSTRATIONS)){
+   select.value=String(MISSIONS.findIndex(m=>m.scene===kind));
+   select.dispatchEvent(new Event("change",{bubbles:true}));
+   const image=document.querySelector("#illustrationView img");
+   await image.decode();
+   const url=new URL(image.src);
+   result.push({kind,local:url.origin===location.origin,pathname:url.pathname,
+    description:image.alt,expected:EXHIBIT_ILLUSTRATIONS[kind],size:[image.naturalWidth,image.naturalHeight]});
+  }
+  return result;
+ });
+ expect(exhibits).toHaveLength(8);
+ for(const exhibit of exhibits){
+  expect(exhibit.local).toBe(true);
+  expect(exhibit.pathname).toBe("/games/dino-discovery-world/illustrations/"+exhibit.kind+".webp");
+  expect(exhibit.description).toBe(exhibit.expected);
+  expect(exhibit.size).toEqual([1152,672]);
+ }
+});
+
+test("Dino Discovery: a failed illustration falls back to the model and the next illustration works",async({page})=>{
+ await page.route("**/illustrations/trike.webp",route=>route.abort());
+ await page.goto(route);
+ await expect(page.locator("#dinoCanvas")).toBeVisible();
+ await expect(page.locator("#exhibitModes")).toBeHidden();
+ await page.locator("#turnRight").click();
+ await page.locator("#switchDino").click();
+ await expect(page.locator("#modelName")).toHaveText("Tyrannosaurus rex");
+ await expect(page.locator("#illustrationMode")).toHaveAttribute("aria-pressed","true");
+ await expect(page.locator("#illustrationView img")).toHaveAttribute("src",/\/rex\.webp$/);
+ await expect(page.locator("#levelReadout")).toHaveText("Mission 1 of 80");
 });
 
 test("Dino Discovery: shared organic animal models use more detailed gallery meshes",async({page})=>{

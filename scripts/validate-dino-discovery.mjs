@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { spawnSync } from "node:child_process";
 import { CHAPTERS, MISSIONS, SOURCES } from "../games/dino-discovery-world/missions.js";
+import { EXHIBIT_ILLUSTRATIONS } from "../games/dino-discovery-world/exhibit-art.js";
 import { drawOrganicDinosaur, ORGANIC_PALETTES } from "../games/dino-discovery-world/organic-dino-models.js";
 
 assert.equal(CHAPTERS.length,8,"Dino Discovery contains eight science chapters");
@@ -25,6 +26,16 @@ assert.ok(SOURCES.length>=3&&SOURCES.every(s=>s.url.startsWith("https://")),"Mus
 const root="games/dino-discovery-world/";
 const html=fs.readFileSync(root+"index.html","utf8"),css=fs.readFileSync(root+"game.css","utf8");
 const game=fs.readFileSync(root+"game.js","utf8"),scene=fs.readFileSync(root+"scene-3d.js","utf8");
+assert.deepEqual(Object.keys(EXHIBIT_ILLUSTRATIONS).sort(),["bird","flyer","longneck","marine","raptor","rex","stego","trike"]);
+const artFiles=new Set();
+for(const [kind,description] of Object.entries(EXHIBIT_ILLUSTRATIONS)){
+  assert.ok(description.length>45&&MISSIONS.some(m=>m.scene===kind),kind+" has a specimen description and mission");
+  const file=fs.readFileSync(root+"illustrations/"+kind+".webp");
+  assert.equal(file.toString("ascii",0,4),"RIFF");
+  assert.equal(file.toString("ascii",8,12),"WEBP");
+  artFiles.add(file.toString("base64"));
+}
+assert.equal(artFiles.size,8,"Each creature has its own illustration");
 for(const name of ["dinoCanvas","turnLeft","turnRight","zoomIn","zoomOut","tiltUp","tiltDown","switchDino","brushFossil","brushReadout","fieldGuide","answerChoices","chapterName","missionQuestion","nextMission","levelSelect"]){
   assert.ok(html.includes('id="'+name+'"'),"3D scene exposes "+name);
 }
@@ -46,7 +57,7 @@ assert.ok(scene.includes("light = clamp(.79 + .38"),"Dinosaur facets have richer
 assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|geolocation/i.test(game+scene),"3D dinosaur cabinet makes no external requests or location calls");
 assert.ok(html.includes("arcade-sdk.js")&&html.includes("cabinet-shell.js")&&html.includes("arcade-accessibility.css"));
 assert.ok(css.includes("html.larriverse-dark")&&css.includes("html.larriverse-high-contrast")&&css.includes("@media(max-width:720px)"));
-for(const f of ["missions.js","game.js","scene-3d.js","organic-dino-models.js"]){
+for(const f of ["missions.js","game.js","scene-3d.js","organic-dino-models.js","exhibit-art.js"]){
   const result=spawnSync(process.execPath,["--check",root+f],{encoding:"utf8"});
   assert.equal(result.status,0,root+f+" must parse: "+result.stderr);
 }

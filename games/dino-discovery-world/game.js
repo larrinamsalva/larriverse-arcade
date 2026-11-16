@@ -1,5 +1,6 @@
 import { CHAPTERS, MISSIONS } from "./missions.js";
 import { createScene } from "./scene-3d.js";
+import { EXHIBIT_ILLUSTRATIONS } from "./exhibit-art.js";
 
 const GAME_ID = "dino-discovery-world";
 const SAVE_KEY = "larriverse.dinoDiscovery.v1";
@@ -33,6 +34,7 @@ function load(){
   } catch {return base;}
 }
 let state = load(), selectedSubject="trike", brushes=0, solvedHere=false, hint=false;
+let preferredView = "illustration", illustrationAvailable = false;
 const scene = createScene($("dinoCanvas"));
 const current = () => MISSIONS[state.level];
 function persist(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(state));}catch{$("feedback").textContent="This browser could not save right now; you can still play.";}}
@@ -49,7 +51,11 @@ function renderGuide(){
     const title=document.createElement("strong");title.textContent=info.name;
     const description=document.createElement("small");description.textContent=info.family+" · "+info.fact;
     button.append(title,description);
-    button.addEventListener("click",()=>{selectedSubject=key;updateScene();$("dinoCanvas").focus();});
+    button.addEventListener("click",()=>{
+      selectedSubject=key;
+      updateScene();
+      $($("modelView").hidden ? "illustrationMode" : "dinoCanvas").focus();
+    });
     $("fieldGuide").append(button);
   }
 }
@@ -65,12 +71,41 @@ function chapterRail(){
       '<small class="chapter-count">'+solved+' / 10 discoveries</small></button>';
   }).join("");
 }
+function renderExhibitView(){
+  const showingIllustration = illustrationAvailable && preferredView === "illustration";
+  $("exhibitModes").hidden = !illustrationAvailable;
+  $("illustrationView").hidden = !showingIllustration;
+  $("modelView").hidden = showingIllustration;
+  $("illustrationMode").setAttribute("aria-pressed", String(showingIllustration));
+  $("modelMode").setAttribute("aria-pressed", String(!showingIllustration));
+}
 function updateScene(){
   scene.setSubject(selectedSubject);
   $("modelName").textContent=GUIDE[selectedSubject].name;
   $("modelType").textContent=GUIDE[selectedSubject].family;
   $("dinoCanvas").setAttribute("aria-label","Interactive 3D illustrated "+GUIDE[selectedSubject].name+". "+GUIDE[selectedSubject].fact+" Use A and D or left and right arrows to orbit; Page Up and Page Down to look vertically; plus and minus to zoom.");
   if(current().mode==="dig" && brushes>0)scene.setFossilProgress(brushes/3);
+  const illustration = $("illustrationView");
+  const alt = EXHIBIT_ILLUSTRATIONS[selectedSubject];
+  illustrationAvailable = Boolean(alt);
+  illustration.replaceChildren();
+  if (alt) {
+    const image = document.createElement("img");
+    image.alt = alt;
+    image.width = 1152;
+    image.height = 672;
+    image.decoding = "async";
+    image.addEventListener("error", () => {
+      if (image.parentNode !== illustration) return;
+      const modeHadFocus = $("exhibitModes").contains(document.activeElement);
+      illustrationAvailable = false;
+      renderExhibitView();
+      if (modeHadFocus) $("dinoCanvas").focus();
+    }, { once: true });
+    illustration.append(image);
+    image.src = new URL(`./illustrations/${selectedSubject}.webp`, import.meta.url).href;
+  }
+  renderExhibitView();
 }
 function render(){
   const item=current(), chapter=CHAPTERS[item.chapter];
@@ -86,7 +121,7 @@ function render(){
   $("hintText").textContent="Inspect the specimen and read the observation. Tap for a clue if you want one.";
   $("hintButton").textContent="💡 Show clue";
   $("feedback").className="feedback";
-  $("feedback").textContent=solvedHere?"Already discovered! Revisit the mission or continue.":"Explore the model and make a discovery. There's no timer.";
+  $("feedback").textContent=solvedHere?"Already discovered! Revisit the mission or continue.":"Explore the exhibit and make a discovery. There's no timer.";
   $("explanation").textContent=solvedHere?item.explanation:"The science explanation appears here when you discover the answer.";
   // Moving between learning activities never requires a correct answer first.
   $("nextMission").disabled=false;
@@ -169,7 +204,13 @@ $("nextMission").addEventListener("click",()=>{
 });
 $("brushFossil").addEventListener("click",()=>{
   if(brushes>=3)return;
-  brushes++;scene.setFossilProgress(brushes/3);
+  brushes++;
+  if (selectedSubject !== current().scene) {
+    selectedSubject = current().scene;
+    updateScene();
+  } else {
+    scene.setFossilProgress(brushes/3);
+  }
   $("brushReadout").textContent=brushes===3?"Fossil revealed! Read the evidence.":"Brush rock carefully: "+brushes+" / 3 layers uncovered";
   if(brushes===3){
     $("brushFossil").disabled=true;
@@ -188,6 +229,12 @@ $("tiltUp").addEventListener("click",()=>scene.tilt(-.12));
 $("tiltDown").addEventListener("click",()=>scene.tilt(.12));
 $("zoomIn").addEventListener("click",()=>scene.changeZoom(.12));
 $("zoomOut").addEventListener("click",()=>scene.changeZoom(-.12));
+$("exhibitModes").addEventListener("click", event => {
+  const button = event.target.closest("[data-exhibit-view]");
+  if (!button) return;
+  preferredView = button.dataset.exhibitView;
+  renderExhibitView();
+});
 $("switchDino").addEventListener("click",()=>{
   selectedSubject=subjects[(subjects.indexOf(selectedSubject)+1)%subjects.length];
   updateScene();
