@@ -64,3 +64,35 @@ test('Real World hub: every portal remains keyboard-accessible and reaches its g
  await page.keyboard.press('Enter');
  await expect(page).toHaveURL(/\/games\/repair-cafe\/index\.html/);
 });
+
+test('Real World hub: 200% text fits a 320px screen and keeps restore/erase controls separate',async({page})=>{
+ await page.setViewportSize({width:320,height:700});
+ await page.goto('/');
+ await page.evaluate(()=>{
+   window.LarriVerseArcade.setSettings({reducedMotion:true,highContrast:true,largeText:true});
+   document.documentElement.style.setProperty('font-size','32px','important');
+ });
+ const layout=await page.evaluate(()=>({
+   scroll:document.documentElement.scrollWidth,
+   width:document.documentElement.clientWidth,
+   overflowing:[...document.querySelectorAll('.world-portals,.world-portals-heading,.world-portal-grid,.world-portal,.world-portal-content,.world-portal-action')].
+     filter(e=>e.getBoundingClientRect().right>document.documentElement.clientWidth+4).
+     map(e=>e.className)
+ }));
+ expect(layout.scroll,'Art portals must not widen a 320px page: '+JSON.stringify(layout)).toBeLessThanOrEqual(layout.width+4);
+ expect(layout.overflowing).toEqual([]);
+ await page.locator('.nav [data-open-control]').click();
+ await expect(page.locator('#controlCenter')).toBeVisible();
+ const controlLayout=await page.evaluate(()=>{
+  const nodes=['#exportSaves','.data-actions .import-label','#clearSaves'].map(s=>document.querySelector(s).getBoundingClientRect());
+  return {width:document.documentElement.clientWidth,
+    dimensions:nodes.map(r=>({left:r.left,right:r.right,top:r.top,bottom:r.bottom})),
+    nonOverlapping:nodes.every((r,i)=>i===0||r.top>=nodes[i-1].bottom-1),
+    inside:nodes.every(r=>r.width>0&&r.width<=document.querySelector('.control-center').clientWidth)};
+ });
+ expect(controlLayout.nonOverlapping,'Backup actions must not overlap: '+JSON.stringify(controlLayout)).toBe(true);
+ expect(controlLayout.inside).toBe(true);
+ page.once('dialog',dialog=>dialog.dismiss());
+ await page.locator('#clearSaves').click();
+ await expect(page.locator('#controlCenter')).toBeVisible();
+});
