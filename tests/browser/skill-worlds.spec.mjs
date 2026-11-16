@@ -305,9 +305,42 @@ test("Scam Sleuth: center evidence stays readable in light, dark, and high contr
   await expect(page.locator(".message-card")).toHaveCSS("background-color", "rgb(17, 17, 17)");
   await expect(page.locator(".message-card p")).toHaveCSS("color", "rgb(255, 255, 255)");
 });
-test("Kindness Quest: listen, set boundaries, and repair · full 60-challenge journey", async ({ page }) => {
+test("Kindness Quest: illustrated situations, accessible motion, and a full 60-challenge journey", async ({ page }) => {
   test.setTimeout(420000);
-  await round(page, "kindness-quest", () => chooseDeck(page, conversations));
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await round(page, "kindness-quest", async () => {
+    const stage = page.locator(".kindness-stage");
+    const actors = stage.locator(".kindness-actor .kindness-sprite");
+    const ball = stage.locator('[data-prop="ball"] .kindness-sprite');
+    await expect(stage).toHaveAttribute("data-setting", "playground");
+    await expect(stage.locator('[data-character="rabbit"]')).toBeVisible();
+    await expect(actors).toHaveCount(2);
+    await expect(ball).toBeVisible();
+    await expect(actors.first()).toHaveCSS("animation-name", "kindness-listen");
+    await expect(ball).toHaveCSS("animation-name", "kindness-prop-settle");
+
+    const decoded = await stage.evaluate(async scene => {
+      const backdrop = scene.querySelector(".kindness-backdrop");
+      const textures = [...scene.querySelectorAll(".kindness-sprite")].map(sprite =>
+        getComputedStyle(sprite).backgroundImage.slice(4, -1).replace(/^"|"$/g, "")
+      );
+      return Promise.all([...new Set([backdrop.src, ...textures])].map(async source => {
+        const image = new Image();
+        image.src = source;
+        await image.decode();
+        return image.naturalWidth;
+      }));
+    });
+    expect(decoded).toHaveLength(3);
+    expect(decoded.every(width => width > 0)).toBe(true);
+
+    await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: true }));
+    await expect(actors.first()).toHaveCSS("animation-name", "none");
+    await expect(ball).toHaveCSS("animation-name", "none");
+    await expect(stage.locator(".kindness-backdrop")).toHaveCSS("animation-name", "none");
+
+    await chooseDeck(page, conversations);
+  });
 });
 test("Fact Finder: inspect sources, opinions, advertising, and claims · full 60-challenge journey", async ({
   page,

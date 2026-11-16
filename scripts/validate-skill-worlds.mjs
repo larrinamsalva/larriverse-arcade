@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { kindnessScene } from "../games/kindness-quest/quest-art.js";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import {
@@ -24,6 +25,17 @@ import {
   gardenLessonSvg,
   gardenChoiceSvg,
 } from "../assets/arcade-scenes.js";
+const kindnessArt = conversations.map(kindnessScene);
+assert.equal(new Set(kindnessArt).size, conversations.length, "Each Kindness Quest situation has its own stage composition");
+const kindnessImages = new Set(kindnessArt.flatMap(scene =>
+  [...scene.matchAll(/file:\/\/[^"'()]+\/art\/[^"'()]+\.(?:jpg|png)/g)].map(([url]) => url)
+));
+assert.equal(kindnessImages.size, 7, "Kindness Quest uses all four settings and three sprite atlases");
+for (const file of kindnessImages) {
+  assert.ok(fs.existsSync(new URL(file)), "Kindness Quest art exists for " + file);
+}
+
+
 const catalog = JSON.parse(fs.readFileSync("games/catalog.json", "utf8"));
 const release = JSON.parse(fs.readFileSync("release.json", "utf8"));
 const standaloneV3Cabinets = new Set(["street-safety-scout", "kids-sudoku", "word-search-world", "crossword-world", "creative-calm-cove", "date-detective", "dino-discovery-world", "spider-scout", "helping-hands"]);
