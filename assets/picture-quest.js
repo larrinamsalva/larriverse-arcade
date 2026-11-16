@@ -1,5 +1,5 @@
 import { actionPicture, scenePicture, spiderPicture } from './picture-quest-art.js';
-import { helpActionPicture } from './helping-hands-realistic-art.js';
+import { renderHelpAnswerPicture } from './helping-hands-answer-art.js';
 // Same offline, accessible choice-board engine for both worlds. No timers,
 // accounts, user-entered medical data, location, uploads, or remote assets.
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
@@ -47,7 +47,13 @@ export function startPictureQuest({id,world,chapters,missions}){
       const button=document.createElement('button');
       button.type='button';button.className='picture-answer';button.dataset.answer=String(index);
       const image=document.createElement('span');image.className='answer-art';
-      image.innerHTML=option.spider?spiderPicture(option.spider):(world==='help'?helpActionPicture(option.icon):actionPicture(option.icon));
+      if(option.spider){
+        image.innerHTML=spiderPicture(option.spider);
+      }else if(world==='help'){
+        renderHelpAnswerPicture(image,option.icon);
+      }else{
+        image.innerHTML=actionPicture(option.icon);
+      }
       image.setAttribute('aria-hidden','true');
       text(button,'strong',String.fromCharCode(65+index)+'. '+option.text,'answer-title');
       button.prepend(image);

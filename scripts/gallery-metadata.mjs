@@ -81,7 +81,7 @@ const mobileDescriptions = Object.freeze({
   'dino-discovery-world': 'Dino Discovery World mobile opening view showing the prehistoric adventure heading, chapter mission tracker, accessible 3D dinosaur exhibit and locally saved progress.',
   'date-detective': 'Date Detective mobile opening view with the 80-level date-reading mission, package-label lesson, shared LarriVerse comfort controls, compact chapter progress, and device-local case progress.',
   'spider-scout': 'Spider Scout phone-width opening introduction to spider body clues and habitats, with eight open chapter cards, visible text alternatives and large SVG picture options below the hero.',
-  'helping-hands': 'Helping Hands phone-width opening view with a calm safety introduction, eight selectable picture-challenge chapters, clear emergency-care boundaries and high-contrast SVG action choices.',
+  'helping-hands': 'Helping Hands phone-width opening view with a calm safety introduction, eight selectable picture-challenge chapters, clear emergency-care boundaries and illustrated action choices with readable labels.',
   'chill-brain-rewards': 'Chill Brain gentle onboarding introduction beneath shared LarriVerse player context, an arcade return, and comfort controls.',
   'creature-catcher': 'Creature Catcher illustrated opening dialog introducing its question safari, with instructions and a scrollable learning-path and start area.',
   'road-trip-quest': 'Road Trip Quest opening adventure title beneath shared LarriVerse player context, an arcade return, and comfort controls.',

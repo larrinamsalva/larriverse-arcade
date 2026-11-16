@@ -75,7 +75,7 @@ assert.ok(game.includes("button.dataset.chapter")&&game.includes("missions.forEa
 assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|geolocation|sendBeacon|setInterval/.test(game+art),'Picture engine uses no external calls, device location or timers');
 assert.ok(css.includes('larriverse-dark')&&css.includes('larriverse-high-contrast')&&css.includes('@media(max-width:550px)'),'Dark, contrast and phone styles');
 assert.ok(art.includes('<svg')&&spiderPicture('widow').includes('<ellipse')&&actionPicture('kit').includes('<rect'),'Original SVG spider and first-aid pictures');
-for(const file of ['assets/picture-quest.js','assets/picture-quest-art.js','games/spider-scout/game.js',
+for(const file of ['assets/picture-quest.js','assets/picture-quest-art.js','assets/helping-hands-answer-art.js','games/spider-scout/game.js',
  'games/spider-scout/questions.js','games/helping-hands/game.js','games/helping-hands/questions.js']){
  const result=spawnSync(process.execPath,['--check',file],{encoding:'utf8'});
  assert.equal(result.status,0,file+' must parse cleanly: '+result.stderr);
@@ -112,9 +112,8 @@ const spiderUi=fs.readFileSync('assets/picture-quest.css','utf8');
 assert.ok(spiderUi.includes('body[data-classic="spider-scout"] .choices'), 'Spider pictures stay large enough to compare on phones');
 const moduleSyntax=spawnSync(process.execPath,['--check','assets/spider-field-guide-art.js'],{encoding:'utf8'});
 assert.equal(moduleSyntax.status,0,'Field guide renderer must parse as JavaScript: '+moduleSyntax.stderr);
-// Helping Hands keeps its original questions and answers. The art is completely
-// offline and the first aid object bank / twenty different real-world scenarios
-// use separate, recognisable SVG models.
+// Helping Hands uses local WebP answer art with SVG fallbacks and keeps its
+// twenty distinct SVG scenarios.
 assert.equal(HELPING_SCENE_TITLES.length,20,'Twenty individual Helping Hands teaching scenes exist');
 assert.equal(new Set(HELPING_SCENE_TITLES).size,20,'Every real-life situation has a unique scene');
 assert.ok(HELPING_ACTION_TYPES.length>=24,'Every object/action icon gets upgraded art');
@@ -130,6 +129,9 @@ for(const title of HELPING_SCENE_TITLES){
 assert.equal(seenSceneArt.size,20,'All twenty helping scenes are individual illustrations');
 const seenActions=new Set();
 for(const kind of HELPING_ACTION_TYPES){
+ const bitmap=fs.readFileSync('assets/helping-hands-answers/'+kind+'.webp');
+ assert.equal(bitmap.toString('ascii',0,4),'RIFF',kind+' has a WebP container');
+ assert.equal(bitmap.toString('ascii',8,12),'WEBP',kind+' has a WebP signature');
  const pic=helpActionPicture(kind);
  assert.ok(pic.includes('data-kind="answer"')&&pic.includes('data-key="'+kind+'"'),kind+' has its own illustrated prop');
  assert.ok(pic.includes('<svg')&&pic.length>350&&(pic.includes('<path')||pic.includes('<rect')),
@@ -150,7 +152,7 @@ assert.equal(new Set(helpQuestionSet).size,20,'Each of the original twenty scena
 assert.ok(HELP_MISSIONS.every(q=>q.options.every(option=>HELPING_ACTION_TYPES.includes(option.icon))),
  'Every image answer in the 80 Helping Hands missions uses an illustrated, registered object');
 const qs=fs.readFileSync('assets/picture-quest.js','utf8');
-assert.ok(qs.includes("world==='help'?helpActionPicture(option.icon):actionPicture(option.icon)"),
+assert.ok(qs.includes("if(world==='help'){\n        renderHelpAnswerPicture(image,option.icon);"),
  'Realism answers are limited to Helping Hands and do not replace Spider Scout art');
 assert.ok(qs.includes('state.solved.includes(item.id)'), 'First-time awards are not changed');
 const host=fs.readFileSync('assets/picture-quest-art.js','utf8');

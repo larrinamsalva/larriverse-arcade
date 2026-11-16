@@ -1,13 +1,14 @@
 import {test,expect} from '@playwright/test';
 
 for(const slug of ['spider-scout','helping-hands']){
+ const answerPicture=slug==='helping-hands'?'.picture-answer img':'.picture-answer svg';
  test(slug+': 80 selectable picture missions and eight open chapters',async({page})=>{
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   await page.goto('/games/'+slug+'/index.html');
   await expect(page.locator('#chapters button')).toHaveCount(8);
   await expect(page.locator('#levelSelect option')).toHaveCount(80);
   await expect(page.locator('.picture-answer')).toHaveCount(3);
-  await expect(page.locator('.picture-answer svg')).toHaveCount(3);
+  await expect(page.locator(answerPicture)).toHaveCount(3);
   await expect(page.locator('#sceneArt svg')).toHaveCount(1);
   for(let i=0;i<8;i++){
    await page.locator('#chapters [data-chapter="'+i+'"]').click();
@@ -51,11 +52,12 @@ for(const slug of ['spider-scout','helping-hands']){
  test(slug+': readable mobile illustrated choices and dark mode',async({page})=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto('/games/'+slug+'/index.html');
-  await page.evaluate(()=>window.LarriVerseArcade.setSettings({darkMode:true,highContrast:true,reducedMotion:true}));
+  await page.evaluate(()=>window.LarriVerseArcade.setSettings({theme:'dark',highContrast:true,reducedMotion:true}));
   await page.setViewportSize({width:390,height:844});
+  await expect(page.locator('html')).toHaveClass(/larriverse-dark/);
   await expect(page.locator('#question')).toBeVisible();
   await expect(page.locator('.picture-answer')).toHaveCount(3);
-  await expect(page.locator('.picture-answer svg')).toHaveCount(3);
+  await expect(page.locator(answerPicture)).toHaveCount(3);
   const dims=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth}));
   expect(dims.scroll).toBeLessThanOrEqual(dims.client+4);
   await page.locator('#hint').click();
@@ -168,25 +170,49 @@ test('Helping Hands: all twenty real-world scenes are unique, illustrated and va
  expect(errors).toEqual([]);
 });
 
-test('Helping Hands: every answer object has its own detailed picture',async({page})=>{
+test('Helping Hands: every answer picture loads and matches its option',async({page})=>{
  await page.goto('/games/helping-hands/index.html');
- const results=await page.evaluate(async()=>{
-  const {helpActionPicture,HELPING_ACTION_TYPES}=await import('/assets/helping-hands-realistic-art.js');
-  return HELPING_ACTION_TYPES.map(key=>{
-   const svg=helpActionPicture(key);
-   const doc=new DOMParser().parseFromString(svg,'image/svg+xml');
-   return {key,valid:doc.querySelectorAll('parsererror').length===0,
-     detail:doc.querySelectorAll('path,rect,circle,ellipse').length,
-     art:doc.documentElement.getAttribute('data-help-art'),
-     scene:doc.documentElement.getAttribute('data-key')};
-  });
+ const pictures=await page.evaluate(async()=>{
+  const {HELPING_ACTION_TYPES}=await import('/assets/helping-hands-realistic-art.js');
+  const {renderHelpAnswerPicture}=await import('/assets/helping-hands-answer-art.js');
+  return Promise.all(HELPING_ACTION_TYPES.map(async key=>{
+   const container=document.createElement('span');
+   renderHelpAnswerPicture(container,key);
+   const picture=container.querySelector('img');
+   await picture.decode();
+   return {key,path:new URL(picture.src).pathname,local:new URL(picture.src).origin===location.origin,
+     width:picture.naturalWidth,height:picture.naturalHeight};
+  }));
  });
- expect(results.length).toBeGreaterThanOrEqual(24);
- expect(results.every(x=>x.valid&&x.detail>=3&&x.art==='anime-3'&&x.scene===x.key)).toBe(true);
+ expect(pictures.length).toBeGreaterThanOrEqual(24);
+ for(const {key,path,local,width,height} of pictures){
+  expect(path).toBe('/assets/helping-hands-answers/'+key+'.webp');
+  expect(local).toBe(true);
+  expect([width,height]).toEqual([480,300]);
+ }
+ await expect(page.locator('#choices img')).toHaveCount(3);
+ const nose=page.locator('#choices img[src$="/nose.webp"]');
+ await expect(nose).toHaveCount(1);
+ await expect(nose).toHaveAttribute('alt','');
+ await expect(page.getByRole('button',{name:/pinch the soft nose/})).toBeVisible();
+ const waterMission=await page.evaluate(async()=>{
+  const {HELP_MISSIONS}=await import('/games/helping-hands/questions.js');
+  const index=HELP_MISSIONS.findIndex(m=>m.options[m.answer].text.includes('floating or reaching aid'));
+  return {index,answer:HELP_MISSIONS[index].answer};
+ });
+ await page.locator('#levelSelect').selectOption(String(waterMission.index));
+ await expect(page.locator('[data-answer="'+waterMission.answer+'"] img')).toHaveAttribute('src',/\/lifeRing\.webp$/);
+});
+
+test('Helping Hands: failed picture requests keep the answer artwork and controls usable',async({page})=>{
+ await page.route('**/helping-hands-answers/*.webp',route=>route.abort());
+ await page.goto('/games/helping-hands/index.html');
  await expect(page.locator('#choices svg[data-help-art="anime-3"]')).toHaveCount(3);
  await expect(page.locator('#choices svg[data-key="nose"]')).toHaveCount(1);
- await page.locator('#levelSelect').selectOption('21');
- await expect(page.locator('#sceneArt svg[data-key="case-2"]')).toHaveCount(1);
+ const answer=page.getByRole('button',{name:/pinch the soft nose/});
+ await answer.focus();
+ await answer.press('Enter');
+ await expect(page.locator('#solvedCount')).toHaveText('1');
 });
 
 test('Helping Hands: readable larger picture cards on narrow phones, with progress preserved',async({page})=>{
@@ -195,7 +221,7 @@ test('Helping Hands: readable larger picture cards on narrow phones, with progre
  const columns=await page.locator('#choices').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length);
  expect(columns).toBe(2);
  await expect(page.locator('#levelSelect option')).toHaveCount(80);
- await expect(page.locator('#choices svg[data-help-art="anime-3"]')).toHaveCount(3);
+ await expect(page.locator('#choices img')).toHaveCount(3);
  const answer=await page.evaluate(async()=>{
   const {HELP_MISSIONS}=await import('/games/helping-hands/questions.js');
   return HELP_MISSIONS[0].answer;
