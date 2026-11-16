@@ -113,7 +113,7 @@ const HELP_CASES=Object.freeze([
   fact:'Escape first using a safe route. Stay out, call the fire department, and never reenter a burning or smoke-filled building to collect things.'},
  {title:'Someone struggling in deep water',scene:'water',detail:'A person is struggling to stay above the water.',
   first:step('Shout for an adult/lifeguard and call 911; do not jump in.','emergency'),
-  tool:step('A safe floating or reaching aid if one is immediately available.','rest'),
+  tool:step('A safe floating or reaching aid if one is immediately available.','lifeRing'),
   alarm:step('The person goes under, cannot call out, or stops responding.','emergency'),
   support:step('Stay on safe ground and follow a lifeguard or dispatcher’s directions.','away'),
   fact:'Get a lifeguard or adult and call emergency services. Do not enter dangerous water to attempt an untrained rescue; reach or throw a floating aid from safety if possible.'},

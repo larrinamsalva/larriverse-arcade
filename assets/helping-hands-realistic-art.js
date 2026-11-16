@@ -6,7 +6,7 @@ import {animeFace,animePerson,animeResting,animeListening,animeNosebleedPose} fr
 const KINDS=Object.freeze([
  'emergency','phone','kit','bandage','pressure','water','nose','ice','medicine',
  'adult','friend','listen','rest','stop','away','noTouch','observe','clock',
- 'food','cloth','door','wait','house','fire'
+ 'food','cloth','door','wait','house','fire','lifeRing'
 ]);
 export const HELPING_ACTION_TYPES=KINDS;
 const SITUATIONS=Object.freeze([
@@ -189,6 +189,11 @@ function food(){
    p('M101 124 Q114 94 145 98 T206 114','none','#ba986c',18)+
    e(178,128,26,11,'#92b678');
 }
+function lifeRing(){
+ return e(162,175,82,9,'#91a09b',{opacity:.2})+
+  c(160,101,62,'none',{stroke:'#cc6b45','stroke-width':34})+
+  p('M160 23 V56 M238 101 H205 M160 179 V146 M82 101 H115','none','#fff7e8',18);
+}
 function actionParts(kind){
  switch(kind){
   case 'emergency':return phone(true);
@@ -216,6 +221,7 @@ function actionParts(kind){
   case 'wait':return person(159,108,.79)+thermometerClock();
   case 'house':return shelter();
   case 'fire':return fire();
+  case 'lifeRing':return lifeRing();
   default:return magnifier();
  }
 }

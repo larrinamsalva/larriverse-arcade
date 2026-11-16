@@ -43,7 +43,7 @@ button:focus-visible,select:focus-visible,a:focus-visible{outline:4px solid #e6a
 .picture-answer.right{border-color:#17845c;background:#e3f9e8}
 .picture-answer.try{border-color:#c38b4f;background:#fff3dc}
 .answer-art{display:block;border-radius:9px;overflow:hidden}
-.answer-art svg{display:block;width:100%;height:auto}
+.answer-art :is(svg,img){display:block;width:100%;height:auto}
 .answer-title{font-size:.82rem;line-height:1.4;padding:0 5px 9px;overflow-wrap:anywhere}
 .feedback{background:#dff0f3;color:#205263;border-radius:12px;padding:13px 15px;min-height:48px;font-weight:750;line-height:1.5;margin:17px 0}
 .feedback.good{background:#d9f4de;color:#205a36}
@@ -85,8 +85,7 @@ html.larriverse-large-text .quest{font-size:1.14rem}
 @media(max-width:550px){.quest{padding:12px 10px 70px}.quest-hero{padding:20px 18px}.hero-art{display:none}.progress-card,.learning-panel,.sidebar,.parent-guide{padding:17px}.choices{gap:7px}.picture-answer{padding:5px;border-width:2px}.answer-title{font-size:.73rem}.chapter-chip{min-height:78px}.level-jump select{width:100%}.actions button{flex:1 1 40%}}
 @media(prefers-reduced-motion:reduce){.track>div{transition:none}}
 
-/* Helping Hands needs large, recognizable first-aid props and human scenes on phones.
-   The pictures are real authored SVG diagrams, not generic emoji or downloaded photos. */
+/* Keep first-aid objects and gestures large enough to recognize on phones. */
 @media(max-width:550px){
   body[data-classic="helping-hands"] .choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   body[data-classic="helping-hands"] .picture-answer{padding:7px}
