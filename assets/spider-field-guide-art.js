@@ -123,37 +123,55 @@ function eyeGroup(spec){
   else if(spec.eye==='recluse')pairs=[[112,99,2.4],[112,118,2.4],[123,94,2.4],[123,123,2.4],[133,101,2.4],[133,116,2.4]];
   else if(spec.eye==='tiny')pairs=[[118,103,1.4],[118,112,1.4],[124,99,1.3],[124,116,1.3],[131,102,1.3],[131,113,1.3]];
   else pairs=[[115,102,2.2],[115,114,2.2],[124,98,1.5],[124,118,1.5],[131,102,1.3],[131,114,1.3]];
-  return n('g',{'data-eyes':spec.eye},pairs.map(([x,y,r])=>eye(x,y,r)).join(''));
+  const [hX,hY]=spec.h;
+  return n('g',{'data-eyes':spec.eye},pairs.map(([x,y,r])=>
+    eye(137+(x-137)*hX/29,108+(y-108)*hY/26,r*Math.sqrt(hX*hY/(29*26)))).join(''));
 }
-function legs(spec){
-  const output=[],heavy=spec.fuzz>0,w=spec.feet;
+function restKnee([ax,ay],[kx,ky],[tx,ty],side){
+  const reach=Math.hypot(tx-ax,ty-ay);
+  const nx=(ay-ty)/reach, ny=(tx-ax)/reach;
+  const bend=(kx-ax)*nx+(ky-ay)*ny;
+  // Give nearly straight legs room to extend during a step.
+  const shift=(Math.sign(bend)||side)*Math.max(0,reach*.21-Math.abs(bend));
+  return [xy(kx+nx*shift),xy(ky+ny*shift)];
+}
+export function spiderLegLayout(kind){
+  const spec=TYPE[kind]||TYPE.jumping;
   const compact=spec.pose==='compact',sideways=spec.pose==='sideways',long=spec.pose==='long';
-  const topX=[104,115,141,153],kneeX=[77,91,186,229],tipX=[32,61,213,281];
+  const kneeX=[77,91,186,229],tipX=[32,61,213,281];
   const kneeY=[54,31,40,66],tipY=[31,17,22,45];
-  for(const side of [-1,1]){
-    for(let i=0;i<4;i++){
-      const shift=sideways?(i<2?-17:18):0;
-      const shorten=compact?.78:1;
-      const expansion=long?1.1:1;
-      const anchorX=topX[i],anchorY=108+side*([11,18,16,12][i]);
-      const knee=[xy(153+(kneeX[i]-153)*shorten*expansion+shift),xy(108+side*(108-kneeY[i]))];
-      const tip=[xy(Math.max(15,Math.min(302,153+(tipX[i]-153)*shorten*expansion+shift))),xy(Math.max(18,Math.min(181,108+side*(108-tipY[i]))))];
-      const curve='M'+anchorX+' '+anchorY+' Q'+xy((anchorX+knee[0])/2)+' '+xy((anchorY+knee[1])/2-8*side)+' '+knee[0]+' '+knee[1]+
-        ' Q'+xy((knee[0]+tip[0])/2)+' '+xy((knee[1]+tip[1])/2+2*side)+' '+tip[0]+' '+tip[1];
-      output.push(path(curve,'none',{stroke:blend(spec.leg,'#151b21',.45),'stroke-width':w+1.8,'stroke-linejoin':'round','stroke-linecap':'round'}));
-      output.push(path(curve,'none',{stroke:spec.leg,'stroke-width':w,'stroke-linejoin':'round','stroke-linecap':'round',
-        'data-leg':side===-1?i+1:i+5}));
-      output.push(ellipse(knee[0],knee[1],w*.57,w*.57,blend(spec.leg,'#efddba',.23)));
-      output.push(path('M'+xy(anchorX)+' '+xy(anchorY)+' L'+knee[0]+' '+knee[1],'none',
-        {stroke:spec.accent,'stroke-width':Math.max(.5,w*.2),'stroke-linecap':'round',opacity:.3}));
-      if(heavy){
-        for(let q=1;q<=spec.fuzz+1;q++){
-          const t=q/(spec.fuzz+2),hx=anchorX*(1-t)+knee[0]*t,hy=anchorY*(1-t)+knee[1]*t;
-          output.push(line(hx,hy,hx+(i%2?-5:5),hy+side*(3+spec.fuzz),spec.accent,.9,.55));
-        }
+  return Array.from({length:8},(_,index)=>{
+    const i=index%4, side=index<4?-1:1;
+    const shift=sideways?(i<2?-17:18):0;
+    const shorten=compact?.78:1, expansion=long?1.1:1;
+    const anchor=[xy(137+spec.h[0]*[-.63,-.28,.16,.6][i]),xy(108+side*spec.h[1]*[.48,.67,.7,.5][i])];
+    const knee=[153+(kneeX[i]-153)*shorten*expansion+shift,108+side*(108-kneeY[i])];
+    const tip=[xy(Math.max(15,Math.min(302,153+(tipX[i]-153)*shorten*expansion+shift))),xy(Math.max(18,Math.min(181,108+side*(108-tipY[i]))))];
+    return {number:index+1,side,pair:i,anchor,knee:restKnee(anchor,knee,tip,side),tip};
+  });
+}
+function legs(kind,spec){
+  const w=spec.feet;
+  const stroke=blend(spec.leg,'#151b21',.45);
+  const contour=(curve,color,width)=>path(curve,'none',{
+    stroke:color,'stroke-width':width,'stroke-linejoin':'round','stroke-linecap':'round'});
+  const output=spiderLegLayout(kind).map(({number,side,pair,anchor,knee,tip})=>{
+    const [ax,ay]=anchor,[kx,ky]=knee,[tx,ty]=tip;
+    const upper='M'+ax+' '+ay+' Q'+xy((ax+kx)/2)+' '+xy((ay+ky)/2-8*side)+' '+kx+' '+ky;
+    const lower='M'+kx+' '+ky+' Q'+xy((kx+tx)/2)+' '+xy((ky+ty)/2+2*side)+' '+tx+' '+ty;
+    const hairs=[];
+    if(spec.fuzz){
+      for(let q=1;q<=spec.fuzz+1;q++){
+        const t=q/(spec.fuzz+2),hx=ax*(1-t)+kx*t,hy=ay*(1-t)+ky*t;
+        hairs.push(line(hx,hy,hx+(pair%2?-5:5),hy+side*(3+spec.fuzz),spec.accent,.9,.55));
       }
     }
-  }
+    const lowerPart=n('g',{'data-leg-part':'lower'},contour(lower,stroke,w+1.8)+contour(lower,spec.leg,w));
+    const upperPart=n('g',{'data-leg-part':'upper'},contour(upper,stroke,w+1.8)+contour(upper,spec.leg,w)+
+      ellipse(kx,ky,w*.57,w*.57,blend(spec.leg,'#efddba',.23))+
+      line(ax,ay,kx,ky,spec.accent,Math.max(.5,w*.2),.3)+hairs.join(''));
+    return n('g',{'data-leg':number},lowerPart+upperPart);
+  });
   return n('g',{'data-legs':'eight-articulated'},output.join(''));
 }
 function markings(kind,spec){
@@ -200,7 +218,7 @@ function spider(kind,spec){
       n('stop',{offset:'0%', 'stop-color':blend(body,'#ffffff',.27)})+
       n('stop',{offset:'57%', 'stop-color':body})+
       n('stop',{offset:'100%','stop-color':blend(body,'#11151c',.49)})));
-  const shadow=ellipse(168,147,77,13,'#1b2b2c',{opacity:.16});
+  const shadow=ellipse(168,147,77,13,'#1b2b2c',{opacity:.16,'data-spider-shadow':''});
   const petiole=path('M149 104 L165 104 L165 115 L149 116 Z',blend(head,body,.5));
   const bodyShapes=
     ellipse(182,108,aX,aY,'url(#'+id+'-abdomen)',{stroke:blend(body,'#25221e',.54),'stroke-width':1.8})+
@@ -217,8 +235,9 @@ function spider(kind,spec){
       hairs.push(line(xx,yy,xx+Math.cos(ang)*spec.fuzz*1.5,yy+Math.sin(ang)*spec.fuzz*1.4,spec.accent,.8,.49));
     }
   }
-  return defs+n('g',{'data-anatomy':'cephalothorax-abdomen'},shadow+legs(spec)+petiole+
-    bodyShapes+sheen+markings(kind,spec)+eyeGroup(spec)+hairs.join(''));
+  const torso=n('g',{'data-spider-body':''},petiole+bodyShapes+sheen+
+    markings(kind,spec)+eyeGroup(spec)+hairs.join(''));
+  return defs+n('g',{'data-anatomy':'cephalothorax-abdomen'},shadow+legs(kind,spec)+torso);
 }
 export function spiderPicture(kind){
   const spec=TYPE[kind]||TYPE.jumping;

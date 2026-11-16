@@ -12,7 +12,7 @@ const text=(parent,tag,content,className)=>{
   parent.append(node);
   return node;
 };
-export function startPictureQuest({id,world,chapters,missions}){
+export function startPictureQuest({id,world,chapters,missions,onSceneChange}){
   const KEY='larriverse.'+id+'.v1';
   if(missions.length!==80||chapters.length!==8)throw Error('World needs eight chapters and eighty picture missions');
   function load(){
@@ -89,6 +89,7 @@ export function startPictureQuest({id,world,chapters,missions}){
     el('feedback').className='feedback';
     el('feedback').textContent=solved?'Discovery saved! You can revisit any mission.':'Look at the picture and clues. Take your time—there is no timer.';
     el('next').textContent=mission.id===80?'Return to mission 1 ↺':'Next picture →';
+    onSceneChange?.();
   }
   function choose(index){
     const item=current(),good=index===item.answer;
