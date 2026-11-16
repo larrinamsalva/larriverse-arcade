@@ -199,4 +199,27 @@ assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|navigator\.geolocation|sendBeacon|s
  'Anime drawings require no servers, timers, telemetry or unsafe markup');
 const animeSyntax=spawnSync(process.execPath,['--check','assets/helping-hands-anime-characters.js'],{encoding:'utf8'});
 assert.equal(animeSyntax.status,0,'Anime character module must parse cleanly: '+animeSyntax.stderr);
+// Face proportions must match modern expressive anime rather than tall ovals.
+// Choking should LOOK like choking, without teaching an untrained child treatment.
+const roundedFace=animeFace(150,92,1);
+assert.ok(roundedFace.includes('data-face-proportion="rounded-anime"')&&
+ roundedFace.includes('data-face-shape="compact-rounded"'),
+ 'Characters require wider round heads and actual cheeks, not stretched faces');
+const distressed=animePerson(130,95,.72,{pose:'choking',expression:'distress'});
+assert.equal((distressed.match(/data-body-language="hand-at-throat"/g)||[]).length,2,
+ 'Both forearms and hands must clearly converge at the throat when choking');
+assert.ok(distressed.includes('data-expression="open-mouth"')&&
+ distressed.includes('data-body-language="choking-symptoms"')&&
+ distressed.includes('data-anime-anatomy="hand-and-fingers"'),
+ 'Choking characters show facial distress and shaped hands, not an icon');
+const chokingScene=helpScenePicture({title:'A person cannot breathe or speak'});
+for(const clue of ['data-scene-action="choking-hands-at-throat"',
+ 'data-body-language="choking-symptoms"','data-face-proportion="rounded-anime"',
+ 'data-expression="open-mouth"']){
+ assert.ok(chokingScene.includes(clue),'Choking problem scene must act out: '+clue);
+}
+const noseArt=animeNosebleedPose();
+assert.ok(noseArt.includes('data-face-proportion="rounded-anime"')&&
+ noseArt.includes('data-first-aid-action="pinch-soft-nose"'),
+ 'Nosebleed teaching retains a clear pinching hand with improved rounder head');
 console.log('Picture Quest validated: 40 playable worlds, 2 new visual games, 160 picture missions, safe local progress and accessibility.');
