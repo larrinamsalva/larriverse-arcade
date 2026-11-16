@@ -36,6 +36,12 @@ button:focus-visible,select:focus-visible,a:focus-visible{outline:4px solid #e6a
 .scene-art{margin:auto;max-width:580px;border-radius:18px;background:#f1f8f5}
 .scene-art :is(svg,img){display:block;width:100%;height:auto}
 .scene-art img{border-radius:inherit}
+.scene-art svg[data-spider-art="wildlife"]{border-radius:inherit}
+svg[data-spider-art="wildlife"] [data-habitat],
+svg[data-spider-art="wildlife"] :is([data-spider-body],[data-leg-part])>:not([data-wildlife-layer]){opacity:0}
+svg[data-spider-art="wildlife"] [data-spider-shadow]{filter:blur(4px)}
+svg[data-spider-art="wildlife"]:is([data-species="orb"],[data-species="cellar"],[data-species="widow"]) [data-spider-shadow]{display:none}
+svg[data-spider-art="wildlife"]:not([data-species="orb"],[data-species="cellar"],[data-species="widow"]) [data-anatomy]{filter:drop-shadow(1px 1.8px 1px #0f191c5c)}
 .spider-watch{display:block;margin:9px auto 0;min-height:44px;max-width:100%;padding:8px 15px;border:2px solid var(--q-line);border-radius:11px;background:#eaf5ed;color:var(--q-ink);font-weight:750;overflow-wrap:anywhere}
 .spider-watch[hidden]{display:none}
 html.larriverse-dark .spider-watch{background:#234b51;color:#fff}

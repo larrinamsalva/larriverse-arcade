@@ -100,6 +100,6 @@ for(let ch=0;ch<8;ch++)for(let i=0;i<SPIDERS.length;i++){
     explanation='Notice '+s.home+'. Write down behaviors such as: '+s.habit+'. This is a practice illustration, not a field identification certificate.';
   }
   const pair=arrange(correct,wrongA,wrongB,ch*10+i);
-  chapters.push({id:ch*10+i+1,chapter:ch,scene:s.key,sceneAlt:'Stylized picture of '+s.name+'. '+s.look,title,prompt,observation,clue,explanation,options:pair.options,answer:pair.answer});
+  chapters.push({id:ch*10+i+1,chapter:ch,scene:s.key,sceneAlt:'Illustration of '+s.name+'. '+s.look,title,prompt,observation,clue,explanation,options:pair.options,answer:pair.answer});
 }
 export const SPIDER_MISSIONS=Object.freeze(chapters);

@@ -75,7 +75,7 @@ assert.ok(game.includes("button.dataset.chapter")&&game.includes("missions.forEa
 assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|geolocation|sendBeacon|setInterval/.test(game+art),'Picture engine uses no external calls, device location or timers');
 assert.ok(css.includes('larriverse-dark')&&css.includes('larriverse-high-contrast')&&css.includes('@media(max-width:550px)'),'Dark, contrast and phone styles');
 assert.ok(art.includes('<svg')&&spiderPicture('widow').includes('<ellipse')&&actionPicture('kit').includes('<rect'),'Original SVG spider and first-aid pictures');
-for(const file of ['assets/picture-quest.js','assets/picture-quest-art.js','assets/helping-hands-answer-art.js','assets/helping-hands-picture-art.js','games/spider-scout/game.js',
+for(const file of ['assets/picture-quest.js','assets/picture-quest-art.js','assets/spider-wildlife-art.js','assets/helping-hands-answer-art.js','assets/helping-hands-picture-art.js','games/spider-scout/game.js',
  'games/spider-scout/questions.js','games/spider-scout/spider-motion.js','games/helping-hands/game.js','games/helping-hands/questions.js']){
  const result=spawnSync(process.execPath,['--check',file],{encoding:'utf8'});
  assert.equal(result.status,0,file+' must parse cleanly: '+result.stderr);
@@ -102,6 +102,16 @@ for(const kind of FIELD_GUIDE_SPECIES){
  drawings.add(svg);
 }
 assert.equal(drawings.size,10,'All ten spider pictures are visibly different designs');
+for(const folder of ['habitats','bodies','legs']){
+ const images=FIELD_GUIDE_SPECIES.map(kind=>{
+  const bytes=fs.readFileSync(`assets/spider-wildlife/${folder}/${kind}.webp`);
+  assert.equal(bytes.toString('ascii',0,4),'RIFF');
+  assert.equal(bytes.toString('ascii',8,12),'WEBP');
+  assert.ok(bytes.length<160_000,kind+' '+folder+' stays compact');
+  return bytes.toString('base64');
+ });
+ assert.equal(new Set(images).size,10,folder+' contains a distinct local image for each spider');
+}
 for(const kind of ['jumping','wolf','cellar','tarantula','widow','recluse']){
  const s=spiderPicture(kind);
  assert.ok(s.includes('data-species="'+kind+'"')&&s.includes('data-markings="'+kind+'"'));
