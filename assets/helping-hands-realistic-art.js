@@ -30,7 +30,7 @@ const e=(cx,cy,rx,ry,fill,other={})=>h('ellipse',{cx,cy,rx,ry,fill,...other});
 const c=(cx,cy,r,fill,other={})=>h('circle',{cx,cy,r,fill,...other});
 const r=(x,y,w,hgt,rx,fill,other={})=>h('rect',{x,y,width:w,height:hgt,rx,fill,...other});
 const line=(x1,y1,x2,y2,color,width=2)=>p('M'+x1+' '+y1+' L'+x2+' '+y2,'none',color,width);
-const g=(inside,transform)=>h('g',transform?{transform}: {},inside);
+const g=(inside,transform,metadata={})=>h('g',transform?{transform,...metadata}:metadata,inside);
 const tx=(x,y,value,size=15,fill=ink)=>h('text',{x,y,fill,'text-anchor':'middle','font-family':'system-ui,Arial,sans-serif','font-size':size,'font-weight':800},value);
 // Soft painterly floor and slight cast shadows make the objects feel tangible.
 function frame(inner,kind,key,background='#f1f5f2'){
