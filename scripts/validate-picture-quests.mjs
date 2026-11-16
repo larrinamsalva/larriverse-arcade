@@ -76,7 +76,7 @@ assert.ok(!/fetch\(|XMLHttpRequest|WebSocket|geolocation|sendBeacon|setInterval/
 assert.ok(css.includes('larriverse-dark')&&css.includes('larriverse-high-contrast')&&css.includes('@media(max-width:550px)'),'Dark, contrast and phone styles');
 assert.ok(art.includes('<svg')&&spiderPicture('widow').includes('<ellipse')&&actionPicture('kit').includes('<rect'),'Original SVG spider and first-aid pictures');
 for(const file of ['assets/picture-quest.js','assets/picture-quest-art.js','assets/helping-hands-answer-art.js','assets/helping-hands-picture-art.js','games/spider-scout/game.js',
- 'games/spider-scout/questions.js','games/helping-hands/game.js','games/helping-hands/questions.js']){
+ 'games/spider-scout/questions.js','games/spider-scout/spider-motion.js','games/helping-hands/game.js','games/helping-hands/questions.js']){
  const result=spawnSync(process.execPath,['--check',file],{encoding:'utf8'});
  assert.equal(result.status,0,file+' must parse cleanly: '+result.stderr);
 }
@@ -90,6 +90,8 @@ for(const kind of FIELD_GUIDE_SPECIES){
  assert.ok(svg.includes('data-species="'+kind+'"')&&svg.includes('data-art-version="field-guide-2"'),kind+' identifies its illustration');
  assert.ok(svg.includes('data-habitat=')&&svg.includes('data-anatomy="cephalothorax-abdomen"'),kind+' has a distinct habitat and body');
  assert.equal((svg.match(/data-leg="/g)||[]).length,8,kind+' must show all eight joined legs');
+ assert.equal((svg.match(/data-leg-part="upper"/g)||[]).length,8,kind+' has eight mobile upper leg segments');
+ assert.equal((svg.match(/data-leg-part="lower"/g)||[]).length,8,kind+' has eight mobile lower leg segments');
  assert.ok(svg.includes('<radialGradient')&&svg.includes('data-eyes='),kind+' has dimensional shading and a species-relevant eye arrangement');
  assert.ok(svg.includes('data-markings="'+kind+'"'),kind+' has a distinct markings layer');
  assert.ok((svg.match(/<path /g)||[]).length>=22,kind+' must have substantially more visual detail than a simple oval sketch');

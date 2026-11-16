@@ -15,7 +15,7 @@ Make Spider Scout easier and more engaging to study by replacing flat symbol-lik
 Every spider has:
 
 - Two separately shaded body segments (cephalothorax and abdomen), linked by a narrow waist.
-- Eight legs, each shaped with two curved articulated sections and visible joints.
+- Eight legs, each shaped with two curved sections that bend independently at a shared joint.
 - Species-group-dependent limb proportions, positions, eye arrangements, abdomen proportions and markings.
 - A darker contour plus subtle gradients, highlights and optional fine hairs where appropriate.
 - A scene grounded in leaves, orbital silk, ground leaf litter, indoor corners, flower petals, woodpiles, dry soil/burrows, house storage spaces or grass/sheet webs.
@@ -37,15 +37,16 @@ Every spider has:
 
 ## Performance and accessibility
 
-- No new packages, live services, network downloads, location access or animation loops.
-- SVG generated deterministically for consistent browser screenshots and predictable offline play.
+- The scene and motion assets run locally as part of the static arcade.
+- Each mission shows a short movement when its picture comes into view. **Watch spider move** replays it. The arcade and device motion settings both support a still view.
+- The jumping spider hops, the crab spider steps sideways, and web spiders make small adjustments on the silk. Ground walking alternates sets of feet while the other feet hold position. The motions are illustrated examples based on [University of Minnesota Extension’s spider guide](https://extension.umn.edu/garden-and-home/home-maintenance/household-insects/spiders) and [high-speed observations of a tarantula’s leg joints and gait](https://onlinelibrary.wiley.com/doi/10.1155/2019/4617212).
 - Answer cards use existing text labels; scene artwork is paired with descriptive `aria-label` text. Child-facing safety explanations remain visible.
 - Spider Scout uses two columns of larger answer art at phone widths. Helping Hands keeps its original picture-card layout.
 - Same keyboard, mobile, reduced-motion, dark/high-contrast and save/backup behavior.
 
 ## Human review and testing
 
-**Automated:** Verify the ten exported illustration keys match the Spider Scout question bank; each is a complete locally generated SVG with eight legs, both body segments, eyes and background; ensure no external assets/scripts and a reasonable SVG size; confirm all chapters and saved progress survive. Browser QA renders every SVG, exercises widow/recluse mission changes and tests the two-column 390px phone layout.
+**Automated:** Verify that all ten local SVGs have eight legs, both body segments, eyes, and a background. Browser QA measures leg joint alignment and planted feet during movement, exercises keyboard replay and reduced motion, and tests mission changes, saved progress, and the phone layout.
 
 **Before formal release:** Review every spider portrait at actual phone size, ensure it stays distinguishable and child-friendly, verify posture/web/habitat accuracy with a naturalist or qualified spider educator, and confirm no illustration is interpreted as a guarantee that a real spider is harmless. Manually inspect actual devices and the offline screenshot gallery. Real spider ID, spider-bite diagnosis and medical decisions require appropriate human expertise.
 

@@ -122,6 +122,85 @@ test('Spider Scout: ten field-guide spiders show articulated legs and natural ha
  expect(errors).toEqual([]);
 });
 
+test('Spider Scout: all ten spiders move jointed legs, with planted feet during a walk', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/games/spider-scout/index.html');
+  const motion = await page.evaluate(async () => {
+    const { createSpiderRig } = await import('/games/spider-scout/spider-motion.js');
+    const select = document.getElementById('levelSelect');
+    const endOf = (part, atEnd) => {
+      const path = part.querySelector('path');
+      const point = path.getPointAtLength(atEnd ? path.getTotalLength() : 0);
+      return new DOMPoint(point.x, point.y).matrixTransform(path.getCTM());
+    };
+    const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+    const poses = [];
+    let plantedFootDrift;
+    for (let index = 0; index < 10; index++) {
+      select.value = String(index);
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      const svg = document.querySelector('#sceneArt svg');
+      const rig = createSpiderRig(svg);
+      const movements = [];
+      let widestJointGap = 0;
+      for (const time of [.12, .35, .56, .82]) {
+        rig.pose(time);
+        movements.push(svg.querySelector('[data-spider-body]').getAttribute('transform'));
+        for (const leg of svg.querySelectorAll('[data-leg]')) {
+          const upper = leg.querySelector('[data-leg-part="upper"]');
+          const lower = leg.querySelector('[data-leg-part="lower"]');
+          widestJointGap = Math.max(widestJointGap, distance(endOf(upper, true), endOf(lower, false)));
+        }
+      }
+      if (svg.dataset.species === 'wolf') {
+        const foot = svg.querySelector('[data-leg="1"] [data-leg-part="lower"]');
+        rig.pose(.18);
+        const planted = endOf(foot, true);
+        rig.pose(.27);
+        plantedFootDrift = distance(planted, endOf(foot, true));
+      }
+      poses.push({ species: svg.dataset.species, widestJointGap, positions: new Set(movements).size });
+      rig.rest();
+    }
+    return { poses, plantedFootDrift };
+  });
+  expect(new Set(motion.poses.map(pose => pose.species)).size).toBe(10);
+  for (const pose of motion.poses) {
+    expect(pose.positions, pose.species).toBeGreaterThan(1);
+    expect(pose.widestJointGap, pose.species).toBeLessThan(.15);
+  }
+  expect(motion.plantedFootDrift).toBeLessThan(.15);
+});
+
+test('Spider Scout: a keyboard replay animates the mission picture and honors both motion settings', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/games/spider-scout/index.html');
+  const art = page.locator('#sceneArt');
+  const watch = page.getByRole('button', { name: 'Watch spider move' });
+  const body = art.locator('[data-spider-body]');
+  await art.scrollIntoViewIfNeeded();
+  await watch.focus();
+  await page.keyboard.press('Enter');
+  await expect(body).toHaveAttribute('transform', /translate\(-/);
+  await expect(page.locator('#choices [data-leg-part][transform]')).toHaveCount(0);
+  await expect(page.locator('#solvedCount')).toHaveText('0');
+
+  await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: true }));
+  await expect(watch).toBeHidden();
+  await expect(art.locator('[data-leg-part][transform]')).toHaveCount(0);
+  await page.locator('#levelSelect').selectOption('4');
+  await expect(art.locator('svg')).toHaveAttribute('data-species', 'crab');
+  await expect(art.locator('[data-leg-part][transform]')).toHaveCount(0);
+
+  await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: false }));
+  await art.scrollIntoViewIfNeeded();
+  await watch.click();
+  await expect(body).toHaveAttribute('transform', /translate\(/);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(watch).toBeHidden();
+  await expect(art.locator('[data-leg-part][transform]')).toHaveCount(0);
+});
+
 test('Spider Scout: larger phone pictures preserve 80 missions and saved discoveries',async({page})=>{
  await page.setViewportSize({width:390,height:844});
  await page.goto('/games/spider-scout/index.html');
