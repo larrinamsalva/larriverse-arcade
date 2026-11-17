@@ -467,6 +467,13 @@ test("Traffic Town: saved sixty-level completion resumes at sign 61",async({page
 
 test("Traffic Town: scenes follow the sign lesson and respect reduced motion and enlarged text", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.addInitScript(() => {
+    const observe = IntersectionObserver.prototype.observe;
+    IntersectionObserver.prototype.observe = function (target) {
+      // Keep the intro's first visibility notification pending during the replay check.
+      if (target.getAttribute("data-lv-world-motion") !== "traffic-town") observe.call(this, target);
+    };
+  });
   await page.goto("/games/traffic-town/index.html");
   const scene = page.locator(".traffic-street-scene");
   const backdrop = scene.locator(".traffic-street-backdrop");
@@ -478,6 +485,7 @@ test("Traffic Town: scenes follow the sign lesson and respect reduced motion and
   const intro = page.locator('[data-lv-world-motion="traffic-town"]');
   await expect(intro.locator(".lv-motion-poses")).toHaveAttribute("src", /traffic-instructor\.webp$/);
   await expect(intro.locator(".lv-motion-prop")).toHaveAttribute("src", /traffic-hatchback\.webp$/);
+  await intro.scrollIntoViewIfNeeded();
   const replay = intro.getByRole("button", { name: /Play scene/ });
   await replay.click();
   expect(await intro.evaluate(element => element.getAnimations({ subtree: true }).map(animation => animation.effect.target.className)))

@@ -105,7 +105,8 @@ export async function mountWorldMotion(gameId, sdk) {
   }
 
   function play(restart = false) {
-    if (!visible || document.hidden || reduced()) return;
+    // The replay button can be pressed before the scroll observer updates.
+    if ((!visible && !restart) || document.hidden || reduced()) return;
     if (!restart && performance.now() - lastStart < 900) return;
     lastStart = performance.now();
     introduced = true;
