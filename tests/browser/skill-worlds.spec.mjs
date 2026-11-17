@@ -525,12 +525,21 @@ test("Repair Café: complete all sixty unique step-by-step repairs", async ({
   await round(page, "repair-cafe", async () => {
     expect(repairs.length).toBe(60);
     const seen = [];
+    const objects = new Set();
+    const workshops = new Set();
     for (let i = 0; i < 60; i++) {
       const title = await page.locator(".message-card .board-title").innerText();
       const repair = repairs.find((item) => item.title === title);
       expect(repair).toBeTruthy();
       expect(seen).not.toContain(title);
       seen.push(title);
+      const scene = page.locator(".repair-workshop-scene");
+      await expect(scene).toHaveAttribute("role", "img");
+      await expect(scene).toHaveAttribute("aria-label", "Illustrated repair scene for " + title);
+      await scene.locator("img").evaluateAll(images => Promise.all(images.map(image => image.decode())));
+      objects.add(await scene.locator(".repair-project-object").getAttribute("src"));
+      workshops.add(await scene.getAttribute("data-repair-setting"));
+      await expect(page.locator(".repair-workshop-caption")).toContainText("Inspect");
 
       if (i === 0) {
         await page
@@ -541,6 +550,7 @@ test("Repair Café: complete all sixty unique step-by-step repairs", async ({
 
       for (const step of repair.steps)
         await page.getByRole("button", { name: step, exact: true }).click();
+      await expect(page.locator(".repair-workshop-caption")).toContainText("Checked");
 
       await page
         .getByRole("button", {
@@ -550,6 +560,8 @@ test("Repair Café: complete all sixty unique step-by-step repairs", async ({
         .click();
     }
     expect(new Set(seen).size).toBe(60);
+    expect(objects.size).toBeGreaterThanOrEqual(35);
+    expect([...workshops].sort()).toEqual(["fabric", "garden", "paper", "toys"]);
   });
 });
 test("Time Trail: complete sixty growing maps over six chapters",async({page})=>{

@@ -36,6 +36,9 @@ test('Repair Café animates the background, character pose and wrench after a co
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/games/repair-cafe/index.html');
   const frame = page.locator('[data-lv-world-motion="repair-cafe"]');
+  await expect(frame.locator('.lv-motion-poses')).toHaveAttribute('src', /repair-cafe-mentor\.webp$/);
+  await expect(frame.locator('.lv-motion-prop')).toHaveAttribute('src', /repair-cafe-wrench\.webp$/);
+  await expect(page.locator('.repair-project-supply')).toHaveCSS('animation-name', 'repair-inspect');
   await frame.scrollIntoViewIfNeeded();
   const button = frame.getByRole('button', { name: /Play scene/ });
   await button.focus();
@@ -46,16 +49,20 @@ test('Repair Café animates the background, character pose and wrench after a co
     'lv-motion-landscape', 'lv-motion-character', 'lv-motion-poses', 'lv-motion-prop'
   ]));
   await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: true }));
+  await expect(page.locator('.repair-project-supply')).toHaveCSS('animation-name', 'none');
   await expect(button).toBeHidden();
   await expect.poll(() => frame.evaluate(node => node.getAnimations({ subtree: true }).length)).toBe(0);
   await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: false }));
   await frame.evaluate(node => node.scrollIntoView({ block: 'end' }));
   await page.locator('[data-repair="0"]').click();
   await expect(page.locator('#feedback')).toHaveClass(/good/);
+  await expect(page.locator('.repair-workshop-caption')).toContainText('Choose');
+  await expect(page.locator('.repair-project-supply')).toHaveAttribute('src', /cloth\.webp$/);
   await frame.scrollIntoViewIfNeeded();
   await expect.poll(() => frame.evaluate(node => node.getAnimations({ subtree: true })
     .some(animation => animation.effect.target.className === 'lv-motion-prop'))).toBe(true);
   await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(page.locator('.repair-project-supply')).toHaveCSS('animation-name', 'none');
   await expect(button).toBeHidden();
   await expect.poll(() => frame.evaluate(node => node.getAnimations({ subtree: true }).length)).toBe(0);
 });

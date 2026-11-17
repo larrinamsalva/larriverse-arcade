@@ -1,0 +1,163 @@
+body[data-world="repair-cafe"] .world-cover::before {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  background: url("../../assets/world-motion/backgrounds/repair-toys.webp") center / cover;
+}
+
+body[data-world="repair-cafe"] .repair-card {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.repair-workshop-visual {
+  min-width: 0;
+  overflow: hidden;
+  border: 2px solid #947256;
+  border-radius: 16px;
+  background: #f0e6d5;
+}
+
+body[data-world="repair-cafe"] .repair-workshop-scene {
+  height: clamp(184px, 27vw, 258px);
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.repair-workshop-scene::after {
+  display: none;
+}
+
+.repair-workshop-background {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center 62%;
+}
+
+.repair-project-items {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 7%;
+  padding: 12px 6% 10px;
+  pointer-events: none;
+}
+
+.repair-project-items img {
+  display: block;
+  min-width: 0;
+  width: auto;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 6px 3px #35251961);
+  transform-origin: center 92%;
+}
+
+.repair-project-object {
+  height: 88%;
+  max-width: 63%;
+  animation: repair-object-settle 600ms ease-out both;
+}
+
+.repair-project-supply {
+  height: 46%;
+  max-width: 25%;
+  animation: repair-supply-lift 650ms ease-out both;
+}
+
+[data-repair-phase="0"] .repair-project-supply {
+  align-self: center;
+  animation: repair-inspect 5s ease-in-out infinite alternate;
+}
+
+[data-repair-phase="2"] .repair-project-supply {
+  animation: repair-supply-work 1.2s ease-in-out both;
+}
+
+.repair-workshop-caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding: 0.5rem 0.75rem;
+  color: #573e2e;
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+body[data-world="repair-cafe"] .lv-motion-character {
+  left: 0;
+  bottom: -134%;
+  height: 230%;
+}
+
+body[data-world="repair-cafe"] .lv-motion-prop {
+  right: 20%;
+  bottom: 6%;
+  height: 49%;
+}
+
+html.larriverse-dark .repair-workshop-visual {
+  background: #342c36;
+  border-color: #a88b70;
+}
+
+html.larriverse-dark .repair-workshop-background {
+  filter: brightness(0.76) saturate(0.9);
+}
+
+html.larriverse-dark .repair-workshop-caption {
+  color: #fff3dd;
+}
+
+html.larriverse-high-contrast .repair-workshop-visual {
+  border-color: #fff;
+  background: #000;
+}
+
+html.larriverse-high-contrast .repair-workshop-background {
+  opacity: 0.65;
+}
+
+html.larriverse-high-contrast .repair-workshop-caption {
+  color: #fff;
+}
+
+@keyframes repair-object-settle {
+  from { transform: translateY(-3px); }
+  to { transform: translateY(0); }
+}
+
+@keyframes repair-inspect {
+  from { transform: translateX(-8%) rotate(-4deg); }
+  to { transform: translateX(8%) rotate(4deg); }
+}
+
+@keyframes repair-supply-lift {
+  from { transform: translateY(6px); opacity: 0.6; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes repair-supply-work {
+  35%, 65% { transform: rotate(-8deg); }
+}
+
+html.larriverse-reduced-motion :is(.repair-project-object, .repair-project-supply) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.repair-project-object, .repair-project-supply) {
+    animation: none;
+  }
+}

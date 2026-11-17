@@ -39,6 +39,9 @@ const renderTrafficStreet = world.mode === "traffic"
 const gardenArtwork = world.mode === "garden-grow"
   ? await import("../games/garden-grow-harvest/season-art.js").catch(() => null)
   : null;
+const renderRepairWorkshop = world.mode === "repair"
+  ? await import("../games/repair-cafe/workshop-art.js").then(module => module.repairWorkshopScene, () => null)
+  : null;
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
 const board = $("gameBoard");
@@ -708,6 +711,8 @@ function renderLearningPath(mode) {
 
 
 function repairVisual(item) {
+  const workshop = renderRepairWorkshop?.(item, state.position);
+  if (workshop) return workshop;
   const title = item.title.toLowerCase();
   const match = [
     ["book","book"],["notebook","book"],["journal","book"],["paperback","book"],
