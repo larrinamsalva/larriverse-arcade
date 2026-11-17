@@ -7,6 +7,7 @@ import {
   bridgeCartSvg,
 } from "./arcade-scenes.js";
 import { bridgeMiniatureLandscape } from "./bridge-miniatures.js";
+import { councilScenery, councilResident, councilBuilding } from "../games/critter-council/council-art.js";
 
 export function createExpedition(world, a) {
   let s;
@@ -40,7 +41,12 @@ export function createExpedition(world, a) {
   }
   const total = object => Object.values(object).reduce((sum, value) => sum + value, 0);
   const part = id => bridgeParts.find(item => item.id === id);
-  const tool = (item, selected, disabled = false) => `<button type="button" class="build-tool ${selected === item.id ? "selected" : ""}" data-tool="${item.id}" data-focus="tool-${item.id}" aria-pressed="${selected === item.id}" ${disabled ? "disabled" : ""}>${item.capacity ? `<svg class="bridge-tool-art" viewBox="0 0 140 96" aria-hidden="true">${bridgePartDrawing(item.id)}</svg>` : iconSvg(item.icon || "wood")}<b>${a.esc(item.name)}</b><small>${item.capacity ? `Holds load ${item.capacity}` : "Choose and place"}</small></button>`;
+  const tool = (item, selected, disabled = false, visual) => {
+    const art = visual ?? (item.capacity
+      ? `<svg class="bridge-tool-art" viewBox="0 0 140 96" aria-hidden="true">${bridgePartDrawing(item.id)}</svg>`
+      : iconSvg(item.icon || "wood"));
+    return `<button type="button" class="build-tool ${selected === item.id ? "selected" : ""}" data-tool="${item.id}" data-focus="tool-${item.id}" aria-pressed="${selected === item.id}" ${disabled ? "disabled" : ""}>${art}<b>${a.esc(item.name)}</b><small>${item.capacity ? `Holds load ${item.capacity}` : "Choose and place"}</small></button>`;
+  };
   const rankNames = {
     bridge: ["Trail Builder", "Town Builder", "River Engineer", "Bridge Maker", "Safe Support Planner", "Span Surveyor", "Reinforced Designer", "Load Tester", "Cargo Engineer", "Mountain Builder", "Summit Engineer", "Master Bridge Maker"],
     pipes: ["Flow Finder","Pipe Planner","Network Engineer","Waterworks Master","Bend Builder","Filter Tracker","Flow Explorer","Route Analyst","Water Connector","Flow Specialist","Pipeline Designer","Waterworks Champion","Flow Mapper","Filter Engineer","Pipeline Pathfinder","Waterworks Grandmaster"],
@@ -56,9 +62,9 @@ export function createExpedition(world, a) {
     const done = s.level + (s.passed ? 1 : 0);
     return `<section class="adventure-advancement" data-rank="${a.esc(rankName())}" data-level="${s.level + 1}" aria-label="${a.esc(rankName())}, level ${s.level + 1} of ${count}"><span>${a.esc(rankName())}</span><b>Level ${s.level + 1} of ${count}</b><div class="adventure-rank-track" role="progressbar" aria-label="World advancement" aria-valuemin="0" aria-valuemax="${count}" aria-valuenow="${done}"><i style="width:${done / count * 100}%"></i></div></section>`;
   };
-  function render() {
+  function render(placedPlot) {
     const focused = document.activeElement?.dataset.focus;
-    painters[world.mode]();
+    painters[world.mode](placedPlot);
     if (focused) (a.board.querySelector(`[data-focus="${CSS.escape(focused)}"]`) || a.actions.querySelector("button"))?.focus({ preventScroll: true });
   }
   function resetLevel() {
@@ -375,20 +381,76 @@ export function createExpedition(world, a) {
       a.say(cost === best ? "Great comparison! This basket meets the request for the lowest whole cost." : `Your basket fits! A ${best}-coin plan would also cover the request. Compare the unit prices next time.`, "good");
     });
   }
-  function town() {
+  const townCost = plots => plots.reduce((sum, id) => sum + (townParts.find(item => item.id === id)?.cost ?? 0), 0);
+  const townColumns = ["left trail", "center", "river side"];
+
+  function townPlot(id, index, placedPlot) {
+    const building = townParts.find(item => item.id === id);
+    const row = index < 3 ? "shaded top" : "quiet bottom";
+    const column = townColumns[index % 3];
+    const location = column === "river side" ? "river-side right" : column;
+    return `<button type="button" class="town-plot critter-town-plot ${id || "empty"}" data-plot="${index}" data-focus="plot-${index}" ${s.passed ? "disabled" : ""}
+      aria-label="Plot ${index + 1}, ${row} row, ${location} column, ${building?.name || "empty"}">
+      ${building ? councilBuilding(id, index === placedPlot) : iconSvg("seed")}
+      <b>${building?.name || "Build here"}</b>
+      <small>Plot ${index + 1} · ${column}</small>
+    </button>`;
+  }
+
+  function town(placedPlot) {
     const level = townLevels[s.level];
-    const spent = s.plots.reduce((sum,id) => sum + (townParts.find(item => item.id === id)?.cost || 0), 0), needs = checkTownLevel(level, s.plots), included = needs.filter(Boolean).length;
-    a.stage(`${level.name} · ${s.level + 1} of ${townLevels.length}`); a.progress(s.level + (s.passed ? 1 : 0), townLevels.length); a.score((s.level + (s.passed ? 1 : included / 4)) / townLevels.length * 100);
-    a.board.innerHTML = `${advancement(townLevels.length)}<article class="town-challenge-card critter-challenge-card"><p class="eyebrow">Four neighbor requests</p><h2>${a.esc(level.name)}</h2><p>${a.esc(level.intro)}</p></article><div class="expedition-stats">${a.chip("Builder tokens", level.budget-spent)}${a.chip("Requests met", `${included}/4`)}${a.chip("Neighborhoods", `${s.level + (s.passed ? 1 : 0)}/${townLevels.length}`)}</div><div class="neighbor-requests critter-neighbor-requests">${level.requests.map((request,index) => `<p class="critter-request ${needs[index] ? "met" : ""}"><span aria-hidden="true">${needs[index] ? "✓" : "○"}</span><b>${a.esc(request.neighbor)}</b><small>${a.esc(request.text)}</small></p>`).join("")}</div><div class="tool-shelf town-tool-shelf critter-tool-shelf">${townParts.map(item => tool(item,s.tool,s.passed)).join("")}<button type="button" class="build-tool" data-tool="erase" data-focus="tool-erase" aria-pressed="${s.tool === "erase"}" ${s.passed ? "disabled" : ""}><span class="erase-tool" aria-hidden="true"></span><b>Clear a plot</b><small>Return builder tokens</small></button></div><div class="town-map critter-town-map"><span class="town-shade">Top row · plots 1–3 · shaded side</span><div class="town-plots">${s.plots.map((id,index) => `<button type="button" class="town-plot critter-town-plot ${id || "empty"}" data-plot="${index}" data-focus="plot-${index}" ${s.passed ? "disabled" : ""} aria-label="Plot ${index+1}, ${index < 3 ? "shaded top" : "quiet bottom"} row, ${index%3===2 ? "river-side right" : index%3===1 ? "center" : "left trail"} column, ${townParts.find(item => item.id===id)?.name || "empty"}">${id ? iconSvg(townParts.find(item => item.id===id).icon) : iconSvg("seed")}<b>${townParts.find(item => item.id===id)?.name || "Build here"}</b><small>Plot ${index+1} · ${index%3===2 ? "river side" : index%3===1 ? "center" : "left trail"}</small></button>`).join("")}</div><span class="town-quiet">Bottom row · plots 4–6 · quiet side</span></div>`;
+    const spent = townCost(s.plots);
+    const needs = checkTownLevel(level, s.plots);
+    const included = needs.filter(Boolean).length;
+    const completed = s.level + (s.passed ? 1 : 0);
+    a.stage(`${level.name} · ${s.level + 1} of ${townLevels.length}`);
+    a.progress(completed, townLevels.length);
+    a.score((s.level + (s.passed ? 1 : included / 4)) / townLevels.length * 100);
+    a.board.innerHTML = `${advancement(townLevels.length)}
+      <article class="town-challenge-card critter-challenge-card">
+        <p class="eyebrow">Four neighbor requests</p><h2>${a.esc(level.name)}</h2><p>${a.esc(level.intro)}</p>
+      </article>
+      <div class="expedition-stats">
+        ${a.chip("Builder tokens", level.budget - spent)}
+        ${a.chip("Requests met", `${included}/4`)}
+        ${a.chip("Neighborhoods", `${completed}/${townLevels.length}`)}
+      </div>
+      <div class="neighbor-requests critter-neighbor-requests${s.passed ? " critter-neighbors-welcomed" : ""}">
+        ${level.requests.map((request, index) => `<p class="critter-request ${needs[index] ? "met" : ""}">
+          ${councilResident(s.level, index, needs[index])}
+          <b>${a.esc(request.neighbor)}</b><small>${a.esc(request.text)}</small>
+        </p>`).join("")}
+      </div>
+      <div class="tool-shelf town-tool-shelf critter-tool-shelf">
+        ${townParts.map(item => tool(item, s.tool, s.passed, councilBuilding(item.id))).join("")}
+        <button type="button" class="build-tool" data-tool="erase" data-focus="tool-erase" aria-pressed="${s.tool === "erase"}" ${s.passed ? "disabled" : ""}>
+          <span class="erase-tool" aria-hidden="true"></span><b>Clear a plot</b><small>Return builder tokens</small>
+        </button>
+      </div>
+      <div class="town-map critter-town-map">
+        ${councilScenery(s.level)}
+        <span class="town-shade">Top row · plots 1–3 · shaded side</span>
+        <div class="town-plots">${s.plots.slice(0, 3).map((id, index) => townPlot(id, index, placedPlot)).join("")}</div>
+        <span class="town-quiet">Bottom row · plots 4–6 · quiet side</span>
+        <div class="town-plots">${s.plots.slice(3).map((id, index) => townPlot(id, index + 3, placedPlot)).join("")}</div>
+      </div>`;
     if (!s.passed) toolBindings();
     a.bind("[data-plot]", node => {
       if (s.passed) return;
-      const index = Number(node.dataset.plot), next = [...s.plots];
-      if (s.tool !== "erase") { const previous = next.indexOf(s.tool); if (previous >= 0) next[previous] = null; }
+      const index = Number(node.dataset.plot);
+      const next = [...s.plots];
+      if (s.tool !== "erase") {
+        const previous = next.indexOf(s.tool);
+        if (previous >= 0) next[previous] = null;
+      }
       next[index] = s.tool === "erase" ? null : s.tool;
-      const cost = next.reduce((sum,id) => sum + (townParts.find(item => item.id===id)?.cost || 0),0);
-      if (cost > level.budget) { a.say("That plan needs more tokens. Clear a plot or move a building.", "try"); return; }
-      s.plots = next; render();
+      if (townCost(next) > level.budget) {
+        a.say("That plan needs more tokens. Clear a plot or move a building.", "try");
+        return;
+      }
+      const addedBuilding = next[index] && next[index] !== s.plots[index];
+      s.plots = next;
+      render(addedBuilding ? index : undefined);
     });
     if (s.passed) nextLevel(townLevels.length, "You completed sixty neighborhoods and listened to 240 different requests. Thoughtful design makes more room for everyone.");
     else a.button("Invite the neighbors", () => {
