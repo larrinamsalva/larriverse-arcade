@@ -1,0 +1,187 @@
+body[data-classic="creature-catcher"] {
+  --safari-meadow: url("../../assets/world-motion/backgrounds/safari-pond.webp");
+  --safari-view: 57% 57%;
+}
+
+#world {
+  background: #35543a var(--safari-meadow) var(--safari-view) / cover no-repeat;
+}
+
+#world .lv-motion-landscape {
+  object-position: var(--safari-view);
+}
+
+.safari-water-ripples {
+  position: absolute;
+  z-index: 1;
+  inset: 48% 4% 9% auto;
+  inline-size: 34%;
+  pointer-events: none;
+}
+
+.safari-water-ripples i {
+  position: absolute;
+  top: 22%;
+  right: 18%;
+  inline-size: 46%;
+  block-size: 9%;
+  border: 1px solid #dcf5fdb0;
+  border-radius: 50%;
+  opacity: .26;
+  animation: safari-ripple 6s ease-out infinite;
+}
+
+.safari-water-ripples i + i {
+  top: 42%;
+  right: 12%;
+  animation-delay: -3s;
+}
+
+body[data-classic="creature-catcher"] .start-card::before {
+  background: var(--safari-meadow) center 52% / cover no-repeat;
+}
+
+body[data-classic="creature-catcher"] #startOverlay .start-card::before {
+  display: none;
+}
+
+.safari-cover {
+  display: grid;
+  min-inline-size: 0;
+  block-size: clamp(84px, 23vw, 156px);
+  place-items: end center;
+  overflow: hidden;
+  margin-bottom: .8rem;
+  border: 1px solid #929d7d;
+  border-radius: 18px;
+  background: var(--safari-meadow) center 52% / cover no-repeat;
+}
+
+.creature-art {
+  display: block;
+  block-size: auto;
+  max-inline-size: 100%;
+  margin-inline: auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.safari-cover .creature-art {
+  inline-size: auto;
+  block-size: 100%;
+  filter: drop-shadow(0 6px 5px #1624169c);
+}
+
+.creature {
+  position: absolute;
+  z-index: 5;
+  inline-size: clamp(84px, 16vw, 148px);
+  padding: 4px;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  transform: translate(-50%, -50%);
+}
+
+.creature .creature-art {
+  inline-size: 100%;
+  filter: drop-shadow(0 7px 5px #112b1db3);
+  transform-origin: center 90%;
+  animation: safari-trot 1.9s ease-in-out var(--creature-delay) infinite alternate;
+}
+
+.creature[data-movement="hop"] .creature-art { animation-name: safari-hop; }
+.creature[data-movement="fly"] .creature-art { animation-name: safari-fly; }
+.creature[data-movement="swim"] .creature-art { animation-name: safari-swim; }
+
+.creature .tag {
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  margin: 0 auto;
+  padding: 4px 8px;
+  border: 1px solid #91a07c;
+  border-radius: 12px;
+  background: #fff8e4;
+  color: #203829;
+  font-weight: 850;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  box-shadow: 0 2px 5px #1e35294d;
+}
+
+.creature:hover .tag {
+  background: #fff0b3;
+}
+
+.creature:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 2px #103b2b;
+}
+
+.big-creature .creature-art { inline-size: 100%; }
+.specimen .creature-art { inline-size: min(100%, 86px); }
+
+body[data-classic="creature-catcher"] .lv-adventure-header {
+  padding: .6rem;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #142f25f0, #162c24b5), var(--safari-meadow) center 46% / cover;
+  color: #fff;
+}
+
+body[data-classic="creature-catcher"] .lv-adventure-header .lv-adventure-kicker {
+  color: #eaf5da;
+}
+
+html.larriverse-dark body[data-classic="creature-catcher"] #world {
+  background-color: #28402e;
+}
+
+html.larriverse-dark .creature .tag {
+  border-color: #8daf8d;
+  background: #233b31;
+  color: #f7fff2;
+}
+
+html.larriverse-high-contrast body[data-classic="creature-catcher"] :is(.creature .tag, .lv-adventure-header) {
+  border: 1px solid #fff;
+  background: #000;
+  color: #fff;
+  box-shadow: none;
+}
+
+@media (max-width: 570px) {
+  body[data-classic="creature-catcher"] { --safari-view: 64% 54%; }
+}
+
+@keyframes safari-trot {
+  to { transform: translateX(3px) rotate(2deg); }
+}
+
+@keyframes safari-hop {
+  45% { transform: translateY(-9px) rotate(-3deg); }
+  80% { transform: scale(1.04, .97); }
+}
+
+@keyframes safari-fly {
+  from { transform: translateY(-2px) rotate(-3deg); }
+  to { transform: translateY(-10px) rotate(4deg); }
+}
+
+@keyframes safari-swim {
+  to { transform: translate(6px, -4px) rotate(-4deg); }
+}
+
+@keyframes safari-ripple {
+  from { opacity: 0; transform: scale(.65); }
+  30% { opacity: .48; }
+  to { opacity: 0; transform: scale(1.35); }
+}
+
+html.larriverse-reduced-motion :is(.creature .creature-art, .safari-water-ripples i) {
+  animation-name: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.creature .creature-art, .safari-water-ripples i) { animation-name: none; }
+}

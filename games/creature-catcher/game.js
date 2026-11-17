@@ -8,16 +8,16 @@
   const SUBJECT_LABELS = { math: 'Math', reading: 'Reading', science: 'Science', nature: 'Nature' };
 
   const creatures = [
-    {id:'foxfire',emoji:'🦊',name:'Foxfire',rarity:'common'},
-    {id:'ribbit',emoji:'🐸',name:'Ribbit Rex',rarity:'common'},
-    {id:'buzzy',emoji:'🐝',name:'Buzzy B',rarity:'common'},
-    {id:'spiky',emoji:'🦔',name:'Spiky Sam',rarity:'common'},
-    {id:'octo',emoji:'🐙',name:'Octo Otto',rarity:'uncommon'},
-    {id:'flippy',emoji:'🐬',name:'Flippy',rarity:'uncommon'},
-    {id:'roary',emoji:'🦁',name:'Roary',rarity:'uncommon'},
-    {id:'drake',emoji:'🐉',name:'Sparkle Drake',rarity:'rare'},
-    {id:'unicorny',emoji:'🦄',name:'Unicorny',rarity:'rare'},
-    {id:'moonmoth',emoji:'🦋',name:'Moon Moth',rarity:'rare'}
+    {id:'foxfire',movement:'trot',name:'Foxfire',rarity:'common'},
+    {id:'ribbit',movement:'hop',name:'Ribbit Rex',rarity:'common'},
+    {id:'buzzy',movement:'fly',name:'Buzzy B',rarity:'common'},
+    {id:'spiky',movement:'trot',name:'Spiky Sam',rarity:'common'},
+    {id:'octo',movement:'swim',name:'Octo Otto',rarity:'uncommon'},
+    {id:'flippy',movement:'swim',name:'Flippy',rarity:'uncommon'},
+    {id:'roary',movement:'trot',name:'Roary',rarity:'uncommon'},
+    {id:'drake',movement:'fly',name:'Sparkle Drake',rarity:'rare'},
+    {id:'unicorny',movement:'trot',name:'Unicorny',rarity:'rare'},
+    {id:'moonmoth',movement:'fly',name:'Moon Moth',rarity:'rare'}
   ];
 
   const world = document.querySelector('#world');
@@ -128,18 +128,47 @@
     if (state.time <= 0) finish();
   }
 
+  function creatureArt(creature) {
+    return `<img class="creature-art" src="art/${creature.id}.webp" alt="" width="240" height="192" draggable="false">`;
+  }
+
+  function meadowPosition(movement) {
+    const swims = movement === 'swim';
+    const startX = swims ? 72 : 8;
+    const spanX = swims ? 20 : movement === 'fly' ? 84 : 51;
+    const startY = swims ? 44 : 43;
+    const spanY = swims ? 17 : 36;
+    const width = world.clientWidth;
+    const height = world.clientHeight;
+    const edge = Math.max(48, Math.min(width * .095, 84));
+    const occupied = state.active.map(button => [button.offsetLeft, button.offsetTop]);
+    let best = { space: -1 };
+
+    for (let attempt = 0; attempt < 8; attempt++) {
+      const left = startX + Math.random() * spanX;
+      const top = startY + Math.random() * spanY;
+      const x = Math.max(edge, Math.min(width - edge, width * left / 100));
+      const y = Math.max(100, Math.min(height - 100, height * top / 100));
+      const space = Math.min(...occupied.map(([otherX, otherY]) => Math.hypot(x - otherX, y - otherY)));
+      if (space > best.space) best = { left, top, space };
+    }
+    return best;
+  }
+
   function spawn() {
     if (!state.running || state.paused || state.active.length >= 5) return;
     const creature = random(creatures);
     const button = document.createElement('button');
     button.className = 'creature';
+    button.dataset.movement = creature.movement;
     button.type = 'button';
     button.setAttribute('aria-label', `Catch ${creature.name}`);
-    // Keep the whole target inside the meadow when its text is enlarged.
-    button.style.left = `clamp(84px, ${8 + Math.random() * 84}%, calc(100% - 84px))`;
-    button.style.top = `clamp(100px, ${43 + Math.random() * 36}%, calc(100% - 100px))`;
-    button.style.animationDelay = `-${Math.random()}s`;
-    button.innerHTML = `<span class="ping">!</span><span class="emoji">${creature.emoji}</span><span class="tag">${creature.name}</span>`;
+    const { left, top } = meadowPosition(creature.movement);
+    const edge = 'clamp(48px, 9.5%, 84px)';
+    button.style.left = `clamp(${edge}, ${left}%, calc(100% - ${edge}))`;
+    button.style.top = `clamp(100px, ${top}%, calc(100% - 100px))`;
+    button.style.setProperty('--creature-delay', `-${Math.random()}s`);
+    button.innerHTML = `${creatureArt(creature)}<span class="tag" aria-hidden="true">${creature.name}</span>`;
     button.addEventListener('click', () => encounter(creature, button));
     world.appendChild(button);
     state.active.push(button);
@@ -157,7 +186,7 @@
     if (!state.running || state.paused) return;
     state.paused = true;
     state.current = { creature, button, question: nextQuestion(), answered: false };
-    $('questionCreature').textContent = creature.emoji;
+    $('questionCreature').innerHTML = creatureArt(creature);
     $('creatureName').textContent = creature.name;
     $('rarity').textContent = creature.rarity;
     $('subject').textContent = state.current.question.subject;
@@ -195,7 +224,7 @@
       removeCreature(state.current.button);
       $('feedback').textContent = `Caught! +${points} points. ${question.explanation}`;
       $('feedback').className = 'feedback good';
-      toast(`${state.current.creature.emoji} Added to the field guide`);
+      toast(`${state.current.creature.name} added to the field guide`);
     } else {
       button.classList.add('wrong');
       state.score += 1;
@@ -237,7 +266,7 @@
   function renderGuide() {
     $('collectionGrid').innerHTML = creatures.map(creature => {
       const count = state.collection[creature.id] || 0;
-      return `<div class="specimen ${count ? '' : 'locked'}"><span>${count ? creature.emoji : '❔'}</span><b>${count ? creature.name : 'Undiscovered'}</b><small>${count ? `Caught ×${count}` : creature.rarity}</small></div>`;
+      return `<div class="specimen ${count ? '' : 'locked'}"><span aria-hidden="true">${count ? creatureArt(creature) : '❔'}</span><b>${count ? creature.name : 'Undiscovered'}</b><small>${count ? `Caught ×${count}` : creature.rarity}</small></div>`;
     }).join('');
   }
 

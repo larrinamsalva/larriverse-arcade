@@ -12,7 +12,7 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'cipher-club': scene('library', 'researcher', 'cipher-wheel', 'spin'),
   'compass-cove': scene('harbor', 'explorer', 'compass', 'turn'),
   'creative-calm-cove': scene('studio', 'artist', 'palette', 'lift', { host: '.creative-layout', position: 'beforebegin' }),
-  'creature-catcher': scene('woodland', 'fox', 'lantern', 'sway', { host: '#world', fullScene: true }),
+  'creature-catcher': scene('safari-pond', 'fox', 'lantern', 'sway', { host: '#world', fullScene: true }),
   'critter-council': scene('woodland', 'fox', 'notebook', 'slide'),
   'crossword-world': scene('library', 'artist', 'notebook', 'turn', { host: '.play-card', position: 'beforebegin' }),
   'date-detective': scene('market', 'researcher', 'magnifier', 'scan', { host: '.game-layout', position: 'beforebegin' }),

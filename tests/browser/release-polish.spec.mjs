@@ -183,9 +183,15 @@ test('Creature Catcher keeps its keyboard question, completion and replay flow a
   await expect(page.locator('#world')).toBeFocused();
   expect(await page.locator('#world').evaluate(node => node.clientHeight)).toBeGreaterThanOrEqual(420);
   await checkReflow(page, 'Creature meadow');
+  const encounteredArt = page.locator('.creature .creature-art').first();
+  const sprite = await encounteredArt.getAttribute('src');
+  expect(sprite).toMatch(/^art\/[a-z]+\.webp$/);
+  await encounteredArt.evaluate(image => image.decode());
+  await expect(encounteredArt).toHaveCSS('animation-name', 'none');
   await page.locator('.creature').first().focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('#questionOverlay')).toBeVisible();
+  await expect(page.locator('#questionCreature .creature-art')).toHaveAttribute('src', sprite);
   await checkReflow(page, 'Creature question');
   const questions = ['games/learning-question-bank.json', 'games/learning-question-pack-2.json']
     .flatMap(file => Object.values(JSON.parse(fs.readFileSync(file, 'utf8')).subjects).flat());
@@ -197,6 +203,10 @@ test('Creature Catcher keeps its keyboard question, completion and replay flow a
   await expect(page.locator('#feedback')).not.toBeEmpty();
   await page.locator('#continueButton').focus();
   await page.keyboard.press('Enter');
+  await page.locator('#guideButton').click();
+  await expect(page.locator('#collectionGrid .specimen:not(.locked) .creature-art')).toHaveAttribute('src', sprite);
+  await expect(page.locator('#collectionGrid .locked .creature-art')).toHaveCount(0);
+  await page.locator('#closeGuide').click();
   await page.clock.runFor(61_000);
   await expect(page.locator('#endOverlay')).toBeVisible();
   await checkReflow(page, 'Creature completion');
@@ -205,6 +215,22 @@ test('Creature Catcher keeps its keyboard question, completion and replay flow a
   await page.keyboard.press('Enter');
   await expect(page.locator('#endOverlay')).toBeHidden();
   await expect(page.locator('.creature').first()).toBeVisible();
+});
+
+test('Creature Catcher animates the habitat and creatures without moving their hit targets', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/games/creature-catcher/index.html');
+  await expect(page.locator('#world .lv-motion-landscape')).toHaveAttribute('src', /safari-pond\.webp$/);
+  await page.locator('#startButton').click();
+  const creature = page.locator('.creature').first();
+  const sprite = creature.locator('.creature-art');
+  const ripples = page.locator('.safari-water-ripples i').first();
+  await expect(creature).toHaveCSS('animation-name', 'none');
+  await expect(sprite).toHaveCSS('animation-name', /safari-(trot|hop|fly|swim)/);
+  await expect(ripples).toHaveCSS('animation-name', 'safari-ripple');
+  await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: true }));
+  await expect(sprite).toHaveCSS('animation-name', 'none');
+  await expect(ripples).toHaveCSS('animation-name', 'none');
 });
 
 test('reduced-motion Road Trip keeps same-lane collection, saved inventory and deliberate pause', async ({ page }) => {
