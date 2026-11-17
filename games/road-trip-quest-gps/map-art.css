@@ -117,13 +117,6 @@ body[data-classic="road-trip-quest-gps"] .controls button {
   color: #d7e4ec;
 }
 
-#toast {
-  width: max-content;
-  max-inline-size: calc(100% - 24px);
-  overflow-wrap: anywhere;
-  text-align: center;
-}
-
 html.larriverse-dark body[data-classic="road-trip-quest-gps"] .quest-field {
   --field-shade: #14293463;
 }
@@ -148,11 +141,6 @@ html.larriverse-high-contrast body[data-classic="road-trip-quest-gps"] .park-zon
 }
 
 @media (max-width: 700px) {
-  #toast {
-    top: 12px;
-    bottom: auto;
-  }
-
   .hud {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

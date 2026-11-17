@@ -139,6 +139,7 @@ import { roadScenes, roadBackground, roadProps } from './scenic-drive.js';
     syncRoadComfort();
     startLoops();
     toast(`${CITIES[state.currentCity].emoji} Next stop: ${CITIES[state.currentCity].name}`);
+    $('.lane-movers').scrollIntoView({ block: 'nearest' });
   }
 
   function startLoops() {
@@ -536,9 +537,10 @@ import { roadScenes, roadBackground, roadProps } from './scenic-drive.js';
 
   function toast(message) {
     clearTimeout(toastTimer);
-    $('#toast').textContent = message;
-    $('#toast').classList.add('show');
-    toastTimer = setTimeout(() => $('#toast').classList.remove('show'), 2300);
+    const status = $(running ? '#toast' : '#resetToast');
+    status.textContent = message;
+    status.classList.add('show');
+    toastTimer = setTimeout(() => status.classList.remove('show'), 2300);
   }
 
   function syncProfile() {
