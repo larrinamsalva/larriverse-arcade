@@ -589,16 +589,18 @@ test('progress views keep shared comfort controls visible on narrow screens with
   }
 });
 
-test('dimensional object models replace flat road-trip scenery and preserve sign identity', async ({ page }) => {
+test('Road Trip Quest and GPS show illustrated road art and preserve Traffic Town sign identity', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/games/road-trip-quest/index.html');
   await expect(page.locator('#startButton')).toBeEnabled();
-  await expect(page.locator('.road-demo .demo-object-art')).toHaveCount(3);
-  await expect(page.locator('#car .player-car-art .object-model--car')).toHaveCount(1);
-  await expect(page.locator('#car .player-car-art .object-depth--car')).toHaveCount(1);
-  await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: false }));
+  const intro = page.locator('#roadPreview [data-lv-world-motion="road-trip-quest"]');
+  await expect(intro.locator('.lv-motion-poses')).toHaveAttribute('src', /road-traveler\.webp$/);
+  await expect(intro.locator('.lv-motion-prop')).toHaveAttribute('src', /road-camper\.webp$/);
   await page.locator('#startButton').click();
-  await expect(page.locator('#skyline .scenery-art').first()).toBeAttached({ timeout: 2_500 });
+  await expect(page.locator('#car img.player-car-art')).toHaveAttribute('src', 'art/player-car.webp');
+  await expect(page.locator('#skyline img.scenery-object').first()).toHaveAttribute('src', /\.webp$/);
 
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/games/traffic-town/index.html');
   const sign = page.locator('.traffic-sign-art').first();
   await expect(sign).toBeVisible();
@@ -615,4 +617,56 @@ test('dimensional object models replace flat road-trip scenery and preserve sign
   await expect(page.locator('#player .gps-car-art .object-model--car')).toHaveCount(1);
   await expect(page.locator('.poi .poi-art').first()).toBeVisible();
   expect(await page.locator('.poi .poi-art').count()).toBeGreaterThan(5);
+});
+
+test('Road Trip Quest scenery follows a completed stop and honors pause and reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.addInitScript(() => {
+    Math.random = () => .5;
+    if (!localStorage.getItem('larriverse.roadTripQuest.v1')) {
+      localStorage.setItem('larriverse.roadTripQuest.v1', JSON.stringify({ currentCity: 0, bossMeter: 100 }));
+    }
+  });
+  await page.goto('/games/road-trip-quest/index.html');
+  await page.locator('#startButton').click();
+  const landscape = page.locator('#roadLandscape');
+  const stripe = page.locator('.lane-line.one');
+  const car = page.locator('.player-car-art');
+  await expect(landscape).toHaveAttribute('src', /road-new-york\.webp$/);
+  await landscape.evaluate(image => image.decode());
+  await expect(stripe).toHaveCSS('animation-name', 'road-lane-stripes');
+  await expect(car).toHaveCSS('animation-name', 'road-car-suspension');
+  await page.locator('#pauseButton').click();
+  await expect(landscape).toHaveCSS('animation-play-state', 'paused');
+  await expect(stripe).toHaveCSS('animation-play-state', 'paused');
+  await expect(car).toHaveCSS('animation-play-state', 'paused');
+  await page.locator('#pauseButton').click();
+
+  const math = await page.evaluate(async () => {
+    const bank = await fetch('../learning-question-bank.json').then(response => response.json());
+    return bank.subjects.math;
+  });
+  const question = page.locator('#questionDialog');
+  await page.locator('#battleButton').click();
+  for (let round = 0; round < 3; round++) {
+    await expect(question).toBeVisible();
+    const prompt = await question.locator('#questionText').textContent();
+    const item = math.find(entry => entry.prompt === prompt);
+    expect(item, prompt).toBeDefined();
+    await question.locator('#answers button').nth(item.answer).click();
+    if (round < 2) await question.locator('#nextQuestion').click();
+  }
+  await page.locator('#continueButton').click();
+  await expect(page.locator('#cityHud')).toContainText('Orlando');
+  await expect(landscape).toHaveAttribute('src', /road-orlando\.webp$/);
+  await landscape.evaluate(image => image.decode());
+  await expect(page.locator('#skyline .scenery-object--palm').first()).toBeAttached();
+  await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: true }));
+  await expect(landscape).toHaveCSS('animation-name', 'none');
+  await expect(stripe).toHaveCSS('animation-name', 'none');
+  await expect(car).toHaveCSS('animation-name', 'none');
+  await expect(page.locator('#skyline img.scenery-object')).toHaveCount(0);
+  await page.reload();
+  await page.locator('#startButton').click();
+  await expect(landscape).toHaveAttribute('src', /road-orlando\.webp$/);
 });

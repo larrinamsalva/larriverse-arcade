@@ -22,9 +22,10 @@ const roadTripGame = read('games/road-trip-quest/game.js');
 const roadTripHtml = read('games/road-trip-quest/index.html');
 const gpsGame = read('games/road-trip-quest-gps/game.js');
 const gpsHtml = read('games/road-trip-quest-gps/index.html');
-const [{ trafficSignSvg }, { trafficQuestions }] = await Promise.all([
+const [{ trafficSignSvg }, { trafficQuestions }, { roadScenes, roadBackground, roadProps }] = await Promise.all([
   import('../assets/arcade-scenes.js'),
-  import('../assets/expanded-scenarios.js')
+  import('../assets/expanded-scenarios.js'),
+  import('../games/road-trip-quest/scenic-drive.js')
 ]);
 const failures = [];
 let checks = 0;
@@ -82,8 +83,12 @@ check(bubbleCss.includes('html.larriverse-light') && bubbleCss.includes('--bubbl
 check(chillCss.includes('--chill-ink: #173b32') && chillCss.includes('--chill-copy: #304d45'), 'Chill Brain light cards use a deliberately dark reading palette');
 check(chillCss.includes('.badge.locked span') && chillCss.includes('filter: grayscale(1)') && chillCss.includes('opacity: 1'), 'Chill Brain keeps locked badge labels fully opaque while muting only their icons');
 check(chillCss.includes('html.larriverse-dark body[data-classic="chill-brain-rewards"]'), 'Chill Brain card contrast stays intentional in dark mode');
-check(roadTripGame.includes("import { iconSvg }") && roadTripGame.includes("icon:'airplane'") && roadTripGame.includes("icon:'truck'"), 'Road Trip Quest uses dimensional shared vehicle and scenery models');
-check(!roadTripHtml.includes('<div class="car" id="car" aria-label="Player car">🚗'), 'Road Trip Quest no longer uses a flat emoji player car');
+const tripCities = [...roadTripGame.matchAll(/\{name:'([^']+)',emoji:'[^']+',boss:/g)].map(match => match[1]);
+check(tripCities.length === 16 && roadScenes.size === 16 && tripCities.every(city => roadScenes.has(city)), 'Every Road Trip Quest stop has its own scenery');
+check(new Set([...roadScenes.values()].map(scene => scene.place)).size === 16, 'Road Trip Quest uses sixteen distinct illustrated city views');
+check([...roadScenes.values()].every(({ place, prop }) => fs.existsSync(roadBackground(place)) && Object.hasOwn(roadProps, prop)), 'Each city view and its selected scenery are available');
+check(Object.values(roadProps).every(image => fs.existsSync(image)), 'Road Trip Quest bundles its moving scenery');
+check(roadTripHtml.includes('class="player-car-art" src="art/player-car.webp"') && fs.existsSync(new URL('../games/road-trip-quest/art/player-car.webp', import.meta.url)), 'Road Trip Quest uses an illustrated player car');
 check(gpsGame.includes('placeSvg(poi.type') && gpsGame.includes("iconSvg('car', 'gps-car-art')"), 'Road Trip GPS renders dimensional place markers and player vehicle');
 check(!gpsHtml.includes('aria-label="Player position">🚙'), 'Road Trip GPS no longer uses a flat emoji player vehicle');
 check(game.includes('larriverse:bloom-message'), 'game feedback reaches Bloom locally');

@@ -1,4 +1,4 @@
-import { iconSvg } from '../../assets/arcade-scenes.js';
+import { roadScenes, roadBackground, roadProps } from './scenic-drive.js';
 
 (() => {
   'use strict';
@@ -56,18 +56,6 @@ import { iconSvg } from '../../assets/arcade-scenes.js';
     {emoji:'🦁',name:'Pride Lion',bonus:65,desc:'Roaring for adventure!'}
   ];
 
-  const SCENERY = [
-    { icon:'pine', label:'pine tree' },
-    { icon:'tree', label:'shade tree' },
-    { icon:'house', label:'roadside house' },
-    { icon:'fuel', label:'fuel station' },
-    { icon:'trafficLight', label:'traffic light' },
-    { icon:'truck', label:'delivery truck' },
-    { icon:'airplane', label:'airplane' },
-    { icon:'mountain', label:'mountain' },
-    { icon:'boat', label:'sailboat' },
-    { icon:'lighthouse', label:'lighthouse' }
-  ];
   const $ = selector => document.querySelector(selector);
   const fresh = () => ({
     score:0,
@@ -235,15 +223,14 @@ import { iconSvg } from '../../assets/arcade-scenes.js';
   }
 
   function spawnScenery() {
-    const scenery = pick(SCENERY);
-    const element = document.createElement('span');
-    element.className = `scenery-object scenery-object--${scenery.icon}`;
-    element.innerHTML = iconSvg(scenery.icon, 'scenery-art');
-    element.title = scenery.label;
-    element.style.bottom = `${4 + Math.random() * 30}px`;
+    const { prop } = roadScenes.get(CITIES[state.currentCity].name);
+    const scenery = pick(['camper', prop, 'plane']);
+    const element = document.createElement('img');
+    element.alt = '';
+    element.className = `scenery-object scenery-object--${scenery}`;
+    element.src = roadProps[scenery].href;
     element.style.animationDuration = `${5 + Math.random() * 4}s`;
-    element.style.setProperty('--scenery-scale', `${.8 + Math.random() * .42}`);
-    $('#skyline').append(element);
+    $('#roadsideObjects').append(element);
     element.addEventListener('animationend', () => element.remove());
   }
 
@@ -251,7 +238,7 @@ import { iconSvg } from '../../assets/arcade-scenes.js';
     const reduced = window.LarriVerseArcade.settings().reducedMotion;
     $('#motionRoadNote').hidden = !reduced;
     $('#road').querySelectorAll('.road-item').forEach(element => element.remove());
-    if (reduced) $('#skyline').replaceChildren();
+    if (reduced) $('#roadsideObjects').replaceChildren();
   }
 
   function collectItem(item) {
@@ -504,6 +491,13 @@ import { iconSvg } from '../../assets/arcade-scenes.js';
 
   function renderHud() {
     const city = CITIES[state.currentCity];
+    const scene = roadScenes.get(city.name);
+    const skyline = $('#skyline');
+    if (skyline.dataset.place !== scene.place) {
+      skyline.dataset.place = scene.place;
+      $('#roadLandscape').src = roadBackground(scene.place).href;
+      $('#roadsideObjects').replaceChildren();
+    }
     $('#cityHud').textContent = `${city.emoji} ${city.name}`;
     $('#scoreHud').textContent = state.score.toLocaleString();
     const itemCount = state.bag.reduce((sum, item) => sum + item.count, 0);
@@ -581,11 +575,6 @@ import { iconSvg } from '../../assets/arcade-scenes.js';
   }
 
   async function init() {
-    document.querySelectorAll('[data-demo-object]').forEach(slot => {
-      slot.innerHTML = iconSvg(slot.dataset.demoObject, 'demo-object-art');
-    });
-    $('#car').innerHTML = iconSvg('car', 'player-car-art');
-    $('#battleCar').innerHTML = iconSvg('car', 'battle-car-art');
     $('#startButton').disabled = true;
     $('#roadMessage').textContent = 'Loading the expanded learning question bank…';
     await loadQuestions();
