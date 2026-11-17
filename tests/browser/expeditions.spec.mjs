@@ -307,11 +307,16 @@ test("Critter Council: 240 requests guide sixty solvable neighborhoods",async({p
     for(const [id,index]of [["park",3],["hut",0],["ramp",1],["bench",5]]) { await page.locator(`[data-tool="${id}"]`).click(); await page.locator(`[data-plot="${index}"]`).click(); }
     await action(page,"Invite the neighbors"); await expect(page.locator("#feedback")).toHaveClass(/try/);
     const ranks=["Kind Listener","Neighborhood Helper","Access Planner","Council Champion","Park Pathfinder","Neighbor Advocate","Inclusive Designer","Access Engineer","Community Planner","Shared Space Leader","Council Mentor","Neighborhood Champion"];
+    const forests = ["spring-grove", "willow-bank", "maple-woods", "evening-pines"];
     for(let round=0;round<townLevels.length;round++) {
       const solution=townSolution(townLevels[round]);
       expect(solution).toBeTruthy();
       await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-level",String(round+1));
       await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-rank",ranks[Math.floor(round/5)]);
+      if (round % 15 === 0) {
+        await expect(page.locator(".critter-scenery")).toHaveAttribute("data-forest", forests[round / 15]);
+        await expect.poll(() => page.locator(".critter-scenery img").evaluate(image => image.naturalWidth)).toBe(832);
+      }
       for(const [index,id] of solution.entries()) if(id) { await page.locator(`[data-tool="${id}"]`).click(); await page.locator(`[data-plot="${index}"]`).click(); }
       await expect(page.locator(".neighbor-requests .met")).toHaveCount(4);
       await action(page,"Invite the neighbors"); await expect(page.locator("#feedback")).toHaveClass(/good/);
@@ -320,6 +325,50 @@ test("Critter Council: 240 requests guide sixty solvable neighborhoods",async({p
     await expect(page.locator("#finishMessage")).toContainText("sixty neighborhoods");
   });
 });
+
+test("Critter Council animates its neighbors, river, and new buildings within the board", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/games/critter-council/index.html");
+  const portraits = page.locator(".critter-portrait");
+  const river = page.locator(".critter-river-light");
+  await expect(portraits).toHaveCount(4);
+  await expect(portraits.first()).toHaveCSS("animation-name", "critter-look-around");
+  await expect(river).toHaveCSS("animation-name", "critter-water-flow");
+  const thumbnails = await page.locator(".critter-tool-shelf img").evaluateAll(async images => {
+    await Promise.all(images.map(image => image.decode()));
+    return images.map(image => image.naturalWidth);
+  });
+  expect(thumbnails).toEqual([224, 224, 224, 224]);
+
+  const firstPlot = page.locator('[data-plot="0"]');
+  await firstPlot.click();
+  await expect(firstPlot).toHaveAttribute("aria-label", /Shaded park/);
+  await expect(firstPlot.locator(".critter-building")).toHaveCSS("animation-name", "critter-place-building");
+  await page.locator('[data-tool="hut"]').click();
+  await expect(firstPlot.locator(".critter-building")).toHaveCSS("animation-name", "none");
+
+  await page.setViewportSize({ width: 320, height: 820 });
+  await page.evaluate(() => {
+    window.LarriVerseArcade.setSettings({ reducedMotion: true, highContrast: true, largeText: true });
+    document.documentElement.style.setProperty("font-size", "32px", "important");
+  });
+  await expect(portraits.first()).toHaveCSS("animation-name", "none");
+  await expect(river).toHaveCSS("animation-name", "none");
+  const bottomPlot = page.locator('[data-plot="3"]');
+  await bottomPlot.click();
+  await expect(bottomPlot.locator('[data-building="hut"]')).toHaveCSS("animation-name", "none");
+  await expect(bottomPlot.locator("small")).toHaveCSS("background-color", "rgb(17, 17, 17)");
+  const columns = await page.locator(".town-plots").first().evaluate(row =>
+    new Set([...row.children].map(plot => plot.getBoundingClientRect().left)).size
+  );
+  expect(columns).toBe(1);
+  const layout = await page.evaluate(() => ({
+    width: document.documentElement.clientWidth,
+    scroll: document.documentElement.scrollWidth
+  }));
+  expect(layout.scroll).toBeLessThanOrEqual(layout.width + 4);
+});
+
 test("Critter Council center cards stay readable in light and high-contrast modes",async({page})=>{
   await page.goto("/games/critter-council/index.html");
   await page.evaluate(()=>window.LarriVerseArcade.setSettings({theme:"light",highContrast:false,largeText:false,reducedMotion:true}));
