@@ -1,0 +1,192 @@
+body[data-classic="road-trip-quest-gps"] .sky {
+  background: linear-gradient(#07131f9e, #07131fe6),
+    url("../../assets/world-motion/backgrounds/gps-visitor-center.webp") center / cover;
+}
+
+#gpsPreview {
+  --preview-height: clamp(118px, 22vw, 174px);
+  min-block-size: var(--preview-height);
+}
+
+#gpsPreview :is(.world-scene, .lv-world-motion) {
+  block-size: var(--preview-height);
+  margin: 0;
+}
+
+#gpsPreview .world-scene {
+  border-radius: 16px;
+  background: url("../../assets/world-motion/backgrounds/gps-visitor-center.webp") center 64% / cover;
+}
+
+#gpsPreview .lv-motion-landscape {
+  object-position: center 75%;
+}
+
+#gpsPreview .lv-motion-character {
+  left: 8%;
+  bottom: 3%;
+  height: 90%;
+}
+
+#gpsPreview .lv-motion-prop {
+  right: 17%;
+  height: 57%;
+  object-position: center bottom;
+}
+
+.boundary-car-art,
+.gps-car-art,
+.poi-art,
+.place-tag-art {
+  object-fit: contain;
+}
+
+body[data-classic="road-trip-quest-gps"] .quest-field {
+  --field-shade: #21392625;
+  isolation: isolate;
+  background: linear-gradient(var(--field-shade), var(--field-shade)),
+    url("art/meadow.webp") center / cover #526746;
+}
+
+.quest-field::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 28% 24%, #ffedb14d, transparent 66%);
+  pointer-events: none;
+  animation: gps-field-light 11s ease-in-out infinite alternate;
+}
+
+body[data-classic="road-trip-quest-gps"] .road {
+  border-color: #858778;
+  background: linear-gradient(#2029342e, #2029342e), url("art/asphalt.webp") center / 236px auto;
+}
+
+body[data-classic="road-trip-quest-gps"] .park-zone {
+  background: url("art/park-ground.webp") center / cover;
+  border-color: #bcc58c;
+}
+
+body[data-classic="road-trip-quest-gps"] .poi {
+  background: radial-gradient(circle at 35% 20%, #fff8dc, #d6dad0 60%, #9daea4);
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+body[data-classic="road-trip-quest-gps"] .poi.near {
+  border-color: #ffedb5;
+}
+
+body[data-classic="road-trip-quest-gps"] .poi::after {
+  top: calc(100% + 4px);
+  color: #fff;
+  font-weight: 750;
+}
+
+body[data-classic="road-trip-quest-gps"] .poi:is(:hover, :focus-visible) {
+  z-index: 6;
+}
+
+.poi-art {
+  pointer-events: none;
+}
+
+.poi.near:not(.caught) .poi-art {
+  animation: gps-marker-bob 1.6s ease-in-out infinite alternate;
+}
+
+.gps-car-art {
+  transform: rotate(var(--gps-car-turn, 0deg));
+  pointer-events: none;
+}
+
+.controls {
+  width: min(340px, 100%);
+  padding: 10px;
+  border: 1px solid #70838d;
+  border-radius: 16px;
+  background: #152b37;
+}
+
+body[data-classic="road-trip-quest-gps"] .controls button {
+  border-color: #a4bac5;
+  background: #2d4857;
+  color: #fff;
+}
+
+.controls small {
+  color: #d7e4ec;
+}
+
+#toast {
+  width: max-content;
+  max-inline-size: calc(100% - 24px);
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+html.larriverse-dark body[data-classic="road-trip-quest-gps"] .quest-field {
+  --field-shade: #14293463;
+}
+
+html.larriverse-high-contrast .sky,
+html.larriverse-high-contrast .quest-field::before {
+  visibility: hidden;
+}
+
+html.larriverse-high-contrast body[data-classic="road-trip-quest-gps"] .park-zone {
+  background: #152820;
+  border-color: #fff;
+}
+
+@keyframes gps-field-light {
+  from { opacity: .44; }
+  to { opacity: .83; }
+}
+
+@keyframes gps-marker-bob {
+  to { transform: translateY(-2px); }
+}
+
+@media (max-width: 700px) {
+  #toast {
+    top: 12px;
+    bottom: auto;
+  }
+
+  .hud {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hud-chip {
+    min-inline-size: 0;
+    flex-wrap: wrap;
+    padding-inline: 6px;
+    text-align: center;
+  }
+
+  .poi {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+  }
+
+  .poi-art {
+    width: 36px;
+    height: 36px;
+  }
+
+  .poi:not(:is(.near, :hover, :focus-visible))::after {
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 420px) {
+  .landing-card {
+    padding-inline: 16px;
+  }
+
+  .boundary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,7 +1,9 @@
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import process from 'node:process';
+import { gpsPlaceImages } from '../games/road-trip-quest-gps/map-art.js';
 
 const root = process.cwd();
 const base = 'games/road-trip-quest-gps';
@@ -28,6 +30,8 @@ check(manifest.source?.levelCount === 20, 'GPS source exposes twenty quest level
 
 const placeTypes = Object.keys(manifest.placeTypes || {});
 check(placeTypes.length === 15, 'GPS manifest exposes 15 place types');
+check(gpsPlaceImages.size === placeTypes.length && placeTypes.every(type => gpsPlaceImages.has(type)), 'GPS has an illustration for each of its 15 place types');
+check([...gpsPlaceImages.values()].every(image => existsSync(image)), 'GPS place illustrations are bundled locally');
 check(Object.keys(manifest.rewards || {}).length === 15, 'GPS rewards cover all 15 place types');
 
 const rewardIds = new Set();

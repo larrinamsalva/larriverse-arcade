@@ -612,11 +612,71 @@ test('Road Trip Quest and GPS show illustrated road art and preserve Traffic Tow
 
   await page.goto('/games/road-trip-quest-gps/index.html');
   await page.waitForFunction(() => window.RoadTripGpsContent);
-  await expect(page.locator('#boundaryVehicle .boundary-car-art .object-model--car')).toHaveCount(1);
+  await expect(page.locator('#boundaryVehicle img.boundary-car-art')).toHaveAttribute('src', /road-camper\.webp$/);
   await page.locator('#demoButton').click();
-  await expect(page.locator('#player .gps-car-art .object-model--car')).toHaveCount(1);
-  await expect(page.locator('.poi .poi-art').first()).toBeVisible();
-  expect(await page.locator('.poi .poi-art').count()).toBeGreaterThan(5);
+  await expect(page.locator('#player img.gps-car-art')).toHaveAttribute('src', /player-car\.webp$/);
+  await expect(page.locator('.poi img.poi-art').first()).toBeVisible();
+  await expect(page.locator('.poi img.poi-art')).toHaveCount(15);
+});
+
+test('GPS map art follows Demo movement and respects reduced motion without using location', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.addInitScript(() => {
+    Math.random = () => .25;
+    window.locationUses = 0;
+    Object.defineProperty(navigator, 'geolocation', {
+      value: {
+        getCurrentPosition() { window.locationUses++; },
+        watchPosition() { window.locationUses++; return 0; },
+        clearWatch() {}
+      }
+    });
+  });
+  await page.goto('/games/road-trip-quest-gps/index.html');
+  const preview = page.locator('#gpsPreview [data-lv-world-motion]');
+  await expect(preview.locator('.lv-motion-poses')).toHaveAttribute('src', /road-traveler\.webp$/);
+  await expect(preview.locator('.lv-motion-prop')).toHaveAttribute('src', /gps-compass\.webp$/);
+  await preview.getByRole('button', { name: /Play scene/ }).click();
+  const layers = await preview.evaluate(element => element.getAnimations({ subtree: true }).map(animation => animation.effect.target.className));
+  expect(layers).toEqual(expect.arrayContaining(['lv-motion-landscape', 'lv-motion-poses', 'lv-motion-prop']));
+  await page.locator('#demoButton').click();
+  await expect(page.locator('#landingView')).toBeHidden();
+  await expect(page.locator('#trackingText')).toHaveText('No location access');
+
+  const map = page.locator('#questField');
+  const places = map.locator('.poi img.poi-art');
+  await expect(places).toHaveCount(15);
+  const images = await places.evaluateAll(async markers => {
+    await Promise.all(markers.map(image => image.decode()));
+    return markers.map(image => image.src);
+  });
+  expect(new Set(images).size).toBe(15);
+  await expect(map).toHaveCSS('background-image', /meadow\.webp/);
+  expect(await map.evaluate(element => getComputedStyle(element, '::before').animationName)).toBe('gps-field-light');
+
+  const right = page.getByRole('button', { name: 'Move right' });
+  await right.click();
+  await right.click();
+  await expect(map.locator('#player')).toHaveAttribute('style', /--gps-car-turn:\s*90deg/);
+  const fuel = map.getByRole('button', { name: 'Gas Station Quest', exact: true });
+  expect(await fuel.evaluate(element => getComputedStyle(element, '::after').color)).toBe('rgb(255, 255, 255)');
+  await fuel.focus();
+  await page.keyboard.press('Enter');
+  const encounter = page.locator('#encounterDialog');
+  await expect(encounter).toBeVisible();
+  await expect(encounter.locator('img.place-tag-art')).toHaveAttribute('src', /fuel\.webp$/);
+  await encounter.getByRole('button', { name: 'Close', exact: true }).click();
+
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.evaluate(() => {
+    window.LarriVerseArcade.setSettings({ reducedMotion: true, highContrast: true, largeText: true });
+    document.documentElement.style.setProperty('font-size', '32px', 'important');
+  });
+  expect(await map.evaluate(element => getComputedStyle(element, '::before').animationName)).toBe('none');
+  await expect(fuel.locator('.poi-art')).toHaveCSS('animation-name', 'none');
+  await expect(map.locator('#player')).toHaveCSS('transition-duration', '0s');
+  expect(await page.evaluate(() => window.locationUses)).toBe(0);
+  await checkReflow(page, 'GPS illustrated Demo field');
 });
 
 test('Road Trip Quest scenery follows a completed stop and honors pause and reduced motion', async ({ page }) => {

@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="../../assets/emoji.css">
   <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
   <link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+  <link rel="stylesheet" href="map-art.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LarriVerse Arcade">
   <meta property="og:title" content="Road Trip Quest GPS · LarriVerse Arcade">
@@ -41,9 +42,10 @@
         <h1>Find nearby-style quests without sharing your location.</h1>
         <p>This rebuild preserves the recovered proximity hunt, place categories, question catches, collectibles, XP levels, and collection book. It does not load external maps or upload coordinates.</p>
         <div class="boundary">
-          <span id="boundaryVehicle" aria-hidden="true"></span>
+          <span id="boundaryVehicle" aria-hidden="true"><img class="boundary-car-art" src="../../assets/world-motion/objects/road-camper.webp" alt=""></span>
           <div><strong>Never play while driving.</strong><p>A passenger may play, or use it after the vehicle is safely parked. This is not navigation or an emergency-location service.</p></div>
         </div>
+        <div id="gpsPreview"><div class="world-scene" aria-hidden="true"></div></div>
         <div class="mode-grid">
           <article>
             <span class="mode-icon">🎮</span>
@@ -86,7 +88,7 @@
         <div class="road road-b"></div>
         <div class="park-zone"></div>
         <div id="poiLayer"></div>
-        <div id="player" class="player" aria-label="Player position"></div>
+        <div id="player" class="player" aria-label="Player position"><img class="gps-car-art" src="../road-trip-quest/art/player-car.webp" alt=""></div>
         <div class="range-ring" id="rangeRing"></div>
       </section>
 

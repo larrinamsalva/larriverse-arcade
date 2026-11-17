@@ -89,8 +89,8 @@ check(new Set([...roadScenes.values()].map(scene => scene.place)).size === 16, '
 check([...roadScenes.values()].every(({ place, prop }) => fs.existsSync(roadBackground(place)) && Object.hasOwn(roadProps, prop)), 'Each city view and its selected scenery are available');
 check(Object.values(roadProps).every(image => fs.existsSync(image)), 'Road Trip Quest bundles its moving scenery');
 check(roadTripHtml.includes('class="player-car-art" src="art/player-car.webp"') && fs.existsSync(new URL('../games/road-trip-quest/art/player-car.webp', import.meta.url)), 'Road Trip Quest uses an illustrated player car');
-check(gpsGame.includes('placeSvg(poi.type') && gpsGame.includes("iconSvg('car', 'gps-car-art')"), 'Road Trip GPS renders dimensional place markers and player vehicle');
-check(!gpsHtml.includes('aria-label="Player position">🚙'), 'Road Trip GPS no longer uses a flat emoji player vehicle');
+check(gpsGame.includes("gpsPlaceArt(poi.type, 'poi-art')"), 'Road Trip GPS renders illustrated place markers');
+check(gpsHtml.includes('class="gps-car-art" src="../road-trip-quest/art/player-car.webp"'), 'Road Trip GPS uses the illustrated Road Trip hatchback');
 check(game.includes('larriverse:bloom-message'), 'game feedback reaches Bloom locally');
 check(!sdk.includes('fetch(') && !sdk.includes('WebSocket'), 'Bloom remains scripted, local, and network-free');
 

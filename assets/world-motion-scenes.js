@@ -30,7 +30,7 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'repair-cafe': scene('workshop', 'mechanic', 'wrench', 'turn'),
   'reuse-rally': scene('workshop', 'park-helper', 'shopping-bag', 'sway'),
   'road-trip-quest': scene('road-new-york', 'road-traveler', 'road-camper', 'slide', { host: '#roadPreview' }),
-  'road-trip-quest-gps': scene('countryside', 'explorer', 'compass', 'turn', { host: '#questField', position: 'beforebegin' }),
+  'road-trip-quest-gps': scene('gps-visitor-center', 'road-traveler', 'gps-compass', 'turn', { host: '#gpsPreview' }),
   'robot-rover': scene('outpost', 'rover', 'wrench', 'lift'),
   'scam-sleuth': scene('library', 'researcher', 'magnifier', 'scan'),
   'spider-scout': scene('woodland', 'spider', 'magnifier', 'scan', { host: '.learning-panel' }),

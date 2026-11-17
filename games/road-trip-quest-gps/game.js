@@ -1,4 +1,4 @@
-import { iconSvg, placeSvg } from '../../assets/arcade-scenes.js';
+import { gpsPlaceArt } from './map-art.js';
 
 (() => {
   'use strict';
@@ -7,6 +7,12 @@ import { iconSvg, placeSvg } from '../../assets/arcade-scenes.js';
   const SAVE_KEY = 'larriverse.roadTripGps.v1';
   const FIELD_RADIUS_METERS = 340;
   const CATCH_RADIUS_METERS = 95;
+  const demoMoves = {
+    up: { x: 0, y: -1, turn: 0 },
+    right: { x: 1, y: 0, turn: 90 },
+    down: { x: 0, y: 1, turn: 180 },
+    left: { x: -1, y: 0, turn: -90 }
+  };
   const $ = selector => document.querySelector(selector);
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const esc = value => String(value ?? '').replace(/[&<>'"]/g, char => ({
@@ -27,7 +33,7 @@ import { iconSvg, placeSvg } from '../../assets/arcade-scenes.js';
   let world;
   let state = load();
   let mode = 'demo';
-  let player = { x: 50, y: 50 };
+  let player = { x: 50, y: 50, turn: 0 };
   let field = [];
   let caughtThisField = new Set();
   let currentEncounter = null;
@@ -108,8 +114,6 @@ import { iconSvg, placeSvg } from '../../assets/arcade-scenes.js';
     for (const [subject, questions] of Object.entries(world.questions)) {
       if (questions.length < 20) throw new Error(`GPS needs at least twenty ${subject} questions`);
     }
-    $('#boundaryVehicle').innerHTML = iconSvg('car', 'boundary-car-art');
-    $('#player').innerHTML = iconSvg('car', 'gps-car-art');
     bind();
     renderSharedProfile();
     renderHud();
@@ -170,7 +174,7 @@ import { iconSvg, placeSvg } from '../../assets/arcade-scenes.js';
       ? 'Location active in memory only'
       : 'No location access';
     $('#stopTracking').hidden = mode !== 'live';
-    player = { x: 50, y: 50 };
+    player = { x: 50, y: 50, turn: 0 };
     if (mode === 'demo') state.demoFields += 1;
     if (mode === 'live') state.liveFields += 1;
     save();
@@ -290,7 +294,7 @@ import { iconSvg, placeSvg } from '../../assets/arcade-scenes.js';
       const style = world.placeTypes[poi.type] || world.placeTypes.default;
       return `<button class="poi" data-poi="${poi.id}" data-distance=""
         style="left:${poi.x}%;top:${poi.y}%;--poi-bg:${style.bg};--poi-glow:${style.glow}"
-        aria-label="${esc(poi.label)}">${placeSvg(poi.type, 'poi-art')}</button>`;
+        aria-label="${esc(poi.label)}" title="${esc(poi.label)}">${gpsPlaceArt(poi.type, 'poi-art')}</button>`;
     }).join('');
 
     $('#poiLayer').querySelectorAll('[data-poi]').forEach(button => {
@@ -300,8 +304,10 @@ import { iconSvg, placeSvg } from '../../assets/arcade-scenes.js';
   }
 
   function renderPlayer() {
-    $('#player').style.left = `${player.x}%`;
-    $('#player').style.top = `${player.y}%`;
+    const marker = $('#player');
+    marker.style.left = `${player.x}%`;
+    marker.style.top = `${player.y}%`;
+    marker.style.setProperty('--gps-car-turn', `${player.turn}deg`);
     $('#rangeRing').style.left = `${player.x}%`;
     $('#rangeRing').style.top = `${player.y}%`;
   }
@@ -309,12 +315,10 @@ import { iconSvg, placeSvg } from '../../assets/arcade-scenes.js';
   function moveDemo(direction) {
     if (mode !== 'demo') return;
     const step = 4.6;
-    if (direction === 'up') player.y -= step;
-    if (direction === 'down') player.y += step;
-    if (direction === 'left') player.x -= step;
-    if (direction === 'right') player.x += step;
-    player.x = clamp(player.x, 3, 97);
-    player.y = clamp(player.y, 3, 97);
+    const { x, y, turn } = demoMoves[direction];
+    player.x = clamp(player.x + x * step, 3, 97);
+    player.y = clamp(player.y + y * step, 3, 97);
+    player.turn = turn;
     renderPlayer();
     updateDistances();
   }
@@ -348,7 +352,7 @@ import { iconSvg, placeSvg } from '../../assets/arcade-scenes.js';
     currentEncounter = poi;
     currentQuestion = null;
     const style = world.placeTypes[poi.type] || world.placeTypes.default;
-    $('#placeTag').innerHTML = `${placeSvg(poi.type, 'place-tag-art')}<span>${esc(questLabel(poi.type).replace(/ Quest$/, ''))}</span>`;
+    $('#placeTag').innerHTML = `${gpsPlaceArt(poi.type, 'place-tag-art')}<span>${esc(questLabel(poi.type).replace(/ Quest$/, ''))}</span>`;
     $('#placeTag').style.color = style.color;
     $('#rewardEmoji').textContent = poi.reward.emoji;
     $('#rewardName').textContent = poi.reward.name;
