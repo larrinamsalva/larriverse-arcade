@@ -42,6 +42,9 @@ const gardenArtwork = world.mode === "garden-grow"
 const renderRepairWorkshop = world.mode === "repair"
   ? await import("../games/repair-cafe/workshop-art.js").then(module => module.repairWorkshopScene, () => null)
   : null;
+const guardianArtwork = world.mode === "garden"
+  ? await import("../games/garden-guardians/guardian-art.js").catch(() => null)
+  : null;
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
 const board = $("gameBoard");
@@ -906,10 +909,10 @@ function startGardenLevel() {
 function gardenQuota(level) {
   return ["carrot", "bean", "flower"].map((type) => {
     const placed = state.plots.filter((p) => p.plant === type).length;
-    return `<span class="nature-quota ${placed === level[type] ? "complete" : ""}">${plants[type].icon} ${plants[type].name}: ${placed}/${level[type]}</span>`;
+    return `<span class="nature-quota ${placed === level[type] ? "complete" : ""}">${guardianArtwork?.guardianPlant(type, 2) || plants[type].icon} ${plants[type].name}: ${placed}/${level[type]}</span>`;
   }).join("");
 }
-function renderGarden() {
+function renderGarden(changedPlot = null) {
   const level = gardenLevels[state.level];
   const grown = state.plots.filter((p) => p.growth >= 2).length;
   const mixed = ["carrot", "bean", "flower"].every((type) => state.plots.filter((p) => p.plant === type).length === level[type]);
@@ -917,7 +920,7 @@ function renderGarden() {
   stage(`Garden level ${state.level + 1} of ${gardenLevels.length} · ${level.rank} · ${state.day === 0 ? "Planting" : "Day " + state.day + "/3"}`);
   board.innerHTML = `${levelTrail(gardenLevels, state.level)}
     <section class="nature-banner nature-zone--${level.zone}" aria-label="${esc(level.name)} garden challenge">
-      <span aria-hidden="true">🌻</span>
+      <span aria-hidden="true">${guardianArtwork?.guardianPlant("flower", 2) || "🌻"}</span>
       <div><h2>${esc(level.name)}</h2><p>${esc(level.lesson)}</p><small>Grow at least ${level.target} of 6 plants and try to match the planting plan.</small></div>
     </section>
     <div class="stat-row">${chip("Level", `${state.level + 1}/${gardenLevels.length}`)}
@@ -926,12 +929,15 @@ function renderGarden() {
     <div class="nature-quotas" aria-label="Planting plan">${gardenQuota(level)}</div>
     <p class="board-note">${state.day === 0 ? "Choose a crop, then plant all six plots to match the plan." : "Water each growing plot at most once per day. Two watered days grow a plant. You can leave a plot unwatered to save drops."}</p>
     ${state.day === 0 ? `<div class="plant-picker garden-plant-picker">${Object.entries(plants).map(([id, plant]) =>
-      `<button data-plant="${id}" class="garden-plant-choice garden-plant-choice--${id} ${state.tool === id ? "selected" : ""}" aria-pressed="${state.tool === id}"><span class="garden-plant-icon" aria-hidden="true">${plant.icon}</span><span>${plant.name}</span></button>`).join("")}</div>` : ""}
+      `<button data-plant="${id}" class="garden-plant-choice garden-plant-choice--${id} ${state.tool === id ? "selected" : ""}" aria-pressed="${state.tool === id}"><span class="garden-plant-icon" aria-hidden="true">${guardianArtwork?.guardianPlant(id, 2) || plant.icon}</span><span>${plant.name}</span></button>`).join("")}</div>` : ""}
+    <section class="guardian-garden" aria-label="${esc(level.name)} planting beds">
+    ${guardianArtwork?.guardianBackdrop(level.zone) || ""}${guardianArtwork?.guardianRobin() || ""}
     <div class="garden-grid garden-grid--${esc(level.zone)}">${state.plots.map((plot, i) =>
-      `<button class="plot garden-plot ${plot.plant ? `garden-plot--${plot.plant}` : "garden-plot--empty"} garden-growth-${plot.growth} ${state.watered.has(i) ? "selected" : ""}" data-plot="${i}" aria-label="Plot ${i + 1}, ${plot.plant ? plants[plot.plant].name : "empty"}, growth ${plot.growth} of 2" ${levelDone ? "disabled" : ""}>
-        <span class="garden-growth-art" aria-hidden="true">${plot.plant ? (plot.growth >= 2 ? plants[plot.plant].icon : plot.growth === 1 ? "🌿" : "🌱") : "+"}</span>
+      `<button class="plot garden-plot ${plot.plant ? `garden-plot--${plot.plant}` : "garden-plot--empty"} garden-growth-${plot.growth} ${state.watered.has(i) ? "selected" : ""} ${changedPlot === i ? "guardian-plot-changed" : ""}" data-plot="${i}" aria-label="Plot ${i + 1}, ${plot.plant ? plants[plot.plant].name : "empty"}, growth ${plot.growth} of 2" ${levelDone ? "disabled" : ""}>
+        <span class="garden-growth-art" aria-hidden="true">${plot.plant ? (guardianArtwork?.guardianPlant(plot.plant, plot.growth) || (plot.growth >= 2 ? plants[plot.plant].icon : plot.growth === 1 ? "🌿" : "🌱")) : '<span class="guardian-empty-mark">+</span>'}</span>
+        ${changedPlot === i && state.day > 0 ? guardianArtwork?.guardianWatering() || "" : ""}
         <small>${plot.plant ? `${plants[plot.plant].name} · ${plot.growth}/2` : "Tap to plant"}</small>
-      </button>`).join("")}</div>`;
+      </button>`).join("")}</div></section>`;
   bind("[data-plant]", (node) => { state.tool = node.dataset.plant; renderGarden(); });
   bind("[data-plot]", (node) => {
     const i = Number(node.dataset.plot), plot = state.plots[i];
@@ -945,7 +951,7 @@ function renderGarden() {
       plot.growth++; state.water--; state.watered.add(i); tone();
       say("Water saved in the soil. Look how your plant grows!", "good");
     }
-    renderGarden();
+    renderGarden(i);
   });
   progress(state.level, gardenLevels.length, `${state.level} of ${gardenLevels.length} garden levels explored`);
   updateScore(Math.round((stageStars(gardenLevels) / (gardenLevels.length * 3)) * 100));

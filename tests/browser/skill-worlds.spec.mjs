@@ -625,7 +625,12 @@ test("Garden Guardians: sixty gardens with sustainable water planning", async ({
   expect(gardenLevels).toHaveLength(60);
   await round(page, "garden-guardians", async () => {
     await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(12);
+    const picturedSettings = new Set();
     for (const [levelIndex, level] of gardenLevels.entries()) {
+      const background = page.locator('.guardian-backdrop');
+      await background.evaluate(image => image.decode());
+      await expect(background).toHaveAttribute('data-guardian-setting', level.zone);
+      picturedSettings.add(await background.getAttribute('src'));
       await expect(page.locator("#stageLabel")).toContainText(`Garden level ${levelIndex + 1} of 60`);
       await expect(page.locator(".nature-banner")).toContainText(level.name);
       await expect(page.locator("#gameBoard")).toContainText(level.lesson);
@@ -656,6 +661,7 @@ test("Garden Guardians: sixty gardens with sustainable water planning", async ({
       if (levelIndex < 59)
         await expect(page.locator(".stat-row")).toContainText(`Garden stars${(levelIndex + 1) * 3}/180`);
     }
+    expect(picturedSettings.size).toBe(4);
     await expect(page.locator("#finishMessage")).toContainText("180 of 180 garden stars");
   });
 });
