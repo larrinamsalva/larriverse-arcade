@@ -12,8 +12,7 @@
     button,a{font:inherit}button{cursor:pointer}.hidden{display:none!important}.stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle at 12% 18%,#fff 0 2px,transparent 3px),radial-gradient(circle at 82% 11%,#fff 0 1px,transparent 2px),radial-gradient(circle at 55% 28%,rgba(255,255,255,.8) 0 2px,transparent 3px);opacity:.75}
     .topbar{position:fixed;z-index:20;top:0;left:0;right:0;display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(9,24,59,.82);backdrop-filter:blur(12px);color:white;border-bottom:1px solid rgba(255,255,255,.18)}
     .brand{color:white;text-decoration:none;font-weight:950;white-space:nowrap}.brand span{color:var(--gold)}.hud{margin-left:auto;display:flex;gap:8px}.pill{min-width:78px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.12);font-size:.82rem;font-weight:900;text-align:center}.pill b{color:var(--gold)}
-    #world{position:fixed;inset:58px 0 0;overflow:hidden}.cloud{position:absolute;width:120px;height:36px;border-radius:40px;background:rgba(255,255,255,.82);filter:drop-shadow(0 8px 9px rgba(40,80,130,.14));animation:drift linear infinite}.cloud:before,.cloud:after{content:"";position:absolute;border-radius:50%;background:inherit}.cloud:before{width:55px;height:55px;left:18px;top:-25px}.cloud:after{width:73px;height:65px;right:13px;top:-31px}@keyframes drift{from{transform:translateX(-170px)}to{transform:translateX(calc(100vw + 170px))}}
-    .creature{position:absolute;border:0;background:transparent;transform:translate(-50%,-50%);animation:bob 1.4s ease-in-out infinite alternate;filter:drop-shadow(0 10px 8px rgba(16,32,59,.22));z-index:4}.creature:hover,.creature:focus-visible{scale:1.12;outline:none}.creature .emoji{display:block;font-size:clamp(3rem,8vw,5rem)}.creature .tag{display:block;margin-top:-5px;padding:4px 9px;border-radius:999px;background:white;color:var(--ink);font-size:.67rem;font-weight:950;box-shadow:0 3px 0 rgba(16,32,59,.14)}.creature .ping{position:absolute;top:-18px;left:50%;width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:var(--pink);color:white;font-weight:950;animation:ping .8s ease-in-out infinite alternate}@keyframes bob{to{transform:translate(-50%,calc(-50% - 12px))}}@keyframes ping{to{transform:translateY(-5px) rotate(8deg)}}
+    #world{position:fixed;inset:58px 0 0;overflow:hidden;isolation:isolate}
     .round-banner{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);z-index:8;text-align:center;color:white;text-shadow:0 4px 18px rgba(16,32,59,.45);pointer-events:none}.round-banner strong{display:block;font-size:clamp(2.4rem,10vw,6rem);line-height:.95}.round-banner span{font-weight:900;letter-spacing:.12em}
     .corner-actions{position:fixed;right:14px;bottom:16px;z-index:12;display:flex;gap:9px}.round-btn{border:0;border-radius:18px;padding:11px 14px;background:rgba(9,24,59,.86);color:white;font-weight:900;box-shadow:var(--shadow)}
     .overlay{position:fixed;z-index:50;inset:0;display:grid;place-items:center;padding:20px;background:rgba(8,18,45,.66);backdrop-filter:blur(8px)}.card{width:min(560px,100%);max-height:92vh;overflow:auto;background:var(--cream);border:3px solid rgba(255,255,255,.8);border-radius:28px;padding:24px;box-shadow:var(--shadow)}
@@ -29,84 +28,6 @@
       background:
         radial-gradient(circle at 14% 11%,rgba(255,255,255,.72) 0 2px,transparent 3px),
         linear-gradient(#74d7fb 0 48%,#94d99d 48% 62%,#58bd73 62% 78%,#9f704c 78% 100%);
-    }
-    #world{
-      isolation:isolate;
-      background:
-        radial-gradient(ellipse at 18% 58%,rgba(255,255,255,.28),transparent 24%),
-        linear-gradient(180deg,transparent 0 50%,rgba(31,116,70,.12) 50% 100%);
-    }
-    #world::before{
-      content:"";
-      position:absolute;
-      z-index:1;
-      left:-8%;
-      right:-8%;
-      bottom:16%;
-      height:31%;
-      pointer-events:none;
-      background:
-        radial-gradient(ellipse at 14% 100%,#3f9e62 0 27%,transparent 28%),
-        radial-gradient(ellipse at 37% 100%,#54b96f 0 32%,transparent 33%),
-        radial-gradient(ellipse at 66% 100%,#3f9e62 0 29%,transparent 30%),
-        radial-gradient(ellipse at 91% 100%,#54b96f 0 31%,transparent 32%);
-      filter:drop-shadow(0 -5px 9px rgba(31,91,54,.18));
-    }
-    #world::after{
-      content:"";
-      position:absolute;
-      z-index:2;
-      left:0;
-      right:0;
-      bottom:0;
-      height:23%;
-      pointer-events:none;
-      background:
-        radial-gradient(ellipse at 8% 105%,#3f7b3d 0 22%,transparent 23%),
-        radial-gradient(ellipse at 29% 110%,#4b8d43 0 25%,transparent 26%),
-        radial-gradient(ellipse at 54% 106%,#39763b 0 23%,transparent 24%),
-        radial-gradient(ellipse at 78% 111%,#4e9148 0 25%,transparent 26%),
-        radial-gradient(ellipse at 98% 106%,#39763b 0 22%,transparent 23%),
-        linear-gradient(180deg,transparent 0 30%,rgba(72,120,54,.18) 31% 100%);
-    }
-    .cloud{
-      box-shadow:inset 0 5px 0 rgba(255,255,255,.58),0 10px 16px rgba(40,80,130,.16);
-    }
-    .creature{
-      z-index:5;
-      padding:5px;
-      border-radius:26px;
-      transition:scale .12s ease,filter .12s ease;
-    }
-    .creature .emoji{
-      display:grid;
-      place-items:center;
-      width:clamp(72px,9vw,102px);
-      height:clamp(72px,9vw,102px);
-      border:3px solid rgba(255,255,255,.9);
-      border-radius:28px;
-      background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(222,248,235,.9));
-      box-shadow:
-        inset 0 5px 0 #fff,
-        inset 0 -9px 0 rgba(68,141,95,.16),
-        0 7px 0 rgba(36,87,62,.22),
-        0 14px 24px rgba(16,32,59,.2);
-      font-size:clamp(3rem,7vw,4.7rem);
-    }
-    .creature:hover,.creature:focus-visible{
-      scale:1.1;
-      filter:drop-shadow(0 13px 10px rgba(16,32,59,.28));
-    }
-    .creature .tag{
-      margin-top:-8px;
-      border:2px solid #c9e7df;
-      background:linear-gradient(145deg,#fff,#ecfaf4);
-      box-shadow:inset 0 2px 0 #fff,0 4px 0 rgba(16,32,59,.15);
-    }
-    .creature .ping{
-      z-index:2;
-      border:2px solid #fff;
-      box-shadow:inset 0 2px 0 rgba(255,255,255,.45),0 4px 0 #ae315e,0 8px 15px rgba(16,32,59,.2);
     }
     .topbar{
       border-bottom:2px solid rgba(255,255,255,.2);
@@ -235,13 +156,14 @@
   <meta property="og:title" content="Creature Catcher | LarriVerse Arcade">
   <meta property="og:description" content="Catch curious creatures, answer questions, and fill your field guide. Free game practice in LarriVerse Arcade. KC are fictional; progress stays in this browser.">
   <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/creature-catcher/">
-  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/world-motion/backgrounds/safari-pond.webp">
   <meta property="og:image:type" content="image/webp">
-  <meta property="og:image:width" content="1600">
-  <meta property="og:image:height" content="800">
-  <meta property="og:image:alt" content="Eight illustrated LarriVerse expedition worlds: bridges, water, island deliveries, picnic planning, maps, codes, shopping, and an inclusive town.">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="854">
+  <meta property="og:image:alt" content="A sunlit woodland meadow on the bank of a clear pond.">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="../../assets/classic-adventure-missions.css">
+  <link rel="stylesheet" href="safari-art.css">
 </head>
 <body data-classic="creature-catcher">
   <a class="skip-link" href="#world">Skip to game</a>
@@ -262,9 +184,7 @@
   </header>
 
   <main id="world" aria-label="Creature meadow" tabindex="-1">
-    <div class="cloud" style="top:10%;animation-duration:30s"></div>
-    <div class="cloud" style="top:27%;animation-duration:39s;animation-delay:-14s;scale:.7"></div>
-    <div class="cloud" style="top:17%;animation-duration:47s;animation-delay:-29s;scale:1.3"></div>
+    <div class="safari-water-ripples" aria-hidden="true"><i></i><i></i></div>
     <div class="round-banner" id="banner"><strong>Ready?</strong><span>TAP A CREATURE</span></div>
   </main>
 
@@ -275,7 +195,9 @@
 
   <section class="overlay" id="startOverlay">
     <div class="card start-card">
-      <div class="logo">🦊</div>
+      <div class="safari-cover" aria-hidden="true">
+        <img class="creature-art" src="art/foxfire.webp" alt="" width="240" height="192">
+      </div>
       <p class="eyebrow">LarriVerse learning arcade</p>
       <h1>Creature Catcher</h1>
       <p>Catch curious creatures and answer questions from a 96-question Math, Reading, Science and Nature pool.</p>
@@ -291,7 +213,7 @@
 
   <section class="overlay hidden" id="questionOverlay" role="dialog" aria-modal="true" aria-labelledby="questionText">
     <div class="card">
-      <div class="question-top"><div class="big-creature" id="questionCreature">🦊</div><div><p class="eyebrow" id="creatureName">Creature</p><span class="subject" id="subject">Science</span></div><span class="rarity" id="rarity">Common</span></div>
+      <div class="question-top"><div class="big-creature" id="questionCreature" aria-hidden="true"></div><div><p class="eyebrow" id="creatureName">Creature</p><span class="subject" id="subject">Science</span></div><span class="rarity" id="rarity">Common</span></div>
       <div class="question" id="questionText"></div>
       <div class="answers" id="answers"></div>
       <div class="feedback" id="feedback" aria-live="polite"></div>
