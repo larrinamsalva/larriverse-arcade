@@ -23,7 +23,7 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'harbor-helpers': scene('harbor', 'sailor', 'life-ring', 'bob'),
   'kids-sudoku': scene('observatory', 'researcher', 'hourglass', 'turn', { host: '.puzzle-layout', position: 'beforebegin' }),
   'kidscoin-family': scene('market', 'park-helper', 'calculator', 'slide', { host: '#view', position: 'beforebegin' }),
-  'kindness-quest': scene('neighborhood', 'park-helper', 'books', 'lift'),
+  'kindness-quest': scene('woodland', 'fox', 'books', 'lift'),
   'lemonade-lab': scene('market', 'baker', 'lemonade', 'pour'),
   'pantry-picnic': scene('countryside', 'baker', 'basket', 'lift'),
   'pocket-planet': scene('outpost', 'explorer', 'shopping-bag', 'slide'),
