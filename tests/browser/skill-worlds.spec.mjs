@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { test, expect } from "@playwright/test";
 import {
   worlds,
@@ -733,8 +735,9 @@ test("Energy Island: sixty solvable power grids respond to four-day forecasts", 
 });
 test("Robot Rover: debug a collision and solve eighty original mazes at par", async ({
   page,
-}) => {
+}, testInfo) => {
   test.setTimeout(600000);
+  await page.emulateMedia({ reducedMotion: "no-preference" });
   await round(page, "robot-rover", async () => {
     expect(robotLevels).toHaveLength(80);
     await expect(page.locator("#stageLabel")).toContainText("Robot world 1 of 80");
@@ -764,7 +767,21 @@ test("Robot Rover: debug a collision and solve eighty original mazes at par", as
       robotLevels.map((level) => level.par),
     );
 
+    const picturedSettings = new Set(), picturedDirections = new Set();
     for (const [i, program] of programs.entries()) {
+      const background = page.locator('.rover-terrain-backdrop');
+      await background.evaluate(image => image.decode());
+      await expect(background).toHaveAttribute('data-rover-setting', robotLevels[i].zone);
+      const source = await background.getAttribute('src');
+      if (!picturedSettings.has(source)) {
+        await page.locator('.rover-terrain img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
+        const folder = path.join('artifacts', 'screenshots', testInfo.project.name);
+        fs.mkdirSync(folder, { recursive: true });
+        await page.locator('.rover-terrain').screenshot({ path: path.join(folder, 'rover-world-' + robotLevels[i].zone + '.png') });
+      }
+      picturedSettings.add(source);
+      await page.locator('.rover-character-art').evaluate(image => image.decode());
+      picturedDirections.add(await page.locator('.rover-character-art').getAttribute('data-rover-facing'));
       // Enter the full program inside the page instead of making hundreds of
       // Playwright round-trips on narrow mobile layouts. Each click still
       // uses the real command buttons and render path; Run my code still
@@ -814,6 +831,8 @@ test("Robot Rover: debug a collision and solve eighty original mazes at par", as
       }
     }
 
+    expect(picturedSettings.size).toBe(4);
+    expect(picturedDirections.size).toBe(4);
     await expect(page.locator("#finishMessage")).toContainText(
       "240 of 240 efficiency stars",
     );

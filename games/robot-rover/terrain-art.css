@@ -1,0 +1,131 @@
+body[data-world="robot-rover"] .world-cover::before {
+  background-image: url('../../assets/world-motion/backgrounds/rover-meadow.webp');
+  background-size: cover;
+  background-position: center;
+}
+body[data-world="robot-rover"] .rover-terrain {
+  --rover-floor: url('./art/floor-meadow.webp');
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding: 120px .7rem .85rem;
+  border: 2px solid #7b8c9a;
+  border-radius: 20px;
+  background: #6a725e var(--rover-floor) center / 256px;
+}
+body[data-world="robot-rover"] .rover-terrain--canyon { --rover-floor: url('./art/floor-canyon.webp'); }
+body[data-world="robot-rover"] .rover-terrain--crystal { --rover-floor: url('./art/floor-crystal.webp'); }
+body[data-world="robot-rover"] .rover-terrain--cosmic { --rover-floor: url('./art/floor-cosmic.webp'); }
+body[data-world="robot-rover"] .rover-terrain-backdrop {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: 18px 18px 0 0;
+  pointer-events: none;
+}
+body[data-world="robot-rover"] .rover-grid {
+  --rover-floor: url('./art/floor-meadow.webp');
+  --rover-line: #d2d1a4;
+  gap: .4rem;
+  padding: .6rem;
+  background: #3e4e3c;
+  border-color: #e3dfc8;
+  overflow: visible;
+}
+body[data-world="robot-rover"] .rover-grid::after { display: none; }
+body[data-world="robot-rover"] .rover-zone--canyon { --rover-floor: url('./art/floor-canyon.webp'); --rover-line: #ffe2c3; background: #85533e; }
+body[data-world="robot-rover"] .rover-zone--crystal { --rover-floor: url('./art/floor-crystal.webp'); --rover-line: #e2d6fa; background: #514568; }
+body[data-world="robot-rover"] .rover-zone--cosmic { --rover-floor: url('./art/floor-cosmic.webp'); --rover-line: #d8dfec; background: #292e42; }
+body[data-world="robot-rover"] .tile.rover,
+body[data-world="robot-rover"] .tile.rover:is(.rock, .trail, .player, .goal) {
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 1;
+  background: #927e5e var(--rover-floor) center / 180px;
+  border: 2px solid var(--rover-line);
+  border-radius: 10px;
+  box-shadow: inset 0 1px 0 #ffffff55, 0 3px 0 #15202e66;
+}
+body[data-world="robot-rover"] .tile.rover.rock {
+  border-color: #c2c8cf;
+  box-shadow: inset 0 0 0 2px #273442, 0 3px 0 #15202e66;
+}
+body[data-world="robot-rover"] .tile.rover.player {
+  z-index: 3;
+  outline: 3px solid #a7efff;
+  outline-offset: -3px;
+}
+body[data-world="robot-rover"] .tile.rover.goal:not(.player) {
+  outline: 3px solid #ffe38e;
+  outline-offset: -3px;
+}
+body[data-world="robot-rover"] .rover-character-art,
+body[data-world="robot-rover"] .rover-obstacle-art,
+body[data-world="robot-rover"] .rover-beacon-art {
+  display: block;
+  object-fit: contain;
+  width: 96%;
+  height: 96%;
+  max-width: none;
+  pointer-events: none;
+}
+body[data-world="robot-rover"] .rover-character-art { filter: drop-shadow(0 3px 2px #20273488); }
+body[data-world="robot-rover"] .rover-obstacle-art { filter: drop-shadow(0 4px 2px #212a3b77); }
+body[data-world="robot-rover"] .rover-beacon-art {
+  filter: drop-shadow(0 0 4px #ffe992);
+  animation: rover-beacon-light 3.5s ease-in-out infinite;
+}
+body[data-world="robot-rover"] .tile.rover.player small {
+  display: grid;
+  place-items: center;
+  width: min(19px, 32%);
+  height: min(19px, 32%);
+  right: 1px;
+  bottom: 1px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  background: #172e3b;
+  color: #fff;
+  font: 900 14px/1 system-ui, sans-serif;
+  font-size: clamp(8px, 2.7vw, 14px);
+}
+body[data-world="robot-rover"] .rover-path-dot {
+  width: 6px;
+  height: 6px;
+  border: 1px solid #253c43;
+  background: #fff9e2;
+  box-shadow: none;
+}
+body[data-world="robot-rover"] .rover-trail-dot {
+  width: 16px;
+  height: 16px;
+  border: 3px solid #153e35;
+  background: #a6f0cd;
+  box-shadow: 0 0 0 2px #f5ffdf;
+}
+[data-lv-world-motion="robot-rover"] .lv-motion-character { left: 15%; height: 85%; }
+[data-lv-world-motion="robot-rover"] .lv-motion-prop { right: 22%; height: 48%; }
+html.larriverse-dark body[data-world="robot-rover"] .rover-terrain { border-color: #94a6c6; }
+html.larriverse-dark body[data-world="robot-rover"] .rover-terrain-backdrop { filter: brightness(.82); }
+html.larriverse-high-contrast body[data-world="robot-rover"] .rover-terrain { border-color: #fff; background: #111; }
+html.larriverse-high-contrast body[data-world="robot-rover"] .tile.rover.player { outline-color: #7ef4ff; }
+html.larriverse-high-contrast body[data-world="robot-rover"] .tile.rover.goal:not(.player) { outline-color: #ffec70; }
+@keyframes rover-beacon-light {
+  0%, 100% { filter: drop-shadow(0 0 3px #ffe992); }
+  50% { filter: drop-shadow(0 0 9px #ffd879); }
+}
+@media (max-width: 620px) {
+  body[data-world="robot-rover"] .rover-terrain { padding: 94px .35rem .65rem; }
+  body[data-world="robot-rover"] .rover-terrain-backdrop { height: 155px; }
+  body[data-world="robot-rover"] .rover-grid { gap: 4px; padding: 5px; }
+  body[data-world="robot-rover"] .tile.rover { border-radius: 6px; }
+  body[data-world="robot-rover"] .command-bar button { flex: 1 1 110px; }
+}
+html.larriverse-reduced-motion body[data-world="robot-rover"] .rover-beacon-art { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="robot-rover"] .rover-beacon-art { animation: none !important; }
+}
