@@ -89,7 +89,7 @@ function details(kind, fallback) {
 
 const wrong = /shade-bed|walkway-bed|paint-brush|fork|puddle-bed|concrete|plastic|salt|roof-bed|hidden|shelf-seed|deep-seed|seed-pile|empty-row|move-carrot|pull-stem|dry-roots|box|hard-spray|dry-bed|guess-water|clock|wet-label|sidewalk-water|taste-plant|pull-all|buried-plant|tight-wire|covered-plant|unknown-spray|trash-garden|moldy|tiny-carrots|rotten|uproot|step-plant|dirty-bucket|hot-berries|hot-tomato|buried-tomato/;
 
-export function renderGardenChoice(kind, fallback) {
+export function renderGardenChoice(kind, fallback, illustration) {
   const name = subject(kind), id = safe(kind);
   const spotlight = /garden-path|root-watering|tomato-transplant|tomato-support|seed-depth|spacing/.test(kind);
   return `<svg class="learning-choice-art garden-choice-art" viewBox="0 0 120 108" aria-hidden="true" focusable="false">
@@ -97,7 +97,9 @@ export function renderGardenChoice(kind, fallback) {
     <rect x="4" y="4" width="112" height="100" rx="20" fill="url(#garden-card-${id})" stroke="#769457" stroke-width="2.5"/>
     <path d="M10 79q27-13 49 1t50-3v22H10Z" fill="#b4d68a" opacity=".63"/>
     <ellipse cx="61" cy="94" rx="39" ry="5" fill="#355c38" opacity=".14"/>
-    ${at(name, spotlight ? 4 : 12, spotlight ? 4 : 5, spotlight ? .89 : .97, fallback)}
+    ${illustration
+      ? `<image href="${illustration}" x="12" y="9" width="96" height="86" preserveAspectRatio="xMidYMax meet"/>`
+      : at(name, spotlight ? 4 : 12, spotlight ? 4 : 5, spotlight ? .89 : .97, fallback)}
     ${details(kind, fallback)}
     ${wrong.test(kind) ? '<g transform="translate(99 20)"><circle r="12" fill="#fff3cf" stroke="#ad6d37" stroke-width="2.7"/><path d="m-5-5 10 10m0-10L-5 5" stroke="#8e3f2c" stroke-width="3" stroke-linecap="round"/></g>' : ''}
   </svg>`;

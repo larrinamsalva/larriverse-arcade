@@ -18,7 +18,7 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'date-detective': scene('market', 'researcher', 'magnifier', 'scan', { host: '.game-layout', position: 'beforebegin' }),
   'energy-island': scene('weather-hill', 'mechanic', 'solar-panel', 'turn'),
   'fact-finder': scene('library', 'researcher', 'camera', 'turn'),
-  'garden-grow-harvest': scene('greenhouse', 'gardener', 'watering-can', 'pour'),
+  'garden-grow-harvest': scene('garden-planting', 'garden-grow-gardener', 'garden-grow-watering-can', 'pour'),
   'garden-guardians': scene('greenhouse', 'robin', 'seedling', 'sway'),
   'harbor-helpers': scene('harbor', 'sailor', 'life-ring', 'bob'),
   'kids-sudoku': scene('observatory', 'researcher', 'hourglass', 'turn', { host: '.puzzle-layout', position: 'beforebegin' }),
