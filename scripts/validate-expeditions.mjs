@@ -89,7 +89,7 @@ for (const level of bridgeLevels) {
     bridgeParts.some(part => part.capacity >= load)), `${level.name}: each span has a strong support`);
 }
 const bridgeSource = fs.readFileSync("assets/expedition-games.js","utf8");
-const bridgeGame = bridgeSource.slice(bridgeSource.indexOf("function bridge()"),bridgeSource.indexOf("function pipes()"));
+const bridgeGame = bridgeSource.slice(bridgeSource.indexOf("function bridge("),bridgeSource.indexOf("function pipes()"));
 assert.ok(!/Builder tokens|more tokens|Tokens return|cost > level\.budget|spent/.test(bridgeGame),
   "Bridge Buddies must not have hidden token limits");
 assert.match(bridgeGame, /Supports placed/);

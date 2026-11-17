@@ -26,6 +26,8 @@ async function next(page,last) { await action(page,last ? "Celebrate my discover
 test("Bridge Buddies: sixty keyboard-playable increasingly strong crossings and saved completion",async({page})=>{
   test.setTimeout(240000);
   await adventure(page,"bridge-buddies",async()=>{
+    const vehicles = new Set();
+    const settings = new Set();
     const toolDrawings=await page.locator(".bridge-tool-art").evaluateAll(nodes=>nodes.map(node=>node.innerHTML));
     expect(toolDrawings).toHaveLength(bridgeParts.length);
     expect(new Set(toolDrawings).size).toBe(bridgeParts.length);
@@ -42,6 +44,12 @@ test("Bridge Buddies: sixty keyboard-playable increasingly strong crossings and 
       await expect(page.locator(".bridge-landscape")).toHaveClass(new RegExp(`bridge-crossing--${bridgeLevels[round].scene}`));
       await expect(page.locator(".bridge-cart-art")).toHaveClass(new RegExp(`bridge-vehicle--${bridgeLevels[round].vehicle}`));
       await expect(page.locator(".bridge-load-plaque")).toContainText(bridgeLevels[round].cargo);
+      const backdrop = page.locator("img.bridge-river-art");
+      const vehicle = page.locator("img.bridge-cart-art");
+      await backdrop.evaluate(image => image.decode());
+      await vehicle.evaluate(image => image.decode());
+      vehicles.add(await vehicle.getAttribute("src"));
+      settings.add(await backdrop.getAttribute("data-bridge-setting"));
       for (let index=0;index<4;index++) {
         const support = bridgeParts.find(part=>part.capacity>=bridgeLevels[round].loads[index]);
         await page.locator(`[data-tool="${support.id}"]`).focus(); await page.keyboard.press("Enter");
@@ -49,6 +57,8 @@ test("Bridge Buddies: sixty keyboard-playable increasingly strong crossings and 
       }
       await action(page,"Test the crossing"); await expect(page.locator("#feedback")).toHaveClass(/good/); await next(page,round===bridgeLevels.length-1);
     }
+    expect(vehicles.size).toBe(20);
+    expect(settings.size).toBe(12);
   });
 });
 test("Bridge Buddies: four strongest braces fit even without builder tokens", async ({page})=>{

@@ -6,7 +6,7 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'beat-builder': scene('studio', 'artist', 'headphones', 'sway'),
   'brain-sweat-expanded': scene('library', 'researcher', 'notebook', 'slide', { host: '.quest-panel', position: 'beforebegin' }),
   'brain-sweat-life-skills': scene('studio', 'park-helper', 'books', 'lift', { host: '#lvGameMain .hero', position: 'afterend' }),
-  'bridge-buddies': scene('countryside', 'mechanic', 'cart', 'roll'),
+  'bridge-buddies': scene('bridge-building-bank', 'bridge-builder', 'bridge-handcart', 'roll'),
   'bubble-resonance-phi369': scene('observatory', 'artist', 'radio', 'sway', { host: '.cabinet', position: 'beforebegin' }),
   'chill-brain-rewards': scene('observatory', 'cat', 'lantern', 'sway', { host: '#setupView', position: 'beforebegin' }),
   'cipher-club': scene('library', 'researcher', 'cipher-wheel', 'spin'),

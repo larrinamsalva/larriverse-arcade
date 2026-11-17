@@ -68,3 +68,34 @@ test("Bridge Buddies: legible tools and support labels in dark/high contrast", a
     await expect(page.locator(".load-label")).toHaveCount(4);
   }
 });
+
+test("Bridge Buddies: supports settle and cargo reaches the opposite bank with motion controls", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/games/bridge-buddies/index.html");
+  const introduction = page.locator('[data-lv-world-motion="bridge-buddies"]');
+  await expect(introduction.locator(".lv-motion-poses")).toHaveAttribute("src", /bridge-builder\.webp$/);
+  await introduction.getByRole("button", { name: /Play scene/ }).click();
+  expect(await introduction.evaluate(element => element.getAnimations({ subtree: true }).length)).toBeGreaterThan(0);
+  await page.locator('[data-span="0"]').click();
+  await expect(page.locator(".bridge-preview-segment.just-placed")).toHaveCSS("animation-name", "bridge-deck-place");
+  await page.locator('[data-tool="triangle"]').click();
+  for (let index = 0; index < 4; index++) await page.locator(`[data-span="${index}"]`).click();
+  await page.getByRole("button", { name: "Test the crossing", exact: true }).click();
+  const cart = page.locator(".bridge-cart");
+  await expect(cart).toHaveCSS("animation-name", "bridge-delivery-crossing");
+  await expect.poll(() => cart.evaluate(element => element.offsetLeft > element.parentElement.clientWidth * 0.6)).toBe(true);
+  await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: true }));
+  await expect(cart).toHaveCSS("animation-name", "none");
+  const inBounds = await cart.evaluate(element => {
+    const cart = element.getBoundingClientRect();
+    const crossing = element.parentElement.getBoundingClientRect();
+    return cart.left >= crossing.left - 1 && cart.right <= crossing.right + 1;
+  });
+  expect(inBounds).toBe(true);
+  await expect(page.locator(".bridge-river i").first()).toHaveCSS("animation-name", "none");
+  await expect(page.locator(".bridge-load-plaque")).toContainText("Trail timber");
+  await page.evaluate(() => window.LarriVerseArcade.setSettings({ reducedMotion: false }));
+  await expect(page.locator(".bridge-river i").first()).toHaveCSS("animation-name", "bridge-water-drift");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator(".bridge-river i").first()).toHaveCSS("animation-name", "none");
+});

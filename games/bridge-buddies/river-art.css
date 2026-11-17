@@ -1,0 +1,199 @@
+body[data-world="bridge-buddies"] .world-cover::before {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  background: url("../../assets/world-motion/backgrounds/bridge-creek.webp") center / cover;
+}
+
+body[data-world="bridge-buddies"] .bridge-landscape {
+  --bridge-cart-width: clamp(88px, 17%, 138px);
+  --bridge-bank-inset: clamp(28px, 7%, 58px);
+  --bridge-deck-top: 137px;
+}
+
+body[data-world="bridge-buddies"] .bridge-river-art {
+  display: block;
+  object-fit: cover;
+  object-position: center 60%;
+  filter: none;
+}
+
+body[data-world="bridge-buddies"] .bridge-landscape::before,
+body[data-world="bridge-buddies"] .bridge-landscape::after {
+  display: none;
+}
+
+body[data-world="bridge-buddies"] .bridge-cart {
+  top: calc(var(--bridge-deck-top) - 92px);
+  left: 0;
+  width: var(--bridge-cart-width);
+  height: 92px;
+  align-items: flex-end;
+}
+
+body[data-world="bridge-buddies"] .bridge-cart-art {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+body[data-world="bridge-buddies"] .bridge-preview-deck {
+  top: var(--bridge-deck-top);
+  left: var(--bridge-bank-inset);
+  right: var(--bridge-bank-inset);
+}
+
+body[data-world="bridge-buddies"] .bridge-piers {
+  display: flex;
+  justify-content: space-between;
+  top: calc(var(--bridge-deck-top) + 16px);
+  left: calc(var(--bridge-bank-inset) - 14px);
+  right: calc(var(--bridge-bank-inset) - 14px);
+  bottom: 35px;
+}
+
+body[data-world="bridge-buddies"] .bridge-piers i {
+  width: 28px;
+}
+
+body[data-world="bridge-buddies"] .bridge-piers i,
+body[data-world="bridge-buddies"] .bridge-abutment {
+  background:
+    linear-gradient(90deg, #edf0e133, transparent 32% 70%, #27363966),
+    url("art/pier-stone.webp") center / 72px 72px;
+  box-shadow: inset 3px 0 #c6c8bd66, inset -4px 0 #34403966, 0 5px 6px #26333535;
+}
+
+body[data-world="bridge-buddies"] .bridge-abutment {
+  display: block;
+  top: calc(var(--bridge-deck-top) + 16px);
+  width: 46px;
+}
+
+body[data-world="bridge-buddies"] .abutment-left {
+  left: calc(var(--bridge-bank-inset) - 23px);
+}
+
+body[data-world="bridge-buddies"] .abutment-right {
+  right: calc(var(--bridge-bank-inset) - 23px);
+}
+
+body[data-world="bridge-buddies"] .bridge-landscape.crossed .bridge-cart {
+  animation: bridge-delivery-crossing 2.4s ease-in-out forwards;
+}
+
+body[data-world="bridge-buddies"] .bridge-preview-segment.just-placed:not(.empty) {
+  animation: bridge-deck-place 350ms ease-out both;
+}
+
+body[data-world="bridge-buddies"] .bridge-river {
+  opacity: 0.3;
+}
+
+body[data-world="bridge-buddies"] .bridge-river i {
+  animation: bridge-water-drift 7s ease-in-out infinite alternate;
+}
+
+body[data-world="bridge-buddies"] .bridge-load-plaque {
+  position: static;
+  translate: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  min-width: 0;
+  margin-top: 0.7rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid #af9674;
+  background: #f4e9d8;
+  color: #503b2c;
+  box-shadow: none;
+  line-height: 1.4;
+  text-align: start;
+}
+
+body[data-world="bridge-buddies"] .bridge-load-plaque::before,
+body[data-world="bridge-buddies"] .bridge-load-plaque::after {
+  display: none;
+}
+
+body[data-world="bridge-buddies"] .bridge-load-plaque b,
+body[data-world="bridge-buddies"] .bridge-load-plaque small {
+  color: inherit;
+  font-size: 0.85rem;
+}
+
+body[data-world="bridge-buddies"] .lv-motion-landscape {
+  object-position: center 55%;
+}
+
+body[data-world="bridge-buddies"] .lv-motion-character {
+  left: 6%;
+  bottom: 2%;
+  height: 96%;
+}
+
+body[data-world="bridge-buddies"] .lv-motion-prop {
+  right: 18%;
+  bottom: 4%;
+  height: 48%;
+}
+
+html.larriverse-dark body[data-world="bridge-buddies"] .bridge-river-art {
+  filter: brightness(0.7) saturate(0.9);
+}
+
+html.larriverse-dark body[data-world="bridge-buddies"] .bridge-load-plaque {
+  background: #352c3c;
+  color: #fff2dd;
+  border-color: #a88e71;
+}
+
+html.larriverse-high-contrast body[data-world="bridge-buddies"] .bridge-river-art {
+  opacity: 0.65;
+}
+
+html.larriverse-high-contrast body[data-world="bridge-buddies"] .bridge-load-plaque {
+  background: #000;
+  color: #fff;
+  border-color: #fff;
+}
+
+@keyframes bridge-delivery-crossing {
+  from { left: 0; }
+  to { left: calc(100% - var(--bridge-cart-width)); }
+}
+
+@keyframes bridge-deck-place {
+  from { transform: translateY(-6px); opacity: 0.5; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes bridge-water-drift {
+  from { transform: translateX(-2%); }
+  to { transform: translateX(2%); }
+}
+
+@media (max-width: 600px) {
+  body[data-world="bridge-buddies"] .bridge-landscape {
+    --bridge-deck-top: 126px;
+  }
+}
+
+html.larriverse-reduced-motion body[data-world="bridge-buddies"] :is(.bridge-preview-segment, .bridge-river i) {
+  animation: none;
+}
+
+html.larriverse-reduced-motion body[data-world="bridge-buddies"] .bridge-landscape.crossed .bridge-cart {
+  left: calc(100% - var(--bridge-cart-width));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="bridge-buddies"] :is(.bridge-preview-segment, .bridge-river i) {
+    animation: none;
+  }
+  body[data-world="bridge-buddies"] .bridge-landscape.crossed .bridge-cart {
+    left: calc(100% - var(--bridge-cart-width));
+  }
+}
