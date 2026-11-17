@@ -20,7 +20,7 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'fact-finder': scene('library', 'researcher', 'camera', 'turn'),
   'garden-grow-harvest': scene('garden-planting', 'garden-grow-gardener', 'garden-grow-watering-can', 'pour'),
   'garden-guardians': scene('guardian-meadow', 'guardian-robin', 'garden-grow-watering-can', 'pour'),
-  'harbor-helpers': scene('harbor', 'sailor', 'life-ring', 'bob'),
+  'harbor-helpers': scene('harbor-community', 'harbor-helper', 'harbor-life-ring', 'bob'),
   'kids-sudoku': scene('observatory', 'researcher', 'hourglass', 'turn', { host: '.puzzle-layout', position: 'beforebegin' }),
   'kidscoin-family': scene('market', 'park-helper', 'calculator', 'slide', { host: '#view', position: 'beforebegin' }),
   'kindness-quest': scene('woodland', 'fox', 'books', 'lift'),
