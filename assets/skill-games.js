@@ -45,6 +45,9 @@ const renderRepairWorkshop = world.mode === "repair"
 const guardianArtwork = world.mode === "garden"
   ? await import("../games/garden-guardians/guardian-art.js").catch(() => null)
   : null;
+const roverArtwork = world.mode === "robot"
+  ? await import("../games/robot-rover/terrain-art.js").catch(() => null)
+  : null;
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
 const board = $("gameBoard");
@@ -1077,7 +1080,7 @@ function roverStarTotal() {
 function roverStarsFor(commandsUsed, par) {
   return commandsUsed <= par ? 3 : commandsUsed <= par + 2 ? 2 : 1;
 }
-function renderRobot() {
+function renderRobot(movement = null) {
   const level = robotLevels[state.level];
   const directions = ["↑ North", "→ East", "↓ South", "← West"];
   const trail = new Set(state.trail || [level.start]);
@@ -1092,7 +1095,7 @@ function renderRobot() {
     .join("");
   stage(`Robot world ${state.level + 1} of ${robotLevels.length} · ${level.rank} · ${level.name}`);
   setStageTrail(`<div class="level-trail rover-level-trail" aria-label="Rover advancement ranks">${rankTrail}</div>`);
-  board.innerHTML = `<div class="stat-row rover-stats">${chip("Facing", directions[state.dir])}${chip("World", `${state.level + 1}/${robotLevels.length}`)}${chip("Rank", level.rank)}${chip("3-star target", `${level.par} cmds`)}${chip("Stars earned", `${roverStarTotal()}/${robotLevels.length * 3}`)}</div><p class="board-note rover-lesson"><strong>Forward moves Rover in the direction it is facing.</strong> Left and Right turn Rover in place. The dotted trail shows where it has traveled.</p><div class="tile-grid rover-grid rover-zone--${level.zone}" aria-label="${esc(level.name)} rover path grid">${Array.from({ length: 25 }, (_, i) => {
+  board.innerHTML = `<div class="stat-row rover-stats">${chip("Facing", directions[state.dir])}${chip("World", `${state.level + 1}/${robotLevels.length}`)}${chip("Rank", level.rank)}${chip("3-star target", `${level.par} cmds`)}${chip("Stars earned", `${roverStarTotal()}/${robotLevels.length * 3}`)}</div><p class="board-note rover-lesson"><strong>Forward moves Rover in the direction it is facing.</strong> Left and Right turn Rover in place. The dotted trail shows where it has traveled.</p><section class="rover-terrain rover-terrain--${level.zone}" aria-label="${esc(level.name)} landscape">${roverArtwork?.roverLandscape(level.zone) || ""}<div class="tile-grid rover-grid rover-zone--${level.zone}" aria-label="${esc(level.name)} rover path grid">${Array.from({ length: 25 }, (_, i) => {
     const rock = level.rocks.includes(i);
     const player = i === state.player;
     const goal = i === level.goal;
@@ -1107,16 +1110,17 @@ function renderRobot() {
             ? "visited path"
             : "path";
       const art = player
-        ? `${iconSvg("robot", "rover-token")}<small>${["↑", "→", "↓", "←"][state.dir]}</small>`
+        ? `${roverArtwork?.roverCharacter(state.dir) || iconSvg("robot", "rover-token")}<small>${["↑", "→", "↓", "←"][state.dir]}</small>`
         : goal
-          ? iconSvg("star", "rover-goal")
+          ? roverArtwork?.roverBeacon() || iconSvg("star", "rover-goal")
           : rock
-            ? iconSvg("rock", "rover-rock")
+            ? roverArtwork?.roverObstacle(level.zone) || iconSvg("rock", "rover-rock")
             : visited
               ? '<span class="rover-trail-dot" aria-hidden="true"></span>'
               : '<span class="rover-path-dot" aria-hidden="true"></span>';
       return `<div class="tile rover ${rock ? "rock" : ""} ${player ? "player" : ""} ${visited ? "trail" : ""} ${goal ? "goal" : ""}" aria-label="Row ${Math.floor(i / 5) + 1}, column ${(i % 5) + 1}: ${label}">${art}</div>`;
-  }).join("")}</div><div class="rover-efficiency"><strong>${esc(level.name)}</strong><span>Target: ${level.par} commands for ⭐⭐⭐</span>${currentStars ? `<span class="rover-stars" aria-label="${currentStars} efficiency stars">${"⭐".repeat(currentStars)}${"☆".repeat(3 - currentStars)}</span>` : "<span>Reach the star to earn 1–3 efficiency stars.</span>"}</div><div class="command-bar" aria-label="Add rover commands"><button class="secondary" data-command="F" ${running || state.reached ? "disabled" : ""}>↑ Forward</button><button class="secondary" data-command="L" ${running || state.reached ? "disabled" : ""}>↶ Turn left</button><button class="secondary" data-command="R" ${running || state.reached ? "disabled" : ""}>↷ Turn right</button></div><div class="command-list" aria-label="Your command list">${state.commands.length ? state.commands.map((cmd, i) => `<button class="${i === state.activeCommand ? "active-command" : ""}" data-remove="${i}" aria-label="Remove command ${i + 1}: ${cmd === "F" ? "forward" : cmd === "L" ? "left turn" : "right turn"}" ${i === state.activeCommand ? 'aria-current="step"' : ""} ${running || state.reached ? "disabled" : ""}><small>${i + 1}</small>${cmd === "F" ? "↑" : cmd === "L" ? "↶" : "↷"}</button>`).join("") : '<span class="board-note" style="margin:0">Your program goes here (up to 64 commands).</span>'}</div>`;
+  }).join("")}</div></section><div class="rover-efficiency"><strong>${esc(level.name)}</strong><span>Target: ${level.par} commands for ⭐⭐⭐</span>${currentStars ? `<span class="rover-stars" aria-label="${currentStars} efficiency stars">${"⭐".repeat(currentStars)}${"☆".repeat(3 - currentStars)}</span>` : "<span>Reach the star to earn 1–3 efficiency stars.</span>"}</div><div class="command-bar" aria-label="Add rover commands"><button class="secondary" data-command="F" ${running || state.reached ? "disabled" : ""}>↑ Forward</button><button class="secondary" data-command="L" ${running || state.reached ? "disabled" : ""}>↶ Turn left</button><button class="secondary" data-command="R" ${running || state.reached ? "disabled" : ""}>↷ Turn right</button></div><div class="command-list" aria-label="Your command list">${state.commands.length ? state.commands.map((cmd, i) => `<button class="${i === state.activeCommand ? "active-command" : ""}" data-remove="${i}" aria-label="Remove command ${i + 1}: ${cmd === "F" ? "forward" : cmd === "L" ? "left turn" : "right turn"}" ${i === state.activeCommand ? 'aria-current="step"' : ""} ${running || state.reached ? "disabled" : ""}><small>${i + 1}</small>${cmd === "F" ? "↑" : cmd === "L" ? "↶" : "↷"}</button>`).join("") : '<span class="board-note" style="margin:0">Your program goes here (up to 64 commands).</span>'}</div>`;
+  roverArtwork?.animateRover(board, movement);
   bind("[data-command]", (node) => {
     if (running || state.reached) return;
     if (state.commands.length >= 64) {
@@ -1193,6 +1197,7 @@ async function runRobot() {
   renderRobot();
   for (let i = 0; i < program.length; i++) {
     if (session !== state || finished) return;
+    const movement = roverArtwork?.captureRover(board);
     const cmd = program[i];
     state.activeCommand = i;
     if (cmd === "L") state.dir = (state.dir + 3) % 4;
@@ -1217,7 +1222,7 @@ async function runRobot() {
       state.trail.push(next);
     }
     tone();
-    renderRobot();
+    renderRobot(movement);
     say(
       `Command ${i + 1} of ${program.length}: ${cmd === "F" ? `forward while facing ${["north", "east", "south", "west"][state.dir]}` : cmd === "L" ? "turn left in place" : "turn right in place"}.`,
     );
@@ -1228,7 +1233,7 @@ async function runRobot() {
       state.reached = true;
       running = false;
       state.activeCommand = -1;
-      renderRobot();
+      renderRobot(movement);
       say(
         `Rover found the star in ${used} command${used === 1 ? "" : "s"} — ${"⭐".repeat(stars)}${"☆".repeat(3 - stars)}. ${stars === 3 ? "That meets the shortest-path target!" : "You solved it. Try trimming turns or extra moves if you want more efficiency stars."}`,
         "good",
