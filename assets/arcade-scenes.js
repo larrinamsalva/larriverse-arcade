@@ -309,9 +309,9 @@ const gardenIconName = kind => {
   return 'seed';
 };
 
-export function gardenChoiceSvg(kind) {
+export function gardenChoiceSvg(kind, illustration) {
   // Individual garden materials are intentionally isolated from shared arcade objects.
-  return renderGardenChoice(kind, iconDrawing);
+  return renderGardenChoice(kind, iconDrawing, illustration);
 }
 
 export function gardenLessonSvg(kind) {

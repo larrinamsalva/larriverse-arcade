@@ -1,0 +1,154 @@
+body[data-world="garden-grow-harvest"] .world-cover::before {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  background: url("../../assets/world-motion/backgrounds/garden-planting.webp") center / cover;
+}
+
+body[data-world="garden-grow-harvest"] .garden-season-scene {
+  position: relative;
+  isolation: isolate;
+  height: clamp(180px, 28vw, 258px);
+  min-height: 0;
+  aspect-ratio: auto;
+  overflow: hidden;
+  filter: none;
+}
+
+.garden-season-background {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center 60%;
+}
+
+.garden-season-scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(115deg, #fff3bb20, transparent 65%);
+  animation: garden-daylight 9s ease-in-out infinite alternate;
+}
+
+.garden-season-objects {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5%;
+  padding: 12px 6% 10px;
+  pointer-events: none;
+}
+
+.garden-season-objects img {
+  display: block;
+  min-width: 0;
+  width: auto;
+  object-fit: contain;
+  object-position: center bottom;
+  transform-origin: center 94%;
+  filter: drop-shadow(0 6px 3px #35251961);
+}
+
+.garden-season-primary {
+  max-width: 56%;
+  height: 81%;
+}
+
+.garden-season-secondary {
+  max-width: 31%;
+  height: 59%;
+}
+
+.garden-season-plant {
+  animation: garden-plant-sway 4.5s ease-in-out infinite alternate;
+}
+
+.garden-season-tool {
+  animation: garden-tool-tilt 5s ease-in-out infinite;
+}
+
+.garden-season-water {
+  animation: garden-can-tip 5s ease-in-out infinite;
+}
+
+body[data-world="garden-grow-harvest"] .scene-label {
+  position: relative;
+  inset: auto;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: 0;
+  background: #edf3e3;
+  color: #304831;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+body[data-world="garden-grow-harvest"] .lv-motion-character {
+  left: 6%;
+  bottom: 3%;
+  height: 96%;
+}
+
+body[data-world="garden-grow-harvest"] .lv-motion-prop {
+  right: 18%;
+  bottom: 4%;
+  height: 53%;
+}
+
+html.larriverse-dark .garden-season-background {
+  filter: brightness(0.76) saturate(0.9);
+}
+
+html.larriverse-dark body[data-world="garden-grow-harvest"] .scene-label {
+  background: #263c34;
+  color: #f4fff2;
+}
+
+html.larriverse-high-contrast body[data-world="garden-grow-harvest"] .scene-label {
+  background: #000;
+  color: #fff;
+}
+
+html.larriverse-high-contrast .garden-season-background {
+  opacity: 0.65;
+}
+
+@keyframes garden-daylight {
+  to { opacity: 0.2; }
+}
+
+@keyframes garden-plant-sway {
+  from { transform: rotate(-1deg); }
+  to { transform: rotate(1deg); }
+}
+
+@keyframes garden-tool-tilt {
+  0%, 60%, 100% { transform: rotate(0); }
+  30% { transform: rotate(-6deg); }
+}
+
+@keyframes garden-can-tip {
+  0%, 65%, 100% { transform: rotate(0); }
+  30%, 45% { transform: rotate(12deg); }
+}
+
+html.larriverse-reduced-motion :is(.garden-season-primary, .garden-season-scene::after) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.garden-season-primary, .garden-season-scene::after) {
+    animation: none;
+  }
+}

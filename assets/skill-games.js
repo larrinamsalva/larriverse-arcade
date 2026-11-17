@@ -36,6 +36,9 @@ const renderKindnessScene = world.mode === "conversation"
 const renderTrafficStreet = world.mode === "traffic"
   ? await import("../games/traffic-town/street-art.js").then(module => module.trafficStreetScene, () => null)
   : null;
+const gardenArtwork = world.mode === "garden-grow"
+  ? await import("../games/garden-grow-harvest/season-art.js").catch(() => null)
+  : null;
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
 const board = $("gameBoard");
@@ -620,11 +623,11 @@ function renderLearningPath(mode) {
     .join("");
   const scene = isWeather
     ? weatherSceneSvg(item.scene)
-    : gardenLessonSvg(item.scene);
+    : gardenArtwork?.gardenSeasonScene(item) || gardenLessonSvg(item.scene);
   const choices = display
     .map(
       (choice) => `<button class="picture-choice" data-learning-answer="${choice.index}">
-        ${isWeather ? weatherChoiceSvg(choice.art) : gardenChoiceSvg(choice.art)}
+        ${isWeather ? weatherChoiceSvg(choice.art) : gardenArtwork?.gardenSeasonChoice(choice.art) || gardenChoiceSvg(choice.art)}
         <span>${esc(choice.label)}</span>
       </button>`,
     )
