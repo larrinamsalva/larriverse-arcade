@@ -2428,7 +2428,7 @@ body[data-world="weather-watchers"].weather-panel-collapsed .play-top {
 }
 
 
-/* Traffic Town: dimensional roadside scene, curbs, lane markings, and sign hardware. */
+/* Traffic Town: legible sign models and response cards. */
 body[data-world="traffic-town"] .play-card{
   border:2px solid #6f8798;
   background:
@@ -2439,7 +2439,7 @@ body[data-world="traffic-town"] .play-card{
 body[data-world="traffic-town"] .traffic-message{
   position:relative;
   overflow:hidden;
-  grid-template-columns:minmax(180px,240px) minmax(0,1fr);
+  grid-template-columns:minmax(0,1fr);
   gap:1.35rem;
   padding:1.15rem 1.35rem;
   border:2px solid #688ea8;
@@ -2450,89 +2450,10 @@ body[data-world="traffic-town"] .traffic-message{
     0 7px 0 #5479913d,
     0 14px 22px #2941541a;
 }
-body[data-world="traffic-town"] .traffic-street-scene{
-  position:relative;
-  overflow:hidden;
-  min-height:210px;
-  border:2px solid #7896a7;
-  border-radius:18px;
-  background:
-    linear-gradient(180deg,#bfe3f3 0 48%,#8fc779 48% 64%,#5b646d 64% 100%);
-  box-shadow:
-    inset 0 3px 0 #eafaff,
-    inset 0 -10px 0 #27333c2b,
-    0 6px 0 #536a7a33;
-}
-body[data-world="traffic-town"] .traffic-street-scene::before{
-  content:"";
-  position:absolute;
-  left:-4%;
-  right:-4%;
-  top:60%;
-  height:15px;
-  background:linear-gradient(180deg,#c8cdd0,#8f999e);
-  border-top:2px solid #e9eded;
-  border-bottom:2px solid #616b70;
-  box-shadow:0 5px 0 #39444a40;
-}
-body[data-world="traffic-town"] .traffic-street-scene::after{
-  content:"";
-  position:absolute;
-  left:10%;
-  right:10%;
-  bottom:24px;
-  height:5px;
-  border-radius:999px;
-  background:repeating-linear-gradient(90deg,#f7e896 0 36px,transparent 36px 72px);
-  opacity:.95;
-}
-body[data-world="traffic-town"] .traffic-skyline{
-  position:absolute;
-  inset:20px 10px auto;
-  height:70px;
-  pointer-events:none;
-}
-body[data-world="traffic-town"] .traffic-skyline span{
-  position:absolute;
-  bottom:0;
-  width:44px;
-  border:2px solid #6f7b76;
-  border-bottom:0;
-  background:linear-gradient(180deg,#f0d8ad,#c9aa78);
-  box-shadow:inset 0 -8px 0 #9c7b4d22;
-}
-body[data-world="traffic-town"] .traffic-skyline span:nth-child(1){left:6%;height:40px}
-body[data-world="traffic-town"] .traffic-skyline span:nth-child(2){left:32%;height:58px;background:linear-gradient(180deg,#d7e5c4,#a7bd82)}
-body[data-world="traffic-town"] .traffic-skyline span:nth-child(3){right:8%;height:46px;background:linear-gradient(180deg,#efd2c2,#c49782)}
-body[data-world="traffic-town"] .traffic-road-bed{
-  position:absolute;
-  inset:auto 0 0;
-  height:74px;
-  pointer-events:none;
-}
-body[data-world="traffic-town"] .traffic-road-bed i{
-  position:absolute;
-  top:10px;
-  width:22px;
-  height:8px;
-  border-radius:999px;
-  background:#edf3f4;
-  box-shadow:0 2px 0 #1f292f3d;
-}
-body[data-world="traffic-town"] .traffic-road-bed i:nth-child(1){left:13%}
-body[data-world="traffic-town"] .traffic-road-bed i:nth-child(2){left:45%}
-body[data-world="traffic-town"] .traffic-road-bed i:nth-child(3){right:13%}
-body[data-world="traffic-town"] .traffic-sign-model{
-  position:relative;
-  z-index:2;
-  display:grid;
-  place-items:center;
-  min-height:210px;
-}
 body[data-world="traffic-town"] .traffic-sign-art{
-  width:150px;
-  height:175px;
-  margin:4px auto 0;
+  width:clamp(124px,22vw,176px);
+  height:auto;
+  margin:auto;
   filter:
     drop-shadow(0 7px 2px #23313a45)
     drop-shadow(0 15px 8px #23313a2c);
@@ -2605,21 +2526,6 @@ html.larriverse-dark body[data-world="traffic-town"] .traffic-message{
   color:#f6f4fb;
   border-color:#627a8d;
 }
-html.larriverse-dark body[data-world="traffic-town"] .traffic-street-scene{
-  background:
-    linear-gradient(180deg,#263b58 0 48%,#35513a 48% 64%,#303740 64% 100%);
-  border-color:#596d7c;
-}
-html.larriverse-dark body[data-world="traffic-town"] .traffic-skyline span{
-  border-color:#515c63;
-  background:linear-gradient(180deg,#5a5044,#433a31);
-}
-html.larriverse-dark body[data-world="traffic-town"] .traffic-skyline span:nth-child(2){
-  background:linear-gradient(180deg,#465644,#344133);
-}
-html.larriverse-dark body[data-world="traffic-town"] .traffic-skyline span:nth-child(3){
-  background:linear-gradient(180deg,#5c4943,#463834);
-}
 html.larriverse-dark body[data-world="traffic-town"] .traffic-message .message-copy{
   background:linear-gradient(160deg,#293643,#222d38);
   border-color:#5f7280;
@@ -2649,19 +2555,8 @@ html.larriverse-dark body[data-world="traffic-town"] .choice-button.wrong{
 }
 @media(max-width:760px){
   body[data-world="traffic-town"] .traffic-message{
-    grid-template-columns:1fr;
     gap:.8rem;
     padding:.9rem;
-  }
-  body[data-world="traffic-town"] .traffic-street-scene{
-    min-height:180px;
-  }
-  body[data-world="traffic-town"] .traffic-sign-model{
-    min-height:180px;
-  }
-  body[data-world="traffic-town"] .traffic-sign-art{
-    width:132px;
-    height:155px;
   }
   body[data-world="traffic-town"] .traffic-message .message-copy{
     padding:.8rem;

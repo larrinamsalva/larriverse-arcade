@@ -37,7 +37,7 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'street-safety-scout': scene('neighborhood', 'park-helper', 'car', 'roll', { host: '#playArea' }),
   'time-trail': scene('countryside', 'explorer', 'hourglass', 'turn'),
   'trade-town': scene('market', 'baker', 'shopping-bag', 'lift'),
-  'traffic-town': scene('neighborhood', 'mechanic', 'car', 'roll'),
+  'traffic-town': scene('traffic-neighborhood', 'traffic-instructor', 'traffic-hatchback', 'roll'),
   'water-works': scene('countryside', 'gardener', 'paddle-wheel', 'spin'),
   'weather-watchers': scene('weather-hill', 'robin', 'weather-vane', 'sway'),
   'word-search-world': scene('library', 'cat', 'books', 'slide', { host: '.game-layout', position: 'beforebegin' })

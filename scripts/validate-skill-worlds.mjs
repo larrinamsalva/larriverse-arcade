@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import { kindnessScene } from "../games/kindness-quest/quest-art.js";
 import { caseScenes } from "../games/scam-sleuth/case-art.js";
+import { trafficStreetBySign } from "../games/traffic-town/street-art.js";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import {
@@ -165,9 +166,17 @@ assert.equal(catalog.find(x=>x.id==="pocket-planet").mission,worlds.find(x=>x.id
 assert.equal(catalog.find(x=>x.id==="pocket-planet").topic,"Planet");
 assert.equal(trafficQuestions.length, 120, "Traffic Town includes 120 dedicated sign levels");
 assert.equal(new Set(trafficQuestions.map((item) => item.title)).size, 120, "Every Traffic Town level teaches a different sign title");
+assert.equal(trafficStreetBySign.size, trafficQuestions.length, "Traffic Town illustrations cover all 120 signs");
+const trafficBackdrops = new Set(trafficStreetBySign.values());
+assert.equal(trafficBackdrops.size, 8, "Traffic Town uses eight illustrated street settings");
+for (const setting of trafficBackdrops) {
+  const image = new URL(`../assets/world-motion/backgrounds/traffic-${setting}.webp`, import.meta.url);
+  assert.ok(fs.existsSync(image), `Traffic Town backdrop exists for ${setting}`);
+}
 assert.equal(new Set(trafficQuestions.map((item) => item.family)).size >= 3, true, "Expanded Traffic Town covers regulatory, guide/service, and warning families");
 assert.equal(new Set(trafficQuestions.map((item) => item.text)).size, trafficQuestions.length);
 for (const item of trafficQuestions) {
+  assert.ok(trafficStreetBySign.has(item.title), `Traffic Town street setting exists for ${item.title}`);
   assert.equal(item.options.length, 3);
   assert.ok(item.text.length > 20 && item.why.length > 20);
   assert.ok(Number.isInteger(item.answer) && item.answer >= 0 && item.answer < item.options.length);

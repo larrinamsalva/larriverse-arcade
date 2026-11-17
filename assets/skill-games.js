@@ -33,6 +33,9 @@ const renderScamScene = world.mode === "messages"
 const renderKindnessScene = world.mode === "conversation"
   ? await import("../games/kindness-quest/quest-art.js").then(module => module.kindnessScene, () => null)
   : null;
+const renderTrafficStreet = world.mode === "traffic"
+  ? await import("../games/traffic-town/street-art.js").then(module => module.trafficStreetScene, () => null)
+  : null;
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
 const board = $("gameBoard");
@@ -513,7 +516,7 @@ function renderCards(mode) {
   const actual = mode === "sorting" ? item.bin : item.answer;
   const display = shuffle(labels.map((label, index) => ({ label, index })));
   const messageArt = mode === "traffic"
-    ? `<div class="traffic-street-scene"><div class="traffic-skyline" aria-hidden="true"><span></span><span></span><span></span></div><div class="traffic-road-bed" aria-hidden="true"><i></i><i></i><i></i></div><div class="traffic-sign-model">${trafficSignSvg(item.title)}</div></div>`
+    ? renderTrafficStreet?.(item.title) ?? trafficSignSvg(item.title)
     : mode === "sorting"
       ? `<div class="reuse-object-stage">
           <div class="reuse-sorting-station" aria-hidden="true">

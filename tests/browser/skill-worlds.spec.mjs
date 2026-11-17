@@ -465,6 +465,59 @@ test("Traffic Town: saved sixty-level completion resumes at sign 61",async({page
   await expect(page.locator(".board-title")).toHaveText(trafficQuestions[60].title);
 });
 
+test("Traffic Town: scenes follow the sign lesson and respect reduced motion and enlarged text", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.addInitScript(() => {
+    const observe = IntersectionObserver.prototype.observe;
+    IntersectionObserver.prototype.observe = function (target) {
+      // Keep the intro's first visibility notification pending during the replay check.
+      if (target.getAttribute("data-lv-world-motion") !== "traffic-town") observe.call(this, target);
+    };
+  });
+  await page.goto("/games/traffic-town/index.html");
+  const scene = page.locator(".traffic-street-scene");
+  const backdrop = scene.locator(".traffic-street-backdrop");
+  await expect(scene).toHaveAttribute("data-setting", "neighborhood");
+  await expect(scene.getByRole("img", { name: "STOP sign", exact: true })).toBeVisible();
+  await expect(backdrop).toHaveCSS("animation-name", "traffic-street-settle");
+  await backdrop.evaluate(image => image.decode());
+
+  const intro = page.locator('[data-lv-world-motion="traffic-town"]');
+  await expect(intro.locator(".lv-motion-poses")).toHaveAttribute("src", /traffic-instructor\.webp$/);
+  await expect(intro.locator(".lv-motion-prop")).toHaveAttribute("src", /traffic-hatchback\.webp$/);
+  await intro.scrollIntoViewIfNeeded();
+  const replay = intro.getByRole("button", { name: /Play scene/ });
+  await replay.click();
+  expect(await intro.evaluate(element => element.getAnimations({ subtree: true }).map(animation => animation.effect.target.className)))
+    .toEqual(expect.arrayContaining(["lv-motion-landscape", "lv-motion-poses", "lv-motion-prop"]));
+
+  for (const item of trafficQuestions.slice(0, 3)) {
+    await page.getByRole("button", { name: item.options[item.answer], exact: true }).click();
+    await page.getByRole("button", { name: "Next discovery", exact: true }).click();
+  }
+  await expect(scene).toHaveAttribute("data-setting", "highway");
+  await expect(scene.getByRole("img", { name: "DO NOT ENTER sign", exact: true })).toBeVisible();
+  await backdrop.evaluate(image => image.decode());
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(backdrop).toHaveCSS("animation-name", "none");
+  await expect(replay).toBeHidden();
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.evaluate(() => {
+    window.LarriVerseArcade.setSettings({ largeText: true, highContrast: true, reducedMotion: true });
+    document.documentElement.style.setProperty("font-size", "32px", "important");
+  });
+  await expect(backdrop).toHaveCSS("animation-name", "none");
+  await expect(replay).toBeHidden();
+  await expect(page.locator(".traffic-message p")).toHaveCSS("color", "rgb(255, 255, 255)");
+  for (const width of [320, 430]) {
+    await page.setViewportSize({ width, height: 820 });
+    expect(await scene.evaluate(element => element.getBoundingClientRect().right)).toBeLessThanOrEqual(width);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width + 4);
+    expect(await page.locator(".traffic-message p").evaluate(element => element.clientWidth)).toBeGreaterThanOrEqual(230);
+  }
+});
+
 test("Repair Café: complete all sixty unique step-by-step repairs", async ({
   page,
 }) => {
