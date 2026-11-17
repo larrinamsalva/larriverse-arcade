@@ -6,6 +6,8 @@ body[data-world="kindness-quest"] .world-cover {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  inline-size: 100%;
+  min-inline-size: 0;
   aspect-ratio: 1.9;
   min-block-size: 138px;
   max-block-size: 300px;
