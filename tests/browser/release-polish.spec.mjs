@@ -246,6 +246,7 @@ test('reduced-motion Road Trip keeps same-lane collection, saved inventory and d
   });
   await page.locator('#startButton').click();
   await expect(page.locator('#motionRoadNote')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Move left' })).toBeInViewport({ ratio: 1 });
   const laneControls = await page.locator('.lane-controls').boundingBox();
   const laneMovers = await page.locator('.lane-movers').boundingBox();
   expect(Math.abs((laneMovers.x + laneMovers.width / 2) - (laneControls.x + laneControls.width / 2))).toBeLessThanOrEqual(3);
@@ -586,6 +587,36 @@ test('progress views keep shared comfort controls visible on narrow screens with
     await page.keyboard.press('Escape');
     await expect(opener).toBeFocused();
     await checkReflow(page, `${route} comfort access`);
+  }
+});
+
+test('Road Trip driving messages leave both steering arrows visible and usable', async ({ page }) => {
+  await page.clock.install();
+  const trips = [
+    { route: 'road-trip-quest', start: 'Start the engine', car: '#car', notice: /Next stop/ },
+    { route: 'road-trip-quest-gps', start: 'Start Demo Mode', car: '#player', notice: /quest markers generated/ }
+  ];
+  for (const { route, start, car, notice } of trips) {
+    await page.goto(`/games/${route}/index.html`);
+    if (route === 'road-trip-quest-gps') await page.waitForFunction(() => window.RoadTripGpsContent);
+    await page.getByRole('button', { name: start, exact: true }).click();
+
+    const left = page.getByRole('button', { name: 'Move left', exact: true });
+    const right = page.getByRole('button', { name: 'Move right', exact: true });
+    const status = page.locator('#toast.show');
+    await expect(status).toHaveText(notice);
+    await left.scrollIntoViewIfNeeded();
+    const [leftBox, rightBox, statusBox] = await Promise.all([
+      left.boundingBox(), right.boundingBox(), status.boundingBox()
+    ]);
+    expect(statusBox.y).toBeGreaterThanOrEqual(Math.max(leftBox.y + leftBox.height, rightBox.y + rightBox.height));
+
+    const position = () => page.locator(car).evaluate(element => Number.parseFloat(element.style.left));
+    const startPosition = await position();
+    await left.click();
+    expect(await position()).toBeLessThan(startPosition);
+    await right.click();
+    expect(await position()).toBeCloseTo(startPosition);
   }
 });
 

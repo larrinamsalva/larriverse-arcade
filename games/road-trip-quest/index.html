@@ -45,6 +45,7 @@
         <button class="primary" id="startButton">Start the engine</button>
         <button class="lv-adventure-launch" type="button" data-adventure-mission="road-trip-quest">🗺️ Explore 60 travel quests</button>
         <button class="secondary" id="newTripButton">Reset saved trip</button>
+        <div class="toast" id="resetToast" role="status" aria-live="polite"></div>
         <div class="profile-chip" id="profileChip">Loading player…</div>
       </div>
     </section>
@@ -72,14 +73,15 @@
           <div class="car" id="car" aria-label="Player car"><img class="player-car-art" src="art/player-car.webp" alt=""></div>
           <div class="road-message" id="roadMessage">Collect items to charge the boss meter!</div>
         </div>
-        <p id="motionRoadNote" class="motion-road-note" hidden>Reduced motion: items stay still. Move to an item’s lane with the lane buttons or arrow keys, then tap the item or focus it and press Enter to collect. Your inventory and battles work the same way.</p>
         <div class="lane-controls" aria-label="Driving controls">
           <div class="lane-movers" aria-label="Lane controls">
-            <button id="leftButton" aria-label="Move left">◀</button>
-            <button id="rightButton" aria-label="Move right">▶</button>
+            <button id="leftButton" type="button" aria-label="Move left">←</button>
+            <button id="rightButton" type="button" aria-label="Move right">→</button>
           </div>
           <button id="battleButton" disabled>Boss battle <span id="battleReady">60%</span></button>
         </div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <p id="motionRoadNote" class="motion-road-note" hidden>Reduced motion: items stay still. Move to an item’s lane with the lane buttons or arrow keys, then tap the item or focus it and press Enter to collect. Your inventory and battles work the same way.</p>
       </section>
 
       <nav class="bottom-nav" aria-label="Game panels">
@@ -120,8 +122,6 @@
         <button class="primary" id="continueButton">Continue trip</button>
       </section>
     </dialog>
-
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </main>
   <script src="../../assets/arcade-sdk.js"></script>
   <script src="../../assets/learning-path.js"></script>

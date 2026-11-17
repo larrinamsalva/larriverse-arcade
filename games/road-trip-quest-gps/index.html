@@ -102,6 +102,7 @@
         <div><button data-move="left" aria-label="Move left">◀</button><button data-move="down" aria-label="Move down">▼</button><button data-move="right" aria-label="Move right">▶</button></div>
         <small>Arrow keys and WASD also work.</small>
       </section>
+      <div id="toast" role="status" aria-live="polite"></div>
     </section>
   </main>
 
@@ -159,8 +160,6 @@
       <button id="closeLevel" class="primary">Continue exploring</button>
     </div>
   </dialog>
-
-  <div id="toast" role="status" aria-live="polite"></div>
 
   <noscript>This cabinet needs JavaScript enabled.</noscript>
   <script src="../../assets/arcade-sdk.js"></script>
