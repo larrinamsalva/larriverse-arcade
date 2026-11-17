@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import { kindnessScene } from "../games/kindness-quest/quest-art.js";
+import { caseScenes } from "../games/scam-sleuth/case-art.js";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import {
@@ -35,6 +36,16 @@ for (const file of kindnessImages) {
   assert.ok(fs.existsSync(new URL(file)), "Kindness Quest art exists for " + file);
 }
 
+assert.equal(caseScenes.size, messages.length, "Scam Sleuth illustrations cover the complete case deck");
+for (const { from } of messages) {
+  assert.ok(caseScenes.has(from), "Scam Sleuth art exists for " + from);
+}
+const caseAssets = new Set([...caseScenes.values()].flat());
+assert.equal(caseAssets.size, 16, "Scam Sleuth uses four settings and twelve objects");
+for (const asset of caseAssets) {
+  const file = new URL(`../games/scam-sleuth/art/${asset}.webp`, import.meta.url);
+  assert.ok(fs.existsSync(file), "Scam Sleuth art exists for " + asset);
+}
 
 const catalog = JSON.parse(fs.readFileSync("games/catalog.json", "utf8"));
 const release = JSON.parse(fs.readFileSync("release.json", "utf8"));

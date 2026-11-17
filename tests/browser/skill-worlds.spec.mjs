@@ -261,6 +261,52 @@ test("Scam Sleuth: ten cleared tasks resume from eleven after reload",async({pag
   await expect(page.locator("#stageLabel")).toContainText("Chapter 2/8");
   await expect(page.locator("#stageLabel")).toContainText("11/80");
 });
+test("Scam Sleuth illustrates different cases and fits enlarged text with reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/games/scam-sleuth/index.html");
+  const scene = page.locator(".scam-case-visual");
+  const room = scene.locator(".scam-case-room");
+  const device = scene.locator(".scam-case-device");
+  const object = scene.locator(".scam-case-object");
+  await expect(scene).toHaveAttribute("data-room", "game-room");
+  await expect(device).toHaveAttribute("src", /phone\.webp$/);
+  await expect(object).toHaveAttribute("src", /controller\.webp$/);
+  await expect(room).toHaveCSS("animation-name", "scam-scene-light");
+  await expect(device).toHaveCSS("animation-name", "scam-object-settle");
+
+  for (const item of messages.slice(0, 2)) {
+    await page.getByRole("button", { name: ["Read it", "Check another way", "Block & tell an adult"][item.answer] }).click();
+    await page.getByRole("button", { name: "Next discovery" }).click();
+  }
+  await expect(scene).toHaveAttribute("data-room", "school");
+  await expect(device).toHaveAttribute("src", /laptop\.webp$/);
+  await expect(object).toHaveAttribute("src", /notice-board\.webp$/);
+  await scene.locator("img").evaluateAll(images => Promise.all(images.map(image => image.decode())));
+
+  await page.evaluate(() => {
+    window.LarriVerseArcade.setSettings({ largeText: true, highContrast: true, reducedMotion: true });
+    document.documentElement.style.setProperty("font-size", "32px", "important");
+  });
+  await expect(device).toHaveCSS("animation-name", "none");
+  await expect(room).toHaveCSS("animation-name", "none");
+  for (const viewportWidth of [320, 430]) {
+    await page.setViewportSize({ width: viewportWidth, height: 820 });
+    const width = await scene.evaluate(element => ({
+      right: element.getBoundingClientRect().right,
+      viewport: document.documentElement.clientWidth,
+      scroll: document.documentElement.scrollWidth,
+    }));
+    expect(width.right).toBeLessThanOrEqual(width.viewport);
+    expect(width.scroll).toBeLessThanOrEqual(width.viewport + 4);
+    const firstWordLines = await page.locator(".scam-message .board-title").evaluate(title => {
+      const word = document.createRange();
+      word.setStart(title.firstChild, 0);
+      word.setEnd(title.firstChild, title.textContent.indexOf(" "));
+      return word.getClientRects().length;
+    });
+    expect(firstWordLines).toBe(1);
+  }
+});
 test("Scam Sleuth: center evidence stays readable in light, dark, and high contrast", async ({
   page,
 }) => {
