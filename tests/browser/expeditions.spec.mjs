@@ -180,7 +180,7 @@ function pantrySolution(challenge) {
   search(0, 3, {});
   return solutions[0];
 }
-test("Pantry Picnic: eighty continuous, unique picnics with saved checkpoints and one reward",async({page})=>{
+test("Pantry Picnic: eighty continuous, unique picnics with saved checkpoints and one reward",async({page},testInfo)=>{
   test.setTimeout(360_000);
   expect(pantryChallenges).toHaveLength(80);
   expect(PANTRY_ROUND_SIZE).toBe(10);
@@ -189,13 +189,27 @@ test("Pantry Picnic: eighty continuous, unique picnics with saved checkpoints an
   await expect(page.locator('[data-lv-world-motion="pantry-picnic"]')).toBeVisible();
   await expect(page.locator("#soundToggle")).toHaveAttribute("aria-pressed","false");
 
-  const visited=[];
+  const visited=[], picturedSettings=new Set(), picturedFoods=new Set();
   for(let index=0;index<pantryChallenges.length;index++){
     const challenge=pantryChallenges[index];
     const card=page.locator("[data-pantry-challenge]");
     const id=await card.getAttribute("data-pantry-challenge");
     expect(id).toBe(challenge.id);
     visited.push(id);
+    const landscape=page.locator('.pantry-landscape');
+    await landscape.locator('img').evaluate(image=>image.decode());
+    const setting=await landscape.getAttribute('data-pantry-setting');
+    if(!picturedSettings.has(setting)){
+      const folder=path.join('artifacts','screenshots',testInfo.project.name);
+      fs.mkdirSync(folder,{recursive:true});
+      await landscape.screenshot({path:path.join(folder,'picnic-setting-'+setting+'.png')});
+    }
+    picturedSettings.add(setting);
+    await page.locator('.pantry-food-card img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
+    for(const food of pantryFoods.filter(food=>challenge.stock[food.id])){
+      await expect(page.locator('[data-food="'+food.id+'"] .pantry-food-picture')).toHaveAttribute('data-pantry-food',food.id);
+      picturedFoods.add(food.id);
+    }
     await expect(page.locator("#stageLabel")).toContainText(`Picnic ${index+1} of 80`);
     await expect(page.locator("#stageLabel")).toContainText(`Chapter ${Math.floor(index/10)+1}/8`);
     await expect(page.locator(".adventure-advancement")).toContainText(`Level ${index+1} of 80`);
@@ -207,6 +221,7 @@ test("Pantry Picnic: eighty continuous, unique picnics with saved checkpoints an
     expect(solution).toBeTruthy();
     for(const [food,count] of Object.entries(solution))
       for(let n=0;n<count;n++)await page.locator(`[data-food="${food}"]`).click();
+    await expect(page.locator('.picnic-slot.filled .pantry-food-picture')).toHaveCount(3);
     await action(page,"Check this picnic");
     await expect(page.locator("#feedback")).toHaveClass(/good/);
     const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.pantryPicnic.sixty.v1")));
@@ -223,6 +238,8 @@ test("Pantry Picnic: eighty continuous, unique picnics with saved checkpoints an
     if(index===9)await expect(page.locator("#stageLabel")).toContainText("Chapter 2/8");
   }
   expect(new Set(visited).size).toBe(80);
+  expect(picturedSettings.size).toBe(4);
+  expect(picturedFoods.size).toBe(pantryFoods.length);
   await expect(page.locator("#finishDialog")).toBeVisible();
   const reward=await page.evaluate(()=>window.LarriVerseArcade.summary().games["pantry-picnic"]);
   expect(reward.completions).toBe(1);

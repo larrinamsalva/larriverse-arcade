@@ -25,7 +25,7 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'kidscoin-family': scene('market', 'park-helper', 'calculator', 'slide', { host: '#view', position: 'beforebegin' }),
   'kindness-quest': scene('woodland', 'fox', 'books', 'lift'),
   'lemonade-lab': scene('market', 'baker', 'lemonade', 'pour'),
-  'pantry-picnic': scene('countryside', 'baker', 'basket', 'lift'),
+  'pantry-picnic': scene('picnic-welcome', 'picnic-helper', 'picnic-basket', 'lift'),
   'pocket-planet': scene('outpost', 'explorer', 'shopping-bag', 'slide'),
   'repair-cafe': scene('repair-toys', 'repair-cafe-mentor', 'repair-cafe-wrench', 'turn'),
   'reuse-rally': scene('workshop', 'park-helper', 'shopping-bag', 'sway'),
