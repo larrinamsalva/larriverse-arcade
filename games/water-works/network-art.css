@@ -1,0 +1,123 @@
+body[data-world="water-works"] .world-cover::before {
+  background-image: url('../../assets/world-motion/backgrounds/water-meadow.webp');
+  background-size: cover;
+  background-position: center;
+}
+body[data-world="water-works"] .water-landscape {
+  margin: 0 0 1rem;
+  overflow: hidden;
+  border: 2px solid #8ca59e;
+  border-radius: 18px;
+  background: #e8f5eb;
+}
+body[data-world="water-works"] .water-landscape > img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center 20%;
+  animation: water-valley-light 12s ease-in-out infinite;
+}
+body[data-world="water-works"] .water-landscape figcaption {
+  padding: .5rem .75rem;
+  font-size: .85rem;
+  font-weight: 800;
+  color: #294b45;
+}
+body[data-world="water-works"] .pipe-labels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 6rem), 1fr));
+  gap: .55rem;
+}
+body[data-world="water-works"] .pipe-labels > span {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  padding: .4rem;
+  border: 1px solid #aabdb6;
+  border-radius: 12px;
+  background: #f9fff9;
+  text-align: center;
+  font-size: .85rem;
+  overflow-wrap: anywhere;
+}
+body[data-world="water-works"] .water-object-picture {
+  display: block;
+  width: 86px;
+  height: 76px;
+  max-width: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+body[data-world="water-works"] .pipe-grid {
+  gap: 7px;
+  grid-auto-rows: 1fr;
+  padding: 10px;
+  border: 2px solid #81918a;
+  background: #b2b0a0 url('./art/stone.webp') center / 256px;
+  box-shadow: inset 0 2px 0 #f7fffb, 0 6px 0 #5e6b62;
+}
+body[data-world="water-works"] .pipe-tile {
+  aspect-ratio: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 2px;
+  background: #edf1ed;
+  border: 2px solid #b1bcb8;
+  box-shadow: inset 0 2px 0 #fff, 0 3px 0 #586b63;
+}
+body[data-world="water-works"] .pipe-tile svg { height: auto; aspect-ratio: 1; flex: none; }
+body[data-world="water-works"] .pipe-tile:disabled { opacity: 1; }
+body[data-world="water-works"] .pipe-tile.filter { background: #e8dcf5; border-color: #8e73b4; }
+body[data-world="water-works"] .pipe-tile.flowing { border-color: #007ca3; box-shadow: inset 0 0 0 2px #a4edff, 0 3px 0 #244e5a; }
+body[data-world="water-works"] .pipe-tile.leak { outline: 3px dashed #ae4b22; outline-offset: -3px; }
+body[data-world="water-works"] .pipe-tile:focus-visible { outline: 3px solid #7254c7; outline-offset: 2px; }
+body[data-world="water-works"] .pipe-flow { opacity: 0; }
+body[data-world="water-works"] .pipe-tile.flowing .pipe-flow {
+  opacity: 1;
+  stroke: #0087bc;
+  stroke-dasharray: 9 5;
+  animation: water-current-forward 1s linear infinite;
+}
+body[data-world="water-works"] .flowing .pipe-flow.water-flow-backward { animation-name: water-current-backward; }
+body[data-world="water-works"] .pipe-ground {
+  background: #77553d url('../garden-guardians/art/soil.webp') center / 180px;
+  box-shadow: inset 0 2px 6px #26382a55;
+}
+body[data-world="water-works"] .pipe-ground .water-object-picture { width: 94%; height: 94%; }
+body[data-world="water-works"] .tile-number {
+  position: static;
+  align-self: flex-end;
+  min-width: 0;
+  padding: 1px 3px;
+  line-height: 1.1;
+  font-size: clamp(10px, .6rem, 14px);
+  color: #253e49;
+}
+[data-lv-world-motion="water-works"] .lv-motion-character { left: 13%; height: 92%; }
+[data-lv-world-motion="water-works"] .lv-motion-prop { right: 22%; height: 54%; }
+html.larriverse-dark body[data-world="water-works"] .water-landscape { border-color: #739591; background: #203c3a; }
+html.larriverse-dark body[data-world="water-works"] .water-landscape > img { filter: brightness(.8); animation: none; }
+html.larriverse-dark body[data-world="water-works"] .water-landscape figcaption { color: #e7fffa; }
+html.larriverse-dark body[data-world="water-works"] .pipe-labels > span { border-color: #75918b; background: #223f3b; color: #edfff8; }
+html.larriverse-dark body[data-world="water-works"] .pipe-tile { background: #233e43; border-color: #819895; }
+html.larriverse-dark body[data-world="water-works"] .tile-number { color: #f1fff9; }
+html.larriverse-high-contrast body[data-world="water-works"] :is(.water-landscape, .pipe-labels > span, .pipe-tile) { border-color: #fff; background-color: #111; color: #fff; }
+html.larriverse-high-contrast body[data-world="water-works"] .water-landscape figcaption { color: #fff; }
+html.larriverse-high-contrast body[data-world="water-works"] .tile-number { color: #fff; background: #111; border-color: #fff; }
+@keyframes water-current-forward { to { stroke-dashoffset: -28; } }
+@keyframes water-current-backward { to { stroke-dashoffset: 28; } }
+@keyframes water-valley-light { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.04); } }
+@media (max-width: 620px) {
+  body[data-world="water-works"] .water-landscape > img { height: 200px; }
+  body[data-world="water-works"] .pipe-grid { gap: 5px; padding: 7px; }
+  body[data-world="water-works"] .pipe-tile { padding: 2px; }
+}
+html.larriverse-reduced-motion body[data-world="water-works"] :is(.pipe-flow, .water-landscape > img) { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="water-works"] :is(.pipe-flow, .water-landscape > img) { animation: none !important; }
+}

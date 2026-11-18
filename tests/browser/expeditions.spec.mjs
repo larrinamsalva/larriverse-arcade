@@ -87,20 +87,37 @@ test("Bridge Buddies: four strongest braces fit even without builder tokens", as
   await expect(page.locator("#feedback")).toHaveClass(/good/);
 });
 
-test("Water Works: every one of eighty unique filter-connected networks works",async({page})=>{
+test("Water Works: every one of eighty unique filter-connected networks works",async({page},testInfo)=>{
   test.setTimeout(480_000);
   await adventure(page,"water-works",async()=>{
     await action(page,"Send the water"); await expect(page.locator("#feedback")).toHaveClass(/try/);
+    const picturedSettings = new Set();
     for (let round=0;round<pipePaths.length;round++) {
-      const path = pipePaths[round], dir=(from,to)=>[-5,1,5,-1].indexOf(to-from);
-      for (let index=0;index<path.length;index++) {
-        const tile=path[index], pair=[index ? dir(tile,path[index-1]) : 3,index<path.length-1 ? dir(tile,path[index+1]) : 1];
+      const scene = page.locator('.water-landscape');
+      await scene.locator('img').evaluate(image => image.decode());
+      const setting = await scene.getAttribute('data-water-setting');
+      if (!picturedSettings.has(setting)) {
+        await page.locator('.pipe-labels img, .pipe-ground img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
+        const folder = path.join('artifacts', 'screenshots', testInfo.project.name);
+        fs.mkdirSync(folder, { recursive: true });
+        await scene.screenshot({ path: path.join(folder, 'water-setting-' + setting + '.png') });
+      }
+      picturedSettings.add(setting);
+      const route = pipePaths[round], dir=(from,to)=>[-5,1,5,-1].indexOf(to-from);
+      for (let index=0;index<route.length;index++) {
+        const tile=route[index], pair=[index ? dir(tile,route[index-1]) : 3,index<route.length-1 ? dir(tile,route[index+1]) : 1];
         const pipe=page.locator(`[data-pipe="${tile}"]`);
         for (let turn=0;turn<4;turn++) { const label=await pipe.getAttribute("aria-label"); if(pair.every(value=>label.includes(directions[value])))break; await pipe.click(); }
       }
       await action(page,"Send the water"); await expect(page.locator("#feedback")).toHaveClass(/good/);
-      await expect(page.locator(".pipe-tile.flowing")).toHaveCount(path.length); await next(page,round===pipePaths.length-1);
+      await expect(page.locator(".pipe-tile.flowing")).toHaveCount(route.length);
+      for (const [step, tile] of route.entries()) {
+        const incoming = step ? dir(tile, route[step - 1]) : 3;
+        await expect(page.locator('[data-pipe="' + tile + '"] .pipe-flow')).toHaveAttribute('data-water-incoming', directions[incoming]);
+      }
+      await next(page,round===pipePaths.length-1);
     }
+    expect(picturedSettings.size).toBe(4);
   });
 });
 test("Harbor Helpers: eighty increasingly complex exact deliveries fit their boat",async({page},testInfo)=>{
