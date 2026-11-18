@@ -10,7 +10,7 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'bubble-resonance-phi369': scene('observatory', 'artist', 'radio', 'sway', { host: '.cabinet', position: 'beforebegin' }),
   'chill-brain-rewards': scene('observatory', 'cat', 'lantern', 'sway', { host: '#setupView', position: 'beforebegin' }),
   'cipher-club': scene('library', 'researcher', 'cipher-wheel', 'spin'),
-  'compass-cove': scene('harbor', 'explorer', 'compass', 'turn'),
+  'compass-cove': scene('cove-welcome', 'cove-explorer', 'cove-compass', 'turn'),
   'creative-calm-cove': scene('studio', 'artist', 'palette', 'lift', { host: '.creative-layout', position: 'beforebegin' }),
   'creature-catcher': scene('safari-pond', 'fox', 'lantern', 'sway', { host: '#world', fullScene: true }),
   'critter-council': scene('woodland', 'fox', 'notebook', 'slide'),

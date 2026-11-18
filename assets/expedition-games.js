@@ -12,6 +12,7 @@ import { councilScenery, councilResident, councilBuilding } from "../games/critt
 import { harborDeliveryScene, harborCargoPicture } from "../games/harbor-helpers/delivery-art.js";
 import { waterNetworkScene, waterObject, waterPipeDrawing } from "../games/water-works/network-art.js";
 import { pantryFoodPicture, pantryPicnicLandscape } from "../games/pantry-picnic/picnic-art.js";
+import { coveLandmarkPicture, coveTreasurePicture, coveLandscape } from "../games/compass-cove/cove-art.js";
 
 export function createExpedition(world, a) {
   let s;
@@ -297,6 +298,7 @@ export function createExpedition(world, a) {
   }
   function compass() {
     const clue = compassClues[s.level], landmark = landmarks[clue.landmark];
+    const newTreasure = s.passed ? compassTarget(landmark, clue) : -1;
     const steps = clue.steps || [];
     const directionName = step => step.east > 0 ? ["East", "right"] : step.east < 0 ? ["West", "left"] : step.south > 0 ? ["South", "down"] : ["North", "up"];
     const routeList = steps.map((step,index) => {
@@ -311,8 +313,9 @@ export function createExpedition(world, a) {
         ${a.chip("Direction steps", steps.length)}
         ${a.chip("Treasures found", `${s.found.length}/${compassClues.length}`)}
       </div>
+      ${coveLandscape(s.level)}
       <div class="map-clue compass-clue-card compass-clue-card--steps">
-        <span class="compass-rose compass-rose--3d" aria-hidden="true">N ↑<br>W ← ✦ → E<br>S ↓</span>
+        <div class="cove-route-start" aria-hidden="true"><span class="compass-rose compass-rose--3d">N ↑<br>W ← ✦ → E<br>S ↓</span>${coveLandmarkPicture(landmark.icon)}</div>
         <div class="compass-route-copy">
           <p class="eyebrow">Start at the ${a.esc(landmark.name)}</p>
           <h2>Follow each numbered step in order</h2>
@@ -323,9 +326,9 @@ export function createExpedition(world, a) {
       <p class="compass-gentle-note">Picked the wrong square? Nothing is erased. The red marker only shows your last try; use <b>Clear my try</b> and keep the same treasure clue.</p>
       <div class="compass-grid compass-grid--island">${Array.from({length:36}, (_,index) => {
         const place = landmarks.find(item => item.id === index), found = s.found.includes(index), wrong = s.wrongMap === index;
-        return `<button type="button" class="map-tile compass-map-tile ${place ? "landmark" : ""} ${found ? "found" : ""} ${wrong ? "wrong-pick" : ""}" data-map="${index}" data-focus="map-${index}" ${s.passed ? "disabled" : ""} aria-label="Row ${Math.floor(index / 6) + 1}, column ${index % 6 + 1}${place ? `, ${place.name}` : ""}${found ? ", treasure found" : ""}${wrong ? ", not the treasure yet" : ""}">${place ? iconSvg(place.icon, "object-icon landmark-icon") : found ? iconSvg("coin") : '<span class="map-dot" aria-hidden="true"></span>'}${found && place ? iconSvg("coin", "treasure-marker") : ""}${wrong ? '<span class="compass-wrong-marker" aria-hidden="true">×</span>' : ""}<small>${index + 1}</small></button>`;
+        return `<button type="button" class="map-tile compass-map-tile ${index === newTreasure ? "cove-new-treasure" : ""} ${place ? "landmark" : ""} ${found ? "found" : ""} ${wrong ? "wrong-pick" : ""}" data-map="${index}" data-focus="map-${index}" ${s.passed ? "disabled" : ""} aria-label="Row ${Math.floor(index / 6) + 1}, column ${index % 6 + 1}${place ? `, ${place.name}` : ""}${found ? ", treasure found" : ""}${wrong ? ", not the treasure yet" : ""}"><span class="cove-map-art" aria-hidden="true">${place ? coveLandmarkPicture(place.icon) : found ? coveTreasurePicture() : '<span class="map-dot"></span>'}</span><span class="cove-map-status" aria-hidden="true">${found && place ? coveTreasurePicture() : ""}${wrong ? '<span class="compass-wrong-marker">×</span>' : ""}<small>${index + 1}</small></span></button>`;
       }).join("")}</div>
-      <div class="map-legend compass-map-legend">${landmarks.map(item => `<span>${iconSvg(item.icon)} ${item.name}</span>`).join("")}</div>`;
+      <div class="map-legend compass-map-legend">${landmarks.map(item => `<span>${coveLandmarkPicture(item.icon)} ${item.name}</span>`).join("")}</div>`;
     a.bind("[data-map]", node => {
       if (s.passed) return;
       const target = compassTarget(landmark, clue), selected = Number(node.dataset.map);

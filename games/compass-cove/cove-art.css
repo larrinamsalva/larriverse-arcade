@@ -1,0 +1,113 @@
+body[data-world="compass-cove"] .world-cover::before {
+  background-image: url('../../assets/world-motion/backgrounds/cove-sunlit.webp');
+  background-size: cover;
+  background-position: center;
+}
+body[data-world="compass-cove"] .cove-landscape {
+  margin: 0 0 1rem;
+  overflow: hidden;
+  border: 2px solid #7b9f91;
+  border-radius: 18px;
+  background: #edf6ed;
+}
+body[data-world="compass-cove"] .cove-landscape > img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center 45%;
+  animation: cove-daylight 12s ease-in-out infinite;
+}
+body[data-world="compass-cove"] .cove-landscape figcaption {
+  padding: .5rem .75rem;
+  color: #294f42;
+  font-size: .85rem;
+  font-weight: 800;
+}
+body[data-world="compass-cove"] .cove-route-start { display: flex; flex-direction: column; align-items: center; gap: 12px; min-width: 0; }
+body[data-world="compass-cove"] .compass-rose--3d {
+  background: #c4a35c url('./art/brass.webp') center / cover;
+  font-size: clamp(12px, .75rem, 20px);
+}
+body[data-world="compass-cove"] .cove-object-picture {
+  display: block;
+  width: 88px;
+  height: 88px;
+  max-width: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+body[data-world="compass-cove"] .compass-direction-list { grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); }
+body[data-world="compass-cove"] .compass-direction-list li > div { min-width: 0; overflow-wrap: anywhere; }
+body[data-world="compass-cove"] .compass-direction-list li > span { width: 2em; height: 2em; font-size: clamp(12px, .85rem, 20px); }
+body[data-world="compass-cove"] .compass-grid--island {
+  gap: 6px;
+  padding: 10px;
+  grid-auto-rows: 1fr;
+  border: 2px solid #568f8f;
+  background: #94d5d1 url('./art/water.webp') center / 256px;
+}
+body[data-world="compass-cove"] .compass-grid--island::before { display: none; }
+body[data-world="compass-cove"] .compass-map-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 2px;
+  aspect-ratio: auto;
+  padding: 3px;
+  background: #c4d8ad url('./art/grass.webp') center / 128px;
+  border-color: #6f8c69;
+}
+body[data-world="compass-cove"] .compass-map-tile.landmark { background: #e9dfc2 url('./art/sand.webp') center / 128px; border-color: #a68a59; }
+body[data-world="compass-cove"] .compass-map-tile.found { background: #fff3c1 url('./art/sand.webp') center / 128px; border-color: #9a7527; }
+body[data-world="compass-cove"] .compass-map-tile.wrong-pick { background: #fce9e9; border-color: #a74051; }
+body[data-world="compass-cove"] .compass-map-tile:disabled { opacity: 1; }
+body[data-world="compass-cove"] .compass-map-tile:focus-visible { outline: 3px solid #5e478e; outline-offset: 2px; }
+body[data-world="compass-cove"] .cove-map-art { display: grid; place-items: center; width: 100%; aspect-ratio: 1; min-height: 0; }
+body[data-world="compass-cove"] .cove-map-art .cove-object-picture { width: 100%; height: 100%; }
+body[data-world="compass-cove"] .cove-map-status { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 1px; min-height: 14px; }
+body[data-world="compass-cove"] .cove-map-status .cove-object-picture { width: 14px; height: 14px; }
+body[data-world="compass-cove"] .map-tile small {
+  position: static;
+  min-width: 0;
+  padding: 1px 3px;
+  font-size: clamp(10px, .6rem, 14px);
+  line-height: 1.1;
+  color: #294138;
+}
+body[data-world="compass-cove"] .cove-map-status .compass-wrong-marker { position: static; width: 14px; height: 14px; font-size: 14px; box-shadow: none; }
+body[data-world="compass-cove"] .cove-new-treasure .cove-object-picture { animation: cove-discovery .7s ease-out both; }
+body[data-world="compass-cove"] .compass-map-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+  gap: 8px;
+}
+body[data-world="compass-cove"] .compass-map-legend > span { display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 0; padding: 8px; border-radius: 12px; overflow-wrap: anywhere; text-align: center; }
+body[data-world="compass-cove"] .compass-map-legend .cove-object-picture { width: 60px; height: 60px; }
+[data-lv-world-motion="compass-cove"] .lv-motion-character { left: 12%; height: 92%; }
+[data-lv-world-motion="compass-cove"] .lv-motion-prop { right: 24%; height: 54%; }
+html.larriverse-dark body[data-world="compass-cove"] .cove-landscape { background: #223c34; border-color: #75998a; }
+html.larriverse-dark body[data-world="compass-cove"] .cove-landscape > img { filter: brightness(.8); animation: none; }
+html.larriverse-dark body[data-world="compass-cove"] .cove-landscape figcaption { color: #e8fff2; }
+html.larriverse-dark body[data-world="compass-cove"] .compass-rose--3d { background: #4a3d2a; color: #fff3d8; }
+html.larriverse-dark body[data-world="compass-cove"] .map-tile small { background: #182a22; color: #f2fff6; }
+html.larriverse-high-contrast body[data-world="compass-cove"] :is(.cove-landscape, .compass-clue-card, .compass-rose--3d, .compass-map-tile, .compass-map-legend, .compass-map-legend > span) { background: #111; color: #fff; border: 2px solid #fff; }
+html.larriverse-high-contrast body[data-world="compass-cove"] .cove-landscape figcaption { color: #fff; }
+html.larriverse-high-contrast body[data-world="compass-cove"] .map-tile small { background: #111; color: #fff; border-color: #fff; }
+@keyframes cove-discovery {
+  from { opacity: .4; transform: translateY(8px) scale(.8); }
+  65% { opacity: 1; transform: translateY(-3px) scale(1.04); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cove-daylight { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.04); } }
+@media (max-width: 620px) {
+  body[data-world="compass-cove"] .cove-landscape > img { height: 200px; }
+  body[data-world="compass-cove"] .cove-route-start { flex-direction: row; justify-content: center; flex-wrap: wrap; }
+  body[data-world="compass-cove"] .compass-grid--island { gap: 3px; padding: 6px; }
+  body[data-world="compass-cove"] .compass-map-tile { padding: 2px; }
+}
+html.larriverse-reduced-motion body[data-world="compass-cove"] :is(.cove-object-picture, .cove-landscape > img) { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="compass-cove"] :is(.cove-object-picture, .cove-landscape > img) { animation: none !important; }
+}
