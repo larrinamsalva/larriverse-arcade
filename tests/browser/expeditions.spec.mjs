@@ -263,7 +263,7 @@ test("Pantry Picnic: eighty continuous, unique picnics with saved checkpoints an
   expect(after.completions).toBe(1);
   expect(errors).toEqual([]);
 });
-test("Compass Cove: sixty progressive multi-step routes with gentle wrong-answer recovery",async({page})=>{
+test("Compass Cove: sixty progressive multi-step routes with gentle wrong-answer recovery",async({page},testInfo)=>{
   test.setTimeout(180_000);
   expect(compassClues.slice(0,5).every(clue=>clue.steps.length===2)).toBe(true);
   expect(compassClues.slice(40).every(clue=>clue.steps.length>=4)).toBe(true);
@@ -281,13 +281,31 @@ test("Compass Cove: sixty progressive multi-step routes with gentle wrong-answer
     const targets=compassClues.map(clue=>compassTarget(landmarks[clue.landmark],clue));
     expect(new Set(targets.slice(0,20)).size).toBe(20);
     expect(new Set(compassClues.map(c=>[c.landmark,c.east,c.south].join(":"))).size).toBe(60);
+    const picturedSettings=new Set();
     for(let index=0;index<compassClues.length;index++) {
+      const scene=page.locator('.cove-landscape');
+      await scene.locator('img').evaluate(image=>image.decode());
+      const setting=await scene.getAttribute('data-cove-setting');
+      if(!picturedSettings.has(setting)){
+        const folder=path.join('artifacts','screenshots',testInfo.project.name);
+        fs.mkdirSync(folder,{recursive:true});
+        await scene.screenshot({path:path.join(folder,'cove-setting-'+setting+'.png')});
+      }
+      picturedSettings.add(setting);
+      await page.locator('.compass-map-legend img, .cove-route-start img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
+      await expect(page.locator('.compass-map-legend img')).toHaveCount(landmarks.length);
+      const startPicture=page.locator('[data-map="'+landmarks[compassClues[index].landmark].id+'"] .cove-map-art img');
+      await expect(startPicture).toHaveAttribute('src',await page.locator('.cove-route-start img').getAttribute('src'));
       await expect(page.locator(".compass-direction-list li")).toHaveCount(compassClues[index].steps.length);
       await page.locator(`[data-map="${targets[index]}"]`).click();
       await expect(page.locator("#feedback")).toHaveClass(/good/);
       await expect(page.locator(`[data-map="${targets[index]}"]`)).toHaveClass(/found/);
+      await expect(page.locator('.cove-new-treasure')).toHaveCount(1);
+      await expect(page.locator('.cove-new-treasure')).toHaveAttribute('data-map',String(targets[index]));
+      await page.locator('.cove-new-treasure img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
       await next(page,index===compassClues.length-1);
     }
+    expect(picturedSettings.size).toBe(3);
   });
 });
 test("Cipher Club: eighty unique messages grow from A-H starters to long A-Z words",async({page})=>{
