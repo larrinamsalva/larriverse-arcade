@@ -48,6 +48,9 @@ const guardianArtwork = world.mode === "garden"
 const roverArtwork = world.mode === "robot"
   ? await import("../games/robot-rover/terrain-art.js").catch(() => null)
   : null;
+const pocketArtwork = world.mode === "budget"
+  ? await import("../games/pocket-planet/project-art.js").catch(() => null)
+  : null;
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
 const board = $("gameBoard");
@@ -421,6 +424,7 @@ function initialize() {
 }
 
 function startResourceProject() {
+  state.lastSupply=-1;
   state.selected=new Set();
   state.phase="gather";
   state.makeStep=0;
@@ -428,12 +432,14 @@ function startResourceProject() {
   renderBudget();
 }
 function renderBudget() {
+  const focusedSupply=document.activeElement?.dataset.supply;
+  const focusedStep=document.activeElement?.hasAttribute("data-make-step");
   const plan=state.deck[state.step];
   const chosen=[...state.selected].filter(i=>plan.items[i].need).length;
   stage(`Pocket Planet · Chapter ${Math.floor(state.step/10)+1}/6 · Project ${state.step+1}/${state.deck.length}`);
-  const banner=`
+  const banner=`${pocketArtwork?.projectLandscape(plan.kind) || ""}
     <div class="budget-hero pocket-project-hero pocket-project-hero--${esc(plan.kind)}">
-      <span class="budget-illustration pocket-project-icon" aria-hidden="true">${esc(plan.icon)}</span>
+      <span class="budget-illustration pocket-project-icon ${state.phase === "make" && state.makeStep > 0 ? "pocket-step-reaction" : ""}" aria-hidden="true">${pocketArtwork?.projectPicture(plan.id) || esc(plan.icon)}</span>
       <div>
         <p class="budget-kicker">${esc(plan.kind)} project ${state.step+1} of ${state.deck.length}</p>
         <h2 class="board-title">${esc(plan.title)}</h2>
@@ -448,23 +454,24 @@ function renderBudget() {
     </div>`;
   if(state.phase==="gather"){
     board.innerHTML=campaignTrail(state.passed,state.deck.length)+banner+`<p class="board-note">Choose THREE useful things to ${esc(plan.kind)}. Some objects do not belong in this project. Tap again to remove one.</p>
-      <div class="item-grid pocket-supply-grid">${plan.items.map((item,i)=>`<button class="item-button pocket-supply-card ${item.need?"useful":"decoy"} ${state.selected.has(i)?"selected":""}" data-supply="${i}" aria-pressed="${state.selected.has(i)}"><span class="item-icon pocket-supply-icon" aria-hidden="true">${esc(item.icon)}</span><b class="pocket-supply-name">${esc(item.name)}</b><small>${state.selected.has(i)?"✓ In your kit":"Tap to choose"}</small></button>`).join("")}</div>`;
+      <div class="item-grid pocket-supply-grid">${plan.items.map((item,i)=>`<button class="item-button pocket-supply-card ${item.need?"useful":"decoy"} ${state.selected.has(i)?"selected":""} ${state.lastSupply === i ? "pocket-just-added" : ""}" data-supply="${i}" aria-pressed="${state.selected.has(i)}"><span class="item-icon pocket-supply-icon" aria-hidden="true">${pocketArtwork?.supplyPicture(item.name) || esc(item.icon)}</span><b class="pocket-supply-name">${esc(item.name)}</b><small>${state.selected.has(i)?"✓ In your kit":"Tap to choose"}</small></button>`).join("")}</div>`;
     bind("[data-supply]",node=>{
       const i=Number(node.dataset.supply);
       if(state.selected.has(i))state.selected.delete(i);
       else if(state.selected.size===3){say("Your kit holds three supplies. Put one item back first.","try");return;}
-      else{state.selected.add(i);tone();}
+      else{state.selected.add(i);state.lastSupply=i;tone();}
       renderBudget();
+      state.lastSupply=-1;
     });
     button("Use my supplies",()=>{
       if(state.selected.size!==3){say("Choose exactly three supplies before starting.","try");return;}
       if(chosen!==3){say("Some things in your kit do not help with this project. Swap them for useful supplies.","try");return;}
-      state.phase="make";tone();renderBudget();say("Great supplies! Now put the steps in the right order.","good");
+      state.phase="make";tone();renderBudget();board.querySelector("[data-make-step]:not(:disabled)")?.focus();say("Great supplies! Now put the steps in the right order.","good");
     });
   }else if(state.phase==="make"){
     board.innerHTML=campaignTrail(state.passed,state.deck.length)+banner+`<p class="board-note">You have the right supplies. What should happen next? Choose the steps in a sensible order.</p>
       <div class="planet-workbench pocket-workbench" aria-label="Project workbench">
-        ${plan.items.filter(item=>item.need).map(item=>`<span class="pocket-workbench-item"><i aria-hidden="true">${esc(item.icon)}</i><b>${esc(item.name)}</b></span>`).join("")}
+        ${plan.items.filter(item=>item.need).map(item=>`<span class="pocket-workbench-item"><i aria-hidden="true">${pocketArtwork?.supplyPicture(item.name) || esc(item.icon)}</i><b>${esc(item.name)}</b></span>`).join("")}
       </div>
       <div class="planet-step-status pocket-step-status">Step ${state.makeStep+1} of 3</div>
       <div class="choice-grid planet-step-choices pocket-step-choices">${state.stepOrder.map(i=>`<button class="choice-button ${i<state.makeStep?"correct":""}" data-make-step="${i}" ${i<state.makeStep?"disabled":""}>${i<state.makeStep?"✓ ":""}${esc(plan.steps[i])}</button>`).join("")}</div>`;
@@ -484,7 +491,7 @@ function renderBudget() {
       }else{renderBudget();say("Good work! What comes next?","good");}
     });
   }else{
-    board.innerHTML=campaignTrail(state.passed,state.deck.length)+banner+`<div class="planet-project-complete pocket-project-complete" role="status"><strong>🌟 ${esc(plan.goal)} completed!</strong><p>You chose useful supplies and followed all three steps.</p></div>`;
+    board.innerHTML=campaignTrail(state.passed,state.deck.length)+banner+`<div class="planet-project-complete pocket-project-complete" role="status">${pocketArtwork?.projectPicture(plan.id) || ""}<strong>🌟 ${esc(plan.goal)} completed!</strong><p>You chose useful supplies and followed all three steps.</p></div>`;
     button("Next project",()=>{
       state.step++;
       startResourceProject();
@@ -496,6 +503,8 @@ function renderBudget() {
   hint=state.phase==="gather"
     ? `Look for things you can use to create ${plan.goal.toLowerCase()}. Unrelated objects do not belong in this kit.`
     : `First: ${plan.steps[0]}. What should happen after that?`;
+  if(focusedSupply !== undefined && state.phase === "gather")board.querySelector(`[data-supply="${CSS.escape(focusedSupply)}"]`)?.focus({preventScroll:true});
+  if(focusedStep)(state.phase === "make" ? board.querySelector("[data-make-step]:not(:disabled)") : actions.querySelector("button"))?.focus({preventScroll:true});
 }
 
 function renderCards(mode) {

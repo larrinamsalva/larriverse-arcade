@@ -158,6 +158,10 @@ async function completePlanetProject(page,plan,testMistakes=false) {
   }
   for(let i=0;i<3;i++)await page.locator(`[data-supply="${i}"]`).click();
   await page.getByRole("button",{name:"Use my supplies"}).click();
+  await expect(page.locator('.pocket-workbench-item img')).toHaveCount(3);
+  await page.locator('.pocket-workbench-item img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
+  expect(await page.locator('.pocket-workbench-item img').evaluateAll(images=>images.map(image=>image.dataset.planetSupply)))
+    .toEqual(plan.items.filter(item=>item.need).map(item=>item.name));
   if(testMistakes){
     await page.locator('[data-make-step="2"]').click();
     await expect(page.locator("#feedback")).toContainText("Try another step");
@@ -167,12 +171,12 @@ async function completePlanetProject(page,plan,testMistakes=false) {
     if(i<2)await expect(page.locator(".planet-step-status")).toContainText(`Step ${i+2} of 3`);
   }
 }
-test("Pocket Planet: all sixty original grow, build, eat projects form one six-chapter adventure",async({page})=>{
+test("Pocket Planet: all sixty original grow, build, eat projects form one six-chapter adventure",async({page},testInfo)=>{
   test.setTimeout(420000);
   expect(resourceAdventures).toHaveLength(60);
   expect(new Set(resourceAdventures.map(p=>p.id)).size).toBe(60);
   await round(page,"pocket-planet",async()=>{
-    const seen=new Set();
+    const seen=new Set(),picturedSupplies=new Set(),picturedSettings=new Set();
     await expect(page.locator(".level-trail .level-node")).toHaveCount(6);
     for(let i=0;i<60;i++){
       const title=await page.locator(".budget-hero h2").innerText();
@@ -183,13 +187,32 @@ test("Pocket Planet: all sixty original grow, build, eat projects form one six-c
       await expect(page.locator("#stageLabel")).toContainText(`Chapter ${Math.floor(i/10)+1}/6`);
       await expect(page.locator("#stageLabel")).toContainText(`Project ${i+1}/60`);
       await expect(page.locator("[data-supply]")).toHaveCount(6);
+      await page.locator('.planet-landscape img, .pocket-project-icon img, .pocket-supply-icon img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
+      await expect(page.locator('.pocket-project-icon [data-planet-project]')).toHaveAttribute('data-planet-project',plan.id);
+      await expect(page.locator('.planet-landscape')).toHaveAttribute('data-planet-setting',plan.kind);
+      for(const [index,item] of plan.items.entries()){
+        await expect(page.locator('[data-supply="'+index+'"] img')).toHaveAttribute('data-planet-supply',item.name);
+        picturedSupplies.add(item.name);
+      }
+      if(!picturedSettings.has(plan.kind)){
+        const folder=path.join('artifacts','screenshots',testInfo.project.name);
+        fs.mkdirSync(folder,{recursive:true});
+        await page.locator('.planet-landscape').screenshot({path:path.join(folder,'planet-setting-'+plan.kind+'.png')});
+      }
+      picturedSettings.add(plan.kind);
       await expect(page.locator("#gameBoard")).not.toContainText(/coins left|starting coins|price per/);
       await completePlanetProject(page,plan,i===0);
       const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.mainCampaign.pocket-planet.v1")));
       expect(saved).toEqual({next:i+1,correct:i+1});
+      if(i<59){
+        await expect(page.locator('.pocket-project-complete [data-planet-project]')).toHaveAttribute('data-planet-project',plan.id);
+        await page.locator('.pocket-project-complete img').evaluate(image=>image.decode());
+      }
       if(i<59)await page.getByRole("button",{name:"Next project"}).click();
     }
     expect(seen.size).toBe(60);
+    expect(picturedSupplies.size).toBe(new Set(resourceAdventures.flatMap(plan=>plan.items.map(item=>item.name))).size);
+    expect(picturedSettings.size).toBe(3);
     await expect(page.locator("#finishMessage")).toContainText("60 hands-on projects");
   });
   await expect(page.locator("#stageLabel")).toContainText("Project 1/60");
