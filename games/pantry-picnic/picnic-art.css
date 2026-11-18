@@ -1,0 +1,115 @@
+body[data-world="pantry-picnic"] .world-cover::before {
+  background-image: url('../../assets/world-motion/backgrounds/picnic-garden.webp');
+  background-size: cover;
+  background-position: center;
+}
+body[data-world="pantry-picnic"] .pantry-landscape {
+  margin: 0 0 1rem;
+  overflow: hidden;
+  border: 2px solid #849a72;
+  border-radius: 18px;
+  background: #f1f6e9;
+}
+body[data-world="pantry-picnic"] .pantry-landscape > img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center 58%;
+  animation: picnic-daylight 12s ease-in-out infinite;
+}
+body[data-world="pantry-picnic"] .pantry-landscape figcaption {
+  padding: .5rem .75rem;
+  font-size: .85rem;
+  font-weight: 800;
+  color: #344b30;
+}
+body[data-world="pantry-picnic"] .pantry-challenge::after,
+body[data-world="pantry-picnic"] .picnic-basket::before { display: none; }
+body[data-world="pantry-picnic"] .picnic-basket {
+  gap: 12px;
+  padding: 16px;
+  border: 6px solid #8d5d39;
+  background: #be8c58 url('./art/wicker.webp') center / 180px;
+}
+body[data-world="pantry-picnic"] .picnic-basket::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  height: auto;
+  border-radius: 16px;
+  background: #e9edce url('./art/cloth.webp') center / 180px;
+  opacity: 1;
+  pointer-events: none;
+}
+body[data-world="pantry-picnic"] .pantry-picnic-slot {
+  min-width: 0;
+  gap: 6px;
+  background: #fffcf4;
+  color: #3a3d2d;
+  border-color: #9c9d76;
+  overflow-wrap: anywhere;
+}
+body[data-world="pantry-picnic"] .pantry-picnic-slot.filled::before { display: none; }
+body[data-world="pantry-picnic"] .pantry-picnic-slot b { line-height: 1.35; }
+body[data-world="pantry-picnic"] .pantry-picnic-slot small { color: #51533e; line-height: 1.4; }
+body[data-world="pantry-picnic"] .pantry-food-picture {
+  display: block;
+  flex: none;
+  width: 100px;
+  height: 100px;
+  max-width: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 3px #644a3028);
+}
+body[data-world="pantry-picnic"] .picnic-slot .pantry-food-picture { width: 92px; height: 92px; }
+body[data-world="pantry-picnic"] .picnic-slot.is-packing .pantry-food-picture { animation: picnic-pack .65s ease-out both; }
+body[data-world="pantry-picnic"] .cargo-shelf {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  gap: 12px;
+}
+body[data-world="pantry-picnic"] .pantry-food-card {
+  min-width: 0;
+  background: #fffcf4;
+  color: #3a3d2d;
+  border-color: #a59b7b;
+  overflow-wrap: anywhere;
+}
+body[data-world="pantry-picnic"] .pantry-food-card b { line-height: 1.35; }
+body[data-world="pantry-picnic"] .pantry-food-card small { color: #51533e; line-height: 1.45; }
+body[data-world="pantry-picnic"] :is(.pantry-food-card, .pantry-picnic-slot):disabled { opacity: 1; }
+body[data-world="pantry-picnic"] .pantry-food-card:disabled { border-style: dashed; box-shadow: none; }
+body[data-world="pantry-picnic"] .pantry-picnic-slot:focus-visible,
+body[data-world="pantry-picnic"] .pantry-food-card:focus-visible { outline: 3px solid #5e478e; outline-offset: 3px; }
+[data-lv-world-motion="pantry-picnic"] .lv-motion-character { left: 12%; height: 92%; }
+[data-lv-world-motion="pantry-picnic"] .lv-motion-prop { right: 23%; height: 60%; }
+html.larriverse-dark body[data-world="pantry-picnic"] .pantry-landscape { background: #273e32; border-color: #799473; }
+html.larriverse-dark body[data-world="pantry-picnic"] .pantry-landscape > img { filter: brightness(.8); animation: none; }
+html.larriverse-dark body[data-world="pantry-picnic"] .pantry-landscape figcaption { color: #edf7df; }
+html.larriverse-dark body[data-world="pantry-picnic"] :is(.pantry-food-card, .pantry-picnic-slot) { background: #293b30; color: #f2ffe7; border-color: #8eab7d; }
+html.larriverse-dark body[data-world="pantry-picnic"] :is(.pantry-food-card, .pantry-picnic-slot) small { color: #e4ecd7; }
+html.larriverse-high-contrast body[data-world="pantry-picnic"] :is(.pantry-landscape, .pantry-challenge, .pantry-food-card, .pantry-picnic-slot, .pantry-rules span, .leftover-tag) { background: #111; color: #fff; border: 2px solid #fff; }
+html.larriverse-high-contrast body[data-world="pantry-picnic"] :is(.pantry-landscape figcaption, .pantry-challenge .eyebrow, .pantry-food-card small, .pantry-picnic-slot small) { color: #fff; }
+@keyframes picnic-pack {
+  from { opacity: .3; transform: translateY(-14px) scale(.8); }
+  65% { opacity: 1; transform: translateY(3px) scale(1.04); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes picnic-daylight { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.04); } }
+@media (max-width: 700px) {
+  body[data-world="pantry-picnic"] .pantry-landscape > img { height: 200px; }
+  body[data-world="pantry-picnic"] .picnic-basket { padding: 12px; }
+  body[data-world="pantry-picnic"] .pantry-picnic-slot { min-height: 70px; }
+  body[data-world="pantry-picnic"] .pantry-picnic-slot.filled {
+    display: grid;
+    grid-template-columns: minmax(0, clamp(48px, 22vw, 80px)) minmax(0, 1fr);
+    text-align: left;
+  }
+  body[data-world="pantry-picnic"] .picnic-slot .pantry-food-picture { grid-row: span 2; width: 100%; height: 80px; }
+}
+html.larriverse-reduced-motion body[data-world="pantry-picnic"] :is(.pantry-food-picture, .pantry-landscape > img) { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="pantry-picnic"] :is(.pantry-food-picture, .pantry-landscape > img) { animation: none !important; }
+}
