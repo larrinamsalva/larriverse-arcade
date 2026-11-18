@@ -1,0 +1,134 @@
+body[data-world="harbor-helpers"] .world-cover::before {
+  background-image: url('../../assets/world-motion/backgrounds/harbor-garden.webp');
+  background-size: cover;
+  background-position: center;
+}
+body[data-world="harbor-helpers"] .harbor-map--illustrated {
+  --harbor-ship-width: min(var(--harbor-vessel-width), 260px);
+  position: relative;
+  isolation: isolate;
+  height: clamp(218px, 27vw, 310px);
+  overflow: hidden;
+  border: 2px solid #6c999e;
+  border-radius: 20px;
+  background: #5eaebc;
+}
+body[data-world="harbor-helpers"] .harbor-island-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+body[data-world="harbor-helpers"] .harbor-vessel {
+  position: absolute;
+  left: 10px;
+  bottom: 8%;
+  width: var(--harbor-ship-width);
+  aspect-ratio: 5 / 3;
+  transform-origin: center 88%;
+  animation: harbor-vessel-bob 4.5s ease-in-out infinite;
+}
+body[data-world="harbor-helpers"] .harbor-transport-picture {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 2px #173a4b66);
+}
+body[data-world="harbor-helpers"] .harbor-vessel-wake {
+  position: absolute;
+  left: 8%;
+  right: 7%;
+  bottom: 9%;
+  height: 12%;
+  border-bottom: 2px dashed #e8ffff;
+  border-radius: 50%;
+  opacity: .8;
+}
+body[data-world="harbor-helpers"] .harbor-water-glint {
+  position: absolute;
+  left: 26%;
+  bottom: 22%;
+  width: 34%;
+  height: 4px;
+  border-radius: 50%;
+  background: #deffff;
+  opacity: .3;
+  animation: harbor-water-light 6s ease-in-out infinite;
+}
+body[data-world="harbor-helpers"] .harbor-dock-bollard {
+  position: absolute;
+  left: 1%;
+  bottom: 6%;
+  width: clamp(24px, 6%, 44px);
+  height: auto;
+  filter: drop-shadow(0 2px 2px #173a4b55);
+}
+body[data-world="harbor-helpers"] .harbor-arrived .harbor-vessel {
+  animation: harbor-delivery-sail 2.4s ease-in-out both;
+}
+body[data-world="harbor-helpers"] .harbor-cargo-shelf {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+}
+body[data-world="harbor-helpers"] .harbor-cargo-card {
+  min-width: 0;
+  gap: .4rem;
+  padding: .8rem;
+}
+body[data-world="harbor-helpers"] .harbor-cargo-picture {
+  display: block;
+  width: 94px;
+  height: 90px;
+  max-width: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+body[data-world="harbor-helpers"] :is(.harbor-cargo-card, .harbor-manifest-crates button) :is(b, small) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 1fr));
+  gap: .5rem;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-head { flex-wrap: wrap; gap: .4rem; }
+body[data-world="harbor-helpers"] .harbor-request-card { min-width: 0; }
+body[data-world="harbor-helpers"] .harbor-request-card h2 { overflow-wrap: anywhere; }
+body[data-world="harbor-helpers"] .harbor-manifest-crates button { min-width: 0; width: auto; }
+body[data-world="harbor-helpers"] .harbor-manifest-crates .harbor-cargo-picture {
+  width: 60px;
+  height: 56px;
+}
+body[data-world="harbor-helpers"] .harbor-manifest-crates > p { grid-column: 1 / -1; }
+[data-lv-world-motion="harbor-helpers"] .lv-motion-character { left: 13%; height: 94%; }
+[data-lv-world-motion="harbor-helpers"] .lv-motion-prop { right: 23%; height: 54%; }
+html.larriverse-dark body[data-world="harbor-helpers"] .harbor-map--illustrated { border-color: #84a9b3; }
+html.larriverse-dark body[data-world="harbor-helpers"] .harbor-island-backdrop { filter: brightness(.85); }
+html.larriverse-high-contrast body[data-world="harbor-helpers"] .harbor-map--illustrated { border-color: #fff; }
+@keyframes harbor-vessel-bob {
+  0%, 100% { transform: none; }
+  50% { transform: translateY(-3px) rotate(.7deg); }
+}
+@keyframes harbor-water-light {
+  0%, 100% { transform: translateX(-8%); opacity: .18; }
+  50% { transform: translateX(8%); opacity: .4; }
+}
+@keyframes harbor-delivery-sail {
+  from { left: 10px; }
+  to { left: calc(100% - var(--harbor-ship-width) - 10px); }
+}
+@media (max-width: 620px) {
+  body[data-world="harbor-helpers"] .harbor-map--illustrated { height: 240px; }
+  body[data-world="harbor-helpers"] .harbor-island-backdrop { object-position: center; }
+}
+html.larriverse-reduced-motion body[data-world="harbor-helpers"] :is(.harbor-vessel, .harbor-water-glint) { animation: none !important; }
+html.larriverse-reduced-motion body[data-world="harbor-helpers"] .harbor-arrived .harbor-vessel { left: calc(100% - var(--harbor-ship-width) - 10px); }
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="harbor-helpers"] :is(.harbor-vessel, .harbor-water-glint) { animation: none !important; }
+  body[data-world="harbor-helpers"] .harbor-arrived .harbor-vessel { left: calc(100% - var(--harbor-ship-width) - 10px); }
+}

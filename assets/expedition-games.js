@@ -9,6 +9,7 @@ import {
 import { bridgeMiniatureLandscape } from "./bridge-miniatures.js";
 import { bridgeRiverLandscape, bridgeDeliveryVehicle } from "../games/bridge-buddies/river-art.js";
 import { councilScenery, councilResident, councilBuilding } from "../games/critter-council/council-art.js";
+import { harborDeliveryScene, harborCargoPicture } from "../games/harbor-helpers/delivery-art.js";
 
 export function createExpedition(world, a) {
   let s;
@@ -153,7 +154,7 @@ export function createExpedition(world, a) {
     const transportArt = level.vehicleIcon === "truck"
       ? `<g class="harbor-ferry harbor-ferry--3d" transform="translate(230 90) scale(.92)">${iconDrawing("boat")}</g><g class="harbor-truck harbor-truck--3d" transform="translate(74 87) scale(.78)">${iconDrawing("truck")}</g>`
       : `<g class="harbor-boat harbor-boat--3d harbor-boat--chapter-${level.chapter}" transform="translate(105 85) scale(${transportScale})">${iconDrawing("boat")}</g>`;
-    a.stage(`${level.name} · Chapter ${level.chapter}/6 · ${s.level + 1} of ${harborLevels.length}`);
+    a.stage(`${level.name} · Chapter ${level.chapter}/${Math.ceil(harborLevels.length / 10)} · ${s.level + 1} of ${harborLevels.length}`);
     a.progress(s.level + (s.passed ? 1 : 0), harborLevels.length);
     a.score((s.level + (s.passed ? 1 : 0)) / harborLevels.length * 100);
     a.board.innerHTML = `${advancement(harborLevels.length)}
@@ -163,7 +164,7 @@ export function createExpedition(world, a) {
         ${a.chip("Cargo load", `${total(s.load)}/${level.capacity}`)}
         ${a.chip("Deliveries", `${s.level + (s.passed ? 1 : 0)}/${harborLevels.length}`)}
       </div>
-      <div class="harbor-map harbor-route--${s.level + 1} harbor-map--dimensional harbor-map--chapter-${level.chapter}" aria-hidden="true">
+      ${harborDeliveryScene(level, s.passed) || `<div class="harbor-map harbor-route--${s.level + 1} harbor-map--dimensional harbor-map--chapter-${level.chapter}" aria-hidden="true">
         <svg viewBox="0 0 620 190">
           <defs><linearGradient id="harbor-water" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b9edf0"/><stop offset="1" stop-color="#49b5ca"/></linearGradient></defs>
           <rect width="620" height="190" rx="24" fill="url(#harbor-water)"/>
@@ -174,7 +175,7 @@ export function createExpedition(world, a) {
           ${transportArt}
           <path d="M194 139q88-42 190-24" fill="none" stroke="#fff" stroke-width="5" stroke-dasharray="10 12" opacity=".72"/>
         </svg>
-      </div>
+      </div>`}
       <article class="harbor-request-card">
         <p class="eyebrow">Island request · Chapter ${level.chapter} of ${Math.ceil(harborLevels.length / 10)}</p>
         <h2>${a.esc(level.name)}</h2>
@@ -182,12 +183,12 @@ export function createExpedition(world, a) {
         ${level.purpose ? `<p class="small-note">${a.esc(level.purpose)}</p>` : ""}
       </article>
       <div class="harbor-cargo-shelf cargo-shelf">
-        ${availableCargo.map(item => `<button type="button" class="supply-card harbor-cargo-card harbor-cargo-card--${item.id}" data-cargo="${item.id}" data-focus="cargo-${item.id}" ${(s.load[item.id] || 0) >= item.count || s.passed ? "disabled" : ""}>${iconSvg(item.icon)}<b>${a.esc(item.name)}</b><small>${s.load[item.id] || 0} loaded · tap to add</small></button>`).join("")}
+        ${availableCargo.map(item => `<button type="button" class="supply-card harbor-cargo-card harbor-cargo-card--${item.id}" data-cargo="${item.id}" data-focus="cargo-${item.id}" ${(s.load[item.id] || 0) >= item.count || s.passed ? "disabled" : ""}>${harborCargoPicture(item.id) || iconSvg(item.icon)}<b>${a.esc(item.name)}</b><small>${s.load[item.id] || 0} loaded · tap to add</small></button>`).join("")}
       </div>
       <section class="harbor-manifest" aria-label="Loaded cargo">
         <div class="harbor-manifest-head"><b>Cargo manifest</b><span>${total(s.load)} of ${level.capacity} spaces filled</span></div>
         <div class="harbor-manifest-crates">
-          ${loadEntries.length ? loadEntries.map((id, index) => `<button type="button" data-unload-cargo="${id}" aria-label="Unload one ${a.esc(cargoById.get(id).name)}"><span aria-hidden="true">${iconSvg(cargoById.get(id).icon)}</span><small>${a.esc(cargoById.get(id).name)}</small></button>`).join("") : '<p>Choose supplies above. Loaded crates will appear here.</p>'}
+          ${loadEntries.length ? loadEntries.map((id, index) => `<button type="button" data-unload-cargo="${id}" aria-label="Unload one ${a.esc(cargoById.get(id).name)}"><span aria-hidden="true">${harborCargoPicture(id) || iconSvg(cargoById.get(id).icon)}</span><small>${a.esc(cargoById.get(id).name)}</small></button>`).join("") : '<p>Choose supplies above. Loaded crates will appear here.</p>'}
         </div>
       </section>`;
     a.bind("[data-cargo]", node => {

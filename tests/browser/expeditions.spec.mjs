@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { test, expect } from "@playwright/test";
 import { bridgeLevels, bridgeParts, pipePaths, directions, harborLevels, cargo, expeditions, pantryFoods, pantryChallenges, PANTRY_ROUND_SIZE, compassClues, landmarks, cipherLevels, tradeLevels, townParts, townLevels } from "../../assets/expedition-worlds.js";
 import { checkPantryBox, compassTarget, encode, checkTownLevel } from "../../assets/expedition-logic.js";
@@ -101,7 +103,7 @@ test("Water Works: every one of eighty unique filter-connected networks works",a
     }
   });
 });
-test("Harbor Helpers: eighty increasingly complex exact deliveries fit their boat",async({page})=>{
+test("Harbor Helpers: eighty increasingly complex exact deliveries fit their boat",async({page},testInfo)=>{
   test.setTimeout(420_000);
   await adventure(page,"harbor-helpers",async()=>{
     expect(harborLevels).toHaveLength(80);
@@ -117,7 +119,20 @@ test("Harbor Helpers: eighty increasingly complex exact deliveries fit their boa
     await page.locator('[data-cargo="wood"]').click();
     await expect(page.locator("#feedback")).toContainText("holds 3 crates"); await action(page,"Unload the boat");
     const ranks=["Dock Helper","Route Planner","Harbor Captain","Community Admiral","Supply Scout","Island Planner","Resource Organizer","Cargo Navigator","Delivery Leader","Harbor Coordinator","Community Captain","Master Harbor Helper","Coastal Dispatcher","Fleet Planner","Harbor Strategist","Grand Harbor Captain"];
+    const picturedSettings = new Set(), picturedTransports = new Set(), picturedSupplies = new Set();
     for(let index=0;index<harborLevels.length;index++) {
+      const scene = page.locator('.harbor-map--illustrated');
+      await scene.locator('img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
+      const setting = await scene.getAttribute('data-harbor-setting'), transport = await scene.getAttribute('data-harbor-transport');
+      if (!picturedSettings.has(setting) || !picturedTransports.has(transport)) {
+        const folder = path.join('artifacts', 'screenshots', testInfo.project.name);
+        fs.mkdirSync(folder, { recursive: true });
+        await scene.screenshot({ path: path.join(folder, 'harbor-' + setting + '-' + transport + '.png') });
+      }
+      picturedSettings.add(setting); picturedTransports.add(transport);
+      await page.locator('.harbor-cargo-shelf img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
+      for (const type of await page.locator('.harbor-cargo-shelf [data-harbor-cargo]').evaluateAll(images => images.map(image => image.dataset.harborCargo))) picturedSupplies.add(type);
+      await expect(page.locator('#stageLabel')).toContainText('Chapter ' + harborLevels[index].chapter + '/8');
       await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-level",String(index+1));
       await expect(page.locator(".adventure-advancement")).toHaveAttribute("data-rank",ranks[Math.floor(index/5)]);
       for(const [id,count] of Object.entries(harborLevels[index].needs)) for(let crate=0;crate<count;crate++) await page.locator(`[data-cargo="${id}"]`).click();
@@ -125,6 +140,9 @@ test("Harbor Helpers: eighty increasingly complex exact deliveries fit their boa
       await expect(page.locator("#feedback")).toHaveClass(/good/);
       await next(page,index===harborLevels.length-1);
     }
+    expect(picturedSettings.size).toBe(8);
+    expect(picturedTransports.size).toBe(8);
+    expect(picturedSupplies.size).toBe(10);
     await expect(page.locator("#finishMessage")).toContainText("80 island deliveries");
   });
 });
