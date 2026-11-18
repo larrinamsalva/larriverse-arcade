@@ -1,0 +1,49 @@
+body[data-world="pocket-planet"] .world-cover::before {
+  background-image: url('../../assets/world-motion/backgrounds/planet-grow.webp');
+  background-size: cover;
+  background-position: center;
+}
+body[data-world="pocket-planet"] .planet-landscape { margin: 0 0 1rem; overflow: hidden; border: 2px solid #889c75; border-radius: 18px; background: #eff4e5; }
+body[data-world="pocket-planet"] .planet-landscape > img { display: block; width: 100%; height: 220px; object-fit: cover; object-position: center 50%; animation: planet-daylight 12s ease-in-out infinite; }
+body[data-world="pocket-planet"] .planet-landscape figcaption { padding: .5rem .75rem; font-size: .85rem; font-weight: 800; color: #334e32; }
+body[data-world="pocket-planet"] .pocket-project-hero { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; }
+body[data-world="pocket-planet"] .pocket-project-hero::after { display: none; }
+body[data-world="pocket-planet"] .pocket-project-hero > div { min-width: 0; overflow-wrap: anywhere; }
+body[data-world="pocket-planet"] .pocket-project-icon { display: grid; place-items: center; min-height: 104px; background: none; border: 0; box-shadow: none; transform: none; }
+body[data-world="pocket-planet"] .planet-object-picture { display: block; width: 104px; height: 104px; max-width: 100%; margin: 0 auto; object-fit: contain; pointer-events: none; }
+body[data-world="pocket-planet"] .planet-blueprint { position: relative; display: block; width: 104px; height: 104px; max-width: 100%; }
+body[data-world="pocket-planet"] .planet-blueprint-drawing { position: absolute; inset: 16%; width: 68%; height: 68%; pointer-events: none; }
+body[data-world="pocket-planet"] .pocket-supply-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); gap: 12px; }
+body[data-world="pocket-planet"] .pocket-supply-card { min-width: 0; overflow-wrap: anywhere; }
+body[data-world="pocket-planet"] .pocket-supply-icon { width: 104px; height: 104px; max-width: 100%; margin: 0 auto 8px; background: none; border: 0; box-shadow: none; filter: none; }
+body[data-world="pocket-planet"] .pocket-just-added .planet-object-picture { animation: planet-kit-add .65s ease-out both; }
+body[data-world="pocket-planet"] .pocket-step-reaction .planet-object-picture { animation: planet-progress .6s ease-out both; }
+body[data-world="pocket-planet"] .pocket-workbench { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); background: #b28456 url('../garden-guardians/art/timber.webp') center / 256px; }
+body[data-world="pocket-planet"] .pocket-workbench::before { display: none; }
+body[data-world="pocket-planet"] .pocket-workbench-item { min-width: 0; overflow-wrap: anywhere; }
+body[data-world="pocket-planet"] .pocket-workbench-item i { width: 88px; height: 88px; max-width: 100%; background: none; border: 0; box-shadow: none; }
+body[data-world="pocket-planet"] .pocket-workbench-item .planet-object-picture { width: 88px; height: 88px; }
+body[data-world="pocket-planet"] .pocket-step-choices { grid-template-columns: 1fr; }
+body[data-world="pocket-planet"] .pocket-step-choices .choice-button { min-width: 0; overflow-wrap: anywhere; }
+body[data-world="pocket-planet"] .pocket-step-choices .choice-button.correct:disabled { opacity: 1; }
+body[data-world="pocket-planet"] .pocket-project-complete .planet-object-picture { width: 144px; height: 144px; margin-bottom: 12px; animation: planet-progress .7s ease-out both; }
+body[data-world="pocket-planet"] .pocket-project-complete .planet-blueprint { width: 144px; height: 144px; margin: 0 auto 12px; }
+[data-lv-world-motion="pocket-planet"] .lv-motion-character { left: 12%; height: 92%; }
+[data-lv-world-motion="pocket-planet"] .lv-motion-prop { right: 24%; height: 54%; }
+html.larriverse-dark body[data-world="pocket-planet"] .planet-landscape { background: #293c32; border-color: #86a17b; }
+html.larriverse-dark body[data-world="pocket-planet"] .planet-landscape > img { filter: brightness(.8); animation: none; }
+html.larriverse-dark body[data-world="pocket-planet"] .planet-landscape figcaption { color: #efffe6; }
+html.larriverse-high-contrast body[data-world="pocket-planet"] :is(.planet-landscape, .pocket-project-hero, .pocket-workbench, .pocket-workbench-item, .pocket-step-status, .pocket-step-choices .choice-button, .pocket-project-complete) { background: #000 !important; color: #fff !important; border-color: #fff !important; }
+html.larriverse-high-contrast body[data-world="pocket-planet"] :is(.planet-landscape figcaption, .pocket-project-hero h2, .pocket-project-hero p, .pocket-workbench-item b, .pocket-project-complete strong, .pocket-project-complete p) { color: #fff !important; }
+@keyframes planet-kit-add { from { opacity: .4; transform: translateY(-10px) scale(.85); } 65% { opacity: 1; transform: translateY(2px) scale(1.03); } to { opacity: 1; transform: none; } }
+@keyframes planet-progress { from { opacity: .4; transform: translateY(8px) scale(.88); } 65% { opacity: 1; transform: translateY(-3px) scale(1.04); } to { opacity: 1; transform: none; } }
+@keyframes planet-daylight { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.04); } }
+@media (max-width: 700px) {
+  body[data-world="pocket-planet"] .planet-landscape > img { height: 200px; }
+  body[data-world="pocket-planet"] .pocket-project-hero { grid-template-columns: 1fr; }
+  body[data-world="pocket-planet"] .pocket-project-icon { justify-self: center; width: 104px; }
+}
+html.larriverse-reduced-motion body[data-world="pocket-planet"] :is(.planet-object-picture, .planet-landscape > img) { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="pocket-planet"] :is(.planet-object-picture, .planet-landscape > img) { animation: none !important; }
+}
