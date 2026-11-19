@@ -16,7 +16,7 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'critter-council': scene('woodland', 'fox', 'notebook', 'slide'),
   'crossword-world': scene('library', 'artist', 'notebook', 'turn', { host: '.play-card', position: 'beforebegin' }),
   'date-detective': scene('market', 'researcher', 'magnifier', 'scan', { host: '.game-layout', position: 'beforebegin' }),
-  'energy-island': scene('weather-hill', 'mechanic', 'solar-panel', 'turn'),
+  'energy-island': scene('energy-coast-sunny', 'energy-technician', 'energy-solar-panel', 'turn'),
   'fact-finder': scene('library', 'researcher', 'camera', 'turn'),
   'garden-grow-harvest': scene('garden-planting', 'garden-grow-gardener', 'garden-grow-watering-can', 'pour'),
   'garden-guardians': scene('guardian-meadow', 'guardian-robin', 'garden-grow-watering-can', 'pour'),

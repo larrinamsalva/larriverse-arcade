@@ -51,6 +51,9 @@ const roverArtwork = world.mode === "robot"
 const pocketArtwork = world.mode === "budget"
   ? await import("../games/pocket-planet/project-art.js").catch(() => null)
   : null;
+const energyArtwork = world.mode === "energy"
+  ? await import("../games/energy-island/power-art.js").catch(() => null)
+  : null;
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
 const board = $("gameBoard");
@@ -1011,14 +1014,14 @@ function renderEnergy() {
   stage(`Energy level ${state.level + 1} of ${energyLevels.length} · ${level.rank} · ${level.name}`);
   board.innerHTML = `${levelTrail(energyLevels, state.level)}
     <section class="nature-banner energy-zone--${level.zone}" aria-label="${esc(level.name)} power mission">
-      <span aria-hidden="true">🏝️</span>
+      <span aria-hidden="true">${energyArtwork?.forecastPicture(level.zone, "Sunny") || "🏝️"}</span>
       <div><h2>${esc(level.name)}</h2><p>${esc(level.lesson)}</p>
       <small>Keep the lights on for four days. Each day needs ${level.demand} energy units. Each battery holds 4.</small></div>
     </section>
     <p class="board-note">Toy energy system: real electrical systems and weather are more complicated. Build before testing, then watch the forecast.</p>
     <div class="weather-preview energy-weather-preview">${level.weather.map((day, i) =>
       `<div class="energy-weather-card energy-weather-card--${esc(day.name.toLowerCase())} ${state.day === i && state.day < 4 ? "forecast-current" : ""}">
-      <strong>${day.icon}</strong>${esc(day.name)}<br>Solar ${day.solar} · Wind ${day.wind}${state.day > i ? " · Done" : ""}</div>`).join("")}</div>
+      ${energyArtwork?.forecastPicture(level.zone, day.name) || ""}<div class="energy-weather-copy"><strong>${esc(day.name)}</strong>Solar ${day.solar} · Wind ${day.wind}${state.day > i ? " · Done" : ""}</div></div>`).join("")}</div>
     <div class="stat-row">${chip("Level", `${state.level + 1}/${energyLevels.length}`)}
       ${chip("Builder tokens", builderLeft())}
       ${chip("Stored energy", `${state.stored}/${state.build.battery * 4}`)}
@@ -1026,21 +1029,22 @@ function renderEnergy() {
       ${chip("Island stars", `${stageStars(energyLevels)}/${energyLevels.length * 3}`)}</div>
     <div class="item-grid energy-build-grid">${["solar","wind","battery"].map((type, i) =>
       `<button class="item-button energy-build-card energy-build-card--${type}" data-build="${type}" ${state.started ? "disabled" : ""}>
-        <span class="item-icon" aria-hidden="true">${["☀️", "🌬️", "🔋"][i]}</span>
-        ${["Solar panel", "Wind turbine", "Battery"][i]}
+        <span class="item-icon" aria-hidden="true">${energyArtwork?.equipmentPicture(type) || ["☀️", "🌬️", "🔋"][i]}</span>
+        <b>${["Solar panel", "Wind turbine", "Battery"][i]}</b>
         <small>${buildCosts[type]} tokens · Built ${state.build[type]}</small></button>`).join("")}</div>
-    <div class="energy-scene energy-island-scene energy-zone-scene--${esc(level.zone)}" aria-label="Island energy equipment">
+    ${energyArtwork?.islandScene(level, state) || `<div class="energy-scene energy-island-scene energy-zone-scene--${esc(level.zone)}" aria-label="Island energy equipment">
       <span class="energy-home" aria-hidden="true">🏡</span><span class="energy-solar-bank" aria-hidden="true">${"☀️".repeat(state.build.solar) || "▫️"}</span>
       <span class="energy-wind-bank" aria-hidden="true">${"🌬️".repeat(state.build.wind) || "▫️"}</span>
-      <span class="energy-battery-icon" aria-hidden="true">🔋</span><strong class="energy-storage-readout">${state.stored} stored</strong></div>
-    ${state.ledger.length ? `<table class="ledger"><caption>Your energy log</caption><thead><tr><th>Day</th><th>Made</th><th>Stored after</th><th>Lights</th></tr></thead><tbody>${state.ledger.map((entry) =>
-      `<tr><td>${esc(entry.name)}</td><td>${entry.made}</td><td>${entry.stored}</td><td>${entry.ok ? "Glowing" : "Needs more"}</td></tr>`).join("")}</tbody></table>` : ""}`;
+      <span class="energy-battery-icon" aria-hidden="true">🔋</span><strong class="energy-storage-readout">${state.stored} stored</strong></div>`}
+    ${state.ledger.length ? `<div class="energy-log-scroll" role="region" aria-label="Energy log" tabindex="0"><table class="ledger"><caption>Your energy log</caption><thead><tr><th>Day</th><th>Made</th><th>Stored after</th><th>Lights</th></tr></thead><tbody>${state.ledger.map((entry) =>
+      `<tr><td>${esc(entry.name)}</td><td>${entry.made}</td><td>${entry.stored}</td><td>${entry.ok ? "Glowing" : "Needs more"}</td></tr>`).join("")}</tbody></table></div>` : ""}`;
   bind("[data-build]", (node) => {
     const type = node.dataset.build;
     if (builderLeft() < buildCosts[type]) {
       say("Not enough builder tokens. Clear your build and test a different mix.", "try"); return;
     }
     state.build[type]++; tone(); renderEnergy();
+    board.querySelector(`[data-build="${type}"]`)?.focus({ preventScroll: true });
     say("Look at all four forecast days. A good plan keeps working after dark.");
   });
   progress(state.level, energyLevels.length, `${state.level} of ${energyLevels.length} energy levels explored`);
