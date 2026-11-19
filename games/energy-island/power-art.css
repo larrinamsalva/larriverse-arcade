@@ -1,0 +1,67 @@
+body[data-world="energy-island"] .world-cover::before { background: url('../../assets/world-motion/backgrounds/energy-coast-sunny.webp') center / cover; }
+/* Hide by the link's actual height, including when enlarged text wraps. */
+body[data-world="energy-island"] > .skip-link { top: 0; left: .5rem; max-width: calc(100% - 1rem); transform: translateY(calc(-100% - 1rem)); }
+body[data-world="energy-island"] > .skip-link:focus { top: 1rem; transform: none; }
+body[data-world="energy-island"] .nature-banner > span { overflow: hidden; background: #daedcd; padding: 0; }
+body[data-world="energy-island"] .nature-banner > span img { width: 100%; height: 100%; object-fit: cover; }
+body[data-world="energy-island"] .energy-weather-preview { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); }
+body[data-world="energy-island"] .energy-weather-card { padding: 0; background: #f3f6ec; color: #263b31; overflow-wrap: anywhere; }
+body[data-world="energy-island"] .energy-weather-card > .energy-landscape-picture { display: block; width: 100%; height: 90px; object-fit: cover; }
+body[data-world="energy-island"] .energy-weather-copy { padding: .65rem; }
+body[data-world="energy-island"] .energy-weather-copy strong { font-size: 1rem; }
+body[data-world="energy-island"] .energy-build-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); }
+body[data-world="energy-island"] .energy-build-card { display: grid; justify-items: center; gap: .4rem; overflow-wrap: anywhere; }
+body[data-world="energy-island"] .energy-build-card:disabled { opacity: 1; }
+body[data-world="energy-island"] .energy-build-card .item-icon { display: block; width: 112px; height: 112px; margin: 0; max-width: 100%; background: none; border: 0; box-shadow: none; }
+body[data-world="energy-island"] .energy-equipment-picture { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+body[data-world="energy-island"] .energy-wind-model { position: relative; width: 100%; height: 100%; }
+body[data-world="energy-island"] .energy-tower-picture { display: block; width: 100%; height: 100%; object-fit: contain; }
+body[data-world="energy-island"] .energy-rotor-mount { position: absolute; left: 50%; top: 35%; width: 70%; aspect-ratio: 1; transform: translate(-50%, -50%); }
+body[data-world="energy-island"] .energy-rotor-picture { display: block; width: 100%; height: 100%; object-fit: contain; }
+body[data-world="energy-island"] .energy-island-scene.energy-illustrated { display: block; min-height: 0; padding: 0; border: 2px solid #859b78; border-radius: 20px; background: #edf3e5; color: #263b31; }
+body[data-world="energy-island"] .energy-illustrated::before { display: none; }
+body[data-world="energy-island"] .energy-result-scene { margin: 0; }
+body[data-world="energy-island"] .energy-landscape { position: relative; overflow: hidden; aspect-ratio: 832 / 468; }
+body[data-world="energy-island"] .energy-landscape > .energy-landscape-picture { display: block; width: 100%; height: 100%; object-fit: cover; }
+body[data-world="energy-island"] .energy-cottage-picture { position: absolute; width: 46%; height: auto; left: 27%; bottom: 1%; object-fit: contain; }
+body[data-world="energy-island"] .energy-result-scene figcaption { padding: 1rem; border-bottom: 1px solid #859b78; }
+body[data-world="energy-island"] .energy-result-title { display: block; font-size: 1.1rem; }
+body[data-world="energy-island"] .energy-result-status { margin: .35rem 0 0; }
+body[data-world="energy-island"] .energy-installations { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: .8rem; padding: 1rem; }
+body[data-world="energy-island"] .energy-installation { min-width: 0; border: 1px solid #91a085; border-radius: 12px; background: #fffdf1; padding: .65rem; }
+body[data-world="energy-island"] .energy-installation h3 { margin: 0 0 .7rem; font-size: .95rem; overflow-wrap: anywhere; }
+body[data-world="energy-island"] .energy-installed { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 64px), 1fr)); gap: 4px; }
+body[data-world="energy-island"] .energy-device { aspect-ratio: 1; min-width: 0; max-width: 112px; width: 100%; justify-self: center; }
+body[data-world="energy-island"] .energy-empty { margin: 0; font-size: .9rem; }
+body[data-world="energy-island"] .energy-storage-panel { margin: 0 1rem 1rem; padding: .8rem; border: 1px solid #859b78; border-radius: 12px; background: #fffdf1; }
+body[data-world="energy-island"] .energy-storage-panel p { margin: .4rem 0 0; font-size: .85rem; }
+body[data-world="energy-island"] .energy-storage-track { height: 16px; border: 2px solid #475e49; border-radius: 8px; background: #e2e6d9; overflow: hidden; margin-top: .4rem; }
+body[data-world="energy-island"] .energy-storage-fill { height: 100%; background: #407d3e; }
+body[data-world="energy-island"] .energy-installed--wind .energy-rotor-picture { animation: energy-rotor var(--energy-rotor-time, 8s) linear infinite; }
+body[data-world="energy-island"] .energy-installed--solar .energy-equipment-picture { animation: energy-solar-glint 5s ease-in-out infinite; }
+body[data-world="energy-island"] [data-energy-solar-output="0"] .energy-installed--solar .energy-equipment-picture,
+body[data-world="energy-island"] [data-energy-wind-output="0"] .energy-rotor-picture { animation: none; }
+body[data-world="energy-island"] .energy-log-scroll { max-width: 100%; overflow-x: auto; margin-top: 1rem; border-radius: 12px; }
+body[data-world="energy-island"] .energy-log-scroll .ledger { min-width: 22rem; margin: 0; }
+[data-lv-world-motion="energy-island"] .lv-motion-character { left: 12%; height: 92%; }
+[data-lv-world-motion="energy-island"] .lv-motion-prop { right: 24%; height: 54%; }
+html.larriverse-dark body[data-world="energy-island"] :is(.energy-weather-card, .energy-island-scene.energy-illustrated) { background: #25372d; color: #f1ffe8; border-color: #90a47f; }
+html.larriverse-dark body[data-world="energy-island"] :is(.energy-installation, .energy-storage-panel) { background: #1b2b23; color: #f1ffe8; border-color: #90a47f; }
+html.larriverse-dark body[data-world="energy-island"] .energy-storage-track { background: #152219; border-color: #bccdae; }
+html.larriverse-dark body[data-world="energy-island"] .energy-storage-fill { background: #b3e77e; }
+html.larriverse-high-contrast body[data-world="energy-island"] :is(.energy-weather-card, .energy-weather-copy, .energy-result-scene figcaption, .energy-installation, .energy-storage-panel) { background: #111 !important; color: #fff !important; border-color: #fff !important; box-shadow: none !important; }
+html.larriverse-high-contrast body[data-world="energy-island"] :is(.nature-banner h2, .nature-banner p, .nature-banner small, .energy-build-card small, .energy-build-card b, .energy-result-title, .energy-result-status, .energy-installation h3, .energy-installation p, .energy-storage-panel strong, .energy-storage-panel p) { color: #fff !important; }
+html.larriverse-high-contrast body[data-world="energy-island"] .energy-storage-track { background: #000; border-color: #fff; }
+html.larriverse-high-contrast body[data-world="energy-island"] .energy-storage-fill { background: #fff; }
+@keyframes energy-rotor { to { transform: rotate(360deg); } }
+@keyframes energy-solar-glint { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.15); } }
+@media (max-width: 480px) {
+  body[data-world="energy-island"] .energy-result-scene figcaption { padding: 12px; }
+  body[data-world="energy-island"] .energy-installations { padding: 10px; gap: 10px; }
+  body[data-world="energy-island"] .energy-installation { padding: 10px; }
+  body[data-world="energy-island"] .energy-storage-panel { margin: 0 10px 10px; padding: 10px; }
+}
+html.larriverse-reduced-motion body[data-world="energy-island"] :is(.energy-rotor-picture, .energy-equipment-picture) { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="energy-island"] :is(.energy-rotor-picture, .energy-equipment-picture) { animation: none !important; }
+}
