@@ -14,11 +14,27 @@ function folder(testInfo) {
   const target=path.join('artifacts','screenshots',testInfo.project.name);
   fs.mkdirSync(target,{recursive:true});return target;
 }
-async function actuallyMoves(picture) {
-  return picture.evaluate(node=>new Promise(resolve=>{
-    const before=getComputedStyle(node).transform;
-    requestAnimationFrame(()=>requestAnimationFrame(()=>resolve(before!==getComputedStyle(node).transform)));
-  }));
+async function hasMotionFrames(picture, name) {
+  return picture.evaluate((node, name) => {
+    const animation = node.getAnimations().find(animation => animation.animationName === name);
+    if (!animation || getComputedStyle(node).animationPlayState !== 'running') return false;
+    const duration = animation.effect.getComputedTiming().duration;
+    if (!Number.isFinite(duration) || duration <= 0) return false;
+    const time = animation.currentTime, state = animation.playState;
+    // These reactions last less than a second. Sample their rendered transforms
+    // at fixed times even if the runner observes them after they have finished.
+    animation.pause();
+    try {
+      animation.currentTime = duration * .2;
+      const before = getComputedStyle(node).transform;
+      animation.currentTime = duration * .6;
+      return before !== getComputedStyle(node).transform;
+    } finally {
+      animation.currentTime = time;
+      if (state === 'running') animation.play();
+      else if (state === 'finished') animation.finish();
+    }
+  }, name);
 }
 
 test('Pocket Planet: matching pictures, keyboard kits and making reactions respect motion preferences',async({page},testInfo)=>{
@@ -42,7 +58,7 @@ test('Pocket Planet: matching pictures, keyboard kits and making reactions respe
   await choose(page,0);
   await expect(page.locator('[data-supply="0"]')).toBeFocused();
   await expect(page.locator('[data-supply="0"]')).toHaveAttribute('aria-pressed','true');
-  expect(await actuallyMoves(page.locator('.pocket-just-added img'))).toBe(true);
+  expect(await hasMotionFrames(page.locator('.pocket-just-added img'), 'planet-kit-add')).toBe(true);
   await choose(page,0);
   await expect(page.locator('[data-supply="0"]')).toHaveAttribute('aria-pressed','false');
   await expect(page.locator('.pocket-just-added')).toHaveCount(0);
@@ -57,6 +73,7 @@ test('Pocket Planet: matching pictures, keyboard kits and making reactions respe
   await choose(page,1);
   await expect(page.locator('.pocket-just-added img')).toHaveCSS('animation-name','none');
   await expect(page.locator('.pocket-just-added img')).toHaveCSS('opacity','1');
+  expect(await hasMotionFrames(page.locator('.pocket-just-added img'), 'planet-kit-add')).toBe(false);
   await expect(intro.getByRole('button',{name:/Play scene/})).toBeHidden();
   await page.evaluate(()=>window.LarriVerseArcade.setSettings({reducedMotion:false}));
   await page.emulateMedia({reducedMotion:'reduce'});
@@ -72,7 +89,15 @@ test('Pocket Planet: matching pictures, keyboard kits and making reactions respe
   await expect(page.locator('.pocket-step-status')).toHaveText('Step 1 of 3');
   await page.emulateMedia({reducedMotion:'no-preference'});
   await make(page,0);
-  expect(await actuallyMoves(page.locator('.pocket-step-reaction img'))).toBe(true);
+  const reaction = page.locator('.pocket-step-reaction img');
+  // Exercise the late-observation case without an arbitrary sleep. This also
+  // requires the normal animation to play through before sampling its frames.
+  await reaction.evaluate(async node => {
+    const animation = node.getAnimations().find(animation => animation.animationName === 'planet-progress');
+    if (!animation) throw new Error('The making reaction must have a progress animation');
+    await animation.finished;
+  });
+  expect(await hasMotionFrames(reaction, 'planet-progress')).toBe(true);
   await expect(page.locator('.pocket-step-status')).toHaveText('Step 2 of 3');
   await page.evaluate(()=>window.LarriVerseArcade.setSettings({reducedMotion:true}));
   await make(page,1);
