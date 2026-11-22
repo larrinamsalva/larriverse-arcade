@@ -1,0 +1,43 @@
+body[data-world="lemonade-lab"] .world-cover::before { background: url('../../assets/world-motion/backgrounds/lemon-welcome.webp') center / cover; }
+body[data-world="lemonade-lab"] > .skip-link { top: 0; left: .5rem; max-width: calc(100% - 1rem); transform: translateY(calc(-100% - 1rem)); }
+body[data-world="lemonade-lab"] > .skip-link:focus { top: 1rem; transform: none; }
+body[data-world="lemonade-lab"] .lemon-market-picture { margin: 0 0 1rem; overflow: hidden; border: 2px solid #b99548; border-radius: 18px; background: #fff8df; color: #493a1b; }
+body[data-world="lemonade-lab"] .lemon-scene-art { position: relative; width: 100%; min-width: 0; height: clamp(220px, 35vw, 360px); overflow: hidden; }
+body[data-world="lemonade-lab"] .lemon-landscape-picture { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+body[data-world="lemonade-lab"] .lemon-vendor { position: absolute; width: 46%; max-width: 280px; aspect-ratio: 1; left: 2%; bottom: 3%; overflow: hidden; filter: drop-shadow(0 5px 3px #253b3040); }
+body[data-world="lemonade-lab"] .lemon-vendor-poses { display: block; width: 200%; height: 100%; max-width: none; }
+body[data-world="lemonade-lab"] .lemon-cart { position: absolute; width: 62%; max-width: 340px; aspect-ratio: 1; left: 34%; bottom: 3%; filter: drop-shadow(0 5px 3px #253b3040); }
+body[data-world="lemonade-lab"] .lemon-cart-picture { display: block; width: 100%; height: 100%; object-fit: contain; }
+body[data-world="lemonade-lab"] :is(.lemon-counter-pitcher, .lemon-counter-box, .lemon-counter-fruit) { position: absolute; display: block; object-fit: contain; }
+body[data-world="lemonade-lab"] .lemon-counter-pitcher { left: 38%; top: 37.8%; width: 24%; height: 24%; }
+body[data-world="lemonade-lab"] .lemon-counter-box { left: 65%; top: 46.3%; width: 18%; height: 16%; }
+body[data-world="lemonade-lab"] .lemon-counter-fruit { left: 19%; top: 45.8%; width: 20%; height: 16%; }
+body[data-world="lemonade-lab"] .lemon-scene-caption { padding: 10px 12px; border-bottom: 1px solid #b99548; }
+body[data-world="lemonade-lab"] .lemon-scene-caption p { margin: .3rem 0 0; font-size: .85rem; }
+body[data-world="lemonade-lab"] .lemon-batch { padding: 10px 12px; }
+body[data-world="lemonade-lab"] .lemon-batch strong { display: block; font-size: .9rem; }
+body[data-world="lemonade-lab"] .lemon-batch-cups { display: grid; grid-template-columns: repeat(auto-fit, minmax(32px, 40px)); gap: 4px; margin-top: 8px; }
+body[data-world="lemonade-lab"] .lemon-cup-picture { display: block; width: 100%; height: 48px; object-fit: contain; }
+body[data-world="lemonade-lab"] .lemon-market-picture:not([data-lemon-result="plan"]) .lemon-vendor-poses { animation: lemon-vendor-wave 1.2s steps(1, end) both; }
+body[data-world="lemonade-lab"] .lemon-market-picture:not([data-lemon-result="plan"]) .lemon-cup-picture { animation: lemon-cup-serve .65s ease-out both; }
+body[data-world="lemonade-lab"] .field-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
+body[data-world="lemonade-lab"] .field-grid label { min-width: 0; }
+body[data-world="lemonade-lab"] .field-grid select { min-height: 44px; width: 100%; }
+body[data-world="lemonade-lab"] .lemon-ledger-scroll { max-width: 100%; overflow-x: auto; margin-top: 1rem; }
+body[data-world="lemonade-lab"] .lemon-ledger-scroll .ledger { min-width: 28rem; margin: 0; }
+[data-lv-world-motion="lemonade-lab"] .lv-motion-character { left: 12%; height: 92%; }
+[data-lv-world-motion="lemonade-lab"] .lv-motion-prop { right: 24%; height: 54%; }
+html.larriverse-dark body[data-world="lemonade-lab"] .lemon-market-picture { background: #2d3023; color: #fff8df; border-color: #bca869; }
+html.larriverse-dark body[data-world="lemonade-lab"] .lemon-scene-caption p { color: #fff8df; }
+html.larriverse-high-contrast body[data-world="lemonade-lab"] :is(.lemon-market-picture, .lemon-scene-caption, .lemon-batch) { background: #111 !important; color: #fff !important; border-color: #fff !important; box-shadow: none !important; }
+html.larriverse-high-contrast body[data-world="lemonade-lab"] :is(.lemon-setting-label, .lemon-scene-caption p, .lemon-batch strong) { color: #fff !important; }
+@keyframes lemon-vendor-wave { 0%, 100% { transform: translateX(0); } 25%, 75% { transform: translateX(-50%); } }
+@keyframes lemon-cup-serve { from { transform: translateY(-6px) scale(.92); } 65% { transform: translateY(2px) scale(1.04); } to { transform: none; } }
+html.larriverse-reduced-motion body[data-world="lemonade-lab"] :is(.lemon-vendor-poses, .lemon-cup-picture) { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="lemonade-lab"] :is(.lemon-vendor-poses, .lemon-cup-picture) { animation: none !important; }
+}
+@media (max-width: 480px) {
+  body[data-world="lemonade-lab"] .lemonade-mission-card { padding: 12px; }
+  body[data-world="lemonade-lab"] .lemonade-field-grid label { padding: 10px; }
+}
