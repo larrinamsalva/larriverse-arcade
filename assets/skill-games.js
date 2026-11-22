@@ -54,6 +54,9 @@ const pocketArtwork = world.mode === "budget"
 const energyArtwork = world.mode === "energy"
   ? await import("../games/energy-island/power-art.js").catch(() => null)
   : null;
+const reuseArtwork = world.mode === "sorting"
+  ? await import("../games/reuse-rally/scene-art.js").catch(() => null)
+  : null;
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
 const board = $("gameBoard");
@@ -542,7 +545,7 @@ function renderCards(mode) {
   const messageArt = mode === "traffic"
     ? renderTrafficStreet?.(item.title) ?? trafficSignSvg(item.title)
     : mode === "sorting"
-      ? `<div class="reuse-object-stage">
+      ? reuseArtwork?.objectScene(item, state.step) || `<div class="reuse-object-stage">
           <div class="reuse-sorting-station" aria-hidden="true">
             <span class="reuse-bin reuse-bin-reuse">REUSE</span>
             <span class="reuse-bin reuse-bin-recycle">RECYCLE</span>
@@ -568,7 +571,7 @@ function renderCards(mode) {
             : `<span class="message-icon" aria-hidden="true">${item.icon}</span>`;
   const trailMarkup = campaignTrail(state.step,deck.length);
   const trailDocked = setStageTrail(trailMarkup);
-  board.innerHTML = `${trailDocked ? "" : trailMarkup}<div class="message-card ${mode === "traffic" ? "traffic-message" : mode === "sorting" ? "reuse-message" : mode === "messages" ? "scam-message" : mode === "conversation" ? "kindness-message" : mode === "news" ? "fact-message" : ""}">${messageArt}<div class="message-copy">${mode === "news" ? '<span class="eyebrow fact-desk-label">Source check desk</span>' : ""}<h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""} ${mode === "messages" ? "scam-action-grid" : mode === "conversation" ? "kindness-choice-grid" : mode === "news" ? "fact-choice-grid" : ""}">${display.map((choice) => `<button class="choice-button ${mode === "messages" ? `scam-action scam-action--${choice.index}` : mode === "conversation" ? "kindness-choice" : mode === "news" ? `fact-choice fact-choice--${choice.index}` : ""}" data-answer="${choice.index}">${mode === "messages" ? `<span class="scam-action-icon" aria-hidden="true">${choice.index === 0 ? "✓" : choice.index === 1 ? "?" : "!"}</span>` : mode === "conversation" ? '<span class="kindness-choice-marker" aria-hidden="true">♥</span>' : mode === "news" ? `<span class="fact-choice-marker" aria-hidden="true">${choice.index === 0 ? "E" : choice.index === 1 ? "O" : choice.index === 2 ? "A" : "?"}</span>` : ""}${esc(choice.label)}</button>`).join("")}</div>${mode === "messages" ? '<div class="scam-safety-strip" aria-label="Scam Sleuth action guide"><span class="safe"><i aria-hidden="true"></i>Read only when it checks out</span><span class="check"><i aria-hidden="true"></i>Verify surprising messages</span><span class="stop"><i aria-hidden="true"></i>Stop when secrets or pressure appear</span></div>' : mode === "news" ? '<div class="fact-source-guide" aria-label="Fact Finder source guide"><span><i class="evidence" aria-hidden="true"></i>Evidence can be checked</span><span><i class="opinion" aria-hidden="true"></i>Opinion shares a view</span><span><i class="ad" aria-hidden="true"></i>Ads try to sell</span><span><i class="check" aria-hidden="true"></i>Missing context needs checking</span></div>' : mode === "sorting" ? '<p class="board-note reuse-rule-card">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
+  board.innerHTML = `${trailDocked ? "" : trailMarkup}<div class="message-card ${mode === "traffic" ? "traffic-message" : mode === "sorting" ? "reuse-message" : mode === "messages" ? "scam-message" : mode === "conversation" ? "kindness-message" : mode === "news" ? "fact-message" : ""}">${messageArt}<div class="message-copy">${mode === "news" ? '<span class="eyebrow fact-desk-label">Source check desk</span>' : ""}<h2 class="board-title">${esc(title)}</h2><p>${esc(text)}</p></div></div><div class="choice-grid ${mode === "news" || mode === "sorting" ? "news-bins" : ""} ${mode === "messages" ? "scam-action-grid" : mode === "conversation" ? "kindness-choice-grid" : mode === "news" ? "fact-choice-grid" : mode === "sorting" ? "reuse-destinations" : ""}">${display.map((choice) => `<button class="choice-button ${mode === "messages" ? `scam-action scam-action--${choice.index}` : mode === "conversation" ? "kindness-choice" : mode === "news" ? `fact-choice fact-choice--${choice.index}` : mode === "sorting" ? "reuse-destination" : ""}" data-answer="${choice.index}">${mode === "messages" ? `<span class="scam-action-icon" aria-hidden="true">${choice.index === 0 ? "✓" : choice.index === 1 ? "?" : "!"}</span>` : mode === "conversation" ? '<span class="kindness-choice-marker" aria-hidden="true">♥</span>' : mode === "news" ? `<span class="fact-choice-marker" aria-hidden="true">${choice.index === 0 ? "E" : choice.index === 1 ? "O" : choice.index === 2 ? "A" : "?"}</span>` : mode === "sorting" ? reuseArtwork?.destinationPicture(choice.index) || "" : ""}${mode === "sorting" ? `<b>${esc(choice.label)}</b>` : esc(choice.label)}</button>`).join("")}</div>${mode === "messages" ? '<div class="scam-safety-strip" aria-label="Scam Sleuth action guide"><span class="safe"><i aria-hidden="true"></i>Read only when it checks out</span><span class="check"><i aria-hidden="true"></i>Verify surprising messages</span><span class="stop"><i aria-hidden="true"></i>Stop when secrets or pressure appear</span></div>' : mode === "news" ? '<div class="fact-source-guide" aria-label="Fact Finder source guide"><span><i class="evidence" aria-hidden="true"></i>Evidence can be checked</span><span><i class="opinion" aria-hidden="true"></i>Opinion shares a view</span><span><i class="ad" aria-hidden="true"></i>Ads try to sell</span><span><i class="check" aria-hidden="true"></i>Missing context needs checking</span></div>' : mode === "sorting" ? '<p class="board-note reuse-rule-card">Toy Town accepts clean paper, cardboard, and metal cans. Fruit scraps go to compost.</p>' : ""}`;
   progress(state.step, deck.length);
   bind("[data-answer]", (node) => {
     if (state.answered) return;
@@ -584,6 +587,7 @@ function renderCards(mode) {
       if (Number(option.dataset.answer) === actual)
         option.classList.add("correct");
     });
+    if (mode === "sorting") reuseArtwork?.showResult(board, good, actual);
     say(
       `${good ? "Nice thinking!" : "Here is a useful clue:"} ${item.why}`,
       good ? "good" : "try",

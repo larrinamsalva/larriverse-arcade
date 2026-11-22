@@ -1,0 +1,38 @@
+body[data-world="reuse-rally"] .world-cover::before { background: url('../../assets/world-motion/backgrounds/reuse-welcome.webp') center / cover; }
+body[data-world="reuse-rally"] > .skip-link { top: 0; left: .5rem; max-width: calc(100% - 1rem); transform: translateY(calc(-100% - 1rem)); }
+body[data-world="reuse-rally"] > .skip-link:focus { top: 1rem; transform: none; }
+body[data-world="reuse-rally"] .reuse-message { display: block; padding: 0; overflow: hidden; }
+body[data-world="reuse-rally"] .reuse-message .message-copy { padding: 1rem; }
+body[data-world="reuse-rally"] .reuse-picture-scene { margin: 0; background: #e9f0e1; color: #2b4634; }
+body[data-world="reuse-rally"] .reuse-display-scene { position: relative; width: 100%; min-width: 0; min-height: 220px; aspect-ratio: 832 / 468; overflow: hidden; }
+body[data-world="reuse-rally"] .reuse-landscape-picture { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+body[data-world="reuse-rally"] .reuse-displayed-object { position: absolute; width: clamp(144px, 38%, 232px); aspect-ratio: 1; max-width: 80%; left: 50%; bottom: 9%; transform: translateX(-50%); }
+body[data-world="reuse-rally"] .reuse-object-picture { display: block; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 3px #253c2d40); }
+body[data-world="reuse-rally"] .reuse-picture-scene figcaption { padding: .5rem .8rem; font-size: .85rem; font-weight: 800; border-bottom: 1px solid #8eaf99; }
+body[data-world="reuse-rally"] .reuse-picture-scene[data-reuse-result="correct"] .reuse-object-picture { animation: reuse-object-settle .65s ease-out both; }
+body[data-world="reuse-rally"] .reuse-picture-scene[data-reuse-result="review"] .reuse-object-picture { animation: reuse-object-review .5s ease-out both; }
+body[data-world="reuse-rally"] .news-bins.reuse-destinations { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); }
+body[data-world="reuse-rally"] .reuse-destination { display: grid; justify-items: center; gap: 8px; padding: 12px; min-width: 0; overflow-wrap: anywhere; }
+body[data-world="reuse-rally"] .reuse-destination:disabled { opacity: 1; }
+body[data-world="reuse-rally"] .reuse-destination-picture { display: block; width: 96px; height: 96px; max-width: 100%; object-fit: contain; }
+body[data-world="reuse-rally"] .reuse-destination.correct .reuse-destination-picture { animation: reuse-destination-nod .6s ease-out both; }
+body[data-world="reuse-rally"] .reuse-destination.correct { border: 3px solid #356e4a; }
+body[data-world="reuse-rally"] .reuse-destination.wrong { border: 3px dashed #8a5925; }
+[data-lv-world-motion="reuse-rally"] .lv-motion-character { left: 12%; height: 92%; }
+[data-lv-world-motion="reuse-rally"] .lv-motion-prop { right: 24%; height: 54%; }
+html.larriverse-dark body[data-world="reuse-rally"] .reuse-picture-scene { background: #293a30; color: #edffe7; }
+html.larriverse-dark body[data-world="reuse-rally"] .reuse-destination.correct { background: #1d3e2d; color: #f0ffe8; border-color: #a2d49b; }
+html.larriverse-dark body[data-world="reuse-rally"] .reuse-destination.wrong { background: #46321e; color: #fff2d0; border-color: #deb77b; }
+html.larriverse-high-contrast body[data-world="reuse-rally"] :is(.reuse-message, .reuse-picture-scene, .reuse-picture-scene figcaption, .reuse-message .message-copy, .reuse-destination, .reuse-rule-card) { background: #111 !important; color: #fff !important; border-color: #fff !important; box-shadow: none !important; }
+html.larriverse-high-contrast body[data-world="reuse-rally"] :is(.reuse-message h2, .reuse-message p, .reuse-destination b) { color: #fff !important; }
+html.larriverse-high-contrast body[data-world="reuse-rally"] .reuse-destination.correct { outline: 3px solid #fff; outline-offset: 2px; }
+@keyframes reuse-object-settle { from { transform: translateY(-10px) scale(.94); } 65% { transform: translateY(2px) scale(1.03); } to { transform: none; } }
+@keyframes reuse-object-review { 0%, 100% { transform: none; } 35% { transform: rotate(-4deg); } 70% { transform: rotate(3deg); } }
+@keyframes reuse-destination-nod { from { transform: translateY(-6px); } 60% { transform: translateY(2px); } to { transform: none; } }
+html.larriverse-reduced-motion body[data-world="reuse-rally"] :is(.reuse-object-picture, .reuse-destination-picture) { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="reuse-rally"] :is(.reuse-object-picture, .reuse-destination-picture) { animation: none !important; }
+}
+@media (max-width: 480px) {
+  body[data-world="reuse-rally"] .reuse-message .message-copy { padding: 12px; }
+}
