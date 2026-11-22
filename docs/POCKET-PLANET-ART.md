@@ -22,6 +22,8 @@ Phone layouts let supply cards, project copy and workbench items reflow. Dark mo
 
 Focused desktop and phone coverage checks keyboard selection, deselection and retained focus; full-kit and wrong-supply recovery; matching workbench pictures; actual selection and making movement; both reduced-motion preferences; completion checkpoint; contrast modes; and 320 pixels with 200% text.
 
+The short selection and making reactions are checked by sampling their rendered transforms at fixed points in the actual CSS animation, then restoring the animation's original time and playback state. The making check waits for natural completion before sampling, covering a runner that observes the brief reaction late. Reduced motion must still remove the animation and leave the picture visible. This avoids relying on a difference between two adjacent browser frames.
+
 The campaign checks complete every one of the 60 projects, decode pictures for all 236 supply names and 60 goals, verify all three project settings, check saved chapters and replay, and reload partway through the journey. Existing shared-scene and four-world surface checks remain relevant to this world.
 
 ## Original prompts

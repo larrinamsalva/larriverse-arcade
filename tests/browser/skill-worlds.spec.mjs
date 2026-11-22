@@ -725,9 +725,12 @@ function powerRecipe(level) {
       }
   throw new Error(`No feasible mix for ${level.id}`);
 }
-test("Energy Island: sixty solvable power grids respond to four-day forecasts", async ({ page }) => {
+test("Energy Island: sixty solvable power grids respond to four-day forecasts", async ({ page }, testInfo) => {
   test.setTimeout(420000);
   expect(energyLevels).toHaveLength(60);
+  const pictured = new Set();
+  const output = path.join("artifacts", "screenshots", testInfo.project.name);
+  fs.mkdirSync(output, { recursive: true });
   await round(page, "energy-island", async () => {
     await expect(page.locator(".nature-level-trail .level-node")).toHaveCount(12);
     for (const [index, level] of energyLevels.entries()) {
@@ -744,15 +747,39 @@ test("Energy Island: sixty solvable power grids respond to four-day forecasts", 
         for (let i = 0; i < mix[type]; i++)
           await page.locator(`[data-build="${type}"]`).click();
       }
-      await page.getByRole("button", { name: "Test my power mix" }).click();
-      for (const day of level.weather.slice(1))
-        await page.getByRole("button", { name: `Run ${day.name.toLowerCase()} day` }).click();
+      for (const type of ["solar", "wind", "battery"])
+        await expect(page.locator(`[data-energy-device="${type}"]`)).toHaveCount(mix[type]);
+      await expect(page.locator(".energy-illustrated")).toHaveAttribute("data-energy-power", "preview");
+      await page.locator(".energy-weather-preview img, .energy-installed img").evaluateAll(images => Promise.all(images.map(image => image.decode())));
+      for (const [dayIndex, day] of level.weather.entries()) {
+        await page.getByRole("button", { name: dayIndex === 0 ? "Test my power mix" : `Run ${day.name.toLowerCase()} day`, exact: true }).click();
+        const scene = page.locator(".energy-illustrated");
+        await expect(scene).toHaveAttribute("data-energy-zone", level.zone);
+        await expect(scene).toHaveAttribute("data-energy-weather", day.name.toLowerCase());
+        await expect(scene).toHaveAttribute("data-energy-power", "on");
+        await expect(scene).toHaveAttribute("data-energy-solar-output", String(day.solar));
+        await expect(scene).toHaveAttribute("data-energy-wind-output", String(day.wind));
+        await expect(page.locator(".energy-result-title")).toHaveText(`Day ${dayIndex + 1} result · ${day.name}`);
+        const stored = Number(await page.locator(".ledger tbody tr").last().locator("td").nth(2).innerText());
+        await expect(page.locator(".energy-storage-label")).toHaveText(`${stored} / ${mix.battery * 4} stored`);
+        const percent = mix.battery ? stored / (mix.battery * 4) * 100 : 0;
+        expect(await page.locator(".energy-storage-fill").evaluate(node => parseFloat(node.style.width))).toBeCloseTo(percent, 3);
+        await page.locator(".energy-landscape img").evaluateAll(images => Promise.all(images.map(image => image.decode())));
+        const image = page.locator(".energy-landscape > .energy-landscape-picture");
+        expect(await image.getAttribute("src")).toContain(`energy-${level.zone}-${day.name.toLowerCase()}.webp`);
+        const key = level.zone + "-" + day.name.toLowerCase();
+        if (!pictured.has(key)) {
+          pictured.add(key);
+          await scene.screenshot({ path: path.join(output, "energy-" + key + ".png") });
+        }
+      }
       await expect(page.locator(".ledger tbody tr")).toHaveCount(4);
       await expect(page.locator(".ledger tbody tr").filter({ hasText: "Glowing" })).toHaveCount(4);
       await page.getByRole("button", { name: index === 59 ? "See my island" : "Next island" }).click();
       if (index < 59)
         await expect(page.locator(".stat-row")).toContainText(`Island stars${(index + 1) * 3}/180`);
     }
+    expect(pictured.size).toBe(16);
     await expect(page.locator("#finishMessage")).toContainText("180 of 180 island stars");
   });
 });
