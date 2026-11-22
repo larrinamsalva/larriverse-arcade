@@ -57,6 +57,9 @@ const energyArtwork = world.mode === "energy"
 const reuseArtwork = world.mode === "sorting"
   ? await import("../games/reuse-rally/scene-art.js").catch(() => null)
   : null;
+const marketArtwork = world.mode === "market"
+  ? await import("../games/lemonade-lab/market-art.js").catch(() => null)
+  : null;
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
 const board = $("gameBoard");
@@ -1297,7 +1300,7 @@ function renderMarketMission(){
   const m=marketMissions[state.mission],done=state.missionPassed;
   const completion=state.mission+(done?1:0);
   stage(`Lemonade Lab · Mission ${state.mission+1} of ${marketMissions.length} · ${m.chapter}`);
-  board.innerHTML=`<article class="creative-mission-card lemonade-mission-card" data-market-mission="${m.id}"><div class="lemonade-market-scene" aria-hidden="true"><div class="lemonade-canopy"></div><div class="lemonade-counter"><span class="lemonade-pitcher">🍋</span><span class="lemonade-cups">🥤🥤</span><span class="lemonade-cashbox">🪙</span></div><div class="lemonade-customer-row">🧒 🧑 🧒</div></div>
+  board.innerHTML=`<article class="creative-mission-card lemonade-mission-card" data-market-mission="${m.id}">${marketArtwork?.missionScene(m, state.mission, state.stock, state.lastMarketResult) || `<div class="lemonade-market-scene" aria-hidden="true"><div class="lemonade-canopy"></div><div class="lemonade-counter"><span class="lemonade-pitcher">🍋</span><span class="lemonade-cups">🥤🥤</span><span class="lemonade-cashbox">🪙</span></div><div class="lemonade-customer-row">🧒 🧑 🧒</div></div>`}
     <p class="eyebrow">🍋 Market mission ${state.mission+1}/${marketMissions.length} · ${esc(m.chapter)}</p>
     <h2>${esc(m.name)}</h2><p>At 2 coins per cup, about <strong>${m.base} customers</strong> might visit. Charging more may reduce demand.</p>
     <div class="stat-row">${chip("Supply cost",`${m.supplyCost} coin${m.supplyCost===1?"":"s"}/cup`)}
@@ -1313,7 +1316,7 @@ function renderMarketMission(){
       <p>Revenue ${state.lastMarketResult.revenue} − cost ${state.lastMarketResult.cost} = <strong>${state.lastMarketResult.profit} coins profit</strong></p></div>`:""}
     </article>`;
   const stockNode=board.querySelector("#stockInput"),priceNode=board.querySelector("#priceInput");
-  stockNode?.addEventListener("change",e=>{state.stock=Number(e.target.value);});
+  stockNode?.addEventListener("change",e=>{state.stock=Number(e.target.value);marketArtwork?.updateBatch(board,state.stock);});
   priceNode?.addEventListener("change",e=>{state.price=Number(e.target.value);});
   progress(completion,marketMissions.length,`${completion} of ${marketMissions.length} market missions completed`);
   updateScore(Math.round(completion/marketMissions.length*100));
@@ -1418,9 +1421,10 @@ function renderMarket() {
   if(state.marketMode==="missions"){renderMarketMission();return;}
   const forecast = marketWeather[Math.min(state.day, 3)];
   stage(`Lemonade stand · Day ${Math.min(state.day + 1, 4)} of 4`);
-  board.innerHTML = `<div class="stat-row">${chip("Coins in till", state.cash)}${chip("Supply cost", "1 coin/cup")}${chip("Days tried", `${state.day}/4`)}</div><div class="stand-scene">${lemonadeStandSvg(forecast.name)}<div class="weather-caption"><b>${esc(forecast.name)}</b><span>${forecast.base} customers at a 2-coin price</span></div></div><p class="board-note">A higher price brings fewer buyers in this toy town. Unsold cups are not carried to tomorrow. Watch costs and sales.</p><div class="field-grid"><label>Cups to make<select id="stockInput">${[2, 4, 6, 8, 10, 12].map((n) => `<option value="${n}" ${state.stock === n ? "selected" : ""}>${n} cups · ${n} coins</option>`).join("")}</select></label><label>Price per cup<select id="priceInput">${[1, 2, 3, 4, 5].map((n) => `<option value="${n}" ${state.price === n ? "selected" : ""}>${n} coin${n === 1 ? "" : "s"}</option>`).join("")}</select></label></div>${state.ledger.length ? `<table class="ledger"><caption>Your business ledger</caption><thead><tr><th>Day</th><th>Made / sold</th><th>Costs</th><th>Revenue</th><th>Profit</th></tr></thead><tbody>${state.ledger.map((entry, i) => `<tr><td>${i + 1}</td><td>${entry.stock} / ${entry.sold}</td><td>${entry.stock}</td><td>${entry.revenue}</td><td>${entry.profit}</td></tr>`).join("")}</tbody></table>` : ""}`;
+  board.innerHTML = `<div class="stat-row">${chip("Coins in till", state.cash)}${chip("Supply cost", "1 coin/cup")}${chip("Days tried", `${state.day}/4`)}</div>${marketArtwork?.labScene(forecast, state.stock, state.day) || `<div class="stand-scene">${lemonadeStandSvg(forecast.name)}<div class="weather-caption"><b>${esc(forecast.name)}</b><span>${forecast.base} customers at a 2-coin price</span></div></div>`}<p class="board-note">A higher price brings fewer buyers in this toy town. Unsold cups are not carried to tomorrow. Watch costs and sales.</p><div class="field-grid"><label>Cups to make<select id="stockInput">${[2, 4, 6, 8, 10, 12].map((n) => `<option value="${n}" ${state.stock === n ? "selected" : ""}>${n} cups · ${n} coins</option>`).join("")}</select></label><label>Price per cup<select id="priceInput">${[1, 2, 3, 4, 5].map((n) => `<option value="${n}" ${state.price === n ? "selected" : ""}>${n} coin${n === 1 ? "" : "s"}</option>`).join("")}</select></label></div>${state.ledger.length ? `<div class="lemon-ledger-scroll" role="region" aria-label="Business ledger" tabindex="0"><table class="ledger"><caption>Your business ledger</caption><thead><tr><th>Day</th><th>Made / sold</th><th>Costs</th><th>Revenue</th><th>Profit</th></tr></thead><tbody>${state.ledger.map((entry, i) => `<tr><td>${i + 1}</td><td>${entry.stock} / ${entry.sold}</td><td>${entry.stock}</td><td>${entry.revenue}</td><td>${entry.profit}</td></tr>`).join("")}</tbody></table></div>` : ""}`;
   $("stockInput").addEventListener("change", (event) => {
     state.stock = Number(event.target.value);
+    marketArtwork?.updateBatch(board, state.stock);
   });
   $("priceInput").addEventListener("change", (event) => {
     state.price = Number(event.target.value);

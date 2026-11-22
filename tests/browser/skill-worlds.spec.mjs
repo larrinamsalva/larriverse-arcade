@@ -15,6 +15,7 @@ import {
 } from "../../assets/skill-worlds.js";
 import { resourceAdventures } from "../../assets/budget-adventures.js";
 import { REUSE_ART_FILES, REUSE_OBJECT_ART } from "../../games/reuse-rally/reuse-pictures.js";
+import { MARKET_SETTINGS } from "../../games/lemonade-lab/market-art.js";
 import { marketMissions, beatMissions, bestMarketPlan } from "../../assets/creative-missions.js";
 import { gardenLevels, energyLevels } from "../../assets/garden-energy-levels.js";
 import { timeTrailLevelsWithGoals as timeTrailLevels, shortestTrailPath } from "../../assets/time-trail-level.js";
@@ -963,10 +964,13 @@ test("Beat Builder: compose, play silently, pause on hide, and save a pattern", 
   });
 });
 
-test("Lemonade Lab: keep four-day free play and finish all eighty market missions", async function marketE2E({page}){
+test("Lemonade Lab: keep four-day free play and finish all eighty market missions", async function marketE2E({page},testInfo){
   test.setTimeout(520000);
   expect(marketMissions).toHaveLength(80);
   expect(new Set(marketMissions.map(m=>m.name)).size).toBe(80);
+  const seen = new Set();
+  const output = path.join("artifacts", "screenshots", testInfo.project.name);
+  fs.mkdirSync(output, { recursive: true });
   await round(page,"lemonade-lab",async()=>{
     await expect(page.locator("[data-market-mission]")).toBeVisible();
     for(let i=0;i<marketMissions.length;i++){
@@ -975,13 +979,27 @@ test("Lemonade Lab: keep four-day free play and finish all eighty market mission
       await expect(page.locator("[data-market-mission]")).toHaveAttribute("data-market-mission",mission.id);
       await page.locator("#stockInput").selectOption(String(best.stock));
       await page.locator("#priceInput").selectOption(String(best.price));
+      const scene = page.locator(".lemon-market-picture"), setting = MARKET_SETTINGS[i % MARKET_SETTINGS.length];
+      await expect(scene).toHaveAttribute("data-lemon-setting", setting);
+      await expect(scene).toHaveAttribute("data-lemon-result", "plan");
+      await expect(page.locator(".lemon-batch")).toHaveAttribute("data-lemon-stock", String(best.stock));
+      await expect(page.locator(".lemon-cup-picture")).toHaveCount(best.stock);
+      await page.locator(".lemon-market-picture img").evaluateAll(images => Promise.all(images.map(image => image.decode())));
+      if (!seen.has(setting)) {
+        seen.add(setting);
+        await scene.screenshot({ path: path.join(output, "lemon-" + setting + ".png") });
+      }
       await page.getByRole("button",{name:"Run my mission stand"}).click();
       await expect(page.locator(".creative-result")).toContainText("Goal reached!");
+      await expect(scene).toHaveAttribute("data-lemon-result", "goal");
+      await expect(page.locator(".creative-result")).toContainText(`Customers: ${best.demand} · Sold: ${best.sold} · Left over: ${best.leftovers}`);
+      await expect(page.locator(".creative-result")).toContainText(`Revenue ${best.revenue} − cost ${best.cost} = ${best.profit} coins profit`);
       await expect(page.locator("#feedback")).toHaveClass(/good/);
       const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("larriverse.creative.market.v1")||"{}").nextLevel);
       expect(saved).toBe(i+1);
       await page.getByRole("button",{name:i===marketMissions.length-1?"Celebrate market mastery":"Next market mission"}).click();
     }
+    expect(seen.size).toBe(10);
     await expect(page.locator("#finishMessage")).toContainText("all 80 market missions");
   });
 });
