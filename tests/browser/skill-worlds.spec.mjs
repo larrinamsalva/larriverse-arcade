@@ -14,6 +14,7 @@ import {
   gardenGrowthChallenges,
 } from "../../assets/skill-worlds.js";
 import { resourceAdventures } from "../../assets/budget-adventures.js";
+import { REUSE_ART_FILES, REUSE_OBJECT_ART } from "../../games/reuse-rally/reuse-pictures.js";
 import { marketMissions, beatMissions, bestMarketPlan } from "../../assets/creative-missions.js";
 import { gardenLevels, energyLevels } from "../../assets/garden-energy-levels.js";
 import { timeTrailLevelsWithGoals as timeTrailLevels, shortestTrailPath } from "../../assets/time-trail-level.js";
@@ -426,36 +427,51 @@ test("Fact Finder: inspect sources, opinions, advertising, and claims · full 60
     ]),
   );
 });
-test("Reuse Rally: sort all sixty objects through six chapters", async ({
-  page,
-}) => {
+test("Reuse Rally: sort all sixty objects through six chapters", async ({ page }, testInfo) => {
   test.setTimeout(420000);
+  expect(Object.keys(REUSE_OBJECT_ART).sort()).toEqual(sorting.map(item => item.name).sort());
+  const seen = new Set(), pictures = new Set(), settings = new Set();
+  const output = path.join("artifacts", "screenshots", testInfo.project.name);
+  fs.mkdirSync(output, { recursive: true });
   await round(page, "reuse-rally", async () => {
     for (let i = 0; i < 60; i++) {
       if (i === 0) {
         await expect(page.locator("#stageTrailDock .level-trail .level-node")).toHaveCount(6);
         await expect(page.locator("#gameBoard > .level-trail")).toHaveCount(0);
       }
-      const art = page.locator(".reuse-item-art");
-      await expect(art).toBeVisible();
-      await expect(art.locator(".object-model")).toHaveCount(1);
+      const title = await page.locator(".message-copy .board-title").innerText();
+      const item = sorting.find(entry => entry.name === title);
+      expect(item).toBeTruthy(); expect(seen.has(item.name)).toBe(false); seen.add(item.name);
+      const key = REUSE_OBJECT_ART[item.name], art = page.locator(".reuse-object-picture");
+      await expect(art).toHaveAttribute("data-reuse-object", item.name);
+      await expect(art).toHaveAttribute("data-reuse-art", key);
+      expect(await art.getAttribute("src")).toContain(REUSE_ART_FILES[key].split("/").at(-1));
+      await art.evaluate(image => image.decode()); pictures.add(key);
       const box = await art.boundingBox();
-      expect(box?.width).toBeGreaterThanOrEqual(90);
-      expect(box?.height).toBeGreaterThanOrEqual(90);
-      const text = await page.locator(".message-card").innerText();
-      const item = sorting.find((entry) => text.includes(entry.name));
-      expect(item).toBeTruthy();
-      await expect(art.locator(`.object-model--${item.art}`)).toHaveCount(1);
-      await page.getByRole("button", {
-        name: ["Reuse", "Recycle", "Compost", "Trash"][item.bin],
-        exact: true,
-      }).click();
+      expect(box?.width).toBeGreaterThanOrEqual(90); expect(box?.height).toBeGreaterThanOrEqual(90);
+      const scene = page.locator(".reuse-picture-scene");
+      await expect(scene).toHaveAttribute("data-reuse-result", "ready");
+      await page.locator(".reuse-destination img").evaluateAll(images => Promise.all(images.map(image => image.decode())));
+      const setting = await scene.getAttribute("data-reuse-setting");
+      if (!settings.has(setting)) {
+        settings.add(setting);
+        await page.locator(".reuse-landscape-picture").evaluate(image => image.decode());
+        await page.locator(".reuse-message").screenshot({ path: path.join(output, "reuse-" + setting + ".png") });
+      }
+      await page.getByRole("button", { name: ["Reuse", "Recycle", "Compost", "Trash"][item.bin], exact: true }).click();
       await expect(page.locator("#feedback")).toHaveClass(/good/);
-      await page.getByRole("button", {
-        name: i === 59 ? "See what I learned" : "Next discovery",
-        exact: true,
-      }).click();
+      await expect(scene).toHaveAttribute("data-reuse-result", "correct");
+      await expect(scene).toHaveAttribute("data-reuse-destination", String(item.bin));
+      await expect(page.locator("[data-answer]:disabled")).toHaveCount(4);
+      await expect(page.locator(".reuse-destination.correct")).toHaveAttribute("data-answer", String(item.bin));
+      await page.getByRole("button", { name: i === 59 ? "See what I learned" : "Next discovery", exact: true }).click();
+      if (i === 29) {
+        expect(await page.evaluate(() => JSON.parse(localStorage.getItem("larriverse.mainCampaign.reuse-rally.v1")))).toEqual({ next: 30, correct: 30 });
+        await page.reload();
+        await expect(page.locator("#stageLabel")).toContainText("Chapter 4/6");
+      }
     }
+    expect(seen.size).toBe(60); expect(pictures.size).toBe(38); expect(settings.size).toBe(6);
   });
 });
 test("Traffic Town: complete 120 different signs across twelve chapters", async ({ page }) => {

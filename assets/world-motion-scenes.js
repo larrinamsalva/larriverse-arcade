@@ -28,7 +28,7 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'pantry-picnic': scene('picnic-welcome', 'picnic-helper', 'picnic-basket', 'lift'),
   'pocket-planet': scene('planet-welcome', 'planet-maker', 'planet-pinwheel', 'sway'),
   'repair-cafe': scene('repair-toys', 'repair-cafe-mentor', 'repair-cafe-wrench', 'turn'),
-  'reuse-rally': scene('workshop', 'park-helper', 'shopping-bag', 'sway'),
+  'reuse-rally': scene('reuse-welcome', 'reuse-helper', 'reuse-tote', 'sway'),
   'road-trip-quest': scene('road-new-york', 'road-traveler', 'road-camper', 'slide', { host: '#roadPreview' }),
   'road-trip-quest-gps': scene('gps-visitor-center', 'road-traveler', 'gps-compass', 'turn', { host: '#gpsPreview' }),
   'robot-rover': scene('rover-meadow', 'rover-explorer', 'rover-sample-case', 'lift'),
