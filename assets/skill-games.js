@@ -60,6 +60,9 @@ const reuseArtwork = world.mode === "sorting"
 const marketArtwork = world.mode === "market"
   ? await import("../games/lemonade-lab/market-art.js").catch(() => null)
   : null;
+const weatherArtwork = world.mode === "weather-reading"
+  ? await import("../games/weather-watchers/weather-art.js").catch(() => null)
+  : null;
 const sdk = window.LarriVerseArcade;
 const $ = (id) => document.getElementById(id);
 const board = $("gameBoard");
@@ -650,12 +653,12 @@ function renderLearningPath(mode) {
     })
     .join("");
   const scene = isWeather
-    ? weatherSceneSvg(item.scene)
+    ? weatherArtwork?.weatherScene(item.scene) || weatherSceneSvg(item.scene)
     : gardenArtwork?.gardenSeasonScene(item) || gardenLessonSvg(item.scene);
   const choices = display
     .map(
       (choice) => `<button class="picture-choice" data-learning-answer="${choice.index}">
-        ${isWeather ? weatherChoiceSvg(choice.art) : gardenArtwork?.gardenSeasonChoice(choice.art) || gardenChoiceSvg(choice.art)}
+        ${isWeather ? weatherArtwork?.weatherChoice(choice.art) || weatherChoiceSvg(choice.art) : gardenArtwork?.gardenSeasonChoice(choice.art) || gardenChoiceSvg(choice.art)}
         <span>${esc(choice.label)}</span>
       </button>`,
     )
