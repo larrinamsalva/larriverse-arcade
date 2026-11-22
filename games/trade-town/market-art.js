@@ -1,7 +1,7 @@
 import { iconSvg } from '../../assets/arcade-scenes.js';
 
-// Only use product photographs when the named item is actually shown.
-// Other requests retain their familiar, clearly labeled icon rather than a misleading photo.
+// Only use illustrated item pictures when they show the named goods.
+// Other requests retain their familiar, clearly labeled icon rather than a misleading picture.
 const photographs = [
   [/^Apples for /, 'games/pantry-picnic/art/apple.webp'],
   [/^Carrots for /, 'games/pantry-picnic/art/carrot.webp'],
@@ -13,8 +13,7 @@ const photographs = [
   [/^Berry baskets /, 'games/pantry-picnic/art/berries.webp'],
   [/^Classroom rulers /, 'games/repair-cafe/art/ruler.webp'],
   [/^Community lanterns /, 'assets/world-motion/objects/lantern.webp'],
-  [/^Picnic napkins /, 'games/pantry-picnic/art/cloth.webp'],
-  [/^Reusable lunch boxes /, 'games/repair-cafe/art/lunch-bag.webp']
+  [/^Picnic napkins /, 'games/pantry-picnic/art/cloth.webp']
 ];
 
 const backdrops = [
