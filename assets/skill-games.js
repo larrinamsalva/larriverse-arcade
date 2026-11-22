@@ -60,7 +60,7 @@ const reuseArtwork = world.mode === "sorting"
 const marketArtwork = world.mode === "market"
   ? await import("../games/lemonade-lab/market-art.js").catch(() => null)
   : null;
-const weatherArtwork = world.mode === "weather"
+const weatherArtwork = world.mode === "weather-reading"
   ? await import("../games/weather-watchers/weather-art.js").catch(() => null)
   : null;
 const sdk = window.LarriVerseArcade;
