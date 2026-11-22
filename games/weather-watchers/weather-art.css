@@ -1,0 +1,116 @@
+/* The picture shows the authored sky condition. Reading and choices remain native text. */
+body[data-world="weather-watchers"] .weather-panorama {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 190px;
+  aspect-ratio: 760 / 300;
+  overflow: hidden;
+  background: #b6dce7;
+  isolation: isolate;
+}
+body[data-world="weather-watchers"] .weather-landscape {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center 28%;
+}
+body[data-world="weather-watchers"] .weather-air,
+body[data-world="weather-watchers"] .weather-forecast-overlay {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+body[data-world="weather-watchers"] .weather-forecast-overlay {
+  z-index: 1;
+  filter: drop-shadow(0 5px 10px #152c4180);
+}
+body[data-world="weather-watchers"] .weather-choice-picture {
+  width: min(128px, 100%);
+  height: 108px;
+  object-fit: contain;
+  transform: none;
+}
+body[data-world="weather-watchers"] .weather-choice-picture[src*="/backgrounds/"] {
+  width: min(145px, 100%);
+  height: 100px;
+  border: 2px solid #567887;
+  border-radius: 12px;
+  object-fit: cover;
+  object-position: center 27%;
+}
+body[data-world="weather-watchers"] .weather-panorama:is(
+  [data-weather-scene="wispy-clouds"], [data-weather-scene="puffy-clouds"],
+  [data-weather-scene="partly-cloudy"], [data-weather-scene="cloudy"],
+  [data-weather-scene="windy"]
+) .weather-landscape {
+  animation: weather-sky-drift 7s ease-in-out infinite alternate;
+}
+body[data-world="weather-watchers"] .weather-panorama:is(
+  [data-weather-scene="rainy"], [data-weather-scene="stormy"]
+) .weather-air::before {
+  content: "";
+  position: absolute;
+  inset: -50% 0 0;
+  opacity: .23;
+  background: repeating-linear-gradient(106deg, transparent 0 22px, #edfaff 22px 24px, transparent 24px 48px);
+  background-size: 48px 80px;
+  animation: weather-rain-fall 1.4s linear infinite;
+}
+body[data-world="weather-watchers"] .weather-panorama[data-weather-scene="snowy"] .weather-air::before {
+  content: "";
+  position: absolute;
+  inset: -32% 0 0;
+  opacity: .56;
+  background: radial-gradient(3px 3px at 10% 15%, #fff 98%, transparent),
+    radial-gradient(4px 4px at 34% 40%, #fff 98%, transparent),
+    radial-gradient(3px 3px at 58% 17%, #fff 98%, transparent),
+    radial-gradient(3px 3px at 81% 52%, #fff 98%, transparent);
+  background-size: 180px 90px;
+  animation: weather-snow-fall 5s linear infinite;
+}
+body[data-world="weather-watchers"] .picture-choice.correct .weather-choice-picture {
+  animation: weather-choice-settle .55s ease-out both;
+}
+@keyframes weather-sky-drift {
+  from { transform: scale(1.04) translateX(-.8%); }
+  to { transform: scale(1.07) translateX(.8%); }
+}
+@keyframes weather-rain-fall {
+  from { transform: translateY(-40px); }
+  to { transform: translateY(40px); }
+}
+@keyframes weather-snow-fall {
+  from { transform: translateY(-20px); }
+  to { transform: translateY(70px); }
+}
+@keyframes weather-choice-settle {
+  0% { transform: scale(.94); }
+  55% { transform: scale(1.055); }
+  100% { transform: scale(1); }
+}
+html.larriverse-reduced-motion body[data-world="weather-watchers"] .weather-landscape,
+html.larriverse-reduced-motion body[data-world="weather-watchers"] .weather-air::before,
+html.larriverse-reduced-motion body[data-world="weather-watchers"] .weather-choice-picture {
+  animation: none !important;
+  transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-world="weather-watchers"] .weather-landscape,
+  body[data-world="weather-watchers"] .weather-air::before,
+  body[data-world="weather-watchers"] .weather-choice-picture {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+@media (max-width: 600px) {
+  body[data-world="weather-watchers"] .weather-panorama { min-height: 190px; }
+  body[data-world="weather-watchers"] .weather-landscape { object-position: center 16%; }
+}

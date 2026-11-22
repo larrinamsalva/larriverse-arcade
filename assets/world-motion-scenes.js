@@ -39,6 +39,6 @@ export const WORLD_MOTION_SCENES = Object.freeze({
   'trade-town': scene('market', 'baker', 'shopping-bag', 'lift'),
   'traffic-town': scene('traffic-neighborhood', 'traffic-instructor', 'traffic-hatchback', 'roll'),
   'water-works': scene('water-meadow', 'water-helper', 'water-paddle-wheel', 'spin'),
-  'weather-watchers': scene('weather-hill', 'robin', 'weather-vane', 'sway'),
+  'weather-watchers': scene('weather-sunny', 'weather-guide', 'weather-vane', 'sway'),
   'word-search-world': scene('library', 'cat', 'books', 'slide', { host: '.game-layout', position: 'beforebegin' })
 });
