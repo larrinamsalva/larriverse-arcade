@@ -5,16 +5,16 @@
   <meta name="theme-color" content="#6f63c8">
   <meta name="description" content="Creative Calm Cove is a no-pressure LarriVerse art studio with free drawing, symmetry, spiro art, creature-making, stickers, local saves, and 80 optional creative prompts.">
   <title>Creative Calm Cove · LarriVerse Arcade</title>
-  <link rel="stylesheet" href="game.css"><link rel="stylesheet" href="../../assets/emoji.css"><link rel="stylesheet" href="../../assets/arcade-accessibility.css">
+  <link rel="stylesheet" href="game.css"><link rel="stylesheet" href="cove-art.css"><link rel="stylesheet" href="../../assets/emoji.css"><link rel="stylesheet" href="../../assets/arcade-accessibility.css">
   <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
   <link rel="canonical" href="https://larrinamsalva.github.io/larriverse-arcade/games/creative-calm-cove/">
   <meta property="og:type" content="website"><meta property="og:site_name" content="LarriVerse Arcade">
   <meta property="og:title" content="Creative Calm Cove · Draw, relax & imagine">
   <meta property="og:description" content="A no-pressure creative hideaway with drawing, symmetry, Spiro Garden, Creature Spark, stickers, and 80 optional prompts.">
   <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/creative-calm-cove/">
-  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
-  <meta property="og:image:type" content="image/webp"><meta property="og:image:width" content="1600"><meta property="og:image:height" content="800">
-  <meta property="og:image:alt" content="Colorful illustrated learning worlds in LarriVerse Arcade"><meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/games/creative-calm-cove/art/cove-studio.webp">
+  <meta property="og:image:type" content="image/webp"><meta property="og:image:width" content="1000"><meta property="og:image:height" content="563">
+  <meta property="og:image:alt" content="A sunlit art table overlooking a calm cove"><meta name="twitter:card" content="summary_large_image">
 </head>
 <body data-classic="creative-calm-cove">
 <a class="skip-link" href="#artCanvas">Skip to art canvas</a>
@@ -28,11 +28,12 @@
   <section class="cove-hero"><div><p class="eyebrow">🎨 New creative world · 80 optional cards · no timer</p><h1>Creative <span>Calm Cove</span></h1>
     <p>Draw, stamp, mirror, swirl, invent creatures, or simply make marks. There are no wrong answers and nothing has to be finished.</p>
     <div class="hero-pills"><span>✏️ Free draw</span><span>🪞 Symmetry</span><span>🌀 Spiro Garden</span><span>👾 Creature Spark</span><span>💾 Local save</span></div></div>
-    <div class="hero-art" aria-hidden="true"><i></i><i></i><i></i><b>✦</b><span>🌿</span></div>
+    <div class="hero-art" aria-hidden="true"><img src="art/cove-studio.webp" width="1000" height="563" alt="" fetchpriority="high"></div>
   </section>
   <section class="creative-layout">
     <aside class="prompt-panel">
       <div class="panel-heading"><div><p class="eyebrow">Optional inspiration</p><h2 id="promptChapter">Color &amp; Doodles</h2></div><strong id="promptCounter">1 / 80</strong></div>
+      <figure class="chapter-scene"><img id="chapterScene" src="art/color-doodles.webp" width="520" height="520" alt="Colored pencil doodles on a sheet at a cove-side art table."><figcaption>Picture idea only. Your art can look completely different.</figcaption></figure>
       <p id="promptText" class="prompt-text">Fill the page with three colors that feel good together.</p>
       <div class="prompt-actions"><button type="button" id="previousPrompt">← Previous</button><button type="button" id="nextPrompt">Next →</button><button type="button" id="completePrompt" class="primary">✓ I made something</button></div>
       <label class="prompt-picker">Jump to any creative card<select id="promptSelect" aria-label="Choose any creative prompt"></select></label>
