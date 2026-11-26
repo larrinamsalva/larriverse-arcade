@@ -1,0 +1,74 @@
+/* The landscape sets a mood. Only the native grid shows the exact authored route. */
+body[data-world="time-trail"] .trail-landscape{
+  margin:.35rem 0 1rem;overflow:hidden;
+  border:2px solid #647d78;border-radius:19px;
+  background:#e6f1e9;box-shadow:0 7px 18px #273e342b;
+}
+body[data-world="time-trail"] .trail-landscape-stage{
+  position:relative;height:clamp(150px,26vw,225px);overflow:hidden;isolation:isolate;
+}
+body[data-world="time-trail"] .trail-landscape-background{
+  display:block;width:100%;height:100%;object-fit:cover;object-position:center 52%;
+}
+body[data-world="time-trail"] .trail-landscape-stage::after{
+  content:"";position:absolute;inset:50% 0 0;pointer-events:none;
+  background:linear-gradient(transparent,#193e3260);z-index:0;
+}
+body[data-world="time-trail"] .trail-landscape-hiker{
+  position:absolute;z-index:1;left:8%;bottom:-2%;
+  width:clamp(85px,15vw,128px);height:87%;object-fit:contain;object-position:center bottom;
+  filter:drop-shadow(0 8px 5px #213222a8);
+  animation:trail-hiker-arrive .25s ease-out both;
+}
+body[data-world="time-trail"] .trail-landscape-caption{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.3rem 1rem;
+  padding:.65rem .85rem;background:#273d46;color:#f6fff7;
+  font-size:.88rem;line-height:1.4;
+}
+body[data-world="time-trail"] .trail-landscape-caption strong{color:#fff0a8}
+body[data-world="time-trail"] .route-map .tile{display:grid;place-items:center;overflow:hidden}
+body[data-world="time-trail"] .route-map .trail-tile-picture{
+  display:block;width:83%;height:87%;object-fit:contain;pointer-events:none;
+  filter:drop-shadow(0 2px 2px #263f3855);
+}
+body[data-world="time-trail"] .route-map .trail-tile-picture--hiker{width:86%;height:94%}
+body[data-world="time-trail"] .route-map .trail-tile-picture--flag{width:76%;height:91%}
+body[data-world="time-trail"] .route-map .trail-tile-picture--rock{width:95%}
+body[data-world="time-trail"] .route-map .trail-path-dot{
+  display:block;width:9px;height:9px;border-radius:50%;background:#356a56;
+}
+body[data-world="time-trail"] .route-map .trail-collected{
+  display:grid;place-items:center;width:1.45rem;height:1.45rem;border-radius:50%;
+  background:#f6fff1;color:#185637;border:2px solid #185637;font-weight:900;line-height:1;
+}
+body[data-world="time-trail"] .route-legend span{display:inline-flex;align-items:center;gap:.4rem}
+body[data-world="time-trail"] .route-legend .trail-tile-picture{
+  display:block;width:26px;height:26px;object-fit:contain;
+}
+html.larriverse-dark body[data-world="time-trail"] .route-map .trail-path-dot{background:#d1efda}
+html.larriverse-dark body[data-world="time-trail"] .route-map .trail-collected{
+  background:#224b33;color:#e9ffe9;border-color:#b5e3b8;
+}
+html.larriverse-high-contrast body[data-world="time-trail"] .trail-landscape,
+html.larriverse-high-contrast body[data-world="time-trail"] .trail-landscape-caption{
+  background:#000!important;color:#fff!important;border-color:#fff!important;box-shadow:none!important;
+}
+html.larriverse-high-contrast body[data-world="time-trail"] .trail-landscape-caption strong{color:#fff}
+html.larriverse-high-contrast body[data-world="time-trail"] .route-map .trail-path-dot{background:#fff}
+html.larriverse-high-contrast body[data-world="time-trail"] .route-map .trail-collected{
+  background:#fff;color:#000;border-color:#000;
+}
+@keyframes trail-hiker-arrive{
+  from{transform:translateY(7px)}
+  to{transform:translateY(0)}
+}
+html.larriverse-reduced-motion body[data-world="time-trail"] .trail-landscape-hiker{animation:none!important}
+@media(prefers-reduced-motion:reduce){
+  body[data-world="time-trail"] .trail-landscape-hiker{animation:none!important}
+}
+@media(max-width:620px){
+  body[data-world="time-trail"] .trail-landscape-stage{height:145px}
+  body[data-world="time-trail"] .trail-landscape-hiker{width:94px;height:87%}
+  body[data-world="time-trail"] .trail-landscape-caption{font-size:.78rem;padding:.58rem .7rem}
+  body[data-world="time-trail"] .route-map .trail-collected{width:1.15rem;height:1.15rem}
+}
