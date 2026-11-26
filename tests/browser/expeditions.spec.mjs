@@ -308,8 +308,10 @@ test("Compass Cove: sixty progressive multi-step routes with gentle wrong-answer
     expect(picturedSettings.size).toBe(3);
   });
 });
-test("Cipher Club: eighty unique messages grow from A-H starters to long A-Z words",async({page})=>{
+test("Cipher Club: eighty unique messages grow from A-H starters to long A-Z words",async({page},testInfo)=>{
   test.setTimeout(420_000);
+  const artScreenshots=path.join('artifacts','screenshots',testInfo.project.name);
+  fs.mkdirSync(artScreenshots,{recursive:true});
   expect(cipherLevels).toHaveLength(80);
   expect(new Set(cipherLevels.map(level=>level.word)).size).toBe(80);
   expect(cipherLevels.slice(60,70).every(level=>level.word.length>=8&&level.alphabet?.length===20)).toBe(true);
@@ -319,6 +321,12 @@ test("Cipher Club: eighty unique messages grow from A-H starters to long A-Z wor
     await action(page,"Check my message"); await expect(page.locator("#feedback")).toContainText("shared key 1");
     for(let index=0;index<cipherLevels.length;index++) {
       const level=cipherLevels[index], charset=level.alphabet||"ABCDEFGH";
+      if([0,60,70].includes(index)) {
+        await expect(page.locator('.cipher-rotor-art')).toHaveAttribute('data-rotor-size',String(charset.length));
+        await expect(page.locator('.cipher-rotor-letters text')).toHaveCount(charset.length*2);
+        const cover=await page.locator('.world-cover.expedition').evaluate(node=>getComputedStyle(node,'::before').backgroundImage);
+        expect(cover).toContain('clubhouse-workshop.webp');
+      }
       if(index===60){
         await expect(page.locator("#stageLabel")).toContainText("Chapter 7/8");
         await expect(page.locator(".cipher-letter-keys button")).toHaveCount(20);
@@ -331,6 +339,11 @@ test("Cipher Club: eighty unique messages grow from A-H starters to long A-Z wor
         const step=shift<=size/2?1:-1, turns=step===1?shift:size-shift;
         for(let n=0;n<turns;n++)document.querySelector(`[data-key="${step}"]`)?.click();
       },{shift:level.shift,size:charset.length});
+      if([0,60,70].includes(index)) {
+        await expect(page.locator('.cipher-rotor-art')).toHaveAttribute('data-rotor-shift',String(level.shift));
+        await expect(page.locator('.cipher-rotor-pair')).toContainText(`A lines up with ${encode('A',level.shift,charset)}`);
+        await page.locator('.cipher-workshop').screenshot({path:path.join(artScreenshots,`cipher-workshop-${index+1}.png`)});
+      }
       if(index===0) {
         await page.evaluate(length=>{for(let n=0;n<length;n++)document.querySelector('[data-letter="A"]')?.click();},level.word.length);
         await action(page,"Check my message"); await expect(page.locator("#feedback")).toHaveClass(/try/); await action(page,"Clear my answer");
