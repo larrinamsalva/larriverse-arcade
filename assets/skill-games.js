@@ -14,6 +14,7 @@ import {
 import { resourceAdventures } from "./budget-adventures.js";
 import { createExpedition } from "./expedition-games.js";
 import { timeTrailLevelsWithGoals as timeTrailLevels } from "./time-trail-level.js";
+import { trailScene, trailTilePicture, trailLegend } from "../games/time-trail/trail-art.js";
 import { gardenLevels, energyLevels } from "./garden-energy-levels.js";
 import {
   mountScene,
@@ -849,7 +850,7 @@ function renderRoute() {
   const moving=!state.levelPassed && state.moves<level.stepLimit;
   const stars=state.levelStars.reduce((sum,n)=>sum+n,0);
   stage(`Time Trail · Map ${state.level+1} of ${timeTrailLevels.length} · ${level.rank}`);
-  board.innerHTML=`${levelTrail(timeTrailLevels,state.level)}
+  board.innerHTML=`${levelTrail(timeTrailLevels,state.level)}${trailScene(level,state.moves)}
     <section class="route-level-hero route-zone--${esc(level.zone)}">
       <span aria-hidden="true">${esc(level.icon)}</span>
       <div><h2>${esc(level.name)}</h2><p>${esc(level.lesson)}</p><small>Chapter ${level.chapter+1} of 6 · ${level.width} × ${level.width} map</small></div>
@@ -862,11 +863,14 @@ function renderRoute() {
       ${chip("Shortest route",`${level.bestMoves} moves`)}
       ${chip("Trail stars",`${stars}/${timeTrailLevels.length*3}`)}
     </div>
-    <div class="route-legend"><span>🧑 You</span><span>🚩 Mission</span><span>🧺 Finish</span><span>✨ Glowing = next move</span></div>
+    ${trailLegend()}
     <div class="tile-grid route-map route-map--${level.width} route-map-zone--${esc(level.zone)}" aria-label="Trail map, ${level.width} by ${level.width} squares">${Array.from({length:level.width*level.width},(_,i)=>{
       const rock=rocks.has(i),flag=level.flags.includes(i),finishTile=i===level.finish,player=i===state.player;
       const reachable=moving&&!rock&&!player&&adjacent(state.player,i,level.width);
-      return `<button class="tile ${rock?"rock":""} ${player?"player":""} ${reachable?"route-reachable":""} ${flag?"flag":""} ${finishTile?"finish":""} ${state.visited.has(i)?"visited":""}" data-tile="${i}" aria-label="Row ${Math.floor(i/level.width)+1}, column ${i%level.width+1}, ${player?"your position":rock?"rock":flag?(state.flags.has(i)?"flag collected":"mission flag"):finishTile?"picnic finish":"path"}${reachable?", next possible move":""}" ${!moving||rock||player?"disabled":""}>${player?"🧑":rock?"🪨":flag?(state.flags.has(i)?"✓":"🚩"):finishTile?"🧺":"·"}</button>`;
+      const picture=player?trailTilePicture('hiker',state.moves):rock?trailTilePicture('rock'):
+        flag?trailTilePicture(state.flags.has(i)?'collected':'flag'):
+        finishTile?trailTilePicture('basket'):trailTilePicture('path');
+      return `<button class="tile ${rock?"rock":""} ${player?"player":""} ${reachable?"route-reachable":""} ${flag?"flag":""} ${finishTile?"finish":""} ${state.visited.has(i)?"visited":""}" data-tile="${i}" aria-label="Row ${Math.floor(i/level.width)+1}, column ${i%level.width+1}, ${player?"your position":rock?"rock":flag?(state.flags.has(i)?"flag collected":"mission flag"):finishTile?"picnic finish":"path"}${reachable?", next possible move":""}" ${!moving||rock||player?"disabled":""}>${picture}</button>`;
     }).join("")}</div><p class="trail-local-note">🌱 Your completed maps and trail stars are saved only in this browser.</p>`;
   bind("[data-tile]",node=>moveRoute(Number(node.dataset.tile)));
   progress(state.level+(state.levelPassed?1:0),timeTrailLevels.length,

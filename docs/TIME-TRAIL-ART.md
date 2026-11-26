@@ -1,0 +1,15 @@
+# Time Trail: illustrated route journey
+
+All sixty route puzzles retain their authored tile positions, blocked rocks, mission flags, picnic finish, move limits, stars, focusable tile buttons, native labels, save key and retry/replay controls. The updated playable board shows a recognizable hiker, rock, fabric trail flag and picnic basket instead of emoji stand-ins. The hiker alternates two poses with actual moves; it never moves through a rock or changes the underlying route. The flags, picnic and rocks are placed **only** on their authored tile positions.
+
+Above the grid, a short landscape strip follows each level's region. The original reusable scenery pairs meadow, river, pine forest, ridge, creek, valley, cloudy hills, mountains and night summit with appropriate local images. Its native caption calls it an **illustrative landscape** and tells learners to use the exact grid below. It is not a picture of the grid geometry, a weather forecast, or a clue to which tile to choose. Theme, chapter, level and star counts remain native text outside the art.
+
+## Assets and provenance
+
+The two 256 × 256 transparent hiker poses are crops from the original packaged `assets/world-motion/characters/cove-explorer.webp` sheet. The new 256 × 256 purple pennant in `games/time-trail/art/mission-flag.webp` was generated as an original transparent 3D prop: a short wooden stake, stitched purple cloth, gold edge and grass base, complete from tip to foot, with no text. The existing `games/robot-rover/art/rock-meadow.webp` and `assets/world-motion/objects/picnic-basket.webp` supply the other accurate markers. Seven distinct existing local landscape paintings are reused. The three new files together are under 34 KiB; no runtime dependencies, network images, login or new personal data are added. The social preview now uses the actual Time Trail meadow scene.
+
+Tile pictures have empty alternative text because every button keeps its precise row, column and object label. The landscape images are decorative; their native caption gives the relationship to the real grid. The map remains keyboard navigable, high contrast keeps the tile boundaries and collected check clear, and both motion preferences stop the short hiker entrance animation without removing any information. Mobile widths preserve the original 5, 6 and 7 column grids.
+
+## Verification
+
+`npm run validate` checks that all sixty maps resolve to locally packaged WebP scenery and markers. `tests/browser/time-trail-art.spec.mjs` visits ten maps across the six chapters at 320 CSS pixels, decodes all active pictures, checks the exact number of flags and rocks, moves the hiker, and saves scenes and grids for phone/desktop visual review. The existing full-campaign test in `skill-worlds.spec.mjs` follows the exact shortest route through all sixty maps and verifies save, stars, completion, replay and retry. Human review should check that the tiny markers stay recognizable and no scenery contradicts a level title before merging.
