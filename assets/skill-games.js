@@ -64,6 +64,9 @@ const reuseArtwork = world.mode === "sorting"
 const marketArtwork = world.mode === "market"
   ? await import("../games/lemonade-lab/market-art.js").catch(() => null)
   : null;
+const beatArtwork = world.mode === "music"
+  ? await import("../games/beat-builder/studio-art.js").catch(() => null)
+  : null;
 const weatherArtwork = world.mode === "weather-reading"
   ? await import("../games/weather-watchers/weather-art.js").catch(() => null)
   : null;
@@ -1371,9 +1374,9 @@ function renderBeatMission(){
     <h2>${esc(m.name)}</h2><p>${esc(m.explanation)}</p>
     <div class="stat-row">${chip("Tempo",`${m.bpm} BPM`)}${chip("Completed",`${completion}/${beatMissions.length}`)}</div>
     <p class="board-note">Light up the numbered steps below for each instrument. Leave all unlisted steps off. Sound is optional.</p>
-    ${musicStudioSvg()}
+    ${beatArtwork?.beatStudioScene() ?? musicStudioSvg()}
     <div class="beat-numbers">${Array.from({length:16},(_,i)=>`<span>${i%4===0?i/4+1:"·"}</span>`).join("")}</div>
-    ${state.tracks.map((track,row)=>`<div class="track-label beat-track-label beat-track-label--${row}"><span class="track-symbol track-symbol-${row}" aria-hidden="true"></span><span>${trackNames[row]} · Steps: ${m.rows[row].map(n=>n+1).join(", ")}</span></div>
+    ${state.tracks.map((track,row)=>`<div class="track-label beat-track-label beat-track-label--${row}">${beatArtwork?.beatInstrumentPicture(row) ?? `<span class="track-symbol track-symbol-${row}" aria-hidden="true"></span>`}<span>${trackNames[row]} · Steps: ${m.rows[row].map(n=>n+1).join(", ")}</span></div>
       <div class="beat-grid beat-grid--${row}">${track.map((on,col)=>`<button type="button" class="beat-cell beat-cell--${row} ${on?"active":""}" data-beat="${row},${col}" aria-label="${trackNames[row]}, step ${col+1}" aria-pressed="${on}" ${done?"disabled":""}>${col+1}</button>`).join("")}</div>`).join("")}
     </section>`;
   bind("[data-beat]",node=>{
@@ -1484,7 +1487,7 @@ const trackNames = ["Kick", "Clap", "Hi-hat"];
 function renderMusic() {
   if(state.musicMode==="missions"){renderBeatMission();return;}
   stage("Your little rhythm studio");
-  board.innerHTML = `${musicStudioSvg()}<p class="board-note">Tap glowing pads to make a pattern. Four steps make one beat. Play is visual even with sound off.</p><div class="beat-numbers">${Array.from({ length: 16 }, (_, i) => `<span>${i % 4 === 0 ? i / 4 + 1 : "·"}</span>`).join("")}</div>${state.tracks.map((track, row) => `<div class="track-label"><span class="track-symbol track-symbol-${row}" aria-hidden="true"></span>${trackNames[row]}</div><div class="beat-grid">${track.map((on, col) => `<button class="beat-cell ${on ? "active" : ""}" data-beat="${row},${col}" aria-pressed="${on}" aria-label="${trackNames[row]}, step ${col + 1}">${col + 1}</button>`).join("")}</div>`).join("")}<div class="pattern-goals"><span>Kick: steps 1, 5, 9, 13</span><span>Clap: steps 5, 13</span><span>Hi-hat: odd steps</span></div><label class="board-note">Tempo <select id="tempoInput">${[80, 100, 120, 140].map((n) => `<option value="${n}" ${n === state.bpm ? "selected" : ""}>${n} BPM</option>`).join("")}</select></label>`;
+  board.innerHTML = `${beatArtwork?.beatStudioScene() ?? musicStudioSvg()}<p class="board-note">Tap glowing pads to make a pattern. Four steps make one beat. Play is visual even with sound off.</p><div class="beat-numbers">${Array.from({ length: 16 }, (_, i) => `<span>${i % 4 === 0 ? i / 4 + 1 : "·"}</span>`).join("")}</div>${state.tracks.map((track, row) => `<div class="track-label">${beatArtwork?.beatInstrumentPicture(row) ?? `<span class="track-symbol track-symbol-${row}" aria-hidden="true"></span>`}${trackNames[row]}</div><div class="beat-grid">${track.map((on, col) => `<button class="beat-cell ${on ? "active" : ""}" data-beat="${row},${col}" aria-pressed="${on}" aria-label="${trackNames[row]}, step ${col + 1}">${col + 1}</button>`).join("")}</div>`).join("")}<div class="pattern-goals"><span>Kick: steps 1, 5, 9, 13</span><span>Clap: steps 5, 13</span><span>Hi-hat: odd steps</span></div><label class="board-note">Tempo <select id="tempoInput">${[80, 100, 120, 140].map((n) => `<option value="${n}" ${n === state.bpm ? "selected" : ""}>${n} BPM</option>`).join("")}</select></label>`;
   bind("[data-beat]", (node) => {
     const [row, col] = node.dataset.beat.split(",").map(Number);
     state.tracks[row][col] = !state.tracks[row][col];

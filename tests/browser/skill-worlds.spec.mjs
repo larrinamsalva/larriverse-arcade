@@ -16,6 +16,7 @@ import {
 import { resourceAdventures } from "../../assets/budget-adventures.js";
 import { REUSE_ART_FILES, REUSE_OBJECT_ART } from "../../games/reuse-rally/reuse-pictures.js";
 import { newsroomSceneForStep } from "../../games/fact-finder/newsroom-art.js";
+import { BEAT_INSTRUMENTS } from "../../games/beat-builder/studio-art.js";
 import { MARKET_SETTINGS } from "../../games/lemonade-lab/market-art.js";
 import { marketMissions, beatMissions, bestMarketPlan } from "../../assets/creative-missions.js";
 import { gardenLevels, energyLevels } from "../../assets/garden-energy-levels.js";
@@ -943,6 +944,8 @@ test("Beat Builder: compose, play silently, pause on hide, and save a pattern", 
 }) => {
   await round(page, "beat-builder", async () => {
     await page.getByRole("button",{name:"Return to freestyle"}).click();
+    await expect(page.locator(".beat-studio-scene img")).toHaveAttribute("src", "art/music-studio.webp");
+    await expect(page.locator(".beat-instrument-picture")).toHaveCount(3);
     const pattern = [
       [0, 4, 8, 12],
       [4, 12],
@@ -1017,15 +1020,25 @@ test("Lemonade Lab: keep four-day free play and finish all eighty market mission
   });
 });
 
-test("Beat Builder: keep freestyle and complete eighty unique patterns", async function beatE2E({page}){
+test("Beat Builder: keep freestyle and complete eighty unique patterns", async function beatE2E({page},testInfo){
   test.setTimeout(520000);
   expect(beatMissions).toHaveLength(80);
   expect(new Set(beatMissions.map(m=>m.rows.map(row=>row.join(",")).join("|"))).size).toBe(80);
+  const output=path.join("artifacts","screenshots",testInfo.project.name);
+  fs.mkdirSync(output,{recursive:true});
   await round(page,"beat-builder",async()=>{
     await expect(page.locator("[data-beat-mission]")).toBeVisible();
     for(let i=0;i<beatMissions.length;i++){
       const mission=beatMissions[i];
       await expect(page.locator("[data-beat-mission]")).toHaveAttribute("data-beat-mission",mission.id);
+      await expect(page.locator(".beat-studio-scene img")).toHaveAttribute("src","art/music-studio.webp");
+      await expect(page.locator(".beat-instrument-picture")).toHaveCount(3);
+      if([0,40,79].includes(i)){
+        await page.locator(".beat-studio-scene img,.beat-instrument-picture").evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
+        const sources=await page.locator(".beat-instrument-picture").evaluateAll(images=>images.map(image=>image.getAttribute("src")));
+        expect(sources).toEqual(BEAT_INSTRUMENTS.map(instrument=>`art/${instrument.file}`));
+        await page.locator(".beat-mission-card").screenshot({path:path.join(output,`beat-builder-mission-${i+1}.png`)});
+      }
       await page.evaluate(rows=>{
         for(const [row,steps] of rows.entries())for(const col of steps){
           document.querySelector(`[data-beat="${row},${col}"]`).click();
