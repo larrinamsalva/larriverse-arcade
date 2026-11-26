@@ -34,6 +34,9 @@ const renderScamScene = world.mode === "messages"
 const renderKindnessScene = world.mode === "conversation"
   ? await import("../games/kindness-quest/quest-art.js").then(module => module.kindnessScene, () => null)
   : null;
+const renderFactNewsroom = world.mode === "news"
+  ? await import("../games/fact-finder/newsroom-art.js").then(module => module.factNewsroomScene, () => null)
+  : null;
 const renderTrafficStreet = world.mode === "traffic"
   ? await import("../games/traffic-town/street-art.js").then(module => module.trafficStreetScene, () => null)
   : null;
@@ -567,7 +570,7 @@ function renderCards(mode) {
         : mode === "conversation"
           ? renderKindnessScene?.(item) ?? `<span class="message-icon" aria-hidden="true">${item.icon}</span>`
           : mode === "news"
-            ? `<div class="fact-newsroom-scene" aria-hidden="true">
+            ? renderFactNewsroom?.(state.step) ?? `<div class="fact-newsroom-scene" aria-hidden="true">
                 <div class="fact-desk">
                   <span class="fact-monitor">${item.icon}</span>
                   <span class="fact-notepad"></span>
