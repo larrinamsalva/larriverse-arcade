@@ -15,6 +15,7 @@ import {
 } from "../../assets/skill-worlds.js";
 import { resourceAdventures } from "../../assets/budget-adventures.js";
 import { REUSE_ART_FILES, REUSE_OBJECT_ART } from "../../games/reuse-rally/reuse-pictures.js";
+import { newsroomSceneForStep } from "../../games/fact-finder/newsroom-art.js";
 import { MARKET_SETTINGS } from "../../games/lemonade-lab/market-art.js";
 import { marketMissions, beatMissions, bestMarketPlan } from "../../assets/creative-missions.js";
 import { gardenLevels, energyLevels } from "../../assets/garden-energy-levels.js";
@@ -58,8 +59,9 @@ async function round(page, id, play) {
   await expect(page.locator("#bestScore")).not.toHaveText("—");
   expect(errors).toEqual([]);
 }
-async function chooseDeck(page, deck, labels, roundSize = 60) {
+async function chooseDeck(page, deck, labels, roundSize = 60, beforeChoice = null) {
   for (let i = 0; i < roundSize; i++) {
+    if (beforeChoice) await beforeChoice(i);
     const text = await page.locator(".message-card").innerText();
     const item = deck.find((item) => text.includes(item.text || item.name));
     expect(item).toBeTruthy();
@@ -417,15 +419,26 @@ test("Kindness Quest: illustrated situations, accessible motion, and a full 60-c
 });
 test("Fact Finder: inspect sources, opinions, advertising, and claims · full 60-challenge journey", async ({
   page,
-}) => {
+}, testInfo) => {
   test.setTimeout(420000);
+  const output = path.join("artifacts", "screenshots", testInfo.project.name);
+  fs.mkdirSync(output, { recursive: true });
   await round(page, "fact-finder", () =>
     chooseDeck(page, newsCards, [
       "Evidence",
       "Opinion",
       "Advertisement",
       "Needs checking",
-    ]),
+    ], 60, async (index) => {
+      const scene = newsroomSceneForStep(index);
+      await expect(page.locator(".fact-newsroom-scene")).toHaveAttribute("data-fact-setting", scene.id);
+      await expect(page.locator(".fact-newsroom-scene img")).toHaveAttribute("src", `art/${scene.file}`);
+      await expect(page.locator(".fact-newsroom-scene img")).toHaveAttribute("alt", scene.alt);
+      if ([0, 20, 40].includes(index)) {
+        await page.locator(".fact-newsroom-scene img").evaluate(image => image.decode());
+        await page.locator(".fact-message").screenshot({ path: path.join(output, `fact-finder-${scene.id}.png`) });
+      }
+    }),
   );
 });
 test("Reuse Rally: sort all sixty objects through six chapters", async ({ page }, testInfo) => {
