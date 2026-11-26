@@ -1,0 +1,14 @@
+.hero-art{background:#2f7d70;isolation:isolate;overflow:hidden}
+.hero-art img{display:block;width:100%;height:100%;min-height:220px;object-fit:cover;object-position:center 62%;animation:cove-breathe 18s ease-in-out infinite alternate}
+.prompt-panel{position:static}
+.chapter-scene{margin:1rem 0 .5rem;border:1px solid #d5cce9;border-radius:16px;overflow:hidden;background:#ebe9f2}
+.chapter-scene img{display:block;width:100%;aspect-ratio:3 / 2;object-fit:cover;object-position:center;}
+.chapter-scene figcaption{padding:.55rem .7rem;color:#4b5872;background:#f6f3ff;font-size:.76rem;font-weight:750;line-height:1.4}
+html.larriverse-dark .chapter-scene{border-color:#686382;background:#2c3049}
+html.larriverse-dark .chapter-scene figcaption{background:#292d47;color:#e6e1f5}
+html.larriverse-high-contrast .chapter-scene{border:2px solid currentColor}
+html.larriverse-high-contrast .chapter-scene figcaption{color:var(--ink);background:var(--card)}
+@keyframes cove-breathe{from{transform:scale(1)}to{transform:scale(1.025)}}
+@media(max-width:680px){.hero-art img{min-height:135px;max-height:185px}.chapter-scene img{max-height:180px}}
+@media(prefers-reduced-motion:reduce){.hero-art img{animation:none}}
+html.larriverse-reduced-motion .hero-art img{animation:none}

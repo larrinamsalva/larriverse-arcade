@@ -1,4 +1,5 @@
 import { CREATIVE_CHAPTERS, CREATIVE_PROMPTS } from "./prompts.js";
+import { CHAPTER_SCENES } from "./cove-art.js";
 
 const GAME_ID = "creative-calm-cove";
 const SAVE_KEY = "larriverse.creativeCalmCove.v1";
@@ -286,6 +287,11 @@ function creatureSpark() {
 
 function renderPrompt() {
   const p = CREATIVE_PROMPTS[save.prompt];
+  const scene = CHAPTER_SCENES[p.chapter];
+  const chapterImage = $("chapterScene");
+  const scenePath = "art/" + scene.file;
+  if (chapterImage.getAttribute("src") !== scenePath) chapterImage.src = scenePath;
+  chapterImage.alt = scene.alt;
   $("promptChapter").textContent = p.icon + " " + p.chapterName;
   $("promptText").textContent = p.prompt;
   $("promptCounter").textContent = p.id + " / " + CREATIVE_PROMPTS.length;
