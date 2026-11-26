@@ -384,6 +384,28 @@
     $('#earnJump').onclick = () => { tab = 'tasks'; render(); };
   }
 
+  // These scenes are illustrative context; questions and earned KC remain native text.
+  const familyScenes = {
+    chores: {
+      title: 'Sharing the work',
+      caption: 'Choose only chores your family has assigned. A parent approves earned Family KC.',
+      alt: 'Two children fold clean towels and water a houseplant while their family encourages them.'
+    },
+    learning: {
+      title: 'Practice together',
+      caption: 'The pictured tokens are pretend. Your lesson questions and choices are below.',
+      alt: 'A family discusses a pretend savings plan using two jars and blank paper.'
+    }
+  };
+
+  function familyScene(kind) {
+    const scene = familyScenes[kind];
+    return `<figure class="family-story-scene family-story-scene--${kind}">
+      <img src="art/${kind}.webp" width="1672" height="941" alt="${scene.alt}" loading="lazy" decoding="async">
+      <figcaption><strong>${scene.title}</strong><span>${scene.caption}</span></figcaption>
+    </figure>`;
+  }
+
   function renderTasks() {
     const profileState = activeProfile();
     const assigned = tasksFor(profileState.id);
@@ -393,6 +415,7 @@
 
     if (!assigned.length) {
       $('#view').innerHTML = `
+        ${familyScene('chores')}
         <div class="empty">
           <h2>No chores assigned yet</h2>
           <p>A parent can assign a shared chore or a chore just for ${esc(profileState.name)} in Parent Mode.</p>
@@ -402,6 +425,7 @@
     }
 
     $('#view').innerHTML = `
+      ${familyScene('chores')}
       <div class="section-head">
         <div>
           <p class="eyebrow">Assigned by family</p>
@@ -490,6 +514,7 @@
     const profileState = activeProfile();
     const totalQuestions = manifest.lessons.reduce((sum, lesson) => sum + lesson.questions.length, 0);
     $('#view').innerHTML = `
+      ${familyScene('learning')}
       <div class="section-head">
         <div>
           <p class="eyebrow">Always unlocked</p>
