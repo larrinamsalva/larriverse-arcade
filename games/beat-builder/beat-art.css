@@ -1,0 +1,36 @@
+body[data-world="beat-builder"] .world-cover{width:265px;min-width:215px}
+body[data-world="beat-builder"] .world-cover::before{
+  inset:0;width:100%;height:100%;transform:none;
+  background-image:url("art/music-studio.webp");
+  background-size:cover;background-position:center 46%;
+}
+body[data-world="beat-builder"] .beat-studio-scene{
+  margin:0 0 1rem;overflow:hidden;border:3px solid #594788;
+  border-radius:22px;background:#211a39;
+  box-shadow:0 8px 0 #352b5f,0 14px 28px #241c4530;
+}
+body[data-world="beat-builder"] .beat-studio-scene img{
+  display:block;width:100%;height:clamp(180px,26vw,310px);
+  object-fit:cover;object-position:center 45%;
+}
+body[data-world="beat-builder"] .beat-studio-scene figcaption{
+  padding:.5rem .75rem;color:#f8f3ff;background:#302749;
+  font-size:.75rem;line-height:1.4;font-weight:800;
+}
+body[data-world="beat-builder"] .beat-instrument-picture{
+  display:block;flex:none;width:44px;height:44px;object-fit:cover;
+  border:2px solid #7b668f;border-radius:11px;
+  box-shadow:0 3px 0 #4f416a2e;
+}
+html.larriverse-dark body[data-world="beat-builder"] .beat-studio-scene{border-color:#9c86c0}
+html.larriverse-dark body[data-world="beat-builder"] .beat-studio-scene figcaption{background:#241d37;color:#f4efff}
+html.larriverse-high-contrast body[data-world="beat-builder"] .beat-studio-scene{
+  border-color:#fff;box-shadow:none;
+}
+html.larriverse-high-contrast body[data-world="beat-builder"] .beat-studio-scene figcaption{background:#111;color:#fff}
+html.larriverse-high-contrast body[data-world="beat-builder"] .beat-instrument-picture{border-color:#fff;box-shadow:none}
+@media(max-width:700px){body[data-world="beat-builder"] .world-cover{width:100px;min-width:100px}}
+@media(max-width:620px){
+  body[data-world="beat-builder"] .beat-studio-scene img{height:180px}
+  body[data-world="beat-builder"] .beat-instrument-picture{width:38px;height:38px}
+}
