@@ -73,6 +73,7 @@ function bootAdventureMissions(){
    section.className="lv-adventure-question";
    section.dataset.missionId=m.id;
    section.innerHTML=`
+     ${kind==="kidscoin-family"?`<img class="kidscoin-mission-art" src="./art/learning.webp" alt="" width="1672" height="941" decoding="async">`:""}
      <p class="lv-adventure-chapter">${escapeHtml(m.chapter)}</p>
      <h3>${escapeHtml(m.title)}</h3>
      <p class="lv-adventure-prompt" id="adventurePrompt">${escapeHtml(m.prompt)}</p>
