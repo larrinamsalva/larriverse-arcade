@@ -1,0 +1,226 @@
+/* Trade Town: a recognizable shopkeeper, illustrated districts, and product-matched merchandise.
+   All existing challenge labels, prices, control buttons, and save keys stay unchanged. */
+body[data-world="trade-town"] .trade-illustrated-market {
+  margin: 15px 0 18px;
+  border: 2px solid #987e57;
+  border-radius: 21px;
+  overflow: hidden;
+  background: #fff9e9;
+  color: #332a23;
+  box-shadow: 0 8px 0 #96774b24, 0 15px 24px #4d3c2c18;
+}
+body[data-world="trade-town"] .trade-market-heading,
+body[data-world="trade-town"] .trade-market-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 14px;
+  row-gap: 5px;
+  padding: 10px 14px;
+  font-size: .88rem;
+  line-height: 1.5;
+}
+body[data-world="trade-town"] .trade-market-heading {
+  background: #3f3150;
+  color: #fff5da;
+  font-weight: 700;
+}
+body[data-world="trade-town"] .trade-market-heading span {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+body[data-world="trade-town"] .trade-market-stage {
+  position: relative;
+  height: clamp(205px, 30vw, 270px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #b3dece;
+}
+body[data-world="trade-town"] .trade-market-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;
+  filter: saturate(.93) brightness(.9);
+}
+body[data-world="trade-town"] .trade-market-stage::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(0deg, #2a2d327c, transparent 50%);
+}
+body[data-world="trade-town"] .trade-market-vendor {
+  position: absolute;
+  left: 1.5%;
+  bottom: 2%;
+  z-index: 2;
+  height: 80%;
+  width: 23%;
+  overflow: hidden;
+  filter: drop-shadow(0 7px 5px #2a27285c);
+}
+body[data-world="trade-town"] .trade-market-vendor img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: block;
+  width: 200%;
+  max-width: none;
+  height: 100%;
+  object-fit: fill;
+  animation: trade-vendor-wave 5.4s steps(1,end) infinite;
+}
+body[data-world="trade-town"] .trade-market-display {
+  position: absolute;
+  z-index: 2;
+  left: 28%;
+  bottom: 10%;
+  width: 37%;
+  height: 77%;
+  display: grid;
+  place-items: center;
+  border: 4px solid #bf9665;
+  border-bottom-width: 10px;
+  border-radius: 18px;
+  background: #fffdf2ed;
+  box-shadow: inset 0 4px 16px #ba9b6c38, 0 10px 25px #201d1b5e;
+  animation: trade-market-arrive .7s ease-out both;
+}
+body[data-world="trade-town"] .trade-market-item {
+  width: 94%;
+  height: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 9px 6px #4b35243a);
+}
+body[data-world="trade-town"] .trade-market-item--symbol {
+  display: grid;
+  place-items: center;
+}
+body[data-world="trade-town"] .trade-market-item--symbol .object-icon {
+  width: min(120px, 80%);
+  height: min(120px, 80%);
+  filter: drop-shadow(0 8px 4px #4b352433);
+}
+body[data-world="trade-town"] .trade-market-basket {
+  position: absolute;
+  z-index: 2;
+  right: 2%;
+  bottom: 8%;
+  width: 27%;
+  min-height: 150px;
+  padding: 12px 8px 13px;
+  border: 3px solid #d9b474;
+  border-radius: 19px;
+  background: #292b42ed;
+  color: #fff7e7;
+  box-shadow: 0 10px 19px #22222265;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+body[data-world="trade-town"] .trade-market-basket img {
+  width: min(70px, 85%);
+  height: 65px;
+  object-fit: contain;
+  animation: trade-bag-sway 2.8s ease-in-out infinite alternate;
+}
+body[data-world="trade-town"] .trade-market-basket-count {
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  font-size: .94rem;
+}
+body[data-world="trade-town"] .trade-market-basket i {
+  width: 86%;
+  height: 9px;
+  border-radius: 20px;
+  border: 1px solid #fff6e4a8;
+  background: linear-gradient(to right,#c6f6ba var(--trade-basket-fill),#6c617d var(--trade-basket-fill));
+}
+body[data-world="trade-town"] .trade-market-summary {
+  font-weight: 850;
+  background: #fff9e9;
+  color: #3e3429;
+  font-variant-numeric: tabular-nums;
+}
+body[data-world="trade-town"] .trade-market-ready {color:#185b3a}
+body[data-world="trade-town"] .trade-market-over-budget {color:#a52822}
+body[data-world="trade-town"] .trade-item-picture {
+  width: 96px;
+  height: 96px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #fffaec;
+  border: 1px solid #e7d2ad;
+}
+body[data-world="trade-town"] .trade-item-image {
+  width: 92%;
+  height: 92%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 4px #62483035);
+}
+body[data-world="trade-town"] .trade-item-symbol .object-icon {
+  width: 80px;
+  height: 80px;
+}
+body[data-world="trade-town"] .trade-market-stall h3 {overflow-wrap: anywhere}
+body[data-world="trade-town"] .trade-quantity-stepper button {min-width: 44px; min-height: 44px}
+html.larriverse-dark body[data-world="trade-town"] .trade-market-summary {
+  background:#292238;
+  color:#faf1e5;
+}
+html.larriverse-dark body[data-world="trade-town"] .trade-market-ready {color:#9cebbd}
+html.larriverse-dark body[data-world="trade-town"] .trade-market-over-budget {color:#ffafa7}
+html.larriverse-high-contrast body[data-world="trade-town"] .trade-illustrated-market,
+html.larriverse-high-contrast body[data-world="trade-town"] .trade-market-heading,
+html.larriverse-high-contrast body[data-world="trade-town"] .trade-market-summary {
+  background:#111;
+  color:#fff;
+  border-color:#fff;
+}
+html.larriverse-high-contrast body[data-world="trade-town"] .trade-market-ready {color:#b5ffc4}
+html.larriverse-high-contrast body[data-world="trade-town"] .trade-market-over-budget {color:#ffb5af}
+@keyframes trade-vendor-wave {
+  0%, 38%, 74%, 100% {transform:translateX(0)}
+  42%, 68% {transform:translateX(-50%)}
+}
+@keyframes trade-bag-sway {
+  from {transform:rotate(-3deg) translateY(0)}
+  to {transform:rotate(3deg) translateY(-4px)}
+}
+@keyframes trade-market-arrive {
+  from {transform:translateY(13px);opacity:.25}
+  to {transform:translateY(0);opacity:1}
+}
+html.larriverse-reduced-motion body[data-world="trade-town"] .trade-illustrated-market *,
+html.larriverse-high-contrast.larriverse-reduced-motion body[data-world="trade-town"] .trade-illustrated-market * {
+  animation:none!important;
+  transition:none!important;
+}
+@media (prefers-reduced-motion:reduce) {
+  body[data-world="trade-town"] .trade-illustrated-market * {animation:none!important;transition:none!important}
+}
+@media (max-width:600px) {
+  body[data-world="trade-town"] .trade-market-stage {height:204px}
+  body[data-world="trade-town"] .trade-market-vendor {left:0;width:25%;height:69%}
+  body[data-world="trade-town"] .trade-market-display {
+    left:25%;width:41%;height:64%;bottom:13%;border-width:3px;border-bottom-width:7px;
+  }
+  body[data-world="trade-town"] .trade-market-basket {
+    right:1%;width:30%;min-height:115px;padding:8px 4px 10px;border-width:2px;
+  }
+  body[data-world="trade-town"] .trade-market-basket img {height:44px}
+  body[data-world="trade-town"] .trade-market-basket-count {font-size:.8rem}
+  body[data-world="trade-town"] .trade-market-heading,
+  body[data-world="trade-town"] .trade-market-summary {font-size:.8rem;padding:9px 11px}
+  body[data-world="trade-town"] .trade-item-picture {width:88px;height:88px}
+}
