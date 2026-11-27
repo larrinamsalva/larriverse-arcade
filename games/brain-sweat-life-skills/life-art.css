@@ -1,0 +1,86 @@
+/* Neutral illustrated settings for the four worlds with reviewed lessons. */
+body[data-classic="brain-sweat-life-skills"] .life-settings{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px;
+  width:min(100%,310px);
+  margin:auto;
+  padding:7px;
+  border:1px solid rgba(88,230,168,.45);
+  border-radius:20px;
+  background:#0e2130;
+  box-shadow:0 15px 40px #0009,0 0 34px rgba(88,230,168,.12);
+  transform:rotate(2deg);
+}
+body[data-classic="brain-sweat-life-skills"] .life-settings img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1;
+  border-radius:9px;
+}
+body[data-classic="brain-sweat-life-skills"] .world-setting{
+  margin:0 12px;
+  padding:7px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:15px;
+  background:#0d1b2b;
+}
+body[data-classic="brain-sweat-life-skills"] .world-setting img{
+  display:block;
+  width:100%;
+  height:clamp(175px,21vw,230px);
+  object-fit:cover;
+  object-position:center 47%;
+  border-radius:10px;
+}
+body[data-classic="brain-sweat-life-skills"] .world-setting figcaption{
+  padding:7px 5px 1px;
+  color:#d5eee6;
+  font-size:12px;
+  font-weight:750;
+}
+body[data-classic="brain-sweat-life-skills"] .lesson-setting{
+  display:grid;
+  grid-template-columns:118px minmax(0,1fr);
+  align-items:center;
+  gap:13px;
+  margin:0 0 19px;
+  padding:7px;
+  border:1px solid rgba(88,230,168,.32);
+  border-radius:15px;
+  background:#122735;
+}
+body[data-classic="brain-sweat-life-skills"] .lesson-setting[hidden]{display:none}
+body[data-classic="brain-sweat-life-skills"] .lesson-setting img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1;
+  object-fit:cover;
+  border-radius:10px;
+}
+body[data-classic="brain-sweat-life-skills"] .lesson-setting figcaption{
+  max-width:35ch;
+  color:#d7f0e9;
+  font-size:13px;
+  font-weight:750;
+  line-height:1.5;
+}
+html.larriverse-high-contrast body[data-classic="brain-sweat-life-skills"] :is(.life-settings,.world-setting,.lesson-setting){
+  border:2px solid #fff;
+  background:#000;
+  box-shadow:none;
+}
+html.larriverse-high-contrast body[data-classic="brain-sweat-life-skills"] :is(.world-setting,.lesson-setting) figcaption{color:#fff}
+@media(max-width:800px){
+  body[data-classic="brain-sweat-life-skills"] .life-settings{width:min(100%,300px);transform:none}
+}
+@media(max-width:520px){
+  body[data-classic="brain-sweat-life-skills"] .world-setting img{height:190px}
+  body[data-classic="brain-sweat-life-skills"] .lesson-setting{grid-template-columns:95px minmax(0,1fr);gap:9px}
+  body[data-classic="brain-sweat-life-skills"] .lesson-setting figcaption{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-classic="brain-sweat-life-skills"] .life-settings{transform:none}
+}
