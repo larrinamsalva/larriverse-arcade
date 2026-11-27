@@ -7,6 +7,7 @@
   <meta name="description" content="Aim glossy round bubbles and unleash row, burst, and color-sweep powers through 80 matching levels. Free game practice in LarriVerse Arcade.">
   <title>Bubble Resonance Φ369 · LarriVerse Arcade</title>
   <link rel="stylesheet" href="game.css">
+  <link rel="stylesheet" href="bubble-art.css">
   <link rel="stylesheet" href="../../assets/classic-polish.css">
 <link rel="stylesheet" href="../../assets/emoji.css">
   <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
@@ -17,11 +18,11 @@
   <meta property="og:title" content="Bubble Resonance Φ369 · LarriVerse Arcade">
   <meta property="og:description" content="Aim glossy round bubbles and unleash row, burst, and color-sweep powers through 80 matching levels in LarriVerse Arcade.">
   <meta property="og:url" content="https://larrinamsalva.github.io/larriverse-arcade/games/bubble-resonance-phi369/">
-  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/assets/expedition-atlas.webp">
+  <meta property="og:image" content="https://larrinamsalva.github.io/larriverse-arcade/games/bubble-resonance-phi369/art/coastal-cove.webp">
   <meta property="og:image:type" content="image/webp">
-  <meta property="og:image:width" content="1600">
-  <meta property="og:image:height" content="800">
-  <meta property="og:image:alt" content="Eight illustrated LarriVerse expedition worlds: bridges, water, island deliveries, picnic planning, maps, codes, shopping, and an inclusive town.">
+  <meta property="og:image:width" content="762">
+  <meta property="og:image:height" content="506">
+  <meta property="og:image:alt" content="Illustrated sunlit cove backdrop for the Bubble Resonance game.">
   <meta name="twitter:card" content="summary_large_image">
 </head>
 <body data-classic="bubble-resonance-phi369">
@@ -58,7 +59,9 @@
       </div>
       <div class="coherence"><span>Tφ COHERENCE</span><i><em id="coherenceFill"></em></i><b id="coherenceValue">50</b></div>
       <div class="level-track" id="levelTrack" role="progressbar" aria-label="Bubble level progress" aria-valuemin="0" aria-valuemax="80" aria-valuenow="0" aria-valuetext="0 of 80 stages cleared"><span><small>Current stage</small><b id="levelName">First Ripple</b></span><i><em id="levelFill"></em></i><strong id="levelProgress">1 of 80</strong></div>
+      <p class="scene-caption" id="sceneCaption">Illustrated chapter setting · Sunlit Cove</p>
       <div class="playfield">
+        <img id="sceneBackdrop" class="scene-backdrop" src="art/coastal-cove.webp" width="762" height="506" alt="" aria-hidden="true" decoding="async">
         <canvas id="game" tabindex="0" aria-describedby="bubbleKeys bubbleStatus" width="1000" height="600" aria-label="Bubble Resonance playfield"></canvas>
         <div id="message" class="message" aria-live="polite"><b></b><span></span><button type="button" id="levelAction" hidden>Next level</button></div>
       </div>

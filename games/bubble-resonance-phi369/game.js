@@ -1,3 +1,5 @@
+import { sceneForLevel } from './scene-art.js';
+
 'use strict';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d');
 const W=1000,H=600,PHI=1.618,LAM=.618,R=28,WALL=18,COLS=16,ROWS=10,HEX=Math.sqrt(3)*R;
@@ -108,6 +110,13 @@ const $=s=>document.querySelector(s),pos=(c,r)=>({x:x0+c*R*2+(r%2?R:0),y:y0+r*HE
 const rand=()=>Math.floor(Math.random()*currentStage().frequencies),distance=(a,b,c,d)=>Math.hypot(a-c,b-d);
 function canvasTheme(){return CANVAS_THEMES[document.documentElement.dataset.larriverseTheme==='light'?'light':'dark']}
 function syncCanvasTheme(){canvas.dataset.colorMode=canvasTheme().mode}
+function syncScene(){
+  const scene=sceneForLevel(level),image=$('#sceneBackdrop');
+  if(image.dataset.scene===scene.id)return;
+  image.dataset.scene=scene.id;
+  image.src=`art/${scene.file}`;
+  $('#sceneCaption').textContent=`Illustrated chapter setting · ${scene.name}`;
+}
 function profile(){return window.LarriVerseArcade?.summary?.()||{name:'Player One',avatar:'🌟',level:1,kc:0,games:{}}}
 function refreshProfile(){const p=profile(),g=p.games?.[GAME_ID]||{};$('#playerName').textContent=`${p.avatar||'🌟'} ${p.name||'Player One'}`;$('#playerLevel').textContent=p.level||1;$('#playerKc').textContent=p.kc||0;$('#bestScore').textContent=(g.highScore||0).toLocaleString()}
 function toast(text){const n=$('#toast');n.textContent=text;n.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>n.classList.remove('show'),2600)}
@@ -127,7 +136,7 @@ function particlesAt(x,y,color,count=10){if(window.LarriVerseArcade.settings().r
 function announce(title,sub,color='#5dcaa5',sticky=false){const m=$('#message');m.querySelector('b').textContent=title;m.querySelector('b').style.color=color;m.querySelector('span').textContent=sub;m.classList.add('show');clearTimeout(messageTimer);if(!sticky)messageTimer=setTimeout(()=>m.classList.remove('show'),1200)}
 function setLevelAction(label=''){const button=$('#levelAction'),message=$('#message'),visible=Boolean(label);button.hidden=!visible;button.textContent=label;message.classList.toggle('actionable',visible)}
 function updateCoherence(){coherence=Math.round(Math.min(100,Math.max(0,PHI*(pattern/10+integration/10)+(combo-1)*2-LAM*(10-combo)*2)));$('#coherenceFill').style.width=`${coherence}%`;$('#coherenceValue').textContent=coherence}
-function hud(){const stage=currentStage(),progress=(level-(levelCleared?0:1))/MAX_LEVEL*100;$('#score').textContent=score.toLocaleString();$('#combo').textContent=`×${combo}`;$('#combo').style.color=combo>=5?'var(--gold)':combo>=3?'#a45d20':'var(--mint)';$('#level').textContent=`${level} / ${MAX_LEVEL}`;$('#levelName').textContent=stage.name;$('#levelProgress').textContent=`${level} of ${MAX_LEVEL}`;$('#levelFill').style.width=`${Math.max(0,Math.min(100,progress))}%`;$('#levelTrack').setAttribute('aria-valuenow',String(levelCleared?level:level-1));$('#levelTrack').setAttribute('aria-valuetext',`${levelCleared?level:level-1} of ${MAX_LEVEL} stages cleared`);$('#dropIn').textContent=Math.max(0,stage.dropAfter-misses);$('#limit').textContent=won?'WIN':gameOver?'FULL':levelCleared?'NEXT':'CLEAR';$('#limit').style.color=won?'var(--gold)':gameOver?'var(--red)':levelCleared?'var(--gold)':'var(--mint)'}
+function hud(){const stage=currentStage(),progress=(level-(levelCleared?0:1))/MAX_LEVEL*100;syncScene();$('#score').textContent=score.toLocaleString();$('#combo').textContent=`×${combo}`;$('#combo').style.color=combo>=5?'var(--gold)':combo>=3?'#a45d20':'var(--mint)';$('#level').textContent=`${level} / ${MAX_LEVEL}`;$('#levelName').textContent=stage.name;$('#levelProgress').textContent=`${level} of ${MAX_LEVEL}`;$('#levelFill').style.width=`${Math.max(0,Math.min(100,progress))}%`;$('#levelTrack').setAttribute('aria-valuenow',String(levelCleared?level:level-1));$('#levelTrack').setAttribute('aria-valuetext',`${levelCleared?level:level-1} of ${MAX_LEVEL} stages cleared`);$('#dropIn').textContent=Math.max(0,stage.dropAfter-misses);$('#limit').textContent=won?'WIN':gameOver?'FULL':levelCleared?'NEXT':'CLEAR';$('#limit').style.color=won?'var(--gold)':gameOver?'var(--red)':levelCleared?'var(--gold)':'var(--mint)'}
 function phiMultiplier(size){return size>=13?4:size>=8?3:size>=5?PHI:1}
 function boardEmpty(){return grid.every(row=>row.every(cell=>!cell))}
 function removeCells(cells,particleCount=10){const seen=new Set();let removed=0;for(const n of cells){const key=`${n.r},${n.c}`,cell=grid[n.r]?.[n.c];if(seen.has(key)||!cell)continue;seen.add(key);particlesAt(cell.x,cell.y,FREQS[cell.freq].color,particleCount);grid[n.r][n.c]=null;removed++}return removed}
