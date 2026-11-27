@@ -1,0 +1,39 @@
+/* Four painted settings sit behind the transparent gameplay canvas. */
+body[data-classic="bubble-resonance-phi369"] .scene-caption{
+  margin:0;
+  padding:6px 16px;
+  border-bottom:1px solid var(--bubble-line-soft);
+  background:var(--bubble-panel-strong);
+  color:var(--bubble-muted);
+  font:700 10px 'Space Mono',monospace;
+  letter-spacing:.07em;
+}
+body[data-classic="bubble-resonance-phi369"] .playfield .scene-backdrop{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  opacity:.85;
+  pointer-events:none;
+}
+body[data-classic="bubble-resonance-phi369"] .playfield canvas{
+  position:relative;
+  z-index:1;
+  background:rgba(5,9,21,.53);
+}
+body[data-classic="bubble-resonance-phi369"] .playfield::before{z-index:2}
+body[data-classic="bubble-resonance-phi369"] .playfield .message{z-index:3}
+html.larriverse-light body[data-classic="bubble-resonance-phi369"] .playfield canvas{
+  background:rgba(239,249,252,.62);
+}
+html.larriverse-light body[data-classic="bubble-resonance-phi369"] .playfield .scene-backdrop{opacity:.8}
+html.larriverse-high-contrast body[data-classic="bubble-resonance-phi369"] .playfield .scene-backdrop{opacity:0}
+html.larriverse-high-contrast body[data-classic="bubble-resonance-phi369"] .playfield canvas{background:#000}
+html.larriverse-high-contrast body[data-classic="bubble-resonance-phi369"] .scene-caption{
+  background:#000;
+  color:#fff;
+  border-color:#fff;
+}
