@@ -7,6 +7,7 @@
   <meta name="description" content="Try coding, shop skills, gardening, and everyday problem-solving challenges. Free game practice in LarriVerse Arcade. KC are fictional; progress stays in this browser.">
   <title>Brain Sweat Expanded · LarriVerse Arcade</title>
   <link rel="stylesheet" href="game.css">
+  <link rel="stylesheet" href="skill-art.css">
   <link rel="stylesheet" href="../../assets/classic-adventure-missions.css">
   <link rel="stylesheet" href="../../assets/classic-polish.css">
 <link rel="stylesheet" href="../../assets/emoji.css">
@@ -52,7 +53,14 @@
           <button type="button" class="lv-adventure-launch" data-adventure-mission="brain-sweat-expanded">🧠 Explore 80 workshop learning missions</button>
         </div>
       </div>
-      <div class="workbench" aria-hidden="true"><span>🔧</span><span>💰</span><span>💻</span><span>🌳</span><i></i></div>
+      <div class="skill-lab-preview" aria-hidden="true">
+        <img src="art/checkbook.webp" alt="" width="504" height="504" decoding="async">
+        <img src="art/retail.webp" alt="" width="504" height="504" decoding="async">
+        <img src="art/landscaping.webp" alt="" width="504" height="504" decoding="async">
+        <img src="art/community.webp" alt="" width="504" height="504" decoding="async">
+        <img src="art/cooking.webp" alt="" width="504" height="504" decoding="async">
+        <img src="art/coding.webp" alt="" width="504" height="504" decoding="async">
+      </div>
     </section>
 
     <section class="profile-strip" aria-label="Player progress">
@@ -106,6 +114,10 @@
         <div class="scenario-top"><span id="scenarioNumber">Challenge 1</span><span id="rewardBadge">+3 KC · +6 XP</span></div>
         <h3 id="scenarioTitle"></h3>
         <p id="scenarioDescription"></p>
+        <figure class="scenario-art" id="scenarioArt" hidden>
+          <img id="scenarioArtImage" width="504" height="504" alt="" decoding="async">
+          <figcaption>Illustrated skill setting. Follow the written challenge to decide.</figcaption>
+        </figure>
         <div class="hint-box"><span id="guideIcon">🦊</span><div><b id="guideName">Rufus says</b><p id="scenarioHint"></p></div></div>
         <div id="challengeBody"></div>
         <p class="feedback" id="feedback" aria-live="polite"></p>
