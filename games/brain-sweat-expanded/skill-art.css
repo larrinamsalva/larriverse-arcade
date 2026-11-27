@@ -1,0 +1,75 @@
+/* Illustrated settings for the six reviewed skill worlds. Answer controls stay in text. */
+body[data-classic="brain-sweat-expanded"] .skill-lab-preview{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:5px;
+  width:min(100%,345px);
+  margin:auto;
+  padding:7px;
+  border:1px solid rgba(157,245,222,.4);
+  border-radius:20px;
+  background:#071d2b;
+  box-shadow:0 18px 34px #0009,0 0 35px rgba(80,227,212,.12);
+  transform:rotate(-2deg);
+}
+body[data-classic="brain-sweat-expanded"] .skill-lab-preview img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1;
+  object-fit:cover;
+  border-radius:9px;
+}
+body[data-classic="brain-sweat-expanded"] .world-setting{
+  display:block;
+  width:100%;
+  height:clamp(145px,17vw,190px);
+  margin-top:15px;
+  object-fit:cover;
+  object-position:center 46%;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:14px;
+  box-shadow:0 6px 15px #0006;
+}
+body[data-classic="brain-sweat-expanded"] .scenario-art{
+  display:grid;
+  grid-template-columns:minmax(115px,176px) 1fr;
+  align-items:center;
+  gap:14px;
+  margin:16px 0;
+  padding:8px;
+  border:1px solid rgba(80,227,212,.32);
+  border-radius:17px;
+  background:#122b3b;
+}
+body[data-classic="brain-sweat-expanded"] .scenario-art[hidden]{display:none}
+body[data-classic="brain-sweat-expanded"] .scenario-art img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1;
+  object-fit:cover;
+  border-radius:11px;
+}
+body[data-classic="brain-sweat-expanded"] .scenario-art figcaption{
+  max-width:35ch;
+  color:#d6f1ee;
+  font-size:14px;
+  font-weight:700;
+  line-height:1.5;
+}
+html.larriverse-high-contrast body[data-classic="brain-sweat-expanded"] :is(.skill-lab-preview,.world-setting,.scenario-art){
+  border:2px solid #fff;
+  background:#000;
+  box-shadow:none;
+}
+html.larriverse-high-contrast body[data-classic="brain-sweat-expanded"] .scenario-art figcaption{color:#fff}
+@media(max-width:560px){
+  body[data-classic="brain-sweat-expanded"] .skill-lab-preview{width:min(100%,310px);transform:none}
+  body[data-classic="brain-sweat-expanded"] .world-setting{height:185px}
+  body[data-classic="brain-sweat-expanded"] .scenario-art{grid-template-columns:110px 1fr;gap:10px}
+  body[data-classic="brain-sweat-expanded"] .scenario-art figcaption{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-classic="brain-sweat-expanded"] .skill-lab-preview{transform:none}
+}

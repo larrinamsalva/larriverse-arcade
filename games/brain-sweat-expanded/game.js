@@ -4,6 +4,15 @@
   const GAME_ID = 'brain-sweat-expanded';
   const SAVE_KEY = 'larriverse.brainSweatExpanded.v1';
   const TODAY = () => new Date().toISOString().slice(0, 10);
+  // One neutral setting per reviewed world: the picture never varies by answer.
+  const WORLD_ART = Object.freeze({
+    checkbook: { file: 'checkbook.webp', alt: 'A child reviews a paper ledger at a desk with a pencil, coins, and a receipt.' },
+    retail: { file: 'retail.webp', alt: 'A child and cashier talk at a neighborhood grocery checkout beside a basket of produce.' },
+    landscaping: { file: 'landscaping.webp', alt: 'Children and an adult tend seedlings in a sunny raised garden bed.' },
+    community: { file: 'community.webp', alt: 'Children and volunteers share a bag of groceries at a community food pantry.' },
+    cooking: { file: 'cooking.webp', alt: 'An adult supervises a child preparing vegetables in a home kitchen.' },
+    coding: { file: 'coding.webp', alt: 'Two children look at colorful programming blocks on a laptop in a sunny study room.' }
+  });
   const $ = selector => document.querySelector(selector);
   const fresh = () => ({
     guideId: 'rufus',
@@ -210,8 +219,10 @@
       const description = status.ready
         ? `${ready} reviewed ${ready === 1 ? 'activity' : 'activities'} ready. ${status.queued ? 'Higher tiers remain review queued.' : 'All source tiers are represented.'}`
         : world.tiers.find(tier => tier.reviewNote)?.reviewNote || 'Qualified review required.';
+      const art = status.ready ? WORLD_ART[world.id] : null;
       return `<article class="world-card" style="--accent:${world.color}">
         <div class="world-top"><div class="world-icon">${world.icon}</div><span class="status-pill ${status.ready ? 'ready' : 'queued'}">${status.ready ? 'Ready' : 'Review queued'}</span></div>
+        ${art ? `<img class="world-setting" src="art/${art.file}" alt="${art.alt}" width="504" height="504" loading="lazy" decoding="async">` : ''}
         <h3>${esc(world.title)}</h3>
         <p>${esc(description)}</p>
         <div class="world-meta"><span>${world.sourceCount} source items</span><span>${completed}/${ready || 0} practiced</span></div>
@@ -292,6 +303,12 @@
 
     $('#lockedPanel').hidden = true;
     $('#challengePanel').hidden = false;
+    const art = WORLD_ART[activeWorld.id];
+    $('#scenarioArt').hidden = !art;
+    if (art) {
+      $('#scenarioArtImage').src = `art/${art.file}`;
+      $('#scenarioArtImage').alt = art.alt;
+    }
     if (activeIndex >= items.length) activeIndex = 0;
     challengeSolved = false;
     selectedTools = [];
