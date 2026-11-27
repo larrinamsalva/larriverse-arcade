@@ -3,6 +3,13 @@
 
   const GAME_ID = 'brain-sweat-life-skills';
   const SAVE_KEY = 'larriverse.brainSweatLifeSkills.v1';
+  // Fixed context by reviewed world; illustrations never vary by quiz answer.
+  const WORLD_ART = Object.freeze({
+    cooking: { file: 'cooking.webp', alt: 'An adult and two children sort vegetables and pantry packages in a home kitchen.' },
+    home2: { file: 'home2.webp', alt: 'A family talks at a living room table with a closed toolbox, tape measure, notebook, and plant.' },
+    nature: { file: 'nature.webp', alt: 'Two children and an adult look at trees during a walk on a sunlit park path.' },
+    mind: { file: 'mind.webp', alt: 'Children and a teacher discuss a blank book and colored cards at a library table.' }
+  });
   const $ = selector => document.querySelector(selector);
   let content = null;
   let save = loadSave();
@@ -75,6 +82,7 @@
       if (!visible.length) return '';
 
       const readyCount = world.lessons.filter(lesson => lesson.status === 'reviewed').length;
+      const art = readyCount && filter !== 'review-queued' ? WORLD_ART[world.id] : null;
       const lessonCards = visible.map(lesson => {
         const ready = lesson.status === 'reviewed';
         const record = lessonRecord(lesson.id);
@@ -91,6 +99,7 @@
 
       return `<article class="world-card" style="--world:${world.color}">
         <header class="world-head"><span>${world.icon}</span><div><h2>${escapeHtml(world.title)}</h2><p>${escapeHtml(world.note)}</p></div><span class="world-count">${readyCount}/4 ready</span></header>
+        ${art ? `<figure class="world-setting"><img src="art/${art.file}" width="623" height="623" loading="lazy" decoding="async" alt="${art.alt}"><figcaption>Illustrated setting for reviewed lessons</figcaption></figure>` : ''}
         <div class="lesson-list">${lessonCards}</div>
       </article>`;
     }).filter(Boolean);
@@ -118,6 +127,12 @@
     persist();
     $('#lessonWorld').textContent = found.world.title;
     $('#lessonTitle').textContent = `${found.lesson.icon} ${found.lesson.title}`;
+    const art = WORLD_ART[found.world.id];
+    $('#lessonSetting').hidden = !art;
+    if (art) {
+      $('#lessonSettingImage').src = `art/${art.file}`;
+      $('#lessonSettingImage').alt = art.alt;
+    }
     $('#lessonDialog').showModal();
     renderQuestion();
   }
